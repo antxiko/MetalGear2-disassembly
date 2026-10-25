@@ -74,6 +74,12 @@ D 0xB30A 0xB742 dibujo_B30A  45 caracteres de 8x8 a 3 bits por punto (24 bytes c
 F 0xB30A 24
 D 0xB742 0xBB4A dibujo_B742  43 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 12 de la lista 0xBF8B (p00:4D92, p00:4DF5); lo leen p13:9534 (1032 bytes)
 F 0xB742 24
+D 0xBBD5 0xBC95 mosaico_BBD5  un mosaico de 12 x 16 caracteres, un byte cada uno (p00:510F; BC = 0x0C10 en quien llama); lo leen p01:719C (192 bytes)
+F 0xBBD5 16
+D 0xBCD3 0xBCD5 mosaico_BCD3  un mosaico de 2 x 1 caracteres, un byte cada uno (p00:510F; BC = 0x0201 en quien llama); lo leen p01:647D (2 bytes)
+F 0xBCD3 1
+D 0xBCDB 0xBCDD mosaico_BCDB  un mosaico de 2 x 1 caracteres, un byte cada uno (p00:510F; BC = 0x0201 en quien llama); lo leen p01:647D (2 bytes)
+F 0xBCDB 1
 D 0xBEA0 0xBED0 tabla_colores_BEA0  24 punteros a colores de dibujo (los usa hasta el indice 23; p00:4DA0); lo leen p00:4DA0 (48 bytes)
 F 0xBEA0 w8
 D 0xBED0 0xBED4 colores_BED0  8 colores de 4 bits, dos por byte, para un dibujo de 3 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p13:952B (4 bytes)
@@ -132,6 +138,8 @@ D 0xBFCD 0xBFDD lista_BFCD  3 fichas de dibujo de 5 bytes [tipo-cuantos][colores
 F 0xBFCD 5
 D 0xA188 0xA3B2 resto_A188  lo apuntan con el banco puesto p13:954C (0xA188); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p13:954C (554 bytes)
 F 0xA188 16
-D 0xBB4A 0xBEA0 resto_BB4A  lo apuntan con el banco puesto p01:7161 (0xBB4A), p01:7193 (0xBBD5), p01:717C (0xBC95); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:7161, p01:7193, p01:717C (854 bytes)
+D 0xBB4A 0xBBD5 resto_BB4A  lo apuntan con el banco puesto p01:7161 (0xBB4A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:7161 (139 bytes)
 F 0xBB4A 16
+D 0xBC95 0xBCD3 resto_BC95  lo apuntan con el banco puesto p01:717C (0xBC95); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:717C (62 bytes)
+F 0xBC95 16
 # --- fin de los bloques de bloques.py ---

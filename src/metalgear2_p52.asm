@@ -23,40 +23,76 @@ DATA_tabla_colores_8000:
 	defw 08107h,0810bh,0810fh,08111h,08113h	; 8060
 
 ; ----------------------------------------------------------------------
-; DATOS colores_806A: 2 colores de 4 bits, dos por byte, para un dibujo de 1
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (1 bytes)
-;   0x806a..0x806b  (1 bytes)
+; DATOS colores_806A: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CF5 (2
+;   bytes)
+;   0x806a..0x806c  (2 bytes)
 DATA_colores_806A:
-	defb 001h	; 806a
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x806b..0x806c  (1 bytes)
-DATA_806B:
-	defb 025h	; 806b
+	defb 001h,025h	; 806a
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_806C: 4 colores de 4 bits, dos por byte, para un dibujo de 2
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (2 bytes)
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CF5,
+;   p01:6CFB (2 bytes)
 ;   0x806c..0x806e  (2 bytes)
 DATA_colores_806C:
 	defb 002h,034h	; 806c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x806e..0x8078  (10 bytes)
-DATA_806E:
-	defb 002h,035h,006h,013h,002h,056h,002h,045h,002h,056h	; 806e  .5...V.E.V
+; DATOS colores_806E: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5 (2 bytes)
+;   0x806e..0x8070  (2 bytes)
+DATA_colores_806E:
+	defb 002h,035h	; 806e
 
 ; ----------------------------------------------------------------------
-; DATOS colores_8078: 2 colores de 4 bits, dos por byte, para un dibujo de 1
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (1 bytes)
-;   0x8078..0x8079  (1 bytes)
+; DATOS colores_8070: 2 colores de 4 bits, dos por byte, para un dibujo de 1
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5, p01:6CFB (1
+;   bytes)
+;   0x8070..0x8071  (1 bytes)
+DATA_colores_8070:
+	defb 006h	; 8070
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x8071..0x8072  (1 bytes)
+DATA_8071:
+	defb 013h	; 8071
+
+; ----------------------------------------------------------------------
+; DATOS colores_8072: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5 (2 bytes)
+;   0x8072..0x8074  (2 bytes)
+DATA_colores_8072:
+	defb 002h,056h	; 8072
+
+; ----------------------------------------------------------------------
+; DATOS colores_8074: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5 (2 bytes)
+;   0x8074..0x8076  (2 bytes)
+DATA_colores_8074:
+	defb 002h,045h	; 8074
+
+; ----------------------------------------------------------------------
+; DATOS colores_8076: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5 (2 bytes)
+;   0x8076..0x8078  (2 bytes)
+DATA_colores_8076:
+	defb 002h,056h	; 8076
+
+; ----------------------------------------------------------------------
+; DATOS colores_8078: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CF5 (2
+;   bytes)
+;   0x8078..0x807a  (2 bytes)
 DATA_colores_8078:
-	defb 003h	; 8078
+	defb 003h,045h	; 8078
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8079..0x807c  (3 bytes)
-DATA_8079:
-	defb 045h,006h,0ach	; 8079
+; DATOS colores_807A: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (2 bytes)
+;   0x807a..0x807c  (2 bytes)
+DATA_colores_807A:
+	defb 006h,0ach	; 807a
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_807C: 4 colores de 4 bits, dos por byte, para un dibujo de 2
@@ -95,7 +131,8 @@ DATA_colores_8083:
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_8085: 4 colores de 4 bits, dos por byte, para un dibujo de 2
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (2 bytes)
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6DCA (2
+;   bytes)
 ;   0x8085..0x8087  (2 bytes)
 DATA_colores_8085:
 	defb 005h,07fh	; 8085
@@ -108,49 +145,149 @@ DATA_colores_8087:
 	defb 001h,034h	; 8087
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8089..0x808b  (2 bytes)
-DATA_8089:
+; DATOS colores_8089: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (2 bytes)
+;   0x8089..0x808b  (2 bytes)
+DATA_colores_8089:
 	defb 001h,026h	; 8089
 
 ; ----------------------------------------------------------------------
-; DATOS colores_808B: 4 colores de 4 bits, dos por byte, para un dibujo de 2
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (2 bytes)
-;   0x808b..0x808d  (2 bytes)
-DATA_colores_808B:
-	defb 001h,023h	; 808b
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x808d..0x80b3  (38 bytes)
-DATA_808D:
-	defb 045h,068h,001h,024h,036h,07fh,002h,036h,07bh,0cfh,012h,06fh,008h,0cdh,001h,024h	; 808d  Eh.$6..6{..o...$
-	defb 068h,0dfh,015h,06fh,027h,0adh,024h,067h,08ch,0dfh,068h,0dfh,012h,045h,015h,06dh	; 809d  h..o'.$g..h..E.m
-	defb 083h,0cfh,001h,06fh,048h,0cdh	; 80ad
-
-; ----------------------------------------------------------------------
-; DATOS colores_80B3: 2 colores de 4 bits, dos por byte, para un dibujo de 1
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6F22 (1
+; DATOS colores_808B: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CF5 (4
 ;   bytes)
-;   0x80b3..0x80b4  (1 bytes)
+;   0x808b..0x808f  (4 bytes)
+DATA_colores_808B:
+	defb 001h,023h,045h,068h	; 808b
+
+; ----------------------------------------------------------------------
+; DATOS colores_808F: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5, p01:6CFB (4
+;   bytes)
+;   0x808f..0x8093  (4 bytes)
+DATA_colores_808F:
+	defb 001h,024h,036h,07fh	; 808f
+
+; ----------------------------------------------------------------------
+; DATOS colores_8093: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5, p01:6CFB (4
+;   bytes)
+;   0x8093..0x8097  (4 bytes)
+DATA_colores_8093:
+	defb 002h,036h,07bh,0cfh	; 8093
+
+; ----------------------------------------------------------------------
+; DATOS colores_8097: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x8097..0x809b  (4 bytes)
+DATA_colores_8097:
+	defb 012h,06fh,008h,0cdh	; 8097
+
+; ----------------------------------------------------------------------
+; DATOS colores_809B: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x809b..0x809f  (4 bytes)
+DATA_colores_809B:
+	defb 001h,024h,068h,0dfh	; 809b
+
+; ----------------------------------------------------------------------
+; DATOS colores_809F: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x809f..0x80a3  (4 bytes)
+DATA_colores_809F:
+	defb 015h,06fh,027h,0adh	; 809f
+
+; ----------------------------------------------------------------------
+; DATOS colores_80A3: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80a3..0x80a7  (4 bytes)
+DATA_colores_80A3:
+	defb 024h,067h,08ch,0dfh	; 80a3
+
+; ----------------------------------------------------------------------
+; DATOS colores_80A7: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80a7..0x80ab  (4 bytes)
+DATA_colores_80A7:
+	defb 068h,0dfh,012h,045h	; 80a7
+
+; ----------------------------------------------------------------------
+; DATOS colores_80AB: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80ab..0x80af  (4 bytes)
+DATA_colores_80AB:
+	defb 015h,06dh,083h,0cfh	; 80ab
+
+; ----------------------------------------------------------------------
+; DATOS colores_80AF: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80af..0x80b3  (4 bytes)
+DATA_colores_80AF:
+	defb 001h,06fh,048h,0cdh	; 80af
+
+; ----------------------------------------------------------------------
+; DATOS colores_80B3: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CFB,
+;   p01:6F22 (4 bytes)
+;   0x80b3..0x80b7  (4 bytes)
 DATA_colores_80B3:
-	defb 007h	; 80b3
+	defb 007h,0dfh,046h,08ah	; 80b3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x80b4..0x80c7  (19 bytes)
-DATA_80B4:
-	defb 0dfh,046h,08ah,046h,078h,0ach,0dfh,016h,08fh,02bh,0cdh,07ah,0efh,008h,0cdh,008h	; 80b4  .F.Fx....+.z....
-	defb 0efh,04ah,0cdh	; 80c4
+; DATOS colores_80B7: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80b7..0x80bb  (4 bytes)
+DATA_colores_80B7:
+	defb 046h,078h,0ach,0dfh	; 80b7
 
 ; ----------------------------------------------------------------------
-; DATOS colores_80C7: 2 colores de 4 bits, dos por byte, para un dibujo de 1
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (1 bytes)
-;   0x80c7..0x80c8  (1 bytes)
+; DATOS colores_80BB: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80bb..0x80bf  (4 bytes)
+DATA_colores_80BB:
+	defb 016h,08fh,02bh,0cdh	; 80bb
+
+; ----------------------------------------------------------------------
+; DATOS colores_80BF: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80bf..0x80c3  (4 bytes)
+DATA_colores_80BF:
+	defb 07ah,0efh,008h,0cdh	; 80bf
+
+; ----------------------------------------------------------------------
+; DATOS colores_80C3: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80c3..0x80c7  (4 bytes)
+DATA_colores_80C3:
+	defb 008h,0efh,04ah,0cdh	; 80c3
+
+; ----------------------------------------------------------------------
+; DATOS colores_80C7: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CFB (4
+;   bytes)
+;   0x80c7..0x80cb  (4 bytes)
 DATA_colores_80C7:
-	defb 00dh	; 80c7
+	defb 00dh,0efh,047h,0bch	; 80c7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x80c8..0x80d7  (15 bytes)
-DATA_80C8:
-	defb 0efh,047h,0bch,0ach,0efh,007h,0bdh,08ch,0efh,004h,07dh,08dh,0efh,004h,07ah	; 80c8  .G........}...z
+; DATOS colores_80CB: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80cb..0x80cf  (4 bytes)
+DATA_colores_80CB:
+	defb 0ach,0efh,007h,0bdh	; 80cb
+
+; ----------------------------------------------------------------------
+; DATOS colores_80CF: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80cf..0x80d3  (4 bytes)
+DATA_colores_80CF:
+	defb 08ch,0efh,004h,07dh	; 80cf
+
+; ----------------------------------------------------------------------
+; DATOS colores_80D3: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80d3..0x80d7  (4 bytes)
+DATA_colores_80D3:
+	defb 08dh,0efh,004h,07ah	; 80d3
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_80D7: 8 colores de 4 bits, dos por byte, para un dibujo de 3
@@ -174,27 +311,95 @@ DATA_colores_80DF:
 	defb 001h,023h,045h,06fh	; 80df
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x80e3..0x80f7  (20 bytes)
-DATA_80E3:
-	defb 001h,056h,08dh,0efh,002h,06fh,01ah,0cdh,056h,0dfh,018h,0ceh,008h,0deh,014h,0afh	; 80e3  .V...o..V.......
+; DATOS colores_80E3: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5, p01:6CFB (4
+;   bytes)
+;   0x80e3..0x80e7  (4 bytes)
+DATA_colores_80E3:
+	defb 001h,056h,08dh,0efh	; 80e3
+
+; ----------------------------------------------------------------------
+; DATOS colores_80E7: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80e7..0x80eb  (4 bytes)
+DATA_colores_80E7:
+	defb 002h,06fh,01ah,0cdh	; 80e7
+
+; ----------------------------------------------------------------------
+; DATOS colores_80EB: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80eb..0x80ef  (4 bytes)
+DATA_colores_80EB:
+	defb 056h,0dfh,018h,0ceh	; 80eb
+
+; ----------------------------------------------------------------------
+; DATOS colores_80EF: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80ef..0x80f3  (4 bytes)
+DATA_colores_80EF:
+	defb 008h,0deh,014h,0afh	; 80ef
+
+; ----------------------------------------------------------------------
+; DATOS colores_80F3: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80f3..0x80f7  (4 bytes)
+DATA_colores_80F3:
 	defb 008h,0abh,0cdh,0efh	; 80f3
 
 ; ----------------------------------------------------------------------
-; DATOS colores_80F7: 4 colores de 4 bits, dos por byte, para un dibujo de 2
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (2 bytes)
-;   0x80f7..0x80f9  (2 bytes)
+; DATOS colores_80F7: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CFB (4
+;   bytes)
+;   0x80f7..0x80fb  (4 bytes)
 DATA_colores_80F7:
-	defb 001h,02ch	; 80f7
+	defb 001h,02ch,06ah,0bfh	; 80f7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x80f9..0x8111  (24 bytes)
-DATA_80F9:
-	defb 06ah,0bfh,056h,0cfh,024h,08dh,004h,08ah,0bch,0dfh,002h,046h,08ch,0dfh,068h,0efh	; 80f9  j.V.$......F..h.
-	defb 014h,05dh,005h,06fh,014h,08eh,002h,013h	; 8109  .].o....
+; DATOS colores_80FB: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80fb..0x80ff  (4 bytes)
+DATA_colores_80FB:
+	defb 056h,0cfh,024h,08dh	; 80fb
+
+; ----------------------------------------------------------------------
+; DATOS colores_80FF: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x80ff..0x8103  (4 bytes)
+DATA_colores_80FF:
+	defb 004h,08ah,0bch,0dfh	; 80ff
+
+; ----------------------------------------------------------------------
+; DATOS colores_8103: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x8103..0x8107  (4 bytes)
+DATA_colores_8103:
+	defb 002h,046h,08ch,0dfh	; 8103
+
+; ----------------------------------------------------------------------
+; DATOS colores_8107: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x8107..0x810b  (4 bytes)
+DATA_colores_8107:
+	defb 068h,0efh,014h,05dh	; 8107
+
+; ----------------------------------------------------------------------
+; DATOS colores_810B: 8 colores de 4 bits, dos por byte, para un dibujo de 3
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CFB (4 bytes)
+;   0x810b..0x810f  (4 bytes)
+DATA_colores_810B:
+	defb 005h,06fh,014h,08eh	; 810b
+
+; ----------------------------------------------------------------------
+; DATOS colores_810F: 4 colores de 4 bits, dos por byte, para un dibujo de 2
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CF5 (2 bytes)
+;   0x810f..0x8111  (2 bytes)
+DATA_colores_810F:
+	defb 002h,013h	; 810f
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_8111: 4 colores de 4 bits, dos por byte, para un dibujo de 2
-;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF (2 bytes)
+;   bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6CEF, p01:6CF5 (2
+;   bytes)
 ;   0x8111..0x8113  (2 bytes)
 DATA_colores_8111:
 	defb 001h,036h	; 8111
@@ -219,7 +424,7 @@ DATA_lista_8114:
 ; ----------------------------------------------------------------------
 ; DATOS lista_811F: 2 fichas de dibujo de 5 bytes
 ;   [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores
-;   en la tabla 0x0000); lo leen p01:6DCA (11 bytes)
+;   en la tabla 0x8000); lo leen p01:6DCA (11 bytes)
 ;   0x811f..0x812a  (11 bytes)
 DATA_lista_811F:
 	defb 03fh,00eh,001h,04ah,087h	; 811f
@@ -239,7 +444,7 @@ DATA_lista_812A:
 ; ----------------------------------------------------------------------
 ; DATOS lista_8135: 19 fichas de dibujo de 5 bytes
 ;   [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores
-;   en la tabla 0x0000); lo leen p01:6CF5 (96 bytes)
+;   en la tabla 0x8000); lo leen p01:6CF5 (96 bytes)
 ;   0x8135..0x8195  (96 bytes)
 DATA_lista_8135:
 	defb 001h,000h,001h,00ah,0a9h	; 8135
@@ -266,7 +471,7 @@ DATA_lista_8135:
 ; ----------------------------------------------------------------------
 ; DATOS lista_8195: 58 fichas de dibujo de 5 bytes
 ;   [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores
-;   en la tabla 0x0000); lo leen p01:6CFB (291 bytes)
+;   en la tabla 0x8000); lo leen p01:6CFB (291 bytes)
 ;   0x8195..0x82b8  (291 bytes)
 DATA_lista_8195:
 	defb 001h,001h,001h,00ah,094h	; 8195
@@ -363,82 +568,249 @@ DATA_lista_82B8:
 	defb 0ffh	; 8335
 
 ; ----------------------------------------------------------------------
-; DATOS resto_8336: lo apuntan con el banco puesto p01:6D0C (0x8336); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p01:6D0C (1044 bytes)
-;   0x8336..0x874a  (1044 bytes)
-DATA_resto_8336:
-	defb 000h,0e0h,008h,004h,0e0h,086h,048h,0e0h,00ah,004h,009h,087h,070h,0c0h,005h,004h	; 8336  ......H.....p...
-	defb 031h,087h,038h,080h,002h,007h,0fdh,084h,060h,080h,001h,007h,00ch,085h,068h,080h	; 8346  1.8.....`.....h.
-	defb 008h,006h,0c1h,084h,038h,0b8h,006h,002h,0f0h,084h,000h,080h,007h,00bh,08dh,084h	; 8356  ....8...........
-	defb 0ffh,000h,000h,015h,010h,0c2h,085h,068h,0e0h,001h,003h,046h,087h,090h,0e0h,001h	; 8366  .......h...F....
-	defb 003h,046h,087h,090h,0c0h,001h,003h,046h,087h,000h,0e0h,004h,003h,001h,087h,020h	; 8376  .F.....F.......
-	defb 0e0h,004h,003h,001h,087h,0ffh,0a8h,000h,008h,00ah,014h,085h,0d0h,050h,004h,008h	; 8386  .............P..
-	defb 062h,085h,098h,0c0h,001h,008h,082h,085h,0a0h,0c8h,004h,006h,08bh,085h,0c0h,098h	; 8396  b...............
-	defb 002h,005h,0a4h,085h,0e8h,030h,003h,001h,0afh,085h,0f0h,058h,002h,007h,0b3h,085h	; 83a6  .....0.....X....
-	defb 0a8h,050h,005h,009h,0d5h,083h,0e8h,000h,003h,006h,002h,084h,0a8h,098h,003h,006h	; 83b6  .P..............
-	defb 015h,084h,0d0h,090h,006h,006h,028h,084h,0c0h,0c0h,008h,008h,04ch,084h,0ffh,000h	; 83c6  ......(.....L...
-	defb 000h,046h,04bh,04ch,08ch,04dh,04eh,000h,047h,000h,04fh,087h,050h,051h,052h,088h	; 83d6  .FKL.MN.G.O.PQR.
-	defb 053h,054h,055h,056h,057h,058h,059h,05ah,089h,05bh,05ch,05dh,05eh,05fh,060h,061h	; 83e6  STUVWXYZ.[\]^_`a
-	defb 062h,063h,064h,0fah,000h,04ah,065h,086h,066h,067h,048h,0ffh,077h,049h,078h,08bh	; 83f6  bcd..Je.fgH.wIx.
-	defb 079h,051h,07ah,07bh,07ch,07dh,07eh,07fh,080h,081h,082h,083h,084h,085h,0ffh,045h	; 8406  yQz{|}~........E
-	defb 068h,069h,08ah,06ah,051h,06bh,06ch,06dh,06eh,06fh,070h,071h,072h,073h,074h,075h	; 8416  hi.jQklmnopqrstu
-	defb 076h,0ffh,0fah,000h,001h,009h,003h,000h,00eh,017h,00ah,00bh,015h,016h,018h,019h	; 8426  v...............
-	defb 00ch,00fh,010h,011h,01bh,01ch,00dh,01ah,01eh,020h,024h,025h,012h,021h,01fh,002h	; 8436  ......... $%.!..
-	defb 013h,01dh,014h,004h,026h,0ffh,027h,028h,035h,022h,027h,028h,035h,022h,029h,02ah	; 8446  ....&.'(5"'(5")*
-	defb 040h,02bh,029h,005h,032h,02bh,036h,02ch,02dh,02eh,036h,033h,007h,02eh,023h,03bh	; 8456  @+).2+6,-.63..#.
-	defb 03ch,03fh,023h,03bh,03ch,03fh,027h,028h,037h,022h,027h,028h,039h,022h,029h,042h	; 8466  <?#.<?'(7"'(9")B
-	defb 043h,02bh,029h,041h,008h,02bh,038h,02fh,030h,031h,03ah,044h,006h,034h,023h,03bh	; 8476  C+)A.+8/01:D.4#.
-	defb 03dh,03fh,023h,03bh,03eh,03fh,0ffh,04ch,0fbh,046h,047h,052h,0fah,046h,053h,04ah	; 8486  =?#.>?.L.FGR.FSJ
-	defb 0fbh,000h,04bh,0fbh,000h,054h,04ah,0fbh,000h,04bh,0fbh,000h,055h,04ah,0fbh,000h	; 8496  ..K..TJ..K..UJ..
-	defb 04bh,0fbh,000h,04ah,04ah,0fbh,000h,04bh,0fbh,000h,04ah,04ah,0fbh,000h,04bh,0fbh	; 84a6  K..JJ..K..JJ..K.
-	defb 000h,04ah,04dh,0fch,04eh,04fh,050h,051h,048h,049h,0ffh,000h,06ch,06dh,06eh,06fh	; 84b6  .JM.NOPQHI..lmno
-	defb 070h,071h,088h,096h,097h,08ch,072h,073h,089h,094h,08ah,098h,074h,075h,08dh,08bh	; 84c6  pq....rs....tu..
-	defb 095h,099h,072h,077h,08eh,09ah,09bh,09ch,08fh,078h,079h,090h,091h,07ah,07bh,092h	; 84d6  ..rw.....xy..z{.
-	defb 093h,07ch,07dh,000h,000h,07eh,07fh,0fbh,000h,0ffh,080h,081h,082h,083h,084h,085h	; 84e6  .|}..~..........
-	defb 086h,087h,080h,081h,082h,083h,0ffh,056h,05fh,060h,061h,058h,059h,000h,057h,06bh	; 84f6  .......V_`aXY.Wk
-	defb 062h,063h,064h,066h,05ah,0ffh,069h,067h,068h,05ch,05dh,05eh,06ah,0ffh,000h,000h	; 8506  bcdfZ.igh\]^j...
-	defb 0bah,0b4h,0e3h,0e4h,0e5h,0fah,000h,0c6h,09ah,0efh,09eh,09fh,0e9h,0eah,099h,0bbh	; 8516  ................
-	defb 0b1h,08eh,08fh,090h,0a0h,0a1h,0b9h,0a2h,0bch,0c7h,0aeh,091h,0c8h,092h,0bdh,0cfh	; 8526  ................
-	defb 0d0h,0beh,0a6h,0a8h,09dh,094h,0cdh,095h,0ach,0c2h,0c3h,0a3h,0b6h,0a9h,08dh,096h	; 8536  ................
-	defb 0c9h,097h,0abh,0b8h,0d5h,0d6h,0a7h,0aah,09bh,0cbh,098h,093h,0b7h,0d4h,0a4h,0d1h	; 8546  ................
-	defb 0c5h,0afh,09ch,000h,0adh,0cah,0b0h,0c4h,0b2h,0fbh,000h,0ffh,0f0h,0f1h,0dah,0b5h	; 8556  ................
-	defb 0d7h,0b3h,0dbh,0dch,09ah,0efh,09eh,0e6h,0e7h,0e8h,099h,0bbh,08fh,090h,0a0h,0a5h	; 8566  ................
-	defb 0d3h,0d8h,0bch,0c7h,0c8h,092h,0bdh,0c0h,0d2h,0bfh,0a6h,0a8h,0f2h,0eeh,0d9h,09fh	; 8576  ................
-	defb 0e9h,0eah,0dfh,0f5h,0ffh,0b4h,0b5h,0d7h,0b3h,000h,000h,09eh,0e6h,0e7h,0e8h,099h	; 8586  ................
-	defb 0bbh,0e1h,0a5h,0d3h,0d8h,0e2h,0c7h,0bdh,0c0h,0d2h,0bfh,0a6h,0a8h,0ffh,0f3h,0c0h	; 8596  ................
-	defb 0d2h,0bfh,0c1h,0ddh,0a5h,0d3h,0d8h,0e0h,0ffh,0edh,0ech,0ceh,0ffh,0ebh,090h,0deh	; 85a6  ................
-	defb 0a5h,0d3h,0d8h,0f4h,0cch,092h,0bdh,0c0h,0d2h,0bfh,0a6h,0ffh,051h,039h,03ah,03bh	; 85b6  ............Q9:.
-	defb 000h,000h,00eh,000h,000h,001h,00fh,0fch,000h,010h,03ch,03dh,03eh,03fh,000h,012h	; 85c6  ..........<=>?..
-	defb 011h,000h,013h,0fah,000h,040h,002h,000h,010h,014h,041h,042h,043h,009h,044h,045h	; 85d6  .....@....ABC.DE
-	defb 046h,015h,000h,000h,023h,047h,016h,000h,010h,017h,048h,049h,04ah,00ah,04bh,04ch	; 85e6  F...#G....HIJ.KL
-	defb 04dh,04eh,04fh,018h,050h,008h,000h,000h,010h,038h,052h,053h,054h,055h,056h,057h	; 85f6  MNO.P....8RSTUVW
-	defb 058h,059h,05ah,05bh,008h,0fah,000h,026h,05ch,05dh,05eh,05fh,060h,061h,062h,063h	; 8606  XYZ[...&\]^_`abc
-	defb 064h,065h,008h,0fbh,000h,066h,067h,068h,069h,06ah,06bh,06ch,06dh,06eh,06fh,070h	; 8616  de...fghijklmnop
-	defb 071h,072h,073h,027h,000h,003h,019h,004h,028h,074h,075h,076h,077h,078h,079h,07ah	; 8626  qrs'....(tuvwxyz
-	defb 07bh,07ch,07dh,07eh,0fah,000h,029h,07fh,0dfh,081h,082h,083h,084h,085h,086h,087h	; 8636  {|}~..).........
-	defb 088h,089h,08ah,0fah,000h,025h,08bh,08ch,08dh,08eh,08fh,090h,091h,092h,093h,094h	; 8646  .....%..........
-	defb 095h,02bh,0fbh,000h,096h,097h,098h,099h,09ah,09bh,09ch,09dh,09eh,09fh,01ah,0a0h	; 8656  .+..............
-	defb 0fbh,000h,0a1h,0a2h,0a3h,0a4h,0a5h,0a6h,0a7h,0a8h,0a9h,0aah,0fdh,000h,0abh,0ach	; 8666  ................
-	defb 0adh,0aeh,0afh,0b0h,0b1h,0b2h,0b3h,0b4h,0fdh,000h,0b5h,0b6h,0b7h,0b8h,0b9h,0bah	; 8676  ................
-	defb 0bbh,0bch,0bdh,0beh,0fdh,000h,0bfh,0c0h,0c1h,02ch,0c2h,0c3h,00bh,0c4h,0c5h,0c6h	; 8686  .........,......
-	defb 0fdh,000h,0c7h,0c8h,02dh,000h,02fh,031h,000h,02eh,033h,02ah,0fch,000h,034h,0c9h	; 8696  ....-./1..3*..4.
-	defb 0cah,00ch,0fbh,000h,00dh,0cbh,0cch,0fch,000h,0cdh,0ceh,0cfh,0d0h,0fbh,000h,024h	; 86a6  ...............$
-	defb 0d1h,0d2h,035h,000h,000h,004h,01bh,0d3h,0d4h,01ch,0fdh,000h,01dh,0d5h,0d6h,01eh	; 86b6  ..5.............
-	defb 005h,01fh,0d7h,0d8h,0d9h,030h,0fdh,000h,020h,0dah,0dbh,0dch,021h,0ddh,006h,000h	; 86c6  .....0.. ...!...
-	defb 036h,007h,0fdh,000h,032h,037h,000h,022h,0deh,0ffh,000h,000h,0adh,0aeh,000h,0afh	; 86d6  6...27."........
-	defb 0b0h,0b1h,0b2h,0b3h,0b4h,0b5h,0ach,0b6h,000h,0b7h,000h,000h,0b8h,0b9h,000h,0bah	; 86e6  ................
-	defb 0bbh,0bch,0bdh,0beh,0bfh,0c0h,0ach,0b6h,000h,0c1h,0ffh,053h,054h,000h,05eh,0feh	; 86f6  ...........ST.^.
-	defb 000h,075h,0ffh,0c2h,0c3h,0c4h,0a0h,0c5h,0c6h,0c7h,0c8h,0c9h,0a5h,0cah,0aah,0cbh	; 8706  .u..............
-	defb 0cch,0cdh,0abh,000h,0ceh,000h,09fh,0cfh,0d0h,0d1h,0a1h,0d2h,0d3h,0d4h,0d5h,0d6h	; 8716  ................
-	defb 0a6h,0d7h,0a7h,0d8h,0d9h,0dah,0a7h,000h,0dbh,000h,0a2h,0dch,0ddh,0deh,0a3h,0a8h	; 8726  ................
-	defb 0dfh,0e0h,0a4h,0e1h,0a9h,0e2h,09dh,0e3h,0e4h,0e5h,09dh,000h,0e6h,000h,09eh,0ffh	; 8736  ................
+; DATOS lista_mosaicos_8336: 8 fichas [VRAM lo hi][filas][columnas][puntero] y
+;   un 0xFF (p01:6D65); lo leen p01:6D69 (49 bytes)
+;   0x8336..0x8367  (49 bytes)
+DATA_lista_mosaicos_8336:
+	defb 000h,0e0h,008h,004h,0e0h,086h	; 8336
+	defb 048h,0e0h,00ah,004h,009h,087h	; 833c
+	defb 070h,0c0h,005h,004h,031h,087h	; 8342
+	defb 038h,080h,002h,007h,0fdh,084h	; 8348
+	defb 060h,080h,001h,007h,00ch,085h	; 834e
+	defb 068h,080h,008h,006h,0c1h,084h	; 8354
+	defb 038h,0b8h,006h,002h,0f0h,084h	; 835a
+	defb 000h,080h,007h,00bh,08dh,084h	; 8360
+	defb 0ffh	; 8366
+
+; ----------------------------------------------------------------------
+; DATOS lista_mosaicos_8367: 6 fichas [VRAM lo hi][filas][columnas][puntero] y
+;   un 0xFF (p01:6D65); lo leen p01:6D69 (37 bytes)
+;   0x8367..0x838c  (37 bytes)
+DATA_lista_mosaicos_8367:
+	defb 000h,000h,015h,010h,0c2h,085h	; 8367
+	defb 068h,0e0h,001h,003h,046h,087h	; 836d
+	defb 090h,0e0h,001h,003h,046h,087h	; 8373
+	defb 090h,0c0h,001h,003h,046h,087h	; 8379
+	defb 000h,0e0h,004h,003h,001h,087h	; 837f
+	defb 020h,0e0h,004h,003h,001h,087h	; 8385
+	defb 0ffh	; 838b
+
+; ----------------------------------------------------------------------
+; DATOS lista_mosaicos_838C: 12 fichas [VRAM lo hi][filas][columnas][puntero]
+;   y un 0xFF (p01:6D65); lo leen p01:6D69 (73 bytes)
+;   0x838c..0x83d5  (73 bytes)
+DATA_lista_mosaicos_838C:
+	defb 0a8h,000h,008h,00ah,014h,085h	; 838c
+	defb 0d0h,050h,004h,008h,062h,085h	; 8392
+	defb 098h,0c0h,001h,008h,082h,085h	; 8398
+	defb 0a0h,0c8h,004h,006h,08bh,085h	; 839e
+	defb 0c0h,098h,002h,005h,0a4h,085h	; 83a4
+	defb 0e8h,030h,003h,001h,0afh,085h	; 83aa
+	defb 0f0h,058h,002h,007h,0b3h,085h	; 83b0
+	defb 0a8h,050h,005h,009h,0d5h,083h	; 83b6
+	defb 0e8h,000h,003h,006h,002h,084h	; 83bc
+	defb 0a8h,098h,003h,006h,015h,084h	; 83c2
+	defb 0d0h,090h,006h,006h,028h,084h	; 83c8
+	defb 0c0h,0c0h,008h,008h,04ch,084h	; 83ce
+	defb 0ffh	; 83d4
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_83D5: mosaico de 5 x 9 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (45 bytes)
+;   0x83d5..0x8402  (45 bytes)
+DATA_mosaico_f7_83D5:
+	defb 000h,000h,046h,04bh,04ch,08ch,04dh,04eh,000h,047h,000h,04fh,087h,050h,051h,052h	; 83d5  ..FKL.MN.G.O.PQR
+	defb 088h,053h,054h,055h,056h,057h,058h,059h,05ah,089h,05bh,05ch,05dh,05eh,05fh,060h	; 83e5  .STUVWXYZ.[\]^_`
+	defb 061h,062h,063h,064h,0fah,000h,04ah,065h,086h,066h,067h,048h,0ffh	; 83f5  abcd..Je.fgH.
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8402: mosaico de 3 x 6 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (19 bytes)
+;   0x8402..0x8415  (19 bytes)
+DATA_mosaico_f7_8402:
+	defb 077h,049h,078h,08bh,079h,051h,07ah,07bh,07ch,07dh,07eh,07fh,080h,081h,082h,083h	; 8402  wIx.yQz{|}~.....
+	defb 084h,085h,0ffh	; 8412
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8415: mosaico de 3 x 6 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (19 bytes)
+;   0x8415..0x8428  (19 bytes)
+DATA_mosaico_f7_8415:
+	defb 045h,068h,069h,08ah,06ah,051h,06bh,06ch,06dh,06eh,06fh,070h,071h,072h,073h,074h	; 8415  Ehi.jQklmnopqrst
+	defb 075h,076h,0ffh	; 8425
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8428: mosaico de 6 x 6 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (36 bytes)
+;   0x8428..0x844c  (36 bytes)
+DATA_mosaico_f7_8428:
+	defb 0fah,000h,001h,009h,003h,000h,00eh,017h,00ah,00bh,015h,016h,018h,019h,00ch,00fh	; 8428  ................
+	defb 010h,011h,01bh,01ch,00dh,01ah,01eh,020h,024h,025h,012h,021h,01fh,002h,013h,01dh	; 8438  ....... $%.!....
+	defb 014h,004h,026h,0ffh	; 8448
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_844C: mosaico de 8 x 8 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (65 bytes)
+;   0x844c..0x848d  (65 bytes)
+DATA_mosaico_f7_844C:
+	defb 027h,028h,035h,022h,027h,028h,035h,022h,029h,02ah,040h,02bh,029h,005h,032h,02bh	; 844c  '(5"'(5")*@+).2+
+	defb 036h,02ch,02dh,02eh,036h,033h,007h,02eh,023h,03bh,03ch,03fh,023h,03bh,03ch,03fh	; 845c  6,-.63..#.<?#.<?
+	defb 027h,028h,037h,022h,027h,028h,039h,022h,029h,042h,043h,02bh,029h,041h,008h,02bh	; 846c  '(7"'(9")BC+)A.+
+	defb 038h,02fh,030h,031h,03ah,044h,006h,034h,023h,03bh,03dh,03fh,023h,03bh,03eh,03fh	; 847c  8/01:D.4#.=?#.>?
+	defb 0ffh	; 848c
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_848D: mosaico de 7 x 11 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (52 bytes)
+;   0x848d..0x84c1  (52 bytes)
+DATA_mosaico_f7_848D:
+	defb 04ch,0fbh,046h,047h,052h,0fah,046h,053h,04ah,0fbh,000h,04bh,0fbh,000h,054h,04ah	; 848d  L.FGR.FSJ..K..TJ
+	defb 0fbh,000h,04bh,0fbh,000h,055h,04ah,0fbh,000h,04bh,0fbh,000h,04ah,04ah,0fbh,000h	; 849d  ..K..UJ..K..JJ..
+	defb 04bh,0fbh,000h,04ah,04ah,0fbh,000h,04bh,0fbh,000h,04ah,04dh,0fch,04eh,04fh,050h	; 84ad  K..JJ..K..JM.NOP
+	defb 051h,048h,049h,0ffh	; 84bd
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_84C1: mosaico de 8 x 6 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (47 bytes)
+;   0x84c1..0x84f0  (47 bytes)
+DATA_mosaico_f7_84C1:
+	defb 000h,06ch,06dh,06eh,06fh,070h,071h,088h,096h,097h,08ch,072h,073h,089h,094h,08ah	; 84c1  .lmnopq....rs...
+	defb 098h,074h,075h,08dh,08bh,095h,099h,072h,077h,08eh,09ah,09bh,09ch,08fh,078h,079h	; 84d1  .tu....rw.....xy
+	defb 090h,091h,07ah,07bh,092h,093h,07ch,07dh,000h,000h,07eh,07fh,0fbh,000h,0ffh	; 84e1  ..z{..|}..~....
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_84F0: mosaico de 6 x 2 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (13 bytes)
+;   0x84f0..0x84fd  (13 bytes)
+DATA_mosaico_f7_84F0:
+	defb 080h,081h,082h,083h,084h,085h,086h,087h,080h,081h,082h,083h,0ffh	; 84f0  .............
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_84FD: mosaico de 2 x 7 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (15 bytes)
+;   0x84fd..0x850c  (15 bytes)
+DATA_mosaico_f7_84FD:
+	defb 056h,05fh,060h,061h,058h,059h,000h,057h,06bh,062h,063h,064h,066h,05ah,0ffh	; 84fd  V_`aXY.WkbcdfZ.
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_850C: mosaico de 1 x 7 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (8 bytes)
+;   0x850c..0x8514  (8 bytes)
+DATA_mosaico_f7_850C:
+	defb 069h,067h,068h,05ch,05dh,05eh,06ah,0ffh	; 850c  igh\]^j.
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8514: mosaico de 8 x 10 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (78 bytes)
+;   0x8514..0x8562  (78 bytes)
+DATA_mosaico_f7_8514:
+	defb 000h,000h,0bah,0b4h,0e3h,0e4h,0e5h,0fah,000h,0c6h,09ah,0efh,09eh,09fh,0e9h,0eah	; 8514  ................
+	defb 099h,0bbh,0b1h,08eh,08fh,090h,0a0h,0a1h,0b9h,0a2h,0bch,0c7h,0aeh,091h,0c8h,092h	; 8524  ................
+	defb 0bdh,0cfh,0d0h,0beh,0a6h,0a8h,09dh,094h,0cdh,095h,0ach,0c2h,0c3h,0a3h,0b6h,0a9h	; 8534  ................
+	defb 08dh,096h,0c9h,097h,0abh,0b8h,0d5h,0d6h,0a7h,0aah,09bh,0cbh,098h,093h,0b7h,0d4h	; 8544  ................
+	defb 0a4h,0d1h,0c5h,0afh,09ch,000h,0adh,0cah,0b0h,0c4h,0b2h,0fbh,000h,0ffh	; 8554  ..............
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8562: mosaico de 4 x 8 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); se solapan 2 bloques:
+;   (mosaico_f7_8582 8582-858B); lo leen p01:6D7B (41 bytes)
+;   0x8562..0x858b  (41 bytes)
+DATA_mosaico_f7_8562:
+	defb 0f0h,0f1h,0dah,0b5h,0d7h,0b3h,0dbh,0dch,09ah,0efh,09eh,0e6h,0e7h,0e8h,099h,0bbh	; 8562  ................
+	defb 08fh,090h,0a0h,0a5h,0d3h,0d8h,0bch,0c7h,0c8h,092h,0bdh,0c0h,0d2h,0bfh,0a6h,0a8h	; 8572  ................
+	defb 0f2h,0eeh,0d9h,09fh,0e9h,0eah,0dfh,0f5h,0ffh	; 8582  .........
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_858B: mosaico de 4 x 6 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (25 bytes)
+;   0x858b..0x85a4  (25 bytes)
+DATA_mosaico_f7_858B:
+	defb 0b4h,0b5h,0d7h,0b3h,000h,000h,09eh,0e6h,0e7h,0e8h,099h,0bbh,0e1h,0a5h,0d3h,0d8h	; 858b  ................
+	defb 0e2h,0c7h,0bdh,0c0h,0d2h,0bfh,0a6h,0a8h,0ffh	; 859b  .........
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_85A4: mosaico de 2 x 5 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (11 bytes)
+;   0x85a4..0x85af  (11 bytes)
+DATA_mosaico_f7_85A4:
+	defb 0f3h,0c0h,0d2h,0bfh,0c1h,0ddh,0a5h,0d3h,0d8h,0e0h,0ffh	; 85a4  ...........
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_85AF: mosaico de 3 x 1 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (4 bytes)
+;   0x85af..0x85b3  (4 bytes)
+DATA_mosaico_f7_85AF:
+	defb 0edh,0ech,0ceh,0ffh	; 85af
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_85B3: mosaico de 2 x 7 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (15 bytes)
+;   0x85b3..0x85c2  (15 bytes)
+DATA_mosaico_f7_85B3:
+	defb 0ebh,090h,0deh,0a5h,0d3h,0d8h,0f4h,0cch,092h,0bdh,0c0h,0d2h,0bfh,0a6h,0ffh	; 85b3  ...............
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_85C2: mosaico de 21 x 16 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (286 bytes)
+;   0x85c2..0x86e0  (286 bytes)
+DATA_mosaico_f7_85C2:
+	defb 051h,039h,03ah,03bh,000h,000h,00eh,000h,000h,001h,00fh,0fch,000h,010h,03ch,03dh	; 85c2  Q9:...........<=
+	defb 03eh,03fh,000h,012h,011h,000h,013h,0fah,000h,040h,002h,000h,010h,014h,041h,042h	; 85d2  >?.......@....AB
+	defb 043h,009h,044h,045h,046h,015h,000h,000h,023h,047h,016h,000h,010h,017h,048h,049h	; 85e2  C.DEF...#G....HI
+	defb 04ah,00ah,04bh,04ch,04dh,04eh,04fh,018h,050h,008h,000h,000h,010h,038h,052h,053h	; 85f2  J.KLMNO.P....8RS
+	defb 054h,055h,056h,057h,058h,059h,05ah,05bh,008h,0fah,000h,026h,05ch,05dh,05eh,05fh	; 8602  TUVWXYZ[...&\]^_
+	defb 060h,061h,062h,063h,064h,065h,008h,0fbh,000h,066h,067h,068h,069h,06ah,06bh,06ch	; 8612  `abcde...fghijkl
+	defb 06dh,06eh,06fh,070h,071h,072h,073h,027h,000h,003h,019h,004h,028h,074h,075h,076h	; 8622  mnopqrs'....(tuv
+	defb 077h,078h,079h,07ah,07bh,07ch,07dh,07eh,0fah,000h,029h,07fh,0dfh,081h,082h,083h	; 8632  wxyz{|}~..).....
+	defb 084h,085h,086h,087h,088h,089h,08ah,0fah,000h,025h,08bh,08ch,08dh,08eh,08fh,090h	; 8642  .........%......
+	defb 091h,092h,093h,094h,095h,02bh,0fbh,000h,096h,097h,098h,099h,09ah,09bh,09ch,09dh	; 8652  .....+..........
+	defb 09eh,09fh,01ah,0a0h,0fbh,000h,0a1h,0a2h,0a3h,0a4h,0a5h,0a6h,0a7h,0a8h,0a9h,0aah	; 8662  ................
+	defb 0fdh,000h,0abh,0ach,0adh,0aeh,0afh,0b0h,0b1h,0b2h,0b3h,0b4h,0fdh,000h,0b5h,0b6h	; 8672  ................
+	defb 0b7h,0b8h,0b9h,0bah,0bbh,0bch,0bdh,0beh,0fdh,000h,0bfh,0c0h,0c1h,02ch,0c2h,0c3h	; 8682  .............,..
+	defb 00bh,0c4h,0c5h,0c6h,0fdh,000h,0c7h,0c8h,02dh,000h,02fh,031h,000h,02eh,033h,02ah	; 8692  ........-./1..3*
+	defb 0fch,000h,034h,0c9h,0cah,00ch,0fbh,000h,00dh,0cbh,0cch,0fch,000h,0cdh,0ceh,0cfh	; 86a2  ..4.............
+	defb 0d0h,0fbh,000h,024h,0d1h,0d2h,035h,000h,000h,004h,01bh,0d3h,0d4h,01ch,0fdh,000h	; 86b2  ...$..5.........
+	defb 01dh,0d5h,0d6h,01eh,005h,01fh,0d7h,0d8h,0d9h,030h,0fdh,000h,020h,0dah,0dbh,0dch	; 86c2  .........0.. ...
+	defb 021h,0ddh,006h,000h,036h,007h,0fdh,000h,032h,037h,000h,022h,0deh,0ffh	; 86d2  !...6...27."..
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_86E0: mosaico de 8 x 4 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (33 bytes)
+;   0x86e0..0x8701  (33 bytes)
+DATA_mosaico_f7_86E0:
+	defb 000h,000h,0adh,0aeh,000h,0afh,0b0h,0b1h,0b2h,0b3h,0b4h,0b5h,0ach,0b6h,000h,0b7h	; 86e0  ................
+	defb 000h,000h,0b8h,0b9h,000h,0bah,0bbh,0bch,0bdh,0beh,0bfh,0c0h,0ach,0b6h,000h,0c1h	; 86f0  ................
+	defb 0ffh	; 8700
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8701: mosaico de 4 x 3 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (8 bytes)
+;   0x8701..0x8709  (8 bytes)
+DATA_mosaico_f7_8701:
+	defb 053h,054h,000h,05eh,0feh,000h,075h,0ffh	; 8701  ST.^..u.
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8709: mosaico de 10 x 4 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); se solapan 2 bloques:
+;   (mosaico_f7_8731 8731-8746); lo leen p01:6D7B (61 bytes)
+;   0x8709..0x8746  (61 bytes)
+DATA_mosaico_f7_8709:
+	defb 0c2h,0c3h,0c4h,0a0h,0c5h,0c6h,0c7h,0c8h,0c9h,0a5h,0cah,0aah,0cbh,0cch,0cdh,0abh	; 8709  ................
+	defb 000h,0ceh,000h,09fh,0cfh,0d0h,0d1h,0a1h,0d2h,0d3h,0d4h,0d5h,0d6h,0a6h,0d7h,0a7h	; 8719  ................
+	defb 0d8h,0d9h,0dah,0a7h,000h,0dbh,000h,0a2h,0dch,0ddh,0deh,0a3h,0a8h,0dfh,0e0h,0a4h	; 8729  ................
+	defb 0e1h,0a9h,0e2h,09dh,0e3h,0e4h,0e5h,09dh,000h,0e6h,000h,09eh,0ffh	; 8739  .............
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_f7_8746: mosaico de 1 x 3 caracteres comprimido (p01:6DA5:
+;   0xF7-0xFE repite el siguiente, 0xFF acaba); lo leen p01:6D7B (4 bytes)
+;   0x8746..0x874a  (4 bytes)
+DATA_mosaico_f7_8746:
 	defb 09eh,000h,01ah,0ffh	; 8746
 
 ; ----------------------------------------------------------------------
 ; DATOS dibujo_874A: 63 caracteres de 8x8 a 1 bit por punto (8 bytes cada
-;   uno), ficha 0 de la lista 0x8114 (p00:4D92, p00:4DF5); lo leen p01:6F22,
-;   p01:6DE3, p01:6DCA (504 bytes)
+;   uno), ficha 0 de la lista 0x812A (p00:4D92, p00:4DF5); lo leen p01:6DE3,
+;   p01:6F22, p01:6DCA (504 bytes)
 ;   0x874a..0x8942  (504 bytes)
 DATA_dibujo_874A:
 	defb 030h,030h,030h,030h,030h,078h,078h,048h	; 874a  00000xxH
@@ -507,8 +879,8 @@ DATA_dibujo_874A:
 
 ; ----------------------------------------------------------------------
 ; DATOS dibujo_8942: 5 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno),
-;   ficha 1 de la lista 0x8114 (p00:4D92, p00:4DF5); lo leen p01:6F22,
-;   p01:6DE3, p01:6DCA (40 bytes)
+;   ficha 1 de la lista 0x812A (p00:4D92, p00:4DF5); lo leen p01:6DE3,
+;   p01:6F22, p01:6DCA (40 bytes)
 ;   0x8942..0x896a  (40 bytes)
 DATA_dibujo_8942:
 	defb 030h,060h,060h,060h,0c0h,0c0h,0fch,0fch	; 8942  0```....

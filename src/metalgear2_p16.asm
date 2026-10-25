@@ -667,9 +667,18 @@ L_45B9:
 	ret			;45bd
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x45be..0x45cb  (13 bytes)
-DATA_45BE:
-	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h,035h	; 45be  jd^YTOJFB?.85
+; DATOS sonido_45BE: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72 y 43
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12
+;   bytes)
+;   0x45be..0x45ca  (12 bytes)
+DATA_sonido_45BE:
+	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h	; 45be  jd^YTOJFB?.8
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x45ca..0x45cb  (1 bytes)
+DATA_45CA:
+	defb 035h	; 45ca
 
 ; ======================================================================
 ; CODIGO 0x45cb..0x4cf9  (1838 bytes)
@@ -1587,8 +1596,12 @@ L_4CF4:
 	ret			;4cf8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4cf9..0x4d3a  (65 bytes)
-DATA_4CF9:
+; DATOS sonido_4CF9: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x73 y 55
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (65
+;   bytes)
+;   0x4cf9..0x4d3a  (65 bytes)
+DATA_sonido_4CF9:
 	defb 014h,014h,037h,037h,037h,037h,037h,037h,037h,037h,013h,014h,03bh,016h,03bh,014h	; 4cf9  ..77777777......
 	defb 017h,014h,013h,013h,037h,03bh,015h,013h,014h,013h,015h,013h,013h,013h,013h,015h	; 4d09  ....7...........
 	defb 014h,013h,03bh,014h,015h,015h,015h,015h,015h,014h,013h,013h,015h,015h,014h,015h	; 4d19  ................
@@ -1620,61 +1633,447 @@ L_4D4D:
 	jp (hl)			;4d51
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4d52..0x5035  (739 bytes)
-DATA_4D52:
+; DATOS sonido_4D52: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x06, 0x28, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71 y 44
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (30
+;   bytes)
+;   0x4d52..0x4d70  (30 bytes)
+DATA_sonido_4D52:
 	defb 0b0h,04dh,0b0h,04dh,0b0h,04dh,0b0h,04dh,0b0h,04dh,0b0h,04dh,0b7h,04dh,0c9h,04dh	; 4d52  .M.M.M.M.M.M.M.M
-	defb 0d0h,04dh,0d5h,04dh,0eah,04dh,0ffh,04dh,005h,04eh,00ah,04eh,012h,04eh,037h,04eh	; 4d62  .M.M.M.M.N.N.N7N
-	defb 03ch,04eh,051h,04eh,03ch,04eh,051h,04eh,070h,04eh,09ah,04eh,0aah,04eh,0b6h,04eh	; 4d72  <NQN<NQNpN.N.N.N
+	defb 0d0h,04dh,0d5h,04dh,0eah,04dh,0ffh,04dh,005h,04eh,00ah,04eh,012h,04eh	; 4d62  .M.M.M.M.N.N.N
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x4d70..0x4d72  (2 bytes)
+DATA_4D70:
+	defb 037h,04eh	; 4d70
+
+; ----------------------------------------------------------------------
+; DATOS sonido_4D72: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10 y 136
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12
+;   bytes)
+;   0x4d72..0x4d7e  (12 bytes)
+DATA_sonido_4D72:
+	defb 03ch,04eh,051h,04eh,03ch,04eh,051h,04eh,070h,04eh,09ah,04eh	; 4d72  <NQN<NQNpN.N
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x4d7e..0x4d82  (4 bytes)
+DATA_4D7E:
+	defb 0aah,04eh,0b6h,04eh	; 4d7e
+
+; ----------------------------------------------------------------------
+; DATOS sonido_4D82: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x06, 0x0C, 0x13, 0x16, 0x1C, 0x1D, 0x23, 0x24, 0x26, 0x27 y 89
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (30
+;   bytes)
+;   0x4d82..0x4da0  (30 bytes)
+DATA_sonido_4D82:
 	defb 0c7h,04eh,0d5h,04eh,0dfh,04eh,0e7h,04eh,02eh,04fh,037h,04fh,046h,04fh,050h,04fh	; 4d82  .N.N.N.N.O7OFOPO
-	defb 055h,04fh,08dh,04fh,0d6h,04fh,0ebh,04fh,000h,050h,019h,050h,020h,050h,025h,050h	; 4d92  UO.O.O.O.P.P P%P
-	defb 02fh,050h,04dh,050h,057h,050h,05eh,050h,077h,050h,094h,050h,097h,050h,01ah,0e6h	; 4da2  /PMPWP^PwP.P.P..
-	defb 00fh,0ddh,077h,017h,0c9h,0ddh,036h,03ah,020h,013h,01ah,0ddh,077h,037h,013h,01ah	; 4db2  ..w...6: ...w7..
-	defb 0ddh,077h,038h,0ddh,077h,039h,0c9h,0ddh,036h,03ah,0a0h,0c3h,0bbh,04dh,0afh,0ddh	; 4dc2  .w8.w9..6:...M..
-	defb 077h,03ah,0c9h,013h,01ah,0feh,0d7h,0cah,0e3h,04dh,0ddh,036h,03ah,038h,0c3h,0bbh	; 4dd2  w:.......M.6:8..
-	defb 04dh,0ddh,036h,03ah,0bch,0c3h,0bbh,04dh,0ddh,036h,03ah,002h,013h,01ah,0feh,0d6h	; 4de2  M.6:...M.6:.....
-	defb 0cah,0f9h,04dh,0ddh,0cbh,03ah,0feh,013h,01ah,0ddh,077h,037h,0c9h,013h,01ah,0ddh	; 4df2  ..M..:....w7....
-	defb 077h,021h,0c9h,0afh,0ddh,077h,021h,0c9h,0e5h,021h,0d1h,0d7h,0cbh,0d6h,0e1h,0c9h	; 4e02  w!...w!..!......
-	defb 013h,01ah,0ddh,077h,02ah,013h,01ah,0e6h,0f0h,00fh,00fh,00fh,00fh,0ddh,077h,016h	; 4e12  ...w*.........w.
-	defb 01ah,0e6h,00fh,0ddh,077h,026h,013h,01ah,0ddh,077h,028h,0e6h,0f0h,00fh,00fh,00fh	; 4e22  ....w&...w(.....
-	defb 00fh,0ddh,077h,027h,0c9h,0ddh,0cbh,010h,0beh,0c9h,0ddh,0cbh,010h,0beh,01ah,0e6h	; 4e32  ..w'............
-	defb 003h,0ddh,077h,00fh,047h,013h,01ah,0ddh,077h,014h,078h,0b7h,0c0h,01bh,0c9h,03ah	; 4e42  ..w.G...w.x....:
-	defb 044h,0c6h,0feh,004h,03ah,047h,0c6h,0c2h,066h,04eh,0cbh,0c7h,0cbh,08fh,032h,047h	; 4e52  D...:G..fN....2G
-	defb 0c6h,0c3h,03ch,04eh,0cbh,0d7h,0cbh,09fh,032h,047h,0c6h,0c3h,03ch,04eh,013h,01ah	; 4e62  ..<N....2G..<N..
-	defb 0e6h,01fh,047h,03ah,044h,0c6h,0feh,004h,078h,0c2h,08ch,04eh,032h,045h,0c6h,03ah	; 4e72  ..G:D...x..N2E.:
-	defb 047h,0c6h,0cbh,0c7h,0cbh,08fh,032h,047h,0c6h,0c9h,032h,046h,0c6h,03ah,047h,0c6h	; 4e82  G.....2G..2F.:G.
-	defb 0cbh,0d7h,0cbh,09fh,032h,047h,0c6h,0c9h,013h,0ddh,0cbh,00fh,09eh,01ah,032h,048h	; 4e92  ....2G........2H
-	defb 0c6h,021h,047h,0c6h,07eh,0cbh,0efh,077h,013h,01ah,032h,04ah,0c6h,021h,047h,0c6h	; 4ea2  .!G.~..w..2J.!G.
-	defb 07eh,0cbh,0f7h,077h,013h,01ah,032h,049h,0c6h,021h,047h,0c6h,07eh,0cbh,0ffh,077h	; 4eb2  ~..w..2I.!G.~..w
-	defb 0ddh,0cbh,00fh,0d6h,0c9h,021h,047h,0c6h,0afh,077h,0ddh,07eh,00fh,0e6h,0f3h,0ddh	; 4ec2  .....!G..w.~....
-	defb 077h,00fh,0c9h,013h,01ah,0ddh,077h,015h,0afh,0ddh,077h,01fh,0c9h,013h,01ah,0e6h	; 4ed2  w.....w...w.....
-	defb 00fh,0ddh,077h,016h,0c9h,013h,0ddh,036h,02ah,000h,0ddh,07eh,02bh,0e6h,080h,0f6h	; 4ee2  ..w....6*..~+...
-	defb 001h,0ddh,077h,02bh,01ah,0e6h,0f0h,00fh,00fh,00fh,00fh,0feh,008h,0dah,00ch,04fh	; 4ef2  ..w+...........O
-	defb 0ddh,0cbh,02bh,0ceh,0ddh,0cbh,02bh,0eeh,0cbh,09fh,0ddh,077h,02ch,01ah,0e6h,00fh	; 4f02  ..+...+....w,...
-	defb 0feh,008h,0dah,01dh,04fh,0ddh,0cbh,02bh,0e6h,0cbh,09fh,0ddh,077h,022h,013h,01ah	; 4f12  ....O..+....w"..
-	defb 0e6h,0f0h,00fh,00fh,00fh,00fh,0ddh,077h,023h,0c3h,022h,04eh,0ddh,07eh,02bh,0e6h	; 4f22  .......w#."N.~+.
-	defb 0c0h,0ddh,077h,02bh,0c9h,013h,01ah,0ddh,077h,02eh,0e6h,0f0h,00fh,00fh,00fh,00fh	; 4f32  ..w+....w.......
-	defb 0ddh,077h,02dh,0c9h,013h,01ah,0ddh,077h,036h,0ddh,0cbh,010h,0ceh,0c9h,0ddh,0cbh	; 4f42  .w-....w6.......
-	defb 010h,08eh,0c9h,013h,01ah,0ddh,077h,031h,0b7h,0c8h,0ddh,0cbh,031h,0feh,013h,01ah	; 4f52  ......w1....1...
-	defb 0cbh,03fh,0cbh,03fh,0cbh,03fh,0cbh,03fh,0b7h,0cah,07dh,04fh,03dh,0cah,087h,04fh	; 4f62  .?.?.?.?..}O=..O
-	defb 04fh,0ddh,07eh,00eh,0ddh,086h,015h,00dh,0c2h,076h,04fh,0ddh,077h,032h,01ah,0e6h	; 4f72  O.~......vO.w2..
-	defb 00fh,0ddh,077h,033h,0c9h,0ddh,07eh,015h,0c3h,07dh,04fh,0ddh,0cbh,03bh,0a6h,03eh	; 4f82  ..w3..~..}O....>
-	defb 001h,032h,08bh,0c6h,013h,01ah,0cbh,07fh,0cah,0a6h,04fh,0cbh,0bfh,04fh,03eh,005h	; 4f92  .2........O..O>.
-	defb 032h,08bh,0c6h,079h,0cdh,0cdh,04fh,07eh,032h,083h,0c6h,023h,07eh,032h,084h,0c6h	; 4fa2  2..y..O~2..#~2..
-	defb 013h,01ah,0cdh,0cdh,04fh,07eh,032h,085h,0c6h,023h,07eh,032h,086h,0c6h,013h,01ah	; 4fb2  ....O~2..#~2....
-	defb 0e6h,00fh,032h,088h,0c6h,013h,01ah,032h,08ah,0c6h,0c9h,021h,03eh,058h,087h,085h	; 4fc2  ..2....2...!>X..
-	defb 06fh,0d0h,024h,0c9h,013h,01ah,0b7h,03ah,08bh,0c6h,0cah,0e5h,04fh,0cbh,0dfh,032h	; 4fd2  o.$....:....O..2
-	defb 08bh,0c6h,0c9h,0cbh,09fh,032h,08bh,0c6h,0c9h,013h,01ah,0b7h,03ah,08bh,0c6h,0cah	; 4fe2  .....2......:...
-	defb 0fah,04fh,0cbh,0f7h,032h,08bh,0c6h,0c9h,0cbh,0b7h,032h,08bh,0c6h,0c9h,0ddh,0cbh	; 4ff2  .O..2.....2.....
-	defb 03bh,0e6h,013h,01ah,0ddh,077h,03ch,013h,01ah,0ddh,077h,03dh,013h,01ah,0ddh,077h	; 5002  .....w<...w=...w
-	defb 03eh,013h,01ah,0ddh,077h,03fh,0c9h,0ddh,073h,007h,0ddh,072h,008h,0c9h,0afh,032h	; 5012  >...w?..s..r...2
-	defb 08bh,0c6h,0c9h,0ddh,0cbh,010h,0feh,013h,01ah,0ddh,077h,020h,0c9h,0ddh,0cbh,03bh	; 5022  ..........w ....
-	defb 0a6h,013h,01ah	; 5032
+	defb 055h,04fh,08dh,04fh,0d6h,04fh,0ebh,04fh,000h,050h,019h,050h,020h,050h	; 4d92  UO.O.O.O.P.P P
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x4da0..0x4da2  (2 bytes)
+DATA_4DA0:
+	defb 025h,050h	; 4da0
+
+; ----------------------------------------------------------------------
+; DATOS sonido_4DA2: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F y 150
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14
+;   bytes)
+;   0x4da2..0x4db0  (14 bytes)
+DATA_sonido_4DA2:
+	defb 02fh,050h,04dh,050h,057h,050h,05eh,050h,077h,050h,094h,050h,097h,050h	; 4da2  /PMPWP^PwP.P.P
 
 ; ======================================================================
-; CODIGO 0x5035..0x504d  (24 bytes)
+; CODIGO 0x4db0..0x51b4  (1028 bytes)
 ; ======================================================================
 
 
+L_4DB0:
+	ld a,(de)			;4db0
+	and 00fh		;4db1
+	ld (ix+017h),a		;4db3
+	ret			;4db6
+L_4DB7:
+	ld (ix+03ah),020h		;4db7
+L_4DBB:
+	inc de			;4dbb
+	ld a,(de)			;4dbc
+	ld (ix+037h),a		;4dbd
+	inc de			;4dc0
+	ld a,(de)			;4dc1
+	ld (ix+038h),a		;4dc2
+	ld (ix+039h),a		;4dc5
+	ret			;4dc8
+L_4DC9:
+	ld (ix+03ah),0a0h		;4dc9
+	jp L_4DBB		;4dcd
+L_4DD0:
+	xor a			;4dd0
+	ld (ix+03ah),a		;4dd1
+	ret			;4dd4
+L_4DD5:
+	inc de			;4dd5
+	ld a,(de)			;4dd6
+	cp 0d7h		;4dd7
+	jp z,L_4DE3		;4dd9
+	ld (ix+03ah),038h		;4ddc
+	jp L_4DBB		;4de0
+L_4DE3:
+	ld (ix+03ah),0bch		;4de3
+	jp L_4DBB		;4de7
+L_4DEA:
+	ld (ix+03ah),002h		;4dea
+	inc de			;4dee
+	ld a,(de)			;4def
+	cp 0d6h		;4df0
+	jp z,L_4DF9		;4df2
+	set 7,(ix+03ah)		;4df5
+L_4DF9:
+	inc de			;4df9
+	ld a,(de)			;4dfa
+	ld (ix+037h),a		;4dfb
+	ret			;4dfe
+L_4DFF:
+	inc de			;4dff
+	ld a,(de)			;4e00
+	ld (ix+021h),a		;4e01
+	ret			;4e04
+L_4E05:
+	xor a			;4e05
+	ld (ix+021h),a		;4e06
+	ret			;4e09
+L_4E0A:
+	push hl			;4e0a
+	ld hl,0d7d1h		;4e0b
+	set 2,(hl)		;4e0e
+	pop hl			;4e10
+	ret			;4e11
+L_4E12:
+	inc de			;4e12
+	ld a,(de)			;4e13
+	ld (ix+02ah),a		;4e14
+	inc de			;4e17
+	ld a,(de)			;4e18
+	and 0f0h		;4e19
+	rrca			;4e1b
+	rrca			;4e1c
+	rrca			;4e1d
+	rrca			;4e1e
+	ld (ix+016h),a		;4e1f
+L_4E22:
+	ld a,(de)			;4e22
+	and 00fh		;4e23
+	ld (ix+026h),a		;4e25
+	inc de			;4e28
+	ld a,(de)			;4e29
+	ld (ix+028h),a		;4e2a
+	and 0f0h		;4e2d
+	rrca			;4e2f
+	rrca			;4e30
+	rrca			;4e31
+	rrca			;4e32
+	ld (ix+027h),a		;4e33
+	ret			;4e36
+L_4E37:
+	res 7,(ix+010h)		;4e37
+	ret			;4e3b
+L_4E3C:
+	res 7,(ix+010h)		;4e3c
+	ld a,(de)			;4e40
+	and 003h		;4e41
+	ld (ix+00fh),a		;4e43
+	ld b,a			;4e46
+	inc de			;4e47
+	ld a,(de)			;4e48
+	ld (ix+014h),a		;4e49
+	ld a,b			;4e4c
+	or a			;4e4d
+	ret nz			;4e4e
+	dec de			;4e4f
+	ret			;4e50
+L_4E51:
+	ld a,(0c644h)		;4e51
+	cp 004h		;4e54
+	ld a,(0c647h)		;4e56
+	jp nz,L_4E66		;4e59
+	set 0,a		;4e5c
+	res 1,a		;4e5e
+	ld (0c647h),a		;4e60
+	jp L_4E3C		;4e63
+L_4E66:
+	set 2,a		;4e66
+	res 3,a		;4e68
+	ld (0c647h),a		;4e6a
+	jp L_4E3C		;4e6d
+L_4E70:
+	inc de			;4e70
+	ld a,(de)			;4e71
+	and 01fh		;4e72
+	ld b,a			;4e74
+	ld a,(0c644h)		;4e75
+	cp 004h		;4e78
+	ld a,b			;4e7a
+	jp nz,L_4E8C		;4e7b
+	ld (0c645h),a		;4e7e
+	ld a,(0c647h)		;4e81
+	set 0,a		;4e84
+	res 1,a		;4e86
+	ld (0c647h),a		;4e88
+	ret			;4e8b
+L_4E8C:
+	ld (0c646h),a		;4e8c
+	ld a,(0c647h)		;4e8f
+	set 2,a		;4e92
+	res 3,a		;4e94
+	ld (0c647h),a		;4e96
+	ret			;4e99
+L_4E9A:
+	inc de			;4e9a
+	res 3,(ix+00fh)		;4e9b
+	ld a,(de)			;4e9f
+	ld (0c648h),a		;4ea0
+	ld hl,0c647h		;4ea3
+	ld a,(hl)			;4ea6
+	set 5,a		;4ea7
+	ld (hl),a			;4ea9
+L_4EAA:
+	inc de			;4eaa
+	ld a,(de)			;4eab
+	ld (0c64ah),a		;4eac
+	ld hl,0c647h		;4eaf
+	ld a,(hl)			;4eb2
+	set 6,a		;4eb3
+	ld (hl),a			;4eb5
+L_4EB6:
+	inc de			;4eb6
+	ld a,(de)			;4eb7
+	ld (0c649h),a		;4eb8
+	ld hl,0c647h		;4ebb
+	ld a,(hl)			;4ebe
+	set 7,a		;4ebf
+	ld (hl),a			;4ec1
+	set 2,(ix+00fh)		;4ec2
+	ret			;4ec6
+L_4EC7:
+	ld hl,0c647h		;4ec7
+	xor a			;4eca
+	ld (hl),a			;4ecb
+	ld a,(ix+00fh)		;4ecc
+	and 0f3h		;4ecf
+	ld (ix+00fh),a		;4ed1
+	ret			;4ed4
+L_4ED5:
+	inc de			;4ed5
+	ld a,(de)			;4ed6
+	ld (ix+015h),a		;4ed7
+	xor a			;4eda
+	ld (ix+01fh),a		;4edb
+	ret			;4ede
+L_4EDF:
+	inc de			;4edf
+	ld a,(de)			;4ee0
+	and 00fh		;4ee1
+	ld (ix+016h),a		;4ee3
+	ret			;4ee6
+L_4EE7:
+	inc de			;4ee7
+	ld (ix+02ah),000h		;4ee8
+	ld a,(ix+02bh)		;4eec
+	and 080h		;4eef
+	or 001h		;4ef1
+	ld (ix+02bh),a		;4ef3
+	ld a,(de)			;4ef6
+	and 0f0h		;4ef7
+	rrca			;4ef9
+	rrca			;4efa
+	rrca			;4efb
+	rrca			;4efc
+	cp 008h		;4efd
+	jp c,L_4F0C		;4eff
+	set 1,(ix+02bh)		;4f02
+	set 5,(ix+02bh)		;4f06
+	res 3,a		;4f0a
+L_4F0C:
+	ld (ix+02ch),a		;4f0c
+	ld a,(de)			;4f0f
+	and 00fh		;4f10
+	cp 008h		;4f12
+	jp c,L_4F1D		;4f14
+	set 4,(ix+02bh)		;4f17
+	res 3,a		;4f1b
+L_4F1D:
+	ld (ix+022h),a		;4f1d
+	inc de			;4f20
+	ld a,(de)			;4f21
+	and 0f0h		;4f22
+	rrca			;4f24
+	rrca			;4f25
+	rrca			;4f26
+	rrca			;4f27
+	ld (ix+023h),a		;4f28
+	jp L_4E22		;4f2b
+L_4F2E:
+	ld a,(ix+02bh)		;4f2e
+	and 0c0h		;4f31
+	ld (ix+02bh),a		;4f33
+	ret			;4f36
+L_4F37:
+	inc de			;4f37
+	ld a,(de)			;4f38
+	ld (ix+02eh),a		;4f39
+	and 0f0h		;4f3c
+	rrca			;4f3e
+	rrca			;4f3f
+	rrca			;4f40
+	rrca			;4f41
+	ld (ix+02dh),a		;4f42
+	ret			;4f45
+L_4F46:
+	inc de			;4f46
+	ld a,(de)			;4f47
+	ld (ix+036h),a		;4f48
+	set 1,(ix+010h)		;4f4b
+	ret			;4f4f
+L_4F50:
+	res 1,(ix+010h)		;4f50
+	ret			;4f54
+L_4F55:
+	inc de			;4f55
+	ld a,(de)			;4f56
+	ld (ix+031h),a		;4f57
+	or a			;4f5a
+	ret z			;4f5b
+	set 7,(ix+031h)		;4f5c
+	inc de			;4f60
+	ld a,(de)			;4f61
+	srl a		;4f62
+	srl a		;4f64
+	srl a		;4f66
+	srl a		;4f68
+	or a			;4f6a
+	jp z,L_4F7D		;4f6b
+	dec a			;4f6e
+	jp z,L_4F87		;4f6f
+	ld c,a			;4f72
+	ld a,(ix+00eh)		;4f73
+L_4F76:
+	add a,(ix+015h)		;4f76
+	dec c			;4f79
+	jp nz,L_4F76		;4f7a
+L_4F7D:
+	ld (ix+032h),a		;4f7d
+	ld a,(de)			;4f80
+	and 00fh		;4f81
+	ld (ix+033h),a		;4f83
+	ret			;4f86
+L_4F87:
+	ld a,(ix+015h)		;4f87
+	jp L_4F7D		;4f8a
+L_4F8D:
+	res 4,(ix+03bh)		;4f8d
+	ld a,001h		;4f91
+	ld (0c68bh),a		;4f93
+	inc de			;4f96
+	ld a,(de)			;4f97
+	bit 7,a		;4f98
+	jp z,L_4FA6		;4f9a
+	res 7,a		;4f9d
+	ld c,a			;4f9f
+	ld a,005h		;4fa0
+	ld (0c68bh),a		;4fa2
+	ld a,c			;4fa5
+L_4FA6:
+	call L_4FCD		;4fa6
+	ld a,(hl)			;4fa9
+	ld (0c683h),a		;4faa
+	inc hl			;4fad
+	ld a,(hl)			;4fae
+	ld (0c684h),a		;4faf
+	inc de			;4fb2
+	ld a,(de)			;4fb3
+	call L_4FCD		;4fb4
+	ld a,(hl)			;4fb7
+	ld (0c685h),a		;4fb8
+	inc hl			;4fbb
+	ld a,(hl)			;4fbc
+	ld (0c686h),a		;4fbd
+	inc de			;4fc0
+	ld a,(de)			;4fc1
+	and 00fh		;4fc2
+	ld (0c688h),a		;4fc4
+	inc de			;4fc7
+	ld a,(de)			;4fc8
+	ld (0c68ah),a		;4fc9
+	ret			;4fcc
+L_4FCD:
+	ld hl,0583eh		;4fcd
+	add a,a			;4fd0
+	add a,l			;4fd1
+	ld l,a			;4fd2
+	ret nc			;4fd3
+	inc h			;4fd4
+	ret			;4fd5
+L_4FD6:
+	inc de			;4fd6
+	ld a,(de)			;4fd7
+	or a			;4fd8
+	ld a,(0c68bh)		;4fd9
+	jp z,L_4FE5		;4fdc
+	set 3,a		;4fdf
+	ld (0c68bh),a		;4fe1
+	ret			;4fe4
+L_4FE5:
+	res 3,a		;4fe5
+	ld (0c68bh),a		;4fe7
+	ret			;4fea
+L_4FEB:
+	inc de			;4feb
+	ld a,(de)			;4fec
+	or a			;4fed
+	ld a,(0c68bh)		;4fee
+	jp z,L_4FFA		;4ff1
+	set 6,a		;4ff4
+	ld (0c68bh),a		;4ff6
+	ret			;4ff9
+L_4FFA:
+	res 6,a		;4ffa
+	ld (0c68bh),a		;4ffc
+	ret			;4fff
+L_5000:
+	set 4,(ix+03bh)		;5000
+	inc de			;5004
+	ld a,(de)			;5005
+	ld (ix+03ch),a		;5006
+	inc de			;5009
+	ld a,(de)			;500a
+	ld (ix+03dh),a		;500b
+	inc de			;500e
+	ld a,(de)			;500f
+	ld (ix+03eh),a		;5010
+	inc de			;5013
+	ld a,(de)			;5014
+	ld (ix+03fh),a		;5015
+	ret			;5018
+L_5019:
+	ld (ix+007h),e		;5019
+	ld (ix+008h),d		;501c
+	ret			;501f
+L_5020:
+	xor a			;5020
+	ld (0c68bh),a		;5021
+	ret			;5024
+L_5025:
+	set 7,(ix+010h)		;5025
+	inc de			;5029
+	ld a,(de)			;502a
+	ld (ix+020h),a		;502b
+	ret			;502e
+L_502F:
+	res 4,(ix+03bh)		;502f
+	inc de			;5033
+	ld a,(de)			;5034
 L_5035:
 	set 7,(ix+02bh)		;5035
 	ld hl,0583eh		;5039
@@ -1690,24 +2089,80 @@ L_5043:
 	ld a,(hl)			;5048
 	ld (ix+01ch),a		;5049
 	ret			;504c
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x504d..0x50cc  (127 bytes)
-DATA_504D:
-	defb 0cdh,084h,050h,0ddh,075h,009h,0ddh,074h,00ah,0c9h,0ddh,05eh,009h,0ddh,056h,00ah	; 504d  ..P.u..t...^..V.
-	defb 0c9h,013h,0ddh,046h,005h,004h,01ah,0b8h,0cah,072h,050h,0ddh,070h,005h,0ddh,05eh	; 505d  ...F.....rP.p..^
-	defb 007h,0ddh,056h,008h,0c9h,0ddh,036h,005h,000h,0c9h,013h,0ddh,046h,006h,004h,01ah	; 506d  ..V...6.....F...
-	defb 0b8h,0cah,08dh,050h,0ddh,070h,006h,013h,01ah,06fh,013h,01ah,067h,0ebh,01bh,0c9h	; 507d  ...P.p...o..g...
-	defb 013h,013h,0ddh,036h,006h,000h,0c9h,0c3h,084h,050h,013h,0ddh,046h,00bh,01ah,0ddh	; 508d  ...6.....P..F...
-	defb 077h,00bh,0feh,001h,078h,0cah,0bch,050h,0feh,001h,0c0h,0ddh,07eh,010h,0ddh,077h	; 509d  w...x..P....~..w
-	defb 01dh,0ddh,07eh,02bh,0ddh,077h,01eh,0afh,0ddh,077h,010h,0ddh,077h,02bh,0c9h,0feh	; 50ad  ..~+.w...w..w+..
-	defb 001h,0c8h,0ddh,07eh,01dh,0ddh,077h,010h,0ddh,07eh,01eh,0ddh,077h,02bh,0c9h	; 50bd  ...~..w..~..w+.
-
-; ======================================================================
-; CODIGO 0x50cc..0x51b4  (232 bytes)
-; ======================================================================
-
-
+L_504D:
+	call L_5084		;504d
+	ld (ix+009h),l		;5050
+	ld (ix+00ah),h		;5053
+	ret			;5056
+L_5057:
+	ld e,(ix+009h)		;5057
+	ld d,(ix+00ah)		;505a
+	ret			;505d
+L_505E:
+	inc de			;505e
+	ld b,(ix+005h)		;505f
+	inc b			;5062
+	ld a,(de)			;5063
+	cp b			;5064
+	jp z,L_5072		;5065
+	ld (ix+005h),b		;5068
+	ld e,(ix+007h)		;506b
+	ld d,(ix+008h)		;506e
+	ret			;5071
+L_5072:
+	ld (ix+005h),000h		;5072
+	ret			;5076
+L_5077:
+	inc de			;5077
+	ld b,(ix+006h)		;5078
+	inc b			;507b
+	ld a,(de)			;507c
+	cp b			;507d
+	jp z,L_508D		;507e
+	ld (ix+006h),b		;5081
+L_5084:
+	inc de			;5084
+	ld a,(de)			;5085
+	ld l,a			;5086
+	inc de			;5087
+	ld a,(de)			;5088
+	ld h,a			;5089
+	ex de,hl			;508a
+	dec de			;508b
+	ret			;508c
+L_508D:
+	inc de			;508d
+	inc de			;508e
+	ld (ix+006h),000h		;508f
+	ret			;5093
+L_5094:
+	jp L_5084		;5094
+L_5097:
+	inc de			;5097
+	ld b,(ix+00bh)		;5098
+	ld a,(de)			;509b
+	ld (ix+00bh),a		;509c
+	cp 001h		;509f
+	ld a,b			;50a1
+	jp z,L_50BC		;50a2
+	cp 001h		;50a5
+	ret nz			;50a7
+	ld a,(ix+010h)		;50a8
+	ld (ix+01dh),a		;50ab
+	ld a,(ix+02bh)		;50ae
+	ld (ix+01eh),a		;50b1
+	xor a			;50b4
+	ld (ix+010h),a		;50b5
+	ld (ix+02bh),a		;50b8
+	ret			;50bb
+L_50BC:
+	cp 001h		;50bc
+	ret z			;50be
+	ld a,(ix+01dh)		;50bf
+	ld (ix+010h),a		;50c2
+	ld a,(ix+01eh)		;50c5
+	ld (ix+02bh),a		;50c8
+	ret			;50cb
 L_50CC:
 	call L_50E7		;50cc
 	call L_50FB		;50cf
@@ -1835,9 +2290,25 @@ L_51AD:
 	ret			;51b3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x51b4..0x51c0  (12 bytes)
-DATA_51B4:
-	defb 089h,081h,088h,080h,092h,082h,090h,080h,0a4h,084h,0a0h,080h	; 51b4  ............
+; DATOS sonido_51B4: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A y 160
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (7 bytes)
+;   0x51b4..0x51bb  (7 bytes)
+DATA_sonido_51B4:
+	defb 089h,081h,088h,080h,092h,082h,090h	; 51b4
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x51bb..0x51bc  (1 bytes)
+DATA_51BB:
+	defb 080h	; 51bb
+
+; ----------------------------------------------------------------------
+; DATOS sonido_51BC: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A y 160
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+;   0x51bc..0x51c0  (4 bytes)
+DATA_sonido_51BC:
+	defb 0a4h,084h,0a0h,080h	; 51bc
 
 ; ======================================================================
 ; CODIGO 0x51c0..0x5486  (710 bytes)
@@ -2213,14 +2684,59 @@ L_547E:
 	ret			;5485
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5486..0x6000  (2938 bytes)
-DATA_5486:
+; DATOS sonido_5486: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x74, 0x76, 0x77 y 20
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (16
+;   bytes)
+;   0x5486..0x5496  (16 bytes)
+DATA_sonido_5486:
 	defb 0e6h,054h,0efh,054h,008h,055h,01dh,055h,032h,055h,047h,055h,060h,055h,084h,055h	; 5486  .T.T.U.U2UGU`U.U
-	defb 095h,055h,0beh,055h,0d4h,055h,0f2h,055h,014h,056h,035h,056h,053h,056h,06ch,056h	; 5496  .U.U.U.U.V5VSVlV
-	defb 085h,056h,0a0h,056h,0bdh,056h,0deh,056h,0ffh,056h,020h,057h,041h,057h,041h,057h	; 54a6  .V.V.V.V.V WAWAW
-	defb 042h,057h,042h,057h,042h,057h,042h,057h,042h,057h,042h,057h,042h,057h,042h,057h	; 54b6  BWBWBWBWBWBWBWBW
-	defb 042h,057h,042h,057h,042h,057h,042h,057h,043h,057h,049h,057h,04fh,057h,063h,057h	; 54c6  BWBWBWBWCWIWOWcW
-	defb 082h,057h,095h,057h,0a8h,057h,0bdh,057h,0d2h,057h,0eeh,057h,00ah,058h,019h,058h	; 54d6  .W.W.W.W.W.W.X.X
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5496..0x5498  (2 bytes)
+DATA_5496:
+	defb 095h,055h	; 5496
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5498: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6A, 0x6B, 0x6F, 0x70, 0x71, 0x72, 0x73, 0x74, 0x76, 0x77 y 20
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (8 bytes)
+;   0x5498..0x54a0  (8 bytes)
+DATA_sonido_5498:
+	defb 0beh,055h,0d4h,055h,0f2h,055h,014h,056h	; 5498  .U.U.U.V
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x54a0..0x54a4  (4 bytes)
+DATA_54A0:
+	defb 035h,056h,053h,056h	; 54a0
+
+; ----------------------------------------------------------------------
+; DATOS sonido_54A4: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6D, 0x6E, 0x71, 0x73, 0x76, 0x7A, 0x7B, 0x82, 0x88, 0x89 y 9 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14 bytes)
+;   0x54a4..0x54b2  (14 bytes)
+DATA_sonido_54A4:
+	defb 06ch,056h,085h,056h,0a0h,056h,0bdh,056h,0deh,056h,0ffh,056h,020h,057h	; 54a4  lV.V.V.V.V.V W
+
+; ----------------------------------------------------------------------
+; DATOS resto_54B2: lo apuntan con el banco puesto p16:4698 (0x54B6), p16:469C
+;   (0x54B6), p16:46A7 (0x54CE), p16:46AB (0x54CE); el tamano es lo que hay
+;   hasta lo siguiente, no sale de recorrerlo; lo leen p16:4698, p16:469C,
+;   p16:46A7, p16:46AB (52 bytes)
+;   0x54b2..0x54e6  (52 bytes)
+DATA_resto_54B2:
+	defb 041h,057h,041h,057h,042h,057h,042h,057h,042h,057h,042h,057h,042h,057h,042h,057h	; 54b2  AWAWBWBWBWBWBWBW
+	defb 042h,057h,042h,057h,042h,057h,042h,057h,042h,057h,042h,057h,043h,057h,049h,057h	; 54c2  BWBWBWBWBWBWCWIW
+	defb 04fh,057h,063h,057h,082h,057h,095h,057h,0a8h,057h,0bdh,057h,0d2h,057h,0eeh,057h	; 54d2  OWcW.W.W.W.W.W.W
+	defb 00ah,058h,019h,058h	; 54e2
+
+; ----------------------------------------------------------------------
+; DATOS sonido_54E6: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x74, 0x76, 0x77 y 20
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (175
+;   bytes)
+;   0x54e6..0x5595  (175 bytes)
+DATA_sonido_54E6:
 	defb 0e3h,001h,0e4h,000h,070h,00bh,050h,00ah,0ffh,0e3h,001h,0e4h,000h,070h,00ah,050h	; 54e6  ....p.P......p.P
 	defb 009h,0e2h,008h,000h,000h,0e3h,001h,010h,009h,0e2h,008h,000h,000h,0e3h,001h,000h	; 54f6  ................
 	defb 009h,0ffh,0e3h,001h,0e4h,003h,080h,00bh,0e3h,004h,0e4h,001h,060h,00ah,050h,00ah	; 5506  ............`.P.
@@ -2231,171 +2747,603 @@ DATA_5486:
 	defb 006h,005h,004h,003h,002h,002h,001h,001h,000h,0ffh,0e2h,001h,0e5h,00ah,000h,012h	; 5556  ................
 	defb 0c4h,000h,0e8h,0e1h,001h,0e4h,008h,009h,008h,007h,006h,005h,0e4h,00ah,0e1h,002h	; 5566  ................
 	defb 006h,005h,004h,003h,002h,001h,000h,0e1h,006h,0e4h,00bh,001h,000h,0ffh,0e2h,001h	; 5576  ................
-	defb 0a1h,080h,0e1h,001h,0e4h,004h,007h,006h,005h,004h,003h,002h,001h,000h,0ffh,0e2h	; 5586  ................
-	defb 001h,0e5h,00ah,000h,060h,000h,000h,0e8h,0e1h,001h,0e4h,008h,009h,0e3h,002h,0e4h	; 5596  ....`...........
-	defb 005h,070h,00eh,060h,00dh,050h,00ch,040h,00bh,030h,00ah,020h,009h,010h,008h,0e4h	; 55a6  .p.`.P.@.0. ....
-	defb 002h,020h,00bh,010h,00ah,000h,009h,0ffh,0e2h,002h,0e5h,009h,000h,0a0h,0a2h,080h	; 55b6  . ..............
-	defb 0e1h,001h,0e4h,008h,006h,0e4h,003h,005h,004h,003h,002h,001h,000h,0ffh,0e2h,001h	; 55c6  ................
-	defb 0e5h,008h,001h,000h,000h,001h,0e8h,064h,000h,054h,080h,045h,000h,0e2h,003h,005h	; 55d6  .......d.T.E....
-	defb 000h,0e2h,001h,004h,000h,004h,080h,005h,000h,006h,000h,0ffh,0e2h,001h,0e5h,008h	; 55e6  ................
-	defb 001h,080h,097h,000h,098h,000h,0e8h,0e2h,001h,064h,000h,054h,080h,045h,000h,0e2h	; 55f6  .........d.T.E..
-	defb 003h,005h,000h,0e2h,001h,004h,000h,004h,080h,005h,000h,006h,000h,0ffh,0e2h,001h	; 5606  ................
-	defb 091h,0c0h,0e1h,001h,0e4h,004h,007h,006h,005h,004h,003h,0e1h,002h,0e4h,003h,004h	; 5616  ................
-	defb 003h,002h,001h,0e4h,002h,002h,001h,000h,0e1h,003h,0e4h,001h,001h,000h,0ffh,0e2h	; 5626  ................
-	defb 001h,080h,046h,0e1h,001h,0e4h,001h,009h,008h,007h,006h,005h,004h,003h,002h,001h	; 5636  ..F.............
-	defb 0e1h,003h,004h,003h,002h,001h,0e1h,00ah,0e4h,000h,001h,000h,0ffh,0e2h,001h,0a1h	; 5646  ................
-	defb 02ah,091h,04ah,081h,055h,071h,060h,061h,06ah,051h,075h,041h,080h,031h,08ah,021h	; 5656  *.J.Uq`ajQuA.1.!
-	defb 095h,011h,0a0h,001h,0b0h,0ffh,0e2h,001h,0b1h,05ah,091h,080h,081h,08ah,071h,095h	; 5666  .........Z....q.
-	defb 061h,0a0h,051h,0aah,041h,0b5h,031h,0c0h,021h,0cah,011h,0d5h,001h,0e0h,0ffh,0e2h	; 5676  a.Q.A.1.!.......
-	defb 001h,0b1h,095h,0a1h,0c0h,091h,0cah,0b1h,0d5h,071h,0e0h,061h,0eah,051h,0f5h,042h	; 5686  .........q.a.Q.B
-	defb 000h,032h,00ah,022h,015h,012h,020h,002h,030h,0ffh,0e2h,001h,0c1h,0e0h,0b2h,010h	; 5696  .2.".. .0.......
-	defb 0a2h,01ah,092h,025h,082h,030h,072h,03ah,062h,045h,052h,050h,042h,05ah,032h,065h	; 56a6  ...%.0r:bERPBZ2e
-	defb 022h,070h,012h,07ah,002h,085h,0ffh,0e2h,001h,061h,0f8h,0e1h,001h,0e4h,004h,005h	; 56b6  "p.z.....a......
-	defb 004h,003h,002h,001h,0e1h,002h,0e4h,003h,002h,001h,000h,000h,0e4h,002h,000h,000h	; 56c6  ................
-	defb 000h,0e1h,003h,0e4h,001h,000h,000h,0ffh,0e2h,001h,071h,0f8h,0e1h,001h,0e4h,004h	; 56d6  ..........q.....
-	defb 005h,004h,003h,002h,001h,0e1h,002h,0e4h,003h,002h,001h,001h,000h,0e4h,002h,001h	; 56e6  ................
-	defb 000h,000h,0e1h,003h,0e4h,001h,000h,000h,0ffh,0e2h,001h,081h,0f8h,0e1h,001h,0e4h	; 56f6  ................
-	defb 004h,006h,005h,004h,003h,002h,0e1h,002h,0e4h,003h,003h,002h,001h,000h,0e4h,002h	; 5706  ................
-	defb 001h,000h,000h,0e1h,003h,0e4h,001h,000h,000h,0ffh,0e2h,001h,091h,0f8h,0e1h,001h	; 5716  ................
-	defb 0e4h,004h,007h,006h,005h,004h,003h,0e1h,002h,0e4h,003h,004h,003h,002h,001h,0e4h	; 5726  ................
-	defb 002h,002h,001h,000h,0e1h,003h,0e4h,001h,001h,000h,0ffh,0ffh,0ffh,0e1h,001h,0e4h	; 5736  ................
-	defb 001h,009h,0ffh,0e1h,001h,0e4h,001h,007h,0ffh,0e1h,001h,0e4h,005h,005h,0e4h,002h	; 5746  ................
-	defb 007h,0e4h,000h,008h,0e1h,004h,007h,006h,005h,004h,003h,002h,0ffh,0e3h,001h,0e4h	; 5756  ................
-	defb 005h,070h,00dh,0e4h,002h,080h,00bh,0e4h,000h,090h,009h,0e3h,004h,080h,00bh,070h	; 5766  .p.............p
-	defb 00bh,060h,00bh,050h,00bh,040h,00bh,030h,00bh,020h,00bh,0ffh,0e1h,001h,0e4h,014h	; 5776  .`.P.@.0. ......
-	defb 005h,0e2h,001h,052h,000h,0e1h,001h,0e4h,010h,004h,003h,0e4h,006h,002h,0ffh,0e1h	; 5786  ...R............
-	defb 001h,0e4h,014h,006h,0e2h,001h,062h,000h,0e1h,001h,0e4h,010h,005h,004h,0e4h,006h	; 5796  ......b.........
-	defb 002h,0ffh,0e2h,001h,072h,030h,0e1h,002h,0e4h,005h,007h,0e1h,002h,0e4h,006h,007h	; 57a6  ....r0..........
-	defb 0e4h,008h,005h,0e4h,004h,004h,0ffh,0e2h,001h,082h,030h,0e1h,002h,0e4h,005h,008h	; 57b6  ..........0.....
-	defb 0e1h,002h,0e4h,006h,008h,0e4h,008h,006h,0e4h,004h,005h,0ffh,0e2h,001h,092h,030h	; 57c6  ...............0
-	defb 0e1h,001h,0e4h,005h,00ah,0e4h,006h,008h,0e4h,008h,007h,0e4h,004h,006h,0e1h,005h	; 57d6  ................
-	defb 0e4h,00ah,005h,004h,003h,002h,001h,0ffh,0e2h,001h,0a2h,030h,0e1h,001h,0e4h,005h	; 57e6  ...........0....
-	defb 00ah,0e4h,006h,009h,0e4h,008h,008h,0e4h,004h,007h,0e1h,005h,0e4h,00ah,005h,004h	; 57f6  ................
-	defb 003h,002h,001h,0ffh,0e2h,001h,0e5h,009h,001h,0a0h,094h,050h,096h,000h,097h,000h	; 5806  ...........P....
-	defb 098h,000h,0ffh,0e1h,001h,0e4h,008h,005h,0e4h,007h,008h,0e4h,006h,007h,0e4h,005h	; 5816  ................
-	defb 008h,0e4h,004h,008h,0e4h,004h,008h,0e4h,003h,008h,0e4h,002h,008h,0e1h,001h,0e4h	; 5826  ................
-	defb 001h,007h,006h,005h,004h,003h,002h,0ffh,0f2h,058h,012h,059h,032h,059h,052h,059h	; 5836  .........X.Y2YRY
-	defb 072h,059h,092h,059h,0b2h,059h,0d2h,059h,0f2h,059h,012h,05ah,032h,05ah,052h,05ah	; 5846  rY.Y.Y.Y.Y.Z2ZRZ
-	defb 072h,05ah,092h,05ah,0b2h,05ah,0d2h,05ah,0f2h,05ah,012h,05bh,032h,05bh,052h,05bh	; 5856  rZ.Z.Z.Z.Z.[2[R[
-	defb 072h,05bh,092h,05bh,0b2h,05bh,0d2h,05bh,0f2h,05bh,012h,05ch,032h,05ch,052h,05ch	; 5866  r[.[.[.[.[.\2\R\
-	defb 072h,05ch,092h,05ch,0b2h,05ch,0d2h,05ch,0f2h,05ch,012h,05dh,032h,05dh,052h,05dh	; 5876  r\.\.\.\.\.]2]R]
-	defb 072h,05dh,092h,05dh,0b2h,05dh,0d2h,05dh,0f2h,05dh,012h,05eh,032h,05eh,052h,05eh	; 5886  r].].].].].^2^R^
-	defb 072h,05eh,092h,05eh,0b2h,05eh,0d2h,05eh,0f2h,05eh,012h,05fh,032h,05fh,052h,05fh	; 5896  r^.^.^.^.^._2_R_
-	defb 072h,05fh,092h,05fh,0b2h,05fh,0d2h,05fh,0f2h,05fh,012h,060h,032h,060h,052h,060h	; 58a6  r_._._._._.`2`R`
-	defb 072h,060h,092h,060h,0b2h,060h,0d2h,060h,0f2h,060h,012h,061h,032h,061h,052h,061h	; 58b6  r`.`.`.`.`.a2aRa
-	defb 072h,061h,092h,061h,0b2h,061h,0d2h,061h,0f2h,061h,012h,062h,032h,062h,052h,062h	; 58c6  ra.a.a.a.a.b2bRb
-	defb 072h,062h,092h,062h,0b2h,062h,0d2h,062h,0f2h,062h,012h,063h,032h,063h,052h,063h	; 58d6  rb.b.b.b.b.c2cRc
-	defb 072h,063h,092h,063h,0b2h,063h,0d2h,063h,0f2h,063h,012h,064h,07fh,07fh,07fh,07fh	; 58e6  rc.c.c.c.c.d....
-	defb 07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,080h,080h,080h,080h	; 58f6  ................
-	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,000h,07fh,07fh,07fh,07fh	; 5906  ................
-	defb 07fh,07fh,07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h,07fh,07fh,07fh,07fh	; 5916  ................
-	defb 07fh,07fh,07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h,000h,0f8h,0f0h,0e8h	; 5926  ................
-	defb 0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h,080h,078h,070h,068h	; 5936  .............xph
-	defb 060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h,0f0h,0e0h,0d0h	; 5946  `XPH@80( .......
-	defb 0c0h,0b0h,0a0h,090h,080h,070h,060h,050h,040h,030h,020h,010h,000h,0f0h,0e0h,0d0h	; 5956  .....p`P@0 .....
-	defb 0c0h,0b0h,0a0h,090h,080h,070h,060h,050h,040h,030h,020h,010h,000h,04eh,062h,06dh	; 5966  .....p`P@0 ..Nbm
-	defb 075h,07ah,07dh,07eh,07fh,07eh,07dh,07ah,075h,06dh,062h,04eh,000h,0b1h,09dh,092h	; 5976  uz}~.~}zumbN....
-	defb 08ah,085h,082h,081h,080h,081h,082h,085h,08ah,092h,09dh,0b1h,000h,019h,031h,047h	; 5986  ..............1G
-	defb 05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h,000h,0e7h,0cfh,0b9h	; 5996  Zju}.}ujZG1.....
-	defb 0a6h,096h,08bh,083h,080h,083h,08bh,096h,0a6h,0b9h,0cfh,0e7h,000h,0f0h,0e0h,0d0h	; 59a6  ................
-	defb 0c0h,0b0h,0a0h,090h,080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h,000h,010h,020h,030h	; 59b6  .............. 0
-	defb 040h,050h,060h,070h,07fh,070h,060h,050h,040h,030h,020h,010h,000h,0e0h,0c0h,0a0h	; 59c6  @P`p.p`P@0 .....
-	defb 080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h,000h,0e0h,0c0h,0a0h	; 59d6  ..... @`.`@ ....
-	defb 080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h,000h,019h,031h,047h	; 59e6  ..... @`.`@ ..1G
-	defb 05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h,000h,0f0h,0e0h,0d0h	; 59f6  Zju}.}ujZG1.....
-	defb 0c0h,0b0h,0a0h,090h,080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h,000h,019h,031h,047h	; 5a06  ..............1G
-	defb 05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h,000h,0e0h,0c0h,0a0h	; 5a16  Zju}.}ujZG1.....
-	defb 080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h,000h,019h,031h,047h	; 5a26  ..... @`.`@ ..1G
-	defb 05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h,080h,090h,0a0h,0b0h	; 5a36  Zju}.}ujZG1.....
-	defb 0c0h,0d0h,0e0h,0f0h,000h,010h,020h,030h,040h,050h,060h,070h,000h,019h,031h,047h	; 5a46  ...... 0@P`p..1G
-	defb 05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h,080h,0a0h,0c0h,0e0h	; 5a56  Zju}.}ujZG1.....
-	defb 000h,020h,040h,060h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,001h,02ah,040h,050h	; 5a66  . @`..... @`.*@P
-	defb 05ch,068h,070h,078h,07fh,078h,070h,068h,05ch,050h,040h,02ah,0ffh,0d6h,0c0h,0b0h	; 5a76  \hpx.xph\P@*....
-	defb 0a4h,098h,090h,088h,081h,088h,090h,098h,0a4h,0b0h,0c0h,0d6h,000h,040h,07fh,040h	; 5a86  .............@.@
-	defb 001h,0c0h,081h,0c0h,001h,040h,07fh,040h,001h,0c0h,001h,040h,001h,0e0h,001h,020h	; 5a96  .....@.@...@...
-	defb 001h,0f0h,001h,010h,001h,0ffh,0ffh,0ffh,0ffh,040h,040h,040h,078h,070h,068h,060h	; 5aa6  .........@@@xph`
-	defb 058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h,078h,070h,068h,060h	; 5ab6  XPH@80( ....xph`
-	defb 058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h,080h,080h,080h,080h	; 5ac6  XPH@80( ........
-	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,000h,000h,000h,000h	; 5ad6  ................
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,040h,07fh,040h	; 5ae6  .............@.@
-	defb 001h,010h,020h,02dh,037h,044h,04eh,059h,063h,06ch,073h,078h,07ch,07fh,07ch,078h	; 5af6  .. -7DNYclsx|.|x
-	defb 073h,06ch,059h,04eh,044h,037h,02dh,020h,010h,003h,002h,001h,000h,040h,07fh,040h	; 5b06  slYND7- .....@.@
-	defb 010h,001h,0eah,0d6h,0c3h,0b9h,0afh,0a4h,09ch,095h,08fh,08ah,086h,083h,081h,083h	; 5b16  ................
-	defb 086h,08ah,08fh,095h,09ch,0a4h,0afh,0b9h,0c3h,0d6h,0eah,0ffh,000h,040h,07fh,040h	; 5b26  .............@.@
-	defb 000h,0c0h,0ffh,0c0h,005h,0ebh,0d6h,0c3h,0b9h,0afh,0a4h,09ch,095h,08fh,089h,084h	; 5b36  ................
-	defb 081h,084h,089h,08fh,095h,09ch,0a4h,0afh,0b9h,0c3h,0d6h,0eah,000h,0f0h,0e0h,0d0h	; 5b46  ................
-	defb 0c0h,0b0h,0a0h,090h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5b56  ................
-	defb 080h,080h,080h,080h,07fh,070h,060h,050h,040h,030h,020h,010h,000h,030h,050h,060h	; 5b66  .....p`P@0 ..0P`
-	defb 070h,060h,050h,030h,000h,0d0h,0b0h,0a0h,090h,0a0h,0b0h,0d0h,000h,040h,060h,070h	; 5b76  p`P0.........@`p
-	defb 060h,040h,000h,0c0h,0a0h,090h,0a0h,0c0h,000h,070h,000h,090h,030h,050h,050h,030h	; 5b86  `@.......p..0PP0
-	defb 000h,000h,010h,040h,060h,070h,060h,030h,0f0h,0e0h,0e0h,000h,020h,020h,010h,0c0h	; 5b96  ...@`p`0....  ..
-	defb 0a0h,090h,0a0h,0c0h,000h,000h,0d0h,0b0h,0b0h,0d0h,000h,000h,0a0h,090h,090h,0a0h	; 5ba6  ................
-	defb 0a0h,0b0h,0b0h,0b0h,0c0h,0c0h,0d0h,0d0h,0e0h,0e0h,0f0h,0f0h,000h,000h,010h,010h	; 5bb6  ................
-	defb 020h,020h,030h,030h,040h,040h,050h,050h,060h,060h,060h,050h,000h,07fh,000h,080h	; 5bc6    00@@PP```P....
-	defb 0a0h,0c0h,0d8h,0f0h,008h,020h,030h,040h,050h,060h,070h,078h,07ch,07fh,07ch,078h	; 5bd6  ..... 0@P`px|.|x
-	defb 070h,060h,050h,040h,030h,020h,008h,0f0h,0d8h,0c0h,0a0h,080h,07fh,080h,07fh,080h	; 5be6  p`P@0 ..........
-	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5bf6  ................
-	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c06  ................
-	defb 07fh,080h,07fh,080h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c16  ................
-	defb 000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,000h,000h,000h,000h	; 5c26  ................
-	defb 000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,000h,000h,000h,000h	; 5c36  ................
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c46  ................
-	defb 000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c56  ................
-	defb 07fh,080h,07fh,080h,000h,000h,000h,000h,000h,000h,000h,000h,080h,08eh,0a0h,0c0h	; 5c66  ................
-	defb 0e0h,000h,020h,03fh,03eh,03ch,03ah,037h,031h,029h,020h,01ch,010h,000h,0e6h,0c0h	; 5c76  .. ?><:71) .....
-	defb 0d0h,000h,020h,03fh,010h,0e0h,080h,0c0h,000h,020h,000h,090h,000h,070h,050h,020h	; 5c86  .. ?..... ...pP
-	defb 050h,070h,030h,000h,050h,07fh,060h,010h,030h,040h,000h,0b0h,010h,060h,000h,0e0h	; 5c96  Pp0.P.`.0@...`..
-	defb 0f0h,000h,0b0h,090h,0c0h,010h,0e0h,0a0h,0c0h,0f0h,0c0h,0a0h,080h,088h,090h,098h	; 5ca6  ................
-	defb 0a0h,0b0h,0b0h,0b8h,0c0h,0c8h,0d0h,0d8h,0e0h,0e8h,0f0h,0f8h,000h,008h,010h,018h	; 5cb6  ................
-	defb 020h,028h,030h,038h,040h,048h,050h,058h,060h,068h,070h,078h,000h,020h,030h,040h	; 5cc6   (08@HPX`hpx. 0@
-	defb 050h,060h,068h,070h,078h,070h,068h,060h,050h,040h,030h,020h,000h,0e0h,0d0h,0c0h	; 5cd6  P`hpxph`P@0 ....
-	defb 0b0h,0a0h,098h,090h,088h,090h,098h,0a0h,0b0h,0c0h,0d0h,0e0h,000h,000h,000h,000h	; 5ce6  ................
-	defb 000h,078h,078h,000h,000h,080h,080h,080h,000h,000h,000h,000h,078h,078h,078h,000h	; 5cf6  .xx.........xxx.
-	defb 080h,080h,000h,000h,000h,000h,078h,078h,000h,000h,080h,080h,078h,078h,078h,078h	; 5d06  ......xx....xxxx
-	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d16  ................
-	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,078h,078h,078h,078h	; 5d26  ............xxxx
-	defb 078h,078h,078h,078h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d36  xxxx............
-	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,0b0h,0c0h,010h	; 5d46  ................
-	defb 01ah,02ah,02ch,01ah,000h,0e0h,0d0h,0e0h,022h,053h,070h,075h,070h,031h,0eah,080h	; 5d56  .*,....."Spup1..
-	defb 088h,08ah,08ch,08eh,000h,07fh,075h,073h,062h,000h,0c0h,090h,000h,020h,030h,040h	; 5d66  ......usb.... 0@
-	defb 050h,058h,060h,068h,070h,068h,060h,058h,050h,040h,030h,020h,000h,0e0h,0d0h,0c0h	; 5d76  PX`hph`XP@0 ....
-	defb 0b0h,0a0h,098h,090h,088h,090h,098h,0a0h,0b0h,0c0h,0d0h,0e0h,000h,000h,000h,000h	; 5d86  ................
-	defb 000h,070h,070h,000h,000h,080h,080h,080h,000h,000h,000h,000h,070h,070h,070h,000h	; 5d96  .pp.........ppp.
-	defb 080h,080h,000h,000h,000h,000h,070h,070h,000h,000h,080h,080h,000h,000h,000h,080h	; 5da6  ......pp........
-	defb 000h,070h,070h,070h,000h,000h,000h,080h,000h,000h,000h,080h,080h,080h,080h,000h	; 5db6  .ppp............
-	defb 080h,000h,000h,000h,000h,080h,080h,080h,000h,080h,080h,080h,000h,030h,0f0h,030h	; 5dc6  .............0.0
-	defb 040h,050h,060h,060h,070h,079h,070h,078h,040h,000h,000h,00eh,070h,083h,060h,050h	; 5dd6  @P``pypx@...p.`P
-	defb 000h,000h,000h,026h,074h,082h,084h,065h,064h,0e4h,093h,084h,070h,070h,070h,070h	; 5de6  ...&t..ed...pppp
-	defb 070h,070h,070h,070h,080h,080h,080h,080h,080h,080h,080h,080h,070h,070h,070h,080h	; 5df6  pppp........ppp.
-	defb 080h,080h,070h,070h,070h,070h,080h,080h,080h,080h,080h,080h,0a0h,090h,090h,090h	; 5e06  ..pppp..........
-	defb 0a0h,0a0h,0b0h,0b0h,0c0h,0c0h,0d0h,0d0h,0e0h,0e0h,0f0h,0f0h,000h,000h,010h,010h	; 5e16  ................
-	defb 020h,020h,030h,030h,040h,040h,050h,050h,060h,060h,060h,050h,070h,070h,060h,080h	; 5e26    00@@PP```Ppp`.
-	defb 090h,090h,080h,080h,040h,040h,030h,080h,090h,090h,080h,080h,020h,020h,010h,080h	; 5e36  ....@@0.....  ..
-	defb 090h,090h,080h,080h,000h,000h,0f0h,080h,090h,090h,080h,080h,000h,0f8h,0f0h,0e8h	; 5e46  ................
-	defb 0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h,080h,088h,090h,098h	; 5e56  ................
-	defb 0a0h,0a8h,0b0h,0b8h,0c0h,0c8h,0d0h,0d8h,0e0h,0e8h,0f0h,0f8h,078h,070h,068h,060h	; 5e66  ............xph`
-	defb 058h,050h,040h,040h,038h,030h,028h,020h,018h,010h,008h,000h,000h,000h,000h,000h	; 5e76  XP@@80( ........
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,0f8h,0f0h,0e8h,0e0h	; 5e86  ................
-	defb 0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h,080h,078h,070h,068h,060h	; 5e96  ............xph`
-	defb 058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h,000h,005h,00ah,010h	; 5ea6  XPH@80( ........
-	defb 015h,01ah,020h,025h,030h,035h,03ah,040h,045h,04ah,050h,055h,060h,065h,06ah,065h	; 5eb6  .. %05:@EJPU`eje
-	defb 06ah,070h,075h,07ah,07fh,070h,060h,050h,040h,030h,020h,010h,080h,080h,080h,080h	; 5ec6  jpuz.p`P@0 .....
-	defb 080h,080h,080h,080h,000h,000h,000h,000h,000h,000h,000h,000h,080h,080h,080h,080h	; 5ed6  ................
-	defb 080h,080h,080h,080h,000h,000h,000h,000h,000h,000h,000h,000h,000h,00ah,015h,020h	; 5ee6  ...............
-	defb 02ah,035h,040h,04ah,055h,060h,06ah,075h,07fh,060h,040h,020h,000h,0e0h,0c0h,0a0h	; 5ef6  *5@JU`ju.`@ ....
-	defb 080h,08ah,095h,0a0h,0aah,0b5h,0c0h,0cah,0d5h,0e0h,0eah,0f5h,080h,080h,080h,080h	; 5f06  ................
-	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,07fh,07fh,07fh,07fh	; 5f16  ................
-	defb 07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh	; 5f26  ................
-	defb 07fh,07fh,07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h,07fh,07fh,07fh,07fh	; 5f36  ................
-	defb 07fh,07fh,07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h,000h,07fh,000h,080h	; 5f46  ................
-	defb 0a0h,0c0h,0d8h,0f0h,008h,020h,030h,040h,050h,060h,070h,078h,07ch,07fh,07ch,078h	; 5f56  ..... 0@P`px|.|x
-	defb 070h,060h,050h,040h,030h,020h,008h,0f0h,0d8h,0c0h,0a0h,080h,000h,07fh,070h,070h	; 5f66  p`P@0 ........pp
-	defb 060h,060h,040h,020h,000h,0e0h,0c0h,0a0h,0a0h,090h,090h,080h,000h,07fh,070h,070h	; 5f76  ``@ ..........pp
-	defb 060h,060h,040h,020h,000h,0e0h,0c0h,0a0h,0a0h,090h,090h,000h,080h,07fh,080h,070h	; 5f86  ``@ ...........p
-	defb 080h,060h,080h,050h,080h,040h,080h,030h,080h,020h,080h,010h,080h,000h,080h,0f0h	; 5f96  .`.P.@.0. ......
-	defb 080h,0e0h,080h,0d0h,080h,0c0h,080h,0b0h,080h,0a0h,080h,090h,080h,07fh,080h,07fh	; 5fa6  ................
-	defb 080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,060h	; 5fb6  ...............`
-	defb 080h,040h,080h,010h,080h,0f0h,080h,0d0h,080h,0b0h,080h,090h,000h,080h,020h,080h	; 5fc6  .@............ .
-	defb 040h,080h,060h,080h,07fh,080h,060h,080h,040h,080h,020h,080h,000h,080h,0e0h,080h	; 5fd6  @.`...`.@. .....
-	defb 0c0h,080h,0a0h,080h,0a0h,080h,0c0h,080h,0e0h,080h,000h,080h,080h,080h,080h,080h	; 5fe6  ................
-	defb 080h,080h,010h,080h,080h,080h,080h,080h,080h,080h	; 5ff6  ..........
+	defb 0a1h,080h,0e1h,001h,0e4h,004h,007h,006h,005h,004h,003h,002h,001h,000h,0ffh	; 5586  ...............
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5595..0x55be  (41 bytes)
+DATA_5595:
+	defb 0e2h,001h,0e5h,00ah,000h,060h,000h,000h,0e8h,0e1h,001h,0e4h,008h,009h,0e3h,002h	; 5595  .....`..........
+	defb 0e4h,005h,070h,00eh,060h,00dh,050h,00ch,040h,00bh,030h,00ah,020h,009h,010h,008h	; 55a5  ..p.`.P.@.0. ...
+	defb 0e4h,002h,020h,00bh,010h,00ah,000h,009h,0ffh	; 55b5  .. ......
+
+; ----------------------------------------------------------------------
+; DATOS sonido_55BE: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (20 bytes)
+;   0x55be..0x55d2  (20 bytes)
+DATA_sonido_55BE:
+	defb 0e2h,002h,0e5h,009h,000h,0a0h,0a2h,080h,0e1h,001h,0e4h,008h,006h,0e4h,003h,005h	; 55be  ................
+	defb 004h,003h,002h,001h	; 55ce
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x55d2..0x55d4  (2 bytes)
+DATA_55D2:
+	defb 000h,0ffh	; 55d2
+
+; ----------------------------------------------------------------------
+; DATOS sonido_55D4: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6A, 0x6B, 0x6F, 0x70, 0x71, 0x72, 0x73, 0x74, 0x76, 0x77 y 20
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (97
+;   bytes)
+;   0x55d4..0x5635  (97 bytes)
+DATA_sonido_55D4:
+	defb 0e2h,001h,0e5h,008h,001h,000h,000h,001h,0e8h,064h,000h,054h,080h,045h,000h,0e2h	; 55d4  .........d.T.E..
+	defb 003h,005h,000h,0e2h,001h,004h,000h,004h,080h,005h,000h,006h,000h,0ffh,0e2h,001h	; 55e4  ................
+	defb 0e5h,008h,001h,080h,097h,000h,098h,000h,0e8h,0e2h,001h,064h,000h,054h,080h,045h	; 55f4  ...........d.T.E
+	defb 000h,0e2h,003h,005h,000h,0e2h,001h,004h,000h,004h,080h,005h,000h,006h,000h,0ffh	; 5604  ................
+	defb 0e2h,001h,091h,0c0h,0e1h,001h,0e4h,004h,007h,006h,005h,004h,003h,0e1h,002h,0e4h	; 5614  ................
+	defb 003h,004h,003h,002h,001h,0e4h,002h,002h,001h,000h,0e1h,003h,0e4h,001h,001h,000h	; 5624  ................
+	defb 0ffh	; 5634
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5635..0x566c  (55 bytes)
+DATA_5635:
+	defb 0e2h,001h,080h,046h,0e1h,001h,0e4h,001h,009h,008h,007h,006h,005h,004h,003h,002h	; 5635  ...F............
+	defb 001h,0e1h,003h,004h,003h,002h,001h,0e1h,00ah,0e4h,000h,001h,000h,0ffh,0e2h,001h	; 5645  ................
+	defb 0a1h,02ah,091h,04ah,081h,055h,071h,060h,061h,06ah,051h,075h,041h,080h,031h,08ah	; 5655  .*.J.Uq`ajQuA.1.
+	defb 021h,095h,011h,0a0h,001h,0b0h,0ffh	; 5665
+
+; ----------------------------------------------------------------------
+; DATOS sonido_566C: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (18 bytes)
+;   0x566c..0x567e  (18 bytes)
+DATA_sonido_566C:
+	defb 0e2h,001h,0b1h,05ah,091h,080h,081h,08ah,071h,095h,061h,0a0h,051h,0aah,041h,0b5h	; 566c  ...Z....q.a.Q.A.
+	defb 031h,0c0h	; 567c
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x567e..0x5685  (7 bytes)
+DATA_567E:
+	defb 021h,0cah,011h,0d5h,001h,0e0h,0ffh	; 567e
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5685: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (18 bytes)
+;   0x5685..0x5697  (18 bytes)
+DATA_sonido_5685:
+	defb 0e2h,001h,0b1h,095h,0a1h,0c0h,091h,0cah,0b1h,0d5h,071h,0e0h,061h,0eah,051h,0f5h	; 5685  ..........q.a.Q.
+	defb 042h,000h	; 5695
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5697..0x56a0  (9 bytes)
+DATA_5697:
+	defb 032h,00ah,022h,015h,012h,020h,002h,030h,0ffh	; 5697  2.".. .0.
+
+; ----------------------------------------------------------------------
+; DATOS sonido_56A0: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (18 bytes)
+;   0x56a0..0x56b2  (18 bytes)
+DATA_sonido_56A0:
+	defb 0e2h,001h,0c1h,0e0h,0b2h,010h,0a2h,01ah,092h,025h,082h,030h,072h,03ah,062h,045h	; 56a0  .........%.0r:bE
+	defb 052h,050h	; 56b0
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x56b2..0x56bd  (11 bytes)
+DATA_56B2:
+	defb 042h,05ah,032h,065h,022h,070h,012h,07ah,002h,085h,0ffh	; 56b2  BZ2e"p.z...
+
+; ----------------------------------------------------------------------
+; DATOS sonido_56BD: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6D, 0x6E, 0x71, 0x73, 0x76, 0x7A, 0x7B, 0x82, 0x88, 0x89 y 9 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (132 bytes)
+;   0x56bd..0x5741  (132 bytes)
+DATA_sonido_56BD:
+	defb 0e2h,001h,061h,0f8h,0e1h,001h,0e4h,004h,005h,004h,003h,002h,001h,0e1h,002h,0e4h	; 56bd  ..a.............
+	defb 003h,002h,001h,000h,000h,0e4h,002h,000h,000h,000h,0e1h,003h,0e4h,001h,000h,000h	; 56cd  ................
+	defb 0ffh,0e2h,001h,071h,0f8h,0e1h,001h,0e4h,004h,005h,004h,003h,002h,001h,0e1h,002h	; 56dd  ...q............
+	defb 0e4h,003h,002h,001h,001h,000h,0e4h,002h,001h,000h,000h,0e1h,003h,0e4h,001h,000h	; 56ed  ................
+	defb 000h,0ffh,0e2h,001h,081h,0f8h,0e1h,001h,0e4h,004h,006h,005h,004h,003h,002h,0e1h	; 56fd  ................
+	defb 002h,0e4h,003h,003h,002h,001h,000h,0e4h,002h,001h,000h,000h,0e1h,003h,0e4h,001h	; 570d  ................
+	defb 000h,000h,0ffh,0e2h,001h,091h,0f8h,0e1h,001h,0e4h,004h,007h,006h,005h,004h,003h	; 571d  ................
+	defb 0e1h,002h,0e4h,003h,004h,003h,002h,001h,0e4h,002h,002h,001h,000h,0e1h,003h,0e4h	; 572d  ................
+	defb 001h,001h,000h,0ffh	; 573d
+
+; ----------------------------------------------------------------------
+; DATOS resto_5741: lo apuntan con el banco puesto p16:4FCD (0x583E), p16:5039
+;   (0x583E); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p16:4FCD, p16:5039 (257 bytes)
+;   0x5741..0x5842  (257 bytes)
+DATA_resto_5741:
+	defb 0ffh,0ffh,0e1h,001h,0e4h,001h,009h,0ffh,0e1h,001h,0e4h,001h,007h,0ffh,0e1h,001h	; 5741  ................
+	defb 0e4h,005h,005h,0e4h,002h,007h,0e4h,000h,008h,0e1h,004h,007h,006h,005h,004h,003h	; 5751  ................
+	defb 002h,0ffh,0e3h,001h,0e4h,005h,070h,00dh,0e4h,002h,080h,00bh,0e4h,000h,090h,009h	; 5761  ......p.........
+	defb 0e3h,004h,080h,00bh,070h,00bh,060h,00bh,050h,00bh,040h,00bh,030h,00bh,020h,00bh	; 5771  ....p.`.P.@.0. .
+	defb 0ffh,0e1h,001h,0e4h,014h,005h,0e2h,001h,052h,000h,0e1h,001h,0e4h,010h,004h,003h	; 5781  ........R.......
+	defb 0e4h,006h,002h,0ffh,0e1h,001h,0e4h,014h,006h,0e2h,001h,062h,000h,0e1h,001h,0e4h	; 5791  ...........b....
+	defb 010h,005h,004h,0e4h,006h,002h,0ffh,0e2h,001h,072h,030h,0e1h,002h,0e4h,005h,007h	; 57a1  .........r0.....
+	defb 0e1h,002h,0e4h,006h,007h,0e4h,008h,005h,0e4h,004h,004h,0ffh,0e2h,001h,082h,030h	; 57b1  ...............0
+	defb 0e1h,002h,0e4h,005h,008h,0e1h,002h,0e4h,006h,008h,0e4h,008h,006h,0e4h,004h,005h	; 57c1  ................
+	defb 0ffh,0e2h,001h,092h,030h,0e1h,001h,0e4h,005h,00ah,0e4h,006h,008h,0e4h,008h,007h	; 57d1  ....0...........
+	defb 0e4h,004h,006h,0e1h,005h,0e4h,00ah,005h,004h,003h,002h,001h,0ffh,0e2h,001h,0a2h	; 57e1  ................
+	defb 030h,0e1h,001h,0e4h,005h,00ah,0e4h,006h,009h,0e4h,008h,008h,0e4h,004h,007h,0e1h	; 57f1  0...............
+	defb 005h,0e4h,00ah,005h,004h,003h,002h,001h,0ffh,0e2h,001h,0e5h,009h,001h,0a0h,094h	; 5801  ................
+	defb 050h,096h,000h,097h,000h,098h,000h,0ffh,0e1h,001h,0e4h,008h,005h,0e4h,007h,008h	; 5811  P...............
+	defb 0e4h,006h,007h,0e4h,005h,008h,0e4h,004h,008h,0e4h,004h,008h,0e4h,003h,008h,0e4h	; 5821  ................
+	defb 002h,008h,0e1h,001h,0e4h,001h,007h,006h,005h,004h,003h,002h,0ffh,0f2h,058h,012h	; 5831  ..............X.
+	defb 059h	; 5841
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5842: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x12, 0x1D, 0x24, 0x2E, 0x30, 0x56, 0x6A, 0x6B, 0x6D, 0x6E y 27
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+;   0x5842..0x5846  (4 bytes)
+DATA_sonido_5842:
+	defb 032h,059h,052h,059h	; 5842
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5846..0x5848  (2 bytes)
+DATA_5846:
+	defb 072h,059h	; 5846
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5848: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x07, 0x08, 0x09, 0x0B, 0x0C, 0x0E, 0x11, 0x16, 0x1F, 0x22 y 35
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+;   0x5848..0x584a  (2 bytes)
+DATA_sonido_5848:
+	defb 092h,059h	; 5848
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x584a..0x584c  (2 bytes)
+DATA_584A:
+	defb 0b2h,059h	; 584a
+
+; ----------------------------------------------------------------------
+; DATOS sonido_584C: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x0A, 0x0C, 0x13, 0x17, 0x19, 0x1D, 0x1E, 0x25, 0x28, 0x30 y 62
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14
+;   bytes)
+;   0x584c..0x585a  (14 bytes)
+DATA_sonido_584C:
+	defb 0d2h,059h,0f2h,059h,012h,05ah,032h,05ah,052h,05ah,072h,05ah,092h,05ah	; 584c  .Y.Y.Z2ZRZrZ.Z
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x585a..0x585e  (4 bytes)
+DATA_585A:
+	defb 0b2h,05ah,0d2h,05ah	; 585a
+
+; ----------------------------------------------------------------------
+; DATOS sonido_585E: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x3F, 0x5C, 0x78, 0x7A, 0x81, 0x84, 0x9A, 0x9C, 0xA2, 0xA3 y 5 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
+;   0x585e..0x5864  (6 bytes)
+DATA_sonido_585E:
+	defb 0f2h,05ah,012h,05bh,032h,05bh	; 585e
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5864..0x5866  (2 bytes)
+DATA_5864:
+	defb 052h,05bh	; 5864
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5866: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x06, 0x0F, 0x20, 0x21, 0x32, 0x3E, 0x55, 0x61, 0x65, 0x6A y 19
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (8 bytes)
+;   0x5866..0x586e  (8 bytes)
+DATA_sonido_5866:
+	defb 072h,05bh,092h,05bh,0b2h,05bh,0d2h,05bh	; 5866  r[.[.[.[
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x586e..0x5870  (2 bytes)
+DATA_586E:
+	defb 0f2h,05bh	; 586e
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5870: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x20, 0x2E, 0x3B, 0x49, 0x59, 0x5D, 0x5E, 0x63, 0x6D, 0x6E y 5 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+;   0x5870..0x5874  (4 bytes)
+DATA_sonido_5870:
+	defb 012h,05ch,032h,05ch	; 5870
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5874..0x5876  (2 bytes)
+DATA_5874:
+	defb 052h,05ch	; 5874
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5876: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x17, 0x1B, 0x2B, 0x2C, 0x2D, 0x2E, 0x39, 0x6A, 0x6B, 0x6D y 8 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+;   0x5876..0x587a  (4 bytes)
+DATA_sonido_5876:
+	defb 072h,05ch,092h,05ch	; 5876
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x587a..0x587e  (4 bytes)
+DATA_587A:
+	defb 0b2h,05ch,0d2h,05ch	; 587a
+
+; ----------------------------------------------------------------------
+; DATOS sonido_587E: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x0D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (2 bytes)
+;   0x587e..0x5880  (2 bytes)
+DATA_sonido_587E:
+	defb 0f2h,05ch	; 587e
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5880..0x5884  (4 bytes)
+DATA_5880:
+	defb 012h,05dh,032h,05dh	; 5880
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5884: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x0A, 0x0D, 0x0F, 0x10, 0x13, 0x14, 0x15, 0x18, 0x1A, 0x21 y 43
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12
+;   bytes)
+;   0x5884..0x5890  (12 bytes)
+DATA_sonido_5884:
+	defb 052h,05dh,072h,05dh,092h,05dh,0b2h,05dh,0d2h,05dh,0f2h,05dh	; 5884  R]r].].].].]
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5890..0x5892  (2 bytes)
+DATA_5890:
+	defb 012h,05eh	; 5890
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5892: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x1D, 0x43, 0x78, 0x7F (lo mide tools/partituras.py ejecutandolo);
+;   lo leen p16:4392 (2 bytes)
+;   0x5892..0x5894  (2 bytes)
+DATA_sonido_5892:
+	defb 032h,05eh	; 5892
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5894..0x58ae  (26 bytes)
+DATA_5894:
+	defb 052h,05eh,072h,05eh,092h,05eh,0b2h,05eh,0d2h,05eh,0f2h,05eh,012h,05fh,032h,05fh	; 5894  R^r^.^.^.^.^._2_
+	defb 052h,05fh,072h,05fh,092h,05fh,0b2h,05fh,0d2h,05fh	; 58a4  R_r_._._._
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58AE: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x48, 0xAA (lo mide tools/partituras.py ejecutandolo); lo leen
+;   p16:4392 (4 bytes)
+;   0x58ae..0x58b2  (4 bytes)
+DATA_sonido_58AE:
+	defb 0f2h,05fh,012h,060h	; 58ae
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58b2..0x58ba  (8 bytes)
+DATA_58B2:
+	defb 032h,060h,052h,060h,072h,060h,092h,060h	; 58b2  2`R`r`.`
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58BA: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x40, 0x4E (lo mide tools/partituras.py ejecutandolo); lo leen
+;   p16:4392 (4 bytes)
+;   0x58ba..0x58be  (4 bytes)
+DATA_sonido_58BA:
+	defb 0b2h,060h,0d2h,060h	; 58ba
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58be..0x58c0  (2 bytes)
+DATA_58BE:
+	defb 0f2h,060h	; 58be
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58C0: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x25, 0x2E, 0x42, 0x44, 0x45, 0x46, 0x4C, 0x60, 0x76, 0x77 y 6 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
+;   0x58c0..0x58c6  (6 bytes)
+DATA_sonido_58C0:
+	defb 012h,061h,032h,061h,052h,061h	; 58c0
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58c6..0x58ca  (4 bytes)
+DATA_58C6:
+	defb 072h,061h,092h,061h	; 58c6
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58CA: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x2A, 0x2F, 0x36, 0x37, 0x3E, 0x40, 0x4A, 0x4B, 0x63, 0x6F y 25
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14
+;   bytes)
+;   0x58ca..0x58d8  (14 bytes)
+DATA_sonido_58CA:
+	defb 0b2h,061h,0d2h,061h,0f2h,061h,012h,062h,032h,062h,052h,062h,072h,062h	; 58ca  .a.a.a.b2bRbrb
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58d8..0x58da  (2 bytes)
+DATA_58D8:
+	defb 092h,062h	; 58d8
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58DA: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x44, 0x9E (lo mide tools/partituras.py ejecutandolo); lo leen
+;   p16:4392 (2 bytes)
+;   0x58da..0x58dc  (2 bytes)
+DATA_sonido_58DA:
+	defb 0b2h,062h	; 58da
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58dc..0x58de  (2 bytes)
+DATA_58DC:
+	defb 0d2h,062h	; 58dc
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58DE: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x6A, 0x6B, 0x70, 0x71, 0x72, 0x74, 0x77, 0x78, 0x79, 0x7A y 13
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (10
+;   bytes)
+;   0x58de..0x58e8  (10 bytes)
+DATA_sonido_58DE:
+	defb 0f2h,062h,012h,063h,032h,063h,052h,063h,072h,063h	; 58de  .b.c2cRcrc
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58e8..0x58ee  (6 bytes)
+DATA_58E8:
+	defb 092h,063h,0b2h,063h,0d2h,063h	; 58e8
+
+; ----------------------------------------------------------------------
+; DATOS sonido_58EE: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x1C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (2 bytes)
+;   0x58ee..0x58f0  (2 bytes)
+DATA_sonido_58EE:
+	defb 0f2h,063h	; 58ee
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x58f0..0x5906  (22 bytes)
+DATA_58F0:
+	defb 012h,064h,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh	; 58f0  .d..............
+	defb 07fh,07fh,080h,080h,080h,080h	; 5900
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5906: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x54 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (2 bytes)
+;   0x5906..0x5908  (2 bytes)
+DATA_sonido_5906:
+	defb 080h,080h	; 5906
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5908..0x5932  (42 bytes)
+DATA_5908:
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,000h,07fh,07fh,07fh,07fh,07fh,07fh	; 5908  ................
+	defb 07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h,07fh,07fh,07fh,07fh,07fh,07fh	; 5918  ................
+	defb 07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h	; 5928  ..........
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5932: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x12, 0x1D, 0x24, 0x2E, 0x30, 0x56, 0x6A, 0x6B, 0x6D, 0x6E y 27
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64
+;   bytes)
+;   0x5932..0x5972  (64 bytes)
+DATA_sonido_5932:
+	defb 000h,0f8h,0f0h,0e8h,0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h	; 5932  ................
+	defb 080h,078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h	; 5942  .xph`XPH@80( ...
+	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,070h,060h,050h,040h,030h,020h,010h	; 5952  .........p`P@0 .
+	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,070h,060h,050h,040h,030h,020h,010h	; 5962  .........p`P@0 .
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5972..0x5992  (32 bytes)
+DATA_5972:
+	defb 000h,04eh,062h,06dh,075h,07ah,07dh,07eh,07fh,07eh,07dh,07ah,075h,06dh,062h,04eh	; 5972  .Nbmuz}~.~}zumbN
+	defb 000h,0b1h,09dh,092h,08ah,085h,082h,081h,080h,081h,082h,085h,08ah,092h,09dh,0b1h	; 5982  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5992: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x07, 0x08, 0x09, 0x0B, 0x0C, 0x0E, 0x11, 0x16, 0x1F, 0x22 y 35
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32
+;   bytes)
+;   0x5992..0x59b2  (32 bytes)
+DATA_sonido_5992:
+	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 5992  ..1GZju}.}ujZG1.
+	defb 000h,0e7h,0cfh,0b9h,0a6h,096h,08bh,083h,080h,083h,08bh,096h,0a6h,0b9h,0cfh,0e7h	; 59a2  ................
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x59b2..0x59d2  (32 bytes)
+DATA_59B2:
+	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h	; 59b2  ................
+	defb 000h,010h,020h,030h,040h,050h,060h,070h,07fh,070h,060h,050h,040h,030h,020h,010h	; 59c2  .. 0@P`p.p`P@0 .
+
+; ----------------------------------------------------------------------
+; DATOS sonido_59D2: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x0A, 0x0C, 0x13, 0x17, 0x19, 0x1D, 0x1E, 0x25, 0x28, 0x30 y 61
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (224
+;   bytes)
+;   0x59d2..0x5ab2  (224 bytes)
+DATA_sonido_59D2:
+	defb 000h,0e0h,0c0h,0a0h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h	; 59d2  ......... @`.`@
+	defb 000h,0e0h,0c0h,0a0h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h	; 59e2  ......... @`.`@
+	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 59f2  ..1GZju}.}ujZG1.
+	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h	; 5a02  ................
+	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 5a12  ..1GZju}.}ujZG1.
+	defb 000h,0e0h,0c0h,0a0h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h	; 5a22  ......... @`.`@
+	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 5a32  ..1GZju}.}ujZG1.
+	defb 080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h,000h,010h,020h,030h,040h,050h,060h,070h	; 5a42  .......... 0@P`p
+	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 5a52  ..1GZju}.}ujZG1.
+	defb 080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h	; 5a62  ..... @`..... @`
+	defb 001h,02ah,040h,050h,05ch,068h,070h,078h,07fh,078h,070h,068h,05ch,050h,040h,02ah	; 5a72  .*@P\hpx.xph\P@*
+	defb 0ffh,0d6h,0c0h,0b0h,0a4h,098h,090h,088h,081h,088h,090h,098h,0a4h,0b0h,0c0h,0d6h	; 5a82  ................
+	defb 000h,040h,07fh,040h,001h,0c0h,081h,0c0h,001h,040h,07fh,040h,001h,0c0h,001h,040h	; 5a92  .@.@.....@.@...@
+	defb 001h,0e0h,001h,020h,001h,0f0h,001h,010h,001h,0ffh,0ffh,0ffh,0ffh,040h,040h,040h	; 5aa2  ... .........@@@
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5ab2..0x5af2  (64 bytes)
+DATA_5AB2:
+	defb 078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5ab2  xph`XPH@80( ....
+	defb 078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5ac2  xph`XPH@80( ....
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5ad2  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 5ae2  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5AF2: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x3F, 0x5C, 0x78, 0x7A, 0x81, 0x84, 0x9A, 0x9C, 0xA2, 0xA3 y 5 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (96 bytes)
+;   0x5af2..0x5b52  (96 bytes)
+DATA_sonido_5AF2:
+	defb 000h,040h,07fh,040h,001h,010h,020h,02dh,037h,044h,04eh,059h,063h,06ch,073h,078h	; 5af2  .@.@.. -7DNYclsx
+	defb 07ch,07fh,07ch,078h,073h,06ch,059h,04eh,044h,037h,02dh,020h,010h,003h,002h,001h	; 5b02  |.|xslYND7- ....
+	defb 000h,040h,07fh,040h,010h,001h,0eah,0d6h,0c3h,0b9h,0afh,0a4h,09ch,095h,08fh,08ah	; 5b12  .@.@............
+	defb 086h,083h,081h,083h,086h,08ah,08fh,095h,09ch,0a4h,0afh,0b9h,0c3h,0d6h,0eah,0ffh	; 5b22  ................
+	defb 000h,040h,07fh,040h,000h,0c0h,0ffh,0c0h,005h,0ebh,0d6h,0c3h,0b9h,0afh,0a4h,09ch	; 5b32  .@.@............
+	defb 095h,08fh,089h,084h,081h,084h,089h,08fh,095h,09ch,0a4h,0afh,0b9h,0c3h,0d6h,0eah	; 5b42  ................
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5b52..0x5b72  (32 bytes)
+DATA_5B52:
+	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,080h,080h,080h,080h,080h,080h,080h	; 5b52  ................
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,07fh,070h,060h,050h,040h,030h,020h,010h	; 5b62  .........p`P@0 .
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5B72: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x06, 0x0F, 0x20, 0x21, 0x32, 0x3E, 0x55, 0x61, 0x65, 0x6A y 19
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (128
+;   bytes)
+;   0x5b72..0x5bf2  (128 bytes)
+DATA_sonido_5B72:
+	defb 000h,030h,050h,060h,070h,060h,050h,030h,000h,0d0h,0b0h,0a0h,090h,0a0h,0b0h,0d0h	; 5b72  .0P`p`P0........
+	defb 000h,040h,060h,070h,060h,040h,000h,0c0h,0a0h,090h,0a0h,0c0h,000h,070h,000h,090h	; 5b82  .@`p`@.......p..
+	defb 030h,050h,050h,030h,000h,000h,010h,040h,060h,070h,060h,030h,0f0h,0e0h,0e0h,000h	; 5b92  0PP0...@`p`0....
+	defb 020h,020h,010h,0c0h,0a0h,090h,0a0h,0c0h,000h,000h,0d0h,0b0h,0b0h,0d0h,000h,000h	; 5ba2    ..............
+	defb 0a0h,090h,090h,0a0h,0a0h,0b0h,0b0h,0b0h,0c0h,0c0h,0d0h,0d0h,0e0h,0e0h,0f0h,0f0h	; 5bb2  ................
+	defb 000h,000h,010h,010h,020h,020h,030h,030h,040h,040h,050h,050h,060h,060h,060h,050h	; 5bc2  ....  00@@PP```P
+	defb 000h,07fh,000h,080h,0a0h,0c0h,0d8h,0f0h,008h,020h,030h,040h,050h,060h,070h,078h	; 5bd2  ......... 0@P`px
+	defb 07ch,07fh,07ch,078h,070h,060h,050h,040h,030h,020h,008h,0f0h,0d8h,0c0h,0a0h,080h	; 5be2  |.|xp`P@0 ......
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5bf2..0x5c12  (32 bytes)
+DATA_5BF2:
+	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5bf2  ................
+	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c02  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5C12: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x20, 0x2E, 0x3B, 0x49, 0x59, 0x5D, 0x5E, 0x63, 0x6D, 0x6E y 4 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+;   0x5c12..0x5c52  (64 bytes)
+DATA_sonido_5C12:
+	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c12  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c22  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c32  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c42  ................
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5c52..0x5c72  (32 bytes)
+DATA_5C52:
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c52  ................
+	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c62  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5C72: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x17, 0x1B, 0x2B, 0x2C, 0x2D, 0x2E, 0x39, 0x6A, 0x6B, 0x6D y 8 mas
+;   (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+;   0x5c72..0x5cb2  (64 bytes)
+DATA_sonido_5C72:
+	defb 080h,08eh,0a0h,0c0h,0e0h,000h,020h,03fh,03eh,03ch,03ah,037h,031h,029h,020h,01ch	; 5c72  ...... ?><:71) .
+	defb 010h,000h,0e6h,0c0h,0d0h,000h,020h,03fh,010h,0e0h,080h,0c0h,000h,020h,000h,090h	; 5c82  ...... ?..... ..
+	defb 000h,070h,050h,020h,050h,070h,030h,000h,050h,07fh,060h,010h,030h,040h,000h,0b0h	; 5c92  .pP Pp0.P.`.0@..
+	defb 010h,060h,000h,0e0h,0f0h,000h,0b0h,090h,0c0h,010h,0e0h,0a0h,0c0h,0f0h,0c0h,0a0h	; 5ca2  .`..............
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5cb2..0x5cf2  (64 bytes)
+DATA_5CB2:
+	defb 080h,088h,090h,098h,0a0h,0b0h,0b0h,0b8h,0c0h,0c8h,0d0h,0d8h,0e0h,0e8h,0f0h,0f8h	; 5cb2  ................
+	defb 000h,008h,010h,018h,020h,028h,030h,038h,040h,048h,050h,058h,060h,068h,070h,078h	; 5cc2  .... (08@HPX`hpx
+	defb 000h,020h,030h,040h,050h,060h,068h,070h,078h,070h,068h,060h,050h,040h,030h,020h	; 5cd2  . 0@P`hpxph`P@0
+	defb 000h,0e0h,0d0h,0c0h,0b0h,0a0h,098h,090h,088h,090h,098h,0a0h,0b0h,0c0h,0d0h,0e0h	; 5ce2  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5CF2: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x0D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (32 bytes)
+;   0x5cf2..0x5d12  (32 bytes)
+DATA_sonido_5CF2:
+	defb 000h,000h,000h,000h,000h,078h,078h,000h,000h,080h,080h,080h,000h,000h,000h,000h	; 5cf2  .....xx.........
+	defb 078h,078h,078h,000h,080h,080h,000h,000h,000h,000h,078h,078h,000h,000h,080h,080h	; 5d02  xxx.......xx....
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5d12..0x5d52  (64 bytes)
+DATA_5D12:
+	defb 078h,078h,078h,078h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d12  xxxx............
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d22  ................
+	defb 078h,078h,078h,078h,078h,078h,078h,078h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d32  xxxxxxxx........
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d42  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5D52: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x0A, 0x0D, 0x0F, 0x10, 0x13, 0x14, 0x15, 0x18, 0x1A, 0x21 y 43
+;   mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (192
+;   bytes)
+;   0x5d52..0x5e12  (192 bytes)
+DATA_sonido_5D52:
+	defb 080h,0b0h,0c0h,010h,01ah,02ah,02ch,01ah,000h,0e0h,0d0h,0e0h,022h,053h,070h,075h	; 5d52  .....*,....."Spu
+	defb 070h,031h,0eah,080h,088h,08ah,08ch,08eh,000h,07fh,075h,073h,062h,000h,0c0h,090h	; 5d62  p1........usb...
+	defb 000h,020h,030h,040h,050h,058h,060h,068h,070h,068h,060h,058h,050h,040h,030h,020h	; 5d72  . 0@PX`hph`XP@0
+	defb 000h,0e0h,0d0h,0c0h,0b0h,0a0h,098h,090h,088h,090h,098h,0a0h,0b0h,0c0h,0d0h,0e0h	; 5d82  ................
+	defb 000h,000h,000h,000h,000h,070h,070h,000h,000h,080h,080h,080h,000h,000h,000h,000h	; 5d92  .....pp.........
+	defb 070h,070h,070h,000h,080h,080h,000h,000h,000h,000h,070h,070h,000h,000h,080h,080h	; 5da2  ppp.......pp....
+	defb 000h,000h,000h,080h,000h,070h,070h,070h,000h,000h,000h,080h,000h,000h,000h,080h	; 5db2  .....ppp........
+	defb 080h,080h,080h,000h,080h,000h,000h,000h,000h,080h,080h,080h,000h,080h,080h,080h	; 5dc2  ................
+	defb 000h,030h,0f0h,030h,040h,050h,060h,060h,070h,079h,070h,078h,040h,000h,000h,00eh	; 5dd2  .0.0@P``pypx@...
+	defb 070h,083h,060h,050h,000h,000h,000h,026h,074h,082h,084h,065h,064h,0e4h,093h,084h	; 5de2  p.`P...&t..ed...
+	defb 070h,070h,070h,070h,070h,070h,070h,070h,080h,080h,080h,080h,080h,080h,080h,080h	; 5df2  pppppppp........
+	defb 070h,070h,070h,080h,080h,080h,070h,070h,070h,070h,080h,080h,080h,080h,080h,080h	; 5e02  ppp...pppp......
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5e12..0x5e32  (32 bytes)
+DATA_5E12:
+	defb 0a0h,090h,090h,090h,0a0h,0a0h,0b0h,0b0h,0c0h,0c0h,0d0h,0d0h,0e0h,0e0h,0f0h,0f0h	; 5e12  ................
+	defb 000h,000h,010h,010h,020h,020h,030h,030h,040h,040h,050h,050h,060h,060h,060h,050h	; 5e22  ....  00@@PP```P
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5E32: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x1D, 0x43, 0x78, 0x7F (lo mide tools/partituras.py ejecutandolo);
+;   lo leen p16:4392 (32 bytes)
+;   0x5e32..0x5e52  (32 bytes)
+DATA_sonido_5E32:
+	defb 070h,070h,060h,080h,090h,090h,080h,080h,040h,040h,030h,080h,090h,090h,080h,080h	; 5e32  pp`.....@@0.....
+	defb 020h,020h,010h,080h,090h,090h,080h,080h,000h,000h,0f0h,080h,090h,090h,080h,080h	; 5e42    ..............
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x5e52..0x5ff2  (416 bytes)
+DATA_5E52:
+	defb 000h,0f8h,0f0h,0e8h,0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h	; 5e52  ................
+	defb 080h,088h,090h,098h,0a0h,0a8h,0b0h,0b8h,0c0h,0c8h,0d0h,0d8h,0e0h,0e8h,0f0h,0f8h	; 5e62  ................
+	defb 078h,070h,068h,060h,058h,050h,040h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5e72  xph`XP@@80( ....
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 5e82  ................
+	defb 0f8h,0f0h,0e8h,0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h,080h	; 5e92  ................
+	defb 078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5ea2  xph`XPH@80( ....
+	defb 000h,005h,00ah,010h,015h,01ah,020h,025h,030h,035h,03ah,040h,045h,04ah,050h,055h	; 5eb2  ...... %05:@EJPU
+	defb 060h,065h,06ah,065h,06ah,070h,075h,07ah,07fh,070h,060h,050h,040h,030h,020h,010h	; 5ec2  `ejejpuz.p`P@0 .
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,000h,000h,000h,000h,000h,000h,000h,000h	; 5ed2  ................
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,000h,000h,000h,000h,000h,000h,000h,000h	; 5ee2  ................
+	defb 000h,00ah,015h,020h,02ah,035h,040h,04ah,055h,060h,06ah,075h,07fh,060h,040h,020h	; 5ef2  ... *5@JU`ju.`@
+	defb 000h,0e0h,0c0h,0a0h,080h,08ah,095h,0a0h,0aah,0b5h,0c0h,0cah,0d5h,0e0h,0eah,0f5h	; 5f02  ................
+	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5f12  ................
+	defb 07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh	; 5f22  ................
+	defb 07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h	; 5f32  ................
+	defb 07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h	; 5f42  ................
+	defb 000h,07fh,000h,080h,0a0h,0c0h,0d8h,0f0h,008h,020h,030h,040h,050h,060h,070h,078h	; 5f52  ......... 0@P`px
+	defb 07ch,07fh,07ch,078h,070h,060h,050h,040h,030h,020h,008h,0f0h,0d8h,0c0h,0a0h,080h	; 5f62  |.|xp`P@0 ......
+	defb 000h,07fh,070h,070h,060h,060h,040h,020h,000h,0e0h,0c0h,0a0h,0a0h,090h,090h,080h	; 5f72  ..pp``@ ........
+	defb 000h,07fh,070h,070h,060h,060h,040h,020h,000h,0e0h,0c0h,0a0h,0a0h,090h,090h,000h	; 5f82  ..pp``@ ........
+	defb 080h,07fh,080h,070h,080h,060h,080h,050h,080h,040h,080h,030h,080h,020h,080h,010h	; 5f92  ...p.`.P.@.0. ..
+	defb 080h,000h,080h,0f0h,080h,0e0h,080h,0d0h,080h,0c0h,080h,0b0h,080h,0a0h,080h,090h	; 5fa2  ................
+	defb 080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh	; 5fb2  ................
+	defb 080h,07fh,080h,060h,080h,040h,080h,010h,080h,0f0h,080h,0d0h,080h,0b0h,080h,090h	; 5fc2  ...`.@..........
+	defb 000h,080h,020h,080h,040h,080h,060h,080h,07fh,080h,060h,080h,040h,080h,020h,080h	; 5fd2  .. .@.`...`.@. .
+	defb 000h,080h,0e0h,080h,0c0h,080h,0a0h,080h,0a0h,080h,0c0h,080h,0e0h,080h,000h,080h	; 5fe2  ................
+
+; ----------------------------------------------------------------------
+; DATOS sonido_5FF2: datos de sonido que lee el motor de p16 al tocar los
+;   sonidos 0x48 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392
+;   (14 bytes)
+;   0x5ff2..0x6000  (14 bytes)
+DATA_sonido_5FF2:
+	defb 080h,080h,080h,080h,080h,080h,010h,080h,080h,080h,080h,080h,080h,080h	; 5ff2  ..............

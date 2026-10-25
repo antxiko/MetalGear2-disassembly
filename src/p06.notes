@@ -6,6 +6,12 @@ D 0xA5A1 0xA5A9 tabla_A5A1  4 destinos del despachador p00:424D (call en p06:A59
 F 0xA5A1 w4
 D 0xA7F0 0xA800 tabla_A7F0  8 destinos del despachador p00:424D (call en p06:A7ED, el indice en A): A800, A86F, A885, A86F, A86F, A86F, A8E1, A86F; lo leen p06:A7ED (16 bytes)
 F 0xA7F0 w8
+D 0xAB19 0xAB1D mosaico_AB19  un mosaico de 2 x 2 caracteres, un byte cada uno (p00:510F; BC = 0x0202 en quien llama); lo leen p06:AAE6 (4 bytes)
+F 0xAB19 2
+D 0xAB1D 0xAB21 mosaico_AB1D  un mosaico de 2 x 2 caracteres, un byte cada uno (p00:510F; BC = 0x0202 en quien llama); lo leen p06:AB06 (4 bytes)
+F 0xAB1D 2
+D 0xAB7D 0xAB91 mosaico_AB7D  un mosaico de 5 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0504 en quien llama); lo leen p06:AB5C (20 bytes)
+F 0xAB7D 4
 D 0xAF02 0xAF4A tabla_AF02  36 destinos del despachador p00:424D (call en p06:AEFF, el indice en A): AF4A, AF55, AF60, AF75, AF80, AF92, AF9D, AFAC, AFB7, AFBD, AFC3, AFC9, AFD5, AFE0, AFE6, AFEC, AFFC, B002, B008, B00E, B014, B01A, B020, B028, B031, B037, B03D, B043, 6BFF, B04E, B054, B05F, B060, AFCF, AF54, 6B55; lo leen p06:AEFF (72 bytes)
 F 0xAF02 w8
 D 0xB155 0xB16B tabla_B155  11 destinos del despachador p00:424D (call en p06:B152, el indice en A): B16B, B180, B186, B191, B19C, B1A2, B1A8, B1AE, B1B9, B1BF, B1CA; lo leen p06:B152 (22 bytes)
@@ -22,10 +28,6 @@ D 0xA969 0xA979 resto_A969  lo apuntan con el banco puesto p06:A95F (0xA969); el
 F 0xA969 16
 D 0xA9C3 0xA9C7 resto_A9C3  lo apuntan con el banco puesto p06:A9AD (0xA9C3); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:A9AD (4 bytes)
 F 0xA9C3 16
-D 0xAB19 0xAB21 resto_AB19  lo apuntan con el banco puesto p06:AAE3 (0xAB19), p06:AB03 (0xAB1D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AAE3, p06:AB03 (8 bytes)
-F 0xAB19 16
-D 0xAB7D 0xAB91 resto_AB7D  lo apuntan con el banco puesto p06:AB53 (0xAB7D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AB53 (20 bytes)
-F 0xAB7D 16
 D 0xABFE 0xAC26 resto_ABFE  lo apuntan con el banco puesto p06:ABDE (0xABFE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:ABDE (40 bytes)
 F 0xABFE 16
 D 0xAC82 0xAC8B resto_AC82  lo apuntan con el banco puesto p06:AC35 (0xAC82); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AC35 (9 bytes)

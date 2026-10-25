@@ -3604,7 +3604,7 @@ DATA_resto_B998:
 	defb 007h,04bh,00ah,04bh,003h,04ch	; b998
 
 ; ======================================================================
-; CODIGO 0xb99e..0xb9f5  (87 bytes)
+; CODIGO 0xb99e..0xbbeb  (589 bytes)
 ; ======================================================================
 
 
@@ -3630,7 +3630,7 @@ L_B9AC:
 L_B9C1:
 	ld a,(0d7d1h)		;b9c1
 	bit 1,a		;b9c4
-	jr nz,$+53		;b9c6
+	jr nz,L_B9FB		;b9c6
 	ld a,(0ca41h)		;b9c8
 	or a			;b9cb
 	jr nz,L_B9E6		;b9cc
@@ -3656,17 +3656,10 @@ L_B9E6:
 	ld hl,0cabfh		;b9ee
 	ld (hl),a			;b9f1
 	jp 06b12h		;b9f2
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb9f5..0xb9fb  (6 bytes)
-DATA_B9F5:
-	defb 021h,0bfh,0cah,036h,001h,0c9h	; b9f5
-
-; ======================================================================
-; CODIGO 0xb9fb..0xbbeb  (496 bytes)
-; ======================================================================
-
-
+L_B9F5:
+	ld hl,0cabfh		;b9f5
+	ld (hl),001h		;b9f8
+	ret			;b9fa
 L_B9FB:
 	xor a			;b9fb
 	ld (0cadeh),a		;b9fc

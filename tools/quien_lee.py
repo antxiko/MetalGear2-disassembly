@@ -58,7 +58,8 @@ def apuntadores(t):
         if not 0x4000 <= w < 0xC000:
             continue
         if w < 0x6000:
-            destinos = {0}
+            # el 0x4000 es el 0 salvo con el sonido puesto (el 16: cartucho.BANCO_4000)
+            destinos = {bancos.Cartucho.banco(w, s) for s in t.config_de[(b, pc)]} or {0}
         else:
             r = (w - 0x6000) >> 13
             destinos = {s[r] for s in t.config_de[(b, pc)]}

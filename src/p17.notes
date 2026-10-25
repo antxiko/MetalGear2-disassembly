@@ -1,5 +1,549 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
-D 0x6000 0x8000 resto_6000  lo apuntan con el banco puesto p16:4968 (0x6430), p16:47A0 (0x6475), p16:4063 (0x65A9), p03:A111 (0x7000), p03:A171 (0x7000), p03:A1A8 (0x7000); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:4968, p16:47A0, p16:4063, p03:A111, p03:A171, p03:A1A8 (8192 bytes)
+D 0x6000 0x6032 sonido_6000  datos de sonido que lee el motor de p16 al tocar los sonidos 0x48, 0xAA (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (50 bytes)
 F 0x6000 16
+D 0x60B2 0x60F2 sonido_60B2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x40, 0x4E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x60B2 16
+D 0x6112 0x6172 sonido_6112  datos de sonido que lee el motor de p16 al tocar los sonidos 0x25, 0x2E, 0x42, 0x44, 0x45, 0x46, 0x4C, 0x60, 0x76, 0x77 y 6 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (96 bytes)
+F 0x6112 16
+D 0x61B2 0x6292 sonido_61B2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x2A, 0x2F, 0x36, 0x37, 0x3E, 0x40, 0x4A, 0x4B, 0x63, 0x6F y 25 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (224 bytes)
+F 0x61B2 16
+D 0x62B2 0x62D2 sonido_62B2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x44, 0x9E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x62B2 16
+D 0x62F2 0x6392 sonido_62F2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x70, 0x71, 0x72, 0x74, 0x77, 0x78, 0x79, 0x7A y 13 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (160 bytes)
+F 0x62F2 16
+D 0x63F2 0x6412 sonido_63F2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x1C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x63F2 16
+D 0x6432 0x6434 sonido_6432  datos de sonido que lee el motor de p16 al tocar los sonidos 0x7C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x6432 16
+D 0x643A 0x6453 sonido_643A  datos de sonido que lee el motor de p16 al tocar los sonidos 0x7C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x643A 16
+D 0x6477 0x6489 sonido_6477  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x73 y 26 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (18 bytes)
+F 0x6477 16
+D 0x648B 0x648D sonido_648B  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9F, 0xA3 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x648B 16
+D 0x648F 0x6495 sonido_648F  datos de sonido que lee el motor de p16 al tocar los sonidos 0x76, 0x77, 0x7A, 0x84, 0x89, 0x8D, 0x9C, 0xA0, 0xA1, 0xA2 y 4 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
+F 0x648F 16
+D 0x6499 0x64AA sonido_6499  datos de sonido que lee el motor de p16 al tocar los sonidos 0x70, 0x71, 0x78, 0x88, 0x99, 0xA3 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (17 bytes)
+F 0x6499 16
+D 0x64AB 0x64B6 sonido_64AB  datos de sonido que lee el motor de p16 al tocar los sonidos 0x79, 0x83, 0x90, 0x99, 0x9A, 0xA2, 0xA3, 0xA4, 0xA8 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x64AB 16
+D 0x64B7 0x64BE sonido_64B7  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x74, 0x8C, 0xA6 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (7 bytes)
+F 0x64B7 16
+D 0x64BF 0x64C6 sonido_64BF  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x7C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (7 bytes)
+F 0x64BF 16
+D 0x64C7 0x64D2 sonido_64C7  datos de sonido que lee el motor de p16 al tocar los sonidos 0x70, 0x72, 0x7B, 0x7D, 0x9E, 0xA7 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x64C7 16
+D 0x64D3 0x64DE sonido_64D3  datos de sonido que lee el motor de p16 al tocar los sonidos 0xA7 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x64D3 16
+D 0x64DF 0x64EA sonido_64DF  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6C, 0x6F, 0x71, 0x72, 0x73, 0x7B, 0x7E, 0x7F, 0x80, 0x82 y 3 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x64DF 16
+D 0x64EB 0x64F5 sonido_64EB  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6C, 0x6F, 0x81, 0x9C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (10 bytes)
+F 0x64EB 16
+D 0x64F6 0x6500 sonido_64F6  datos de sonido que lee el motor de p16 al tocar los sonidos 0x73, 0x9D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (10 bytes)
+F 0x64F6 16
+D 0x650D 0x6518 sonido_650D  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9F, 0xA3 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x650D 16
+D 0x6525 0x6538 sonido_6525  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (19 bytes)
+F 0x6525 16
+D 0x6539 0x6550 sonido_6539  datos de sonido que lee el motor de p16 al tocar los sonidos 0xA2, 0xA3 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (23 bytes)
+F 0x6539 16
+D 0x6551 0x655E sonido_6551  datos de sonido que lee el motor de p16 al tocar los sonidos 0x76, 0x77, 0x7A, 0x84, 0x89, 0x8D, 0xA0, 0xA1, 0xA3, 0xA5 y 2 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (13 bytes)
+F 0x6551 16
+D 0x6587 0x6592 sonido_6587  datos de sonido que lee el motor de p16 al tocar los sonidos 0x78 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x6587 16
+D 0x6593 0x659E sonido_6593  datos de sonido que lee el motor de p16 al tocar los sonidos 0x78 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x6593 16
+D 0x659F 0x65A9 sonido_659F  datos de sonido que lee el motor de p16 al tocar los sonidos 0x78 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (10 bytes)
+F 0x659F 16
+D 0x65A9 0x66FF sonidos  171 palabras: la del sonido 0 (0xFFE0, no se pide) y un puntero por sonido del 1 al 0xAA a su cabecera (p16:4063: 0x65A9 + 2 x numero); 0x6A-0xAA son las musicas, con su banco en p16:4CF9; lo leen p16:406F (342 bytes)
+F 0x65A9 w8
+D 0x66FF 0x6711 cabecera_66FF  cabecera del sonido 0x01 (p16:4074): [canales FF][prioridad FF] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x66FF 2
+D 0x6711 0x6723 cabecera_6711  cabecera del sonido 0x02 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6711 2
+D 0x6723 0x6731 cabecera_6723  cabecera del sonido 0x03 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6723 2
+D 0x6731 0x6737 cabecera_6731  cabecera del sonido 0x04 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6731 2
+D 0x6737 0x673D cabecera_6737  cabecera del sonido 0x05 (p16:4074): [canales 30][prioridad E0] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6737 2
+D 0x673D 0x6741 cabecera_673D  cabecera del sonido 0x06 (p16:4074): [canales 10][prioridad FE] y 1 punteros, uno por canal (p16:411A); lo leen p16:4074 (4 bytes)
+F 0x673D 2
+D 0x6741 0x6747 cabecera_6741  cabecera del sonido 0x07 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6741 2
+D 0x6747 0x674D cabecera_6747  cabecera del sonido 0x08 (p16:4074): [canales 30][prioridad 50] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6747 2
+D 0x674D 0x6753 cabecera_674D  cabecera del sonido 0x09 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x674D 2
+D 0x6753 0x6759 cabecera_6753  cabecera del sonido 0x0A (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6753 2
+D 0x6759 0x675F cabecera_6759  cabecera del sonido 0x0B (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6759 2
+D 0x675F 0x6765 cabecera_675F  cabecera del sonido 0x0C (p16:4074): [canales 30][prioridad 01] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x675F 2
+D 0x6765 0x676B cabecera_6765  cabecera del sonido 0x0D (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6765 2
+D 0x676B 0x6771 cabecera_676B  cabecera del sonido 0x0E (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x676B 2
+D 0x6771 0x6777 cabecera_6771  cabecera del sonido 0x0F (p16:4074): [canales 30][prioridad 51] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6771 2
+D 0x6777 0x677D cabecera_6777  cabecera del sonido 0x10 (p16:4074): [canales 30][prioridad 51] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6777 2
+D 0x677D 0x6783 cabecera_677D  cabecera del sonido 0x11 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x677D 2
+D 0x6783 0x6789 cabecera_6783  cabecera del sonido 0x12 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6783 2
+D 0x6789 0x678F cabecera_6789  cabecera del sonido 0x13 (p16:4074): [canales 30][prioridad 40] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6789 2
+D 0x678F 0x6795 cabecera_678F  cabecera del sonido 0x14 (p16:4074): [canales 30][prioridad 52] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x678F 2
+D 0x6795 0x679B cabecera_6795  cabecera del sonido 0x15 (p16:4074): [canales 30][prioridad 4F] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6795 2
+D 0x679B 0x67A1 cabecera_679B  cabecera del sonido 0x16 (p16:4074): [canales 30][prioridad 40] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x679B 2
+D 0x67A1 0x67A7 cabecera_67A1  cabecera del sonido 0x17 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67A1 2
+D 0x67A7 0x67AD cabecera_67A7  cabecera del sonido 0x18 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67A7 2
+D 0x67AD 0x67B3 cabecera_67AD  cabecera del sonido 0x19 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67AD 2
+D 0x67B3 0x67B9 cabecera_67B3  cabecera del sonido 0x1A (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67B3 2
+D 0x67B9 0x67BF cabecera_67B9  cabecera del sonido 0x1B (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67B9 2
+D 0x67BF 0x67C5 cabecera_67BF  cabecera del sonido 0x1C (p16:4074): [canales 30][prioridad 50] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67BF 2
+D 0x67C5 0x67CB cabecera_67C5  cabecera del sonido 0x1D (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67C5 2
+D 0x67CB 0x67D1 cabecera_67CB  cabecera del sonido 0x1E (p16:4074): [canales 30][prioridad 01] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67CB 2
+D 0x67D1 0x67D7 cabecera_67D1  cabecera del sonido 0x1F (p16:4074): [canales 30][prioridad 01] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67D1 2
+D 0x67D7 0x67DD cabecera_67D7  cabecera del sonido 0x20 (p16:4074): [canales 30][prioridad 01] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67D7 2
+D 0x67DD 0x67E3 cabecera_67DD  cabecera del sonido 0x21 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67DD 2
+D 0x67E3 0x67E9 cabecera_67E3  cabecera del sonido 0x22 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67E3 2
+D 0x67E9 0x67EF cabecera_67E9  cabecera del sonido 0x23 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67E9 2
+D 0x67EF 0x67F5 cabecera_67EF  cabecera del sonido 0x24 (p16:4074): [canales 30][prioridad 40] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67EF 2
+D 0x67F5 0x67FB cabecera_67F5  cabecera del sonido 0x25 (p16:4074): [canales 30][prioridad 60] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67F5 2
+D 0x67FB 0x6801 cabecera_67FB  cabecera del sonido 0x26 (p16:4074): [canales 30][prioridad 98] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x67FB 2
+D 0x6801 0x6807 cabecera_6801  cabecera del sonido 0x27 (p16:4074): [canales 30][prioridad 02] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6801 2
+D 0x6807 0x680D cabecera_6807  cabecera del sonido 0x28 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6807 2
+D 0x680D 0x6813 cabecera_680D  cabecera del sonido 0x29 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x680D 2
+D 0x6813 0x6819 cabecera_6813  cabecera del sonido 0x2A (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6813 2
+D 0x6819 0x681F cabecera_6819  cabecera del sonido 0x2B (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6819 2
+D 0x681F 0x6825 cabecera_681F  cabecera del sonido 0x2C (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x681F 2
+D 0x6825 0x682B cabecera_6825  cabecera del sonido 0x2D (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6825 2
+D 0x682B 0x6831 cabecera_682B  cabecera del sonido 0x2E (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x682B 2
+D 0x6831 0x6837 cabecera_6831  cabecera del sonido 0x2F (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6831 2
+D 0x6837 0x683D cabecera_6837  cabecera del sonido 0x30 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6837 2
+D 0x683D 0x6843 cabecera_683D  cabecera del sonido 0x31 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x683D 2
+D 0x6843 0x6849 cabecera_6843  cabecera del sonido 0x32 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6843 2
+D 0x6849 0x684F cabecera_6849  cabecera del sonido 0x33 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6849 2
+D 0x684F 0x6855 cabecera_684F  cabecera del sonido 0x34 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x684F 2
+D 0x6855 0x685B cabecera_6855  cabecera del sonido 0x35 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6855 2
+D 0x685B 0x6861 cabecera_685B  cabecera del sonido 0x36 (p16:4074): [canales 30][prioridad 10] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x685B 2
+D 0x6861 0x6867 cabecera_6861  cabecera del sonido 0x37 (p16:4074): [canales 30][prioridad 10] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6861 2
+D 0x6867 0x686D cabecera_6867  cabecera del sonido 0x38 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6867 2
+D 0x686D 0x6873 cabecera_686D  cabecera del sonido 0x39 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x686D 2
+D 0x6873 0x6879 cabecera_6873  cabecera del sonido 0x3A (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6873 2
+D 0x6879 0x687F cabecera_6879  cabecera del sonido 0x3B (p16:4074): [canales 30][prioridad 40] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6879 2
+D 0x687F 0x6885 cabecera_687F  cabecera del sonido 0x3C (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x687F 2
+D 0x6885 0x688B cabecera_6885  cabecera del sonido 0x3D (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6885 2
+D 0x688B 0x6891 cabecera_688B  cabecera del sonido 0x3E (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x688B 2
+D 0x6891 0x6897 cabecera_6891  cabecera del sonido 0x3F (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6891 2
+D 0x6897 0x689D cabecera_6897  cabecera del sonido 0x40 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6897 2
+D 0x689D 0x68A3 cabecera_689D  cabecera del sonido 0x41 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x689D 2
+D 0x68A3 0x68A9 cabecera_68A3  cabecera del sonido 0x42 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68A3 2
+D 0x68A9 0x68AF cabecera_68A9  cabecera del sonido 0x43 (p16:4074): [canales 30][prioridad 51] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68A9 2
+D 0x68AF 0x68B5 cabecera_68AF  cabecera del sonido 0x44 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68AF 2
+D 0x68B5 0x68BB cabecera_68B5  cabecera del sonido 0x45 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68B5 2
+D 0x68BB 0x68C1 cabecera_68BB  cabecera del sonido 0x46 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68BB 2
+D 0x68C1 0x68C7 cabecera_68C1  cabecera del sonido 0x47 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68C1 2
+D 0x68C7 0x68CD cabecera_68C7  cabecera del sonido 0x48 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68C7 2
+D 0x68CD 0x68D3 cabecera_68CD  cabecera del sonido 0x49 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68CD 2
+D 0x68D3 0x68D9 cabecera_68D3  cabecera del sonido 0x4A (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68D3 2
+D 0x68D9 0x68DF cabecera_68D9  cabecera del sonido 0x4B (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68D9 2
+D 0x68DF 0x68E5 cabecera_68DF  cabecera del sonido 0x4C (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68DF 2
+D 0x68E5 0x68EB cabecera_68E5  cabecera del sonido 0x4D (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68E5 2
+D 0x68EB 0x68F1 cabecera_68EB  cabecera del sonido 0x4E (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68EB 2
+D 0x68F1 0x68F7 cabecera_68F1  cabecera del sonido 0x4F (p16:4074): [canales 30][prioridad 50] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68F1 2
+D 0x68F7 0x68FD cabecera_68F7  cabecera del sonido 0x50 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68F7 2
+D 0x68FD 0x6903 cabecera_68FD  cabecera del sonido 0x51 (p16:4074): [canales 30][prioridad 10] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x68FD 2
+D 0x6903 0x6909 cabecera_6903  cabecera del sonido 0x52 (p16:4074): [canales 30][prioridad 10] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6903 2
+D 0x6909 0x690F cabecera_6909  cabecera del sonido 0x53 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6909 2
+D 0x690F 0x6915 cabecera_690F  cabecera del sonido 0x54 (p16:4074): [canales 30][prioridad E0] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x690F 2
+D 0x6915 0x691B cabecera_6915  cabecera del sonido 0x55 (p16:4074): [canales 30][prioridad 28] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6915 2
+D 0x691B 0x6921 cabecera_691B  cabecera del sonido 0x56 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x691B 2
+D 0x6921 0x6927 cabecera_6921  cabecera del sonido 0x57 (p16:4074): [canales 30][prioridad 40] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6921 2
+D 0x6927 0x692D cabecera_6927  cabecera del sonido 0x58 (p16:4074): [canales 30][prioridad 80] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6927 2
+D 0x692D 0x6933 cabecera_692D  cabecera del sonido 0x59 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x692D 2
+D 0x6933 0x6939 cabecera_6933  cabecera del sonido 0x5A (p16:4074): [canales 30][prioridad 08] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6933 2
+D 0x6939 0x693F cabecera_6939  cabecera del sonido 0x5B (p16:4074): [canales 30][prioridad 08] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6939 2
+D 0x693F 0x6945 cabecera_693F  cabecera del sonido 0x5C (p16:4074): [canales 30][prioridad 60] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x693F 2
+D 0x6945 0x694B cabecera_6945  cabecera del sonido 0x5D (p16:4074): [canales 30][prioridad 40] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6945 2
+D 0x694B 0x6951 cabecera_694B  cabecera del sonido 0x5E (p16:4074): [canales 30][prioridad 02] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x694B 2
+D 0x6951 0x6957 cabecera_6951  cabecera del sonido 0x5F (p16:4074): [canales 30][prioridad 50] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6951 2
+D 0x6957 0x695D cabecera_6957  cabecera del sonido 0x60 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6957 2
+D 0x695D 0x6963 cabecera_695D  cabecera del sonido 0x61 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x695D 2
+D 0x6963 0x6969 cabecera_6963  cabecera del sonido 0x62 (p16:4074): [canales 30][prioridad 60] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6963 2
+D 0x6969 0x696F cabecera_6969  cabecera del sonido 0x63 (p16:4074): [canales 30][prioridad 20] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6969 2
+D 0x696F 0x6975 cabecera_696F  cabecera del sonido 0x64 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x696F 2
+D 0x6975 0x697B cabecera_6975  cabecera del sonido 0x65 (p16:4074): [canales 30][prioridad 38] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6975 2
+D 0x697B 0x6981 cabecera_697B  cabecera del sonido 0x66 (p16:4074): [canales 30][prioridad 38] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x697B 2
+D 0x6981 0x6987 cabecera_6981  cabecera del sonido 0x67 (p16:4074): [canales 30][prioridad 30] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6981 2
+D 0x6987 0x698D cabecera_6987  cabecera del sonido 0x68 (p16:4074): [canales 30][prioridad 28] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x6987 2
+D 0x698D 0x6993 cabecera_698D  cabecera del sonido 0x69 (p16:4074): [canales 30][prioridad 90] y 2 punteros, uno por canal (p16:411A); lo leen p16:4074 (6 bytes)
+F 0x698D 2
+D 0x6993 0x69A1 cabecera_6993  cabecera del sonido 0x6A (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6993 2
+D 0x69A1 0x69AF cabecera_69A1  cabecera del sonido 0x6B (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69A1 2
+D 0x69AF 0x69BD cabecera_69AF  cabecera del sonido 0x6C (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69AF 2
+D 0x69BD 0x69CB cabecera_69BD  cabecera del sonido 0x6D (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69BD 2
+D 0x69CB 0x69D9 cabecera_69CB  cabecera del sonido 0x6E (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69CB 2
+D 0x69D9 0x69E7 cabecera_69D9  cabecera del sonido 0x6F (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69D9 2
+D 0x69E7 0x69F5 cabecera_69E7  cabecera del sonido 0x70 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69E7 2
+D 0x69F5 0x6A03 cabecera_69F5  cabecera del sonido 0x71 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x69F5 2
+D 0x6A03 0x6A11 cabecera_6A03  cabecera del sonido 0x72 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A03 2
+D 0x6A11 0x6A1F cabecera_6A11  cabecera del sonido 0x73 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A11 2
+D 0x6A1F 0x6A2D cabecera_6A1F  cabecera del sonido 0x74 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A1F 2
+D 0x6A2D 0x6A3B cabecera_6A2D  cabecera del sonido 0x75 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A2D 2
+D 0x6A3B 0x6A49 cabecera_6A3B  cabecera del sonido 0x76 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A3B 2
+D 0x6A49 0x6A57 cabecera_6A49  cabecera del sonido 0x77 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A49 2
+D 0x6A57 0x6A65 cabecera_6A57  cabecera del sonido 0x78 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A57 2
+D 0x6A65 0x6A73 cabecera_6A65  cabecera del sonido 0x79 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A65 2
+D 0x6A73 0x6A81 cabecera_6A73  cabecera del sonido 0x7A (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A73 2
+D 0x6A81 0x6A8F cabecera_6A81  cabecera del sonido 0x7B (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A81 2
+D 0x6A8F 0x6A9D cabecera_6A8F  cabecera del sonido 0x7C (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A8F 2
+D 0x6A9D 0x6AAB cabecera_6A9D  cabecera del sonido 0x7D (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6A9D 2
+D 0x6AAB 0x6AB9 cabecera_6AAB  cabecera del sonido 0x7E (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AAB 2
+D 0x6AB9 0x6AC7 cabecera_6AB9  cabecera del sonido 0x7F (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AB9 2
+D 0x6AC7 0x6AD5 cabecera_6AC7  cabecera del sonido 0x80 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AC7 2
+D 0x6AD5 0x6AE3 cabecera_6AD5  cabecera del sonido 0x81 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AD5 2
+D 0x6AE3 0x6AF1 cabecera_6AE3  cabecera del sonido 0x82 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AE3 2
+D 0x6AF1 0x6AFF cabecera_6AF1  cabecera del sonido 0x83 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AF1 2
+D 0x6AFF 0x6B0D cabecera_6AFF  cabecera del sonido 0x84 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6AFF 2
+D 0x6B0D 0x6B1B cabecera_6B0D  cabecera del sonido 0x85 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B0D 2
+D 0x6B1B 0x6B29 cabecera_6B1B  cabecera del sonido 0x86 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B1B 2
+D 0x6B29 0x6B37 cabecera_6B29  cabecera del sonido 0x87 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B29 2
+D 0x6B37 0x6B45 cabecera_6B37  cabecera del sonido 0x88 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B37 2
+D 0x6B45 0x6B53 cabecera_6B45  cabecera del sonido 0x89 (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B45 2
+D 0x6B53 0x6B61 cabecera_6B53  cabecera del sonido 0x8A (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B53 2
+D 0x6B61 0x6B6F cabecera_6B61  cabecera del sonido 0x8B (p16:4074): [canales CF][prioridad E0] y 6 punteros, uno por canal (p16:411A); lo leen p16:4074 (14 bytes)
+F 0x6B61 2
+D 0x6B6F 0x6B81 cabecera_6B6F  cabecera del sonido 0x8C (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6B6F 2
+D 0x6B81 0x6B93 cabecera_6B81  cabecera del sonido 0x8D (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6B81 2
+D 0x6B93 0x6BA5 cabecera_6B93  cabecera del sonido 0x8E (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6B93 2
+D 0x6BA5 0x6BB7 cabecera_6BA5  cabecera del sonido 0x8F (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6BA5 2
+D 0x6BB7 0x6BC9 cabecera_6BB7  cabecera del sonido 0x90 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6BB7 2
+D 0x6BC9 0x6BDB cabecera_6BC9  cabecera del sonido 0x91 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6BC9 2
+D 0x6BDB 0x6BED cabecera_6BDB  cabecera del sonido 0x92 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6BDB 2
+D 0x6BED 0x6BFF cabecera_6BED  cabecera del sonido 0x93 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6BED 2
+D 0x6BFF 0x6C11 cabecera_6BFF  cabecera del sonido 0x94 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6BFF 2
+D 0x6C11 0x6C23 cabecera_6C11  cabecera del sonido 0x95 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C11 2
+D 0x6C23 0x6C35 cabecera_6C23  cabecera del sonido 0x96 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C23 2
+D 0x6C35 0x6C47 cabecera_6C35  cabecera del sonido 0x97 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C35 2
+D 0x6C47 0x6C59 cabecera_6C47  cabecera del sonido 0x98 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C47 2
+D 0x6C59 0x6C6B cabecera_6C59  cabecera del sonido 0x99 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C59 2
+D 0x6C6B 0x6C7D cabecera_6C6B  cabecera del sonido 0x9A (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C6B 2
+D 0x6C7D 0x6C8F cabecera_6C7D  cabecera del sonido 0x9B (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C7D 2
+D 0x6C8F 0x6CA1 cabecera_6C8F  cabecera del sonido 0x9C (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6C8F 2
+D 0x6CA1 0x6CB3 cabecera_6CA1  cabecera del sonido 0x9D (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6CA1 2
+D 0x6CB3 0x6CC5 cabecera_6CB3  cabecera del sonido 0x9E (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6CB3 2
+D 0x6CC5 0x6CD7 cabecera_6CC5  cabecera del sonido 0x9F (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6CC5 2
+D 0x6CD7 0x6CE9 cabecera_6CD7  cabecera del sonido 0xA0 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6CD7 2
+D 0x6CE9 0x6CFB cabecera_6CE9  cabecera del sonido 0xA1 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6CE9 2
+D 0x6CFB 0x6D0D cabecera_6CFB  cabecera del sonido 0xA2 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6CFB 2
+D 0x6D0D 0x6D1F cabecera_6D0D  cabecera del sonido 0xA3 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D0D 2
+D 0x6D1F 0x6D31 cabecera_6D1F  cabecera del sonido 0xA4 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D1F 2
+D 0x6D31 0x6D43 cabecera_6D31  cabecera del sonido 0xA5 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D31 2
+D 0x6D43 0x6D55 cabecera_6D43  cabecera del sonido 0xA6 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D43 2
+D 0x6D55 0x6D67 cabecera_6D55  cabecera del sonido 0xA7 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D55 2
+D 0x6D67 0x6D79 cabecera_6D67  cabecera del sonido 0xA8 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D67 2
+D 0x6D79 0x6D8B cabecera_6D79  cabecera del sonido 0xA9 (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D79 2
+D 0x6D8B 0x6D9D cabecera_6D8B  cabecera del sonido 0xAA (p16:4074): [canales FF][prioridad E0] y 8 punteros, uno por canal (p16:411A); lo leen p16:4074 (18 bytes)
+F 0x6D8B 2
+D 0x6D9D 0x6D9E partitura_6D9D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (1 bytes)
+F 0x6D9D 16
+D 0x6D9E 0x6DB6 partitura_6D9E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x06 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (24 bytes)
+F 0x6D9E 16
+D 0x6DB6 0x6DF1 partitura_6DB6  partitura de canal que lee el motor de p16 al tocar los sonidos 0x07 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (59 bytes)
+F 0x6DB6 16
+D 0x6DF1 0x6E2E partitura_6DF1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x07 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x6DF1 16
+D 0x6E2E 0x6E45 partitura_6E2E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x08 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (23 bytes)
+F 0x6E2E 16
+D 0x6E45 0x6E5E partitura_6E45  partitura de canal que lee el motor de p16 al tocar los sonidos 0x08 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x6E45 16
+D 0x6E5E 0x6E9B partitura_6E5E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x09 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x6E5E 16
+D 0x6E9B 0x6EC2 partitura_6E9B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x09 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (39 bytes)
+F 0x6E9B 16
+D 0x6EC2 0x6F02 partitura_6EC2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x6EC2 16
+D 0x6F02 0x6F3F partitura_6F02  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x6F02 16
+D 0x6F3F 0x6F7E partitura_6F3F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (63 bytes)
+F 0x6F3F 16
+D 0x6F7E 0x6FC1 partitura_6F7E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (67 bytes)
+F 0x6F7E 16
+D 0x6FC1 0x6FE1 partitura_6FC1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x6FC1 16
+D 0x6FE1 0x6FF8 partitura_6FE1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (23 bytes)
+F 0x6FE1 16
+D 0x6FF8 0x7046 partitura_6FF8  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (78 bytes)
+F 0x6FF8 16
+D 0x7046 0x70B3 partitura_7046  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (109 bytes)
+F 0x7046 16
+D 0x70B3 0x7107 partitura_70B3  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (84 bytes)
+F 0x70B3 16
+D 0x7107 0x7144 partitura_7107  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x7107 16
+D 0x7144 0x71BB partitura_7144  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (119 bytes)
+F 0x7144 16
+D 0x71BB 0x723C partitura_71BB  partitura de canal que lee el motor de p16 al tocar los sonidos 0x0F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (129 bytes)
+F 0x71BB 16
+D 0x723C 0x7299 partitura_723C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x10 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (93 bytes)
+F 0x723C 16
+D 0x7299 0x72CE partitura_7299  partitura de canal que lee el motor de p16 al tocar los sonidos 0x10 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (53 bytes)
+F 0x7299 16
+D 0x72CE 0x72F5 partitura_72CE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x11 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (39 bytes)
+F 0x72CE 16
+D 0x72F5 0x7320 partitura_72F5  partitura de canal que lee el motor de p16 al tocar los sonidos 0x11 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (43 bytes)
+F 0x72F5 16
+D 0x7320 0x7342 partitura_7320  partitura de canal que lee el motor de p16 al tocar los sonidos 0x12 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (34 bytes)
+F 0x7320 16
+D 0x7342 0x7363 partitura_7342  partitura de canal que lee el motor de p16 al tocar los sonidos 0x12 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (33 bytes)
+F 0x7342 16
+D 0x7363 0x73B3 partitura_7363  partitura de canal que lee el motor de p16 al tocar los sonidos 0x13 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (80 bytes)
+F 0x7363 16
+D 0x73B3 0x73F0 partitura_73B3  partitura de canal que lee el motor de p16 al tocar los sonidos 0x13 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x73B3 16
+D 0x73F0 0x742C partitura_73F0  partitura de canal que lee el motor de p16 al tocar los sonidos 0x14 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (60 bytes)
+F 0x73F0 16
+D 0x742C 0x754B partitura_742C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x14, 0x67 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (287 bytes)
+F 0x742C 16
+D 0x754B 0x75F5 partitura_754B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x15 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (170 bytes)
+F 0x754B 16
+D 0x75F5 0x769E partitura_75F5  partitura de canal que lee el motor de p16 al tocar los sonidos 0x15 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (169 bytes)
+F 0x75F5 16
+D 0x769E 0x76A2 partitura_769E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x16 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x769E 16
+D 0x76A2 0x7718 partitura_76A2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x16 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (118 bytes)
+F 0x76A2 16
+D 0x7718 0x7753 partitura_7718  partitura de canal que lee el motor de p16 al tocar los sonidos 0x17 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (59 bytes)
+F 0x7718 16
+D 0x7753 0x777E partitura_7753  partitura de canal que lee el motor de p16 al tocar los sonidos 0x17 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (43 bytes)
+F 0x7753 16
+D 0x777E 0x779D partitura_777E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x18 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (31 bytes)
+F 0x777E 16
+D 0x779D 0x77BE partitura_779D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x18 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (33 bytes)
+F 0x779D 16
+D 0x77BE 0x77F3 partitura_77BE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x19 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (53 bytes)
+F 0x77BE 16
+D 0x77F3 0x781A partitura_77F3  partitura de canal que lee el motor de p16 al tocar los sonidos 0x19 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (39 bytes)
+F 0x77F3 16
+D 0x781A 0x7868 partitura_781A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (78 bytes)
+F 0x781A 16
+D 0x7868 0x78D3 partitura_7868  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (107 bytes)
+F 0x7868 16
+D 0x78D3 0x78EE partitura_78D3  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x78D3 16
+D 0x78EE 0x7907 partitura_78EE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x78EE 16
+D 0x7907 0x7946 partitura_7907  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (63 bytes)
+F 0x7907 16
+D 0x7946 0x7983 partitura_7946  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x7946 16
+D 0x7983 0x79DB partitura_7983  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (88 bytes)
+F 0x7983 16
+D 0x79DB 0x7A45 partitura_79DB  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (106 bytes)
+F 0x79DB 16
+D 0x7A45 0x7A6A partitura_7A45  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (37 bytes)
+F 0x7A45 16
+D 0x7A6A 0x7A8B partitura_7A6A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (33 bytes)
+F 0x7A6A 16
+D 0x7A8B 0x7AC1 partitura_7A8B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (54 bytes)
+F 0x7A8B 16
+D 0x7AC1 0x7B00 partitura_7AC1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x1F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (63 bytes)
+F 0x7AC1 16
+D 0x7B00 0x7B1D partitura_7B00  partitura de canal que lee el motor de p16 al tocar los sonidos 0x20 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (29 bytes)
+F 0x7B00 16
+D 0x7B1D 0x7B36 partitura_7B1D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x20 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x7B1D 16
+D 0x7B36 0x7BA1 partitura_7B36  partitura de canal que lee el motor de p16 al tocar los sonidos 0x21 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (107 bytes)
+F 0x7B36 16
+D 0x7BA1 0x7C08 partitura_7BA1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x21 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (103 bytes)
+F 0x7BA1 16
+D 0x7C08 0x7C49 partitura_7C08  partitura de canal que lee el motor de p16 al tocar los sonidos 0x22 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (65 bytes)
+F 0x7C08 16
+D 0x7C49 0x7C8E partitura_7C49  partitura de canal que lee el motor de p16 al tocar los sonidos 0x22 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (69 bytes)
+F 0x7C49 16
+D 0x7C8E 0x7C9F partitura_7C8E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x23 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (17 bytes)
+F 0x7C8E 16
+D 0x7C9F 0x7CB0 partitura_7C9F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x23 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (17 bytes)
+F 0x7C9F 16
+D 0x7CB0 0x7CEA partitura_7CB0  partitura de canal que lee el motor de p16 al tocar los sonidos 0x24 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (58 bytes)
+F 0x7CB0 16
+D 0x7CEA 0x7D1E partitura_7CEA  partitura de canal que lee el motor de p16 al tocar los sonidos 0x24 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (52 bytes)
+F 0x7CEA 16
+D 0x7D1E 0x7D5D partitura_7D1E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x25 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (63 bytes)
+F 0x7D1E 16
+D 0x7D5D 0x7DA6 partitura_7D5D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x25 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (73 bytes)
+F 0x7D5D 16
+D 0x7DA6 0x7DEE partitura_7DA6  partitura de canal que lee el motor de p16 al tocar los sonidos 0x26 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (72 bytes)
+F 0x7DA6 16
+D 0x7DEE 0x7E38 partitura_7DEE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x26 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (74 bytes)
+F 0x7DEE 16
+D 0x7E38 0x7E61 partitura_7E38  partitura de canal que lee el motor de p16 al tocar los sonidos 0x27 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (41 bytes)
+F 0x7E38 16
+D 0x7E61 0x7E8A partitura_7E61  partitura de canal que lee el motor de p16 al tocar los sonidos 0x27 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (41 bytes)
+F 0x7E61 16
+D 0x7E8A 0x7EDF partitura_7E8A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x28 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (85 bytes)
+F 0x7E8A 16
+D 0x7EDF 0x7F7E partitura_7EDF  partitura de canal que lee el motor de p16 al tocar los sonidos 0x28 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (159 bytes)
+F 0x7EDF 16
+D 0x7F7E 0x7FD2 partitura_7F7E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x29 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (84 bytes)
+F 0x7F7E 16
+D 0x7FD2 0x8000 partitura_7FD2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x29 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (46 bytes)
+F 0x7FD2 16
+D 0x6412 0x6432 resto_6412  lo apuntan con el banco puesto p16:4968 (0x6430); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:4968 (32 bytes)
+F 0x6412 16
+D 0x6453 0x6477 resto_6453  lo apuntan con el banco puesto p16:47A0 (0x6475); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:47A0 (36 bytes)
+F 0x6453 16
 # --- fin de los bloques de bloques.py ---

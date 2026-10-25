@@ -16,14 +16,8 @@ D 0x4C77 0x4C8B resto_4C77  lo apuntan con el banco puesto p00:4C5F (0x4C77); el
 F 0x4C77 16
 D 0x4FE2 0x4FEF resto_4FE2  lo apuntan con el banco puesto p00:4FD6 (0x4FE2); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:4FD6 (13 bytes)
 F 0x4FE2 16
-D 0x508E 0x5094 resto_508E  lo apuntan con el banco puesto p15:BD02 (0x5090); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:BD02 (6 bytes)
-F 0x508E 16
-D 0x51B8 0x51BE resto_51B8  lo apuntan con el banco puesto p16:5190 (0x51B8), p16:519B (0x51BC); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:5190, p16:519B (6 bytes)
-F 0x51B8 16
 D 0x545C 0x5470 resto_545C  lo apuntan con el banco puesto p00:544A (0x545C), p04:93AC (0x5460), p04:95CD (0x5460), p04:961C (0x5460); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:544A, p04:93AC, p04:95CD, p04:961C (20 bytes)
 F 0x545C 16
-D 0x5482 0x5488 resto_5482  lo apuntan con el banco puesto p16:463F (0x5486), p16:4689 (0x5486); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:463F, p16:4689 (6 bytes)
-F 0x5482 16
 D 0x5BFE 0x5C12 resto_5BFE  lo apuntan con el banco puesto p00:5BC2 (0x5BFE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5BC2 (20 bytes)
 F 0x5BFE 16
 D 0x5C8F 0x5C95 resto_5C8F  lo apuntan con el banco puesto p00:5C79 (0x5C8F); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5C79 (6 bytes)

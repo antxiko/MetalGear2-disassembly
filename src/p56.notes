@@ -1,5 +1,19 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA008 mosaico_A000  un mosaico de 2 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0204 en quien llama); lo leen p02:8328 (8 bytes)
+F 0xA000 4
+D 0xA008 0xA00A mosaico_A008  un mosaico de 2 x 1 caracteres, un byte cada uno (p00:510F; BC = 0x0201 en quien llama); lo leen p02:8334 (2 bytes)
+F 0xA008 1
+D 0xA00A 0xA014 mosaico_A00A  un mosaico de 2 x 5 caracteres, un byte cada uno (p00:510F; BC = 0x0205 en quien llama); lo leen p02:8340 (10 bytes)
+F 0xA00A 5
+D 0xA03C 0xA0B4 mosaico_A03C  un mosaico de 10 x 12 caracteres, un byte cada uno (p00:510F; BC = 0x0A0C en quien llama); lo leen p02:82C6 (120 bytes)
+F 0xA03C 12
+D 0xA412 0xA512 mosaico_A412  un mosaico de 8 x 32 caracteres, un byte cada uno (p00:510F; BC = 0x0820 en quien llama); lo leen p01:6FF4 (256 bytes)
+F 0xA412 16
+D 0xA7C7 0xA7CD mosaico_A7C7  un mosaico de 2 x 3 caracteres, un byte cada uno (p00:510F; BC = 0x0203 en quien llama); lo leen p01:7E7B (6 bytes)
+F 0xA7C7 3
+D 0xAE59 0xAE95 mosaico_AE59  un mosaico de 5 x 12 caracteres, un byte cada uno (p00:510F; BC = 0x050C en quien llama); lo leen p02:8572 (60 bytes)
+F 0xAE59 12
 D 0xBD28 0xBD50 zonas_salas_datos  20 punteros, uno por zona: un byte por sala (p00:58A7; los 4 bits altos a 0xCA4C y los bajos a 0xCA4D); lo leen p00:58A7 (40 bytes)
 F 0xBD28 w8
 D 0xBD50 0xBD5D salas_datos_zona_0  13 bytes, uno por sala de la zona 0: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (13 bytes)
@@ -44,8 +58,16 @@ D 0xBE5C 0xBE62 salas_datos_zona_19  6 bytes, uno por sala de la zona 19: los 4 
 F 0xBE5C 16
 D 0xBE63 0xBE9D salas_0xCA76_datos  58 bytes, uno por cada valor de 0xCA76: los 4 bits altos a L y los bajos a H (p00:566F); lo leen p00:566F (58 bytes)
 F 0xBE63 16
-D 0xA000 0xBD28 resto_A000  lo apuntan con el banco puesto p02:831F (0xA000), p02:832B (0xA008), p02:8337 (0xA00A), p02:8343 (0xA014), p02:82BD (0xA03C), p02:82CE (0xA0B4); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:831F, p02:832B, p02:8337, p02:8343, p02:82BD, p02:82CE (7464 bytes)
-F 0xA000 16
+D 0xA014 0xA03C resto_A014  lo apuntan con el banco puesto p02:8343 (0xA014); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8343 (40 bytes)
+F 0xA014 16
+D 0xA0B4 0xA412 resto_A0B4  lo apuntan con el banco puesto p02:82CE (0xA0B4), p12:6C2C (0xA19B), p12:6C38 (0xA1A1), p12:6C8D (0xA1A7), p12:6C4F (0xA1AD), p12:6C54 (0xA1B3); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:82CE, p12:6C2C, p12:6C38, p12:6C8D, p12:6C4F, p12:6C54 (862 bytes)
+F 0xA0B4 16
+D 0xA512 0xA7C7 resto_A512  lo apuntan con el banco puesto p02:87AD (0xA53A), p12:7F47 (0xA5EA), p12:7F58 (0xA5ED), p12:7F85 (0xA60D), p12:7F93 (0xA618), p12:7F7B (0xA623); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:87AD, p12:7F47, p12:7F58, p12:7F85, p12:7F93, p12:7F7B (693 bytes)
+F 0xA512 16
+D 0xA7CD 0xAE59 resto_A7CD  lo apuntan con el banco puesto p01:7E52 (0xA7CD), p12:7E7C (0xA7EE), p12:7DFF (0xA808), p13:92E7 (0xA848), p04:8963 (0xA9ED), p04:88E0 (0xAA35); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:7E52, p12:7E7C, p12:7DFF, p13:92E7, p04:8963, p04:88E0 (1676 bytes)
+F 0xA7CD 16
+D 0xAE95 0xBD28 resto_AE95  lo apuntan con el banco puesto p13:92D7 (0xAE95), p13:9317 (0xAEA5), p13:92F0 (0xAEE6), p13:92FC (0xAF4E), p13:9308 (0xAFB6), p00:4151 (0xB000); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p13:92D7, p13:9317, p13:92F0, p13:92FC, p13:9308, p00:4151 (3731 bytes)
+F 0xAE95 16
 D 0xBE9D 0xC000 resto_BE9D  lo apuntan con el banco puesto p12:6808 (0xBE9D), p12:6811 (0xBEBC), p12:682C (0xBEC5), p12:6835 (0xBEDA), p12:681B (0xBEE7); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:6808, p12:6811, p12:682C, p12:6835, p12:681B (355 bytes)
 F 0xBE9D 16
 # --- fin de los bloques de bloques.py ---

@@ -29,8 +29,19 @@ import presupuesto                              # noqa: E402
 from paginas import ORG, nombre                 # noqa: E402
 
 ROM = open(os.path.join(RAIZ, "metalgear2.rom"), "rb").read()
-CODIGO = {0: (1, 2, 3), 1: (1, 2, 3), 2: (1, 2, 3), 3: (1, 2, 3), 6: (4, 5, 6),
-          13: (13, 14, 15), 14: (13, 14, 15), 15: (13, 14, 15)}
+# Los bancos de codigo (0-16, y el 63 por su p63:B800) con el reparto con el
+# que se ejecutan: el propio banco en su ranura y 1-2-3 en las demas; el 16,
+# con el sonido puesto (16-17-18-19, cartucho.BANCO_4000).
+def _reparto(p):
+    if p == 16:
+        return (17, 18, 19)
+    s = [1, 2, 3]
+    if ORG[p] != 0x4000:
+        s[(ORG[p] - 0x6000) >> 13] = p
+    return tuple(s)
+
+
+CODIGO = {p: _reparto(p) for p in list(range(17)) + [63]}
 FIN = {0xC9, 0xC3, 0x18, 0xE9}
 
 

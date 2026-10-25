@@ -899,7 +899,7 @@ DATA_resto_A686:
 	defb 001h,001h,0fdh,0ffh	; a696
 
 ; ======================================================================
-; CODIGO 0xa69a..0xa945  (683 bytes)
+; CODIGO 0xa69a..0xaa0f  (885 bytes)
 ; ======================================================================
 
 
@@ -1273,18 +1273,19 @@ L_A940:
 	add a,b			;a940
 	ld (0d8cch),a		;a941
 	ret			;a944
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa945..0xa95d  (24 bytes)
-DATA_A945:
-	defb 03ah,0c2h,0d8h,0b7h,0c8h,03dh,021h,00fh,0aah,0cdh,0f6h,043h,03ah,0cch,0d8h,087h	; a945  :....=!....C:...
-	defb 087h,0cdh,048h,042h,032h,0cdh,0d8h,0c9h	; a955  ..HB2...
-
-; ======================================================================
-; CODIGO 0xa95d..0xaa0f  (178 bytes)
-; ======================================================================
-
-
+L_A945:
+	ld a,(0d8c2h)		;a945
+	or a			;a948
+	ret z			;a949
+	dec a			;a94a
+	ld hl,0aa0fh		;a94b
+	call 043f6h		;a94e
+	ld a,(0d8cch)		;a951
+	add a,a			;a954
+	add a,a			;a955
+	call 04248h		;a956
+	ld (0d8cdh),a		;a959
+	ret			;a95c
 L_A95D:
 	ld hl,0e8d0h		;a95d
 	ld de,07830h		;a960
@@ -1385,10 +1386,10 @@ L_A9F9:
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_AA0F: lo apuntan con el banco puesto p07:A6B5 (0xAA0F), p07:A91B
-;   (0xAA0F), p07:A9FD (0xAA0F), p07:A515 (0xAA83), p07:A80B (0xAA83),
-;   p07:BC3A (0xAA83); el tamano es lo que hay hasta lo siguiente, no sale de
-;   recorrerlo; lo leen p07:A6B5, p07:A91B, p07:A9FD, p07:A515, p07:A80B,
-;   p07:BC3A (309 bytes)
+;   (0xAA0F), p07:A94B (0xAA0F), p07:A9FD (0xAA0F), p07:A515 (0xAA83),
+;   p07:A80B (0xAA83); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p07:A6B5, p07:A91B, p07:A94B, p07:A9FD, p07:A515,
+;   p07:A80B (309 bytes)
 ;   0xaa0f..0xab44  (309 bytes)
 DATA_resto_AA0F:
 	defb 023h,0aah,02fh,0aah,03fh,0aah,047h,0aah,04fh,0aah,05bh,0aah,063h,0aah,06bh,0aah	; aa0f  #./.?.G.O.[.c.k.
@@ -4064,7 +4065,7 @@ DATA_resto_BD5E:
 	defb 0c8h,08ch,038h,04ch,038h,08ch,098h,04ch,098h,08ch	; bd6e  ..8L8..L..
 
 ; ======================================================================
-; CODIGO 0xbd78..0xbe3e  (198 bytes)
+; CODIGO 0xbd78..0xbf2c  (436 bytes)
 ; ======================================================================
 
 
@@ -4170,17 +4171,9 @@ L_BE2D:
 	ld de,01020h		;be39
 	scf			;be3c
 	ret			;be3d
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbe3e..0xbe40  (2 bytes)
-DATA_BE3E:
-	defb 0a7h,0c9h	; be3e
-
-; ======================================================================
-; CODIGO 0xbe40..0xbf2c  (236 bytes)
-; ======================================================================
-
-
+L_BE3E:
+	and a			;be3e
+	ret			;be3f
 L_BE40:
 	ld a,(0d800h)		;be40
 	cp 002h		;be43

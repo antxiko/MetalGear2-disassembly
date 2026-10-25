@@ -64,6 +64,7 @@
 0xB8EC   # p04:8AAE call
 0xB92D   # entrada 0 de la tabla 0xB919 en HL (p15:B8FE, p00:424E)
 0xB959   # entrada 1 de la tabla 0xB919 en HL (p15:B8FE, p00:424E)
+0xB96C   # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB96C
 0xB97F   # entrada 2 de la tabla 0xB919 en HL (p15:B8FE, p00:424E)
 0xB997   # entrada 3 de la tabla 0xB919 en HL (p15:B8FE, p00:424E)
 0xB9D5   # entrada 4 de la tabla 0xB919 en HL (p15:B8FE, p00:424E)

@@ -1,5 +1,269 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
-D 0x8000 0xA000 resto_8000  lo apuntan con el banco puesto p03:A116 (0x9000), p03:A176 (0x9000), p03:A1AD (0x9000), p16:4207 (0x9000), p16:425A (0x9000), p16:53C4 (0x9000); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:A116, p03:A176, p03:A1AD, p16:4207, p16:425A, p16:53C4 (8192 bytes)
+D 0x8000 0x806A sonido_8000  datos de sonido que lee el motor de p16 al tocar los sonidos 0x29 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (106 bytes)
 F 0x8000 16
+D 0x806A 0x80CF partitura_806A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (101 bytes)
+F 0x806A 16
+D 0x80CF 0x8136 partitura_80CF  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (103 bytes)
+F 0x80CF 16
+D 0x8136 0x8141 partitura_8136  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x8136 16
+D 0x8141 0x814C partitura_8141  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x8141 16
+D 0x814C 0x8157 partitura_814C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x814C 16
+D 0x8157 0x8162 partitura_8157  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x8157 16
+D 0x8162 0x816D partitura_8162  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x8162 16
+D 0x816D 0x8178 partitura_816D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (11 bytes)
+F 0x816D 16
+D 0x8178 0x81CA partitura_8178  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (82 bytes)
+F 0x8178 16
+D 0x81CA 0x8208 partitura_81CA  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (62 bytes)
+F 0x81CA 16
+D 0x8208 0x8217 partitura_8208  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (15 bytes)
+F 0x8208 16
+D 0x8217 0x8228 partitura_8217  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (17 bytes)
+F 0x8217 16
+D 0x8228 0x82BE partitura_8228  partitura de canal que lee el motor de p16 al tocar los sonidos 0x2F, 0x30 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (150 bytes)
+F 0x8228 16
+D 0x82BE 0x8355 partitura_82BE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x30 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (151 bytes)
+F 0x82BE 16
+D 0x8355 0x837A partitura_8355  partitura de canal que lee el motor de p16 al tocar los sonidos 0x31 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (37 bytes)
+F 0x8355 16
+D 0x837A 0x839F partitura_837A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x31 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (37 bytes)
+F 0x837A 16
+D 0x839F 0x83C2 partitura_839F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x32 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (35 bytes)
+F 0x839F 16
+D 0x83C2 0x83E7 partitura_83C2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x32 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (37 bytes)
+F 0x83C2 16
+D 0x83E7 0x840A partitura_83E7  partitura de canal que lee el motor de p16 al tocar los sonidos 0x33 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (35 bytes)
+F 0x83E7 16
+D 0x840A 0x842F partitura_840A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x33 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (37 bytes)
+F 0x840A 16
+D 0x842F 0x8455 partitura_842F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x34 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (38 bytes)
+F 0x842F 16
+D 0x8455 0x847B partitura_8455  partitura de canal que lee el motor de p16 al tocar los sonidos 0x34 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (38 bytes)
+F 0x8455 16
+D 0x847B 0x84A9 partitura_847B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x35 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (46 bytes)
+F 0x847B 16
+D 0x84A9 0x84CC partitura_84A9  partitura de canal que lee el motor de p16 al tocar los sonidos 0x35 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (35 bytes)
+F 0x84A9 16
+D 0x84CC 0x84E7 partitura_84CC  partitura de canal que lee el motor de p16 al tocar los sonidos 0x36 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x84CC 16
+D 0x84E7 0x84FC partitura_84E7  partitura de canal que lee el motor de p16 al tocar los sonidos 0x36 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (21 bytes)
+F 0x84E7 16
+D 0x84FC 0x8517 partitura_84FC  partitura de canal que lee el motor de p16 al tocar los sonidos 0x37 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x84FC 16
+D 0x8517 0x852C partitura_8517  partitura de canal que lee el motor de p16 al tocar los sonidos 0x37 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (21 bytes)
+F 0x8517 16
+D 0x852C 0x8565 partitura_852C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x38 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (57 bytes)
+F 0x852C 16
+D 0x8565 0x85A5 partitura_8565  partitura de canal que lee el motor de p16 al tocar los sonidos 0x38 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x8565 16
+D 0x85A5 0x85E4 partitura_85A5  partitura de canal que lee el motor de p16 al tocar los sonidos 0x39 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (63 bytes)
+F 0x85A5 16
+D 0x85E4 0x8607 partitura_85E4  partitura de canal que lee el motor de p16 al tocar los sonidos 0x39 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (35 bytes)
+F 0x85E4 16
+D 0x8607 0x8656 partitura_8607  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (79 bytes)
+F 0x8607 16
+D 0x8656 0x868F partitura_8656  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (57 bytes)
+F 0x8656 16
+D 0x868F 0x86D7 partitura_868F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (72 bytes)
+F 0x868F 16
+D 0x86D7 0x86F2 partitura_86D7  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x86D7 16
+D 0x86F2 0x8708 partitura_86F2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (22 bytes)
+F 0x86F2 16
+D 0x8708 0x8721 partitura_8708  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x8708 16
+D 0x8721 0x8737 partitura_8721  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (22 bytes)
+F 0x8721 16
+D 0x8737 0x8750 partitura_8737  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x8737 16
+D 0x8750 0x8770 partitura_8750  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x8750 16
+D 0x8770 0x878D partitura_8770  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (29 bytes)
+F 0x8770 16
+D 0x878D 0x87A6 partitura_878D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x878D 16
+D 0x87A6 0x87C1 partitura_87A6  partitura de canal que lee el motor de p16 al tocar los sonidos 0x3F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x87A6 16
+D 0x87C1 0x880A partitura_87C1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x40 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (73 bytes)
+F 0x87C1 16
+D 0x880A 0x885B partitura_880A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x40 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (81 bytes)
+F 0x880A 16
+D 0x885B 0x8868 partitura_885B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x41 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (13 bytes)
+F 0x885B 16
+D 0x8868 0x8883 partitura_8868  partitura de canal que lee el motor de p16 al tocar los sonidos 0x41 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x8868 16
+D 0x8883 0x88B0 partitura_8883  partitura de canal que lee el motor de p16 al tocar los sonidos 0x42 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (45 bytes)
+F 0x8883 16
+D 0x88B0 0x88DD partitura_88B0  partitura de canal que lee el motor de p16 al tocar los sonidos 0x42 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (45 bytes)
+F 0x88B0 16
+D 0x88DD 0x8926 partitura_88DD  partitura de canal que lee el motor de p16 al tocar los sonidos 0x43 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (73 bytes)
+F 0x88DD 16
+D 0x8926 0x8971 partitura_8926  partitura de canal que lee el motor de p16 al tocar los sonidos 0x43 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (75 bytes)
+F 0x8926 16
+D 0x8971 0x89CE partitura_8971  partitura de canal que lee el motor de p16 al tocar los sonidos 0x44 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (93 bytes)
+F 0x8971 16
+D 0x89CE 0x8A31 partitura_89CE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x44 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (99 bytes)
+F 0x89CE 16
+D 0x8A31 0x8A6C partitura_8A31  partitura de canal que lee el motor de p16 al tocar los sonidos 0x45 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (59 bytes)
+F 0x8A31 16
+D 0x8A6C 0x8AA9 partitura_8A6C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x45 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x8A6C 16
+D 0x8AA9 0x8AAD partitura_8AA9  partitura de canal que lee el motor de p16 al tocar los sonidos 0x46 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x8AA9 16
+D 0x8AAD 0x8B3D partitura_8AAD  partitura de canal que lee el motor de p16 al tocar los sonidos 0x45, 0x46 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (144 bytes)
+F 0x8AAD 16
+D 0x8B3D 0x8B7B partitura_8B3D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x47 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (62 bytes)
+F 0x8B3D 16
+D 0x8B7B 0x8BB8 partitura_8B7B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x47 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x8B7B 16
+D 0x8BB8 0x8C41 partitura_8BB8  partitura de canal que lee el motor de p16 al tocar los sonidos 0x48 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (137 bytes)
+F 0x8BB8 16
+D 0x8C41 0x8CCE partitura_8C41  partitura de canal que lee el motor de p16 al tocar los sonidos 0x48 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (141 bytes)
+F 0x8C41 16
+D 0x8CCE 0x8D15 partitura_8CCE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x49 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (71 bytes)
+F 0x8CCE 16
+D 0x8D15 0x8D5C partitura_8D15  partitura de canal que lee el motor de p16 al tocar los sonidos 0x49 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (71 bytes)
+F 0x8D15 16
+D 0x8D5C 0x8DBE partitura_8D5C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (98 bytes)
+F 0x8D5C 16
+D 0x8DBE 0x8E67 partitura_8DBE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (169 bytes)
+F 0x8DBE 16
+D 0x8E67 0x8EB2 partitura_8E67  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (75 bytes)
+F 0x8E67 16
+D 0x8EB2 0x8EFF partitura_8EB2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (77 bytes)
+F 0x8EB2 16
+D 0x8EFF 0x8F3F partitura_8EFF  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x8EFF 16
+D 0x8F3F 0x8F88 partitura_8F3F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (73 bytes)
+F 0x8F3F 16
+D 0x8F88 0x8FAC partitura_8F88  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (36 bytes)
+F 0x8F88 16
+D 0x8FAC 0x8FD4 partitura_8FAC  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (40 bytes)
+F 0x8FAC 16
+D 0x8FD4 0x905D partitura_8FD4  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (137 bytes)
+F 0x8FD4 16
+D 0x905D 0x90EA partitura_905D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (141 bytes)
+F 0x905D 16
+D 0x90EA 0x911D partitura_90EA  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (51 bytes)
+F 0x90EA 16
+D 0x911D 0x9150 partitura_911D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x4F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (51 bytes)
+F 0x911D 16
+D 0x9150 0x9179 partitura_9150  partitura de canal que lee el motor de p16 al tocar los sonidos 0x50 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (41 bytes)
+F 0x9150 16
+D 0x9179 0x919A partitura_9179  partitura de canal que lee el motor de p16 al tocar los sonidos 0x50 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (33 bytes)
+F 0x9179 16
+D 0x919A 0x91AD partitura_919A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x51 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (19 bytes)
+F 0x919A 16
+D 0x91AD 0x91C6 partitura_91AD  partitura de canal que lee el motor de p16 al tocar los sonidos 0x51 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x91AD 16
+D 0x91C6 0x91D9 partitura_91C6  partitura de canal que lee el motor de p16 al tocar los sonidos 0x52 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (19 bytes)
+F 0x91C6 16
+D 0x91D9 0x91F2 partitura_91D9  partitura de canal que lee el motor de p16 al tocar los sonidos 0x52 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x91D9 16
+D 0x91F2 0x9242 partitura_91F2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x53 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (80 bytes)
+F 0x91F2 16
+D 0x9242 0x929E partitura_9242  partitura de canal que lee el motor de p16 al tocar los sonidos 0x53 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (92 bytes)
+F 0x9242 16
+D 0x929E 0x932E partitura_929E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x54 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (144 bytes)
+F 0x929E 16
+D 0x932E 0x93C8 partitura_932E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x54 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (154 bytes)
+F 0x932E 16
+D 0x93C8 0x9409 partitura_93C8  partitura de canal que lee el motor de p16 al tocar los sonidos 0x55 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (65 bytes)
+F 0x93C8 16
+D 0x9409 0x9448 partitura_9409  partitura de canal que lee el motor de p16 al tocar los sonidos 0x55 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (63 bytes)
+F 0x9409 16
+D 0x9448 0x9484 partitura_9448  partitura de canal que lee el motor de p16 al tocar los sonidos 0x56 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (60 bytes)
+F 0x9448 16
+D 0x9484 0x94C1 partitura_9484  partitura de canal que lee el motor de p16 al tocar los sonidos 0x56 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (61 bytes)
+F 0x9484 16
+D 0x94C1 0x94EE partitura_94C1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x57 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (45 bytes)
+F 0x94C1 16
+D 0x94EE 0x951D partitura_94EE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x57 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (47 bytes)
+F 0x94EE 16
+D 0x951D 0x951E partitura_951D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x58 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (1 bytes)
+F 0x951D 16
+D 0x951E 0x9567 partitura_951E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x59 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (73 bytes)
+F 0x951E 16
+D 0x9567 0x95A8 partitura_9567  partitura de canal que lee el motor de p16 al tocar los sonidos 0x59 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (65 bytes)
+F 0x9567 16
+D 0x95A8 0x95DF partitura_95A8  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (55 bytes)
+F 0x95A8 16
+D 0x95DF 0x961A partitura_95DF  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (59 bytes)
+F 0x95DF 16
+D 0x961A 0x9630 partitura_961A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (22 bytes)
+F 0x961A 16
+D 0x9630 0x9649 partitura_9630  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x9630 16
+D 0x9649 0x9660 partitura_9649  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (23 bytes)
+F 0x9649 16
+D 0x9660 0x9679 partitura_9660  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x9660 16
+D 0x9679 0x96C1 partitura_9679  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (72 bytes)
+F 0x9679 16
+D 0x96C1 0x96DC partitura_96C1  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (27 bytes)
+F 0x96C1 16
+D 0x96DC 0x96F5 partitura_96DC  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (25 bytes)
+F 0x96DC 16
+D 0x96F5 0x9712 partitura_96F5  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (29 bytes)
+F 0x96F5 16
+D 0x9712 0x9713 partitura_9712  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (1 bytes)
+F 0x9712 16
+D 0x9713 0x9714 partitura_9713  partitura de canal que lee el motor de p16 al tocar los sonidos 0x5F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (1 bytes)
+F 0x9713 16
+D 0x9714 0x9781 partitura_9714  partitura de canal que lee el motor de p16 al tocar los sonidos 0x60 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (109 bytes)
+F 0x9714 16
+D 0x9781 0x97ED partitura_9781  partitura de canal que lee el motor de p16 al tocar los sonidos 0x60 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (108 bytes)
+F 0x9781 16
+D 0x97ED 0x981C partitura_97ED  partitura de canal que lee el motor de p16 al tocar los sonidos 0x61 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (47 bytes)
+F 0x97ED 16
+D 0x981C 0x984F partitura_981C  partitura de canal que lee el motor de p16 al tocar los sonidos 0x61 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (51 bytes)
+F 0x981C 16
+D 0x984F 0x98CE partitura_984F  partitura de canal que lee el motor de p16 al tocar los sonidos 0x62 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (127 bytes)
+F 0x984F 16
+D 0x98CE 0x998E partitura_98CE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x62 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (192 bytes)
+F 0x98CE 16
+D 0x998E 0x99AE partitura_998E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x63 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x998E 16
+D 0x99AE 0x99CB partitura_99AE  partitura de canal que lee el motor de p16 al tocar los sonidos 0x63 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (29 bytes)
+F 0x99AE 16
+D 0x99CB 0x9A40 partitura_99CB  partitura de canal que lee el motor de p16 al tocar los sonidos 0x64 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (117 bytes)
+F 0x99CB 16
+D 0x9A40 0x9A9D partitura_9A40  partitura de canal que lee el motor de p16 al tocar los sonidos 0x64 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (93 bytes)
+F 0x9A40 16
+D 0x9A9D 0x9B02 partitura_9A9D  partitura de canal que lee el motor de p16 al tocar los sonidos 0x65 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (101 bytes)
+F 0x9A9D 16
+D 0x9B02 0x9B59 partitura_9B02  partitura de canal que lee el motor de p16 al tocar los sonidos 0x65 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (87 bytes)
+F 0x9B02 16
+D 0x9B59 0x9B85 partitura_9B59  partitura de canal que lee el motor de p16 al tocar los sonidos 0x66 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (44 bytes)
+F 0x9B59 16
+D 0x9B85 0x9BCC partitura_9B85  partitura de canal que lee el motor de p16 al tocar los sonidos 0x66 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (71 bytes)
+F 0x9B85 16
+D 0x9BCC 0x9C3E partitura_9BCC  partitura de canal que lee el motor de p16 al tocar los sonidos 0x67 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (114 bytes)
+F 0x9BCC 16
+D 0x9C3E 0x9CB2 partitura_9C3E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x67 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (116 bytes)
+F 0x9C3E 16
+D 0x9CB2 0x9CED partitura_9CB2  partitura de canal que lee el motor de p16 al tocar los sonidos 0x68 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (59 bytes)
+F 0x9CB2 16
+D 0x9CED 0x9D14 partitura_9CED  partitura de canal que lee el motor de p16 al tocar los sonidos 0x68 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (39 bytes)
+F 0x9CED 16
+D 0x9D14 0x9D4A partitura_9D14  partitura de canal que lee el motor de p16 al tocar los sonidos 0x69 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (54 bytes)
+F 0x9D14 16
+D 0x9D4A 0x9D80 partitura_9D4A  partitura de canal que lee el motor de p16 al tocar los sonidos 0x69 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (54 bytes)
+F 0x9D4A 16
+D 0x9D80 0x9E0B partitura_9D80  partitura de canal que lee el motor de p16 al tocar los sonidos 0x74 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (139 bytes)
+F 0x9D80 16
+D 0x9E0B 0x9E94 partitura_9E0B  partitura de canal que lee el motor de p16 al tocar los sonidos 0x74 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (137 bytes)
+F 0x9E0B 16
+D 0x9E94 0x9F1E partitura_9E94  partitura de canal que lee el motor de p16 al tocar los sonidos 0x74 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (138 bytes)
+F 0x9E94 16
+D 0x9F1E 0x9FA0 partitura_9F1E  partitura de canal que lee el motor de p16 al tocar los sonidos 0x74 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (130 bytes)
+F 0x9F1E 16
+D 0x9FA0 0xA000 partitura_9FA0  partitura de canal que lee el motor de p16 al tocar los sonidos 0x74 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (96 bytes)
+F 0x9FA0 16
 # --- fin de los bloques de bloques.py ---

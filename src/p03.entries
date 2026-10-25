@@ -26,7 +26,7 @@
 0xA0E5   # p64:C20F jr cc (se ejecuta copiado en 0xC22F)
 0xA142   # p64:C284 jr cc (se ejecuta copiado en 0xC28C)
 0xA146   # p64:C234 jr cc (se ejecuta copiado en 0xC290)
-0xA14B   # p01:6B32 jp (se ejecuta copiado en 0xC340)
+0xA14B   # p01:6A68 jp (se ejecuta copiado en 0xC340)
 0xA186   # p06:B066 call (se ejecuta copiado en 0xC000)
 0xA1BB   # p01:759B call
 0xA1DE   # p01:7FB6 call
@@ -69,23 +69,26 @@
 0xACD8   # p03:A213 entrada 22 de la tabla de 0xA216 (call 0x424D en 0xA213)
 0xAD47   # p03:A213 entrada 23 de la tabla de 0xA216 (call 0x424D en 0xA213)
 0xAD58   # p03:A213 entrada 24 de la tabla de 0xA216 (call 0x424D en 0xA213)
-0xAF05   # p02:8EED call
+0xAEF3   # codigo huerfano: 18 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xAEF3
 0xAF18   # p01:7812 call
 0xB0AD   # p02:9E82 call
 0xB0D3   # p02:9CAF call
 0xB0DC   # p02:8C7D call
 0xB0F6   # p01:6139 call
-0xB0FE   # p01:7EBB call
+0xB0FE   # p02:9220 call
 0xB103   # p02:923D call
-0xB108   # p01:7A73 call
-0xB11F   # p01:79EC call
+0xB108   # p02:8FA0 call
 0xB132   # p01:79F4 call
 0xB19A   # p01:79FD call
-0xB1BE   # p02:8DB8 call
+0xB1BA   # p01:7A1A call
+0xB1BE   # p02:8F21 call
 0xB2BC   # p01:7815 call
 0xB329   # p01:786B call
+0xB3E8   # p02:8E72 call
 0xB404   # p02:8C75 call
-0xB4D1   # p00:5620 call
+0xB48B   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB48B
+0xB490   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB490
+0xB4D1   # p00:539F call
 0xB4E6   # p02:8C55 call
 0xB563   # p02:8C4D call
 0xB593   # p01:7FB0 call
@@ -97,12 +100,12 @@
 0xB612   # p01:61D8 call
 0xB63E   # p01:7A2A jp
 0xB65D   # p02:8CEB call
-0xB67D   # p01:79DC call
+0xB67D   # p02:8E04 call
 0xB68E   # p01:7A05 call
-0xB6C8   # p01:79E4 call
+0xB6C8   # p02:8E0C call
 0xB814   # p02:8E19 call
 0xB8AC   # p02:8E21 call
-0xBA53   # p00:5617 call
+0xBA53   # p00:5374 call
 0xBB38   # p01:7A90 call
 0xBB4C   # p01:78A3 call
 0xBC4B   # p01:787D call
@@ -113,6 +116,7 @@
 0xBDA5   # p02:8D93 call
 0xBDB2   # p03:BD30 entrada 2 de la tabla de 0xBD33 (call 0x424D en 0xBD30)
 0xBE51   # p02:8DA8 call
+0xBE60   # p02:8F98 call
 0xBEB2   # p02:9C8C call
 0xBEB7   # p02:9C86 call
 0xBF14   # p01:77E4 call

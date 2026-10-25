@@ -1,5 +1,11 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
-D 0x8000 0xA000 resto_8000  lo apuntan con el banco puesto p07:A98B (0x8000), p07:ABB7 (0x8050), p07:AB8E (0x8080), p01:6E2F (0x8098), p00:40FF (0x9000), p00:414B (0x9000); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p07:A98B, p07:ABB7, p07:AB8E, p01:6E2F, p00:40FF, p00:414B (8192 bytes)
+D 0x8000 0x8050 copia_8000  80 bytes que p07:A98B copia a 0xDC80; lo leen p07:A991 (80 bytes)
 F 0x8000 16
+D 0x8050 0x8080 fichas_8050  6 fichas de 8 bytes (p07:ABB4: 0x8050 + 8 x A); acaban donde empiezan las de 0x8080; lo leen p07:ABB7 (48 bytes)
+F 0x8050 8
+D 0x8080 0x8098 fichas_8080  6 fichas de 4 bytes (p07:AB8E: 0x8080 + 4 x A); acaban donde empieza el mapa de bits de p01:6E2F; lo leen p07:AB8E (24 bytes)
+F 0x8080 4
+D 0x8098 0xA000 mapa_de_bits_8098  mapa de bits de 168 filas de 64 bytes (dos puntos por byte) que p01:6ED6 copia a la VRAM, 128 bytes por fila (p00:4486) (sigue en el banco 58, en 0xA000); lo leen p01:6E2F (8040 bytes)
+F 0x8098 16
 # --- fin de los bloques de bloques.py ---

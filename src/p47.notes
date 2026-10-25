@@ -10,6 +10,12 @@ D 0xA161 0xA689 dibujo_A161  55 caracteres de 8x8 a 3 bits por punto (24 bytes c
 F 0xA161 24
 D 0xA689 0xA719 dibujo_A689  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0x9EB2 (p00:4D92, p00:4DF5); lo leen p01:6F45 (144 bytes)
 F 0xA689 24
+D 0xA719 0xA71C mosaico_A719  un mosaico de 1 x 3 caracteres, un byte cada uno (p00:510F; BC = 0x0103 en quien llama); lo leen p01:711B (3 bytes)
+F 0xA719 3
+D 0xA815 0xA818 mosaico_A815  un mosaico de 1 x 3 caracteres, un byte cada uno (p00:510F; BC = 0x0103 en quien llama); lo leen p01:711B (3 bytes)
+F 0xA815 3
+D 0xA818 0xA81B mosaico_A818  un mosaico de 1 x 3 caracteres, un byte cada uno (p00:510F; BC = 0x0103 en quien llama); lo leen p01:711B (3 bytes)
+F 0xA818 3
 D 0xAAD9 0xAADF tabla_colores_AAD9  3 punteros a colores de dibujo (los usa hasta el indice 2; p00:4DA0); lo leen p00:4DA0 (6 bytes)
 F 0xAAD9 w8
 D 0xAADF 0xAAE3 colores_AADF  8 colores de 4 bits, dos por byte, para un dibujo de 3 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p02:8440 (4 bytes)
@@ -36,8 +42,8 @@ D 0xB700 0xBA00 dibujo_B700  32 caracteres de 8x8 a 3 bits por punto (24 bytes c
 F 0xB700 24
 D 0xBA00 0xBD48 dibujo_BA00  35 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 7 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (840 bytes)
 F 0xBA00 24
-D 0xA719 0xAAD9 resto_A719  lo apuntan con el banco puesto p01:70FF (0xA719), p00:5201 (0xA7B1), p00:5211 (0xA7C5); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:70FF, p00:5201, p00:5211 (960 bytes)
-F 0xA719 16
+D 0xA71C 0xA815 resto_A71C  lo apuntan con el banco puesto p00:5201 (0xA7B1), p00:5211 (0xA7C5); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5201, p00:5211 (249 bytes)
+F 0xA71C 16
 D 0xBD48 0xC000 resto_BD48  lo apuntan con el banco puesto p02:8454 (0xBD48), p02:8636 (0xBE56), p02:863E (0xBF0A), p02:8630 (0xBF13); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8454, p02:8636, p02:863E, p02:8630 (696 bytes)
 F 0xBD48 16
 # --- fin de los bloques de bloques.py ---

@@ -233,4 +233,174 @@ p08 0xAD43 1 4 8  # entrada 21 de la tabla 0x8159 en HL (p04:8142, p00:424E; ban
 p08 0xA401 1 4 8  # entrada 22 de la tabla 0x8159 en HL (p04:8142, p00:424E; banco de 0xA000 de p04:8148)
 p08 0xA401 1 4 8  # entrada 23 de la tabla 0x8159 en HL (p04:8142, p00:424E; banco de 0xA000 de p04:8148)
 p08 0xABE5 1 4 8  # entrada 24 de la tabla 0x8159 en HL (p04:8142, p00:424E; banco de 0xA000 de p04:8148)
+p01 0x6B1E 1 2 3  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B1E 1 2 9  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B41 1 2 3  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B41 1 2 9  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B91 1 2 3  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B91 1 2 9  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B3D 1 2 3  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B3D 1 2 9  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B26 1 2 3  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B26 1 2 9  # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B39 1 2 3  # destino de la lista de 0xCA22 = 1 (p06:B449; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B39 1 2 9  # destino de la lista de 0xCA22 = 1 (p06:B449; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B2A 1 2 3  # destino de la lista de 0xCA22 = 3 (p06:B46E; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B2A 1 2 9  # destino de la lista de 0xCA22 = 3 (p06:B46E; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B35 1 2 3  # destino de la lista de 0xCA22 = 4 (p06:B489; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B35 1 2 9  # destino de la lista de 0xCA22 = 4 (p06:B489; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B81 1 2 3  # destino de la lista de 0xCA22 = 4 (p06:B489; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B81 1 2 9  # destino de la lista de 0xCA22 = 4 (p06:B489; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6B85 1 2 3  # destino de la lista de 0xCA22 = 7 (p06:B4DB; p01:7CE6 y jp (hl) en p01:73C7)
+p01 0x6B85 1 2 9  # destino de la lista de 0xCA22 = 7 (p06:B4DB; p01:7CE6 y jp (hl) en p02:8EBF)
+p01 0x6BCC 1 4 5  # el HL de p05:A5F9, jp (hl) en p04:86DD
+p01 0x6BCC 1 4 10  # el HL de p10:AA7D, jp (hl) en p04:86DD
+p01 0x6BCC 1 4 14  # el HL de p14:ABA5, jp (hl) en p04:86DD
+p01 0x6AEE 1 4 15  # el HL de p15:B8F2, jp (hl) en p04:86DD
+p01 0x6B85 1 2 3  # la musica pendiente de 0xCA19 (p00:554B), jp (hl) en p02:8A7A
+p01 0x6B89 1 2 3  # la musica pendiente de 0xCA19 (p02:8A2A), jp (hl) en p02:8A7A
+p01 0x6B45 1 2 3  # la musica pendiente de 0xCA19 (p09:A049), jp (hl) en p02:8A7A
+p01 0x6B41 1 2 3  # la musica pendiente de 0xCA19 (p09:A68A), jp (hl) en p02:8A7A
+p01 0x6B6D 1 2 3  # la musica pendiente de 0xCA19 (p09:BB20), jp (hl) en p02:8A7A
+p01 0x6B61 1 2 3  # la musica pendiente de 0xCA19 (p02:8AA8), jp (hl) en p02:8A7A
+p01 0x6B79 1 2 3  # la musica pendiente de 0xCA19 (p02:8AAD), jp (hl) en p02:8A7A
+p01 0x6B3D 1 2 3  # la musica pendiente de 0xCA19 (p02:8ABC), jp (hl) en p02:8A7A
+p01 0x6A11 1 2 3  # la musica pendiente de 0xCA19 (p02:8A47), jp (hl) en p02:8A7A
+p16 0x4DB0 17 18 19  # orden 0xD0 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DB0 17 18 19  # orden 0xD1 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DB0 17 18 19  # orden 0xD2 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DB0 17 18 19  # orden 0xD3 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DB0 17 18 19  # orden 0xD4 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DB0 17 18 19  # orden 0xD5 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DB7 17 18 19  # orden 0xD6 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DC9 17 18 19  # orden 0xD7 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DD0 17 18 19  # orden 0xD8 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DD5 17 18 19  # orden 0xD9 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DEA 17 18 19  # orden 0xDA de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4DFF 17 18 19  # orden 0xDB de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E05 17 18 19  # orden 0xDC de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E0A 17 18 19  # orden 0xDD de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E12 17 18 19  # orden 0xDE de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E37 17 18 19  # orden 0xDF de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E3C 17 18 19  # orden 0xE0 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E51 17 18 19  # orden 0xE1 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E3C 17 18 19  # orden 0xE2 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E51 17 18 19  # orden 0xE3 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E70 17 18 19  # orden 0xE4 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4E9A 17 18 19  # orden 0xE5 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4EAA 17 18 19  # orden 0xE6 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4EB6 17 18 19  # orden 0xE7 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4EC7 17 18 19  # orden 0xE8 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4ED5 17 18 19  # orden 0xE9 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4EDF 17 18 19  # orden 0xEA de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4EE7 17 18 19  # orden 0xEB de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4F2E 17 18 19  # orden 0xEC de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4F37 17 18 19  # orden 0xED de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4F46 17 18 19  # orden 0xEE de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4F50 17 18 19  # orden 0xEF de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4F55 17 18 19  # orden 0xF0 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4F8D 17 18 19  # orden 0xF1 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4FD6 17 18 19  # orden 0xF2 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x4FEB 17 18 19  # orden 0xF3 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5000 17 18 19  # orden 0xF4 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5019 17 18 19  # orden 0xF5 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5020 17 18 19  # orden 0xF6 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5025 17 18 19  # orden 0xF7 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x502F 17 18 19  # orden 0xF8 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x504D 17 18 19  # orden 0xF9 de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5057 17 18 19  # orden 0xFA de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x505E 17 18 19  # orden 0xFB de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5077 17 18 19  # orden 0xFC de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5094 17 18 19  # orden 0xFD de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
+p16 0x5097 17 18 19  # orden 0xFE de la partitura: tabla p16:4D52 (jp (hl) en p16:4D51)
 # --- fin de las tablas en HL ---
+
+# Las rutinas enteras que no alcanza nadie (tools/huerfanas.py: encajan hasta un ret o
+# un salto, sin 0xFF, y ninguna instruccion las apunta con una constante).
+# --- CODIGO HUERFANO (seccion que reescribe tools/huerfanas.py --semillas; no editar a mano) ---
+p00 0x4210 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4210
+p00 0x4215 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4215
+p00 0x435F 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x435F
+p00 0x4572 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4572
+p00 0x4576 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4576
+p00 0x4744 1 2 3  # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4744
+p00 0x4934 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4934
+p00 0x4938 1 2 3  # codigo huerfano: 24 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4938
+p00 0x496C 1 2 3  # codigo huerfano: 33 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x496C
+p00 0x498D 1 2 3  # codigo huerfano: 12 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x498D
+p00 0x4999 1 2 3  # codigo huerfano: 13 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4999
+p00 0x49A6 1 2 3  # codigo huerfano: 27 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x49A6
+p00 0x4AE0 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4AE0
+p00 0x4C91 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4C91
+p00 0x4D42 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4D42
+p00 0x4F7E 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4F7E
+p00 0x4F86 1 2 3  # codigo huerfano: 17 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x4F86
+p00 0x508E 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x508E
+p00 0x50AC 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50AC
+p00 0x50B2 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50B2
+p00 0x50B8 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50B8
+p00 0x50BE 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50BE
+p00 0x50CA 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50CA
+p00 0x50D0 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50D0
+p00 0x50DC 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50DC
+p00 0x50EE 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50EE
+p00 0x5482 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5482
+p00 0x54DE 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x54DE
+p00 0x54E4 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x54E4
+p00 0x5717 1 2 3  # codigo huerfano: 15 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5717
+p00 0x5B72 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5B72
+p00 0x5F1B 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5F1B
+p00 0x5FD5 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5FD5
+p00 0x5FDA 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5FDA
+p00 0x5FE6 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5FE6
+p01 0x6299 1 2 3  # codigo huerfano: 12 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6299
+p01 0x6AD2 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6AD2
+p01 0x6B22 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B22
+p01 0x6B2E 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B2E
+p01 0x6B51 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B51
+p01 0x6B65 1 2 3  # codigo huerfano: 4 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B65
+p01 0x6BF0 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6BF0
+p01 0x6BF4 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6BF4
+p01 0x6C83 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C83
+p01 0x6C9F 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C9F
+p01 0x7078 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7078
+p01 0x7A17 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A17
+p01 0x7A78 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A78
+p01 0x7B14 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7B14
+p01 0x7B1C 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7B1C
+p01 0x7B35 1 2 3  # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7B35
+p01 0x7EDB 1 2 3  # codigo huerfano: 10 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7EDB
+p02 0x829C 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x829C
+p02 0x8B37 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8B37
+p02 0x8B3F 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8B3F
+p02 0x8C32 1 2 3  # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8C32
+p02 0x8C3D 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8C3D
+p02 0x8CD0 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8CD0
+p02 0x8D32 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8D32
+p02 0x8E01 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E01
+p02 0x8E09 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E09
+p02 0x8E6F 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E6F
+p02 0x8E86 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E86
+p02 0x8EF3 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8EF3
+p02 0x8F9D 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8F9D
+p02 0x9309 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x9309
+p02 0x9311 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x9311
+p02 0x9321 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x9321
+p02 0x9329 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x9329
+p02 0x97AB 1 2 3  # codigo huerfano: 18 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x97AB
+p03 0xAEF3 1 2 3  # codigo huerfano: 18 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xAEF3
+p03 0xB48B 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB48B
+p03 0xB490 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB490
+p04 0x8733 1 4 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8733
+p04 0x8AC4 1 4 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8AC4
+p04 0x9047 1 4 3  # codigo huerfano: 49 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x9047
+p04 0x9078 1 4 3  # codigo huerfano: 2 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x9078
+p04 0x9AFC 1 4 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x9AFC
+p07 0xA945 1 2 7  # codigo huerfano: 24 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xA945
+p07 0xBE3E 1 2 7  # codigo huerfano: 2 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xBE3E
+p10 0xA5AA 1 2 10  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xA5AA
+p11 0xB9F5 1 2 11  # codigo huerfano: 6 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xB9F5
+p12 0x6C74 12 2 3  # codigo huerfano: 25 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C74
+p12 0x7AD2 12 2 3  # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7AD2
+p15 0xB96C 1 2 15  # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB96C
+# --- fin del codigo huerfano ---

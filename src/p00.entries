@@ -16,120 +16,135 @@
 0x40F0   # entrada 1 de la tabla 0x65AA en HL (p01:65A8, p00:424E)
 0x4113   # p00:5453 entrada 0 de la tabla de 0x5456 (call 0x424D en 0x5453)
 0x4118   # p00:5453 entrada 1 de la tabla de 0x5456 (call 0x424D en 0x5453)
-0x411D   # p01:667D jp cc
-0x4122   # p01:666E jp cc
-0x4127   # p01:6F19 call
+0x411D   # p01:6361 call
+0x4122   # p01:64C3 call
+0x4127   # p01:6DCF call
 0x412C   # p01:6E2C call
 0x4131   # p01:6EC0 call
 0x4136   # p01:6E48 call
-0x4142   # p04:8145 jp
-0x4158   # p01:71C2 call
+0x413F   # p01:7A98 jp
+0x4142   # p01:7993 call
+0x4158   # p01:6F78 call
 0x415D   # p00:4C68 entrada 2 de la tabla de 0x4C6B (call 0x424D en 0x4C68)
-0x4162   # p01:6FAE call
-0x4167   # p01:6F6D call
-0x416C   # p01:70EA call
-0x4171   # p01:70FC call
-0x4176   # p01:6EC6 jp
+0x4162   # p00:4C68 entrada 3 de la tabla de 0x4C6B (call 0x424D en 0x4C68)
+0x4167   # p00:4C68 entrada 4 de la tabla de 0x4C6B (call 0x424D en 0x4C68)
+0x416C   # p00:4C68 entrada 5 de la tabla de 0x4C6B (call 0x424D en 0x4C68)
+0x4171   # p01:7064 call
+0x4176   # p01:7B1C call
 0x4179   # p01:6DF4 call
 0x417E   # p13:8EDD call
 0x4183   # p01:647A call
-0x418E   # p01:71FA call
+0x418E   # p04:880A call
 0x4198   # p12:76A1 call
-0x419D   # p01:71BA call
-0x41A0   # p01:7CE6 call
-0x41A3   # p04:80E3 jp
-0x41AD   # p01:7DE5 call
+0x41A0   # p04:9AB9 call
+0x41AD   # p07:AB63 jp
 0x41B0   # p02:8BA0 call
-0x41B5   # p08:AF08 jp
-0x41BA   # p01:79D1 call
-0x41BD   # p04:8153 call
+0x41BA   # p02:8DFE jp
+0x41BD   # p04:9AFF jp
 0x41C2   # p02:8E6C jp
-0x41C5   # p02:8B1F call
-0x41CD   # p01:61F5 jp
-0x41D2   # p01:7DEB call
-0x41DD   # p08:AF02 call
+0x41C5   # p02:8B47 call
+0x41CA   # p02:9329 call
+0x41D2   # p02:8F60 jp
+0x41DD   # p04:9826 call
 0x41EA   # p04:9CE3 jp
-0x41EF   # p04:80F8 call
-0x41F7   # p01:7A4B jp
+0x41EF   # p04:80CD call
+0x41F4   # p02:8D53 jp
+0x41F7   # p04:98A8 call
 0x41FC   # p02:864A call
 0x4201   # p02:862D call
 0x4206   # p02:804E call
 0x420B   # p00:5453 entrada 2 de la tabla de 0x5456 (call 0x424D en 0x5453)
+0x4210   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4210
+0x4215   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4215
 0x421A   # p09:A504 call
 0x421F   # p07:AB5D call
 0x4224   # p12:7E3F call
 0x4229   # p15:A537 call
-0x4236   # p04:8212 call
-0x4237   # p08:A708 call
-0x423E   # p14:BA23 call
-0x4243   # p04:8278 jp
-0x424D   # p08:A404 call
+0x4236   # p04:9B96 call
+0x4237   # p04:9C69 jp
+0x423E   # p12:6CA2 call
+0x4243   # p04:9942 call
+0x4248   # p07:A956 call
+0x424D   # p14:B2BC call
 0x424E   # p05:A4D6 call
-0x4256   # p08:A7CF call
-0x4266   # p09:B708 call
+0x4256   # p12:740F call
 0x4270   # p04:8D11 call
-0x4276   # p02:9E36 call
 0x429C   # p10:B288 call
 0x42A2   # p04:8BA8 jp
 0x42A8   # p01:7050 jp
 0x42AD   # p01:7061 jp
 0x42B0   # p03:BB46 call
-0x42BC   # p01:6294 call
 0x4309   # p03:BABE jp
 0x431E   # p02:9B77 jp
 0x4331   # p03:BB49 jp
-0x437E   # p04:8D2C call
-0x43F6   # p04:81CF call
+0x435F   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x435F
+0x437E   # p04:9488 call
+0x439D   # p04:9849 jp
+0x43F6   # p07:A94E call
 0x4403   # p13:9AE5 call
 0x4411   # p01:7F40 call
 0x443A   # p08:AA1E call cc
-0x4442   # p08:A75B call cc
+0x4442   # p02:86AD call cc
 0x444A   # p13:9627 call
 0x444F   # p05:BC85 call
 0x4452   # p08:A152 call
+0x4486   # p04:993D call
+0x4534   # p02:8650 call
+0x456E   # p02:85F0 call
+0x4572   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4572
+0x4576   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4576
 0x45B3   # p01:7398 call
 0x45B9   # p06:B239 call
 0x45BE   # p04:8CC7 call
 0x45C5   # p05:BC8E call
-0x45D7   # p09:B70B call
 0x45F1   # p05:BC51 call
-0x45F6   # p09:B74E jp cc
 0x45FD   # p02:842E call
 0x4606   # p05:B6C6 call
-0x4609   # p05:BCE2 call
-0x463F   # p01:7200 call
-0x46BC   # p01:6543 jp
-0x46F2   # p05:BF05 jp
-0x46FA   # p03:B884 jp
+0x463F   # p02:84EE call
+0x467C   # p10:BC9D call
+0x4680   # p10:BECE jp cc
+0x46BC   # p14:B629 jp
+0x46F2   # p10:B17A jp
+0x46FA   # p03:B811 jp
+0x46FF   # p12:7041 call
 0x473B   # p01:7D7F call
-0x474D   # p05:BBCD call
-0x475A   # p15:B9B4 call
-0x47AB   # p12:7ACF jp
+0x4744   # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4744
+0x474D   # p10:BC45 call
+0x475A   # p10:A575 jp
+0x4767   # p04:98D7 call
+0x47ED   # p15:B97C jp
 0x4840   # p12:6EC5 jp
-0x4879   # p07:A4D9 call
-0x489C   # p01:6F13 call
+0x489C   # p01:7240 jp
 0x4918   # p01:7705 call
-0x4950   # p08:BD69 call
+0x4934   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4934
+0x4938   # codigo huerfano: 24 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4938
+0x4950   # p01:64CF call
+0x496C   # codigo huerfano: 33 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x496C
+0x498D   # codigo huerfano: 12 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x498D
+0x4999   # codigo huerfano: 13 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4999
+0x49A6   # codigo huerfano: 27 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x49A6
 0x49DA   # p06:ABEA call
 0x49FB   # p13:9367 call
+0x4A0B   # p04:88F4 call
 0x4A19   # p15:A55D call
-0x4A2C   # p08:A179 jp
 0x4A8C   # p12:7421 call
-0x4BE4   # p04:8D03 call
+0x4AE0   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4AE0
 0x4C8B   # p09:ACE2 call
+0x4C91   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4C91
 0x4CA6   # p13:9BAF call
 0x4D16   # p08:BC83 call
 0x4D1C   # p01:70A8 call
 0x4D2B   # p03:A8F0 call
 0x4D3E   # p01:6DE3 call
+0x4D42   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4D42
 0x4D46   # p01:6F22 call
 0x4D52   # p13:952B call
-0x4D56   # p01:6E24 call
 0x4E01   # p09:AB9C call
 0x4E11   # p09:AABA call
 0x4E1C   # p09:A14F call
 0x4F65   # p04:8367 jp
-0x4F97   # p01:772F call
+0x4F7E   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4F7E
+0x4F86   # codigo huerfano: 17 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x4F86
 0x5010   # p04:8D26 call
 0x5019   # p05:AAEC jp
 0x504C   # p15:B9CF call
@@ -138,29 +153,41 @@
 0x507A   # p01:647D call
 0x5081   # p01:6469 call
 0x5088   # p06:A4AE jp cc
+0x508E   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x508E
 0x5094   # p01:7ED8 jp
 0x509A   # p01:703C call
-0x50A0   # p01:71F1 jp
+0x50A0   # p01:7158 call
 0x50A6   # p02:8550 call
+0x50AC   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50AC
+0x50B2   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50B2
+0x50B8   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50B8
+0x50BE   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50BE
 0x50C4   # p01:7E7B jp
+0x50CA   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50CA
+0x50D0   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50D0
 0x50D6   # p01:71EE jp cc
+0x50DC   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50DC
 0x50E2   # p01:7173 call
-0x50E8   # p01:70F6 jp cc
+0x50E8   # p06:AB06 call
+0x50EE   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x50EE
 0x50F4   # p01:6FF4 call
 0x50FA   # p01:70F9 jp
 0x5100   # p01:712C call
 0x5106   # p01:7124 call
-0x51E0   # p04:81FE call
+0x51E0   # p04:8893 call
 0x51FD   # p09:BDE2 jp cc
 0x52CF   # p02:817E jp
-0x52D2   # p02:897F jp
+0x52D2   # p02:8D32 call
 0x5470   # p07:A4B5 call
 0x5476   # p04:8D29 call
 0x547C   # p07:A4C0 call
+0x5482   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5482
+0x54DE   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x54DE
+0x54E4   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x54E4
 0x55B1   # p03:A90D call
 0x55CF   # p02:817B jp cc
 0x55D2   # p02:8D41 call
-0x57AE   # p01:70AB jp
+0x5717   # codigo huerfano: 15 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5717
 0x57E9   # p03:AAEC call
 0x57F2   # p03:AA5C call
 0x591D   # p08:A279 jp
@@ -169,11 +196,12 @@
 0x59A7   # p03:AD1A call
 0x59BB   # p01:75BC call
 0x59EF   # p03:A8ED call
+0x5A0F   # p04:9181 jp cc
 0x5A11   # p04:9205 call
 0x5AFE   # p02:9EDF call
-0x5D18   # p01:67A5 jp
-0x5D3D   # p12:7DC2 call
-0x5D41   # p12:7DBF call
+0x5B72   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5B72
+0x5D3D   # p03:B5F2 call
+0x5D41   # p12:7AE2 jp
 0x5D4F   # p01:7C2B call
 0x5D66   # p01:76CF call
 0x5D6E   # p01:76DA call
@@ -192,6 +220,7 @@
 0x5F01   # p15:AC9A call
 0x5F0A   # p15:AB7E call
 0x5F12   # p01:7836 call
+0x5F1B   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5F1B
 0x5F23   # p09:B815 call
 0x5F2B   # p09:A5C7 call
 0x5F34   # p09:A5AC call
@@ -202,7 +231,10 @@
 0x5F4D   # p13:99A1 jp
 0x5F51   # p09:AFFF call
 0x5F57   # p02:8E69 call
-0x5F88   # p02:8F78 call
+0x5F98   # p01:7CCF call
 0x5FCA   # p01:7C40 call
+0x5FD5   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5FD5
+0x5FDA   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5FDA
 0x5FE0   # p07:B569 call
+0x5FE6   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5FE6
 0x5FEB   # p08:BCA7 call

@@ -10,6 +10,8 @@ D 0xAC53 0xAC59 tabla_AC53  3 destinos del despachador p00:424D (call en p03:AC5
 F 0xAC53 w3
 D 0xBD33 0xBD3F tabla_BD33  6 destinos del despachador p00:424D (call en p03:BD30, el indice en A): 8AEF, 8B27, BDB2, BD3F, BD4C, BD59; lo leen p03:BD30 (12 bytes)
 F 0xBD33 w6
+D 0xBFD8 0xBFE2 mosaico_BFD8  un mosaico de 2 x 5 caracteres, un byte cada uno (p00:510F; BC = 0x0205 en quien llama); lo leen p03:BFD2 (10 bytes)
+F 0xBFD8 5
 D 0xA004 0xA021 resto_A004  lo apuntan con el banco puesto p01:7699 (0xA004), p01:7702 (0xA004); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:7699, p01:7702 (29 bytes)
 F 0xA004 16
 D 0xA45A 0xA45E resto_A45A  lo apuntan con el banco puesto p03:A3FA (0xA45A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:A3FA (4 bytes)
@@ -30,6 +32,4 @@ D 0xBAE8 0xBB16 resto_BAE8  lo apuntan con el banco puesto p03:BA76 (0xBAE8), p0
 F 0xBAE8 16
 D 0xBC25 0xBC29 resto_BC25  lo apuntan con el banco puesto p03:BC1B (0xBC25); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:BC1B (4 bytes)
 F 0xBC25 16
-D 0xBFD8 0xBFE2 resto_BFD8  lo apuntan con el banco puesto p03:BFCC (0xBFD8); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:BFCC (10 bytes)
-F 0xBFD8 16
 # --- fin de los bloques de bloques.py ---

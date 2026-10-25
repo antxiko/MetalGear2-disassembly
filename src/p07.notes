@@ -14,7 +14,7 @@ D 0xB89B 0xB8A3 tabla_B89B  4 destinos del despachador p00:424D (call en p07:B89
 F 0xB89B w4
 D 0xA686 0xA69A resto_A686  lo apuntan con el banco puesto p07:A66E (0xA686); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p07:A66E (20 bytes)
 F 0xA686 16
-D 0xAA0F 0xAB44 resto_AA0F  lo apuntan con el banco puesto p07:A6B5 (0xAA0F), p07:A91B (0xAA0F), p07:A9FD (0xAA0F), p07:A515 (0xAA83), p07:A80B (0xAA83), p07:BC3A (0xAA83); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p07:A6B5, p07:A91B, p07:A9FD, p07:A515, p07:A80B, p07:BC3A (309 bytes)
+D 0xAA0F 0xAB44 resto_AA0F  lo apuntan con el banco puesto p07:A6B5 (0xAA0F), p07:A91B (0xAA0F), p07:A94B (0xAA0F), p07:A9FD (0xAA0F), p07:A515 (0xAA83), p07:A80B (0xAA83); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p07:A6B5, p07:A91B, p07:A94B, p07:A9FD, p07:A515, p07:A80B (309 bytes)
 F 0xAA0F 16
 D 0xB2E9 0xB2F9 resto_B2E9  lo apuntan con el banco puesto p07:B2CE (0xB2E9); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p07:B2CE (16 bytes)
 F 0xB2E9 16

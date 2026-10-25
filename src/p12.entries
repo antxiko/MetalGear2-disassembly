@@ -31,13 +31,13 @@
 0x69E0   # p00:5F0D call
 0x6AB3   # p00:5DBE call
 0x6AD4   # p00:5F15 call
-0x6B42   # p00:5D52 call
 0x6BA5   # p00:5DA6 call
 0x6BE4   # p00:5556 call
 0x6C2C   # p12:6BBB entrada 3 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
 0x6C38   # p12:6BBB entrada 7 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
 0x6C4F   # p12:6BBB entrada 10 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
 0x6C54   # p12:6BBB entrada 18 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6C74   # codigo huerfano: 25 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C74
 0x6C8D   # p12:6BBB entrada 14 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
 0x6CDF   # p12:6BBB entrada 0 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
 0x6CE0   # p00:5F5A call
@@ -48,9 +48,9 @@
 0x6E70   # p00:5F8B call
 0x6EC8   # p00:5F93 call
 0x6F49   # p04:9829 call
+0x6FC4   # p04:9911 call
 0x6FFE   # p04:9838 call
-0x72A1   # p00:5FAA call
-0x741E   # p08:AF05 call
+0x72A1   # p00:5FBA call
 0x7462   # p00:5FD0 call
 0x746B   # p00:5FC5 call
 0x74BC   # p04:9CD8 call
@@ -84,6 +84,7 @@
 0x79EE   # p12:76C8 entrada 10 de la tabla de 0x76CB (call 0x424D en 0x76C8)
 0x7ABC   # p12:76C8 entrada 11 de la tabla de 0x76CB (call 0x424D en 0x76C8)
 0x7AC7   # p12:7707 entrada 11 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7AD2   # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7AD2
 0x7B04   # p12:7707 entrada 12 de la tabla de 0x770A (call 0x424D en 0x7707)
 0x7B0D   # p12:76C8 entrada 12 de la tabla de 0x76CB (call 0x424D en 0x76C8)
 0x7B19   # p12:76C8 entrada 13 de la tabla de 0x76CB (call 0x424D en 0x76C8)

@@ -1,5 +1,9 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xAA98 mapa_de_bits_8098_cola  mapa de bits de 168 filas de 64 bytes (dos puntos por byte) que p01:6ED6 copia a la VRAM, 128 bytes por fila (p00:4486) (sigue del banco 57); lo leen p01:6E2F (2712 bytes)
+F 0xA000 16
+D 0xAA98 0xAAAA mosaico_AA98  un mosaico de 1 x 18 caracteres, un byte cada uno (p00:510F; BC = 0x0112 en quien llama); lo leen p01:6469 (18 bytes)
+F 0xAA98 16
 D 0xB1C3 0xB567 rachas_B1C3  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_B1C3 B1C3-B567); lo leen p00:4F58, p00:4F0F (932 bytes)
 F 0xB1C3 16
 D 0xB567 0xB577 tabla_colores_B567  8 punteros a colores de dibujo (los usa hasta el indice 7; p00:4DA0); lo leen p00:4DA0 (16 bytes)
@@ -54,6 +58,6 @@ D 0xBC07 0xBC0F dibujo_BC07  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada
 F 0xBC07 8
 D 0xBC61 0xC000 relleno_ff  927 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (927 bytes)
 F 0xBC61 16
-D 0xA000 0xB1C3 resto_A000  lo apuntan con el banco puesto p01:6E32 (0xA840), p00:4151 (0xB000), p01:6F0D (0xB093); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:6E32, p00:4151, p01:6F0D (4547 bytes)
-F 0xA000 16
+D 0xAAAA 0xB1C3 resto_AAAA  lo apuntan con el banco puesto p00:4151 (0xB000), p01:6F0D (0xB093); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:4151, p01:6F0D (1817 bytes)
+F 0xAAAA 16
 # --- fin de los bloques de bloques.py ---

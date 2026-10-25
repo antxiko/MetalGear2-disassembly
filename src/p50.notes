@@ -1,5 +1,187 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
-D 0x8000 0xA000 resto_8000  lo apuntan con el banco puesto p01:61E0 (0x8000), p01:6238 (0x8002), p01:6730 (0x8004), p01:6321 (0x8006), p01:6356 (0x8008), p01:6331 (0x800A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:61E0, p01:6238, p01:6730, p01:6321, p01:6356, p01:6331 (8192 bytes)
-F 0x8000 16
+D 0x8000 0x804C cabecera_50  38 punteros del banco 50: 8000 y 8002 tablas de mensajes, 8004 los nombres, 8006 y 8008 letreros, 800A tabla de letreros, 800C-8040 secuencias (p09:A507), 8042 tabla, 8044 y 804A letreros con sitio, 8046 y 8048 tablas de letreros; lo leen p01:61E3 (76 bytes)
+F 0x8000 w8
+D 0x804C 0x806B secuencia_804C  10 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (31 bytes)
+F 0x804C 3
+D 0x806B 0x8078 secuencia_806B  4 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (13 bytes)
+F 0x806B 3
+D 0x8078 0x80B2 secuencia_8078  19 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (58 bytes)
+F 0x8078 3
+D 0x80B2 0x80B6 secuencia_80B2  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x80B2 3
+D 0x80B6 0x80BD secuencia_80B6  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x80B6 3
+D 0x80BD 0x80C1 secuencia_80BD  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x80BD 3
+D 0x80C1 0x80E3 secuencia_80C1  11 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (34 bytes)
+F 0x80C1 3
+D 0x80E3 0x80EA secuencia_80E3  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x80E3 3
+D 0x80EA 0x80F1 secuencia_80EA  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x80EA 3
+D 0x80F1 0x80FB secuencia_80F1  3 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (10 bytes)
+F 0x80F1 3
+D 0x80FB 0x8102 secuencia_80FB  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x80FB 3
+D 0x8102 0x8106 secuencia_8102  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x8102 3
+D 0x8106 0x810A secuencia_8106  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x8106 3
+D 0x810A 0x812C secuencia_810A  11 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (34 bytes)
+F 0x810A 3
+D 0x812C 0x8130 secuencia_812C  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x812C 3
+D 0x8130 0x8137 secuencia_8130  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x8130 3
+D 0x8137 0x813E secuencia_8137  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x8137 3
+D 0x813E 0x8142 secuencia_813E  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x813E 3
+D 0x8142 0x8176 secuencia_8142  17 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (52 bytes)
+F 0x8142 3
+D 0x8176 0x817D secuencia_8176  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x8176 3
+D 0x817D 0x8190 secuencia_817D  6 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (19 bytes)
+F 0x817D 3
+D 0x8190 0x8194 secuencia_8190  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x8190 3
+D 0x8194 0x81C2 secuencia_8194  15 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (46 bytes)
+F 0x8194 3
+D 0x81C2 0x81CC secuencia_81C2  3 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (10 bytes)
+F 0x81C2 3
+D 0x81CC 0x81D3 secuencia_81CC  2 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (7 bytes)
+F 0x81CC 3
+D 0x81D3 0x81D7 secuencia_81D3  1 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (4 bytes)
+F 0x81D3 3
+D 0x81D7 0x81E1 secuencia_81D7  3 mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su espera (p09:A4F0, p09:A537); lo leen p09:A507 (10 bytes)
+F 0x81D7 3
+D 0x81E1 0x8227 tabla_81E1  35 punteros a mensajes (cabecera 0x8002 del banco 50); lo leen p01:61E6 (70 bytes)
+F 0x81E1 w8
+D 0x8227 0x8247 mensaje_8227  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (32 bytes)
+F 0x8227 16
+D 0x8247 0x8264 mensaje_8247  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (29 bytes)
+F 0x8247 16
+D 0x8264 0x828A mensaje_8264  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (38 bytes)
+F 0x8264 16
+D 0x828A 0x82C0 mensaje_828A  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (54 bytes)
+F 0x828A 16
+D 0x82C0 0x82E3 mensaje_82C0  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (35 bytes)
+F 0x82C0 16
+D 0x82E3 0x8331 mensaje_82E3  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (78 bytes)
+F 0x82E3 16
+D 0x8347 0x8366 mensaje_8347  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (31 bytes)
+F 0x8347 16
+D 0x8366 0x83BC mensaje_8366  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (86 bytes)
+F 0x8366 16
+D 0x83BC 0x83E7 mensaje_83BC  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (43 bytes)
+F 0x83BC 16
+D 0x83E7 0x8403 mensaje_83E7  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (28 bytes)
+F 0x83E7 16
+D 0x8403 0x8444 mensaje_8403  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (65 bytes)
+F 0x8403 16
+D 0x8444 0x846A mensaje_8444  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (38 bytes)
+F 0x8444 16
+D 0x846A 0x848F mensaje_846A  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (37 bytes)
+F 0x846A 16
+D 0x848F 0x84CB mensaje_848F  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (60 bytes)
+F 0x848F 16
+D 0x84D2 0x851B mensaje_84D2  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (73 bytes)
+F 0x84D2 16
+D 0x851B 0x856A mensaje_851B  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (79 bytes)
+F 0x851B 16
+D 0x856A 0x8580 mensaje_856A  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (22 bytes)
+F 0x856A 16
+D 0x8580 0x85CB mensaje_8580  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (75 bytes)
+F 0x8580 16
+D 0x85CB 0x85E4 mensaje_85CB  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (25 bytes)
+F 0x85CB 16
+D 0x85E4 0x8620 mensaje_85E4  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (60 bytes)
+F 0x85E4 16
+D 0x8620 0x863C mensaje_8620  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (28 bytes)
+F 0x8620 16
+D 0x863C 0x866F mensaje_863C  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (51 bytes)
+F 0x863C 16
+D 0x866F 0x869E mensaje_866F  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (47 bytes)
+F 0x866F 16
+D 0x869E 0x86BA mensaje_869E  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (28 bytes)
+F 0x869E 16
+D 0x86BA 0x86E6 mensaje_86BA  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (44 bytes)
+F 0x86BA 16
+D 0x86E6 0x8706 mensaje_86E6  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (32 bytes)
+F 0x86E6 16
+D 0x871F 0x877C mensaje_871F  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (93 bytes)
+F 0x871F 16
+D 0x877C 0x87AC tabla_877C  24 punteros a mensajes (cabecera 0x8000 del banco 50); lo leen p01:61E6 (48 bytes)
+F 0x877C w8
+D 0x87AC 0x8807 mensaje_87AC  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (91 bytes)
+F 0x87AC 16
+D 0x8807 0x887B mensaje_8807  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (116 bytes)
+F 0x8807 16
+D 0x887B 0x8BDA mensaje_887B  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (863 bytes)
+F 0x887B 16
+D 0x8BDA 0x8C4E mensaje_8BDA  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (116 bytes)
+F 0x8BDA 16
+D 0x8C4E 0x8C79 mensaje_8C4E  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (43 bytes)
+F 0x8C4E 16
+D 0x8C79 0x8CBF mensaje_8C79  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (70 bytes)
+F 0x8C79 16
+D 0x8CBF 0x8D27 mensaje_8CBF  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (104 bytes)
+F 0x8CBF 16
+D 0x8D27 0x8D64 mensaje_8D27  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (61 bytes)
+F 0x8D27 16
+D 0x8D64 0x8D95 mensaje_8D64  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (49 bytes)
+F 0x8D64 16
+D 0x8D95 0x8DE4 mensaje_8D95  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (79 bytes)
+F 0x8D95 16
+D 0x8DE4 0x8E35 mensaje_8DE4  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (81 bytes)
+F 0x8DE4 16
+D 0x8E35 0x8E6D mensaje_8E35  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (56 bytes)
+F 0x8E35 16
+D 0x8E6D 0x8FC4 mensaje_8E6D  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (343 bytes)
+F 0x8E6D 16
+D 0x8FC4 0x9182 mensaje_8FC4  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (446 bytes)
+F 0x8FC4 16
+D 0x9182 0x92AE mensaje_9182  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (300 bytes)
+F 0x9182 16
+D 0x92AE 0x92BB mensaje_92AE  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (13 bytes)
+F 0x92AE 16
+D 0x92BB 0x92FF mensaje_92BB  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (68 bytes)
+F 0x92BB 16
+D 0x92FF 0x9770 mensaje_92FF  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (1137 bytes)
+F 0x92FF 16
+D 0x979A 0x9802 mensaje_979A  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (104 bytes)
+F 0x979A 16
+D 0x9802 0x9844 mensaje_9802  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (66 bytes)
+F 0x9802 16
+D 0x9844 0x9866 mensaje_9844  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (34 bytes)
+F 0x9844 16
+D 0x9866 0x990C mensaje_9866  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (166 bytes)
+F 0x9866 16
+D 0x990C 0x9C93 mensaje_990C  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (903 bytes)
+F 0x990C 16
+D 0x9C93 0x9CB9 mensaje_9C93  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p01:6504 (38 bytes)
+F 0x9C93 16
+D 0x9CB9 0x9CCF mensaje_9CB9  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (22 bytes)
+F 0x9CB9 16
+D 0x9CCF 0x9CD9 mensaje_9CCF  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (10 bytes)
+F 0x9CCF 16
+D 0x9CD9 0x9CEB mensaje_9CD9  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (18 bytes)
+F 0x9CD9 16
+D 0x9CEB 0x9CFD mensaje_9CEB  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (18 bytes)
+F 0x9CEB 16
+D 0x9CFD 0x9D17 mensaje_9CFD  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (26 bytes)
+F 0x9CFD 16
+D 0x9D17 0x9D2C mensaje_9D17  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (21 bytes)
+F 0x9D17 16
+D 0x9FA9 0x9FB2 mensaje_9FA9  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (9 bytes)
+F 0x9FA9 16
+D 0x9FB2 0x9FC2 mensaje_9FB2  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (16 bytes)
+F 0x9FB2 16
+D 0x9FC2 0x9FEA mensaje_9FC2  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (40 bytes)
+F 0x9FC2 16
+D 0x9FEA 0x9FFC mensaje_9FEA  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina; lo leen p09:A50D (18 bytes)
+F 0x9FEA 16
+D 0x9FFC 0xA000 mensaje_9FFC  mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, 0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina (sigue en el banco 51, en 0xA000); lo leen p09:A50D (4 bytes)
+F 0x9FFC 16
 # --- fin de los bloques de bloques.py ---

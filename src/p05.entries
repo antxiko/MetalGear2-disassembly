@@ -175,7 +175,7 @@
 0xBC4A   # entrada 19 de la tabla 0xB934 en HL (p05:B92E, p00:424E)
 0xBCB5   # entrada 20 de la tabla 0xB934 en HL (p05:B92E, p00:424E)
 0xBCE8   # entrada 21 de la tabla 0xB934 en HL (p05:B92E, p00:424E)
-0xBCF5   # p01:7C3A call
+0xBCF5   # p00:534D call
 0xBD3B   # p04:8A72 entrada 8 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
 0xBD46   # entrada 7 de la tabla 0x8A8D en HL (p04:8A64, p00:424E)
 0xBD84   # entrada 0 de la tabla 0xBD58 en HL (p05:BD52, p00:424E)

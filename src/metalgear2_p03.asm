@@ -1946,7 +1946,7 @@ DATA_resto_AD96:
 	defb 0b0h,0f8h,020h,0f8h,0e8h,0c0h,0e8h,030h,0c8h,0f8h,008h,0f8h,0f0h,0d8h,0f0h,018h	; ad96  .. ....0........
 
 ; ======================================================================
-; CODIGO 0xada6..0xaef3  (333 bytes)
+; CODIGO 0xada6..0xb077  (721 bytes)
 ; ======================================================================
 
 
@@ -2135,18 +2135,17 @@ L_AEEC:
 	ld a,001h		;aeec
 	ld (0cb76h),a		;aeee
 	jr L_AEE6		;aef1
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xaef3..0xaf05  (18 bytes)
-DATA_AEF3:
-	defb 0ddh,0e5h,03ah,05fh,0cah,0a7h,0f5h,0cch,012h,0afh,0f1h,03dh,0cch,0bch,079h,0ddh	; aef3  ..:_.......=..y.
-	defb 0e1h,0c9h	; af03
-
-; ======================================================================
-; CODIGO 0xaf05..0xb077  (370 bytes)
-; ======================================================================
-
-
+L_AEF3:
+	push ix		;aef3
+	ld a,(0ca5fh)		;aef5
+	and a			;aef8
+	push af			;aef9
+	call z,L_AF12		;aefa
+	pop af			;aefd
+	dec a			;aefe
+	call z,079bch		;aeff
+	pop ix		;af02
+	ret			;af04
 L_AF05:
 	push ix		;af05
 	ld a,(0ca5fh)		;af07
@@ -2838,7 +2837,7 @@ DATA_resto_B3A0:
 	defb 007h,04bh,00ah,04bh,003h,04ch	; b3a0
 
 ; ======================================================================
-; CODIGO 0xb3a6..0xb48b  (229 bytes)
+; CODIGO 0xb3a6..0xb9ce  (1576 bytes)
 ; ======================================================================
 
 
@@ -2982,6 +2981,7 @@ L_B473:
 	pop hl			;b47a
 	ld a,007h		;b47b
 	call 0423eh		;b47d
+L_B480:
 	ld a,(0ca03h)		;b480
 	and 007h		;b483
 	ret nz			;b485
@@ -2989,17 +2989,12 @@ L_B473:
 	xor 001h		;b487
 	ld (hl),a			;b489
 	ret			;b48a
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb48b..0xb495  (10 bytes)
-DATA_B48B:
-	defb 021h,047h,0e2h,018h,0f0h,021h,04fh,0e2h,018h,0ebh	; b48b  !G...!O...
-
-; ======================================================================
-; CODIGO 0xb495..0xb9ce  (1337 bytes)
-; ======================================================================
-
-
+L_B48B:
+	ld hl,0e247h		;b48b
+	jr L_B480		;b48e
+L_B490:
+	ld hl,0e24fh		;b490
+	jr L_B480		;b493
 L_B495:
 	push af			;b495
 	dec a			;b496
@@ -3036,7 +3031,7 @@ L_B4AF:
 	call L_B457		;b4c6
 	ld hl,0e240h		;b4c9
 	ld de,000c0h		;b4cc
-	jr $-120		;b4cf
+	jr L_B457		;b4cf
 L_B4D1:
 	ld hl,0caa0h		;b4d1
 	ld a,(hl)			;b4d4
@@ -4777,12 +4772,12 @@ L_BFB0:
 	jp 0722ch		;bfd5
 
 ; ----------------------------------------------------------------------
-; DATOS resto_BFD8: lo apuntan con el banco puesto p03:BFCC (0xBFD8); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p03:BFCC (10 bytes)
+; DATOS mosaico_BFD8: un mosaico de 2 x 5 caracteres, un byte cada uno
+;   (p00:510F; BC = 0x0205 en quien llama); lo leen p03:BFD2 (10 bytes)
 ;   0xbfd8..0xbfe2  (10 bytes)
-DATA_resto_BFD8:
-	defb 01ah,001h,00fh,01dh,009h,01bh,002h,019h,01eh,00ah	; bfd8  ..........
+DATA_mosaico_BFD8:
+	defb 01ah,001h,00fh,01dh,009h	; bfd8
+	defb 01bh,002h,019h,01eh,00ah	; bfdd
 
 ; ======================================================================
 ; CODIGO 0xbfe2..0xc000  (30 bytes)

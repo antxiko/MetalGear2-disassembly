@@ -25,6 +25,7 @@
 0x6211   # p08:AB9C call
 0x6250   # p05:BE5F call
 0x6278   # p04:8B9C call
+0x6299   # codigo huerfano: 12 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6299
 0x62A5   # p15:BD40 jp
 0x6302   # p03:BA4C call
 0x631A   # p03:BEE2 jp
@@ -51,7 +52,7 @@
 0x649C   # p10:B9EF call
 0x64A5   # p13:9930 call
 0x64B7   # p10:B00B jp
-0x64C3   # p10:B931 jp
+0x64C3   # p10:B8D2 jp
 0x64D4   # p03:BA42 call
 0x64DD   # p13:9933 call
 0x64E8   # p09:BBB3 jp
@@ -69,7 +70,7 @@
 0x66AA   # entrada 3 de la tabla 0x65AA en HL (p01:65A8, p00:424E)
 0x67EF   # p15:A9E7 call
 0x6A0D   # p09:B747 jp
-0x6A11   # p09:B848 jp
+0x6A11   # la musica pendiente de 0xCA19 (p02:8A47), jp (hl) en p02:8A7A
 0x6A15   # p05:BB05 jp
 0x6A19   # p02:9955 jp cc
 0x6A1D   # p06:A858 call
@@ -81,8 +82,8 @@
 0x6A38   # p03:BCFA jp
 0x6A3C   # p03:A96F jp
 0x6A40   # p07:B3E9 call
-0x6A44   # p14:AF8D jp cc
-0x6A48   # p08:B019 call
+0x6A44   # p03:B24D jp cc
+0x6A48   # p03:B257 jp
 0x6A4C   # p15:A5D9 jp
 0x6A50   # p11:ADED jp
 0x6A54   # p07:A28A jp
@@ -95,7 +96,7 @@
 0x6A73   # p05:B3F2 jp
 0x6A77   # p06:A199 entrada 5 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6A7B   # p06:A199 entrada 4 de la tabla de 0xA19C (call 0x424D en 0xA199)
-0x6A7F   # p11:AAB3 jp
+0x6A7F   # p11:B09F call
 0x6A83   # p09:B296 call
 0x6A87   # p05:AD46 call
 0x6A8B   # p11:AB34 jp
@@ -114,13 +115,14 @@
 0x6AC6   # p02:9885 jp
 0x6ACA   # p02:9958 jp
 0x6ACE   # p02:9C65 call
+0x6AD2   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6AD2
 0x6AD6   # p14:A223 call
 0x6ADA   # p08:AC2F call
 0x6ADE   # p11:A412 jp
 0x6AE2   # p03:A92E jp
 0x6AE6   # p10:BF4F call
 0x6AEA   # p15:ABB6 jp
-0x6AEE   # p09:B5A2 jp
+0x6AEE   # el HL de p15:B8F2, jp (hl) en p04:86DD
 0x6AF2   # p15:BB3C jp cc
 0x6AF6   # p14:B524 jp
 0x6AFA   # p03:AA73 jp
@@ -132,21 +134,34 @@
 0x6B12   # p15:B9F4 call
 0x6B16   # p07:B3A2 jp
 0x6B1A   # p07:A1CE call
-0x6B1E   # p11:A114 jp
-0x6B41   # p09:B2D1 jp
-0x6B45   # p09:BFBE entrada 12 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
+0x6B1E   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B22   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B22
+0x6B26   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B2A   # destino de la lista de 0xCA22 = 3 (p06:B46E; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B2E   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B2E
+0x6B35   # destino de la lista de 0xCA22 = 4 (p06:B489; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B39   # destino de la lista de 0xCA22 = 1 (p06:B449; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B3D   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B41   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B45   # la musica pendiente de 0xCA19 (p09:A049), jp (hl) en p02:8A7A
 0x6B49   # p10:BF62 call
 0x6B4D   # p08:A5B3 call cc
+0x6B51   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B51
 0x6B55   # p06:AEFF entrada 35 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0x6B59   # p14:AEAD call
 0x6B5D   # p14:ADE4 call
+0x6B61   # la musica pendiente de 0xCA19 (p02:8AA8), jp (hl) en p02:8A7A
+0x6B65   # codigo huerfano: 4 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x6B65
 0x6B69   # p04:868E entrada 0 de la tabla de 0x8691 (call 0x424D en 0x868E)
-0x6B6D   # p15:B9F1 call
+0x6B6D   # la musica pendiente de 0xCA19 (p09:BB20), jp (hl) en p02:8A7A
 0x6B71   # p04:868E entrada 2 de la tabla de 0x8691 (call 0x424D en 0x868E)
 0x6B75   # p10:AB4D call
-0x6B79   # p09:BFBE entrada 13 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
+0x6B79   # la musica pendiente de 0xCA19 (p02:8AAD), jp (hl) en p02:8A7A
 0x6B7D   # p02:8A9D jp cc
-0x6B85   # p09:A996 call
+0x6B81   # destino de la lista de 0xCA22 = 4 (p06:B489; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B85   # destino de la lista de 0xCA22 = 7 (p06:B4DB; p01:7CE6 y jp (hl) en p01:73C7)
+0x6B89   # la musica pendiente de 0xCA19 (p02:8A2A), jp (hl) en p02:8A7A
+0x6B91   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
 0x6B95   # p05:BE46 call
 0x6B99   # p14:B16C call
 0x6BA0   # p02:9B9E jp
@@ -159,13 +174,15 @@
 0x6BBC   # p09:B5E7 jp
 0x6BC0   # p13:9731 call
 0x6BC4   # p13:99FE jp
-0x6BCC   # p05:BE64 call
+0x6BCC   # el HL de p05:A5F9, jp (hl) en p04:86DD
 0x6BD0   # p04:86CD jp
 0x6BD4   # p09:AB61 call
 0x6BD8   # p03:BFE2 call
 0x6BDC   # p03:BFB3 call
 0x6BE8   # p05:BFE1 call
 0x6BEC   # p04:9368 jp
+0x6BF0   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6BF0
+0x6BF4   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6BF4
 0x6BFB   # p09:B8EA call cc
 0x6BFF   # p06:AEFF entrada 28 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0x6C03   # p09:BFBE entrada 0 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
@@ -199,12 +216,14 @@
 0x6C77   # p03:AA33 jp cc
 0x6C7B   # p08:A561 jp cc
 0x6C7F   # p06:A51C jp
+0x6C83   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C83
 0x6C87   # p11:B23C jp
 0x6C8B   # p11:A55B jp
 0x6C8F   # p11:A145 call
 0x6C93   # p06:A199 entrada 7 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6C97   # p07:A397 call
 0x6C9B   # p11:BB43 jp cc
+0x6C9F   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C9F
 0x6CA6   # p05:B5BA call
 0x6CAA   # p07:A36D call
 0x6CAE   # p05:B848 call
@@ -252,7 +271,7 @@
 0x7053   # p10:B7ED jp cc
 0x7059   # p03:BB38 call
 0x7072   # p08:BC8C call
-0x707E   # p00:5EFB jp cc
+0x7078   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7078
 0x70AE   # p03:B863 jp
 0x70E4   # p03:BA50 jp
 0x70FC   # p09:B72D call
@@ -304,7 +323,7 @@
 0x79A3   # p03:ACDC call cc
 0x79AB   # p02:9FD0 call
 0x79B4   # p03:A55A call
-0x79BC   # p02:8A1E jp cc
+0x79BC   # p03:AEFF call cc
 0x79C4   # p05:B603 call
 0x79D1   # p05:B501 jp
 0x79D9   # p05:BC8B call
@@ -315,6 +334,7 @@
 0x7A02   # p05:BBD3 call
 0x7A0A   # p05:BBB8 call
 0x7A12   # p04:83B2 jp
+0x7A17   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A17
 0x7A1F   # p05:BC82 call
 0x7A2D   # p08:ABAF call
 0x7A33   # p10:AAD3 call
@@ -326,8 +346,9 @@
 0x7A5F   # p08:A138 jp cc
 0x7A68   # p04:8B49 call
 0x7A70   # p05:BA68 call
+0x7A78   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A78
 0x7A80   # p04:8D0B call
-0x7A88   # p05:BF8D call
+0x7A88   # p04:8AC4 call
 0x7A8D   # p05:AD6F call
 0x7A9B   # p05:BC18 call
 0x7AA0   # p05:BC34 call
@@ -344,8 +365,11 @@
 0x7AF9   # p07:B3F5 jp
 0x7B01   # p07:B444 jp
 0x7B09   # p07:B328 call
+0x7B14   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7B14
+0x7B1C   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7B1C
 0x7B24   # p11:A01F call
 0x7B2D   # p11:A029 call
+0x7B35   # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7B35
 0x7B40   # p13:9BB2 jp
 0x7B48   # p13:9D04 call
 0x7B4D   # p13:9D0A jp
@@ -358,17 +382,15 @@
 0x7B8D   # p09:BF42 call
 0x7BA1   # p15:AC45 jp cc
 0x7BAA   # p00:59FD call
-0x7BF1   # p00:5AF8 call
+0x7BF1   # p00:52E4 call
 0x7BF5   # p00:57FE call
-0x7BFC   # p00:5980 call
 0x7C0E   # p00:5E12 call
 0x7C1A   # p08:A198 call
 0x7C20   # p00:5E74 call cc
 0x7C52   # p00:5310 call
-0x7C85   # p05:BFCE call
+0x7C77   # p02:8EF3 call
 0x7CAF   # p07:A487 call
 0x7CB5   # p09:A028 call
-0x7CBB   # p03:A928 call
 0x7D66   # p15:A231 call
 0x7DA9   # p03:AA2E call
 0x7DC0   # p01:7DB5 entrada 0 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
@@ -376,11 +398,11 @@
 0x7DC6   # p01:7DB5 entrada 2 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
 0x7DC9   # p01:7DB5 entrada 3 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
 0x7DE2   # p00:5E2B call
-0x7DF4   # p00:55F0 call
+0x7DF4   # p00:5326 call
+0x7EDB   # codigo huerfano: 10 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7EDB
 0x7EEE   # p03:A859 call
 0x7EF6   # p02:97ED jp
 0x7F37   # p04:860C jp
-0x7F3D   # p04:9153 call
 0x7F69   # p06:A1B4 call
 0x7F71   # p03:B1EE call
 0x7F88   # p02:997D jp

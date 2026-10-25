@@ -38,7 +38,37 @@ listado:
             unas rachas que p00:51E0 deshace en 0xE780 (n < 0x80 repite el
             siguiente, n > 0x80 copia n & 0x7F, 0 acaba), 36 bytes por sala
             sin juego: los bloques son los de p00:56EF + 2 x zona.
+  p01:6546  un mensaje que se escribe letra a letra (p01:66C4): un primer
+            byte < 4 opcional (la velocidad, p01:654F) y letras hasta un 0xFF
+            o un 0xFB (fin); 0xFE salta de linea, 0xFD y 0xFC cambian de
+            pagina, 0x76-0x7F y 0xD4-0xDF ponen el nombre de quien habla
+            (p50:8004) y 0xF8 trae una letra de la segunda pagina (p00:5D18).
+  p00:4950  un letrero: letras hasta 0xFF, 0xFE salta de linea.
+  p00:4918  [fila][columna] y letras; 0xFE trae otra posicion, 0xFF acaba.
+  p01:608B  las conversaciones del transceptor (bancos 48-49): fichas
+            [cabeza][n condiciones][zona sala si bit 7][accion][puntero]
+            (p01:60C4, p01:6104: n = bits 0-3 de la cabeza) y detras de cada
+            una 0xFE [espera][accion][puntero] para seguir (p01:61A6), hasta
+            un 0xFF. La accion 0 es un mensaje (p01:60B4) y la 1 una tabla de
+            p01:6142: [n], n mensajes y n umbrales para elegir uno al azar.
+  p00:510F  un mosaico de B filas por C columnas de caracteres (un byte cada
+            uno), con la forma de pintarlos que ponen las entradas
+            p00:507A-5106 en 0xCA48 (p00:512C); BC lo trae quien llama.
+  p01:6ED6  un mapa de bits: B filas de C bytes a la VRAM, 128 bytes por fila
+            (p00:4486); p01:6EC9 lo saca antes de unas rachas de p00:51E0 a
+            0xD000. p00:489C: B caracteres de un bit (8 bytes) pasados a 4.
+  p09:A4F0  secuencias de mensajes (banco 50): [mensaje lo hi][espera] hasta
+            una espera 0xFF, que trae detras la ultima (p09:A537).
+  p16:4024  pide el sonido A: la cabecera sale de p17:65A9 + 2 x A (p16:4063)
+            [canales][prioridad] y un puntero por canal (p16:411A): 0x10 uno
+            (el de 0xC4C1), 0x30 dos, 0xCF seis y cualquier otro ocho. Las
+            partituras las lee el motor (p16:4392: notas por debajo de 0xD0,
+            ordenes 0xD0-0xFE por la tabla p16:4D52, 0xFF acaba); lo que lee
+            al tocar cada sonido lo mide tools/partituras.py ejecutandolo.
 """
+import json
+import os
+
 import bloques as B
 
 ROM = B.ROM
@@ -81,6 +111,11 @@ def dibujos(v, lista, tabla, sitio):
                   "de la lista 0x%04X (p00:4D92, p00:4DF5)"
                   % (cuantos, bits, "" if bits == 1 else "s", 8 * bits, n, lista),
                   sitio, F=8 * bits)
+        if tabla is not None and not (0x4000 <= tabla < 0xC000 and (v.banco(tabla) or 0) < 64
+                                      and v.banco(tabla) is not None):
+            tabla = None          # el DE de quien llama no es una tabla
+        if tabla is not None and v.banco(v.w(tabla + 2 * ip)) is None:
+            tabla = None
         if tabla is not None:
             pal = v.w(tabla + 2 * ip)
             nb = {1: 1, 2: 2, 3: 4}[bits]
@@ -124,7 +159,16 @@ def por_llamadas():
     t = B.trazador()
     vistos = set()
     for (d, b, pc, s, hl, de) in t.llamadas:
-        if d not in (0x4D3E, 0x4D46, 0x4D4A, 0x4D4E, 0x4D52, 0x4D56) or hl is None:
+        if d not in (0x4D3E, 0x4D46, 0x4D4A, 0x4D4E, 0x4D52, 0x4D56):
+            continue
+        # p00:4D92 no toca DE (p00:4D9C/4DF1): la tabla de colores de la
+        # llamada anterior sigue puesta (p01:6CF5, 6CFB, 6DCA)
+        familia = (0x4D3E, 0x4D46, 0x4D4A, 0x4D4E, 0x4D52, 0x4D56) + tuple(range(0x4100, 0x4230))
+        if hl is None:
+            hl = antes(b, pc, 0x21, pasa=tuple(range(0x4100, 0x4230)))
+        if de is None:
+            de = antes(b, pc, 0x11, 16, pasa=familia)
+        if hl is None:
             continue
         if (b, pc) == (0, 0x4CA0):
             # p00:4C97 pone los bancos de la zona (p00:4C58) y el trazador no
@@ -382,7 +426,393 @@ def salas_especiales():
                   "hasta lo siguiente" % (m, z), "p00:58F8", F=16)
 
 
+def mensaje(v, a):
+    """p01:66C4: hasta 0xFF o 0xFB; 0xF8 lleva otra letra detras."""
+    if v(a) < 4:
+        a += 1
+    while True:
+        c = v(a)
+        a += 1
+        if c in (0xFF, 0xFB):
+            return a
+        if c == 0xF8:
+            a += 1
+
+
+def letrero(v, a):
+    """p00:4950 (y los nombres de p01:6739): hasta 0xFF."""
+    while True:
+        c = v(a)
+        a += 1
+        if c == 0xFF:
+            return a
+        if c == 0xF8:
+            a += 1
+
+
+def letrero_con_sitio(v, a):
+    """p00:4918: [fila][columna], letras, 0xFE y otra posicion, 0xFF."""
+    a += 2
+    while True:
+        c = v(a)
+        a += 1
+        if c == 0xFF:
+            return a
+        if c == 0xFE:
+            a += 2
+
+
+def pon_mensaje(v, a, sitio):
+    B.declara(v, a, mensaje(v, a), "mensaje_%04X" % a,
+              "mensaje letra a letra (p01:66C4): letras hasta 0xFF o 0xFB; 0xFE linea, "
+              "0xFD/0xFC pagina, 0x76-0x7F y 0xD4-0xDF quien habla, 0xF8 segunda pagina",
+              sitio, F=16)
+
+
+def pon_letrero(v, a, sitio, con_sitio=False):
+    if con_sitio:
+        B.declara(v, a, letrero_con_sitio(v, a), "letrero_%04X" % a,
+                  "letrero (p00:4918): [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba",
+                  sitio, F=16)
+    else:
+        B.declara(v, a, letrero(v, a), "letrero_%04X" % a,
+                  "letrero (p00:4950): letras hasta 0xFF, 0xFE salta de linea", sitio, F=16)
+
+
+def tabla_hasta_el_primero(v, t, minimo=1):
+    """Cuantas palabras tiene una tabla de punteros que va delante de lo que
+    apunta: hasta el destino mas bajo de la misma ranura."""
+    n, tope = 0, (t & 0xE000) + 0x2000
+    while t + 2 * n < tope:
+        w = v.w(t + 2 * n)
+        if (w & 0xE000) == (t & 0xE000) and t < w < tope:
+            tope = w
+        n += 1
+        if t + 2 * n >= tope:
+            break
+    return max(n, minimo)
+
+
+def conversacion(v, a, sitio):
+    """p01:608B: declara la lista y lo que apuntan sus acciones."""
+    x = a
+    n = 0
+    while v(x) != 0xFF:
+        if v(x) == 0xFE:
+            acc, ptr = v(x + 2), v.w(x + 3)
+            x += 5
+        else:
+            h = v(x)
+            y = x + 1 + (h & 0x0F) + (2 if h & 0x80 else 0)
+            acc, ptr = v(y), v.w(y + 1)
+            x = y + 3
+            n += 1
+        if acc == 0 and ptr:
+            pon_mensaje(v, ptr, "p01:60B4")
+        elif acc == 1:
+            k = v(ptr)
+            B.declara(v, ptr, ptr + 1 + 3 * k, "al_azar_%04X" % ptr,
+                      "[n] y n mensajes y n umbrales (0-99): uno al azar (p01:6142, p01:6172)",
+                      "p01:6142", F=16)
+            for i in range(k):
+                if v.w(ptr + 1 + 2 * i):          # 0 = ninguno (p01:60B8)
+                    pon_mensaje(v, v.w(ptr + 1 + 2 * i), "p01:616C")
+    B.declara(v, a, x + 1, "conversacion_%04X" % a,
+              "%d fichas [cabeza][condiciones][zona sala][accion][puntero], cada una con sus "
+              "0xFE [espera][accion][puntero], y un 0xFF (p01:608B)" % n, sitio, F=16)
+
+
+def secuencia(v, a, sitio):
+    x = a
+    while v(x + 2) != 0xFF:
+        pon_mensaje(v, v.w(x), "p09:A50D")
+        x += 3
+    pon_mensaje(v, v.w(x), "p09:A50D")
+    B.declara(v, a, x + 4, "secuencia_%04X" % a,
+              "%d mensajes de 3 bytes [mensaje lo hi][espera] y el ultimo con 0xFF y su "
+              "espera (p09:A4F0, p09:A537)" % ((x - a) // 3 + 1), sitio, F=3)
+
+
+def transceptor():
+    v = B.Ventana((1, 48, 49))
+    B.declara(v, 0x8000, 0x8018, "cabecera_48",
+              "12 punteros del banco 48 (p01:6082...): 8000 tabla de conversaciones por "
+              "frecuencia, 8002-800A, 800E y 8010-8014 conversaciones, 800C 36 parejas, "
+              "8016 un mensaje", "p01:6085", F="w8")
+    t = v.w(0x8000)
+    n = tabla_hasta_el_primero(v, t)
+    B.declara(v, t, t + 2 * n, "conversaciones",
+              "%d punteros a conversaciones (p01:6088: el indice en A)" % n, "p01:6088", F="w8")
+    for k in range(n):
+        conversacion(v, v.w(t + 2 * k), "p01:608B")
+    for h in (0x8002, 0x8004, 0x8006, 0x8008, 0x800A, 0x800E, 0x8010, 0x8012, 0x8014):
+        conversacion(v, v.w(h), "p01:636D")
+    t = v.w(0x800C)
+    B.declara(v, t, t + 2 * 0x24, "parejas_800C",
+              "36 parejas [C][B] que p01:6392 compara con BC: el numero de la que case",
+              "p01:6392", F=2)
+    pon_mensaje(v, v.w(0x8016), "p01:64EE")
+    # el banco 50
+    v = B.Ventana((1, 50, 51))
+    B.declara(v, 0x8000, 0x804C, "cabecera_50",
+              "38 punteros del banco 50: 8000 y 8002 tablas de mensajes, 8004 los nombres, "
+              "8006 y 8008 letreros, 800A tabla de letreros, 800C-8040 secuencias (p09:A507), "
+              "8042 tabla, 8044 y 804A letreros con sitio, 8046 y 8048 tablas de letreros",
+              "p01:61E3", F="w8")
+    tablas = ((0x8000, "m"), (0x8002, "m"), (0x8004, "l"), (0x800A, "l"), (0x8046, "l"),
+              (0x8048, "l"))
+    # una tabla acaba donde empieza la primera cosa que apunta cualquiera de
+    # ellas (la de 8048, en B4FE, no apunta a B546, que es un letrero de la de
+    # 8046 y esta justo detras de su palabra 36)
+    def largo(t, inicios):
+        return min(tabla_hasta_el_primero(v, t), (min([x for x in inicios if x > t] + [(t & 0xE000) + 0x2000]) - t) // 2)
+
+    cabecera = {v.w(h) for h in range(0x8000, 0x804C, 2)}
+    inicios = set(cabecera)
+    for _ in range(8):
+        # cada vuelta desde la cabecera: lo que lea de mas una tabla en una
+        # vuelta (basura que corta a otras) no se arrastra a la siguiente
+        nuevos = set(cabecera)
+        for h, que in tablas:
+            t = v.w(h)
+            nuevos.update(v.w(t + 2 * k) for k in range(largo(t, inicios)))
+        nuevos.discard(0)
+        if nuevos == inicios:
+            break
+        inicios = nuevos
+    for h, que in tablas:
+        t = v.w(h)
+        n = largo(t, inicios)
+        B.declara(v, t, t + 2 * n, "tabla_%04X" % t,
+                  "%d punteros a %s (cabecera 0x%04X del banco 50)"
+                  % (n, "mensajes" if que == "m" else "letreros", h), "p01:61E6", F="w8")
+        for k in range(n):
+            if v.w(t + 2 * k) == 0:
+                continue          # entradas vacias de la tabla de 8002
+            if que == "m":
+                pon_mensaje(v, v.w(t + 2 * k), "p01:6504")
+            else:
+                pon_letrero(v, v.w(t + 2 * k), "p00:4950")
+    pon_letrero(v, v.w(0x8006), "p01:6328")
+    pon_letrero(v, v.w(0x8008), "p01:635C")
+    pon_letrero(v, v.w(0x8044), "p01:64BD", con_sitio=True)
+    pon_letrero(v, v.w(0x804A), "p01:64BD", con_sitio=True)
+    for h in range(0x800C, 0x8042, 2):
+        secuencia(v, v.w(h), "p09:A507")
+
+
+MOSAICOS = (0x507A, 0x5081, 0x5088, 0x5094, 0x509A, 0x50A0, 0x50A6, 0x50C4, 0x50D6, 0x50E2,
+            0x50E8, 0x50F4, 0x50FA, 0x5100, 0x5106, 0x510A, 0x510F)
+
+
+def antes(b, pc, op, n=8, pasa=()):
+    """El inmediato de 16 bits de la ultima instruccion `op` (01 = ld bc,nn)
+    antes de pc, en linea recta: sin pasar por un salto, un ret ni un `call`
+    (salvo a las rutinas de `pasa`, que no tocan ese registro)."""
+    t = B.trazador()
+    o = B.ORG[b]
+    previas = sorted(a for (bb, a) in t.arranques if bb == b and a < pc)[-n:]
+    for a in reversed(previas):
+        i = b * 8192 + (a - o)
+        if B.ROM[i] == op:
+            return B.ROM[i + 1] | B.ROM[i + 2] << 8
+        if B.ROM[i] in (0xC9, 0xC3, 0x18, 0xC1, 0xE1, 0xD1):     # ret, jp, jr, pop
+            return None
+        if B.ROM[i] == 0xCD and (B.ROM[i + 1] | B.ROM[i + 2] << 8) not in pasa:
+            return None
+    return None
+
+
+def mosaicos():
+    t = B.trazador()
+    vistos = {}
+    for (d, b, pc, s_, hl, de) in t.llamadas:
+        if d not in MOSAICOS or hl is None or not 0x4000 <= hl < 0xC000 or b == 0:
+            continue
+        bc = antes(b, pc, 0x01, pasa=tuple(range(0x4100, 0x4230)))
+        if bc is None:
+            continue
+        filas, cols = bc >> 8, bc & 0xFF
+        v = B.Ventana(s_)
+        if v.banco(hl) is None or v.banco(hl) >= 64:
+            continue
+        vistos.setdefault((v.banco(hl), hl, filas * cols), (v, filas, cols, []))[3].append(
+            "p%02d:%04X" % (b, pc))
+    for (bb, hl, n), (v, filas, cols, sitios) in sorted(vistos.items()):
+        B.declara(v, hl, hl + n, "mosaico_%04X" % hl,
+                  "un mosaico de %d x %d caracteres, un byte cada uno (p00:510F; BC = 0x%02X%02X "
+                  "en quien llama)" % (filas, cols, filas, cols), sitios, F=cols if cols <= 16 else 16)
+
+
+def mapa_de_bits(v, a, filas, cols, sitio, nom="mapa_de_bits"):
+    B.declara(v, a, a + filas * cols, "%s_%04X" % (nom, a),
+              "mapa de bits de %d filas de %d bytes (dos puntos por byte) que p01:6ED6 copia "
+              "a la VRAM, 128 bytes por fila (p00:4486)" % (filas, cols), sitio, F=16)
+
+
+def mapas_de_bits():
+    """La presentacion y el titulo (p01:6E48, p01:6E63, p01:6EB4) y el banco 57
+    (p01:6E2C, p07:A985)."""
+    v = B.Ventana((1, 62, 63))
+    mapa_de_bits(v, 0x8000, 0x70, 0x50, "p01:6E54")
+    a = 0xA300
+    B.declara(v, a, rachas_ram(v, a), "rachas_%04X" % a,
+              "rachas de p00:51E0 (n < 0x80 repite, n > 0x80 copia n & 0x7F, 0 acaba) que "
+              "p01:6EC9 deshace en 0xD000 y copia como 0x80 filas de 0x40 bytes", "p01:6ED0", F=16)
+    v = B.Ventana((1, 60, 61))
+    for a, n in ((0x8000, 256), (0x8800, 256), (0x9000, 256), (0x9800, 0x8B)):
+        B.declara(v, a, a + 8 * n, "caracteres_%04X" % a,
+                  "%d caracteres de un bit por punto (8 bytes cada uno) que p00:489C pasa a 4 "
+                  "bits con el color 0x0F (p01:6EAD)" % n, "p01:6E7B", F=8)
+    mapa_de_bits(v, 0x9C58, 0x70, 0x2C, "p01:6EB7")
+    a = 0xAF99
+    B.declara(v, a, rachas_ram(v, a), "rachas_%04X" % a,
+              "rachas de p00:51E0 que p01:6EC9 deshace en 0xD000 y copia como 0x80 filas de "
+              "0x40 bytes", "p01:6ED0", F=16)
+    v = B.Ventana((1, 57, 58))
+    B.declara(v, 0x8000, 0x8050, "copia_8000",
+              "80 bytes que p07:A98B copia a 0xDC80", "p07:A991", F=16)
+    B.declara(v, 0x8050, 0x8080, "fichas_8050",
+              "6 fichas de 8 bytes (p07:ABB4: 0x8050 + 8 x A); acaban donde empiezan las de 0x8080",
+              "p07:ABB7", F=8)
+    B.declara(v, 0x8080, 0x8098, "fichas_8080",
+              "6 fichas de 4 bytes (p07:AB8E: 0x8080 + 4 x A); acaban donde empieza el mapa de "
+              "bits de p01:6E2F", "p07:AB8E", F=4)
+    mapa_de_bits(v, 0x8098, 0xA8, 0x40, "p01:6E2F")
+
+
+def comprimido_f7(v, a):
+    """p01:6DA5: hasta 0xFF; un byte 0xF7-0xFE repite el siguiente (byte -
+    0xF7) veces; los demas van tal cual."""
+    while True:
+        c = v(a)
+        a += 1
+        if c == 0xFF:
+            return a
+        if c >= 0xF7:
+            a += 1
+
+
+def listas_6d65():
+    """p01:6CE3: tres listas seguidas en p52:8336 (p01:6D0C, 6D15, 6D1C), de
+    fichas de 6 bytes [VRAM lo hi][filas][columnas][puntero lo hi] hasta un
+    0xFF; cada puntero, un mosaico comprimido de p01:6DA5 (0xF7-0xFE repite el
+    siguiente, 0xFF acaba) que p01:6D8A pinta."""
+    v = B.Ventana((1, 52, 53))
+    a = 0x8336
+    for k in range(3):
+        a0 = a
+        while v(a) != 0xFF:
+            p_ = v.w(a + 4)
+            B.declara(v, p_, comprimido_f7(v, p_), "mosaico_f7_%04X" % p_,
+                      "mosaico de %d x %d caracteres comprimido (p01:6DA5: 0xF7-0xFE repite el "
+                      "siguiente, 0xFF acaba)" % (v(a + 2), v(a + 3)), "p01:6D7B", F=16)
+            a += 6
+        B.declara(v, a0, a + 1, "lista_mosaicos_%04X" % a0,
+                  "%d fichas [VRAM lo hi][filas][columnas][puntero] y un 0xFF (p01:6D65)"
+                  % ((a - a0) // 6), "p01:6D69", F=6)
+        a += 1
+
+
+def tabla_dibujos_44():
+    """p01:6E18: p44:93E5 + 2 x A, listas de p00:4D92 con los colores de p44:92B8."""
+    v = B.Ventana((1, 44, 45))
+    t = 0x93E5
+    # 12 palabras: en 0x93FD empieza la tabla de mosaicos de p01:70B7
+    n = 12
+    B.declara(v, t, t + 2 * n, "tabla_dibujos_93E5",
+              "%d punteros a listas de dibujos (p01:6E1E: el indice en A); detras, en 0x93FD, "
+              "la tabla de mosaicos de p01:70B7" % n, "p01:6E1E", F="w8")
+    for k in range(n):
+        dibujos(v, v.w(t + 2 * k), 0x92B8, "p01:6E24")
+    t = 0x93FD
+    n = tabla_hasta_el_primero(v, t)
+    B.declara(v, t, t + 2 * n, "tabla_mosaicos_93FD",
+              "%d punteros a mosaicos de 6 x 4 caracteres (p01:70BA: el indice en A; BC = 0x0604 "
+              "en p01:70BD)" % n, "p01:70BA", F="w8")
+    for k in range(n):
+        a = v.w(t + 2 * k)
+        B.declara(v, a, a + 24, "mosaico_%04X" % a,
+                  "un mosaico de 6 x 4 caracteres (p00:510F por p01:70F2)", "p01:70C0", F=4)
+    B.declara(v, 0x95D1, 0x95D5, "mosaico_95D1",
+              "un mosaico de 2 x 2 caracteres (p01:70D0, BC = 0x0202)", "p01:70DE", F=2)
+
+
+# p17:65A9: la palabra 0 no es un puntero (0xFFE0: el sonido 0 no se pide) y
+# la tabla acaba en la 0xAA, donde empieza la primera cabecera (p17:66FF);
+# 0xAB-0xEF no son sonidos aunque p16:4063 los dejaria pasar
+SONIDOS = 0xAB
+BANCOS_SONIDO = {16: 0x4000, 17: 0x6000, 18: 0x8000, 19: 0xA000, 20: 0xA000, 21: 0xA000,
+                 22: 0xA000, 23: 0xA000, 55: 0xA000, 59: 0xA000}
+
+
+def canales(c):
+    return {0x10: 1, 0x30: 2, 0xCF: 6}.get(c, 8)
+
+
+def sonido():
+    ruta = os.path.join(B.RAIZ, "work", "partituras.json")
+    if not os.path.exists(ruta):
+        import partituras
+        partituras.main(["", "json", ruta])
+    with open(ruta) as f:
+        leidos = json.load(f)
+    v = B.Ventana((17, 18, 19))
+    B.declara(v, 0x65A9, 0x65A9 + 2 * SONIDOS, "sonidos",
+              "%d palabras: la del sonido 0 (0xFFE0, no se pide) y un puntero por sonido del 1 al "
+              "0x%02X a su cabecera (p16:4063: 0x65A9 + 2 x numero); 0x6A-0xAA son las musicas, "
+              "con su banco en p16:4CF9" % (SONIDOS, SONIDOS - 1), "p16:406F", F="w8")
+    cab, inicios = set(), {}
+    for n in range(1, SONIDOS):
+        h = v.w(0x65A9 + 2 * n)
+        k = canales(v(h))
+        fin = h + 2 + 2 * k
+        cab.update((v.banco(x), x) for x in range(h, fin))
+        for j in range(k):
+            inicios.setdefault(v.w(h + 2 + 2 * j), set()).add(n)
+        B.declara(v, h, fin, "cabecera_%04X" % h,
+                  "cabecera del sonido 0x%02X (p16:4074): [canales %02X][prioridad %02X] y %d "
+                  "punteros, uno por canal (p16:411A)" % (n, v(h), v(h + 1), k), "p16:4074", F=2)
+    quien = {}
+    for n, ts in leidos.items():
+        if not 1 <= int(n) < SONIDOS:
+            continue
+        for b, i, f in ts:
+            if b not in BANCOS_SONIDO:
+                continue           # el SCC (0x9800 con el 63) y lecturas fuera de banco
+            for x in range(i, f):
+                o = BANCOS_SONIDO[b] + (x & 0x1FFF)
+                quien.setdefault((b, o), set()).add(int(n))
+    ya = {(bl["p"], x) for bl in B.BLOQUES if bl["p"] in BANCOS_SONIDO
+          for x in range(bl["ini"], bl["fin"])}
+    tramos, tr = [], None
+    for (b, x) in sorted(quien):
+        if (b, x) in cab or (b, x) in ya or (b == 17 and 0x65A9 <= x < 0x65A9 + 2 * SONIDOS):
+            continue
+        if tr and tr[0] == b and tr[2] == x and x not in inicios:
+            tr[2] += 1
+            tr[3] |= quien[(b, x)]
+        else:
+            tr = [b, x, x + 1, set(quien[(b, x)])]
+            tramos.append(tr)
+    for b, i, f, ss in tramos:
+        w = B.ventana_de(b) if b != 16 else B.Ventana((17, 18, 19))
+        lista = ", ".join("0x%02X" % k for k in sorted(ss)[:10]) + (
+            " y %d mas" % (len(ss) - 10) if len(ss) > 10 else "")
+        es = i in inicios
+        B.declara(w, i, f, "%s_%04X" % ("partitura" if es else "sonido", i),
+                  "%s que lee el motor de p16 al tocar los sonidos %s (lo mide tools/partituras.py "
+                  "ejecutandolo)" % ("partitura de canal" if es else "datos de sonido", lista),
+                  "p16:4392", F=16)
+
+
 def todo():
+    sonido()
+    listas_6d65()
+    tabla_dibujos_44()
+    mapas_de_bits()
+    mosaicos()
+    transceptor()
     mapas()
     salas_especiales()
     zonas()

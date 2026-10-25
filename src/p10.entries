@@ -11,7 +11,7 @@
 # encuentra tools/z80trace.py solo, siguiendo el flujo.
 #
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
-0xA000   # p00:5629 call
+0xA000   # p00:5396 call
 0xA067   # p01:78B2 call
 0xA082   # p10:A079 entrada 1 de la tabla de 0xA07C (call 0x424D en 0xA079)
 0xA088   # p10:A079 entrada 0 de la tabla de 0xA07C (call 0x424D en 0xA079)
@@ -19,7 +19,7 @@
 0xA0A1   # p10:A08B entrada 1 de la tabla de 0xA08E (call 0x424D en 0xA08B)
 0xA0B0   # p10:A08B entrada 2 de la tabla de 0xA08E (call 0x424D en 0xA08B)
 0xA0BB   # p10:A079 entrada 2 de la tabla de 0xA07C (call 0x424D en 0xA079)
-0xA0D3   # p00:5626 call
+0xA0D3   # p00:5393 call
 0xA143   # p01:78B5 call
 0xA170   # p01:78AF call
 0xA1C1   # p02:8AF2 call
@@ -40,10 +40,11 @@
 0xA477   # p00:5399 call
 0xA4C9   # p00:5E4C call
 0xA4F1   # p01:78B8 call
+0xA5AA   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xA5AA
 0xA65E   # p02:8B7B call
 0xA6A4   # p02:8CDB call
 0xA6C2   # p02:8CE3 call
-0xA82F   # p00:562C call
+0xA82F   # p00:53A5 call
 0xAA78   # p04:8AA6 call
 0xAAA9   # p00:5E8F call
 0xAAB8   # p10:AA8C entrada 0 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
@@ -65,16 +66,20 @@
 0xAE9C   # p04:8CA8 call
 0xAED6   # p02:92FB call
 0xAF30   # p02:9304 call
+0xAFF3   # p02:930C call
+0xB172   # p02:9314 call
 0xB4B0   # p10:B48F entrada 0 de la tabla de 0xB492 (call 0x424D en 0xB48F)
+0xB8C4   # p02:9324 call
+0xB957   # p02:932C call
 0xB960   # p02:9334 call
 0xB9E5   # p02:8D70 call
 0xBA03   # p02:8C1F call
 0xBC0F   # p00:5AC0 call
-0xBC1E   # p00:5E49 call
+0xBC1E   # p00:53F9 call
 0xBC27   # p02:8AC1 call
-0xBC59   # p02:8BF7 call
+0xBC59   # p02:8C38 call
 0xBCA2   # p00:5ABD call
 0xBCE4   # p02:8D2D call
-0xBE6D   # p00:5E46 call
-0xBED4   # p02:8BF4 call
+0xBE6D   # p00:53F6 call
+0xBED4   # p02:8C35 call
 0xBFBC   # p02:8BBB call

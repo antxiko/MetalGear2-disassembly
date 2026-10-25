@@ -36,7 +36,7 @@ D 0x60B7 0x60DB juegos_sprites  18 parejas [primero][segundo]: los dos bloques d
 F 0x60B7 2
 D 0x60DB 0x6113 bloques_sprites  28 punteros a bloques de sprites (p00:4F4C; el 0 no se lee: 0 es ninguno; el 26 lo pone tambien p00:4EFD y el 1A en p00:4F09 va al banco 58); lo leen p00:4F51 (56 bytes)
 F 0x60DB w8
-D 0x6113 0x6517 rachas_6113  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_6113 6113-6517); lo leen p00:4F58, p00:4F78 (1028 bytes)
+D 0x6113 0x6517 rachas_6113  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_6113 6113-6517); lo leen p00:4F58, p00:4EB5 (1028 bytes)
 F 0x6113 16
 D 0x6517 0x668F rachas_6517  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 7 bloques: (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F); lo leen p00:4F6F, p00:4F58 (376 bytes)
 F 0x6517 16

@@ -83,6 +83,81 @@ def mide(t, bt, tab, s):
     return dest
 
 
+LISTAS_FASE = 0xB40C    # p06: 11 punteros, uno por cada valor de 0xCA22
+N_FASES = 11
+
+
+def listas_fase():
+    """p01:7D19: p06:B40C + 2 x 0xCA22 da una lista de grupos [zona, zona...,
+    0xFE][destino lo hi] que acaba en [0xFF][destino]: el destino es el de
+    la zona 0xCA4A, o el de detras del 0xFF (p01:7D22). Devuelve
+    [(fase, ini, fin, [destinos])]."""
+    def r(a):
+        return ROM[6 * TAM_PAGINA + a - 0xA000]
+    out = []
+    for k in range(N_FASES):
+        a = x = r(LISTAS_FASE + 2 * k) | r(LISTAS_FASE + 2 * k + 1) << 8
+        dest = []
+        while r(x) != 0xFF:
+            while r(x) != 0xFE:
+                x += 1
+            dest.append(r(x + 1) | r(x + 2) << 8)
+            x += 3
+        dest.append(r(x + 1) | r(x + 2) << 8)
+        out.append((k, a, x + 3, dest))
+    return out
+
+
+def listas_7ce6():
+    """Los destinos de las listas de p06:B40C. p01:7CE6 los devuelve en HL con
+    los bancos 1-2-3 (p01:7CEC) y p01:73C7 salta con `jp (hl)`; p02:8EB9 pone
+    antes el 9 en 0xA000 (p00:41C2) y salta en p02:8EBF."""
+    vistos, lineas = set(), []
+    for k, a, f, dest in listas_fase():
+        for w in dest:
+            for s_ in ((1, 2, 3), (1, 2, 9)):
+                if (w, s_) in vistos:
+                    continue
+                vistos.add((w, s_))
+                lineas.append("p01 0x%04X %d %d %d  # destino de la lista de 0xCA22 = %d (p06:%04X; "
+                              "p01:7CE6 y jp (hl) en %s)" % (w, s_[0], s_[1], s_[2], k, a,
+                                                              "p01:73C7" if s_[2] == 3 else "p02:8EBF"))
+    return lineas
+
+
+def saltos_por_parametro():
+    """Los `jp (hl)` con la rutina que les pasan en HL, que el trazador no
+    sigue:
+      - p04:86DD: p04:86D0/86D5 saltan al HL de quien las llama si 0xC692 /
+        0xC693 no es 0 (la musica pendiente): `ld hl,6BCC` en p05:A5F9,
+        AAFB, AC27, B2B8, B578, p10:AA7D y p14:ABA5; `ld hl,6AEE` en p15:B8F2.
+      - p02:8A7A: la musica que espera en 0xCA19 (p02:8A3D). La guardan con
+        un inmediato p00:554B (6B85), p02:8A2A (6B89), p09:A049 (6B45),
+        p09:A68A (6B41), p09:BB20 (6B6D); p02:8A4F la cambia por 6B89 si es
+        6A11, y p02:8AA8/8AAD/8ABC entran con 6B61, 6B79 y 6B3D. Las otras
+        (p00:5B5C, p01:7C91, p04:94C0) la sacan de p01:7CE6: las listas de
+        p06:B40C, ya puestas."""
+    out = []
+    for w, s_, por in ((0x6BCC, (1, 4, 5), "p05:A5F9"), (0x6BCC, (1, 4, 10), "p10:AA7D"),
+                       (0x6BCC, (1, 4, 14), "p14:ABA5"), (0x6AEE, (1, 4, 15), "p15:B8F2")):
+        out.append("p01 0x%04X %d %d %d  # el HL de %s, jp (hl) en p04:86DD" % (w, s_[0], s_[1], s_[2], por))
+    for w, por in ((0x6B85, "p00:554B"), (0x6B89, "p02:8A2A"), (0x6B45, "p09:A049"),
+                   (0x6B41, "p09:A68A"), (0x6B6D, "p09:BB20"), (0x6B61, "p02:8AA8"),
+                   (0x6B79, "p02:8AAD"), (0x6B3D, "p02:8ABC"), (0x6A11, "p02:8A47")):
+        out.append("p01 0x%04X 1 2 3  # la musica pendiente de 0xCA19 (%s), jp (hl) en p02:8A7A"
+                   % (w, por))
+    # p16:4D41: las ordenes 0xD0-0xFE de la partitura saltan por la tabla de
+    # p16:4D52 (HL = 4D52 + 2 x (orden - 0xD0); jp (hl) en p16:4D51): 47
+    # palabras, hasta el codigo de la primera (p16:4DB0). El sonido corre con
+    # 16-17-18-19 (el 16 en 0x4000: cartucho.BANCO_4000).
+    for k in range(47):
+        a = 16 * TAM_PAGINA + 0xD52 + 2 * k
+        w = ROM[a] | ROM[a + 1] << 8
+        out.append("p16 0x%04X 17 18 19  # orden 0x%02X de la partitura: tabla p16:4D52 (jp (hl) "
+                   "en p16:4D51)" % (w, 0xD0 + k))
+    return out
+
+
 def main(argv):
     escribe = "--escribe" in argv
     ruta = os.path.join(RAIZ, "src", "semillas.txt")
@@ -123,6 +198,8 @@ def main(argv):
                           "p00:424E; banco de 0xA000 de p04:8148)"
                           % (nombre(bancos.Cartucho.banco(w, s_)), w, s_[0], s_[1], s_[2], k))
         tabs.append("p04 0x8159 25 1 4 5  # p04:8142 (el banco 8 en 0xA000 para 3 y 10-24, p04:8148)")
+        lineas += listas_7ce6()
+        lineas += saltos_por_parametro()
         lineas.append(FIN)
         print("vuelta %d: %d tablas nuevas o cambiadas, %d en total" % (vuelta, nuevas, len(vistas)))
         filas = open(ruta, encoding="utf-8").read().split("\n") if os.path.exists(ruta) else \

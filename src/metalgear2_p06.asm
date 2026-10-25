@@ -1714,12 +1714,20 @@ L_AB13:
 	ret			;ab18
 
 ; ----------------------------------------------------------------------
-; DATOS resto_AB19: lo apuntan con el banco puesto p06:AAE3 (0xAB19), p06:AB03
-;   (0xAB1D); el tamano es lo que hay hasta lo siguiente, no sale de
-;   recorrerlo; lo leen p06:AAE3, p06:AB03 (8 bytes)
-;   0xab19..0xab21  (8 bytes)
-DATA_resto_AB19:
-	defb 0f5h,0f6h,0f7h,0f8h,0d5h,0d6h,0d7h,0d8h	; ab19  ........
+; DATOS mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
+;   (p00:510F; BC = 0x0202 en quien llama); lo leen p06:AAE6 (4 bytes)
+;   0xab19..0xab1d  (4 bytes)
+DATA_mosaico_AB19:
+	defb 0f5h,0f6h	; ab19
+	defb 0f7h,0f8h	; ab1b
+
+; ----------------------------------------------------------------------
+; DATOS mosaico_AB1D: un mosaico de 2 x 2 caracteres, un byte cada uno
+;   (p00:510F; BC = 0x0202 en quien llama); lo leen p06:AB06 (4 bytes)
+;   0xab1d..0xab21  (4 bytes)
+DATA_mosaico_AB1D:
+	defb 0d5h,0d6h	; ab1d
+	defb 0d7h,0d8h	; ab1f
 
 ; ======================================================================
 ; CODIGO 0xab21..0xab7d  (92 bytes)
@@ -1778,12 +1786,14 @@ L_AB6E:
 	jp 04767h		;ab7a
 
 ; ----------------------------------------------------------------------
-; DATOS resto_AB7D: lo apuntan con el banco puesto p06:AB53 (0xAB7D); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p06:AB53 (20 bytes)
+; DATOS mosaico_AB7D: un mosaico de 5 x 4 caracteres, un byte cada uno
+;   (p00:510F; BC = 0x0504 en quien llama); lo leen p06:AB5C (20 bytes)
 ;   0xab7d..0xab91  (20 bytes)
-DATA_resto_AB7D:
-	defb 003h,003h,001h,002h,003h,002h,003h,003h,002h,001h,002h,002h,003h,002h,003h,001h	; ab7d  ................
+DATA_mosaico_AB7D:
+	defb 003h,003h,001h,002h	; ab7d
+	defb 003h,002h,003h,003h	; ab81
+	defb 002h,001h,002h,002h	; ab85
+	defb 003h,002h,003h,001h	; ab89
 	defb 000h,003h,002h,001h	; ab8d
 
 ; ======================================================================

@@ -154,6 +154,16 @@ D 0x963D 0x964D dibujo_963D  1 caracteres de 8x8 a 2 bits por punto (16 bytes ca
 F 0x963D 16
 D 0x964D 0x965D dibujo_964D  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 22 de la lista 0x86A1 (p00:4D92, p00:4DF5); lo leen p01:6EF2 (16 bytes)
 F 0x964D 16
+D 0x965D 0x9663 mosaico_965D  un mosaico de 2 x 3 caracteres, un byte cada uno (p00:510F; BC = 0x0203 en quien llama); lo leen p01:7005 (6 bytes)
+F 0x965D 3
+D 0x9663 0x9677 mosaico_9663  un mosaico de 2 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0204 en quien llama); se solapan 2 bloques: (mosaico_9667 9667-9677); lo leen p01:703C, p01:7011 (20 bytes)
+F 0x9663 4
+D 0x9677 0x969B mosaico_9677  un mosaico de 2 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0204 en quien llama); se solapan 2 bloques: (mosaico_9677 9677-969B); lo leen p01:703C, p01:701D (36 bytes)
+F 0x9677 4
+D 0x969B 0x96A3 mosaico_969B  un mosaico de 2 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0204 en quien llama); lo leen p01:703C (8 bytes)
+F 0x969B 4
+D 0x96A3 0x96AB mosaico_96A3  un mosaico de 2 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0204 en quien llama); lo leen p01:703C (8 bytes)
+F 0x96A3 4
 D 0x9EA2 0x9EA8 tabla_colores_9EA2  3 punteros a colores de dibujo (los usa hasta el indice 2; p00:4DA0); lo leen p00:4DA0 (6 bytes)
 F 0x9EA2 w8
 D 0x9EA8 0x9EAA colores_9EA8  4 colores de 4 bits, dos por byte, para un dibujo de 2 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p01:6F45 (2 bytes)
@@ -168,6 +178,6 @@ D 0x9ED1 0x9FB1 dibujo_9ED1  28 caracteres de 8x8 a 1 bit por punto (8 bytes cad
 F 0x9ED1 8
 D 0x9FB1 0xA000 dibujo_9FB1  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x9EB2 (p00:4D92, p00:4DF5) (sigue en el banco 47, en 0xA000); lo leen p01:6F45 (79 bytes)
 F 0x9FB1 16
-D 0x965D 0x9EA2 resto_965D  lo apuntan con el banco puesto p01:6FFC (0x965D), p01:7067 (0x9663), p01:7008 (0x9667), p01:7014 (0x9677), p01:7020 (0x9677), p01:6FE0 (0x96AB); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:6FFC, p01:7067, p01:7008, p01:7014, p01:7020, p01:6FE0 (2117 bytes)
-F 0x965D 16
+D 0x96AB 0x9EA2 resto_96AB  lo apuntan con el banco puesto p01:6FE0 (0x96AB), p01:7094 (0x96BF), p01:7210 (0x97E2), p01:721A (0x9B92), p01:7224 (0x9E32); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:6FE0, p01:7094, p01:7210, p01:721A, p01:7224 (2039 bytes)
+F 0x96AB 16
 # --- fin de los bloques de bloques.py ---

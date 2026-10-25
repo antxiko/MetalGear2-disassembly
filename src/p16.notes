@@ -1,3 +1,101 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x45BE 0x45CA sonido_45BE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72 y 43 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12 bytes)
+F 0x45BE 16
+D 0x4CF9 0x4D3A sonido_4CF9  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x73 y 55 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (65 bytes)
+F 0x4CF9 16
+D 0x4D52 0x4D70 sonido_4D52  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x28, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71 y 44 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (30 bytes)
+F 0x4D52 16
+D 0x4D72 0x4D7E sonido_4D72  datos de sonido que lee el motor de p16 al tocar los sonidos 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10 y 136 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12 bytes)
+F 0x4D72 16
+D 0x4D82 0x4DA0 sonido_4D82  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x0C, 0x13, 0x16, 0x1C, 0x1D, 0x23, 0x24, 0x26, 0x27 y 89 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (30 bytes)
+F 0x4D82 16
+D 0x4DA2 0x4DB0 sonido_4DA2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F y 150 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14 bytes)
+F 0x4DA2 16
+D 0x51B4 0x51BB sonido_51B4  datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A y 160 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (7 bytes)
+F 0x51B4 16
+D 0x51BC 0x51C0 sonido_51BC  datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A y 160 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x51BC 16
+D 0x5486 0x5496 sonido_5486  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x74, 0x76, 0x77 y 20 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (16 bytes)
+F 0x5486 16
+D 0x5498 0x54A0 sonido_5498  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6F, 0x70, 0x71, 0x72, 0x73, 0x74, 0x76, 0x77 y 20 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (8 bytes)
+F 0x5498 16
+D 0x54A4 0x54B2 sonido_54A4  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6D, 0x6E, 0x71, 0x73, 0x76, 0x7A, 0x7B, 0x82, 0x88, 0x89 y 9 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14 bytes)
+F 0x54A4 16
+D 0x54E6 0x5595 sonido_54E6  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x74, 0x76, 0x77 y 20 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (175 bytes)
+F 0x54E6 16
+D 0x55BE 0x55D2 sonido_55BE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (20 bytes)
+F 0x55BE 16
+D 0x55D4 0x5635 sonido_55D4  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6F, 0x70, 0x71, 0x72, 0x73, 0x74, 0x76, 0x77 y 20 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (97 bytes)
+F 0x55D4 16
+D 0x566C 0x567E sonido_566C  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (18 bytes)
+F 0x566C 16
+D 0x5685 0x5697 sonido_5685  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (18 bytes)
+F 0x5685 16
+D 0x56A0 0x56B2 sonido_56A0  datos de sonido que lee el motor de p16 al tocar los sonidos 0x9A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (18 bytes)
+F 0x56A0 16
+D 0x56BD 0x5741 sonido_56BD  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6D, 0x6E, 0x71, 0x73, 0x76, 0x7A, 0x7B, 0x82, 0x88, 0x89 y 9 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (132 bytes)
+F 0x56BD 16
+D 0x5842 0x5846 sonido_5842  datos de sonido que lee el motor de p16 al tocar los sonidos 0x12, 0x1D, 0x24, 0x2E, 0x30, 0x56, 0x6A, 0x6B, 0x6D, 0x6E y 27 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x5842 16
+D 0x5848 0x584A sonido_5848  datos de sonido que lee el motor de p16 al tocar los sonidos 0x07, 0x08, 0x09, 0x0B, 0x0C, 0x0E, 0x11, 0x16, 0x1F, 0x22 y 35 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x5848 16
+D 0x584C 0x585A sonido_584C  datos de sonido que lee el motor de p16 al tocar los sonidos 0x0A, 0x0C, 0x13, 0x17, 0x19, 0x1D, 0x1E, 0x25, 0x28, 0x30 y 62 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14 bytes)
+F 0x584C 16
+D 0x585E 0x5864 sonido_585E  datos de sonido que lee el motor de p16 al tocar los sonidos 0x3F, 0x5C, 0x78, 0x7A, 0x81, 0x84, 0x9A, 0x9C, 0xA2, 0xA3 y 5 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
+F 0x585E 16
+D 0x5866 0x586E sonido_5866  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x0F, 0x20, 0x21, 0x32, 0x3E, 0x55, 0x61, 0x65, 0x6A y 19 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (8 bytes)
+F 0x5866 16
+D 0x5870 0x5874 sonido_5870  datos de sonido que lee el motor de p16 al tocar los sonidos 0x20, 0x2E, 0x3B, 0x49, 0x59, 0x5D, 0x5E, 0x63, 0x6D, 0x6E y 5 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x5870 16
+D 0x5876 0x587A sonido_5876  datos de sonido que lee el motor de p16 al tocar los sonidos 0x17, 0x1B, 0x2B, 0x2C, 0x2D, 0x2E, 0x39, 0x6A, 0x6B, 0x6D y 8 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x5876 16
+D 0x587E 0x5880 sonido_587E  datos de sonido que lee el motor de p16 al tocar los sonidos 0x0D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x587E 16
+D 0x5884 0x5890 sonido_5884  datos de sonido que lee el motor de p16 al tocar los sonidos 0x0A, 0x0D, 0x0F, 0x10, 0x13, 0x14, 0x15, 0x18, 0x1A, 0x21 y 43 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12 bytes)
+F 0x5884 16
+D 0x5892 0x5894 sonido_5892  datos de sonido que lee el motor de p16 al tocar los sonidos 0x1D, 0x43, 0x78, 0x7F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x5892 16
+D 0x58AE 0x58B2 sonido_58AE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x48, 0xAA (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x58AE 16
+D 0x58BA 0x58BE sonido_58BA  datos de sonido que lee el motor de p16 al tocar los sonidos 0x40, 0x4E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (4 bytes)
+F 0x58BA 16
+D 0x58C0 0x58C6 sonido_58C0  datos de sonido que lee el motor de p16 al tocar los sonidos 0x25, 0x2E, 0x42, 0x44, 0x45, 0x46, 0x4C, 0x60, 0x76, 0x77 y 6 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
+F 0x58C0 16
+D 0x58CA 0x58D8 sonido_58CA  datos de sonido que lee el motor de p16 al tocar los sonidos 0x2A, 0x2F, 0x36, 0x37, 0x3E, 0x40, 0x4A, 0x4B, 0x63, 0x6F y 25 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14 bytes)
+F 0x58CA 16
+D 0x58DA 0x58DC sonido_58DA  datos de sonido que lee el motor de p16 al tocar los sonidos 0x44, 0x9E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x58DA 16
+D 0x58DE 0x58E8 sonido_58DE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x70, 0x71, 0x72, 0x74, 0x77, 0x78, 0x79, 0x7A y 13 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (10 bytes)
+F 0x58DE 16
+D 0x58EE 0x58F0 sonido_58EE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x1C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x58EE 16
+D 0x5906 0x5908 sonido_5906  datos de sonido que lee el motor de p16 al tocar los sonidos 0x54 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (2 bytes)
+F 0x5906 16
+D 0x5932 0x5972 sonido_5932  datos de sonido que lee el motor de p16 al tocar los sonidos 0x12, 0x1D, 0x24, 0x2E, 0x30, 0x56, 0x6A, 0x6B, 0x6D, 0x6E y 27 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x5932 16
+D 0x5992 0x59B2 sonido_5992  datos de sonido que lee el motor de p16 al tocar los sonidos 0x07, 0x08, 0x09, 0x0B, 0x0C, 0x0E, 0x11, 0x16, 0x1F, 0x22 y 35 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x5992 16
+D 0x59D2 0x5AB2 sonido_59D2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x0A, 0x0C, 0x13, 0x17, 0x19, 0x1D, 0x1E, 0x25, 0x28, 0x30 y 61 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (224 bytes)
+F 0x59D2 16
+D 0x5AF2 0x5B52 sonido_5AF2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x3F, 0x5C, 0x78, 0x7A, 0x81, 0x84, 0x9A, 0x9C, 0xA2, 0xA3 y 5 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (96 bytes)
+F 0x5AF2 16
+D 0x5B72 0x5BF2 sonido_5B72  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x0F, 0x20, 0x21, 0x32, 0x3E, 0x55, 0x61, 0x65, 0x6A y 19 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (128 bytes)
+F 0x5B72 16
+D 0x5C12 0x5C52 sonido_5C12  datos de sonido que lee el motor de p16 al tocar los sonidos 0x20, 0x2E, 0x3B, 0x49, 0x59, 0x5D, 0x5E, 0x63, 0x6D, 0x6E y 4 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x5C12 16
+D 0x5C72 0x5CB2 sonido_5C72  datos de sonido que lee el motor de p16 al tocar los sonidos 0x17, 0x1B, 0x2B, 0x2C, 0x2D, 0x2E, 0x39, 0x6A, 0x6B, 0x6D y 8 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (64 bytes)
+F 0x5C72 16
+D 0x5CF2 0x5D12 sonido_5CF2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x0D (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x5CF2 16
+D 0x5D52 0x5E12 sonido_5D52  datos de sonido que lee el motor de p16 al tocar los sonidos 0x0A, 0x0D, 0x0F, 0x10, 0x13, 0x14, 0x15, 0x18, 0x1A, 0x21 y 43 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (192 bytes)
+F 0x5D52 16
+D 0x5E32 0x5E52 sonido_5E32  datos de sonido que lee el motor de p16 al tocar los sonidos 0x1D, 0x43, 0x78, 0x7F (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (32 bytes)
+F 0x5E32 16
+D 0x5FF2 0x6000 sonido_5FF2  datos de sonido que lee el motor de p16 al tocar los sonidos 0x48 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (14 bytes)
+F 0x5FF2 16
+D 0x54B2 0x54E6 resto_54B2  lo apuntan con el banco puesto p16:4698 (0x54B6), p16:469C (0x54B6), p16:46A7 (0x54CE), p16:46AB (0x54CE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:4698, p16:469C, p16:46A7, p16:46AB (52 bytes)
+F 0x54B2 16
+D 0x5741 0x5842 resto_5741  lo apuntan con el banco puesto p16:4FCD (0x583E), p16:5039 (0x583E); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:4FCD, p16:5039 (257 bytes)
+F 0x5741 16
 # --- fin de los bloques de bloques.py ---
