@@ -1,0 +1,7 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xBF86 0xC000 relleno_ff  122 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (122 bytes)
+F 0xBF86 16
+D 0xA000 0xBF86 resto_A000  lo apuntan con el banco puesto p03:A11B (0xB000), p03:A17B (0xB000), p03:A1B2 (0xB000), p16:4D3D (0xB000); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:A11B, p03:A17B, p03:A1B2, p16:4D3D (8070 bytes)
+F 0xA000 16
+# --- fin de los bloques de bloques.py ---

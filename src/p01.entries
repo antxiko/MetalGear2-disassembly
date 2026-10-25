@@ -16,11 +16,14 @@
 0x602D   # p00:4079 call cc
 0x6077   # p15:AAC5 call
 0x6182   # p09:BC7B jp
-0x61CE   # p10:AB53 call
+0x61C0   # p14:ABF8 call
+0x61C9   # p14:AC21 call
+0x61D3   # p05:BC44 call
+0x61F8   # p14:AC26 call
 0x61FE   # p10:ABA5 call
 0x620B   # p08:ABA4 call
 0x6211   # p08:AB9C call
-0x6250   # p05:AB47 jp
+0x6250   # p05:BE5F call
 0x6278   # p04:8B9C call
 0x62A5   # p15:BD40 jp
 0x6302   # p03:BA4C call
@@ -61,9 +64,13 @@
 0x65C7   # p01:6594 entrada 2 de la tabla de 0x6597 (call 0x424D en 0x6594)
 0x665A   # p01:6594 entrada 3 de la tabla de 0x6597 (call 0x424D en 0x6594)
 0x6661   # p01:6594 entrada 4 de la tabla de 0x6597 (call 0x424D en 0x6594)
+0x6683   # entrada 4 de la tabla 0x65AA en HL (p01:65A8, p00:424E)
+0x6698   # entrada 2 de la tabla 0x65AA en HL (p01:65A8, p00:424E)
+0x66AA   # entrada 3 de la tabla 0x65AA en HL (p01:65A8, p00:424E)
 0x67EF   # p15:A9E7 call
+0x6A0D   # p09:B747 jp
 0x6A11   # p09:B848 jp
-0x6A15   # p02:995B jp
+0x6A15   # p05:BB05 jp
 0x6A19   # p02:9955 jp cc
 0x6A1D   # p06:A858 call
 0x6A21   # p06:A199 entrada 0 de la tabla de 0xA19C (call 0x424D en 0xA199)
@@ -74,8 +81,8 @@
 0x6A38   # p03:BCFA jp
 0x6A3C   # p03:A96F jp
 0x6A40   # p07:B3E9 call
-0x6A44   # p06:A8C1 jp
-0x6A48   # p03:B257 jp
+0x6A44   # p14:AF8D jp cc
+0x6A48   # p08:B019 call
 0x6A4C   # p15:A5D9 jp
 0x6A50   # p11:ADED jp
 0x6A54   # p07:A28A jp
@@ -84,12 +91,13 @@
 0x6A60   # p04:9483 call
 0x6A64   # p03:B175 jp
 0x6A6B   # p02:8424 jp
-0x6A6F   # p10:ACE7 jp
-0x6A73   # p06:A199 entrada 6 de la tabla de 0xA19C (call 0x424D en 0xA199)
+0x6A6F   # p04:9C30 jp cc
+0x6A73   # p05:B3F2 jp
 0x6A77   # p06:A199 entrada 5 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6A7B   # p06:A199 entrada 4 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6A7F   # p11:AAB3 jp
 0x6A83   # p09:B296 call
+0x6A87   # p05:AD46 call
 0x6A8B   # p11:AB34 jp
 0x6A8F   # p02:9FD3 jp
 0x6A93   # p11:BC88 jp
@@ -107,53 +115,56 @@
 0x6ACA   # p02:9958 jp
 0x6ACE   # p02:9C65 call
 0x6AD6   # p14:A223 call
+0x6ADA   # p08:AC2F call
 0x6ADE   # p11:A412 jp
 0x6AE2   # p03:A92E jp
 0x6AE6   # p10:BF4F call
 0x6AEA   # p15:ABB6 jp
 0x6AEE   # p09:B5A2 jp
+0x6AF2   # p15:BB3C jp cc
 0x6AF6   # p14:B524 jp
 0x6AFA   # p03:AA73 jp
 0x6AFE   # p11:AA18 jp
+0x6B02   # p08:A564 jp
 0x6B06   # p06:A199 entrada 1 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6B0A   # p06:A199 entrada 2 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6B0E   # p06:A199 entrada 3 de la tabla de 0xA19C (call 0x424D en 0xA199)
-0x6B12   # p10:ABCE call
+0x6B12   # p15:B9F4 call
 0x6B16   # p07:B3A2 jp
 0x6B1A   # p07:A1CE call
 0x6B1E   # p11:A114 jp
 0x6B41   # p09:B2D1 jp
 0x6B45   # p09:BFBE entrada 12 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
 0x6B49   # p10:BF62 call
+0x6B4D   # p08:A5B3 call cc
 0x6B55   # p06:AEFF entrada 35 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0x6B59   # p14:AEAD call
-0x6B5D   # p09:A10D jp
+0x6B5D   # p14:ADE4 call
 0x6B69   # p04:868E entrada 0 de la tabla de 0x8691 (call 0x424D en 0x868E)
-0x6B6D   # p04:868E entrada 1 de la tabla de 0x8691 (call 0x424D en 0x868E)
+0x6B6D   # p15:B9F1 call
 0x6B71   # p04:868E entrada 2 de la tabla de 0x8691 (call 0x424D en 0x868E)
 0x6B75   # p10:AB4D call
 0x6B79   # p09:BFBE entrada 13 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
 0x6B7D   # p02:8A9D jp cc
 0x6B85   # p09:A996 call
-0x6B95   # p09:BFBE entrada 15 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
+0x6B95   # p05:BE46 call
 0x6B99   # p14:B16C call
 0x6BA0   # p02:9B9E jp
 0x6BA4   # p09:BFBE entrada 2 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
 0x6BA8   # p11:A048 jp
-0x6BAC   # p09:A8D3 call
+0x6BAC   # p05:A9E8 call
 0x6BB0   # p09:A7AA call
 0x6BB4   # p09:B1D5 call
 0x6BB8   # p09:ABE9 call cc
 0x6BBC   # p09:B5E7 jp
 0x6BC0   # p13:9731 call
 0x6BC4   # p13:99FE jp
-0x6BCC   # p09:AD22 call
-0x6BD0   # p05:AB50 jp
+0x6BCC   # p05:BE64 call
+0x6BD0   # p04:86CD jp
 0x6BD4   # p09:AB61 call
 0x6BD8   # p03:BFE2 call
 0x6BDC   # p03:BFB3 call
-0x6BE4   # p04:94C8 call
-0x6BE8   # p13:9CD6 call
+0x6BE8   # p05:BFE1 call
 0x6BEC   # p04:9368 jp
 0x6BFB   # p09:B8EA call cc
 0x6BFF   # p06:AEFF entrada 28 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
@@ -161,21 +172,32 @@
 0x6C07   # p09:BFBE entrada 1 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
 0x6C0B   # p04:868E entrada 3 de la tabla de 0x8691 (call 0x424D en 0x868E)
 0x6C0F   # p09:BF8B call
+0x6C13   # p15:BB3F jp
 0x6C17   # p07:B4BA jp cc
+0x6C1B   # p05:BF8A call
 0x6C1F   # p04:9C38 jp cc
 0x6C23   # p09:ACEB jp
 0x6C27   # p09:BFBE entrada 3 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
 0x6C2B   # p06:A924 call
 0x6C2F   # p10:A52B call
-0x6C33   # p11:B239 jp cc
-0x6C3B   # p05:AA78 jp
+0x6C33   # p05:A0D5 call
+0x6C3B   # p04:8C0E call
+0x6C3F   # p14:AF93 jp
 0x6C43   # p09:AAE4 call
+0x6C47   # p05:A672 jp
+0x6C4B   # p05:A75C jp
 0x6C4F   # p04:9C2B jp cc
-0x6C53   # p10:B28B jp
+0x6C53   # p04:8B9F call
 0x6C57   # p07:B4BD jp
 0x6C5B   # p03:B196 jp cc
+0x6C5F   # p08:A33B call cc
+0x6C63   # p08:A2D2 jp
+0x6C67   # p05:AC92 jp
 0x6C6B   # p02:9C62 jp
+0x6C6F   # p06:B367 call cc
+0x6C73   # p08:AC4A call cc
 0x6C77   # p03:AA33 jp cc
+0x6C7B   # p08:A561 jp cc
 0x6C7F   # p06:A51C jp
 0x6C87   # p11:B23C jp
 0x6C8B   # p11:A55B jp
@@ -183,15 +205,18 @@
 0x6C93   # p06:A199 entrada 7 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6C97   # p07:A397 call
 0x6C9B   # p11:BB43 jp cc
+0x6CA6   # p05:B5BA call
 0x6CAA   # p07:A36D call
+0x6CAE   # p05:B848 call
 0x6CB2   # p13:961C jp cc
 0x6CB6   # p10:AB79 call
 0x6CBA   # p10:AB74 call
 0x6CBE   # p09:AD94 call
-0x6CC2   # p09:BFBE entrada 11 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
+0x6CC2   # p05:BBE1 call
 0x6CC6   # p09:A02B call
 0x6CCA   # p02:9F91 jp
 0x6CCE   # p11:B8A0 jp
+0x6CD2   # p05:B567 jp
 0x6CD6   # p07:A3E9 call
 0x6D8A   # p02:845A call
 0x6DBB   # p02:846C jp
@@ -200,6 +225,7 @@
 0x6DF4   # p02:84C4 jp
 0x6DFF   # p00:4276 call
 0x6E0D   # p02:9DB1 call
+0x6E18   # p02:8E2E call
 0x6E29   # p13:87C1 call
 0x6E2C   # p13:9BB8 jp
 0x6EC0   # p13:9C42 call
@@ -210,9 +236,13 @@
 0x6F3C   # p09:B68E call
 0x6F4A   # p09:AADB call
 0x6F56   # p09:A05E jp
+0x6F5E   # p04:8C90 call
+0x6F6A   # p05:BBEF call
 0x6F72   # p09:A196 call
 0x6F94   # p09:AAD8 call
 0x6FA3   # p09:A748 call
+0x6FA8   # p14:AF83 call
+0x6FBE   # p04:8D5F call
 0x6FD5   # p03:B5CC call
 0x6FF9   # p00:4282 call
 0x702B   # p03:B18A call
@@ -275,18 +305,35 @@
 0x79AB   # p02:9FD0 call
 0x79B4   # p03:A55A call
 0x79BC   # p02:8A1E jp cc
-0x79D1   # p04:8505 call
-0x79E9   # p05:AB2F jp
-0x79F1   # p05:AB33 call
-0x79FA   # p05:AB43 call
-0x7A12   # p04:86AC call
+0x79C4   # p05:B603 call
+0x79D1   # p05:B501 jp
+0x79D9   # p05:BC8B call
+0x79E1   # p05:BCB5 call
+0x79E9   # p05:BE40 call
+0x79F1   # p05:BE4F call
+0x79FA   # p05:BE56 call
+0x7A02   # p05:BBD3 call
+0x7A0A   # p05:BBB8 call
+0x7A12   # p04:83B2 jp
+0x7A1F   # p05:BC82 call
 0x7A2D   # p08:ABAF call
 0x7A33   # p10:AAD3 call
 0x7A38   # p10:AADB call
 0x7A3E   # p10:ABA9 call
 0x7A43   # p15:ACB6 jp
+0x7A4E   # p15:BB78 call
+0x7A59   # p14:AC2A call
 0x7A5F   # p08:A138 jp cc
-0x7A88   # p04:94BD call
+0x7A68   # p04:8B49 call
+0x7A70   # p05:BA68 call
+0x7A80   # p04:8D0B call
+0x7A88   # p05:BF8D call
+0x7A8D   # p05:AD6F call
+0x7A9B   # p05:BC18 call
+0x7AA0   # p05:BC34 call
+0x7AA8   # p05:BC4A call
+0x7AB0   # p05:BC7A call
+0x7AB8   # p05:BC29 call
 0x7AC0   # p04:8C56 jp
 0x7AC8   # p07:B451 call
 0x7AD0   # p07:A7EF call cc
@@ -313,12 +360,15 @@
 0x7BAA   # p00:59FD call
 0x7BF1   # p00:5AF8 call
 0x7BF5   # p00:57FE call
+0x7BFC   # p00:5980 call
 0x7C0E   # p00:5E12 call
 0x7C1A   # p08:A198 call
 0x7C20   # p00:5E74 call cc
 0x7C52   # p00:5310 call
+0x7C85   # p05:BFCE call
 0x7CAF   # p07:A487 call
 0x7CB5   # p09:A028 call
+0x7CBB   # p03:A928 call
 0x7D66   # p15:A231 call
 0x7DA9   # p03:AA2E call
 0x7DC0   # p01:7DB5 entrada 0 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
@@ -329,7 +379,8 @@
 0x7DF4   # p00:55F0 call
 0x7EEE   # p03:A859 call
 0x7EF6   # p02:97ED jp
-0x7F37   # p02:8F19 call
+0x7F37   # p04:860C jp
+0x7F3D   # p04:9153 call
 0x7F69   # p06:A1B4 call
 0x7F71   # p03:B1EE call
 0x7F88   # p02:997D jp

@@ -1,0 +1,31 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x6597 0x65A1 tabla_6597  5 destinos del despachador p00:424D (call en p01:6594, el indice en A): 65A1, 65B4, 65C7, 665A, 6661; lo leen p01:6594 (10 bytes)
+F 0x6597 w5
+D 0x72A2 0x72B2 tabla_72A2  8 destinos del despachador p00:424D (call en p01:729F, el indice en A): 72B2, 731F, 735E, 7386, 7398, 73D2, 7655, 7726; lo leen p01:729F (16 bytes)
+F 0x72A2 w8
+D 0x7400 0x741A tabla_7400  13 destinos del despachador p00:424D (call en p01:73FD, el indice en A): 741A, 74ED, 74F7, 7505, 751E, 7538, 7549, 7566, 7586, 75D6, 75F6, 761B, 7636; lo leen p01:73FD (26 bytes)
+F 0x7400 w8
+D 0x7659 0x7661 tabla_7659  4 destinos del despachador p00:424D (call en p01:7656, el indice en A): 7661, 768F, 76A5, 76E0; lo leen p01:7656 (8 bytes)
+F 0x7659 w4
+D 0x7DB8 0x7DC0 tabla_7DB8  4 destinos del despachador p00:424D (call en p01:7DB5, el indice en A): 7DC0, 7DC3, 7DC6, 7DC9; lo leen p01:7DB5 (8 bytes)
+F 0x7DB8 w4
+D 0x7FFF 0x8000 partida_7FFF  los 1 primeros bytes de una instruccion de 2 (18 F5) que sigue en el banco 2: el trazador de un solo banco no puede verla entera (tools/bancos.py); lo leen p01:7FFF (1 bytes)
+F 0x7FFF 1
+D 0x6299 0x62A5 resto_6299  lo apuntan con el banco puesto p10:B8FF (0x629A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p10:B8FF (12 bytes)
+F 0x6299 16
+D 0x6B35 0x6B41 resto_6B35  lo apuntan con el banco puesto p02:8AB9 (0x6B3D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8AB9 (12 bytes)
+F 0x6B35 16
+D 0x6B61 0x6B69 resto_6B61  lo apuntan con el banco puesto p02:8AA3 (0x6B61); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8AA3 (8 bytes)
+F 0x6B61 16
+D 0x6B89 0x6B95 resto_6B89  lo apuntan con el banco puesto p02:8A2A (0x6B89), p02:8A4F (0x6B89), p01:7CE2 (0x6B8D), p01:7D14 (0x6B8D), p01:7D04 (0x6B91), p01:7D62 (0x6B91); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8A2A, p02:8A4F, p01:7CE2, p01:7D14, p01:7D04, p01:7D62 (12 bytes)
+F 0x6B89 16
+D 0x6C37 0x6C3B resto_6C37  lo apuntan con el banco puesto p05:A9B0 (0x6C37); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p05:A9B0 (4 bytes)
+F 0x6C37 16
+D 0x7078 0x707E resto_7078  lo apuntan con el banco puesto p07:AB7D (0x707C); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p07:AB7D (6 bytes)
+F 0x7078 16
+D 0x7747 0x7789 resto_7747  lo apuntan con el banco puesto p01:729B (0x7747), p00:5010 (0x7762); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:729B, p00:5010 (66 bytes)
+F 0x7747 16
+D 0x7D95 0x7DA9 resto_7D95  lo apuntan con el banco puesto p01:7D66 (0x7D95); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:7D66 (20 bytes)
+F 0x7D95 16
+# --- fin de los bloques de bloques.py ---

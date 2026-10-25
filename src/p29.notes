@@ -1,0 +1,25 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x8309 salas_zona_3  21 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 3; lo leen p00:58DD (777 bytes)
+F 0x8000 37
+D 0x8309 0x8456 salas_zona_5  9 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 5; lo leen p00:58DD (333 bytes)
+F 0x8309 37
+D 0x8456 0x898A salas_zona_6  36 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 6; lo leen p00:58DD (1332 bytes)
+F 0x8456 37
+D 0x898A 0x8AD7 salas_zona_12  9 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 12; lo leen p00:58DD (333 bytes)
+F 0x898A 37
+D 0x8AD7 0x8BDA salas_zona_13  7 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 13; lo leen p00:58DD (259 bytes)
+F 0x8AD7 37
+D 0x8BDA 0x8CB8 salas_zona_14  6 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 14; lo leen p00:58DD (222 bytes)
+F 0x8BDA 37
+D 0x8CB8 0x8D71 salas_zona_15  5 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 15; lo leen p00:58DD (185 bytes)
+F 0x8CB8 37
+D 0x8D71 0x8E05 salas_zona_16  4 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 16; lo leen p00:58DD (148 bytes)
+F 0x8D71 37
+D 0x8E05 0x9805 bloques_8E05  155 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 154); se solapan 2 bloques: (bloques_8E05 8E05-9805); lo leen p00:58F8 (2560 bytes)
+F 0x8E05 16
+D 0x9805 0x9A05 bloques_9805  32 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 31); lo leen p00:58F8 (512 bytes)
+F 0x9805 16
+D 0x9A05 0xA000 bloques_9A05  197 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 196) (sigue en el banco 30, en 0xA000); lo leen p00:58F8 (1531 bytes)
+F 0x9A05 16
+# --- fin de los bloques de bloques.py ---

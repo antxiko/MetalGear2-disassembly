@@ -159,7 +159,7 @@
 0xB612   # p09:B318 entrada 12 de la tabla de 0xB31B (call 0x424D en 0xB318)
 0xB618   # p09:B318 entrada 13 de la tabla de 0xB31B (call 0x424D en 0xB318)
 0xB62F   # p02:8C07 call
-0xB68E   # p01:6419 call
+0xB68E   # p02:8B22 call
 0xB76D   # p01:7521 call
 0xB8AB   # p09:B88E entrada 0 de la tabla de 0xB891 (call 0x424D en 0xB88E)
 0xB962   # p09:B88E entrada 1 de la tabla de 0xB891 (call 0x424D en 0xB88E)

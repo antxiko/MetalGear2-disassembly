@@ -1,0 +1,51 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xBD28 0xBD50 zonas_salas_datos  20 punteros, uno por zona: un byte por sala (p00:58A7; los 4 bits altos a 0xCA4C y los bajos a 0xCA4D); lo leen p00:58A7 (40 bytes)
+F 0xBD28 w8
+D 0xBD50 0xBD5D salas_datos_zona_0  13 bytes, uno por sala de la zona 0: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (13 bytes)
+F 0xBD50 16
+D 0xBD5D 0xBD74 salas_datos_zona_1  23 bytes, uno por sala de la zona 1: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (23 bytes)
+F 0xBD5D 16
+D 0xBD74 0xBD7D salas_datos_zona_2  9 bytes, uno por sala de la zona 2: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+F 0xBD74 16
+D 0xBD7D 0xBD92 salas_datos_zona_3  21 bytes, uno por sala de la zona 3: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (21 bytes)
+F 0xBD7D 16
+D 0xBD92 0xBDAA salas_datos_zona_4  24 bytes, uno por sala de la zona 4: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (24 bytes)
+F 0xBD92 16
+D 0xBDAA 0xBDB3 salas_datos_zona_5  9 bytes, uno por sala de la zona 5: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+F 0xBDAA 16
+D 0xBDB3 0xBDD7 salas_datos_zona_6  36 bytes, uno por sala de la zona 6: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (36 bytes)
+F 0xBDB3 16
+D 0xBDD7 0xBDEC salas_datos_zona_7  21 bytes, uno por sala de la zona 7: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (21 bytes)
+F 0xBDD7 16
+D 0xBDEC 0xBDFC salas_datos_zona_8  16 bytes, uno por sala de la zona 8: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (16 bytes)
+F 0xBDEC 16
+D 0xBDFC 0xBE01 salas_datos_zona_9  5 bytes, uno por sala de la zona 9: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (5 bytes)
+F 0xBDFC 16
+D 0xBE01 0xBE1A salas_datos_zona_10  25 bytes, uno por sala de la zona 10: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (25 bytes)
+F 0xBE01 16
+D 0xBE1A 0xBE23 salas_datos_zona_11  9 bytes, uno por sala de la zona 11: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+F 0xBE1A 16
+D 0xBE23 0xBE2C salas_datos_zona_12  9 bytes, uno por sala de la zona 12: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+F 0xBE23 16
+D 0xBE2C 0xBE33 salas_datos_zona_13  7 bytes, uno por sala de la zona 13: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (7 bytes)
+F 0xBE2C 16
+D 0xBE33 0xBE39 salas_datos_zona_14  6 bytes, uno por sala de la zona 14: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (6 bytes)
+F 0xBE33 16
+D 0xBE39 0xBE3E salas_datos_zona_15  5 bytes, uno por sala de la zona 15: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (5 bytes)
+F 0xBE39 16
+D 0xBE3E 0xBE42 salas_datos_zona_16  4 bytes, uno por sala de la zona 16: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (4 bytes)
+F 0xBE3E 16
+D 0xBE42 0xBE48 salas_datos_zona_17  6 bytes, uno por sala de la zona 17: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (6 bytes)
+F 0xBE42 16
+D 0xBE48 0xBE5C salas_datos_zona_18  20 bytes, uno por sala de la zona 18: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (20 bytes)
+F 0xBE48 16
+D 0xBE5C 0xBE62 salas_datos_zona_19  6 bytes, uno por sala de la zona 19: los 4 bits altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (6 bytes)
+F 0xBE5C 16
+D 0xBE63 0xBE9D salas_0xCA76_datos  58 bytes, uno por cada valor de 0xCA76: los 4 bits altos a L y los bajos a H (p00:566F); lo leen p00:566F (58 bytes)
+F 0xBE63 16
+D 0xA000 0xBD28 resto_A000  lo apuntan con el banco puesto p02:831F (0xA000), p02:832B (0xA008), p02:8337 (0xA00A), p02:8343 (0xA014), p02:82BD (0xA03C), p02:82CE (0xA0B4); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:831F, p02:832B, p02:8337, p02:8343, p02:82BD, p02:82CE (7464 bytes)
+F 0xA000 16
+D 0xBE9D 0xC000 resto_BE9D  lo apuntan con el banco puesto p12:6808 (0xBE9D), p12:6811 (0xBEBC), p12:682C (0xBEC5), p12:6835 (0xBEDA), p12:681B (0xBEE7); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:6808, p12:6811, p12:682C, p12:6835, p12:681B (355 bytes)
+F 0xBE9D 16
+# --- fin de los bloques de bloques.py ---

@@ -37,6 +37,8 @@
 0xA8E1   # p06:A7ED entrada 6 de la tabla de 0xA7F0 (call 0x424D en 0xA7ED)
 0xA8E8   # p04:9AB0 call
 0xA924   # p04:9ABC call
+0xA942   # p04:9AD7 call
+0xA95A   # p04:9AEF call
 0xA979   # p04:9AE3 call
 0xA97D   # p02:8009 entrada 0 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xA9C2   # p02:8009 entrada 1 de la tabla de 0x800C (call 0x424D en 0x8009)
@@ -112,10 +114,14 @@
 0xB211   # p02:8009 entrada 11 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB239   # p04:89AF call
 0xB256   # p04:9A78 call
+0xB2D6   # p04:8D65 call
+0xB31D   # p04:8D71 call
 0xB380   # p02:8009 entrada 6 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB3C9   # p01:75C7 call
 0xB532   # p04:9273 call
 0xB55A   # p04:92A1 call
 0xB574   # p02:8009 entrada 7 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB592   # p04:8E3A call
+0xB5E2   # p04:8F10 call
 0xB5FB   # p04:8EC5 call
+0xB626   # p04:8ED4 call

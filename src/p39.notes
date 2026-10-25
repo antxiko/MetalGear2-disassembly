@@ -1,0 +1,173 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA06A dibujo_9E9A_cola  29 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 7 de la lista 0x8217 (p00:4D92, p00:4DF5) (sigue del banco 38); lo leen p00:4C0C (106 bytes)
+F 0xA000 16
+D 0xA06A 0xA0EA dibujo_A06A  8 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 8 de la lista 0x8217 (p00:4D92, p00:4DF5); lo leen p00:4C0C (128 bytes)
+F 0xA06A 16
+D 0xA0EA 0xA10A dibujo_A0EA  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 9 de la lista 0x8217 (p00:4D92, p00:4DF5); lo leen p00:4C0C (32 bytes)
+F 0xA0EA 16
+D 0xA10A 0xA11A dibujo_A10A  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 10 de la lista 0x8217 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xA10A 16
+D 0xA11A 0xA12A dibujo_A11A  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 11 de la lista 0x8217 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xA11A 16
+D 0xA12A 0xA13A dibujo_A12A  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0x8217 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xA12A 16
+D 0xA13A 0xA1FA dibujo_A13A  8 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 13 de la lista 0x8217 (p00:4D92, p00:4DF5); lo leen p00:4C0C (192 bytes)
+F 0xA13A 24
+D 0xA1FA 0xA282 lista_A1FA  27 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x0000); lo leen p00:4C0C, p00:4C26 (136 bytes)
+F 0xA1FA 5
+D 0xA282 0xA2BF lista_A282  12 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x0000); lo leen p00:4C0C (61 bytes)
+F 0xA282 5
+D 0xA2BF 0xA306 lista_A2BF  14 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x0000); lo leen p00:4C0C (71 bytes)
+F 0xA2BF 5
+D 0xA306 0xA348 lista_A306  13 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x0000); lo leen p00:4C0C (66 bytes)
+F 0xA306 5
+D 0xA348 0xA3F8 lista_A348  35 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x0000); lo leen p00:4C0C (176 bytes)
+F 0xA348 5
+D 0xA3F8 0xA3FE lista_A3F8  1 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x62D1); lo leen p00:4C26 (6 bytes)
+F 0xA3F8 5
+D 0xA3FE 0xA44E dibujo_A3FE  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (80 bytes)
+F 0xA3FE 16
+D 0xA44E 0xA45E dibujo_A44E  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (16 bytes)
+F 0xA44E 16
+D 0xA45E 0xA596 dibujo_A45E  13 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (312 bytes)
+F 0xA45E 24
+D 0xA596 0xA5F6 dibujo_A596  4 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 3 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (96 bytes)
+F 0xA596 24
+D 0xA5F6 0xA6D6 dibujo_A5F6  14 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 4 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (224 bytes)
+F 0xA5F6 16
+D 0xA6D6 0xA6EE dibujo_A6D6  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (24 bytes)
+F 0xA6D6 24
+D 0xA6EE 0xA70E dibujo_A6EE  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 6 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (32 bytes)
+F 0xA6EE 16
+D 0xA70E 0xA72E dibujo_A70E  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 7 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (32 bytes)
+F 0xA70E 16
+D 0xA72E 0xA9CE dibujo_A72E  28 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 8 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (672 bytes)
+F 0xA72E 24
+D 0xA9CE 0xA9DE dibujo_A9CE  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 9 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (16 bytes)
+F 0xA9CE 16
+D 0xA9DE 0xA9F6 dibujo_A9DE  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 10 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (24 bytes)
+F 0xA9DE 24
+D 0xA9F6 0xAA16 dibujo_A9F6  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 11 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (32 bytes)
+F 0xA9F6 16
+D 0xAA16 0xAA36 dibujo_AA16  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (32 bytes)
+F 0xAA16 16
+D 0xAA36 0xAA96 dibujo_AA36  4 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 13 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (96 bytes)
+F 0xAA36 24
+D 0xAA96 0xAAC6 dibujo_AA96  3 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 14 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (48 bytes)
+F 0xAA96 16
+D 0xAAC6 0xAB26 dibujo_AAC6  4 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 15 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (96 bytes)
+F 0xAAC6 24
+D 0xAB26 0xAB2E dibujo_AB26  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 16 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (8 bytes)
+F 0xAB26 8
+D 0xAB2E 0xAB3E dibujo_AB2E  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 17 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (16 bytes)
+F 0xAB2E 16
+D 0xAB3E 0xAB4E dibujo_AB3E  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 18 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (16 bytes)
+F 0xAB3E 16
+D 0xAB4E 0xAB96 dibujo_AB4E  3 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 19 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (72 bytes)
+F 0xAB4E 24
+D 0xAB96 0xABA6 dibujo_AB96  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 20 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (16 bytes)
+F 0xAB96 16
+D 0xABA6 0xABD6 dibujo_ABA6  2 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 21 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (48 bytes)
+F 0xABA6 24
+D 0xABD6 0xAC66 dibujo_ABD6  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 22 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (144 bytes)
+F 0xABD6 24
+D 0xAC66 0xAC86 dibujo_AC66  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 23 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (32 bytes)
+F 0xAC66 16
+D 0xAC86 0xAC9E dibujo_AC86  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 24 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (24 bytes)
+F 0xAC86 24
+D 0xAC9E 0xAD2E dibujo_AC9E  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 25 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (144 bytes)
+F 0xAC9E 24
+D 0xAD2E 0xAD5E dibujo_AD2E  2 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 26 de la lista 0xA1FA (p00:4D92, p00:4DF5); lo leen p00:4C0C, p00:4C26 (48 bytes)
+F 0xAD2E 24
+D 0xAD5E 0xADCE dibujo_AD5E  7 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (112 bytes)
+F 0xAD5E 16
+D 0xADCE 0xADD6 dibujo_ADCE  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (8 bytes)
+F 0xADCE 8
+D 0xADD6 0xAF16 dibujo_ADD6  20 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (320 bytes)
+F 0xADD6 16
+D 0xAF16 0xB0C6 dibujo_AF16  18 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 3 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (432 bytes)
+F 0xAF16 24
+D 0xB0C6 0xB0D6 dibujo_B0C6  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 4 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xB0C6 16
+D 0xB0D6 0xB136 dibujo_B0D6  4 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (96 bytes)
+F 0xB0D6 24
+D 0xB136 0xB146 dibujo_B136  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 6 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xB136 16
+D 0xB146 0xB18E dibujo_B146  3 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 7 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (72 bytes)
+F 0xB146 24
+D 0xB18E 0xB29E dibujo_B18E  17 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 8 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (272 bytes)
+F 0xB18E 16
+D 0xB29E 0xB2EE dibujo_B29E  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 9 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (80 bytes)
+F 0xB29E 16
+D 0xB2EE 0xB43E dibujo_B2EE  21 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 10 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (336 bytes)
+F 0xB2EE 16
+D 0xB43E 0xB48E dibujo_B43E  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 11 de la lista 0xA282 (p00:4D92, p00:4DF5); lo leen p00:4C0C (80 bytes)
+F 0xB43E 16
+D 0xB48E 0xB59E dibujo_B48E  17 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0xA2BF (p00:4D92, p00:4DF5); lo leen p00:4C0C (272 bytes)
+F 0xB48E 16
+D 0xB59E 0xB5DE dibujo_B59E  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0xA2BF (p00:4D92, p00:4DF5); lo leen p00:4C0C (64 bytes)
+F 0xB59E 16
+D 0xB5DE 0xB5F6 dibujo_B5DE  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0xA2BF (p00:4D92, p00:4DF5); lo leen p00:4C0C (24 bytes)
+F 0xB5DE 24
+D 0xB5F6 0xB756 dibujo_B5F6  22 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0xA2BF (p00:4D92, p00:4DF5); lo leen p00:4C0C (352 bytes)
+F 0xB5F6 16
+D 0xB756 0xB796 dibujo_B756  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 4 de la lista 0xA2BF (p00:4D92, p00:4DF5); lo leen p00:4C0C (64 bytes)
+F 0xB756 16
+D 0xB796 0xB7AE dibujo_B796  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0xA2BF (p00:4D92, p00:4DF5); lo leen p00:4C0C (24 bytes)
+F 0xB796 24
+D 0xB7AE 0xB90E dibujo_B7AE  22 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (352 bytes)
+F 0xB7AE 16
+D 0xB90E 0xB91E dibujo_B90E  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xB90E 16
+D 0xB91E 0xB936 dibujo_B91E  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (24 bytes)
+F 0xB91E 24
+D 0xB936 0xB946 dibujo_B936  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xB936 16
+D 0xB946 0xB94E dibujo_B946  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 4 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (8 bytes)
+F 0xB946 8
+D 0xB94E 0xB97E dibujo_B94E  6 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 5 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (48 bytes)
+F 0xB94E 8
+D 0xB97E 0xB9FE dibujo_B97E  8 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 6 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (128 bytes)
+F 0xB97E 16
+D 0xB9FE 0xBA46 dibujo_B9FE  3 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 7 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (72 bytes)
+F 0xB9FE 24
+D 0xBA46 0xBA86 dibujo_BA46  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 8 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (64 bytes)
+F 0xBA46 16
+D 0xBA86 0xBB16 dibujo_BA86  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 9 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (144 bytes)
+F 0xBA86 24
+D 0xBB16 0xBC96 dibujo_BB16  16 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 10 de la lista 0xA306 (p00:4D92, p00:4DF5); lo leen p00:4C0C (384 bytes)
+F 0xBB16 24
+D 0xBC96 0xBCC6 dibujo_BC96  6 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (48 bytes)
+F 0xBC96 8
+D 0xBCC6 0xBCE6 dibujo_BCC6  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (32 bytes)
+F 0xBCC6 16
+D 0xBCE6 0xBCF6 dibujo_BCE6  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (16 bytes)
+F 0xBCE6 16
+D 0xBCF6 0xBD16 dibujo_BCF6  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (32 bytes)
+F 0xBCF6 16
+D 0xBD16 0xBD36 dibujo_BD16  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 4 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (32 bytes)
+F 0xBD16 16
+D 0xBD36 0xBDAE dibujo_BD36  5 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (120 bytes)
+F 0xBD36 24
+D 0xBDAE 0xBDC6 dibujo_BDAE  1 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 16 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (24 bytes)
+F 0xBDAE 24
+D 0xBDC6 0xBE06 dibujo_BDC6  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 17 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (64 bytes)
+F 0xBDC6 16
+D 0xBE06 0xBE26 dibujo_BE06  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 18 de la lista 0xA348 (p00:4D92, p00:4DF5); lo leen p00:4C0C (32 bytes)
+F 0xBE06 16
+D 0xBE26 0xBE2A tabla_colores_BE26  2 punteros a colores de dibujo (los usa hasta el indice 1; p00:4DA0); lo leen p00:4DA0 (4 bytes)
+F 0xBE26 w8
+D 0xBE2A 0xBE2E colores_BE2A  8 colores de 4 bits, dos por byte, para un dibujo de 3 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p00:4C26 (4 bytes)
+F 0xBE2A 4
+D 0xBE2E 0xBE32 colores_BE2E  8 colores de 4 bits, dos por byte, para un dibujo de 3 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p00:4C26 (4 bytes)
+F 0xBE2E 4
+D 0xBE32 0xBE42 lista_BE32  3 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0xBE26); lo leen p00:4C26 (16 bytes)
+F 0xBE32 5
+D 0xBE42 0xBE8A dibujo_BE42  9 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0xBE32 (p00:4D92, p00:4DF5); lo leen p00:4C26 (72 bytes)
+F 0xBE42 8
+D 0xBE8A 0xBF32 dibujo_BE8A  7 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 1 de la lista 0xBE32 (p00:4D92, p00:4DF5); lo leen p00:4C26 (168 bytes)
+F 0xBE8A 24
+D 0xBF32 0xBF92 dibujo_BF32  4 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0xBE32 (p00:4D92, p00:4DF5); lo leen p00:4C26 (96 bytes)
+F 0xBF32 24
+# --- fin de los bloques de bloques.py ---

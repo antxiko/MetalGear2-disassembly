@@ -26,7 +26,7 @@
 0xA0E5   # p64:C20F jr cc (se ejecuta copiado en 0xC22F)
 0xA142   # p64:C284 jr cc (se ejecuta copiado en 0xC28C)
 0xA146   # p64:C234 jr cc (se ejecuta copiado en 0xC290)
-0xA14B   # p01:6A68 jp (se ejecuta copiado en 0xC340)
+0xA14B   # p01:6B32 jp (se ejecuta copiado en 0xC340)
 0xA186   # p06:B066 call (se ejecuta copiado en 0xC000)
 0xA1BB   # p01:759B call
 0xA1DE   # p01:7FB6 call
@@ -50,6 +50,7 @@
 0xA6AE   # p03:A213 entrada 11 de la tabla de 0xA216 (call 0x424D en 0xA213)
 0xA779   # p03:A772 entrada 0 de la tabla de 0xA775 (call 0x424D en 0xA772)
 0xA787   # p03:A772 entrada 1 de la tabla de 0xA775 (call 0x424D en 0xA772)
+0xA8D8   # p01:7A6B call
 0xA931   # p03:A213 entrada 17 de la tabla de 0xA216 (call 0x424D en 0xA213)
 0xA977   # p03:A213 entrada 18 de la tabla de 0xA216 (call 0x424D en 0xA213)
 0xA9A4   # p03:A213 entrada 12 de la tabla de 0xA216 (call 0x424D en 0xA213)
@@ -74,11 +75,12 @@
 0xB0D3   # p02:9CAF call
 0xB0DC   # p02:8C7D call
 0xB0F6   # p01:6139 call
-0xB0FE   # p02:9220 call
+0xB0FE   # p01:7EBB call
 0xB103   # p02:923D call
-0xB108   # p00:5638 call
-0xB132   # p02:8F88 call
-0xB19A   # p02:8F80 call
+0xB108   # p01:7A73 call
+0xB11F   # p01:79EC call
+0xB132   # p01:79F4 call
+0xB19A   # p01:79FD call
 0xB1BE   # p02:8DB8 call
 0xB2BC   # p01:7815 call
 0xB329   # p01:786B call
@@ -96,11 +98,12 @@
 0xB63E   # p01:7A2A jp
 0xB65D   # p02:8CEB call
 0xB67D   # p01:79DC call
+0xB68E   # p01:7A05 call
 0xB6C8   # p01:79E4 call
-0xB814   # p01:7B50 call
-0xB866   # p01:7B60 call
-0xB8AC   # p01:7B58 call
+0xB814   # p02:8E19 call
+0xB8AC   # p02:8E21 call
 0xBA53   # p00:5617 call
+0xBB38   # p01:7A90 call
 0xBB4C   # p01:78A3 call
 0xBC4B   # p01:787D call
 0xBD3F   # p03:BD30 entrada 3 de la tabla de 0xBD33 (call 0x424D en 0xBD30)

@@ -1,0 +1,5 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0xA000 resto_8000  lo apuntan con el banco puesto p01:6E75 (0x8000), p01:6E6F (0x8040), p01:6E7E (0x8800), p00:40FF (0x9000), p01:6E88 (0x9000), p01:6E92 (0x9800); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:6E75, p01:6E6F, p01:6E7E, p00:40FF, p01:6E88, p01:6E92 (8192 bytes)
+F 0x8000 16
+# --- fin de los bloques de bloques.py ---

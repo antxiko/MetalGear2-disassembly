@@ -10,8 +10,13 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8000..0xa000  (8192 bytes)
-DATA_8000:
+; DATOS resto_8000: lo apuntan con el banco puesto p07:A98B (0x8000), p07:ABB7
+;   (0x8050), p07:AB8E (0x8080), p01:6E2F (0x8098), p00:40FF (0x9000),
+;   p00:414B (0x9000); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p07:A98B, p07:ABB7, p07:AB8E, p01:6E2F, p00:40FF,
+;   p00:414B (8192 bytes)
+;   0x8000..0xa000  (8192 bytes)
+DATA_resto_8000:
 	defb 001h,000h,020h,002h,000h,0feh,000h,000h,002h,000h,010h,003h,000h,001h,000h,000h	; 8000  .. .............
 	defb 003h,000h,008h,001h,000h,0fdh,000h,000h,004h,000h,004h,001h,000h,001h,000h,000h	; 8010  ................
 	defb 005h,000h,013h,002h,000h,0ffh,000h,000h,006h,000h,016h,001h,000h,001h,000h,000h	; 8020  ................

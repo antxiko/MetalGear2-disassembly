@@ -1,0 +1,43 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA061 dibujo_9FB1_cola  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x9EB2 (p00:4D92, p00:4DF5) (sigue del banco 46); lo leen p01:6F45 (97 bytes)
+F 0xA000 16
+D 0xA061 0xA141 dibujo_A061  14 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x9EB2 (p00:4D92, p00:4DF5); lo leen p01:6F45 (224 bytes)
+F 0xA061 16
+D 0xA141 0xA161 dibujo_A141  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0x9EB2 (p00:4D92, p00:4DF5); lo leen p01:6F45 (32 bytes)
+F 0xA141 16
+D 0xA161 0xA689 dibujo_A161  55 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 4 de la lista 0x9EB2 (p00:4D92, p00:4DF5); lo leen p01:6F45 (1320 bytes)
+F 0xA161 24
+D 0xA689 0xA719 dibujo_A689  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0x9EB2 (p00:4D92, p00:4DF5); lo leen p01:6F45 (144 bytes)
+F 0xA689 24
+D 0xAAD9 0xAADF tabla_colores_AAD9  3 punteros a colores de dibujo (los usa hasta el indice 2; p00:4DA0); lo leen p00:4DA0 (6 bytes)
+F 0xAAD9 w8
+D 0xAADF 0xAAE3 colores_AADF  8 colores de 4 bits, dos por byte, para un dibujo de 3 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p02:8440 (4 bytes)
+F 0xAADF 4
+D 0xAAE3 0xAAE5 colores_AAE3  4 colores de 4 bits, dos por byte, para un dibujo de 2 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p02:8440 (2 bytes)
+F 0xAAE3 2
+D 0xAAE5 0xAAE7 colores_AAE5  4 colores de 4 bits, dos por byte, para un dibujo de 2 bits por punto (p00:4DB3 los pasa a 0xE800); lo leen p02:8440 (2 bytes)
+F 0xAAE5 2
+D 0xAAE7 0xAB10 lista_AAE7  8 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0xAAD9); lo leen p02:8440 (41 bytes)
+F 0xAAE7 5
+D 0xAB10 0xAB20 dibujo_AB10  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (16 bytes)
+F 0xAB10 8
+D 0xAB20 0xABD0 dibujo_AB20  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (176 bytes)
+F 0xAB20 16
+D 0xABD0 0xACD0 dibujo_ABD0  16 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (256 bytes)
+F 0xABD0 16
+D 0xACD0 0xACE0 dibujo_ACD0  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (16 bytes)
+F 0xACD0 16
+D 0xACE0 0xB2C8 dibujo_ACE0  63 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 4 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (1512 bytes)
+F 0xACE0 24
+D 0xB2C8 0xB700 dibujo_B2C8  45 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 5 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (1080 bytes)
+F 0xB2C8 24
+D 0xB700 0xBA00 dibujo_B700  32 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 6 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (768 bytes)
+F 0xB700 24
+D 0xBA00 0xBD48 dibujo_BA00  35 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 7 de la lista 0xAAE7 (p00:4D92, p00:4DF5); lo leen p02:8440 (840 bytes)
+F 0xBA00 24
+D 0xA719 0xAAD9 resto_A719  lo apuntan con el banco puesto p01:70FF (0xA719), p00:5201 (0xA7B1), p00:5211 (0xA7C5); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p01:70FF, p00:5201, p00:5211 (960 bytes)
+F 0xA719 16
+D 0xBD48 0xC000 resto_BD48  lo apuntan con el banco puesto p02:8454 (0xBD48), p02:8636 (0xBE56), p02:863E (0xBF0A), p02:8630 (0xBF13); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8454, p02:8636, p02:863E, p02:8630 (696 bytes)
+F 0xBD48 16
+# --- fin de los bloques de bloques.py ---

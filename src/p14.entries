@@ -50,9 +50,24 @@
 0xAAD8   # p14:AA91 entrada 3 de la tabla de 0xAA94 (call 0x424D en 0xAA91)
 0xAB01   # p01:7B0F call
 0xAB9E   # p04:8AB6 call
+0xABD7   # entrada 0 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xABEE   # entrada 1 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xABFF   # entrada 2 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xAC08   # entrada 3 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xAC26   # entrada 4 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xAC30   # entrada 5 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xAC6B   # entrada 6 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xACED   # entrada 7 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
+0xACFE   # entrada 8 de la tabla 0xABC5 en HL (p14:ABB1, p00:424E)
 0xAD0F   # p04:8ABF call
-0xAE76   # p04:875C call
-0xAF96   # p04:8754 call
+0xAD48   # entrada 0 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAD4D   # entrada 1 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAD96   # entrada 2 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAE32   # entrada 3 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAF0F   # entrada 4 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAF37   # entrada 5 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAF77   # entrada 6 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
+0xAFAB   # entrada 7 de la tabla 0xAD38 en HL (p14:AD2F, p00:424E)
 0xAFE1   # p01:75B6 call
 0xB03A   # p01:75D0 call
 0xB06B   # p01:75A1 call
@@ -66,8 +81,10 @@
 0xB4B9   # p00:53C0 call
 0xB558   # p01:781E call
 0xB6C3   # p00:563E call
+0xB712   # p02:8B73 call
 0xB761   # p01:78A9 call
 0xB842   # p04:80D0 call
+0xB88F   # p04:80EE call
 0xB931   # p04:80DD call
 0xB991   # p14:B971 entrada 0 de la tabla de 0xB974 (call 0x424D en 0xB971)
 0xB9A5   # p14:B971 entrada 1 de la tabla de 0xB974 (call 0x424D en 0xB971)

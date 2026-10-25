@@ -1,0 +1,73 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x6000 0x6028 zonas_sprites  20 punteros, uno por zona (0xCA4A): las parejas [sala][juego] de los sprites de la zona (p00:4E4A); lo leen p00:4E4D (40 bytes)
+F 0x6000 w8
+D 0x6028 0x6029 sprites_zona_0  0 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); se solapan 6 bloques: (sprites_zona_1 6028-6029) (sprites_zona_2 6028-6029) (sprites_zona_9 6028-6029) (sprites_zona_11 6028-6029) (sprites_zona_16 6028-6029); lo leen p00:4E55 (1 bytes)
+F 0x6028 2
+D 0x6029 0x602C sprites_zona_3  1 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (3 bytes)
+F 0x6029 2
+D 0x602C 0x6031 sprites_zona_4  2 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (5 bytes)
+F 0x602C 2
+D 0x6031 0x6032 sprites_zona_5  0 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (1 bytes)
+F 0x6031 2
+D 0x6032 0x604F sprites_zona_6  14 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (29 bytes)
+F 0x6032 2
+D 0x604F 0x605C sprites_zona_7  6 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (13 bytes)
+F 0x604F 2
+D 0x605C 0x6071 sprites_zona_8  10 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (21 bytes)
+F 0x605C 2
+D 0x6071 0x607A sprites_zona_10  4 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (9 bytes)
+F 0x6071 2
+D 0x607A 0x6083 sprites_zona_12  4 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (9 bytes)
+F 0x607A 2
+D 0x6083 0x608A sprites_zona_13  3 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (7 bytes)
+F 0x6083 2
+D 0x608A 0x608F sprites_zona_14  2 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (5 bytes)
+F 0x608A 2
+D 0x608F 0x6098 sprites_zona_15  4 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (9 bytes)
+F 0x608F 2
+D 0x6098 0x609B sprites_zona_17  1 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (3 bytes)
+F 0x6098 2
+D 0x609B 0x60AC sprites_zona_18  8 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (17 bytes)
+F 0x609B 2
+D 0x60AC 0x60B7 sprites_zona_19  5 parejas [sala (0xCA4B)][juego de sprites] y un 0xFF: la sala que no esta lleva el juego 1 (p00:4E52); lo leen p00:4E55 (11 bytes)
+F 0x60AC 2
+D 0x60B7 0x60DB juegos_sprites  18 parejas [primero][segundo]: los dos bloques de sprites de cada juego, numeros de la tabla p35:60DB (p00:4E66; el segundo a 0xFF80, 0 = ninguno); lo leen p00:4E69 (36 bytes)
+F 0x60B7 2
+D 0x60DB 0x6113 bloques_sprites  28 punteros a bloques de sprites (p00:4F4C; el 0 no se lee: 0 es ninguno; el 26 lo pone tambien p00:4EFD y el 1A en p00:4F09 va al banco 58); lo leen p00:4F51 (56 bytes)
+F 0x60DB w8
+D 0x6113 0x6517 rachas_6113  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_6113 6113-6517); lo leen p00:4F58, p00:4F78 (1028 bytes)
+F 0x6113 16
+D 0x6517 0x668F rachas_6517  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 7 bloques: (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F) (sprites_6517 6517-668F); lo leen p00:4F6F, p00:4F58 (376 bytes)
+F 0x6517 16
+D 0x668F 0x670E rachas_668F  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 3 bloques: (sprites_668F 668F-670E) (sprites_668F 668F-670E); lo leen p00:4F58, p00:4EA8 (127 bytes)
+F 0x668F 16
+D 0x670E 0x6860 sprites_670E  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58, p00:504F, p00:504C (codigo sin trazar) (338 bytes)
+F 0x670E 16
+D 0x6860 0x6A29 sprites_6860  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:5068, p00:5066 (codigo sin trazar) (457 bytes)
+F 0x6860 16
+D 0x6A29 0x6A5D rachas_6A29  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_6A29 6A29-6A5D); lo leen p00:505C, p00:5055 (codigo sin trazar), p00:4F58 (52 bytes)
+F 0x6A29 16
+D 0x6A5D 0x6E5C sprites_6A5D  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58, p00:5037 (1023 bytes)
+F 0x6A5D 16
+D 0x6E5C 0x6ED1 sprites_6E5C  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (117 bytes)
+F 0x6E5C 16
+D 0x6ED1 0x71D2 sprites_6ED1  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (769 bytes)
+F 0x6ED1 16
+D 0x71D2 0x7463 sprites_71D2  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (657 bytes)
+F 0x71D2 16
+D 0x7463 0x75B0 sprites_7463  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58, p00:4FFD (333 bytes)
+F 0x7463 16
+D 0x75B0 0x7762 sprites_75B0  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (434 bytes)
+F 0x75B0 16
+D 0x7762 0x7AD8 sprites_7762  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58, p00:5013, p00:5010 (codigo sin trazar) (886 bytes)
+F 0x7762 16
+D 0x7AD8 0x7CC8 sprites_7AD8  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58, p00:500E (496 bytes)
+F 0x7AD8 16
+D 0x7CC8 0x7E8C sprites_7CC8  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (452 bytes)
+F 0x7CC8 16
+D 0x7E8C 0x7EC6 sprites_7E8C  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (58 bytes)
+F 0x7E8C 16
+D 0x7EC6 0x8000 sprites_7EC6  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones) (sigue en el banco 36, en 0x8000); lo leen p00:4F58, p00:5021 (314 bytes)
+F 0x7EC6 16
+# --- fin de los bloques de bloques.py ---

@@ -57,6 +57,6 @@
 0xB75E   # p07:B737 entrada 6 de la tabla de 0xB73A (call 0x424D en 0xB737)
 0xB8A3   # p07:B898 entrada 0 de la tabla de 0xB89B (call 0x424D en 0xB898)
 0xB8AE   # p07:B898 entrada 2 de la tabla de 0xB89B (call 0x424D en 0xB898)
-0xBB10   # p01:6427 call
+0xBB10   # p02:8FB0 call
 0xBE40   # p01:796C call
 0xBF5C   # p02:8FA8 call

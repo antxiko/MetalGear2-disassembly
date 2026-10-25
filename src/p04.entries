@@ -13,61 +13,135 @@
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
 0x8000   # p01:783E call cc
 0x8082   # p05:B58C jp
-0x8085   # p14:AD35 jp
-0x80F3   # p14:B34C call
-0x818B   # p00:5647 call
+0x808B   # p08:A690 call
+0x808E   # p08:AE60 call
+0x8097   # p05:A78F call
+0x80A7   # p05:A793 call
+0x80E6   # p08:A518 call
+0x80F3   # p08:AC27 jp
+0x8100   # p08:AC17 call
+0x8107   # p14:AC4B call
+0x818B   # p00:5D61 call
+0x81BF   # p14:B92C call
+0x81C5   # p08:AC21 jp
 0x827B   # p01:7841 call
 0x82FD   # p01:7AE3 call
 0x8326   # p01:7AF3 call
+0x834C   # p08:B035 jp cc
+0x84A4   # p05:B74C jp
 0x8671   # p05:B2CA jp
-0x8685   # p10:ABD1 jp
+0x8685   # p14:AC30 call
 0x86A4   # p05:B2B5 jp cc
+0x86C2   # p15:B95D call
 0x86D0   # p10:AA80 call
 0x86D5   # p05:B57B call
-0x8728   # p05:AFF5 jp cc
-0x872B   # p15:B815 call
-0x8739   # p04:8A72 entrada 3 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x86DE   # p14:AE32 call
+0x8728   # p05:BF93 call
 0x873C   # p05:B2D4 jp cc
 0x8751   # p05:ABD6 call
 0x8759   # p05:AC14 call cc
-0x88B7   # p00:538D call
+0x88B7   # p00:5EAB call
 0x8957   # p01:7B43 call
 0x8986   # p00:584E call
-0x89A8   # p00:5765 call
+0x89A8   # p00:5EA5 call
 0x89C3   # p01:7FBC call
-0x8AA3   # p04:8A72 entrada 13 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
-0x8AAB   # p04:8A72 entrada 12 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
-0x8AB3   # p04:8A72 entrada 17 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
-0x8ABC   # p04:8A72 entrada 22 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8AA3   # entrada 1 de la tabla 0x8A8D en HL (p04:8A64, p00:424E)
+0x8AAB   # entrada 0 de la tabla 0x8A8D en HL (p04:8A64, p00:424E)
+0x8AB3   # entrada 5 de la tabla 0x8A8D en HL (p04:8A64, p00:424E)
+0x8ABC   # entrada 10 de la tabla 0x8A8D en HL (p04:8A64, p00:424E)
 0x8AC8   # p04:8A72 entrada 6 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
 0x8AD0   # p04:8A72 entrada 1 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
-0x8B90   # p05:AA61 jp
+0x8AF4   # entrada 0 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8B52   # entrada 1 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8B72   # entrada 2 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8BB6   # entrada 4 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
 0x8BDF   # p04:8A72 entrada 0 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
-0x8C4A   # p01:7B04 call
-0x8C65   # p05:AA88 call
+0x8BE0   # entrada 5 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8BF1   # entrada 3 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8C65   # p05:BFFD jp
+0x8C83   # entrada 6 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8CA2   # entrada 7 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8CC5   # entrada 9 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8D40   # entrada 10 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8D5B   # entrada 11 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8D6E   # entrada 13 de la tabla 0x8AD8 en HL (p04:8A5A, p00:424E)
+0x8D7E   # p04:9D59 entrada 0 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x8DA8   # p05:A185 jp
+0x8DB0   # p04:9D59 entrada 4 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x8E25   # p05:A0A4 call
 0x8E2A   # p14:B3C7 jp
-0x8E40   # p08:ADE7 call
-0x8E75   # p12:697B call cc
+0x8E40   # p08:AAF0 call
+0x8E65   # p08:AC7F call
+0x8E82   # p08:AE1D call
 0x8EBE   # p01:7AFC call
+0x8ECD   # p08:A1DB jp cc
+0x8ED9   # p08:A1DE jp cc
+0x8F16   # p08:A1EF jp
+0x8F32   # p04:8F27 entrada 0 de la tabla de 0x8F2A (call 0x424D en 0x8F27)
+0x8F56   # p04:8F27 entrada 1 de la tabla de 0x8F2A (call 0x424D en 0x8F27)
+0x8FAD   # p04:8F27 entrada 2 de la tabla de 0x8F2A (call 0x424D en 0x8F27)
+0x8FBB   # p04:8F27 entrada 3 de la tabla de 0x8F2A (call 0x424D en 0x8F27)
+0x900B   # p05:A095 call
+0x902E   # p08:A76F call cc
+0x9038   # p05:A49D call
+0x908C   # p08:AA27 call
+0x90A9   # p08:AA24 call
+0x90C8   # p08:A671 call
 0x90CE   # p06:B2C6 call
 0x917C   # p00:5644 call
 0x929A   # p08:A1C4 call
 0x92C0   # p01:782D call
 0x92EB   # p01:7B82 call
 0x9372   # p01:7833 call
+0x9431   # p01:7CC6 call
+0x94DA   # p01:7CC9 call
 0x952C   # p01:7830 call
+0x9707   # entrada 0 de la tabla 0x96FF en HL (p04:96A8, p00:424E)
+0x97CB   # entrada 1 de la tabla 0x96FF en HL (p04:96A8, p00:424E)
+0x97E1   # entrada 2 de la tabla 0x96FF en HL (p04:96A8, p00:424E)
+0x97FF   # entrada 3 de la tabla 0x96FF en HL (p04:96A8, p00:424E)
 0x9814   # p14:B211 jp
 0x984C   # p00:5512 call
+0x9889   # p00:4296 call
 0x98FB   # p00:5515 call
 0x9949   # p08:A1C8 jp
 0x9955   # p01:7B9E jp
 0x9961   # p14:B131 call
 0x9982   # p01:7844 call
 0x9A80   # p01:7877 call
+0x9AF4   # p15:BBE0 jp cc
+0x9AF8   # p14:ACF8 call
+0x9B06   # p05:A927 jp
+0x9B0D   # p05:B7D7 jp
+0x9B19   # p05:B525 jp
 0x9B30   # p10:AC48 jp
+0x9B3B   # p14:AF19 jp cc
+0x9B40   # p05:B292 jp
 0x9CA1   # p14:B277 call
 0x9CAA   # p06:A8E5 jp
 0x9CB7   # p06:AA33 call
 0x9CD5   # p01:75E2 call
 0x9CEE   # p01:79AE call
 0x9D03   # p06:A86A call cc
+0x9D1B   # p05:A367 call
+0x9D20   # p05:BF16 call cc
+0x9D25   # p05:A07D jp
+0x9D2A   # p05:B84B jp
+0x9D2F   # p05:B8DC jp cc
+0x9D34   # p05:B912 jp cc
+0x9D39   # entrada 1 de la tabla 0x8159 en HL (p04:8142, p00:424E; banco de 0xA000 de p04:8148)
+0x9DB0   # p04:9D59 entrada 10 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9DC2   # p04:9D59 entrada 11 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9E05   # p04:9D59 entrada 12 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9E31   # p04:9D59 entrada 13 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9E51   # p05:A0DE jp
+0x9E5A   # p04:9D59 entrada 14 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9E6F   # p04:9D59 entrada 15 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9E9A   # p04:9D59 entrada 37 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9EA4   # p04:9D59 entrada 38 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9EC1   # p04:9D59 entrada 39 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9EFD   # p04:9D59 entrada 40 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9F22   # p05:A258 call
+0x9F6B   # p05:A254 call
+0x9FA7   # p04:9D59 entrada 34 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
+0x9FEB   # p04:9D59 entrada 35 de la tabla de 0x9D5C (call 0x424D en 0x9D59)

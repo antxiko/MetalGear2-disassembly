@@ -1,0 +1,26 @@
+# Tablas de saltos con la tabla en HL (p00:424E): 'pNN 0xTABLA palabras b6000 b8000 bA000  # quien salta'.
+# La escribe tools/tablas_hl.py.
+p01 0x65AA 5 1 2 8  # p01:65A8
+p01 0x65AA 5 1 2 9  # p01:65A8
+p01 0x65AA 5 1 4 5  # p01:65A8
+p01 0x65AA 5 1 4 10  # p01:65A8
+p01 0x65AA 5 1 4 14  # p01:65A8
+p01 0x65AA 5 1 13 14  # p01:65A8
+p04 0x8A8D 11 1 4 5  # p04:8A64
+p04 0x8AD8 14 1 4 5  # p04:8A5A
+p04 0x96FF 4 1 4 5  # p04:96A8
+p05 0xA59B 4 1 4 5  # p05:A4D6
+p05 0xA614 18 1 4 5  # p05:A605
+p05 0xA79C 4 1 4 5  # p05:A78C
+p05 0xAC48 19 1 4 5  # p05:AC33
+p05 0xAF18 4 1 4 5  # p05:AF0B
+p05 0xB032 7 1 4 5  # p05:AFE0
+p05 0xB2E8 8 1 4 5  # p05:B2C4
+p05 0xB58F 19 1 4 5  # p05:B589
+p05 0xB934 22 1 4 5  # p05:B92E
+p05 0xBD58 22 1 4 5  # p05:BD52
+p14 0xABC5 9 1 4 14  # p14:ABB1
+p14 0xAD38 8 1 4 14  # p14:AD2F
+p15 0xB919 6 1 4 15  # p15:B8FE
+p15 0xBAA4 8 1 4 15  # p15:BA6F
+p04 0x8159 25 1 4 5  # p04:8142 (el banco 8 en 0xA000 para 3 y 10-24, p04:8148)

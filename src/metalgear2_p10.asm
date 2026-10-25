@@ -67,8 +67,11 @@ L_A04E:
 	ret			;a053
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa054..0xa067  (19 bytes)
-DATA_A054:
+; DATOS resto_A054: lo apuntan con el banco puesto p10:A015 (0xA054); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:A015 (19 bytes)
+;   0xa054..0xa067  (19 bytes)
+DATA_resto_A054:
 	defb 00eh,004h,001h,00eh,005h,001h,013h,039h,001h,012h,008h,001h,001h,008h,001h,00dh	; a054  .......9........
 	defb 005h,000h,0ffh	; a064
 
@@ -91,9 +94,11 @@ L_A067:
 	call 0424dh		;a079
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa07c..0xa082  (6 bytes)
-DATA_A07C:
-	defb 088h,0a0h,082h,0a0h,0bbh,0a0h	; a07c
+; DATOS tabla_A07C: 3 destinos del despachador p00:424D (call en p10:A079, el
+;   indice en A): A088, A082, A0BB; lo leen p10:A079 (6 bytes)
+;   0xa07c..0xa082  (6 bytes)
+DATA_tabla_A07C:
+	defw 0a088h,0a082h,0a0bbh	; a07c  -> L_A088 L_A082 L_A0BB
 
 ; ======================================================================
 ; CODIGO 0xa082..0xa08e  (12 bytes)
@@ -109,9 +114,11 @@ L_A088:
 	call 0424dh		;a08b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa08e..0xa094  (6 bytes)
-DATA_A08E:
-	defb 094h,0a0h,0a1h,0a0h,0b0h,0a0h	; a08e
+; DATOS tabla_A08E: 3 destinos del despachador p00:424D (call en p10:A08B, el
+;   indice en A): A094, A0A1, A0B0; lo leen p10:A08B (6 bytes)
+;   0xa08e..0xa094  (6 bytes)
+DATA_tabla_A08E:
+	defw 0a094h,0a0a1h,0a0b0h	; a08e  -> L_A094 L_A0A1 L_A0B0
 
 ; ======================================================================
 ; CODIGO 0xa094..0xa2b3  (543 bytes)
@@ -435,11 +442,14 @@ L_A2AC:
 	call 0424dh		;a2b0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa2b3..0xa2d5  (34 bytes)
-DATA_A2B3:
-	defb 0dbh,0a2h,0e8h,0a2h,0e0h,0a2h,0edh,0a2h,0dbh,0a2h,0f2h,0a2h,0e0h,0a2h,0f7h,0a2h	; a2b3  ................
-	defb 0dbh,0a2h,0fch,0a2h,0e0h,0a2h,001h,0a3h,0dbh,0a2h,006h,0a3h,0e0h,0a2h,00bh,0a3h	; a2c3  ................
-	defb 0d5h,0a2h	; a2d3
+; DATOS tabla_A2B3: 17 destinos del despachador p00:424D (call en p10:A2B0, el
+;   indice en A): A2DB, A2E8, A2E0, A2ED, A2DB, A2F2, A2E0, A2F7, A2DB, A2FC,
+;   A2E0, A301, A2DB, A306, A2E0, A30B, A2D5; lo leen p10:A2B0 (34 bytes)
+;   0xa2b3..0xa2d5  (34 bytes)
+DATA_tabla_A2B3:
+	defw 0a2dbh,0a2e8h,0a2e0h,0a2edh,0a2dbh,0a2f2h,0a2e0h,0a2f7h	; a2b3
+	defw 0a2dbh,0a2fch,0a2e0h,0a301h,0a2dbh,0a306h,0a2e0h,0a30bh	; a2c3
+	defw 0a2d5h	; a2d3  -> L_A2D5
 
 ; ======================================================================
 ; CODIGO 0xa2d5..0xa5aa  (725 bytes)
@@ -967,8 +977,11 @@ L_A609:
 	jr L_A5FC		;a619
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa61b..0xa65e  (67 bytes)
-DATA_A61B:
+; DATOS resto_A61B: lo apuntan con el banco puesto p10:A480 (0xA61B); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:A480 (67 bytes)
+;   0xa61b..0xa65e  (67 bytes)
+DATA_resto_A61B:
 	defb 003h,010h,042h,003h,010h,082h,003h,011h,068h,004h,005h,094h,004h,005h,099h,005h	; a61b  ..B.....h.......
 	defb 000h,034h,005h,001h,042h,005h,003h,091h,005h,005h,033h,005h,007h,021h,005h,008h	; a62b  .4..B.....3..!..
 	defb 066h,005h,008h,068h,008h,001h,017h,008h,003h,019h,008h,004h,095h,008h,006h,098h	; a63b  f..h............
@@ -1099,8 +1112,11 @@ L_A714:
 	ret			;a719
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa71a..0xa72e  (20 bytes)
-DATA_A71A:
+; DATOS resto_A71A: lo apuntan con el banco puesto p10:A6EB (0xA71A), p10:A6F8
+;   (0xA724); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p10:A6EB, p10:A6F8 (20 bytes)
+;   0xa71a..0xa72e  (20 bytes)
+DATA_resto_A71A:
 	defb 000h,000h,008h,010h,018h,0f0h,010h,0f8h,008h,010h,0f8h,018h,0f0h,0f0h,000h,004h	; a71a  ................
 	defb 015h,008h,008h,0f0h	; a72a
 
@@ -1196,8 +1212,11 @@ L_A7A4:
 	jr L_A7A4		;a7b3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa7b5..0xa82f  (122 bytes)
-DATA_A7B5:
+; DATOS resto_A7B5: lo apuntan con el banco puesto p10:A76E (0xA7B5), p10:A796
+;   (0xA7F1); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p10:A76E, p10:A796 (122 bytes)
+;   0xa7b5..0xa82f  (122 bytes)
+DATA_resto_A7B5:
 	defb 0bdh,0a7h,0c5h,0a7h,0d5h,0a7h,0e5h,0a7h,078h,008h,0f9h,008h,009h,008h,009h,0ffh	; a7b5  ........x.......
 	defb 084h,000h,000h,000h,010h,010h,000h,010h,010h,004h,006h,010h,002h,009h,010h,0ffh	; a7c5  ................
 	defb 0a0h,000h,000h,000h,010h,010h,000h,010h,010h,010h,000h,010h,010h,000h,008h,0ffh	; a7d5  ................
@@ -1552,10 +1571,13 @@ L_AA78:
 	call 0424dh		;aa8c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xaa8f..0xaaa9  (26 bytes)
-DATA_AA8F:
-	defb 0b8h,0aah,0dbh,0aah,0ebh,0aah,0fch,0aah,026h,0abh,0a5h,0abh,0d4h,0abh,018h,0ach	; aa8f  ........&.......
-	defb 0feh,0abh,088h,0ach,0eah,0ach,003h,0adh,00ch,0adh	; aa9f  ..........
+; DATOS tabla_AA8F: 13 destinos del despachador p00:424D (call en p10:AA8C, el
+;   indice en A): AAB8, AADB, AAEB, AAFC, AB26, ABA5, ABD4, AC18, ABFE, AC88,
+;   ACEA, AD03, AD0C; lo leen p10:AA8C (26 bytes)
+;   0xaa8f..0xaaa9  (26 bytes)
+DATA_tabla_AA8F:
+	defw 0aab8h,0aadbh,0aaebh,0aafch,0ab26h,0aba5h,0abd4h,0ac18h	; aa8f
+	defw 0abfeh,0ac88h,0aceah,0ad03h,0ad0ch	; aa9f
 
 ; ======================================================================
 ; CODIGO 0xaaa9..0xab9d  (244 bytes)
@@ -1690,12 +1712,15 @@ L_AB8A:
 	ret			;ab9c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xab9d..0xaba5  (8 bytes)
-DATA_AB9D:
+; DATOS resto_AB9D: lo apuntan con el banco puesto p10:AB7D (0xAB9D); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:AB7D (8 bytes)
+;   0xab9d..0xaba5  (8 bytes)
+DATA_resto_AB9D:
 	defb 030h,060h,068h,088h,030h,0b0h,068h,0d8h	; ab9d  0`h.0.h.
 
 ; ======================================================================
-; CODIGO 0xaba5..0xad12  (365 bytes)
+; CODIGO 0xaba5..0xad8e  (489 bytes)
 ; ======================================================================
 
 
@@ -1894,45 +1919,225 @@ L_AD0C:
 	call L_AC04		;ad0c
 	ret nc			;ad0f
 	jr L_AD07		;ad10
+L_AD12:
+	call L_AD21		;ad12
+	inc (ix+00fh)		;ad15
+	ld a,(ix+00fh)		;ad18
+	and 007h		;ad1b
+	ret nz			;ad1d
+	jp 06a48h		;ad1e
+L_AD21:
+	ld a,(ix+00fh)		;ad21
+	and 00ch		;ad24
+	add a,a			;ad26
+	ld hl,0ad8eh		;ad27
+	call 0423eh		;ad2a
+	ld de,0dc28h		;ad2d
+	ldi		;ad30
+	ldi		;ad32
+	inc de			;ad34
+	inc de			;ad35
+	dec hl			;ad36
+	dec hl			;ad37
+	ldi		;ad38
+	ldi		;ad3a
+	inc de			;ad3c
+	inc de			;ad3d
+	ldi		;ad3e
+	ldi		;ad40
+	inc de			;ad42
+	inc de			;ad43
+	dec hl			;ad44
+	dec hl			;ad45
+	ldi		;ad46
+	ldi		;ad48
+	inc de			;ad4a
+	inc de			;ad4b
+	ldi		;ad4c
+	ldi		;ad4e
+	inc de			;ad50
+	inc de			;ad51
+	dec hl			;ad52
+	dec hl			;ad53
+	ldi		;ad54
+	ldi		;ad56
+	inc de			;ad58
+	inc de			;ad59
+	ldi		;ad5a
+	ldi		;ad5c
+	inc de			;ad5e
+	inc de			;ad5f
+	dec hl			;ad60
+	dec hl			;ad61
+	ldi		;ad62
+	ldi		;ad64
+	ld a,(ix+00fh)		;ad66
+	and 003h		;ad69
+	ld hl,0adaeh		;ad6b
+	call 0423eh		;ad6e
+	ld de,0dc2ah		;ad71
+	ld b,004h		;ad74
+L_AD76:
+	ld a,(hl)			;ad76
+	ld (de),a			;ad77
+	inc de			;ad78
+	inc de			;ad79
+	inc de			;ad7a
+	inc de			;ad7b
+	add a,004h		;ad7c
+	ld (de),a			;ad7e
+	inc de			;ad7f
+	inc de			;ad80
+	inc de			;ad81
+	inc de			;ad82
+	djnz L_AD76		;ad83
+	ld hl,0daa0h		;ad85
+	ld de,0adb2h		;ad88
+	jp 051e0h		;ad8b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xad12..0xaed6  (452 bytes)
-DATA_AD12:
-	defb 0cdh,021h,0adh,0ddh,034h,00fh,0ddh,07eh,00fh,0e6h,007h,0c0h,0c3h,048h,06ah,0ddh	; ad12  .!..4..~.....Hj.
-	defb 07eh,00fh,0e6h,00ch,087h,021h,08eh,0adh,0cdh,03eh,042h,011h,028h,0dch,0edh,0a0h	; ad22  ~....!...>B.(...
-	defb 0edh,0a0h,013h,013h,02bh,02bh,0edh,0a0h,0edh,0a0h,013h,013h,0edh,0a0h,0edh,0a0h	; ad32  ....++..........
-	defb 013h,013h,02bh,02bh,0edh,0a0h,0edh,0a0h,013h,013h,0edh,0a0h,0edh,0a0h,013h,013h	; ad42  ..++............
-	defb 02bh,02bh,0edh,0a0h,0edh,0a0h,013h,013h,0edh,0a0h,0edh,0a0h,013h,013h,02bh,02bh	; ad52  ++............++
-	defb 0edh,0a0h,0edh,0a0h,0ddh,07eh,00fh,0e6h,003h,021h,0aeh,0adh,0cdh,03eh,042h,011h	; ad62  .....~...!...>B.
-	defb 02ah,0dch,006h,004h,07eh,012h,013h,013h,013h,013h,0c6h,004h,012h,013h,013h,013h	; ad72  *...~...........
-	defb 013h,010h,0f1h,021h,0a0h,0dah,011h,0b2h,0adh,0c3h,0e0h,051h,078h,030h,068h,040h	; ad82  ...!.......Qx0h@
-	defb 068h,070h,048h,070h,078h,040h,058h,040h,078h,070h,060h,070h,070h,040h,050h,040h	; ad92  hpHpx@X@xp`pp@P@
-	defb 078h,080h,058h,070h,068h,038h,048h,040h,068h,078h,050h,070h,028h,030h,038h,03ch	; ada2  x.Xph8H@hxPp(08<
-	defb 010h,007h,010h,04ah,010h,007h,010h,04ah,010h,007h,010h,04ah,010h,007h,010h,04ah	; adb2  ...J...J...J...J
-	defb 000h,0ddh,07eh,00fh,00fh,00fh,0e6h,007h,021h,08ch,0aeh,0cdh,0f6h,043h,0ebh,0cdh	; adc2  ..~.....!....C..
-	defb 0e0h,0adh,0ddh,07eh,00fh,0ddh,034h,00fh,0e6h,007h,0cah,044h,06ah,0c9h,0d5h,021h	; add2  ...~..4....Dj..!
-	defb 028h,0dch,001h,01fh,000h,03eh,0e0h,0cdh,037h,042h,0d1h,0ddh,07eh,00fh,0e6h,003h	; ade2  (....>..7B..~...
-	defb 021h,028h,0aeh,0cdh,0f6h,043h,046h,023h,0d9h,021h,028h,0dch,011h,0a0h,0dah,0d9h	; adf2  !(...CF#.!(.....
-	defb 07eh,083h,0d9h,077h,023h,0d9h,023h,07eh,082h,0d9h,077h,023h,0d9h,023h,07eh,0d9h	; ae02  ~..w#.#~..w#.#~.
-	defb 077h,023h,023h,0d9h,023h,07eh,0d9h,0e5h,0ebh,001h,00fh,000h,0cdh,037h,042h,0e1h	; ae12  w##.#~.......7B.
-	defb 013h,0d9h,023h,010h,0dbh,0c9h,030h,0aeh,03dh,0aeh,05ah,0aeh,077h,0aeh,003h,008h	; ae22  ..#...0.=.Z.w...
-	defb 009h,080h,007h,008h,009h,07ch,00ah,008h,000h,078h,00ah,007h,009h,010h,09ch,007h	; ae32  .....|...x......
-	defb 010h,002h,098h,007h,003h,006h,094h,007h,010h,010h,090h,00ah,010h,000h,08ch,00ah	; ae42  ................
-	defb 000h,010h,088h,00ah,000h,000h,084h,00ah,007h,000h,008h,0b8h,00ah,010h,010h,0b4h	; ae52  ................
-	defb 00ah,010h,000h,0b0h,00ah,010h,010h,0ach,003h,010h,000h,0a8h,003h,000h,010h,0a4h	; ae62  ................
-	defb 003h,000h,000h,0a0h,003h,005h,009h,004h,0cch,00ah,004h,00ch,0c8h,00ah,00bh,010h	; ae72  ................
-	defb 0c4h,003h,000h,008h,0c0h,003h,00ah,003h,0bch,003h,028h,068h,000h,028h,000h,058h	; ae82  ..........(h.(.X
-	defb 020h,040h,048h,050h,018h,030h,020h,058h,030h,040h,021h,080h,030h,0ddh,04eh,00eh	; ae92   @HP.0 X0@!.0.N.
-	defb 0cbh,039h,006h,00bh,0afh,081h,0feh,060h,038h,002h,0d6h,060h,010h,0f7h,04ch,084h	; aea2  .9.....`8..`..L.
-	defb 067h,079h,0c6h,060h,04fh,006h,044h,0e5h,0c5h,03ah,042h,0cah,057h,0afh,001h,002h	; aeb2  gy.`O.D..:B.W...
-	defb 002h,0cdh,0ffh,046h,0c1h,0e1h,02ch,02ch,07ch,0c6h,01bh,0b9h,038h,002h,0d6h,060h	; aec2  ...F..,,|...8..`
-	defb 067h,010h,0e4h,0c9h	; aed2
+; DATOS resto_AD8E: lo apuntan con el banco puesto p10:AD27 (0xAD8E), p10:AD6B
+;   (0xADAE), p10:AD88 (0xADB2); el tamano es lo que hay hasta lo siguiente,
+;   no sale de recorrerlo; lo leen p10:AD27, p10:AD6B, p10:AD88 (53 bytes)
+;   0xad8e..0xadc3  (53 bytes)
+DATA_resto_AD8E:
+	defb 078h,030h,068h,040h,068h,070h,048h,070h,078h,040h,058h,040h,078h,070h,060h,070h	; ad8e  x0h@hpHpx@X@xp`p
+	defb 070h,040h,050h,040h,078h,080h,058h,070h,068h,038h,048h,040h,068h,078h,050h,070h	; ad9e  p@P@x.Xph8H@hxPp
+	defb 028h,030h,038h,03ch,010h,007h,010h,04ah,010h,007h,010h,04ah,010h,007h,010h,04ah	; adae  (08<...J...J...J
+	defb 010h,007h,010h,04ah,000h	; adbe
 
 ; ======================================================================
-; CODIGO 0xaed6..0xafc2  (236 bytes)
+; CODIGO 0xadc3..0xae28  (101 bytes)
 ; ======================================================================
 
 
+L_ADC3:
+	ld a,(ix+00fh)		;adc3
+	rrca			;adc6
+	rrca			;adc7
+	and 007h		;adc8
+	ld hl,0ae8ch		;adca
+	call 043f6h		;adcd
+	ex de,hl			;add0
+	call L_ADE0		;add1
+	ld a,(ix+00fh)		;add4
+	inc (ix+00fh)		;add7
+	and 007h		;adda
+	jp z,06a44h		;addc
+	ret			;addf
+L_ADE0:
+	push de			;ade0
+	ld hl,0dc28h		;ade1
+	ld bc,0001fh		;ade4
+	ld a,0e0h		;ade7
+	call 04237h		;ade9
+	pop de			;adec
+	ld a,(ix+00fh)		;aded
+	and 003h		;adf0
+	ld hl,0ae28h		;adf2
+	call 043f6h		;adf5
+	ld b,(hl)			;adf8
+	inc hl			;adf9
+	exx			;adfa
+	ld hl,0dc28h		;adfb
+	ld de,0daa0h		;adfe
+	exx			;ae01
+L_AE02:
+	ld a,(hl)			;ae02
+	add a,e			;ae03
+	exx			;ae04
+	ld (hl),a			;ae05
+	inc hl			;ae06
+	exx			;ae07
+	inc hl			;ae08
+	ld a,(hl)			;ae09
+	add a,d			;ae0a
+	exx			;ae0b
+	ld (hl),a			;ae0c
+	inc hl			;ae0d
+	exx			;ae0e
+	inc hl			;ae0f
+	ld a,(hl)			;ae10
+	exx			;ae11
+	ld (hl),a			;ae12
+	inc hl			;ae13
+	inc hl			;ae14
+	exx			;ae15
+	inc hl			;ae16
+	ld a,(hl)			;ae17
+	exx			;ae18
+	push hl			;ae19
+	ex de,hl			;ae1a
+	ld bc,0000fh		;ae1b
+	call 04237h		;ae1e
+	pop hl			;ae21
+	inc de			;ae22
+	exx			;ae23
+	inc hl			;ae24
+	djnz L_AE02		;ae25
+	ret			;ae27
+
+; ----------------------------------------------------------------------
+; DATOS resto_AE28: lo apuntan con el banco puesto p10:ADF2 (0xAE28), p10:ADCA
+;   (0xAE8C); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p10:ADF2, p10:ADCA (116 bytes)
+;   0xae28..0xae9c  (116 bytes)
+DATA_resto_AE28:
+	defb 030h,0aeh,03dh,0aeh,05ah,0aeh,077h,0aeh,003h,008h,009h,080h,007h,008h,009h,07ch	; ae28  0.=.Z.w........|
+	defb 00ah,008h,000h,078h,00ah,007h,009h,010h,09ch,007h,010h,002h,098h,007h,003h,006h	; ae38  ...x............
+	defb 094h,007h,010h,010h,090h,00ah,010h,000h,08ch,00ah,000h,010h,088h,00ah,000h,000h	; ae48  ................
+	defb 084h,00ah,007h,000h,008h,0b8h,00ah,010h,010h,0b4h,00ah,010h,000h,0b0h,00ah,010h	; ae58  ................
+	defb 010h,0ach,003h,010h,000h,0a8h,003h,000h,010h,0a4h,003h,000h,000h,0a0h,003h,005h	; ae68  ................
+	defb 009h,004h,0cch,00ah,004h,00ch,0c8h,00ah,00bh,010h,0c4h,003h,000h,008h,0c0h,003h	; ae78  ................
+	defb 00ah,003h,0bch,003h,028h,068h,000h,028h,000h,058h,020h,040h,048h,050h,018h,030h	; ae88  ....(h.(.X @HP.0
+	defb 020h,058h,030h,040h	; ae98
+
+; ======================================================================
+; CODIGO 0xae9c..0xafc2  (294 bytes)
+; ======================================================================
+
+
+L_AE9C:
+	ld hl,03080h		;ae9c
+	ld c,(ix+00eh)		;ae9f
+	srl c		;aea2
+	ld b,00bh		;aea4
+	xor a			;aea6
+L_AEA7:
+	add a,c			;aea7
+	cp 060h		;aea8
+	jr c,L_AEAE		;aeaa
+	sub 060h		;aeac
+L_AEAE:
+	djnz L_AEA7		;aeae
+	ld c,h			;aeb0
+	add a,h			;aeb1
+	ld h,a			;aeb2
+	ld a,c			;aeb3
+	add a,060h		;aeb4
+	ld c,a			;aeb6
+	ld b,044h		;aeb7
+L_AEB9:
+	push hl			;aeb9
+	push bc			;aeba
+	ld a,(0ca42h)		;aebb
+	ld d,a			;aebe
+	xor a			;aebf
+	ld bc,00202h		;aec0
+	call 046ffh		;aec3
+	pop bc			;aec6
+	pop hl			;aec7
+	inc l			;aec8
+	inc l			;aec9
+	ld a,h			;aeca
+	add a,01bh		;aecb
+	cp c			;aecd
+	jr c,L_AED2		;aece
+	sub 060h		;aed0
+L_AED2:
+	ld h,a			;aed2
+	djnz L_AEB9		;aed3
+	ret			;aed5
 L_AED6:
 	call 0642ch		;aed6
 	call L_BBDD		;aed9
@@ -2024,8 +2229,11 @@ L_AFB2:
 	jr $+27		;afc0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xafc2..0xafcd  (11 bytes)
-DATA_AFC2:
+; DATOS resto_AFC2: lo apuntan con el banco puesto p10:AFB5 (0xAFC2); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:AFB5 (11 bytes)
+;   0xafc2..0xafcd  (11 bytes)
+DATA_resto_AFC2:
 	defb 000h,001h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; afc2  ...........
 
 ; ======================================================================
@@ -2048,8 +2256,11 @@ L_AFDB:
 	jp 04236h		;afe8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xafeb..0xaff3  (8 bytes)
-DATA_AFEB:
+; DATOS resto_AFEB: lo apuntan con el banco puesto p10:AFD0 (0xAFEB); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:AFD0 (8 bytes)
+;   0xafeb..0xaff3  (8 bytes)
+DATA_resto_AFEB:
 	defb 001h,001h,000h,000h,000h,000h,000h,000h	; afeb  ........
 
 ; ======================================================================
@@ -2230,8 +2441,11 @@ L_B110:
 	jp 043f6h		;b116
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb119..0xb125  (12 bytes)
-DATA_B119:
+; DATOS resto_B119: lo apuntan con el banco puesto p10:B113 (0xB119); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:B113 (12 bytes)
+;   0xb119..0xb125  (12 bytes)
+DATA_resto_B119:
 	defb 090h,0b0h,090h,0b0h,090h,0c0h,090h,0d0h,0a0h,0b0h,0a0h,0c0h	; b119  ............
 
 ; ======================================================================
@@ -2246,8 +2460,11 @@ L_B125:
 	jr $-64		;b12e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb130..0xb13a  (10 bytes)
-DATA_B130:
+; DATOS resto_B130: lo apuntan con el banco puesto p10:B128 (0xB130); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:B128 (10 bytes)
+;   0xb130..0xb13a  (10 bytes)
+DATA_resto_B130:
 	defb 0a0h,010h,090h,0f0h,090h,0e0h,090h,0f0h,0a0h,000h	; b130  ..........
 
 ; ======================================================================
@@ -2692,10 +2909,13 @@ L_B48C:
 	call 0424dh		;b48f
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb492..0xb4b0  (30 bytes)
-DATA_B492:
-	defb 0b0h,0b4h,0b0h,0b4h,0b0h,0b4h,0c7h,085h,0b0h,0b4h,0ddh,085h,0e5h,085h,0d3h,085h	; b492  ................
-	defb 0d8h,085h,0b0h,0b4h,0c7h,085h,0f6h,085h,015h,086h,0b0h,0b4h,0b0h,0b4h	; b4a2  ..............
+; DATOS tabla_B492: 15 destinos del despachador p00:424D (call en p10:B48F, el
+;   indice en A): B4B0, B4B0, B4B0, 85C7, B4B0, 85DD, 85E5, 85D3, 85D8, B4B0,
+;   85C7, 85F6, 8615, B4B0, B4B0; lo leen p10:B48F (30 bytes)
+;   0xb492..0xb4b0  (30 bytes)
+DATA_tabla_B492:
+	defw 0b4b0h,0b4b0h,0b4b0h,085c7h,0b4b0h,085ddh,085e5h,085d3h	; b492
+	defw 085d8h,0b4b0h,085c7h,085f6h,08615h,0b4b0h,0b4b0h	; b4a2
 
 ; ======================================================================
 ; CODIGO 0xb4b0..0xb919  (1129 bytes)
@@ -3313,8 +3533,11 @@ L_B916:
 	jp L_B37D		;b916
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb919..0xb926  (13 bytes)
-DATA_B919:
+; DATOS resto_B919: lo apuntan con el banco puesto p10:B8E6 (0xB919), p10:B8EF
+;   (0xB920); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p10:B8E6, p10:B8EF (13 bytes)
+;   0xb919..0xb926  (13 bytes)
+DATA_resto_B919:
 	defb 01dh,021h,013h,01eh,00dh,012h,0ffh,01eh,013h,017h,00fh,01ch,0ffh	; b919  .!...........
 
 ; ======================================================================
@@ -3894,8 +4117,11 @@ L_BCE4:
 	jr L_BCCE		;bcfb
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbcfd..0xbe6d  (368 bytes)
-DATA_BCFD:
+; DATOS resto_BCFD: lo apuntan con el banco puesto p10:BCCF (0xBCFD); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p10:BCCF (368 bytes)
+;   0xbcfd..0xbe6d  (368 bytes)
+DATA_resto_BCFD:
 	defb 009h,0bdh,050h,0bdh,083h,0bdh,010h,0beh,039h,0beh,04eh,0beh,001h,098h,090h,002h	; bcfd  ..P.....9.N.....
 	defb 006h,020h,004h,004h,000h,000h,001h,018h,050h,003h,006h,028h,004h,004h,000h,000h	; bd0d  . ......P..(....
 	defb 001h,058h,090h,003h,006h,028h,004h,004h,000h,002h,001h,018h,050h,004h,006h,028h	; bd1d  .X...(......P..(

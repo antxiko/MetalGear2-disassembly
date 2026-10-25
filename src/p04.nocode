@@ -8,3 +8,5 @@
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
 0x8691 0x8699   tabla de 4 palabras del despachador (call 0x424D en 0x868E)
 0x8A75 0x8AA3   tabla de 23 palabras del despachador (call 0x424D en 0x8A72)
+0x8F2A 0x8F32   tabla de 4 palabras del despachador (call 0x424D en 0x8F27)
+0x9D5C 0x9DB0   tabla de 42 palabras del despachador (call 0x424D en 0x9D59)

@@ -1,0 +1,15 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA655 bloques_9A05_cola  197 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 196) (sigue del banco 29); lo leen p00:58F8 (1621 bytes)
+F 0xA000 16
+D 0xA655 0xA8F5 bloques_A655  42 bloques de 4 x 4 caracteres (16 bytes cada uno) de las salas de 0xCA76 de la zona 6 (p00:56D4): cuantos son no sale de recorrerlos, es lo que hay hasta lo siguiente; lo leen p00:58F8 (672 bytes)
+F 0xA655 16
+D 0xA8F5 0xB0F5 bloques_A8F5  128 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 127); lo leen p00:58F8 (2048 bytes)
+F 0xA8F5 16
+D 0xB0F5 0xB3F5 bloques_B0F5  48 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 47); lo leen p00:58F8 (768 bytes)
+F 0xB0F5 16
+D 0xB3F5 0xB735 bloques_B3F5  52 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 51); lo leen p00:58F8 (832 bytes)
+F 0xB3F5 16
+D 0xB735 0xC000 resto_B735  lo apuntan con el banco puesto p02:8061 (0xB8A5), p02:8069 (0xBA18), p02:99C0 (0xBAA8), p02:99B0 (0xBE4B), p02:9A5B (0xBE92); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:8061, p02:8069, p02:99C0, p02:99B0, p02:9A5B (2251 bytes)
+F 0xB735 16
+# --- fin de los bloques de bloques.py ---

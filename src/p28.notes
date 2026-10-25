@@ -1,0 +1,11 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA829 bloques_9CA9_cola  184 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 183) (sigue del banco 27); lo leen p00:58F8 (2089 bytes)
+F 0xA000 16
+D 0xA829 0xB0A9 bloques_A829  136 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 135); lo leen p00:58F8 (2176 bytes)
+F 0xA829 16
+D 0xB0A9 0xB3B9 bloques_B0A9  49 bloques de 4 x 4 caracteres (16 bytes cada uno) de las salas de 0xCA76 de la zona 1 (p00:56D4): cuantos son no sale de recorrerlos, es lo que hay hasta lo siguiente; lo leen p00:58F8 (784 bytes)
+F 0xB0A9 16
+D 0xB3B9 0xBFF9 bloques_B3B9  153 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 152); se solapan 2 bloques: (bloques_B3B9 B3B9-BFF9); lo leen p00:58F8 (3136 bytes)
+F 0xB3B9 16
+# --- fin de los bloques de bloques.py ---

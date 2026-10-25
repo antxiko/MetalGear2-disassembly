@@ -1,0 +1,33 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x81D4 sprites_7EC6_cola  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones) (sigue del banco 35); lo leen p00:4F58, p00:5021 (468 bytes)
+F 0x8000 16
+D 0x81D4 0x858D sprites_81D4  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (953 bytes)
+F 0x81D4 16
+D 0x858D 0x8773 rachas_858D  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 4 bloques: (sprites_858D 858D-8773) (sprites_858D 858D-8773) (sprites_858D 858D-8773); lo leen p00:4F58, p00:5074, p00:506E (codigo sin trazar) (486 bytes)
+F 0x858D 16
+D 0x8773 0x8A5D sprites_8773  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:501C (746 bytes)
+F 0x8773 16
+D 0x8A5D 0x8C91 rachas_8A5D  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 3 bloques: (sprites_8A5D 8A5D-8C91) (sprites_8A5D 8A5D-8C91); lo leen p00:4F58, p00:4F03 (564 bytes)
+F 0x8A5D 16
+D 0x8C91 0x8ECA rachas_8C91  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_8C91 8C91-8ECA); lo leen p00:4F58, p00:4F21 (569 bytes)
+F 0x8C91 16
+D 0x8ECA 0x914B sprites_8ECA  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (641 bytes)
+F 0x8ECA 16
+D 0x914B 0x935D sprites_914B  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58, p00:5002 (530 bytes)
+F 0x914B 16
+D 0x935D 0x93E0 rachas_935D  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_935D 935D-93E0); lo leen p00:4E0B, p00:4F58 (131 bytes)
+F 0x935D 16
+D 0x93E0 0x93E6 sprites_93E0  patrones de sprite en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) y fichas de 4 bytes [orden][n][a][b] hasta una orden 0 (p00:5223: 1 copia colores, otra voltea patrones); lo leen p00:4F58 (6 bytes)
+F 0x93E0 16
+D 0x93E6 0x956F rachas_93E6  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_93E6 93E6-956F); lo leen p00:4F58, p00:4F2D (393 bytes)
+F 0x93E6 16
+D 0x956F 0x95B0 rachas_956F  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); lo leen p00:4F37 (65 bytes)
+F 0x956F 16
+D 0x95B0 0x95F2 rachas_95B0  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); lo leen p00:4F41 (66 bytes)
+F 0x95B0 16
+D 0x95F2 0x9638 rachas_95F2  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2 bloques: (sprites_95F2 95F2-9638); lo leen p00:4F58, p00:4F4A (70 bytes)
+F 0x95F2 16
+D 0x9638 0xA000 rachas_9638  datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n > 0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba) (sigue en el banco 37, en 0xA000); lo leen p01:6F83 (2504 bytes)
+F 0x9638 16
+# --- fin de los bloques de bloques.py ---

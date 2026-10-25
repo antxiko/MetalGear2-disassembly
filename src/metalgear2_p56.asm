@@ -10,8 +10,13 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa000..0xc000  (8192 bytes)
-DATA_A000:
+; DATOS resto_A000: lo apuntan con el banco puesto p02:831F (0xA000), p02:832B
+;   (0xA008), p02:8337 (0xA00A), p02:8343 (0xA014), p02:82BD (0xA03C),
+;   p02:82CE (0xA0B4); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p02:831F, p02:832B, p02:8337, p02:8343, p02:82BD,
+;   p02:82CE (7464 bytes)
+;   0xa000..0xbd28  (7464 bytes)
+DATA_resto_A000:
 	defb 01dh,018h,00bh,00bh,01eh,019h,00ah,00bh,007h,008h,01dh,016h,001h,012h,009h,01eh	; a000  ................
 	defb 017h,002h,013h,00ah,068h,09eh,080h,048h,071h,09eh,050h,048h,078h,09eh,0b0h,048h	; a010  ....h..Hq.PHx..H
 	defb 07fh,09eh,030h,048h,086h,09eh,078h,048h,093h,09eh,060h,048h,09ah,09eh,050h,048h	; a020  ..0H..xH..`H..PH
@@ -478,49 +483,217 @@ DATA_A000:
 	defb 00dh,015h,002h,00eh,014h,001h,0ffh,000h,000h,000h,001h,000h,000h,002h,012h,001h	; bcf0  ................
 	defb 003h,034h,003h,004h,045h,004h,005h,023h,002h,006h,045h,004h,007h,034h,003h,008h	; bd00  .4..E..#..E..4..
 	defb 023h,002h,009h,023h,002h,00ah,034h,003h,00bh,045h,004h,00ch,056h,005h,00dh,067h	; bd10  #..#..4..E..V..g
-	defb 006h,00eh,077h,007h,00fh,000h,000h,0ffh,050h,0bdh,05dh,0bdh,074h,0bdh,07dh,0bdh	; bd20  ..w.....P.].t.}.
-	defb 092h,0bdh,0aah,0bdh,0b3h,0bdh,0d7h,0bdh,0ech,0bdh,0fch,0bdh,001h,0beh,01ah,0beh	; bd30  ................
-	defb 023h,0beh,02ch,0beh,033h,0beh,039h,0beh,03eh,0beh,042h,0beh,048h,0beh,05ch,0beh	; bd40  #.,.3.9.>.B.H.\.
-	defb 003h,003h,003h,003h,003h,003h,003h,023h,023h,021h,041h,041h,041h,002h,002h,002h	; bd50  .......##!AAA...
-	defb 002h,002h,001h,001h,001h,001h,002h,001h,067h,001h,001h,002h,001h,001h,001h,004h	; bd60  ........g.......
-	defb 004h,004h,004h,003h,003h,001h,002h,003h,007h,004h,001h,001h,005h,001h,001h,001h	; bd70  ................
-	defb 001h,001h,001h,001h,001h,001h,001h,007h,001h,001h,001h,001h,001h,001h,001h,001h	; bd80  ................
-	defb 001h,001h,003h,003h,001h,001h,001h,001h,001h,001h,001h,002h,001h,001h,007h,001h	; bd90  ................
-	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,007h,001h	; bda0  ................
-	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,007h,001h,001h,001h,001h,001h	; bdb0  ................
-	defb 001h,001h,001h,003h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h	; bdc0  ................
-	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h	; bdd0  ................
-	defb 001h,001h,024h,001h,024h,024h,024h,024h,024h,023h,024h,023h,001h,001h,001h,001h	; bde0  ..$.$$$$$#$#....
-	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,021h,021h,021h,041h	; bdf0  ............!!!A
-	defb 041h,025h,025h,025h,023h,025h,025h,025h,025h,025h,025h,025h,005h,005h,001h,001h	; be00  A%%%#%%%%%%%....
-	defb 001h,005h,005h,001h,001h,001h,041h,001h,001h,001h,045h,045h,045h,045h,045h,045h	; be10  ......A...EEEEEE
-	defb 045h,045h,045h,061h,061h,061h,061h,023h,023h,023h,023h,023h,061h,023h,023h,023h	; be20  EEEaaaa#####a###
-	defb 023h,023h,023h,061h,061h,061h,061h,023h,023h,061h,001h,001h,001h,001h,061h,061h	; be30  ###aaaa##a....aa
-	defb 061h,061h,001h,002h,002h,002h,002h,002h,001h,001h,001h,001h,001h,001h,001h,001h	; be40  aa..............
-	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h	; be50  ................
-	defb 001h,023h,045h,007h,005h,025h,005h,005h,061h,061h,001h,001h,001h,001h,001h,001h	; be60  .#E..%..aa......
-	defb 001h,001h,005h,003h,002h,003h,003h,003h,005h,005h,005h,045h,021h,021h,021h,021h	; be70  ...........E!!!!
-	defb 021h,021h,021h,021h,021h,021h,021h,021h,021h,005h,005h,005h,067h,067h,067h,067h	; be80  !!!!!!!!!...gggg
-	defb 067h,067h,067h,067h,067h,045h,023h,023h,023h,023h,023h,001h,007h,010h,040h,018h	; be90  gggggE#####...@.
-	defb 018h,018h,058h,018h,078h,028h,038h,038h,088h,050h,088h,060h,038h,060h,050h,078h	; bea0  ..X.x(88.P.`8`Px
-	defb 058h,080h,0a0h,088h,070h,090h,018h,090h,058h,090h,088h,0ffh,030h,010h,038h,0a0h	; beb0  X...p...X...0.8.
-	defb 070h,030h,070h,080h,0ffh,030h,010h,028h,028h,038h,028h,050h,048h,068h,048h,090h	; bec0  p0p..0.((8(PHhH.
-	defb 048h,048h,080h,028h,0a0h,048h,0a0h,068h,0a0h,0ffh,058h,028h,058h,048h,058h,068h	; bed0  HH.(.H.h..X(XHXh
-	defb 058h,088h,068h,028h,068h,088h,0ffh,040h,030h,040h,040h,040h,050h,040h,060h,040h	; bee0  X.h(h..@0@@@P@`@
-	defb 070h,040h,080h,094h,030h,094h,040h,094h,050h,094h,060h,094h,070h,094h,080h,050h	; bef0  p@..0.@.P.`.p..P
-	defb 02ch,060h,02ch,070h,02ch,080h,02ch,050h,08ch,060h,08ch,070h,08ch,080h,08ch,0ffh	; bf00  ,`,p,.,P.`.p....
-	defb 000h,00ah,002h,000h,00ch,002h,003h,000h,00bh,003h,002h,00bh,003h,00eh,00bh,004h	; bf10  ................
-	defb 002h,00bh,004h,003h,00bh,004h,00dh,00bh,004h,00eh,00bh,007h,00eh,00bh,0ffh,000h	; bf20  ................
-	defb 00ah,002h,000h,00ch,002h,003h,005h,00bh,003h,007h,00bh,003h,012h,00bh,004h,007h	; bf30  ................
-	defb 00bh,004h,008h,00bh,004h,012h,00bh,004h,013h,00bh,007h,00fh,00bh,009h,003h,002h	; bf40  ................
-	defb 0ffh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bf50  ................
-	defb 000h,000h,000h,000h,000h,000h,021h,01fh,0ffh,0ffh,0ffh,0ffh,010h,00fh,01fh,000h	; bf60  ......!.........
-	defb 000h,000h,000h,000h,001h,012h,021h,011h,011h,010h,000h,000h,000h,000h,000h,000h	; bf70  ......!.........
-	defb 002h,01fh,000h,01fh,0ffh,0ffh,0ffh,0ffh,0ffh,010h,000h,000h,000h,000h,000h,000h	; bf80  ................
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bf90  ................
-	defb 000h,000h,000h,000h,000h,000h,021h,0ddh,0eeh,0ffh,0ffh,0ffh,010h,0f2h,0f0h,000h	; bfa0  ......!.........
-	defb 000h,000h,000h,000h,000h,011h,012h,0f1h,011h,000h,000h,000h,000h,000h,000h,000h	; bfb0  ................
-	defb 000h,021h,0f0h,02fh,0ffh,0ffh,0feh,0eeh,0efh,010h,000h,000h,000h,000h,000h,000h	; bfc0  .!./............
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bfd0  ................
-	defb 000h,000h,000h,000h,000h,002h,022h,022h,021h,01fh,0ffh,0f1h,000h,0f1h,0f0h,000h	; bfe0  ......""!.......
-	defb 000h,000h,000h,000h,000h,001h,014h,0f1h,010h,000h,000h,000h,000h,000h,000h,000h	; bff0  ................
+	defb 006h,00eh,077h,007h,00fh,000h,000h,0ffh	; bd20  ..w.....
+
+; ----------------------------------------------------------------------
+; DATOS zonas_salas_datos: 20 punteros, uno por zona: un byte por sala
+;   (p00:58A7; los 4 bits altos a 0xCA4C y los bajos a 0xCA4D); lo leen
+;   p00:58A7 (40 bytes)
+;   0xbd28..0xbd50  (40 bytes)
+DATA_zonas_salas_datos:
+	defw 0bd50h,0bd5dh,0bd74h,0bd7dh,0bd92h,0bdaah,0bdb3h,0bdd7h	; bd28
+	defw 0bdech,0bdfch,0be01h,0be1ah,0be23h,0be2ch,0be33h,0be39h	; bd38
+	defw 0be3eh,0be42h,0be48h,0be5ch	; bd48  -> DATA_salas_datos_zona_16 DATA_salas_datos_zona_17 DATA_salas_datos_zona_18 DATA_salas_datos_zona_19
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_0: 13 bytes, uno por sala de la zona 0: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (13
+;   bytes)
+;   0xbd50..0xbd5d  (13 bytes)
+DATA_salas_datos_zona_0:
+	defb 003h,003h,003h,003h,003h,003h,003h,023h,023h,021h,041h,041h,041h	; bd50  .......##!AAA
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_1: 23 bytes, uno por sala de la zona 1: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (23
+;   bytes)
+;   0xbd5d..0xbd74  (23 bytes)
+DATA_salas_datos_zona_1:
+	defb 002h,002h,002h,002h,002h,001h,001h,001h,001h,002h,001h,067h,001h,001h,002h,001h	; bd5d  ...........g....
+	defb 001h,001h,004h,004h,004h,004h,003h	; bd6d
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_2: 9 bytes, uno por sala de la zona 2: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+;   0xbd74..0xbd7d  (9 bytes)
+DATA_salas_datos_zona_2:
+	defb 003h,001h,002h,003h,007h,004h,001h,001h,005h	; bd74  .........
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_3: 21 bytes, uno por sala de la zona 3: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (21
+;   bytes)
+;   0xbd7d..0xbd92  (21 bytes)
+DATA_salas_datos_zona_3:
+	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,007h,001h,001h,001h,001h,001h	; bd7d  ................
+	defb 001h,001h,001h,001h,001h	; bd8d
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_4: 24 bytes, uno por sala de la zona 4: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (24
+;   bytes)
+;   0xbd92..0xbdaa  (24 bytes)
+DATA_salas_datos_zona_4:
+	defb 003h,003h,001h,001h,001h,001h,001h,001h,001h,002h,001h,001h,007h,001h,001h,001h	; bd92  ................
+	defb 001h,001h,001h,001h,001h,001h,001h,001h	; bda2  ........
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_5: 9 bytes, uno por sala de la zona 5: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+;   0xbdaa..0xbdb3  (9 bytes)
+DATA_salas_datos_zona_5:
+	defb 001h,001h,001h,001h,007h,001h,001h,001h,001h	; bdaa  .........
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_6: 36 bytes, uno por sala de la zona 6: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (36
+;   bytes)
+;   0xbdb3..0xbdd7  (36 bytes)
+DATA_salas_datos_zona_6:
+	defb 001h,001h,001h,001h,001h,001h,001h,007h,001h,001h,001h,001h,001h,001h,001h,001h	; bdb3  ................
+	defb 003h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h	; bdc3  ................
+	defb 001h,001h,001h,001h	; bdd3
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_7: 21 bytes, uno por sala de la zona 7: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (21
+;   bytes)
+;   0xbdd7..0xbdec  (21 bytes)
+DATA_salas_datos_zona_7:
+	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,024h,001h,024h,024h,024h	; bdd7  ...........$.$$$
+	defb 024h,024h,023h,024h,023h	; bde7
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_8: 16 bytes, uno por sala de la zona 8: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (16
+;   bytes)
+;   0xbdec..0xbdfc  (16 bytes)
+DATA_salas_datos_zona_8:
+	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h	; bdec  ................
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_9: 5 bytes, uno por sala de la zona 9: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (5 bytes)
+;   0xbdfc..0xbe01  (5 bytes)
+DATA_salas_datos_zona_9:
+	defb 021h,021h,021h,041h,041h	; bdfc
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_10: 25 bytes, uno por sala de la zona 10: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (25
+;   bytes)
+;   0xbe01..0xbe1a  (25 bytes)
+DATA_salas_datos_zona_10:
+	defb 025h,025h,025h,023h,025h,025h,025h,025h,025h,025h,025h,005h,005h,001h,001h,001h	; be01  %%%#%%%%%%%.....
+	defb 005h,005h,001h,001h,001h,041h,001h,001h,001h	; be11  .....A...
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_11: 9 bytes, uno por sala de la zona 11: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+;   0xbe1a..0xbe23  (9 bytes)
+DATA_salas_datos_zona_11:
+	defb 045h,045h,045h,045h,045h,045h,045h,045h,045h	; be1a  EEEEEEEEE
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_12: 9 bytes, uno por sala de la zona 12: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (9 bytes)
+;   0xbe23..0xbe2c  (9 bytes)
+DATA_salas_datos_zona_12:
+	defb 061h,061h,061h,061h,023h,023h,023h,023h,023h	; be23  aaaa#####
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_13: 7 bytes, uno por sala de la zona 13: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (7 bytes)
+;   0xbe2c..0xbe33  (7 bytes)
+DATA_salas_datos_zona_13:
+	defb 061h,023h,023h,023h,023h,023h,023h	; be2c
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_14: 6 bytes, uno por sala de la zona 14: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (6 bytes)
+;   0xbe33..0xbe39  (6 bytes)
+DATA_salas_datos_zona_14:
+	defb 061h,061h,061h,061h,023h,023h	; be33
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_15: 5 bytes, uno por sala de la zona 15: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (5 bytes)
+;   0xbe39..0xbe3e  (5 bytes)
+DATA_salas_datos_zona_15:
+	defb 061h,001h,001h,001h,001h	; be39
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_16: 4 bytes, uno por sala de la zona 16: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (4 bytes)
+;   0xbe3e..0xbe42  (4 bytes)
+DATA_salas_datos_zona_16:
+	defb 061h,061h,061h,061h	; be3e
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_17: 6 bytes, uno por sala de la zona 17: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (6 bytes)
+;   0xbe42..0xbe48  (6 bytes)
+DATA_salas_datos_zona_17:
+	defb 001h,002h,002h,002h,002h,002h	; be42
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_18: 20 bytes, uno por sala de la zona 18: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (20
+;   bytes)
+;   0xbe48..0xbe5c  (20 bytes)
+DATA_salas_datos_zona_18:
+	defb 001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h,001h	; be48  ................
+	defb 001h,001h,001h,001h	; be58
+
+; ----------------------------------------------------------------------
+; DATOS salas_datos_zona_19: 6 bytes, uno por sala de la zona 19: los 4 bits
+;   altos a 0xCA4C y los bajos a 0xCA4D (p00:58AB); lo leen p00:58AB (6 bytes)
+;   0xbe5c..0xbe62  (6 bytes)
+DATA_salas_datos_zona_19:
+	defb 001h,001h,001h,001h,001h,023h	; be5c
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xbe62..0xbe63  (1 bytes)
+DATA_BE62:
+	defb 045h	; be62
+
+; ----------------------------------------------------------------------
+; DATOS salas_0xCA76_datos: 58 bytes, uno por cada valor de 0xCA76: los 4 bits
+;   altos a L y los bajos a H (p00:566F); lo leen p00:566F (58 bytes)
+;   0xbe63..0xbe9d  (58 bytes)
+DATA_salas_0xCA76_datos:
+	defb 007h,005h,025h,005h,005h,061h,061h,001h,001h,001h,001h,001h,001h,001h,001h,005h	; be63  ..%..aa.........
+	defb 003h,002h,003h,003h,003h,005h,005h,005h,045h,021h,021h,021h,021h,021h,021h,021h	; be73  ........E!!!!!!!
+	defb 021h,021h,021h,021h,021h,021h,005h,005h,005h,067h,067h,067h,067h,067h,067h,067h	; be83  !!!!!!...ggggggg
+	defb 067h,067h,045h,023h,023h,023h,023h,023h,001h,007h	; be93  ggE#####..
+
+; ----------------------------------------------------------------------
+; DATOS resto_BE9D: lo apuntan con el banco puesto p12:6808 (0xBE9D), p12:6811
+;   (0xBEBC), p12:682C (0xBEC5), p12:6835 (0xBEDA), p12:681B (0xBEE7); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p12:6808, p12:6811, p12:682C, p12:6835, p12:681B (355 bytes)
+;   0xbe9d..0xc000  (355 bytes)
+DATA_resto_BE9D:
+	defb 010h,040h,018h,018h,018h,058h,018h,078h,028h,038h,038h,088h,050h,088h,060h,038h	; be9d  .@...X.x(88.P.`8
+	defb 060h,050h,078h,058h,080h,0a0h,088h,070h,090h,018h,090h,058h,090h,088h,0ffh,030h	; bead  `PxX...p...X...0
+	defb 010h,038h,0a0h,070h,030h,070h,080h,0ffh,030h,010h,028h,028h,038h,028h,050h,048h	; bebd  .8.p0p..0.((8(PH
+	defb 068h,048h,090h,048h,048h,080h,028h,0a0h,048h,0a0h,068h,0a0h,0ffh,058h,028h,058h	; becd  hH.HH.(.H.h..X(X
+	defb 048h,058h,068h,058h,088h,068h,028h,068h,088h,0ffh,040h,030h,040h,040h,040h,050h	; bedd  HXhX.h(h..@0@@@P
+	defb 040h,060h,040h,070h,040h,080h,094h,030h,094h,040h,094h,050h,094h,060h,094h,070h	; beed  @`@p@..0.@.P.`.p
+	defb 094h,080h,050h,02ch,060h,02ch,070h,02ch,080h,02ch,050h,08ch,060h,08ch,070h,08ch	; befd  ..P,`,p,.,P.`.p.
+	defb 080h,08ch,0ffh,000h,00ah,002h,000h,00ch,002h,003h,000h,00bh,003h,002h,00bh,003h	; bf0d  ................
+	defb 00eh,00bh,004h,002h,00bh,004h,003h,00bh,004h,00dh,00bh,004h,00eh,00bh,007h,00eh	; bf1d  ................
+	defb 00bh,0ffh,000h,00ah,002h,000h,00ch,002h,003h,005h,00bh,003h,007h,00bh,003h,012h	; bf2d  ................
+	defb 00bh,004h,007h,00bh,004h,008h,00bh,004h,012h,00bh,004h,013h,00bh,007h,00fh,00bh	; bf3d  ................
+	defb 009h,003h,002h,0ffh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bf4d  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,021h,01fh,0ffh,0ffh,0ffh,0ffh,010h	; bf5d  .........!......
+	defb 00fh,01fh,000h,000h,000h,000h,000h,001h,012h,021h,011h,011h,010h,000h,000h,000h	; bf6d  .........!......
+	defb 000h,000h,000h,002h,01fh,000h,01fh,0ffh,0ffh,0ffh,0ffh,0ffh,010h,000h,000h,000h	; bf7d  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bf8d  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,021h,0ddh,0eeh,0ffh,0ffh,0ffh,010h	; bf9d  .........!......
+	defb 0f2h,0f0h,000h,000h,000h,000h,000h,000h,011h,012h,0f1h,011h,000h,000h,000h,000h	; bfad  ................
+	defb 000h,000h,000h,000h,021h,0f0h,02fh,0ffh,0ffh,0feh,0eeh,0efh,010h,000h,000h,000h	; bfbd  ....!./.........
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bfcd  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,002h,022h,022h,021h,01fh,0ffh,0f1h,000h	; bfdd  .........""!....
+	defb 0f1h,0f0h,000h,000h,000h,000h,000h,000h,001h,014h,0f1h,010h,000h,000h,000h,000h	; bfed  ................
+	defb 000h,000h,000h	; bffd

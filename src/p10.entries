@@ -60,6 +60,9 @@
 0xACEA   # p10:AA8C entrada 10 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
 0xAD03   # p10:AA8C entrada 11 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
 0xAD0C   # p10:AA8C entrada 12 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAD12   # p04:8C86 call
+0xADC3   # p04:8CA5 call
+0xAE9C   # p04:8CA8 call
 0xAED6   # p02:92FB call
 0xAF30   # p02:9304 call
 0xB4B0   # p10:B48F entrada 0 de la tabla de 0xB492 (call 0x424D en 0xB48F)
@@ -67,11 +70,11 @@
 0xB9E5   # p02:8D70 call
 0xBA03   # p02:8C1F call
 0xBC0F   # p00:5AC0 call
-0xBC1E   # p00:53F9 call
+0xBC1E   # p00:5E49 call
 0xBC27   # p02:8AC1 call
 0xBC59   # p02:8BF7 call
 0xBCA2   # p00:5ABD call
 0xBCE4   # p02:8D2D call
-0xBE6D   # p00:5653 call
+0xBE6D   # p00:5E46 call
 0xBED4   # p02:8BF4 call
 0xBFBC   # p02:8BBB call

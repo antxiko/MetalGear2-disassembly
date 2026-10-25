@@ -10,8 +10,11 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8000..0xa000  (8192 bytes)
-DATA_8000:
+; DATOS resto_8000: lo apuntan con el banco puesto p01:6E4E (0x8000), p01:6E5D
+;   (0x8040), p00:414B (0x9000); el tamano es lo que hay hasta lo siguiente,
+;   no sale de recorrerlo; lo leen p01:6E4E, p01:6E5D, p00:414B (8192 bytes)
+;   0x8000..0xa000  (8192 bytes)
+DATA_resto_8000:
 	defb 012h,011h,000h,001h,067h,006h,066h,066h,077h,036h,001h,066h,077h,066h,066h,066h	; 8000  ....g.ffw6.fwfff
 	defb 066h,066h,077h,066h,060h,000h,001h,013h,033h,033h,021h,022h,012h,033h,033h,033h	; 8010  ffwf`...33!".333
 	defb 012h,022h,012h,022h,021h,011h,011h,011h,011h,011h,011h,012h,036h,061h,036h,061h	; 8020  ."."!.......6a6a

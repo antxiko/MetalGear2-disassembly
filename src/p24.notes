@@ -1,0 +1,115 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x6000 0x6028 zonas_salas  20 punteros, uno por zona: las salas de la zona, de 37 bytes (p00:58C5); lo leen p00:58C8 (40 bytes)
+F 0x6000 w8
+D 0x6028 0x6050 zonas_juegos_bloques  20 punteros, uno por zona: la tabla de juegos de bloques de la zona (p00:58CE); lo leen p00:58D1 (40 bytes)
+F 0x6028 w8
+D 0x6052 0x6056 juegos_bloques_6052  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x6052 w8
+D 0x6056 0x605A juegos_bloques_6056  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x6056 w8
+D 0x605A 0x6062 juegos_bloques_605A  4 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 3); lo leen p00:58D5 (8 bytes)
+F 0x605A w8
+D 0x6062 0x6066 juegos_bloques_6062  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x6062 w8
+D 0x6066 0x606A juegos_bloques_6066  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x6066 w8
+D 0x606A 0x606E juegos_bloques_606A  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x606A w8
+D 0x6070 0x6076 juegos_bloques_6070  3 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 2); lo leen p00:58D5 (6 bytes)
+F 0x6070 w8
+D 0x6078 0x607C juegos_bloques_6078  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x6078 w8
+D 0x607C 0x607E juegos_bloques_607C  1 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 0); lo leen p00:58D5 (2 bytes)
+F 0x607C w8
+D 0x607E 0x6082 juegos_bloques_607E  2 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 1); lo leen p00:58D5 (4 bytes)
+F 0x607E w8
+D 0x6082 0x6088 juegos_bloques_6082  3 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 2); lo leen p00:58D5 (6 bytes)
+F 0x6082 w8
+D 0x608A 0x608C juegos_bloques_608A  1 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 0); lo leen p00:58D5 (2 bytes)
+F 0x608A w8
+D 0x608C 0x6092 juegos_bloques_608C  3 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 2); lo leen p00:58D5 (6 bytes)
+F 0x608C w8
+D 0x6092 0x6094 juegos_bloques_6092  1 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 0); lo leen p00:58D5 (2 bytes)
+F 0x6092 w8
+D 0x6094 0x6096 juegos_bloques_6094  1 punteros a juegos de bloques (p00:58D5; las salas usan hasta el 0); lo leen p00:58D5 (2 bytes)
+F 0x6094 w8
+D 0x6098 0x652A bloques_6098  38 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 37); se solapan 7 bloques: (bloques_6098 6098-6318) (bloques_6098 6098-6338) (bloques_6098 6098-6358) (bloques_6098 6098-6368) (bloques_6098 6098-64B8) (salas_0xCA76 64B6-652A); lo leen p00:58F8, p00:56C1 (1170 bytes)
+F 0x6098 16
+D 0x652A 0x6550 salas_ca76_652A  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (38 bytes)
+F 0x652A 16
+D 0x6550 0x656C salas_ca76_6550  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (28 bytes)
+F 0x6550 16
+D 0x656C 0x65BC salas_ca76_656C  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; se solapan 2 bloques: (salas_ca76_65A0 65A0-65BC); lo leen p00:56C8 (80 bytes)
+F 0x656C 16
+D 0x65BC 0x65FD salas_ca76_65BC  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (65 bytes)
+F 0x65BC 16
+D 0x65FD 0x6619 salas_ca76_65FD  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (28 bytes)
+F 0x65FD 16
+D 0x6619 0x6635 salas_ca76_6619  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (28 bytes)
+F 0x6619 16
+D 0x6635 0x665A salas_ca76_6635  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (37 bytes)
+F 0x6635 16
+D 0x665A 0x6676 salas_ca76_665A  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (28 bytes)
+F 0x665A 16
+D 0x6676 0x669C salas_ca76_6676  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (38 bytes)
+F 0x6676 16
+D 0x669C 0x66BD salas_ca76_669C  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x669C 16
+D 0x66BD 0x66D9 salas_ca76_66BD  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (28 bytes)
+F 0x66BD 16
+D 0x66D9 0x66FA salas_ca76_66D9  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x66D9 16
+D 0x66FA 0x671B salas_ca76_66FA  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x66FA 16
+D 0x671B 0x673C salas_ca76_671B  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x671B 16
+D 0x673C 0x6751 salas_ca76_673C  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (21 bytes)
+F 0x673C 16
+D 0x6751 0x6796 salas_ca76_6751  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (69 bytes)
+F 0x6751 16
+D 0x6796 0x67B7 salas_ca76_6796  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x6796 16
+D 0x67B7 0x67D8 salas_ca76_67B7  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x67B7 16
+D 0x67D8 0x67F9 salas_ca76_67D8  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x67D8 16
+D 0x67F9 0x685A salas_ca76_67F9  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (97 bytes)
+F 0x67F9 16
+D 0x685A 0x687B salas_ca76_685A  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (33 bytes)
+F 0x685A 16
+D 0x687B 0x694F salas_ca76_687B  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (212 bytes)
+F 0x687B 16
+D 0x694F 0x698F salas_ca76_694F  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (64 bytes)
+F 0x694F 16
+D 0x698F 0x69AB salas_ca76_698F  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (28 bytes)
+F 0x698F 16
+D 0x69AB 0x69F5 salas_ca76_69AB  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (74 bytes)
+F 0x69AB 16
+D 0x69F5 0x6A19 salas_ca76_69F5  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (36 bytes)
+F 0x69F5 16
+D 0x6A19 0x6AA1 salas_ca76_6A19  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (136 bytes)
+F 0x6A19 16
+D 0x6AA1 0x6AC7 salas_ca76_6AA1  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (38 bytes)
+F 0x6AA1 16
+D 0x6AC7 0x6B11 salas_ca76_6AC7  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (74 bytes)
+F 0x6AC7 16
+D 0x6B11 0x6B51 salas_ca76_6B11  salas en rachas a 0xE780 (p00:51E0: n < 0x80 repite el siguiente, n > 0x80 copia n & 0x7F, 0 acaba): 36 bloques por sala, sin juego; lo leen p00:56C8 (64 bytes)
+F 0x6B11 16
+D 0x6B51 0x6F31 bloques_6B51  62 bloques de 4 x 4 caracteres (16 bytes cada uno) de las salas de 0xCA76 de la zona 2 (p00:56D4): cuantos son no sale de recorrerlos, es lo que hay hasta lo siguiente; lo leen p00:58F8 (992 bytes)
+F 0x6B51 16
+D 0x6F31 0x74C1 bloques_6F31  89 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 88); lo leen p00:58F8 (1424 bytes)
+F 0x6F31 16
+D 0x74C1 0x76A2 salas_zona_0  13 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 0; lo leen p00:58DD (481 bytes)
+F 0x74C1 37
+D 0x76A2 0x77EF salas_zona_2  9 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 2; lo leen p00:58DD (333 bytes)
+F 0x76A2 37
+D 0x77EF 0x7AF8 salas_zona_7  21 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 7; lo leen p00:58DD (777 bytes)
+F 0x77EF 37
+D 0x7B1C 0x7BD5 salas_zona_9  5 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 9; lo leen p00:58DD (185 bytes)
+F 0x7B1C 37
+D 0x7BD5 0x7F72 salas_zona_10  25 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 10; lo leen p00:58DD (925 bytes)
+F 0x7BD5 37
+D 0x7F72 0x8000 salas_zona_17  6 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 17 (sigue en el banco 25, en 0x8000); lo leen p00:58DD (142 bytes)
+F 0x7F72 37
+# --- fin de los bloques de bloques.py ---

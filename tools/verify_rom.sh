@@ -29,7 +29,7 @@ SZ_B=$(wc -c < "$ROM" | tr -d ' ')
 command -v shasum >/dev/null 2>&1 || shasum() { shift 2; sha256sum "$@"; }
 H_A=$(shasum -a 256 "$OUT" | cut -d' ' -f1)
 H_B=$(shasum -a 256 "$ROM" | cut -d' ' -f1)
-echo "== las 16 paginas concatenadas =="
+echo "== los 64 bancos concatenados =="
 echo "  reensamblada : $SZ_A bytes  $H_A"
 echo "  original     : $SZ_B bytes  $H_B"
 echo "  esperado     :              $SHA"

@@ -21,7 +21,7 @@
 0xA0D7   # p11:A003 entrada 6 de la tabla de 0xA006 (call 0x424D en 0xA003)
 0xA0ED   # p11:A003 entrada 7 de la tabla de 0xA006 (call 0x424D en 0xA003)
 0xA117   # p02:8B9B call
-0xA20D   # p01:7E03 call
+0xA20D   # p01:7DEE call
 0xA389   # p02:8B0A call
 0xA3C4   # p02:8B02 call
 0xA3EC   # p11:A3E3 entrada 0 de la tabla de 0xA3E6 (call 0x424D en 0xA3E3)
@@ -33,7 +33,7 @@
 0xA530   # p11:A4F3 entrada 2 de la tabla de 0xA4F6 (call 0x424D en 0xA4F3)
 0xA540   # p11:A4F3 entrada 3 de la tabla de 0xA4F6 (call 0x424D en 0xA4F3)
 0xA577   # p01:7FCE call
-0xA601   # p00:5632 call
+0xA601   # p00:5E84 call
 0xA61E   # p01:78F1 call
 0xA6E1   # p01:7FC8 call
 0xA729   # p11:A70C entrada 0 de la tabla de 0xA70F (call 0x424D en 0xA70C)
