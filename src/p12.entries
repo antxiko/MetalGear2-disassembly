@@ -1,0 +1,97 @@
+# Puntos de entrada del banco 12 (se ejecuta en 0x6000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x6000   # p00:5D74 call
+0x6055   # p00:5D7F call
+0x606E   # p12:6059 entrada 0 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x6155   # p12:6059 entrada 1 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x61F8   # p00:5D88 call
+0x62B4   # p12:6059 entrada 2 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x62F7   # p12:6059 entrada 3 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x63F3   # p12:6059 entrada 4 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x6413   # p12:6059 entrada 5 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x643A   # p12:6059 entrada 7 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x6458   # p12:6059 entrada 8 de la tabla de 0x605C (call 0x424D en 0x6059)
+0x65C6   # p06:ADC9 call
+0x67E1   # p00:5AB7 call
+0x685A   # p00:5341 call
+0x685F   # p04:9512 call
+0x68E3   # p00:5AC6 call
+0x69CC   # p00:5344 call
+0x69E0   # p00:5F0D call
+0x6AB3   # p00:5DBE call
+0x6AD4   # p00:5F15 call
+0x6BA5   # p00:5DA6 call
+0x6BE4   # p00:5556 call
+0x6C2C   # p12:6BBB entrada 3 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6C38   # p12:6BBB entrada 7 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6C4F   # p12:6BBB entrada 10 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6C54   # p12:6BBB entrada 18 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6C8D   # p12:6BBB entrada 14 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6CDF   # p12:6BBB entrada 0 de la tabla de 0x6BBE (call 0x424D en 0x6BBB)
+0x6CE0   # p00:5F5A call
+0x6D78   # p00:5F62 call
+0x6E3A   # p00:5F6B call
+0x6E4B   # p00:5F73 call
+0x6E6C   # p00:5F83 call
+0x6E70   # p00:5F8B call
+0x6EC8   # p00:5F93 call
+0x6F49   # p04:9829 call
+0x6FFE   # p04:9838 call
+0x72A1   # p00:5FBA call
+0x7462   # p00:5FD0 call
+0x746B   # p00:5FC5 call
+0x74BC   # p04:9CD8 call
+0x758D   # p04:9CE9 call
+0x75C3   # p04:9CF9 call
+0x7688   # p00:5DC6 call
+0x76E9   # p00:5DCE call
+0x7728   # p12:76C8 entrada 0 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x772E   # p12:7707 entrada 0 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x77B0   # p12:77A5 entrada 0 de la tabla de 0x77A8 (call 0x424D en 0x77A5)
+0x77B2   # p12:77A5 entrada 1 de la tabla de 0x77A8 (call 0x424D en 0x77A5)
+0x77B4   # p12:77A5 entrada 2 de la tabla de 0x77A8 (call 0x424D en 0x77A5)
+0x77B6   # p12:77A5 entrada 3 de la tabla de 0x77A8 (call 0x424D en 0x77A5)
+0x7805   # p12:7707 entrada 1 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x780D   # p12:76C8 entrada 2 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x781A   # p12:7707 entrada 2 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x787B   # p12:76C8 entrada 3 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7881   # p12:7707 entrada 3 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x78AC   # p12:76C8 entrada 4 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x78B2   # p12:7707 entrada 4 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x78CF   # p12:76C8 entrada 5 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x78D5   # p12:7707 entrada 5 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7904   # p12:7707 entrada 6 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7911   # p12:76C8 entrada 7 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7917   # p12:7707 entrada 7 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7935   # p12:76C8 entrada 8 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7940   # p12:7707 entrada 8 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x79A8   # p12:76C8 entrada 9 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x79AD   # p12:7707 entrada 9 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x79E3   # p12:7707 entrada 10 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x79EE   # p12:76C8 entrada 10 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7ABC   # p12:76C8 entrada 11 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7AC7   # p12:7707 entrada 11 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7B04   # p12:7707 entrada 12 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7B0D   # p12:76C8 entrada 12 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7B19   # p12:76C8 entrada 13 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7B24   # p12:7707 entrada 14 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7B2D   # p12:76C8 entrada 14 de la tabla de 0x76CB (call 0x424D en 0x76C8)
+0x7B84   # p12:7707 entrada 13 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7BAA   # p00:59FD call
+0x7BF1   # p00:52E4 call
+0x7C52   # p00:5310 call
+0x7C77   # p02:8113 call cc
+0x7DDC   # p00:5DAE call
+0x7F25   # p07:BF82 call
+0x7FA0   # p09:B4E9 call

@@ -1,0 +1,77 @@
+# Puntos de entrada del banco 10 (se ejecuta en 0xa000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0xA000   # p00:5629 call
+0xA067   # p01:78B2 call
+0xA082   # p10:A079 entrada 1 de la tabla de 0xA07C (call 0x424D en 0xA079)
+0xA088   # p10:A079 entrada 0 de la tabla de 0xA07C (call 0x424D en 0xA079)
+0xA094   # p10:A08B entrada 0 de la tabla de 0xA08E (call 0x424D en 0xA08B)
+0xA0A1   # p10:A08B entrada 1 de la tabla de 0xA08E (call 0x424D en 0xA08B)
+0xA0B0   # p10:A08B entrada 2 de la tabla de 0xA08E (call 0x424D en 0xA08B)
+0xA0BB   # p10:A079 entrada 2 de la tabla de 0xA07C (call 0x424D en 0xA079)
+0xA0D3   # p00:5626 call
+0xA143   # p01:78B5 call
+0xA170   # p01:78AF call
+0xA1C1   # p02:8AF2 call
+0xA1D2   # p01:78BB call
+0xA234   # p02:8AFA call
+0xA24D   # p01:78BE call
+0xA2D5   # p10:A2B0 entrada 16 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2DB   # p10:A2B0 entrada 0 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2E0   # p10:A2B0 entrada 2 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2E8   # p10:A2B0 entrada 1 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2ED   # p10:A2B0 entrada 3 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2F2   # p10:A2B0 entrada 5 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2F7   # p10:A2B0 entrada 7 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA2FC   # p10:A2B0 entrada 9 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA301   # p10:A2B0 entrada 11 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA306   # p10:A2B0 entrada 13 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA30B   # p10:A2B0 entrada 15 de la tabla de 0xA2B3 (call 0x424D en 0xA2B0)
+0xA477   # p00:5399 call
+0xA4C9   # p00:5E4C call
+0xA4F1   # p01:78B8 call
+0xA65E   # p02:8B7B call
+0xA6A4   # p02:8CDB call
+0xA6C2   # p02:8CE3 call
+0xA82F   # p00:562C call
+0xAA78   # p04:8AA6 call
+0xAAA9   # p00:5E8F call
+0xAAB8   # p10:AA8C entrada 0 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAADB   # p10:AA8C entrada 1 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAAEB   # p10:AA8C entrada 2 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAAFC   # p10:AA8C entrada 3 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAB26   # p10:AA8C entrada 4 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAB7D   # p04:8933 call
+0xABA5   # p10:AA8C entrada 5 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xABD4   # p10:AA8C entrada 6 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xABFE   # p10:AA8C entrada 8 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAC18   # p10:AA8C entrada 7 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAC88   # p10:AA8C entrada 9 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xACEA   # p10:AA8C entrada 10 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAD03   # p10:AA8C entrada 11 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAD0C   # p10:AA8C entrada 12 de la tabla de 0xAA8F (call 0x424D en 0xAA8C)
+0xAED6   # p02:92FB call
+0xAF30   # p02:9304 call
+0xB4B0   # p10:B48F entrada 0 de la tabla de 0xB492 (call 0x424D en 0xB48F)
+0xB960   # p02:9334 call
+0xB9E5   # p02:8D70 call
+0xBA03   # p02:8C1F call
+0xBC0F   # p00:5AC0 call
+0xBC1E   # p00:53F9 call
+0xBC27   # p02:8AC1 call
+0xBC59   # p02:8BF7 call
+0xBCA2   # p00:5ABD call
+0xBCE4   # p02:8D2D call
+0xBE6D   # p00:5653 call
+0xBED4   # p02:8BF4 call
+0xBFBC   # p02:8BBB call

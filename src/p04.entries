@@ -1,0 +1,73 @@
+# Puntos de entrada del banco 4 (se ejecuta en 0x8000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x8000   # p01:783E call cc
+0x8082   # p05:B58C jp
+0x8085   # p14:AD35 jp
+0x80F3   # p14:B34C call
+0x818B   # p00:5647 call
+0x827B   # p01:7841 call
+0x82FD   # p01:7AE3 call
+0x8326   # p01:7AF3 call
+0x8671   # p05:B2CA jp
+0x8685   # p10:ABD1 jp
+0x86A4   # p05:B2B5 jp cc
+0x86D0   # p10:AA80 call
+0x86D5   # p05:B57B call
+0x8728   # p05:AFF5 jp cc
+0x872B   # p15:B815 call
+0x8739   # p04:8A72 entrada 3 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x873C   # p05:B2D4 jp cc
+0x8751   # p05:ABD6 call
+0x8759   # p05:AC14 call cc
+0x88B7   # p00:538D call
+0x8957   # p01:7B43 call
+0x8986   # p00:584E call
+0x89A8   # p00:5765 call
+0x89C3   # p01:7FBC call
+0x8AA3   # p04:8A72 entrada 13 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8AAB   # p04:8A72 entrada 12 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8AB3   # p04:8A72 entrada 17 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8ABC   # p04:8A72 entrada 22 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8AC8   # p04:8A72 entrada 6 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8AD0   # p04:8A72 entrada 1 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8B90   # p05:AA61 jp
+0x8BDF   # p04:8A72 entrada 0 de la tabla de 0x8A75 (call 0x424D en 0x8A72)
+0x8C4A   # p01:7B04 call
+0x8C65   # p05:AA88 call
+0x8E2A   # p14:B3C7 jp
+0x8E40   # p08:ADE7 call
+0x8E75   # p12:697B call cc
+0x8EBE   # p01:7AFC call
+0x90CE   # p06:B2C6 call
+0x917C   # p00:5644 call
+0x929A   # p08:A1C4 call
+0x92C0   # p01:782D call
+0x92EB   # p01:7B82 call
+0x9372   # p01:7833 call
+0x952C   # p01:7830 call
+0x9814   # p14:B211 jp
+0x984C   # p00:5512 call
+0x98FB   # p00:5515 call
+0x9949   # p08:A1C8 jp
+0x9955   # p01:7B9E jp
+0x9961   # p14:B131 call
+0x9982   # p01:7844 call
+0x9A80   # p01:7877 call
+0x9B30   # p10:AC48 jp
+0x9CA1   # p14:B277 call
+0x9CAA   # p06:A8E5 jp
+0x9CB7   # p06:AA33 call
+0x9CD5   # p01:75E2 call
+0x9CEE   # p01:79AE call
+0x9D03   # p06:A86A call cc

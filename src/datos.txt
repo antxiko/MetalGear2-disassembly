@@ -1,0 +1,7 @@
+# Bancos que son biblioteca de datos: el trazador no entra en ellos.
+# Medido con los destinos de call/jp que caen en su propia ventana (0-2 en
+# cada uno, contra cientos en los bancos de codigo) y con lo que hace el
+# sonido: p16 entra por 0x4000/0x4003/0x4006 y lee sus datos en 0x6000-0xBFFF.
+p17  # datos del sonido (con 16-18-19 puestos)
+p18  # datos del sonido
+p19  # datos del sonido, y la musica que va en 0xA000 (tabla p16:4CF9)
