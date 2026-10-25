@@ -20,7 +20,7 @@ L_8000:
 	cp 080h		;8004
 	jp nc,0a2cfh		;8006
 	dec a			;8009
-	call 0424dh		;800a
+	call 0424dh		;800a   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_800D: 65 destinos del despachador p00:424D (call en p13:800A, el
@@ -50,10 +50,10 @@ DATA_tabla_800D:
 L_808F:
 	call 06ba4h		;808f
 	call L_9152		;8092
-	ld hl,0e900h		;8095
+	ld hl,0e900h		;8095   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;8098
 	ld hl,092b8h		;809b
-	call 04918h		;809e
+	call 04918h		;809e   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 	ld de,00000h		;80a1
 	jp L_8144		;80a4
 L_80A7:
@@ -72,7 +72,7 @@ L_80BE:
 	ret nz			;80c1
 	call 045fdh		;80c2
 	call L_9152		;80c5
-	ld hl,0e900h		;80c8
+	ld hl,0e900h		;80c8   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;80cb
 	ld hl,08068h		;80ce
 	ld de,0a040h		;80d1
@@ -119,7 +119,7 @@ L_8126:
 	xor a			;8126
 	jp L_8E2F		;8127
 L_812A:
-	call 04266h		;812a
+	call 04266h		;812a   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;812d
 	ld a,038h		;8130
 	ld (0ca31h),a		;8132
@@ -127,7 +127,7 @@ L_812A:
 	ld de,06c44h		;8138
 	ld c,006h		;813b
 	xor a			;813d
-	call 046bch		;813e
+	call 046bch		;813e   ; marco: cuatro lineas: un marco de D x E desde HL
 	ld de,00100h		;8141
 L_8144:
 	ld (0ca2eh),de		;8144
@@ -144,7 +144,7 @@ L_8150:
 	ret nz			;8157
 	ld b,005h		;8158
 	ld hl,08b9eh		;815a
-	ld de,0dc00h		;815d
+	ld de,0dc00h		;815d   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;8160
 	ld hl,0da00h		;8163
 	ld de,0da01h		;8166
@@ -155,7 +155,7 @@ L_8150:
 	ld (0ca30h),a		;8171
 	jp L_8148		;8174
 L_8177:
-	ld de,0dc00h		;8177
+	ld de,0dc00h		;8177   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,005h		;817a
 	ld hl,0ca30h		;817c
 	inc (hl)			;817f
@@ -175,7 +175,7 @@ L_8197:
 	ld a,001h		;8197
 	jp L_8E2F		;8199
 L_819C:
-	call 04266h		;819c
+	call 04266h		;819c   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;819f
 	ld hl,08038h		;81a2
 	ld de,02050h		;81a5
@@ -197,7 +197,7 @@ L_81C4:
 	ld de,06c44h		;81ca
 	ld c,006h		;81cd
 	xor a			;81cf
-	call 046bch		;81d0
+	call 046bch		;81d0   ; marco: cuatro lineas: un marco de D x E desde HL
 	ld a,028h		;81d3
 	ld (0ca31h),a		;81d5
 	jp L_8148		;81d8
@@ -207,7 +207,7 @@ L_81DB:
 	and a			;81e1
 	ret nz			;81e2
 	ld b,005h		;81e3
-	ld de,0dc00h		;81e5
+	ld de,0dc00h		;81e5   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08bbch		;81e8
 	call L_8B92		;81eb
 	ld hl,0da00h		;81ee
@@ -222,7 +222,7 @@ L_8202:
 	ld hl,0ca30h		;8202
 	inc (hl)			;8205
 	call L_8814		;8206
-	ld de,0dc00h		;8209
+	ld de,0dc00h		;8209   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,005h		;820c
 	ld hl,0ca30h		;820e
 	bit 3,(hl)		;8211
@@ -241,13 +241,13 @@ L_8228:
 	ld a,003h		;8228
 	jp L_8E2F		;822a
 L_822D:
-	call 04266h		;822d
+	call 04266h		;822d   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8230
 	ld hl,00e3eh		;8233
 	ld de,06444h		;8236
 	ld c,006h		;8239
 	xor a			;823b
-	call 046bch		;823c
+	call 046bch		;823c   ; marco: cuatro lineas: un marco de D x E desde HL
 	ld a,020h		;823f
 	ld (0ca31h),a		;8241
 	jp L_8148		;8244
@@ -257,7 +257,7 @@ L_8247:
 	and a			;824d
 	ret nz			;824e
 	ld b,005h		;824f
-	ld de,0dc00h		;8251
+	ld de,0dc00h		;8251   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08bdah		;8254
 	call L_8B92		;8257
 	ld hl,0da00h		;825a
@@ -272,7 +272,7 @@ L_826E:
 	ld hl,0ca30h		;826e
 	inc (hl)			;8271
 	call L_884A		;8272
-	ld de,0dc00h		;8275
+	ld de,0dc00h		;8275   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,005h		;8278
 	ld hl,0ca30h		;827a
 	bit 3,(hl)		;827d
@@ -291,7 +291,7 @@ L_8294:
 	ld a,004h		;8294
 	jp L_8E2F		;8296
 L_8299:
-	call 04266h		;8299
+	call 04266h		;8299   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	xor a			;829c
 	call L_8CE0		;829d
 	ld de,00020h		;82a0
@@ -311,14 +311,14 @@ L_82AD:
 L_82BC:
 	call L_87F5		;82bc
 	ret nz			;82bf
-	call 045f1h		;82c0
-	call 04266h		;82c3
+	call 045f1h		;82c0   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+	call 04266h		;82c3   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045b9h		;82c6
 	ld de,04000h		;82c9
 	ld a,00eh		;82cc
 	call 04614h		;82ce
 	ld b,002h		;82d1
-	ld de,0dc00h		;82d3
+	ld de,0dc00h		;82d3   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c40h		;82d6
 	call L_8B92		;82d9
 	ld hl,0da00h		;82dc
@@ -332,7 +332,7 @@ L_82BC:
 	ld de,03050h		;82f2
 	ld bc,03030h		;82f5
 	ld a,0c8h		;82f8
-	call 047edh		;82fa
+	call 047edh		;82fa   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	call 04606h		;82fd
 	xor a			;8300
 	ld (0ca30h),a		;8301
@@ -341,7 +341,7 @@ L_82BC:
 L_830A:
 	ld hl,0ca30h		;830a
 	inc (hl)			;830d
-	ld de,0dc00h		;830e
+	ld de,0dc00h		;830e   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;8311
 	ld hl,0ca30h		;8313
 	bit 3,(hl)		;8316
@@ -354,7 +354,7 @@ L_8322:
 L_8325:
 	call L_87F5		;8325
 	ret nz			;8328
-	call 04266h		;8329
+	call 04266h		;8329   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld a,001h		;832c
 	call L_8CE0		;832e
 	ld de,00020h		;8331
@@ -374,11 +374,11 @@ L_833E:
 L_834E:
 	call L_87F5		;834e
 	ret nz			;8351
-	call 04266h		;8352
+	call 04266h		;8352   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0c0c0h		;8355
 	call L_887E		;8358
 	ld b,002h		;835b
-	ld de,0dc00h		;835d
+	ld de,0dc00h		;835d   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c61h		;8360
 	call L_8B92		;8363
 	ld hl,0da00h		;8366
@@ -398,7 +398,7 @@ L_837A:
 	ld (hl),000h		;8383
 L_8385:
 	call L_8871		;8385
-	ld de,0dc00h		;8388
+	ld de,0dc00h		;8388   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;838b
 	ld hl,0ca30h		;838d
 	bit 3,(hl)		;8390
@@ -431,8 +431,8 @@ L_83B6:
 L_83C6:
 	call L_87F5		;83c6
 	ret nz			;83c9
-	call 045f1h		;83ca
-	call 04266h		;83cd
+	call 045f1h		;83ca   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+	call 04266h		;83cd   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045b9h		;83d0
 	ld hl,08f5eh		;83d3
 	call 0463fh		;83d6
@@ -440,7 +440,7 @@ L_83C6:
 	ld de,01050h		;83dc
 	ld bc,05838h		;83df
 	ld a,001h		;83e2
-	call 04767h		;83e4
+	call 04767h		;83e4   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld de,01850h		;83e7
 	xor a			;83ea
 	ld b,a			;83eb
@@ -453,9 +453,9 @@ L_83C6:
 	ld b,048h		;83fc
 	ld c,007h		;83fe
 	ld a,000h		;8400
-	call 0467ch		;8402
+	call 0467ch		;8402   ; linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 	ld b,006h		;8405
-	ld de,0dc00h		;8407
+	ld de,0dc00h		;8407   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08cc8h		;840a
 	call L_8B92		;840d
 	ld hl,0da00h		;8410
@@ -480,7 +480,7 @@ L_8434:
 	ld a,006h		;843d
 	jp L_8E2F		;843f
 L_8442:
-	call 04266h		;8442
+	call 04266h		;8442   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8445
 	xor a			;8448
 	call 07b5dh		;8449
@@ -492,7 +492,7 @@ L_8442:
 	ld de,06c44h		;845a
 	ld c,006h		;845d
 	xor a			;845f
-	call 046bch		;8460
+	call 046bch		;8460   ; marco: cuatro lineas: un marco de D x E desde HL
 	ld a,028h		;8463
 	ld (0ca31h),a		;8465
 	jp L_8148		;8468
@@ -502,7 +502,7 @@ L_846B:
 	and a			;8471
 	ret nz			;8472
 	ld b,002h		;8473
-	ld de,0dc00h		;8475
+	ld de,0dc00h		;8475   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c55h		;8478
 	call L_8B92		;847b
 	ld hl,0da00h		;847e
@@ -514,7 +514,7 @@ L_846B:
 	ld (0ca30h),a		;848c
 	jp L_8148		;848f
 L_8492:
-	ld de,0dc00h		;8492
+	ld de,0dc00h		;8492   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;8495
 	ld hl,0ca30h		;8497
 	inc (hl)			;849a
@@ -555,7 +555,7 @@ L_84D9:
 	ret nz			;84dc
 	jp L_8148		;84dd
 L_84E0:
-	call 04266h		;84e0
+	call 04266h		;84e0   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;84e3
 	ld hl,L_8646		;84e6
 	call L_900C		;84e9
@@ -563,12 +563,12 @@ L_84E0:
 	ld de,09848h		;84ef
 	ld bc,05040h		;84f2
 	ld a,0c8h		;84f5
-	call 047edh		;84f7
+	call 047edh		;84f7   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	ld de,00020h		;84fa
 	jp L_8144		;84fd
 L_8500:
 	ld b,001h		;8500
-	ld de,0dc00h		;8502
+	ld de,0dc00h		;8502   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c46h		;8505
 	call L_8B92		;8508
 	ld hl,0da00h		;850b
@@ -580,17 +580,17 @@ L_8500:
 	ret nz			;851b
 	xor a			;851c
 	ld (0ca30h),a		;851d
-	ld (0e900h),a		;8520
+	ld (0e900h),a		;8520   ; guarda los caracteres de un dibujo pasados a 4 bits
 	dec a			;8523
 	ld (0ca32h),a		;8524
 	jp L_8148		;8527
 L_852A:
-	ld de,0dc00h		;852a
+	ld de,0dc00h		;852a   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,001h		;852d
 	ld hl,0ca30h		;852f
 	bit 3,(hl)		;8532
 	jr nz,L_854D		;8534
-	ld a,(0e900h)		;8536
+	ld a,(0e900h)		;8536   ; lee los caracteres de un dibujo pasados a 4 bits
 	and a			;8539
 	ld hl,08c46h		;853a
 	jr z,L_8548		;853d
@@ -609,7 +609,7 @@ L_8550:
 	call L_88A9		;8554
 	ret nz			;8557
 	ld b,002h		;8558
-	ld de,0dc00h		;855a
+	ld de,0dc00h		;855a   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c67h		;855d
 	call L_8B92		;8560
 	ld hl,0da00h		;8563
@@ -621,7 +621,7 @@ L_8550:
 	ld (0ca30h),a		;8571
 	jp L_8148		;8574
 L_8577:
-	ld de,0dc00h		;8577
+	ld de,0dc00h		;8577   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;857a
 	ld hl,0ca30h		;857c
 	bit 3,(hl)		;857f
@@ -637,13 +637,13 @@ L_858E:
 	ld a,008h		;8592
 	jp L_8E2F		;8594
 L_8597:
-	call 04266h		;8597
+	call 04266h		;8597   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;859a
 	ld hl,00e3eh		;859d
 	ld de,06444h		;85a0
 	ld c,006h		;85a3
 	xor a			;85a5
-	call 046bch		;85a6
+	call 046bch		;85a6   ; marco: cuatro lineas: un marco de D x E desde HL
 	ld a,028h		;85a9
 	ld (0ca31h),a		;85ab
 	jp L_8148		;85ae
@@ -654,7 +654,7 @@ L_85B1:
 	ret nz			;85b8
 	ld b,002h		;85b9
 	ld hl,08bf8h		;85bb
-	ld de,0dc00h		;85be
+	ld de,0dc00h		;85be   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;85c1
 	ld hl,0da00h		;85c4
 	ld de,0da01h		;85c7
@@ -665,7 +665,7 @@ L_85B1:
 	ld (0ca30h),a		;85d2
 	jp L_8148		;85d5
 L_85D8:
-	ld de,0dc00h		;85d8
+	ld de,0dc00h		;85d8   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;85db
 	ld hl,0ca30h		;85dd
 	inc (hl)			;85e0
@@ -685,7 +685,7 @@ L_85F8:
 	ld a,009h		;85f8
 	jp L_8E2F		;85fa
 L_85FD:
-	call 04266h		;85fd
+	call 04266h		;85fd   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld a,004h		;8600
 	call L_8CE0		;8602
 	ld de,00020h		;8605
@@ -705,7 +705,7 @@ L_8612:
 L_8622:
 	call L_87F5		;8622
 	ret nz			;8625
-	call 04266h		;8626
+	call 04266h		;8626   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8629
 	ld hl,00e3eh		;862c
 	call L_900C		;862f
@@ -713,7 +713,7 @@ L_8622:
 	ld de,02848h		;8635
 	ld bc,04828h		;8638
 	ld a,0c8h		;863b
-	call 047edh		;863d
+	call 047edh		;863d   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	ld de,00020h		;8640
 	jp L_8144		;8643
 L_8646:
@@ -725,10 +725,10 @@ L_8646:
 	ldir		;8653
 	ld hl,0da20h		;8655
 	ld de,08cb5h		;8658
-	call 051e0h		;865b
+	call 051e0h		;865b   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 	ld b,002h		;865e
 	ld hl,08c4fh		;8660
-	ld de,0dc00h		;8663
+	ld de,0dc00h		;8663   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;8666
 	ld hl,0da00h		;8669
 	ld de,0da01h		;866c
@@ -780,14 +780,14 @@ L_86C4:
 	ldir		;86cb
 	pop de			;86cd
 	ld hl,0da20h		;86ce
-	call 051e0h		;86d1
+	call 051e0h		;86d1   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 	jr L_86DE		;86d4
 L_86D6:
 	ld de,0dc08h		;86d6
 	ld b,005h		;86d9
 	call L_8B88		;86db
 L_86DE:
-	ld de,0dc00h		;86de
+	ld de,0dc00h		;86de   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;86e1
 	ld hl,0ca2eh		;86e3
 	bit 3,(hl)		;86e6
@@ -801,7 +801,7 @@ L_86F5:
 	ld a,00ah		;86f5
 	jp L_8E2F		;86f7
 L_86FA:
-	call 04266h		;86fa
+	call 04266h		;86fa   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;86fd
 	ld de,00040h		;8700
 	jp L_8144		;8703
@@ -838,7 +838,7 @@ L_873B:
 L_8742:
 	call 045fdh		;8742
 	call L_9152		;8745
-	ld hl,0e900h		;8748
+	ld hl,0e900h		;8748   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;874b
 	call L_8A2D		;874e
 	jp L_8148		;8751
@@ -849,7 +849,7 @@ L_8754:
 	ret nz			;875d
 	ld b,00ch		;875e
 	ld hl,08c6dh		;8760
-	ld de,0dc00h		;8763
+	ld de,0dc00h		;8763   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;8766
 	ld hl,0da00h		;8769
 	ld de,0da01h		;876c
@@ -861,7 +861,7 @@ L_8754:
 	ld de,000ffh		;877a
 	jp L_8144		;877d
 L_8780:
-	ld de,0dc00h		;8780
+	ld de,0dc00h		;8780   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,00ch		;8783
 	ld a,(0ca2eh)		;8785
 	cp 040h		;8788
@@ -886,17 +886,17 @@ L_87A7:
 	call L_91F0		;87ab
 	jp L_8148		;87ae
 L_87B1:
-	ld a,(0ca03h)		;87b1
+	ld a,(0ca03h)		;87b1   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 001h		;87b4
 	ret nz			;87b6
 	ld de,09278h		;87b7
 	call L_9175		;87ba
 	ret nz			;87bd
-	call 04266h		;87be
+	call 04266h		;87be   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 06e29h		;87c1
 	jp L_8148		;87c4
 L_87C7:
-	ld a,(0ca03h)		;87c7
+	ld a,(0ca03h)		;87c7   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 007h		;87ca
 	ret nz			;87cc
 	ld de,09298h		;87cd
@@ -911,7 +911,7 @@ L_87DC:
 	call 06be8h		;87e0
 	jp L_8148		;87e3
 L_87E6:
-	ld a,(0ca03h)		;87e6
+	ld a,(0ca03h)		;87e6   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;87e9
 	ret nz			;87eb
 	call L_90F7		;87ec
@@ -935,7 +935,7 @@ L_8801:
 	ld bc,01010h		;880c
 L_880F:
 	ld a,001h		;880f
-	jp 04767h		;8811
+	jp 04767h		;8811   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_8814:
 	ld a,(0ca30h)		;8814
 	and 078h		;8817
@@ -943,7 +943,7 @@ L_8814:
 	rra			;881a
 	rra			;881b
 	ld hl,0882ah		;881c
-	call 043f6h		;881f
+	call 043f6h		;881f   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,0c85fh		;8822
 	ld bc,02028h		;8825
 	jr L_880F		;8828
@@ -970,7 +970,7 @@ L_884A:
 	rra			;8851
 	rra			;8852
 	ld hl,08861h		;8853
-	call 043f6h		;8856
+	call 043f6h		;8856   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,02850h		;8859
 	ld bc,02020h		;885c
 	jr $-80		;885f
@@ -994,12 +994,12 @@ L_8871:
 	rra			;8876
 	rra			;8877
 	ld hl,08889h		;8878
-	call 043f6h		;887b
+	call 043f6h		;887b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 L_887E:
 	ld de,01050h		;887e
 	ld bc,02020h		;8881
 	ld a,0c8h		;8884
-	jp 047edh		;8886
+	jp 047edh		;8886   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_8889: lo apuntan con el banco puesto p13:8878 (0x8889); el
@@ -1023,7 +1023,7 @@ L_88A9:
 	inc (hl)			;88b2
 	ld a,(hl)			;88b3
 	ld hl,08903h		;88b4
-	call 0423eh		;88b7
+	call 0423eh		;88b7   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;88ba
 	cp 0ffh		;88bb
 	ret z			;88bd
@@ -1039,7 +1039,7 @@ L_88A9:
 	add a,a			;88d0
 	add a,c			;88d1
 	ld hl,08918h		;88d2
-	call 0423eh		;88d5
+	call 0423eh		;88d5   ; suma_a_hl: HL = HL + A
 	call L_88DB		;88d8
 L_88DB:
 	ld a,(hl)			;88db
@@ -1059,7 +1059,7 @@ L_88DB:
 	ld h,(hl)			;88ea
 	ld l,a			;88eb
 	ld a,003h		;88ec
-	call 04767h		;88ee
+	call 04767h		;88ee   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	pop hl			;88f1
 	inc hl			;88f2
 	xor a			;88f3
@@ -1067,12 +1067,12 @@ L_88DB:
 	ret			;88f5
 L_88F6:
 	ld a,006h		;88f6
-	call 0423eh		;88f8
+	call 0423eh		;88f8   ; suma_a_hl: HL = HL + A
 	xor a			;88fb
 	inc a			;88fc
 	ret			;88fd
 L_88FE:
-	ld hl,0e900h		;88fe
+	ld hl,0e900h		;88fe   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	inc (hl)			;8901
 	ret			;8902
 
@@ -1100,11 +1100,11 @@ DATA_resto_8903:
 L_8984:
 	ld a,(0ca30h)		;8984
 	ld hl,08998h		;8987
-	call 043f6h		;898a
+	call 043f6h		;898a   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,02850h		;898d
 	ld bc,03018h		;8990
 	ld a,003h		;8993
-	jp 04767h		;8995
+	jp 04767h		;8995   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_8998: lo apuntan con el banco puesto p13:8987 (0x8998); el
@@ -1214,10 +1214,10 @@ L_8A2D:
 	ld de,04010h		;8a30
 	ld bc,080a8h		;8a33
 	ld a,001h		;8a36
-	jp 04767h		;8a38
+	jp 04767h		;8a38   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_8A3B:
 	ld de,08b00h		;8a3b
-	ld hl,0e900h		;8a3e
+	ld hl,0e900h		;8a3e   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,014h		;8a41
 L_8A43:
 	ld a,(de)			;8a43
@@ -1231,7 +1231,7 @@ L_8A43:
 	djnz L_8A43		;8a4b
 	ret			;8a4d
 L_8A4E:
-	ld hl,0e900h		;8a4e
+	ld hl,0e900h		;8a4e   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	push hl			;8a51
 	ld b,00ah		;8a52
 L_8A54:
@@ -1300,7 +1300,7 @@ L_8AA1:
 	ld c,002h		;8aa6
 	ld a,0cch		;8aa8
 	ld d,000h		;8aaa
-	call 046ffh		;8aac
+	call 046ffh		;8aac   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop hl			;8aaf
 	pop de			;8ab0
 	push de			;8ab1
@@ -1315,7 +1315,7 @@ L_8AA1:
 	ld c,002h		;8abb
 	xor a			;8abd
 	ld d,000h		;8abe
-	call 046ffh		;8ac0
+	call 046ffh		;8ac0   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop hl			;8ac3
 	inc l			;8ac4
 	inc l			;8ac5
@@ -1338,7 +1338,7 @@ L_8AD1:
 	ld c,002h		;8ada
 	xor a			;8adc
 	ld d,000h		;8add
-	call 046ffh		;8adf
+	call 046ffh		;8adf   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop hl			;8ae2
 	pop de			;8ae3
 	push de			;8ae4
@@ -1352,7 +1352,7 @@ L_8AD1:
 	ld c,002h		;8aed
 	ld a,0cch		;8aef
 	ld d,000h		;8af1
-	call 046ffh		;8af3
+	call 046ffh		;8af3   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop hl			;8af6
 	inc l			;8af7
 	inc l			;8af8
@@ -1390,8 +1390,8 @@ L_8B28:
 	add a,a			;8b33
 	add a,b			;8b34
 	ld hl,08b53h		;8b35
-	call 0423eh		;8b38
-	ld de,0dc00h		;8b3b
+	call 0423eh		;8b38   ; suma_a_hl: HL = HL + A
+	ld de,0dc00h		;8b3b   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld bc,004ffh		;8b3e
 L_8B41:
 	ldi		;8b41
@@ -1401,7 +1401,7 @@ L_8B41:
 	djnz L_8B41		;8b48
 	ld hl,0da00h		;8b4a
 	ld de,08b83h		;8b4d
-	jp 051e0h		;8b50
+	jp 051e0h		;8b50   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_8B53: lo apuntan con el banco puesto p13:8B35 (0x8B53), p13:8B4D
@@ -1476,13 +1476,13 @@ DATA_resto_8B9E:
 
 L_8CE0:
 	ld hl,08d05h		;8ce0
-	call 043f6h		;8ce3
+	call 043f6h		;8ce3   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	xor a			;8ce6
 	ld (0ca31h),a		;8ce7
 	ld a,(hl)			;8cea
 	ld (0ca30h),a		;8ceb
 	inc hl			;8cee
-	ld de,0dc00h		;8cef
+	ld de,0dc00h		;8cef   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,00ah		;8cf2
 	call L_8B92		;8cf4
 	ld hl,0da00h		;8cf7
@@ -1540,8 +1540,8 @@ L_8DB7:
 	ret c			;8dd0
 	ld a,c			;8dd1
 	ld hl,08dedh		;8dd2
-	call 043f6h		;8dd5
-	ld de,0dc00h		;8dd8
+	call 043f6h		;8dd5   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
+	ld de,0dc00h		;8dd8   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,00ah		;8ddb
 L_8DDD:
 	ld a,(de)			;8ddd
@@ -1580,7 +1580,7 @@ DATA_resto_8DED:
 L_8E2F:
 	ld (0ca3bh),a		;8e2f
 	ld a,(0ca2dh)		;8e32
-	call 0424dh		;8e35
+	call 0424dh		;8e35   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_8E38: 6 destinos del despachador p00:424D (call en p13:8E35, el
@@ -1642,44 +1642,44 @@ L_8E81:
 L_8E88:
 	ld a,(0ca3bh)		;8e88
 	ld hl,08fb4h		;8e8b
-	call 043f6h		;8e8e
+	call 043f6h		;8e8e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0ca33h),hl		;8e91
 	ld a,(0ca3bh)		;8e94
 	ld hl,08fe0h		;8e97
-	call 043f6h		;8e9a
+	call 043f6h		;8e9a   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0ca35h),hl		;8e9d
 	ld a,(0ca3bh)		;8ea0
 	ld hl,08fcah		;8ea3
-	call 043f6h		;8ea6
+	call 043f6h		;8ea6   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0ca37h),hl		;8ea9
 	ld a,(0ca3bh)		;8eac
 	ld hl,08ff6h		;8eaf
-	call 043f6h		;8eb2
+	call 043f6h		;8eb2   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0ca39h),hl		;8eb5
 	ret			;8eb8
 L_8EB9:
 	ld de,(0ca33h)		;8eb9
 	ld hl,(0ca35h)		;8ebd
-	call 0417eh		;8ec0
+	call 0417eh		;8ec0   ; bancos_53: pone el 53 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_8EF4		;8ec3
 	ld a,(hl)			;8ec6
 	inc a			;8ec7
-	jp z,04179h		;8ec8
+	jp z,04179h		;8ec8   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	inc hl			;8ecb
 	ld (0ca35h),hl		;8ecc
 	ld (0ca33h),de		;8ecf
-	jp 04179h		;8ed3
+	jp 04179h		;8ed3   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8ED6:
 	ld de,(0ca37h)		;8ed6
 	ld hl,(0ca39h)		;8eda
-	call 0417eh		;8edd
+	call 0417eh		;8edd   ; bancos_53: pone el 53 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_8F22		;8ee0
 	ld a,(hl)			;8ee3
 	inc a			;8ee4
-	jp z,04179h		;8ee5
+	jp z,04179h		;8ee5   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld (0ca39h),hl		;8ee8
 	ld (0ca37h),de		;8eeb
-	jp 04179h		;8eef
+	jp 04179h		;8eef   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8EF2:
 	xor a			;8ef2
 	ret			;8ef3
@@ -1691,7 +1691,7 @@ L_8EF4:
 	push de			;8efa
 	ld bc,00808h		;8efb
 	ld a,002h		;8efe
-	call 04767h		;8f00
+	call 04767h		;8f00   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	pop de			;8f03
 	pop hl			;8f04
 	inc hl			;8f05
@@ -1728,7 +1728,7 @@ L_8F22:
 	push de			;8f29
 	ld bc,00808h		;8f2a
 	ld a,002h		;8f2d
-	call 04767h		;8f2f
+	call 04767h		;8f2f   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	pop de			;8f32
 	pop hl			;8f33
 	inc hl			;8f34
@@ -1742,7 +1742,7 @@ L_8F22:
 	push de			;8f3f
 	ld bc,00808h		;8f40
 	ld a,002h		;8f43
-	call 04767h		;8f45
+	call 04767h		;8f45   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	pop de			;8f48
 	pop hl			;8f49
 	inc hl			;8f4a
@@ -1792,7 +1792,7 @@ L_900C:
 	ld de,06848h		;900e
 	ld c,006h		;9011
 	xor a			;9013
-	call 046bch		;9014
+	call 046bch		;9014   ; marco: cuatro lineas: un marco de D x E desde HL
 	pop de			;9017
 	pop hl			;9018
 	push hl			;9019
@@ -1806,7 +1806,7 @@ L_901C:
 	ld b,068h		;9022
 	ld c,006h		;9024
 	ld a,000h		;9026
-	call 0467ch		;9028
+	call 0467ch		;9028   ; linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 	pop hl			;902b
 	pop bc			;902c
 	djnz L_901C		;902d
@@ -1821,7 +1821,7 @@ L_9032:
 	ld b,048h		;9038
 	ld c,006h		;903a
 	ld a,000h		;903c
-	call 04680h		;903e
+	call 04680h		;903e   ; linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 	pop hl			;9041
 	pop bc			;9042
 	djnz L_9032		;9043
@@ -1830,7 +1830,7 @@ L_9046:
 	ld a,(0ca30h)		;9046
 	add a,a			;9049
 	ld hl,0905dh		;904a
-	call 0423eh		;904d
+	call 0423eh		;904d   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;9050
 	inc hl			;9051
 	ld l,(hl)			;9052
@@ -1838,7 +1838,7 @@ L_9046:
 	ld de,04434h		;9054
 	ld c,006h		;9057
 	xor a			;9059
-	jp 046bch		;905a
+	jp 046bch		;905a   ; marco: cuatro lineas: un marco de D x E desde HL
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_905D: lo apuntan con el banco puesto p13:904A (0x905D), p13:9834
@@ -1860,7 +1860,7 @@ L_906F:
 	add a,a			;9072
 	add a,a			;9073
 	ld hl,0908ah		;9074
-	call 0423eh		;9077
+	call 0423eh		;9077   ; suma_a_hl: HL = HL + A
 	ld e,(hl)			;907a
 	inc hl			;907b
 	ld d,(hl)			;907c
@@ -1871,7 +1871,7 @@ L_906F:
 	ld l,a			;9081
 	ld bc,04030h		;9082
 	ld a,001h		;9085
-	jp 04767h		;9087
+	jp 04767h		;9087   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_908A: lo apuntan con el banco puesto p13:9074 (0x908A), p13:9801
@@ -1897,7 +1897,7 @@ L_90AE:
 	rra			;90b6
 	rra			;90b7
 	ld de,090e7h		;90b8
-	call 04243h		;90bb
+	call 04243h		;90bb   ; suma_a_de: DE = DE + A
 	ld b,004h		;90be
 	ld hl,0dc08h		;90c0
 L_90C3:
@@ -1914,7 +1914,7 @@ L_90C3:
 	inc hl			;90cd
 	inc hl			;90ce
 	djnz L_90C3		;90cf
-	ld de,0dc00h		;90d1
+	ld de,0dc00h		;90d1   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,002h		;90d4
 	ld hl,0ca2eh		;90d6
 	bit 2,(hl)		;90d9
@@ -2009,14 +2009,14 @@ L_9135:
 	pop bc			;9150
 	ret			;9151
 L_9152:
-	ld hl,0e900h		;9152
+	ld hl,0e900h		;9152   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld de,0e901h		;9155
 	ld bc,00030h		;9158
 	ld (hl),000h		;915b
 	ldir		;915d
 	xor a			;915f
 	ld b,010h		;9160
-	ld hl,0e900h		;9162
+	ld hl,0e900h		;9162   ; apunta a los caracteres de un dibujo pasados a 4 bits
 L_9165:
 	ld (hl),a			;9165
 	inc hl			;9166
@@ -2119,19 +2119,19 @@ L_91D8:
 	djnz L_91D8		;91e5
 L_91E7:
 	push af			;91e7
-	ld hl,0e900h		;91e8
+	ld hl,0e900h		;91e8   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;91eb
 	pop af			;91ee
 	ret			;91ef
 L_91F0:
-	ld hl,0e900h		;91f0
+	ld hl,0e900h		;91f0   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld de,0e901h		;91f3
 	ld bc,00030h		;91f6
 	ld (hl),000h		;91f9
 	ldir		;91fb
 	xor a			;91fd
 	ld b,010h		;91fe
-	ld hl,0e900h		;9200
+	ld hl,0e900h		;9200   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld de,09258h		;9203
 L_9206:
 	ld (hl),a			;9206
@@ -2178,8 +2178,8 @@ DATA_resto_9218:
 
 
 L_92D1:
-	call 045f1h		;92d1
-	call 0418eh		;92d4
+	call 045f1h		;92d1   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+	call 0418eh		;92d4   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0ae95h		;92d7
 	call 0463fh		;92da
 	ld b,00fh		;92dd
@@ -2189,23 +2189,23 @@ L_92D1:
 	ld bc,0a848h		;92e7
 	xor a			;92ea
 	ld d,003h		;92eb
-	call 046ffh		;92ed
+	call 046ffh		;92ed   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld hl,0aee6h		;92f0
 	ld de,00800h		;92f3
 	ld bc,00d01h		;92f6
-	call 0489ch		;92f9
+	call 0489ch		;92f9   ; caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 	ld hl,0af4eh		;92fc
 	ld de,07000h		;92ff
 	ld bc,00d02h		;9302
-	call 0489ch		;9305
+	call 0489ch		;9305   ; caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 	ld hl,0afb6h		;9308
 	ld de,0d800h		;930b
 	ld bc,01a03h		;930e
-	call 0489ch		;9311
+	call 0489ch		;9311   ; caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 	ld de,04040h		;9314
 	ld hl,0aea5h		;9317
 	call L_9351		;931a
-	call 041efh		;931d
+	call 041efh		;931d   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 04606h		;9320
 	ld hl,0ca12h		;9323
 	ld (hl),03ch		;9326
@@ -2235,7 +2235,7 @@ L_9341:
 	ld d,h			;934a
 	ld e,l			;934b
 	ld a,003h		;934c
-	jp 04767h		;934e
+	jp 04767h		;934e   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_9351:
 	push de			;9351
 L_9352:
@@ -2258,7 +2258,7 @@ L_9352:
 L_9366:
 	ld a,c			;9366
 	call 049fbh		;9367
-	call 04af9h		;936a
+	call 04af9h		;936a   ; siguiente_caracter: avanza al siguiente caracter (PR2 p01:6937)
 	jr L_9352		;936d
 L_936F:
 	pop de			;936f
@@ -2270,7 +2270,7 @@ L_9371:
 	ld (0cadbh),a		;9377
 	xor a			;937a
 	ld (0cadch),a		;937b
-	ld de,0e900h		;937e
+	ld de,0e900h		;937e   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld bc,00031h		;9381
 	ldir		;9384
 	ret			;9386
@@ -2282,7 +2282,7 @@ L_9387:
 	dec (hl)			;938f
 	ret nz			;9390
 	ld (hl),c			;9391
-	ld hl,0e900h		;9392
+	ld hl,0e900h		;9392   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,010h		;9395
 L_9397:
 	ld a,(hl)			;9397
@@ -2292,7 +2292,7 @@ L_9397:
 	push hl			;939d
 	push bc			;939e
 	call L_93BC		;939f
-	ld hl,0e900h		;93a2
+	ld hl,0e900h		;93a2   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;93a5
 	pop bc			;93a8
 	pop hl			;93a9
@@ -2336,7 +2336,7 @@ L_93DA:
 	inc hl			;93da
 	jr L_93D2		;93db
 L_93DD:
-	ld hl,0e900h		;93dd
+	ld hl,0e900h		;93dd   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,011h		;93e0
 L_93E2:
 	ld a,(hl)			;93e2
@@ -2363,12 +2363,12 @@ L_93F7:
 	ld (0cadbh),a		;93fd
 	xor a			;9400
 	ld (0cadch),a		;9401
-	ld de,0e900h		;9404
+	ld de,0e900h		;9404   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld bc,00031h		;9407
 	ldir		;940a
 	ld b,010h		;940c
 	xor a			;940e
-	ld hl,0e900h		;940f
+	ld hl,0e900h		;940f   ; apunta a los caracteres de un dibujo pasados a 4 bits
 L_9412:
 	inc hl			;9412
 	ld (hl),a			;9413
@@ -2386,7 +2386,7 @@ L_941A:
 	ret nz			;9424
 	ld (hl),c			;9425
 	push de			;9426
-	ld hl,0e900h		;9427
+	ld hl,0e900h		;9427   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,010h		;942a
 L_942C:
 	ld a,(hl)			;942c
@@ -2398,7 +2398,7 @@ L_942C:
 	push de			;9434
 	push bc			;9435
 	call L_9457		;9436
-	ld hl,0e900h		;9439
+	ld hl,0e900h		;9439   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;943c
 	pop bc			;943f
 	pop de			;9440
@@ -2465,7 +2465,7 @@ L_948A:
 	inc de			;948b
 	jr L_9475		;948c
 L_948E:
-	ld hl,0e900h		;948e
+	ld hl,0e900h		;948e   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,031h		;9491
 L_9493:
 	ld a,(de)			;9493
@@ -2485,7 +2485,7 @@ L_94A3:
 	ld (0cadah),a		;94a5
 	ld a,c			;94a8
 	ld (0cadbh),a		;94a9
-	ld de,0e900h		;94ac
+	ld de,0e900h		;94ac   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld bc,00031h		;94af
 	ldir		;94b2
 	ret			;94b4
@@ -2497,7 +2497,7 @@ L_94B5:
 	dec (hl)			;94be
 	ret nz			;94bf
 	ld (hl),c			;94c0
-	ld hl,0e900h		;94c1
+	ld hl,0e900h		;94c1   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,010h		;94c4
 L_94C6:
 	ld a,(hl)			;94c6
@@ -2507,7 +2507,7 @@ L_94C6:
 	push hl			;94cc
 	push bc			;94cd
 	call L_94E1		;94ce
-	ld hl,0e900h		;94d1
+	ld hl,0e900h		;94d1   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;94d4
 	pop bc			;94d7
 	pop hl			;94d8
@@ -2547,7 +2547,7 @@ L_9503:
 	inc hl			;9503
 	jr L_94F9		;9504
 L_9506:
-	ld hl,0e900h		;9506
+	ld hl,0e900h		;9506   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,011h		;9509
 L_950B:
 	ld a,(hl)			;950b
@@ -2568,30 +2568,30 @@ L_951D:
 	ld (0cadah),a		;951e
 	ret			;9521
 L_9522:
-	call 04183h		;9522
-	ld de,0bea0h		;9525
-	ld hl,0bf21h		;9528
+	call 04183h		;9522   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0bea0h		;9525   ; tabla_colores_BEA0: 24 punteros a colores de dibujo
+	ld hl,0bf21h		;9528   ; lista_BF21: 21 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	call 04d52h		;952b
-	ld de,0bea0h		;952e
-	ld hl,0bf8bh		;9531
+	ld de,0bea0h		;952e   ; tabla_colores_BEA0: 24 punteros a colores de dibujo
+	ld hl,0bf8bh		;9531   ; lista_BF8B: 13 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	call 04d56h		;9534
-	jp 04179h		;9537
+	jp 04179h		;9537   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_953A:
-	call 04183h		;953a
-	ld de,0bea0h		;953d
-	ld hl,0bfcdh		;9540
+	call 04183h		;953a   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0bea0h		;953d   ; tabla_colores_BEA0: 24 punteros a colores de dibujo
+	ld hl,0bfcdh		;9540   ; lista_BFCD: 3 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	call 04d56h		;9543
-	jp 04179h		;9546
+	jp 04179h		;9546   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9549:
-	call 04183h		;9549
+	call 04183h		;9549   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0a188h		;954c
-	call 04534h		;954f
-	jp 04179h		;9552
+	call 04534h		;954f   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
+	jp 04179h		;9552   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9555:
 	ld hl,0d705h		;9555
 	inc (hl)			;9558
 	ld a,(0d701h)		;9559
-	call 0424dh		;955c
+	call 0424dh		;955c   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_955F: 31 destinos del despachador p00:424D (call en p13:955C, el
@@ -2627,14 +2627,14 @@ L_95B0:
 	ret nz			;95b9
 	ld hl,001a4h		;95ba
 	ld (0d713h),hl		;95bd
-	call 045f1h		;95c0
+	call 045f1h		;95c0   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	xor a			;95c3
-	ld hl,0ca42h		;95c4
+	ld hl,0ca42h		;95c4   ; apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld (hl),a			;95c7
 	call 04879h		;95c8
 	call L_9620		;95cb
-	call 04266h		;95ce
-	call 045d7h		;95d1
+	call 04266h		;95ce   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+	call 045d7h		;95d1   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 	jr L_960E		;95d4
 L_95D6:
 	call L_9613		;95d6
@@ -2644,7 +2644,7 @@ L_95D6:
 	ld a,h			;95e0
 	or l			;95e1
 	ret nz			;95e2
-	call 045f1h		;95e3
+	call 045f1h		;95e3   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962E		;95e6
 	ld hl,09ff2h		;95e9
 	call 0463fh		;95ec
@@ -2690,7 +2690,7 @@ L_9634:
 	ld bc,08058h		;9637
 	ld d,a			;963a
 	ld a,077h		;963b
-	jp 046ffh		;963d
+	jp 046ffh		;963d   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 L_9640:
 	call L_9EC8		;9640
 	call L_9DA7		;9643
@@ -2711,7 +2711,7 @@ L_9640:
 	ld (hl),000h		;9664
 	jr L_960E		;9666
 L_9668:
-	call 04650h		;9668
+	call 04650h		;9668   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld a,(0d706h)		;966b
 	ld b,a			;966e
 	ld c,017h		;966f
@@ -2724,7 +2724,7 @@ L_9674:
 	ld hl,04000h		;967b
 	ld d,001h		;967e
 	ld a,001h		;9680
-	jp 047abh		;9682
+	jp 047abh		;9682   ; copia_en_y: orden YMMM del VDP
 L_9685:
 	ld hl,0d706h		;9685
 	ld e,(hl)			;9688
@@ -2744,7 +2744,7 @@ L_9692:
 	add a,e			;969c
 	ld e,a			;969d
 	ld a,001h		;969e
-	jp 047abh		;96a0
+	jp 047abh		;96a0   ; copia_en_y: orden YMMM del VDP
 L_96A3:
 	call L_9EC8		;96a3
 	call L_9DA7		;96a6
@@ -2806,12 +2806,12 @@ L_9708:
 	ld a,007h		;9710
 	jp 04614h		;9712
 L_9715:
-	call 045f1h		;9715
+	call 045f1h		;9715   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962A		;9718
 	ld b,000h		;971b
 	ld c,017h		;971d
 	call 00047h		;971f   ; BIOS WRTVDP - Writes data in the VDP-register
-	call 04266h		;9722
+	call 04266h		;9722   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0a01dh		;9725
 	call 0463fh		;9728
 	call 07190h		;972b
@@ -2919,19 +2919,19 @@ L_97DE:
 	ld hl,0d703h		;97e1
 	dec (hl)			;97e4
 	ret nz			;97e5
-	call 04266h		;97e6
+	call 04266h		;97e6   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0d706h		;97e9
 	ld (hl),000h		;97ec
 	ld hl,04038h		;97ee
 	ld de,00000h		;97f1
 	ld bc,08060h		;97f4
 	ld a,008h		;97f7
-	call 04767h		;97f9
+	call 04767h		;97f9   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld hl,00060h		;97fc
 	ld d,002h		;97ff
 	ld bc,090a0h		;9801
 	xor a			;9804
-	call 046ffh		;9805
+	call 046ffh		;9805   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	xor a			;9808
 	ld hl,0d70fh		;9809
 	ld (hl),a			;980c
@@ -2959,7 +2959,7 @@ L_981F:
 	ld d,a			;9837
 	push af			;9838
 	xor a			;9839
-	call 046ffh		;983a
+	call 046ffh		;983a   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop af			;983d
 	ld hl,00000h		;983e
 	ld de,04038h		;9841
@@ -2967,7 +2967,7 @@ L_981F:
 	rlca			;9847
 	rlca			;9848
 	or 002h		;9849
-	call 04767h		;984b
+	call 04767h		;984b   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld hl,00090h		;984e
 	ld a,(0d70fh)		;9851
 	add a,l			;9854
@@ -2980,8 +2980,8 @@ L_981F:
 	rlca			;985f
 	or 088h		;9860
 	ld bc,09060h		;9862
-	call 047edh		;9865
-	call 04650h		;9868
+	call 047edh		;9865   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+	call 04650h		;9868   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld a,(0d710h)		;986b
 	jp 04879h		;986e
 L_9871:
@@ -2990,7 +2990,7 @@ L_9871:
 	ld de,00090h		;9876
 	ld bc,09060h		;9879
 	ld a,00ah		;987c
-	call 04767h		;987e
+	call 04767h		;987e   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld hl,(0d711h)		;9881
 	ld de,00012h		;9884
 	add hl,de			;9887
@@ -3019,11 +3019,11 @@ L_98B4:
 	ld a,(0cadah)		;98b9
 	or a			;98bc
 	ret nz			;98bd
-	call 045f1h		;98be
-	call 04266h		;98c1
+	call 045f1h		;98be   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+	call 04266h		;98c1   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call L_9625		;98c4
 	xor a			;98c7
-	ld (0ca42h),a		;98c8
+	ld (0ca42h),a		;98c8   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 04879h		;98cb
 	call 04606h		;98ce
 	ld hl,0a01dh		;98d1
@@ -3042,17 +3042,17 @@ L_98EA:
 	ld bc,07040h		;98ed
 	ld a,0bbh		;98f0
 	ld d,001h		;98f2
-	call 046ffh		;98f4
+	call 046ffh		;98f4   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld hl,0c030h		;98f7
 	ld bc,04040h		;98fa
 	xor a			;98fd
 	ld d,001h		;98fe
-	call 046ffh		;9900
+	call 046ffh		;9900   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld a,001h		;9903
-	ld (0ca42h),a		;9905
+	ld (0ca42h),a		;9905   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 07179h		;9908
 	xor a			;990b
-	ld (0ca42h),a		;990c
+	ld (0ca42h),a		;990c   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ret			;990f
 L_9910:
 	ld hl,0d703h		;9910
@@ -3067,7 +3067,7 @@ L_991A:
 	jp L_960E		;991f
 L_9922:
 	ld a,(0d702h)		;9922
-	call 0424dh		;9925
+	call 0424dh		;9925   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9928: 4 destinos del despachador p00:424D (call en p13:9925, el
@@ -3090,7 +3090,7 @@ L_9936:
 	ret			;993a
 L_993B:
 	call 06585h		;993b
-	ld a,(0e220h)		;993e
+	ld a,(0e220h)		;993e   ; lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 	or a			;9941
 	ret nz			;9942
 	ld hl,0d703h		;9943
@@ -3112,7 +3112,7 @@ L_994A:
 	ld bc,0e828h		;9962
 	xor a			;9965
 	ld d,a			;9966
-	call 046ffh		;9967
+	call 046ffh		;9967   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop af			;996a
 	cp 013h		;996b
 	ret nz			;996d
@@ -3120,7 +3120,7 @@ L_994A:
 	ld bc,00040h		;9971
 	xor a			;9974
 	ld d,002h		;9975
-	call 046ffh		;9977
+	call 046ffh		;9977   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld hl,0a01dh		;997a
 	ld c,001h		;997d
 	call L_9371		;997f
@@ -3137,7 +3137,7 @@ L_998A:
 	ld bc,08060h		;9997
 	ld a,0bbh		;999a
 	ld d,000h		;999c
-	call 046ffh		;999e
+	call 046ffh		;999e   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	jp 05f4dh		;99a1
 L_99A4:
 	ld hl,0d717h		;99a4
@@ -3150,13 +3150,13 @@ L_99A4:
 	ld l,a			;99b1
 	ld de,02048h		;99b2
 	ld a,001h		;99b5
-	jp 047abh		;99b7
+	jp 047abh		;99b7   ; copia_en_y: orden YMMM del VDP
 L_99BA:
 	ld hl,06070h		;99ba
 	ld de,06068h		;99bd
 	ld bc,04808h		;99c0
 	ld a,001h		;99c3
-	call 04767h		;99c5
+	call 04767h		;99c5   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld hl,0d702h		;99c8
 	ld (hl),000h		;99cb
 	ret			;99cd
@@ -3234,7 +3234,7 @@ L_9A46:
 	jp L_960E		;9a58
 L_9A5B:
 	ld a,(0d702h)		;9a5b
-	call 0424dh		;9a5e
+	call 0424dh		;9a5e   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9A61: 9 destinos del despachador p00:424D (call en p13:9A5E, el
@@ -3265,7 +3265,7 @@ L_9A73:
 	add a,a			;9a8c
 	add a,b			;9a8d
 	ld hl,09c59h		;9a8e
-	call 0423eh		;9a91
+	call 0423eh		;9a91   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;9a94
 	inc hl			;9a95
 	ld e,(hl)			;9a96
@@ -3276,7 +3276,7 @@ L_9A73:
 L_9A9E:
 	ld a,(0d706h)		;9a9e
 	ld hl,09cb4h		;9aa1
-	call 043f6h		;9aa4
+	call 043f6h		;9aa4   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld c,001h		;9aa7
 	jp L_93F7		;9aa9
 L_9AAC:
@@ -3284,27 +3284,27 @@ L_9AAC:
 	ld de,08840h		;9aaf
 	ld bc,04058h		;9ab2
 	ld a,001h		;9ab5
-	call 04767h		;9ab7
+	call 04767h		;9ab7   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	jr L_9A9E		;9aba
 L_9ABC:
 	ld hl,00000h		;9abc
 	ld de,01010h		;9abf
 	ld bc,080a8h		;9ac2
 	ld a,001h		;9ac5
-	call 04767h		;9ac7
+	call 04767h		;9ac7   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	jr L_9A9E		;9aca
 L_9ACC:
 	ld hl,0a000h		;9acc
 	ld de,02030h		;9acf
 	ld bc,05870h		;9ad2
 	ld a,002h		;9ad5
-	call 04767h		;9ad7
+	call 04767h		;9ad7   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	jr L_9A9E		;9ada
 L_9ADC:
 	call 07b55h		;9adc
 	ld a,(0d706h)		;9adf
 	ld de,09cb4h		;9ae2
-	call 04403h		;9ae5
+	call 04403h		;9ae5   ; palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 	ld c,001h		;9ae8
 	call L_941A		;9aea
 	ld a,(0cadah)		;9aed
@@ -3322,7 +3322,7 @@ L_9AFB:
 	ld (hl),008h		;9b03
 	ld a,(0d706h)		;9b05
 	ld hl,09c80h		;9b08
-	call 043f6h		;9b0b
+	call 043f6h		;9b0b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0d718h),hl		;9b0e
 	ld hl,09c9ah		;9b11
 	ld a,(0d706h)		;9b14
@@ -3397,7 +3397,7 @@ L_9B7C:
 	ld a,(0d706h)		;9b94
 	dec a			;9b97
 	ld hl,09cb4h		;9b98
-	call 043f6h		;9b9b
+	call 043f6h		;9b9b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld c,001h		;9b9e
 	jp L_9371		;9ba0
 L_9BA3:
@@ -3420,7 +3420,7 @@ L_9BBB:
 	ld a,(0cadah)		;9bc3
 	or a			;9bc6
 	ret nz			;9bc7
-	call 045f1h		;9bc8
+	call 045f1h		;9bc8   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962A		;9bcb
 	xor a			;9bce
 	call 07b5dh		;9bcf
@@ -3479,11 +3479,11 @@ L_9C2A:
 	jr z,L_9C3C		;9c37
 	jp L_9708		;9c39
 L_9C3C:
-	call 045f1h		;9c3c
+	call 045f1h		;9c3c   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_9625		;9c3f
 	call 06ec0h		;9c42
 	call 04606h		;9c45
-	call 04650h		;9c48
+	call 04650h		;9c48   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld hl,0d702h		;9c4b
 	ld (hl),000h		;9c4e
 	ld hl,0a06dh		;9c50
@@ -3533,8 +3533,8 @@ L_9CEE:
 	dec (hl)			;9cf1
 	ret nz			;9cf2
 	xor a			;9cf3
-	ld (0ca00h),a		;9cf4
-	ld (0ca01h),a		;9cf7
+	ld (0ca00h),a		;9cf4   ; guarda el estado de la partida (p01:729F: 8 estados)
+	ld (0ca01h),a		;9cf7   ; guarda el paso del estado de la partida
 	ld (0caafh),a		;9cfa
 	ld (0d700h),a		;9cfd
 	ret			;9d00
@@ -3680,7 +3680,7 @@ L_9DF6:
 L_9DFB:
 	ld hl,0dc28h		;9dfb
 	ld bc,00058h		;9dfe
-	call 04236h		;9e01
+	call 04236h		;9e01   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld ix,0cb00h		;9e04
 	ld b,016h		;9e08
 	ld hl,0dc28h		;9e0a
@@ -3698,7 +3698,7 @@ L_9E18:
 	ld hl,0daa0h		;9e1f
 	ld a,00fh		;9e22
 	ld bc,0015fh		;9e24
-	jp 04237h		;9e27
+	jp 04237h		;9e27   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_9E2A:
 	ld e,(ix+002h)		;9e2a
 	ld a,(0d706h)		;9e2d
@@ -3706,7 +3706,7 @@ L_9E2A:
 	ld e,a			;9e31
 	ld d,(ix+004h)		;9e32
 	ld c,(ix+009h)		;9e35
-	jp 05d41h		;9e38
+	jp 05d41h		;9e38   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 L_9E3B:
 	ld a,(0d70ch)		;9e3b
 	inc a			;9e3e
@@ -3747,7 +3747,7 @@ L_9E7A:
 	add a,a			;9e7f
 	add a,b			;9e80
 	ld hl,09ea0h		;9e81
-	call 0423eh		;9e84
+	call 0423eh		;9e84   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;9e87
 	ld (ix+005h),a		;9e88
 	inc hl			;9e8b
@@ -3780,9 +3780,9 @@ DATA_resto_9EA0:
 
 
 L_9EC8:
-	ld hl,0dc00h		;9ec8
+	ld hl,0dc00h		;9ec8   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld (0d707h),hl		;9ecb
-	ld a,(0ca03h)		;9ece
+	ld a,(0ca03h)		;9ece   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;9ed1
 	rra			;9ed2
 	ld hl,09f85h		;9ed3
@@ -3800,7 +3800,7 @@ L_9EDD:
 	push bc			;9ee3
 	push hl			;9ee4
 	ld hl,(0d707h)		;9ee5
-	call 05d41h		;9ee8
+	call 05d41h		;9ee8   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 	ld (0d707h),hl		;9eeb
 	pop hl			;9eee
 	pop bc			;9eef
@@ -3808,10 +3808,10 @@ L_9EDD:
 	ld hl,0da00h		;9ef2
 	ld a,00fh		;9ef5
 	ld bc,0009fh		;9ef7
-	jp 04237h		;9efa
+	jp 04237h		;9efa   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_9EFD:
 	call L_9F1E		;9efd
-	ld a,(0ca03h)		;9f00
+	ld a,(0ca03h)		;9f00   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;9f03
 	rra			;9f04
 	ld c,050h		;9f05
@@ -3821,26 +3821,26 @@ L_9F0B:
 	ld a,(0d709h)		;9f0b
 	ld d,a			;9f0e
 	ld e,068h		;9f0f
-	ld hl,0dc00h		;9f11
+	ld hl,0dc00h		;9f11   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 L_9F14:
-	call 05d41h		;9f14
+	call 05d41h		;9f14   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 	ld a,d			;9f17
 	add a,010h		;9f18
 	ld d,a			;9f1a
-	jp 05d3dh		;9f1b
+	jp 05d3dh		;9f1b   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 L_9F1E:
 	ld hl,0da00h		;9f1e
 	ld a,00fh		;9f21
 	ld bc,0001fh		;9f23
-	jp 04237h		;9f26
+	jp 04237h		;9f26   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_9F29:
 	call L_9F1E		;9f29
 	call L_9F6B		;9f2c
 	ld a,(0d709h)		;9f2f
 	ld d,a			;9f32
 	ld e,068h		;9f33
-	ld hl,0dc00h		;9f35
-	call 05d41h		;9f38
+	ld hl,0dc00h		;9f35   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+	call 05d41h		;9f38   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 	ld a,c			;9f3b
 	add a,004h		;9f3c
 	ld c,a			;9f3e
@@ -3851,9 +3851,9 @@ L_9F45:
 	ld a,d			;9f45
 	add a,010h		;9f46
 	ld d,a			;9f48
-	jp 05d41h		;9f49
+	jp 05d41h		;9f49   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 L_9F4C:
-	ld a,(0ca03h)		;9f4c
+	ld a,(0ca03h)		;9f4c   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;9f4f
 	rra			;9f50
 	ld c,098h		;9f51
@@ -3866,7 +3866,7 @@ L_9F57:
 	ld hl,0da20h		;9f60
 	ld a,007h		;9f63
 	ld bc,0001fh		;9f65
-	jp 04237h		;9f68
+	jp 04237h		;9f68   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_9F6B:
 	ld a,(0d70ah)		;9f6b
 	cp 004h		;9f6e

@@ -9,3 +9,6 @@ F 0xBF6B 16
 D 0xB1CC 0xB800 resto_B1CC  lo apuntan con el banco puesto p12:77BB (0xB1CC), p12:78EE (0xB1D2), p12:7B4D (0xB1D8), p12:7A79 (0xB242), p12:7B10 (0xB242), p12:78BB (0xB25A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:77BB, p12:78EE, p12:7B4D, p12:7A79, p12:7B10, p12:78BB (1588 bytes)
 F 0xB1CC 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+# --- fin de las anotaciones de anota.py ---

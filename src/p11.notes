@@ -59,3 +59,175 @@ F 0xBE3D 16
 D 0xBF4F 0xBF5D resto_BF4F  lo apuntan con el banco puesto p11:BF14 (0xBF4F); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p11:BF14 (14 bytes)
 F 0xBF4F 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0xA003 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA05D suma_a_hl: HL = HL + A
+C 0xA117 lee la sala de la zona
+C 0xA14C apunta a la sala de la zona
+C 0xA178 lee la zona
+C 0xA180 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA1D2 suma_a_hl: HL = HL + A
+C 0xA1DD byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xA1F3 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xA212 lee la zona
+C 0xA219 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA226 lee la zona
+C 0xA22E lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA23C lee la sala de la zona
+C 0xA26A suma_a_hl: HL = HL + A
+C 0xA390 lee la zona
+C 0xA396 lee la sala de la zona
+C 0xA3E3 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA427 lee la zona
+C 0xA46C pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA497 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA4A0 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA4D0 apunta a el contador de cuadros (uno mas en cada interrupcion)
+C 0xA4F3 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA577 lee la zona
+C 0xA57D lee la sala de la zona
+C 0xA589 lee la zona
+C 0xA58F lee la sala de la zona
+C 0xA5B8 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA5BB pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xA661 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA66A copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA670 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xA6B0 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xA70C despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA751 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA75D llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA79D pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA7A0 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xA7C7 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA7CA pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xA7D6 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA7E0 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA814 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA81F llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA889 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA88C pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xA897 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA8C4 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA8CE llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA8DC copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA908 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xA913 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA97D lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAA2A suma_a_hl: HL = HL + A
+C 0xAA80 lee la zona
+C 0xAA87 lee la sala de la zona
+C 0xAAB6 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAADA lee la zona
+C 0xAAE1 lee la sala de la zona
+C 0xAB6A palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xABA3 lee la zona
+C 0xABAA lee la sala de la zona
+C 0xABF8 apunta a el contador de cuadros (uno mas en cada interrupcion)
+C 0xAC29 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAC93 lee la zona
+C 0xAC9A lee la sala de la zona
+C 0xACC6 suma_a_hl: HL = HL + A
+C 0xAD41 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAE4A lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAE57 lee la zona
+C 0xAE5E lee la sala de la zona
+C 0xAE8E palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAEC3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAEC6 marco: cuatro lineas: un marco de D x E desde HL
+C 0xAED5 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAED8 marco: cuatro lineas: un marco de D x E desde HL
+C 0xAEE1 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xAEF5 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xAFD4 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB004 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB059 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB064 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xB06B lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xB1E6 suma_a_hl: HL = HL + A
+C 0xB1F5 suma_a_hl: HL = HL + A
+C 0xB2C6 suma_a_hl: HL = HL + A
+C 0xB315 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB329 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xB32E pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xB33E suma_a_hl: HL = HL + A
+C 0xB357 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB35A lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB369 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB42C lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB44E suma_a_hl: HL = HL + A
+C 0xB475 lee la zona
+C 0xB47C lee la sala de la zona
+C 0xB4E5 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xB504 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB622 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB653 suma_a_hl: HL = HL + A
+C 0xB681 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB6F7 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB70F apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB722 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB731 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB73B copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB754 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB761 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB76E copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB774 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB77E copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB78B copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB798 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB7A8 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB7B5 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB7BB apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB7C5 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB7D2 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB7EB copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB7F4 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB804 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB814 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB821 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB827 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xB831 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB83E copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB849 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB86C copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0xB87D lee la direccion en la VRAM de la tabla de atributos de sprites (16 bits)
+C 0xB8AB suma_a_hl: HL = HL + A
+C 0xB90D despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB96E pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xB971 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xB97B suma_a_hl: HL = HL + A
+C 0xB9A9 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xB9AC lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB9CE lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB9D5 lee la sala de la zona
+C 0xBA11 lee la zona
+C 0xBA18 lee la sala de la zona
+C 0xBA48 lee la zona
+C 0xBAA6 lee la zona
+C 0xBAAD lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBAB3 lee la sala de la zona
+C 0xBAFF lee la zona
+C 0xBBD6 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xBBDC lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBBE8 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xBC12 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xBCC2 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBCCE copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xBD51 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBD81 suma_a_hl: HL = HL + A
+C 0xBE21 suma_a_hl: HL = HL + A
+C 0xBE91 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBEA2 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xBECB lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBED1 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xBEEC pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xBEF1 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xBEFC pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xBF01 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xBF0C llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBF70 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBFB7 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBFC7 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBFE1 suma_a_hl: HL = HL + A
+# --- fin de las anotaciones de anota.py ---

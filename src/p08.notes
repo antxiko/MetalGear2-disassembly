@@ -55,3 +55,111 @@ F 0xBD74 16
 D 0xBE7D 0xC000 resto_BE7D  lo apuntan con el banco puesto p02:86E7 (0xBE7D), p02:8698 (0xBF7D), p08:A4C5 (0xBF7D), p08:A4E2 (0xBF7D), p02:8735 (0xBFBD), p02:8745 (0xBFC9); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:86E7, p02:8698, p08:A4C5, p08:A4E2, p02:8735, p02:8745 (387 bytes)
 F 0xBE7D 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0xA007 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA06B lee la sala de la zona
+C 0xA09D suma_a_hl: HL = HL + A
+C 0xA0EB apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA0FB lee la sala de la zona
+C 0xA0FF lee la zona
+C 0xA11E lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA13B lee la zona
+C 0xA14E lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA15F lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA169 lee la sala de la zona
+C 0xA17C lee la sala de la zona
+C 0xA18F apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
+C 0xA195 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
+C 0xA19E apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
+C 0xA1A4 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
+C 0xA1AA apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
+C 0xA1B0 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
+C 0xA1B3 lee la zona
+C 0xA1FF despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA245 suma_a_hl: HL = HL + A
+C 0xA2CD lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA2DC despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA371 suma_a_hl: HL = HL + A
+C 0xA404 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA499 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA4B8 lee la sala de la zona
+C 0xA4C8 suma_a_hl: HL = HL + A
+C 0xA4EA suma_a_hl: HL = HL + A
+C 0xA53F suma_a_hl: HL = HL + A
+C 0xA5C1 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA5CA palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA5F5 suma_a_hl: HL = HL + A
+C 0xA708 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA76B lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA7CF azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA7DA lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA7E3 lee la sala de la zona
+C 0xA806 lee la sala de la zona
+C 0xA83C suma_a_hl: HL = HL + A
+C 0xA842 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA850 lee la sala de la zona
+C 0xA8B2 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA8C5 suma_a_hl: HL = HL + A
+C 0xA8D6 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA94A azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA959 hl_negativo: HL = -HL (PR2 p00:5BBD)
+C 0xA960 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAA1E hl_negativo: HL = -HL (PR2 p00:5BBD)
+C 0xAA4F despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAA72 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAA7A lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAA8E suma_a_hl: HL = HL + A
+C 0xAAAC despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAABD azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAAD0 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAB30 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAB39 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAB58 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAB85 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xABAA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAC53 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAC5C suma_a_hl: HL = HL + A
+C 0xAC86 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAD4D despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAD7C lee la zona
+C 0xAD82 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAD8F suma_a_hl: HL = HL + A
+C 0xAE55 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAE7B lee la zona
+C 0xAED2 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAEE5 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
+C 0xAEEF palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAF02 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0xAF08 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xAF0E despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAF38 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAF57 suma_a_hl: HL = HL + A
+C 0xAFEF despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB006 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xB028 suma_a_hl: HL = HL + A
+C 0xB02F llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBC61 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xBC80 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0xBC86 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0xBC89 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
+C 0xBC9A copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xBCB0 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xBCD8 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
+C 0xBCE5 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBCEA copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBCF6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBCFF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBD07 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xBD0C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBD11 marco: cuatro lineas: un marco de D x E desde HL
+C 0xBD45 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBD69 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
+C 0xBDB5 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBDD4 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBDFA lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBE1B pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xBE1E pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xBE2F pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xBE32 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+# --- fin de las anotaciones de anota.py ---

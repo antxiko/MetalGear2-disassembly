@@ -26,7 +26,7 @@ L_8001:
 	ld ix,0cb80h		;8001
 	ld a,(0cb20h)		;8005
 	dec a			;8008
-	call 0424dh		;8009
+	call 0424dh		;8009   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_800C: 14 destinos del despachador p00:424D (call en p02:8009, el
@@ -44,7 +44,7 @@ DATA_tabla_800C:
 
 L_8028:
 	dec a			;8028
-	call 0424dh		;8029
+	call 0424dh		;8029   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_802C: 8 destinos del despachador p00:424D (call en p02:8029, el
@@ -62,31 +62,31 @@ DATA_tabla_802C:
 L_803C:
 	ret			;803c
 L_803D:
-	call 041a0h		;803d
+	call 041a0h		;803d   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b066h		;8040
 	jr L_804B		;8043
-L_8045:
-	call 041a0h		;8045
-	call 0b0adh		;8048
+lee_mandos:		; pone el banco 6 y lee mando y teclas (p06:B0AD)
+	call 041a0h		;8045   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+	call 0b0adh		;8048   ; lee_mando_y_teclas: el mando a 0xCA08/0xCA07 y las teclas de funcion a 0xCA0A/0xCA09
 L_804B:
-	jp 040f0h		;804b
+	jp 040f0h		;804b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_804E:
-	call 04206h		;804e
+	call 04206h		;804e   ; bancos_30: pone el 30 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0d900h		;8051
 	ld bc,000ffh		;8054
 	ld a,0ffh		;8057
-	call 04237h		;8059
-	ld a,(0ca76h)		;805c
+	call 04237h		;8059   ; llena_bloque: pone A en BC + 1 bytes desde HL
+	ld a,(0ca76h)		;805c   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	ld c,a			;805f
 	and a			;8060
 	ld hl,0b8a5h		;8061
-	ld a,(0ca4ah)		;8064
+	ld a,(0ca4ah)		;8064   ; lee la zona
 	jr z,L_806E		;8067
 	ld hl,0ba18h		;8069
 	ld a,c			;806c
 	dec a			;806d
 L_806E:
-	call 043f6h		;806e
+	call 043f6h		;806e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ex de,hl			;8071
 	ld c,000h		;8072
 L_8074:
@@ -95,7 +95,7 @@ L_8074:
 	jr z,L_8084		;8076
 	ld a,(de)			;8078
 	ld hl,0d900h		;8079
-	call 0423eh		;807c
+	call 0423eh		;807c   ; suma_a_hl: HL = HL + A
 	ld (hl),c			;807f
 	inc c			;8080
 	inc de			;8081
@@ -104,10 +104,10 @@ L_8084:
 	inc de			;8084
 	ld a,(de)			;8085
 	inc a			;8086
-	jp z,040f0h		;8087
+	jp z,040f0h		;8087   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(de)			;808a
 	ld hl,0d900h		;808b
-	call 0423eh		;808e
+	call 0423eh		;808e   ; suma_a_hl: HL = HL + A
 	inc de			;8091
 	ld a,(de)			;8092
 	ld (hl),a			;8093
@@ -124,7 +124,7 @@ L_8096:
 	ld de,0ca50h		;80aa
 	ld a,(0ca41h)		;80ad
 	dec a			;80b0
-	call 0424dh		;80b1
+	call 0424dh		;80b1   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_80B4: 4 destinos del despachador p00:424D (call en p02:80B1, el
@@ -139,9 +139,9 @@ DATA_tabla_80B4:
 
 
 L_80BC:
-	ld a,(0ca4bh)		;80bc
+	ld a,(0ca4bh)		;80bc   ; lee la sala de la zona
 	ld c,a			;80bf
-	ld a,(0ca4ah)		;80c0
+	ld a,(0ca4ah)		;80c0   ; lee la zona
 	ld b,a			;80c3
 	cp 007h		;80c4
 	jr z,L_80D9		;80c6
@@ -154,7 +154,7 @@ L_80BC:
 	jr nz,L_80F8		;80d5
 	jr L_8109		;80d7
 L_80D9:
-	ld a,(0ca22h)		;80d9
+	ld a,(0ca22h)		;80d9   ; lee la fase de la partida (indice de las listas de p06:B40C)
 	dec a			;80dc
 	jr nz,L_80F8		;80dd
 	ld a,(0d430h)		;80df
@@ -165,7 +165,7 @@ L_80D9:
 	jr z,L_8109		;80e9
 	jr L_80F8		;80eb
 L_80ED:
-	ld a,(0ca22h)		;80ed
+	ld a,(0ca22h)		;80ed   ; lee la fase de la partida (indice de las listas de p06:B40C)
 	cp 004h		;80f0
 	jr nc,L_80F8		;80f2
 	ld a,c			;80f4
@@ -196,16 +196,16 @@ L_8117:
 	call L_8181		;8119
 	jr L_8177		;811c
 L_811E:
-	ld a,(0ca4bh)		;811e
+	ld a,(0ca4bh)		;811e   ; lee la sala de la zona
 	ld b,a			;8121
-	ld a,(0ca4ah)		;8122
+	ld a,(0ca4ah)		;8122   ; lee la zona
 	cp 00fh		;8125
 	jr z,L_815C		;8127
 	cp 00dh		;8129
 	jr z,L_8153		;812b
 	cp 007h		;812d
 	jr nz,L_814F		;812f
-	ld a,(0ca22h)		;8131
+	ld a,(0ca22h)		;8131   ; lee la fase de la partida (indice de las listas de p06:B40C)
 	dec a			;8134
 	jr nz,L_814F		;8135
 	ld a,b			;8137
@@ -232,7 +232,7 @@ L_8153:
 	jr z,L_813C		;8158
 	jr L_814F		;815a
 L_815C:
-	ld a,(0ca22h)		;815c
+	ld a,(0ca22h)		;815c   ; lee la fase de la partida (indice de las listas de p06:B40C)
 	cp 004h		;815f
 	jr nc,L_814F		;8161
 	ld a,b			;8163
@@ -251,12 +251,12 @@ L_8171:
 	inc (hl)			;8173
 	call L_81D4		;8174
 L_8177:
-	ld a,(0ca76h)		;8177
+	ld a,(0ca76h)		;8177   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;817a
 	jp nz,055cfh		;817b
 	jp 052cfh		;817e
 L_8181:
-	ld a,(0ca4ah)		;8181
+	ld a,(0ca4ah)		;8181   ; lee la zona
 	and a			;8184
 	ret nz			;8185
 	ld a,(0ca50h)		;8186
@@ -282,12 +282,12 @@ L_8197:
 	set 3,(hl)		;81a4
 	ret			;81a6
 L_81A7:
-	ld a,(0ca4ah)		;81a7
+	ld a,(0ca4ah)		;81a7   ; lee la zona
 	ld b,a			;81aa
 	sub 00dh		;81ab
 	cp 004h		;81ad
 	ret nc			;81af
-	ld a,(0ca4bh)		;81b0
+	ld a,(0ca4bh)		;81b0   ; lee la sala de la zona
 	ld c,a			;81b3
 	ld a,b			;81b4
 	cp 010h		;81b5
@@ -303,17 +303,17 @@ L_81A7:
 L_81C6:
 	ld hl,0cc80h		;81c6
 	ld bc,0007fh		;81c9
-	jp 04236h		;81cc
+	jp 04236h		;81cc   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_81CF:
 	ld hl,08212h		;81cf
 	jr L_81F9		;81d2
 L_81D4:
-	ld a,(0ca4ah)		;81d4
+	ld a,(0ca4ah)		;81d4   ; lee la zona
 	ld b,a			;81d7
 	sub 00ch		;81d8
 	cp 005h		;81da
 	ret nc			;81dc
-	ld a,(0ca4bh)		;81dd
+	ld a,(0ca4bh)		;81dd   ; lee la sala de la zona
 	ld c,a			;81e0
 	ld a,b			;81e1
 	cp 010h		;81e2
@@ -389,13 +389,13 @@ L_8236:
 	ld b,0b7h		;8239
 	ret			;823b
 L_823C:
-	call 0418eh		;823c
-	ld a,(0ca4ah)		;823f
+	call 0418eh		;823c   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld a,(0ca4ah)		;823f   ; lee la zona
 	ld hl,0a713h		;8242
-	call 04248h		;8245
+	call 04248h		;8245   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (0ca75h),a		;8248
-	call 040f0h		;824b
-	ld a,(0ca76h)		;824e
+	call 040f0h		;824b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld a,(0ca76h)		;824e   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 002h		;8251
 	ret nz			;8253
 	ld a,05dh		;8254
@@ -440,35 +440,35 @@ DATA_resto_827A:
 
 
 L_8281:
-	ld a,(0c383h)		;8281
+	ld a,(0c383h)		;8281   ; lee la copia del banco de 0xA000
 	push af			;8284
-	call 041a0h		;8285
+	call 041a0h		;8285   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ab91h		;8288
 L_828B:
 	pop af			;828b
 	push af			;828c
 	jp 041a3h		;828d
 L_8290:
-	ld a,(0c383h)		;8290
+	ld a,(0c383h)		;8290   ; lee la copia del banco de 0xA000
 	push af			;8293
-	call 041a0h		;8294
+	call 041a0h		;8294   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0abbbh		;8297
 	jr L_828B		;829a
 L_829C:
-	ld a,(0ca42h)		;829c
+	ld a,(0ca42h)		;829c   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jp 04452h		;829f
 L_82A2:
 	call 06ddah		;82a2
 	call L_850C		;82a5
 	call L_82BA		;82a8
 	call 06dcfh		;82ab
-	call 0418eh		;82ae
+	call 0418eh		;82ae   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_831F		;82b1
-	call 040f0h		;82b4
+	call 040f0h		;82b4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp 0722ch		;82b7
 L_82BA:
-	call 0418eh		;82ba
-	ld hl,0a03ch		;82bd
+	call 0418eh		;82ba   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld hl,0a03ch		;82bd   ; mosaico_A03C: un mosaico de 10 x 12 caracteres, un byte cada uno
 	ld de,03030h		;82c0
 	ld bc,00a0ch		;82c3
 	call 050c4h		;82c6
@@ -478,7 +478,7 @@ L_82BA:
 L_82D1:
 	ld a,(hl)			;82d1
 	cp 0ffh		;82d2
-	jp z,040f0h		;82d4
+	jp z,040f0h		;82d4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld c,(hl)			;82d7
 	inc hl			;82d8
 	ld b,(hl)			;82d9
@@ -518,19 +518,19 @@ L_82FB:
 	cp 0f0h		;8305
 	jr z,L_8315		;8307
 L_8309:
-	ld a,(0ca42h)		;8309
+	ld a,(0ca42h)		;8309   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;830c
 	rlca			;830d
 	rlca			;830e
 	rlca			;830f
 	or 0c8h		;8310
-	jp 047edh		;8312
+	jp 047edh		;8312   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 L_8315:
-	ld a,(0ca42h)		;8315
+	ld a,(0ca42h)		;8315   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;8318
 	rlca			;8319
 	or 003h		;831a
-	jp 04767h		;831c
+	jp 04767h		;831c   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_831F:
 	ld hl,0a000h		;831f
 	ld de,068a8h		;8322
@@ -558,14 +558,14 @@ L_8348:
 	ld l,(hl)			;8350
 	ld h,a			;8351
 	ld bc,00808h		;8352
-	ld a,(0ca42h)		;8355
+	ld a,(0ca42h)		;8355   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	and 003h		;8358
 	rlca			;835a
 	rlca			;835b
 	rlca			;835c
 	rlca			;835d
 	or 0c8h		;835e
-	call 047edh		;8360
+	call 047edh		;8360   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	pop hl			;8363
 	ld de,00004h		;8364
 	add hl,de			;8367
@@ -573,27 +573,27 @@ L_8348:
 	djnz L_8348		;8369
 	ret			;836b
 L_836C:
-	call 0418eh		;836c
-	ld de,0ca4ch		;836f
+	call 0418eh		;836c   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0ca4ch		;836f   ; apunta a los 4 bits altos del byte de la sala (p56:BD28)
 	call L_838A		;8372
-	ld de,0ca4dh		;8375
+	ld de,0ca4dh		;8375   ; apunta a los 4 bits bajos del byte de la sala (p56:BD28)
 	call L_838A		;8378
-	call 040f0h		;837b
-	ld a,(0ca76h)		;837e
+	call 040f0h		;837b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld a,(0ca76h)		;837e   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 002h		;8381
 	ret nz			;8383
 	ld a,001h		;8384
 	ld (0ca4eh),a		;8386
 	ret			;8389
 L_838A:
-	ld a,(0ca4ah)		;838a
+	ld a,(0ca4ah)		;838a   ; lee la zona
 	add a,a			;838d
 	add a,a			;838e
 	add a,a			;838f
 	ld hl,0a727h		;8390
-	call 0423eh		;8393
+	call 0423eh		;8393   ; suma_a_hl: HL = HL + A
 	ld a,(de)			;8396
-	call 0423eh		;8397
+	call 0423eh		;8397   ; suma_a_hl: HL = HL + A
 	inc e			;839a
 	inc e			;839b
 	ld a,(hl)			;839c
@@ -604,7 +604,7 @@ L_839F:
 	ld a,(0d430h)		;83a1
 	cp 002h		;83a4
 	jr nc,L_83C1		;83a6
-	ld a,(0ca4ah)		;83a8
+	ld a,(0ca4ah)		;83a8   ; lee la zona
 	cp 007h		;83ab
 	jr nz,L_83C1		;83ad
 	ld a,(0ca50h)		;83af
@@ -622,10 +622,10 @@ L_83C1:
 	ret			;83c5
 L_83C6:
 	ld b,000h		;83c6
-	ld a,(0ca4ah)		;83c8
+	ld a,(0ca4ah)		;83c8   ; lee la zona
 	cp 004h		;83cb
 	jr nz,L_83D7		;83cd
-	ld a,(0ca4bh)		;83cf
+	ld a,(0ca4bh)		;83cf   ; lee la sala de la zona
 	cp 009h		;83d2
 	jr nz,L_83D7		;83d4
 	inc b			;83d6
@@ -637,7 +637,7 @@ L_83DC:
 	ld a,(0ca77h)		;83dc
 	and a			;83df
 	ret nz			;83e0
-	ld a,(0ca4ah)		;83e1
+	ld a,(0ca4ah)		;83e1   ; lee la zona
 	dec a			;83e4
 	ld d,a			;83e5
 	cp 006h		;83e6
@@ -651,7 +651,7 @@ L_83DC:
 	ret nz			;83f4
 	ld a,d			;83f5
 	ld hl,08409h		;83f6
-	call 043f6h		;83f9
+	call 043f6h		;83f9   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,05888h		;83fc
 	ld a,l			;83ff
 	call 04a8ch		;8400
@@ -676,61 +676,61 @@ L_8415:
 	ld a,(0cb80h)		;8415
 	ld hl,0cb80h		;8418
 	ld bc,0005fh		;841b
-	call 04236h		;841e
+	call 04236h		;841e   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	cp 008h		;8421
 	ret nz			;8423
 	jp 06a6bh		;8424
 L_8427:
 	xor a			;8427
-	ld (0ca42h),a		;8428
+	ld (0ca42h),a		;8428   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld (0cafbh),a		;842b
 	call 045fdh		;842e
 	ld bc,00007h		;8431
-	call 04522h		;8434
-	call 04201h		;8437
-	ld de,0aad9h		;843a
-	ld hl,0aae7h		;843d
+	call 04522h		;8434   ; registro_vdp: escribe B en el registro C del VDP
+	call 04201h		;8437   ; bancos_47: pone el 47 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0aad9h		;843a   ; tabla_colores_AAD9: 3 punteros a colores de dibujo
+	ld hl,0aae7h		;843d   ; lista_AAE7: 8 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	call 04d4ah		;8440
 	ld a,055h		;8443
 	ld (0ca75h),a		;8445
 	ld hl,00100h		;8448
-	ld (0ca4ch),hl		;844b
+	ld (0ca4ch),hl		;844b   ; guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 	ld d,h			;844e
-	call 04be4h		;844f
+	call 04be4h		;844f   ; borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 	ld d,l			;8452
 	ld e,l			;8453
 	ld hl,0bd48h		;8454
 	ld bc,00a1bh		;8457
 	call 06d8ah		;845a
 	call L_8502		;845d
-	call 0418eh		;8460
+	call 0418eh		;8460   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0bc23h		;8463
 	call 0463fh		;8466
-	call 040f0h		;8469
+	call 040f0h		;8469   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp 06dbbh		;846c
 L_846F:
 	call L_8475		;846f
-	jp 041cah		;8472
+	jp 041cah		;8472   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8475:
 	call L_8502		;8475
 	ld a,(0ca65h)		;8478
 	or a			;847b
 	jp nz,L_84FA		;847c
-	call 0418eh		;847f
-	ld a,(0ca76h)		;8482
+	call 0418eh		;847f   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld a,(0ca76h)		;8482   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;8485
 	jr nz,L_84C7		;8486
 	ld hl,0e740h		;8488
-	ld a,(0ca4bh)		;848b
+	ld a,(0ca4bh)		;848b   ; lee la sala de la zona
 	ld d,a			;848e
-	call 0423eh		;848f
+	call 0423eh		;848f   ; suma_a_hl: HL = HL + A
 	ld b,(hl)			;8492
-	ld a,(0ca4ah)		;8493
+	ld a,(0ca4ah)		;8493   ; lee la zona
 	ld c,a			;8496
 	ld hl,0b76fh		;8497
-	call 043f6h		;849a
+	call 043f6h		;849a   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,b			;849d
-	call 043f6h		;849e
+	call 043f6h		;849e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,c			;84a1
 	and a			;84a2
 	jr nz,L_84B9		;84a3
@@ -746,38 +746,38 @@ L_8475:
 	ld hl,0b9b7h		;84b6
 L_84B9:
 	call 0463fh		;84b9
-	call 040f0h		;84bc
+	call 040f0h		;84bc   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cadfh)		;84bf
 	or a			;84c2
 	ret z			;84c3
 	jp 06df4h		;84c4
 L_84C7:
-	ld a,(0ca76h)		;84c7
+	ld a,(0ca76h)		;84c7   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	ld hl,0b8a0h		;84ca
-	call 043f6h		;84cd
+	call 043f6h		;84cd   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	call 0463fh		;84d0
-	ld a,(0ca4bh)		;84d3
+	ld a,(0ca4bh)		;84d3   ; lee la sala de la zona
 	dec a			;84d6
-	jp nz,040f0h		;84d7
-	ld a,(0ca76h)		;84da
+	jp nz,040f0h		;84d7   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld a,(0ca76h)		;84da   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 018h		;84dd
 	jr z,L_84EB		;84df
 	cp 039h		;84e1
-	jp nz,040f0h		;84e3
+	jp nz,040f0h		;84e3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0bb35h		;84e6
 	jr L_84EE		;84e9
 L_84EB:
 	ld hl,0babeh		;84eb
 L_84EE:
 	call 0463fh		;84ee
-	jp 040f0h		;84f1
+	jp 040f0h		;84f1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_84F4:
 	call L_84FA		;84f4
-	jp 041bdh		;84f7
+	jp 041bdh		;84f7   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 L_84FA:
 	ld hl,0b98ah		;84fa
 L_84FD:
-	call 0418eh		;84fd
+	call 0418eh		;84fd   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	jr L_84EE		;8500
 L_8502:
 	ld hl,0b945h		;8502
@@ -793,7 +793,7 @@ L_8511:
 	jr L_84FD		;8514
 L_8516:
 	ld hl,0851eh		;8516
-	call 043f6h		;8519
+	call 043f6h		;8519   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jr L_84FD		;851c
 
 ; ----------------------------------------------------------------------
@@ -815,81 +815,81 @@ L_8524:
 L_8529:
 	ld hl,0bc9eh		;8529
 L_852C:
-	call 0418eh		;852c
+	call 0418eh		;852c   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0463fh		;852f
-	jp 041adh		;8532
+	jp 041adh		;8532   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8535:
 	call L_8559		;8535
 	call 050a0h		;8538
 	call L_8541		;853b
-	jp 041c2h		;853e
+	jp 041c2h		;853e   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8541:
 	call L_8559		;8541
 	jp 062b1h		;8544
 L_8547:
 	call L_854D		;8547
-	jp 041c5h		;854a
+	jp 041c5h		;854a   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_854D:
 	call L_8559		;854d
 	call 050a6h		;8550
 	call L_8541		;8553
-	jp 040f0h		;8556
+	jp 040f0h		;8556   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8559:
-	call 0418eh		;8559
+	call 0418eh		;8559   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0ae3bh		;855c
 	ld de,06040h		;855f
 	ld bc,00605h		;8562
 	ret			;8565
 L_8566:
-	call 0418eh		;8566
-	ld hl,0ae59h		;8569
+	call 0418eh		;8566   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld hl,0ae59h		;8569   ; mosaico_AE59: un mosaico de 5 x 12 caracteres, un byte cada uno
 	ld de,04800h		;856c
 	ld bc,0050ch		;856f
 	call 05100h		;8572
-	jp 041c2h		;8575
+	jp 041c2h		;8575   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8578:
-	call 041fch		;8578
-	ld de,0b809h		;857b
-	ld hl,0b845h		;857e
+	call 041fch		;8578   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0b809h		;857b   ; tabla_colores_B809: 14 punteros a colores de dibujo
+	ld hl,0b845h		;857e   ; lista_B845: 22 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	call 04d56h		;8581
-	jp 041adh		;8584
+	jp 041adh		;8584   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8587:
 	call L_8593		;8587
-	jp 040f0h		;858a
+	jp 040f0h		;858a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_858D:
 	call L_8593		;858d
-	jp 041c2h		;8590
+	jp 041c2h		;8590   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8593:
-	call 041fch		;8593
-	ld de,0b34ah		;8596
+	call 041fch		;8593   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0b34ah		;8596   ; rachas_B34A: datos en rachas a la VRAM
 	ld hl,0e200h		;8599
 	jr L_85EE		;859c
 L_859E:
 	call L_85B0		;859e
-	jp 041c5h		;85a1
+	jp 041c5h		;85a1   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_85A4:
 	call L_85B0		;85a4
-	jp 041c2h		;85a7
+	jp 041c2h		;85a7   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_85AA:
 	call L_85B0		;85aa
-	jp 041cah		;85ad
+	jp 041cah		;85ad   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_85B0:
 	ld de,0b007h		;85b0
 	call L_85B9		;85b3
 	ld de,0af4ch		;85b6
 L_85B9:
-	call 041fch		;85b9
-	call 04534h		;85bc
-	jp 040f0h		;85bf
+	call 041fch		;85b9   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	call 04534h		;85bc   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
+	jp 040f0h		;85bf   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_85C2:
 	ld de,0b7a1h		;85c2
 	jr L_85B9		;85c5
 L_85C7:
 	ld de,0b030h		;85c7
 L_85CA:
-	call 041fch		;85ca
-	call 04534h		;85cd
-	jp 041cah		;85d0
+	call 041fch		;85ca   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	call 04534h		;85cd   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
+	jp 041cah		;85d0   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_85D3:
 	ld de,0b04ah		;85d3
 	jr L_85CA		;85d6
@@ -897,60 +897,60 @@ L_85D8:
 	ld de,0b060h		;85d8
 	jr L_85CA		;85db
 L_85DD:
-	call 041fch		;85dd
-	ld de,0b078h		;85e0
+	call 041fch		;85dd   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0b078h		;85e0   ; rachas_B078: datos en rachas a la VRAM
 	jr L_85EB		;85e3
 L_85E5:
-	call 041fch		;85e5
-	ld de,0b159h		;85e8
+	call 041fch		;85e5   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0b159h		;85e8   ; rachas_B159: datos en rachas a la VRAM
 L_85EB:
 	ld hl,0e000h		;85eb
 L_85EE:
 	ld a,001h		;85ee
-	call 0456eh		;85f0
-	jp 041cah		;85f3
+	call 0456eh		;85f0   ; rachas_a_vram_tal_cual: p00:453E sin voltear (C = 0)
+	jp 041cah		;85f3   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_85F6:
-	call 041fch		;85f6
-	ld de,0b1e6h		;85f9
+	call 041fch		;85f6   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+	ld de,0b1e6h		;85f9   ; rachas_B1E6: datos en rachas a la VRAM
 	jr L_85EB		;85fc
 L_85FE:
-	call 041fch		;85fe
+	call 041fch		;85fe   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0b2d5h		;8601
-	call 04534h		;8604
-	call 041cah		;8607
+	call 04534h		;8604   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
+	call 041cah		;8607   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0f800h		;860a
 	ld de,0f890h		;860d
 	ld c,004h		;8610
 	jp 0457ah		;8612
 L_8615:
 	call L_8621		;8615
-	jp 041cah		;8618
+	jp 041cah		;8618   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_861B:
 	ld a,(0d7dah)		;861b
 	bit 6,a		;861e
 	ret z			;8620
 L_8621:
-	ld a,(0ca4ah)		;8621
+	ld a,(0ca4ah)		;8621   ; lee la zona
 	cp 012h		;8624
 	ret nz			;8626
-	ld a,(0ca4bh)		;8627
+	ld a,(0ca4bh)		;8627   ; lee la sala de la zona
 	cp 00ch		;862a
 	ret nc			;862c
-	call 04201h		;862d
+	call 04201h		;862d   ; bancos_47: pone el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0bf13h		;8630
-	call 04534h		;8633
+	call 04534h		;8633   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
 	ld de,0be56h		;8636
-	call 04534h		;8639
+	call 04534h		;8639   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
 	push ix		;863c
 	ld ix,0bf0ah		;863e
-	call 05223h		;8642
+	call 05223h		;8642   ; fichas_de_sprites: fichas de 4 bytes de IX hasta una orden 0: copia colores o voltea patrones
 	pop ix		;8645
-	jp 040f0h		;8647
+	jp 040f0h		;8647   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_864A:
-	call 041fch		;864a
+	call 041fch		;864a   ; bancos_37: pone el 37 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0b3a6h		;864d
-	call 04534h		;8650
-	jp 041c2h		;8653
+	call 04534h		;8650   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
+	jp 041c2h		;8653   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8656:
 	ld b,000h		;8656
 L_8658:
@@ -958,9 +958,9 @@ L_8658:
 	ld a,b			;8659
 	ld (0caceh),a		;865a
 	pop af			;865d
-	call 041bdh		;865e
+	call 041bdh		;865e   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_8667		;8661
-	jp 040f0h		;8664
+	jp 040f0h		;8664   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8667:
 	ld (0ca5eh),a		;8667
 	call L_86C3		;866a
@@ -1049,7 +1049,7 @@ L_86DE:
 	and 00fh		;86e4
 	add a,e			;86e6
 	ld hl,0be7dh		;86e7
-	call 04248h		;86ea
+	call 04248h		;86ea   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (0ca5ch),a		;86ed
 	ld c,a			;86f0
 	ld hl,(0ca5ah)		;86f1
@@ -1094,9 +1094,9 @@ L_8722:
 	djnz L_871E		;8722
 	ret			;8724
 L_8725:
-	call 041bdh		;8725
+	call 041bdh		;8725   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_872E		;8728
-	jp 040f0h		;872b
+	jp 040f0h		;872b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_872E:
 	cp 018h		;872e
 	jr c,L_8734		;8730
@@ -1104,7 +1104,7 @@ L_872E:
 L_8734:
 	push af			;8734
 	ld de,0bfbdh		;8735
-	call 04403h		;8738
+	call 04403h		;8738   ; palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 	ld hl,00000h		;873b
 	push bc			;873e
 L_873F:
@@ -1114,7 +1114,7 @@ L_873F:
 	pop af			;8743
 	push hl			;8744
 	ld de,0bfc9h		;8745
-	call 04403h		;8748
+	call 04403h		;8748   ; palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 	ld hl,00000h		;874b
 L_874E:
 	add hl,de			;874e
@@ -1123,33 +1123,33 @@ L_874E:
 	pop hl			;8752
 	ret			;8753
 L_8754:
-	call 041a0h		;8754
+	call 041a0h		;8754   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aa49h		;8757
-	jp 040f0h		;875a
+	jp 040f0h		;875a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_875D:
 	ld a,01eh		;875d
 	ld (0d417h),a		;875f
 	ld hl,0ce00h		;8762
 	ld bc,005ffh		;8765
-	jp 04236h		;8768
+	jp 04236h		;8768   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_876B:
-	call 0418eh		;876b
+	call 0418eh		;876b   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_877F		;876e
 L_8771:
-	call 040f0h		;8771
-	jp 041efh		;8774
+	call 040f0h		;8771   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+	jp 041efh		;8774   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8777:
-	call 0418eh		;8777
+	call 0418eh		;8777   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_87AD		;877a
 	jr L_8771		;877d
 L_877F:
 	ld a,(hl)			;877f
 	cp 0ffh		;8780
 	ret z			;8782
-	ld a,(0ca76h)		;8783
+	ld a,(0ca76h)		;8783   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;8786
 	jr nz,L_8795		;8787
-	ld a,(0ca4bh)		;8789
+	ld a,(0ca4bh)		;8789   ; lee la sala de la zona
 	cp (hl)			;878c
 	jr z,L_8795		;878d
 	ld de,00006h		;878f
@@ -1171,7 +1171,7 @@ L_8795:
 	ld a,(hl)			;87ac
 L_87AD:
 	ld hl,0a53ah		;87ad
-	call 043f6h		;87b0
+	call 043f6h		;87b0   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld ix,0e280h		;87b3
 	ld b,001h		;87b7
 L_87B9:
@@ -1181,7 +1181,7 @@ L_87B9:
 	ld de,0a62eh		;87bd
 	add a,a			;87c0
 	add a,a			;87c1
-	call 04243h		;87c2
+	call 04243h		;87c2   ; suma_a_de: DE = DE + A
 	ld a,(de)			;87c5
 	ld (ix+003h),a		;87c6
 	inc de			;87c9
@@ -1203,14 +1203,14 @@ L_87B9:
 	add ix,de		;87e5
 	jr L_87B9		;87e7
 L_87E9:
-	call 0418eh		;87e9
+	call 0418eh		;87e9   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0a67eh		;87ec
-	call 04248h		;87ef
+	call 04248h		;87ef   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	jr L_8810		;87f2
 L_87F4:
-	call 0418eh		;87f4
+	call 0418eh		;87f4   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld l,a			;87f7
-	ld a,(0ca76h)		;87f8
+	ld a,(0ca76h)		;87f8   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 011h		;87fb
 	ld a,l			;87fd
 	jr nz,L_880A		;87fe
@@ -1221,9 +1221,9 @@ L_87F4:
 	ld a,031h		;8808
 L_880A:
 	ld hl,0a6afh		;880a
-	call 043f6h		;880d
+	call 043f6h		;880d   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 L_8810:
-	jp 040f0h		;8810
+	jp 040f0h		;8810   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8813:
 	ld a,(0d708h)		;8813
 	ld hl,0a6afh		;8816
@@ -1240,29 +1240,29 @@ L_881B:
 	jr nc,L_8832		;882e
 	ld a,024h		;8830
 L_8832:
-	call 0418eh		;8832
+	call 0418eh		;8832   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	dec a			;8835
-	call 043f6h		;8836
-	jp 041cah		;8839
+	call 043f6h		;8836   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
+	jp 041cah		;8839   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_883C:
-	call 041a0h		;883c
+	call 041a0h		;883c   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0bdd2h		;883f
-	call 043f6h		;8842
+	call 043f6h		;8842   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jr L_884A		;8845
 L_8847:
-	call 041a0h		;8847
+	call 041a0h		;8847   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_884A:
 	ld a,(0cab5h)		;884a
-	call 043f6h		;884d
+	call 043f6h		;884d   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jr L_887B		;8850
 L_8852:
 	ld hl,0beach		;8852
 L_8855:
-	call 041a0h		;8855
+	call 041a0h		;8855   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cb0eh)		;8858
 	dec a			;885b
 	add a,a			;885c
-	call 0423eh		;885d
+	call 0423eh		;885d   ; suma_a_hl: HL = HL + A
 	ld a,(0cb03h)		;8860
 	ld b,a			;8863
 	ld a,(0cb43h)		;8864
@@ -1277,23 +1277,23 @@ L_8855:
 	ld (ix+002h),a		;8875
 	ld (ix+004h),a		;8878
 L_887B:
-	jp 040f0h		;887b
+	jp 040f0h		;887b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_887E:
 	ld a,(0cb0eh)		;887e
 L_8881:
-	call 041a0h		;8881
+	call 041a0h		;8881   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	dec a			;8884
 	add a,a			;8885
 	add a,a			;8886
-	call 0423eh		;8887
+	call 0423eh		;8887   ; suma_a_hl: HL = HL + A
 	call 06406h		;888a
 	ld bc,00004h		;888d
 	ldir		;8890
 	jr L_887B		;8892
 L_8894:
-	call 041a0h		;8894
+	call 041a0h		;8894   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aebbh		;8897
-	jp 040f0h		;889a
+	jp 040f0h		;889a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_889D:
 	ld a,(0ca65h)		;889d
 	and a			;88a0
@@ -1312,7 +1312,7 @@ L_88A9:
 	ret c			;88b4
 L_88B5:
 	ld a,004h		;88b5
-	call 0423eh		;88b7
+	call 0423eh		;88b7   ; suma_a_hl: HL = HL + A
 	djnz L_88A9		;88ba
 	ret			;88bc
 L_88BD:
@@ -1358,9 +1358,9 @@ L_88BD:
 	call 054a4h		;8913
 	call 05dbbh		;8916
 	pop af			;8919
-	call 041cdh		;891a
+	call 041cdh		;891a   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a0d3h		;891d
-	call 040f0h		;8920
+	call 040f0h		;8920   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_902A		;8923
 	scf			;8926
 	ret			;8927
@@ -1418,10 +1418,10 @@ L_8982:
 	ld (0dff8h),a		;8983
 	ld hl,0df80h		;8986
 	ld bc,0003fh		;8989
-	call 04236h		;898c
+	call 04236h		;898c   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0cb80h		;898f
 	ld bc,0005fh		;8992
-	jp 04236h		;8995
+	jp 04236h		;8995   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_8998:
 	ld a,(0d8a4h)		;8998
 	and a			;899b
@@ -1498,13 +1498,13 @@ L_8A12:
 	jp nc,L_8A9A		;8a1a
 	dec a			;8a1d
 	jp z,079bch		;8a1e
-	call 07ce6h		;8a21
+	call 07ce6h		;8a21   ; rutina_de_fase: HL = la rutina de la zona en la lista de la fase 0xCA22 (p06:B40C)
 	ld a,(0ca64h)		;8a24
 	and a			;8a27
 	jr z,L_8A2D		;8a28
 	ld hl,06b89h		;8a2a
 L_8A2D:
-	ld (0ca19h),hl		;8a2d
+	ld (0ca19h),hl		;8a2d   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	jr L_8A3D		;8a30
 L_8A32:
 	ld de,0ca18h		;8a32
@@ -1517,14 +1517,14 @@ L_8A32:
 	and a			;8a3b
 	ret z			;8a3c
 L_8A3D:
-	ld hl,(0ca19h)		;8a3d
+	ld hl,(0ca19h)		;8a3d   ; lee la musica pendiente: la rutina que la pide (16 bits)
 	ld de,00000h		;8a40
-	ld (0ca19h),de		;8a43
+	ld (0ca19h),de		;8a43   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	ld de,06a11h		;8a47
 	call 00020h		;8a4a   ; BIOS DCOMPR - Compares HL with DE
 	jr nz,L_8A5B		;8a4d
 	ld de,06b89h		;8a4f
-	ld (0ca19h),de		;8a52
+	ld (0ca19h),de		;8a52   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	ld a,0b4h		;8a56
 	ld (0ca18h),a		;8a58
 L_8A5B:
@@ -1534,12 +1534,12 @@ L_8A5B:
 	ld a,(0ca64h)		;8a61
 	and a			;8a64
 	jr nz,L_8A6F		;8a65
-	ld a,(0ca76h)		;8a67
+	ld a,(0ca76h)		;8a67   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 02ah		;8a6a
 	call nz,06b12h		;8a6c
 L_8A6F:
 	push hl			;8a6f
-	ld hl,0ca97h		;8a70
+	ld hl,0ca97h		;8a70   ; apunta a 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 	ld a,(hl)			;8a73
 	and a			;8a74
 	jr z,L_8A79		;8a75
@@ -1558,7 +1558,7 @@ L_8A7B:
 	jp c,L_89F4		;8a88
 L_8A8B:
 	ld hl,00000h		;8a8b
-	ld (0ca19h),hl		;8a8e
+	ld (0ca19h),hl		;8a8e   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	call L_89C7		;8a91
 	ld a,(0d430h)		;8a94
 	dec a			;8a97
@@ -1566,7 +1566,7 @@ L_8A8B:
 L_8A9A:
 	call 0799bh		;8a9a
 	jp c,06b7dh		;8a9d
-	ld a,(0ca4ah)		;8aa0
+	ld a,(0ca4ah)		;8aa0   ; lee la zona
 	ld hl,06b61h		;8aa3
 	cp 011h		;8aa6
 	jr c,L_8A5B		;8aa8
@@ -1581,195 +1581,195 @@ L_8AAF:
 	ld hl,06b3dh		;8ab9
 	jr L_8A5B		;8abc
 L_8ABE:
-	call 041cdh		;8abe
+	call 041cdh		;8abe   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bc27h		;8ac1
 	jr L_8ACC		;8ac4
 L_8AC6:
-	call 041b0h		;8ac6
+	call 041b0h		;8ac6   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a000h		;8ac9
 L_8ACC:
-	jp 040f0h		;8acc
+	jp 040f0h		;8acc   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8ACF:
-	call 041b0h		;8acf
+	call 041b0h		;8acf   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a009h		;8ad2
 	jr L_8B4D		;8ad5
 L_8AD7:
-	call 041b0h		;8ad7
+	call 041b0h		;8ad7   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a985h		;8ada
 	jr L_8B4D		;8add
 L_8ADF:
-	call 041b0h		;8adf
+	call 041b0h		;8adf   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a996h		;8ae2
 	jr L_8B4D		;8ae5
 L_8AE7:
-	call 041b0h		;8ae7
+	call 041b0h		;8ae7   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9BDB		;8aea
 	jr L_8B4D		;8aed
 L_8AEF:
-	call 041cdh		;8aef
+	call 041cdh		;8aef   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a1c1h		;8af2
 	jr L_8B4D		;8af5
 L_8AF7:
-	call 041cdh		;8af7
+	call 041cdh		;8af7   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a234h		;8afa
 	jr L_8B4D		;8afd
 L_8AFF:
-	call 041d5h		;8aff
+	call 041d5h		;8aff   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a3c4h		;8b02
 	jr L_8B4D		;8b05
 L_8B07:
-	call 041d5h		;8b07
+	call 041d5h		;8b07   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a389h		;8b0a
 	jr L_8B4D		;8b0d
 L_8B0F:
-	call 041c5h		;8b0f
+	call 041c5h		;8b0f   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a000h		;8b12
 	jr L_8B4D		;8b15
 L_8B17:
-	call 041c5h		;8b17
+	call 041c5h		;8b17   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a07bh		;8b1a
 	jr L_8B4D		;8b1d
 L_8B1F:
-	call 041c5h		;8b1f
+	call 041c5h		;8b1f   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b68eh		;8b22
 	jr L_8B4D		;8b25
 L_8B27:
-	call 041d5h		;8b27
+	call 041d5h		;8b27   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bbfbh		;8b2a
 	jr L_8B4D		;8b2d
 L_8B2F:
-	call 041d5h		;8b2f
+	call 041d5h		;8b2f   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0af47h		;8b32
 	jr L_8B4D		;8b35
 L_8B37:
-	call 041d5h		;8b37
+	call 041d5h		;8b37   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b056h		;8b3a
 	jr L_8B4D		;8b3d
 L_8B3F:
-	call 041d5h		;8b3f
+	call 041d5h		;8b3f   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aee4h		;8b42
 	jr L_8B4D		;8b45
 L_8B47:
-	call 041c5h		;8b47
+	call 041c5h		;8b47   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a163h		;8b4a
 L_8B4D:
-	jp 040f0h		;8b4d
+	jp 040f0h		;8b4d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8B50:
-	call 041c5h		;8b50
+	call 041c5h		;8b50   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a588h		;8b53
 	jr L_8B4D		;8b56
 L_8B58:
-	call 041c5h		;8b58
+	call 041c5h		;8b58   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a1a1h		;8b5b
 	jr L_8B4D		;8b5e
 L_8B60:
-	call 041d5h		;8b60
+	call 041d5h		;8b60   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b23fh		;8b63
 	jr L_8B4D		;8b66
 L_8B68:
-	call 041d5h		;8b68
+	call 041d5h		;8b68   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bd31h		;8b6b
 	jr L_8B4D		;8b6e
 L_8B70:
-	call 041efh		;8b70
+	call 041efh		;8b70   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b712h		;8b73
 	jr L_8B4D		;8b76
 L_8B78:
-	call 041cdh		;8b78
+	call 041cdh		;8b78   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a65eh		;8b7b
 	jr L_8B4D		;8b7e
 L_8B80:
-	call 041d5h		;8b80
+	call 041d5h		;8b80   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b494h		;8b83
 	jr L_8B4D		;8b86
 L_8B88:
-	call 041d5h		;8b88
+	call 041d5h		;8b88   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b66eh		;8b8b
 	jr L_8B4D		;8b8e
 L_8B90:
-	call 041d5h		;8b90
+	call 041d5h		;8b90   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a000h		;8b93
 	jr L_8B4D		;8b96
 L_8B98:
-	call 041d5h		;8b98
+	call 041d5h		;8b98   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a117h		;8b9b
 	jr L_8B4D		;8b9e
 L_8BA0:
-	call 041b0h		;8ba0
+	call 041b0h		;8ba0   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ab44h		;8ba3
 	jr L_8B4D		;8ba6
 L_8BA8:
-	call 041d2h		;8ba8
+	call 041d2h		;8ba8   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b9c1h		;8bab
 	jr L_8B4D		;8bae
 L_8BB0:
-	call 041d2h		;8bb0
+	call 041d2h		;8bb0   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ba03h		;8bb3
 	jr L_8B4D		;8bb6
 L_8BB8:
-	call 041cdh		;8bb8
+	call 041cdh		;8bb8   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bfbch		;8bbb
 	jr L_8B4D		;8bbe
 L_8BC0:
-	call 041b0h		;8bc0
+	call 041b0h		;8bc0   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b5afh		;8bc3
 	jr L_8B4D		;8bc6
 L_8BC8:
-	call 041adh		;8bc8
+	call 041adh		;8bc8   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aed1h		;8bcb
 	jr L_8BEE		;8bce
 L_8BD0:
-	call 041adh		;8bd0
+	call 041adh		;8bd0   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0af0dh		;8bd3
 	jr L_8BEE		;8bd6
 L_8BD8:
-	call 041adh		;8bd8
+	call 041adh		;8bd8   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b6cch		;8bdb
 	jr L_8BEE		;8bde
 L_8BE0:
-	call 041adh		;8be0
+	call 041adh		;8be0   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b5cch		;8be3
 	jr L_8BEE		;8be6
 L_8BE8:
-	call 041d5h		;8be8
+	call 041d5h		;8be8   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bdbdh		;8beb
 L_8BEE:
-	jp 040f0h		;8bee
+	jp 040f0h		;8bee   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8BF1:
-	call 041cdh		;8bf1
+	call 041cdh		;8bf1   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bed4h		;8bf4
 	call 0bc59h		;8bf7
 	jr L_8BEE		;8bfa
 L_8BFC:
-	call 041a0h		;8bfc
+	call 041a0h		;8bfc   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a6f9h		;8bff
 	jr L_8BEE		;8c02
 L_8C04:
-	call 041c5h		;8c04
+	call 041c5h		;8c04   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b62fh		;8c07
 	jr L_8BEE		;8c0a
 L_8C0C:
-	call 041a0h		;8c0c
+	call 041a0h		;8c0c   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a0abh		;8c0f
 	jr L_8BEE		;8c12
 L_8C14:
-	call 041a0h		;8c14
+	call 041a0h		;8c14   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a598h		;8c17
 	jr L_8BEE		;8c1a
 L_8C1C:
-	call 041cdh		;8c1c
+	call 041cdh		;8c1c   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ba03h		;8c1f
 	jr L_8BEE		;8c22
 L_8C24:
 	call L_8A9A		;8c24
 	jr L_8C2F		;8c27
 L_8C29:
-	call 040f0h		;8c29
+	call 040f0h		;8c29   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_8475		;8c2c
 L_8C2F:
-	jp 041c2h		;8c2f
+	jp 041c2h		;8c2f   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8C32:
-	call 041cdh		;8c32
+	call 041cdh		;8c32   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bed4h		;8c35
 	call 0bc59h		;8c38
 	jr $+117		;8c3b
@@ -1777,51 +1777,51 @@ L_8C3D:
 	call 04e22h		;8c3d
 	jr $+112		;8c40
 L_8C42:
-	call 040f0h		;8c42
+	call 040f0h		;8c42   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9319		;8c45
 	jr $+104		;8c48
 L_8C4A:
-	call 040f0h		;8c4a
+	call 040f0h		;8c4a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b563h		;8c4d
 	jr $+96		;8c50
 L_8C52:
-	call 040f0h		;8c52
+	call 040f0h		;8c52   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b4e6h		;8c55
 	jr $+88		;8c58
 L_8C5A:
-	call 040f0h		;8c5a
+	call 040f0h		;8c5a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b5b5h		;8c5d
 	jr $+80		;8c60
 L_8C62:
-	call 040f0h		;8c62
+	call 040f0h		;8c62   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b593h		;8c65
 	jr $+72		;8c68
 L_8C6A:
-	call 040f0h		;8c6a
+	call 040f0h		;8c6a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b4e0h		;8c6d
 	jr $+64		;8c70
 L_8C72:
-	call 040f0h		;8c72
+	call 040f0h		;8c72   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b404h		;8c75
 	jr $+56		;8c78
 L_8C7A:
-	call 040f0h		;8c7a
+	call 040f0h		;8c7a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b0dch		;8c7d
 	jr $+48		;8c80
 L_8C82:
-	call 040f0h		;8c82
+	call 040f0h		;8c82   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b607h		;8c85
 	jr $+40		;8c88
 L_8C8A:
-	call 040f0h		;8c8a
+	call 040f0h		;8c8a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b610h		;8c8d
 	jr $+32		;8c90
 L_8C92:
-	call 040f0h		;8c92
+	call 040f0h		;8c92   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b603h		;8c95
 	jr $+24		;8c98
 L_8C9A:
-	call 040f0h		;8c9a
+	call 040f0h		;8c9a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b5ffh		;8c9d
 	jr $+16		;8ca0
 
@@ -1836,12 +1836,12 @@ DATA_8CA2:
 
 
 L_8CAA:
-	call 040f0h		;8caa
+	call 040f0h		;8caa   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b63eh		;8cad
 L_8CB0:
-	jp 041c5h		;8cb0
+	jp 041c5h		;8cb0   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8CB3:
-	call 040f0h		;8cb3
+	call 040f0h		;8cb3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9430		;8cb6
 	jr L_8CB0		;8cb9
 
@@ -1859,19 +1859,19 @@ L_8CCB:
 	call L_8507		;8ccb
 	jr $-30		;8cce
 L_8CD0:
-	call 040f0h		;8cd0
+	call 040f0h		;8cd0   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b67dh		;8cd3
 	jr $-38		;8cd6
 L_8CD8:
-	call 041cah		;8cd8
+	call 041cah		;8cd8   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a6a4h		;8cdb
 	jr $-46		;8cde
 L_8CE0:
-	call 041cah		;8ce0
+	call 041cah		;8ce0   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a6c2h		;8ce3
 	jr $-54		;8ce6
 L_8CE8:
-	call 040f0h		;8ce8
+	call 040f0h		;8ce8   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b65dh		;8ceb
 	jr $-62		;8cee
 L_8CF0:
@@ -1891,14 +1891,14 @@ DATA_8CF5:
 
 
 L_8D1D:
-	call 040f0h		;8d1d
-	call 057aeh		;8d20
+	call 040f0h		;8d1d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+	call 057aeh		;8d20   ; pinta_mapa: pinta los 24 x 24 caracteres de 0xDD00
 	jr $-115		;8d23
 L_8D25:
 	call 050e8h		;8d25
 	jr $-120		;8d28
 L_8D2A:
-	call 041cah		;8d2a
+	call 041cah		;8d2a   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bce4h		;8d2d
 	jr L_8D53		;8d30
 L_8D32:
@@ -1922,7 +1922,7 @@ L_8D4B:
 L_8D50:
 	call 05caeh		;8d50
 L_8D53:
-	jp 041f4h		;8d53
+	jp 041f4h		;8d53   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8D56:
 	call 04279h		;8d56
 	jr L_8D53		;8d59
@@ -1933,22 +1933,22 @@ L_8D60:
 	call 07c77h		;8d60
 	jr L_8D53		;8d63
 L_8D65:
-	call 041d5h		;8d65
+	call 041d5h		;8d65   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bdbdh		;8d68
 	jr L_8D53		;8d6b
 L_8D6D:
-	call 041cdh		;8d6d
+	call 041cdh		;8d6d   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b9e5h		;8d70
 	jr L_8D53		;8d73
 L_8D75:
-	call 040f0h		;8d75
+	call 040f0h		;8d75   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b4d1h		;8d78
 	jr L_8D83		;8d7b
 L_8D7D:
-	call 040f0h		;8d7d
+	call 040f0h		;8d7d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b0f6h		;8d80
 L_8D83:
-	jp 041b0h		;8d83
+	jp 041b0h		;8d83   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8D86:
 	call 04cb8h		;8d86
 	jr L_8D83		;8d89
@@ -1956,53 +1956,53 @@ L_8D8B:
 	call 07c77h		;8d8b
 	jr L_8DC3		;8d8e
 L_8D90:
-	call 040f0h		;8d90
+	call 040f0h		;8d90   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bda5h		;8d93
 	jr L_8DC3		;8d96
 L_8D98:
 	call 059a7h		;8d98
 	jr L_8DC3		;8d9b
 L_8D9D:
-	call 041d5h		;8d9d
+	call 041d5h		;8d9d   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aee4h		;8da0
 	jr L_8DC3		;8da3
 L_8DA5:
-	call 040f0h		;8da5
+	call 040f0h		;8da5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be51h		;8da8
 	jr L_8DC3		;8dab
 L_8DAD:
-	call 041cdh		;8dad
+	call 041cdh		;8dad   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bfbch		;8db0
 	jr L_8DC3		;8db3
 L_8DB5:
-	call 040f0h		;8db5
+	call 040f0h		;8db5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b1beh		;8db8
 	jr L_8DC3		;8dbb
 L_8DBD:
-	call 040f0h		;8dbd
+	call 040f0h		;8dbd   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ac02h		;8dc0
 L_8DC3:
-	jp 041adh		;8dc3
+	jp 041adh		;8dc3   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8DC6:
 	call 04288h		;8dc6
 	jr L_8DC3		;8dc9
 L_8DCB:
-	call 040f0h		;8dcb
+	call 040f0h		;8dcb   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9FE6		;8dce
 	jr L_8DC3		;8dd1
 L_8DD3:
-	call 040f0h		;8dd3
+	call 040f0h		;8dd3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bd82h		;8dd6
 	jr L_8DC3		;8dd9
 L_8DDB:
-	call 041d5h		;8ddb
+	call 041d5h		;8ddb   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bdbdh		;8dde
 	jr L_8DC3		;8de1
 L_8DE3:
 	call 059a7h		;8de3
 	jr $+24		;8de6
 L_8DE8:
-	call 040f0h		;8de8
+	call 040f0h		;8de8   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 06fd5h		;8deb
 	jr $+16		;8dee
 
@@ -2017,43 +2017,43 @@ DATA_8DF0:
 
 
 L_8DFE:
-	jp 041bah		;8dfe
+	jp 041bah		;8dfe   ; bancos_1_2_8: pone el 1 en 0x6000, el 2 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8E01:
-	call 040f0h		;8e01
+	call 040f0h		;8e01   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b67dh		;8e04
 	jr L_8DFE		;8e07
 L_8E09:
-	call 040f0h		;8e09
+	call 040f0h		;8e09   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b6c8h		;8e0c
 	jr L_8DFE		;8e0f
 L_8E11:
 	call 059a7h		;8e11
 	jr $+88		;8e14
 L_8E16:
-	call 040f0h		;8e16
+	call 040f0h		;8e16   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b814h		;8e19
 	jr $+80		;8e1c
 L_8E1E:
-	call 040f0h		;8e1e
+	call 040f0h		;8e1e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b8ach		;8e21
 	jr $+72		;8e24
 L_8E26:
-	call 040f0h		;8e26
+	call 040f0h		;8e26   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b866h		;8e29
 	jr $+64		;8e2c
 L_8E2E:
 	call 06e18h		;8e2e
 	jr $+59		;8e31
 L_8E33:
-	call 041f4h		;8e33
+	call 041f4h		;8e33   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a316h		;8e36
 	jr $+51		;8e39
 L_8E3B:
-	call 040f0h		;8e3b
+	call 040f0h		;8e3b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 06fd5h		;8e3e
 	jr $+43		;8e41
 L_8E43:
-	call 041a0h		;8e43
+	call 041a0h		;8e43   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aeffh		;8e46
 	jr $+35		;8e49
 
@@ -2069,13 +2069,13 @@ DATA_8E4B:
 
 
 L_8E63:
-	call 040f0h		;8e63
+	call 040f0h		;8e63   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 05f5fh		;8e66
 	call 05f57h		;8e69
 L_8E6C:
-	jp 041c2h		;8e6c
+	jp 041c2h		;8e6c   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8E6F:
-	call 040f0h		;8e6f
+	call 040f0h		;8e6f   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b3e8h		;8e72
 	jr L_8E6C		;8e75
 L_8E77:
@@ -2088,36 +2088,36 @@ L_8E81:
 	call 07c77h		;8e81
 	jr L_8E6C		;8e84
 L_8E86:
-	call 040f0h		;8e86
+	call 040f0h		;8e86   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_84FA		;8e89
 	jr L_8E6C		;8e8c
 L_8E8E:
-	call 041d5h		;8e8e
+	call 041d5h		;8e8e   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be0fh		;8e91
 	jr L_8E6C		;8e94
 L_8E96:
-	call 041d5h		;8e96
+	call 041d5h		;8e96   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be6bh		;8e99
 	jr L_8E6C		;8e9c
 L_8E9E:
-	call 041d5h		;8e9e
+	call 041d5h		;8e9e   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be94h		;8ea1
 	jr L_8E6C		;8ea4
 L_8EA6:
-	call 041d5h		;8ea6
+	call 041d5h		;8ea6   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bea2h		;8ea9
 	jr L_8E6C		;8eac
 L_8EAE:
-	call 041d2h		;8eae
+	call 041d2h		;8eae   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bf0fh		;8eb1
 	jr L_8E6C		;8eb4
 L_8EB6:
-	call 07ce6h		;8eb6
-	call 041c2h		;8eb9
+	call 07ce6h		;8eb6   ; rutina_de_fase: HL = la rutina de la zona en la lista de la fase 0xCA22 (p06:B40C)
+	call 041c2h		;8eb9   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld (0ca20h),hl		;8ebc
 	jp (hl)			;8ebf
 L_8EC0:
-	call 040f0h		;8ec0
+	call 040f0h		;8ec0   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b4e0h		;8ec3
 	jr $+15		;8ec6
 
@@ -2137,27 +2137,27 @@ L_8ECD:
 L_8ED2:
 	call 067f5h		;8ed2
 L_8ED5:
-	jp 041cah		;8ed5
+	jp 041cah		;8ed5   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8ED8:
 	call 04f97h		;8ed8
 	jr L_8ED5		;8edb
 L_8EDD:
-	call 040f0h		;8edd
+	call 040f0h		;8edd   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b1a3h		;8ee0
 	jr L_8ED5		;8ee3
 L_8EE5:
 	call L_89D2		;8ee5
 	jr L_8ED5		;8ee8
 L_8EEA:
-	call 040f0h		;8eea
+	call 040f0h		;8eea   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0af05h		;8eed
 L_8EF0:
-	jp 041a0h		;8ef0
+	jp 041a0h		;8ef0   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8EF3:
 	call 07c77h		;8ef3
 	jr L_8EF0		;8ef6
 L_8EF8:
-	call 040f0h		;8ef8
+	call 040f0h		;8ef8   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9DB1		;8efb
 	jr $+13		;8efe
 L_8F00:
@@ -2175,37 +2175,37 @@ DATA_8F05:
 
 
 L_8F0B:
-	jp 041efh		;8f0b
+	jp 041efh		;8f0b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8F0E:
-	call 040f0h		;8f0e
+	call 040f0h		;8f0e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9319		;8f11
 	jr L_8F60		;8f14
 L_8F16:
-	call 040f0h		;8f16
+	call 040f0h		;8f16   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 07f37h		;8f19
 	jr L_8F60		;8f1c
 L_8F1E:
-	call 040f0h		;8f1e
+	call 040f0h		;8f1e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b1beh		;8f21
 	jr L_8F60		;8f24
 L_8F26:
-	call 040f0h		;8f26
+	call 040f0h		;8f26   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b1f5h		;8f29
 	jr L_8F60		;8f2c
 L_8F2E:
-	call 040f0h		;8f2e
+	call 040f0h		;8f2e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b3a6h		;8f31
 	jr L_8F60		;8f34
 L_8F36:
-	call 040f0h		;8f36
+	call 040f0h		;8f36   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b289h		;8f39
 	jr L_8F60		;8f3c
 L_8F3E:
-	call 040f0h		;8f3e
+	call 040f0h		;8f3e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b322h		;8f41
 	jr L_8F60		;8f44
 L_8F46:
-	call 040f0h		;8f46
+	call 040f0h		;8f46   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 07f3dh		;8f49
 	jr L_8F60		;8f4c
 L_8F4E:
@@ -2220,54 +2220,54 @@ L_8F58:
 L_8F5D:
 	call L_8852		;8f5d
 L_8F60:
-	jp 041d2h		;8f60
+	jp 041d2h		;8f60   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8F63:
 	call L_8725		;8f63
 	jr L_8F60		;8f66
 L_8F68:
-	call 040f0h		;8f68
+	call 040f0h		;8f68   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b1bah		;8f6b
 	jr L_8F60		;8f6e
 L_8F70:
-	call 040f0h		;8f70
+	call 040f0h		;8f70   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0af05h		;8f73
 	jr L_8F60		;8f76
 L_8F78:
 	call 05f88h		;8f78
 	jr L_8F60		;8f7b
 L_8F7D:
-	call 040f0h		;8f7d
+	call 040f0h		;8f7d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b19ah		;8f80
 	jr L_8F60		;8f83
 L_8F85:
-	call 040f0h		;8f85
+	call 040f0h		;8f85   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b132h		;8f88
 	jr L_8F60		;8f8b
 L_8F8D:
-	call 040f0h		;8f8d
+	call 040f0h		;8f8d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b11fh		;8f90
 	jr L_8F60		;8f93
 L_8F95:
-	call 040f0h		;8f95
+	call 040f0h		;8f95   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be60h		;8f98
 	jr L_8F60		;8f9b
 L_8F9D:
-	call 040f0h		;8f9d
+	call 040f0h		;8f9d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b108h		;8fa0
 	jr L_8F60		;8fa3
 L_8FA5:
-	call 041b0h		;8fa5
+	call 041b0h		;8fa5   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bf5ch		;8fa8
 	jr L_8F60		;8fab
 L_8FAD:
-	call 041b0h		;8fad
+	call 041b0h		;8fad   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bb10h		;8fb0
-	jp 040f0h		;8fb3
+	jp 040f0h		;8fb3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8FB6:
 	ld hl,0d770h		;8fb6
 	ld bc,0000fh		;8fb9
 	ld a,0ffh		;8fbc
-	call 04237h		;8fbe
+	call 04237h		;8fbe   ; llena_bloque: pone A en BC + 1 bytes desde HL
 	ld hl,0d771h		;8fc1
 	ld (hl),020h		;8fc4
 	ld hl,0d776h		;8fc6
@@ -2280,19 +2280,19 @@ L_8FB6:
 	ld hl,0d780h		;8fd4
 	ld bc,00003h		;8fd7
 	ld a,0ffh		;8fda
-	jp 04237h		;8fdc
+	jp 04237h		;8fdc   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_8FDF:
-	call 041a0h		;8fdf
+	call 041a0h		;8fdf   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_914E		;8fe2
-	ld a,(0ca4ah)		;8fe5
+	ld a,(0ca4ah)		;8fe5   ; lee la zona
 	cp 010h		;8fe8
 	jr z,L_901E		;8fea
 	ld hl,0b6d7h		;8fec
-	call 043f6h		;8fef
+	call 043f6h		;8fef   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	call L_9009		;8ff2
 	jp c,L_9001		;8ff5
 	ld hl,0b7f2h		;8ff8
-	call 043f6h		;8ffb
+	call 043f6h		;8ffb   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	call L_9157		;8ffe
 L_9001:
 	call L_910C		;9001
@@ -2305,7 +2305,7 @@ L_9009:
 	scf			;900e
 	ret			;900f
 L_9010:
-	ld a,(0ca4bh)		;9010
+	ld a,(0ca4bh)		;9010   ; lee la sala de la zona
 	cp (hl)			;9013
 	jr z,L_901A		;9014
 	inc hl			;9016
@@ -2321,25 +2321,25 @@ L_901E:
 	call L_91BD		;9021
 	call L_924D		;9024
 L_9027:
-	jp 040f0h		;9027
+	jp 040f0h		;9027   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_902A:
-	call 041a0h		;902a
+	call 041a0h		;902a   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_914E		;902d
 	ld a,(0ca65h)		;9030
 	or a			;9033
 	ret z			;9034
 	ld hl,0b6fdh		;9035
-	call 043f6h		;9038
+	call 043f6h		;9038   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	call L_9157		;903b
 	call L_924D		;903e
 	jr L_9027		;9041
 L_9043:
-	call 041a0h		;9043
+	call 041a0h		;9043   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_914E		;9046
-	ld a,(0ca76h)		;9049
+	ld a,(0ca76h)		;9049   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	dec a			;904c
 	ld hl,0b719h		;904d
-	call 043f6h		;9050
+	call 043f6h		;9050   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	call L_917D		;9053
 	call L_90FF		;9056
 	call L_924D		;9059
@@ -2412,7 +2412,7 @@ L_90B4:
 	scf			;90b7
 	ret			;90b8
 L_90B9:
-	ld a,(0ca76h)		;90b9
+	ld a,(0ca76h)		;90b9   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 029h		;90bc
 	jr z,L_90E4		;90be
 	ld a,c			;90c0
@@ -2428,10 +2428,10 @@ L_90D4:
 	add a,080h		;90d4
 	ld (hl),a			;90d6
 	call L_90F9		;90d7
-	ld a,(0ca4ah)		;90da
+	ld a,(0ca4ah)		;90da   ; lee la zona
 	ld (bc),a			;90dd
 	inc c			;90de
-	ld a,(0ca4bh)		;90df
+	ld a,(0ca4bh)		;90df   ; lee la sala de la zona
 	ld (bc),a			;90e2
 	ret			;90e3
 L_90E4:
@@ -2489,11 +2489,11 @@ L_9128:
 	ld b,002h		;912e
 L_9130:
 	push hl			;9130
-	ld a,(0ca4ah)		;9131
+	ld a,(0ca4ah)		;9131   ; lee la zona
 	cp (hl)			;9134
 	jr nz,L_9142		;9135
 	inc l			;9137
-	ld a,(0ca4bh)		;9138
+	ld a,(0ca4bh)		;9138   ; lee la sala de la zona
 	cp (hl)			;913b
 	jr nz,L_9142		;913c
 	pop hl			;913e
@@ -2515,7 +2515,7 @@ L_9142:
 L_914E:
 	ld hl,0d7c0h		;914e
 	ld bc,0000fh		;9151
-	jp 04236h		;9154
+	jp 04236h		;9154   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_9157:
 	ld de,0d7c0h		;9157
 	ld b,000h		;915a
@@ -2625,7 +2625,7 @@ L_91D9:
 	ld a,(hl)			;91e7
 	and 00fh		;91e8
 	ld b,a			;91ea
-	ld a,(0ca4bh)		;91eb
+	ld a,(0ca4bh)		;91eb   ; lee la sala de la zona
 	cp b			;91ee
 	jr nz,L_91F4		;91ef
 	inc hl			;91f1
@@ -2667,9 +2667,9 @@ L_921A:
 	inc hl			;921a
 	ld a,(hl)			;921b
 	push hl			;921c
-	call 040f0h		;921d
+	call 040f0h		;921d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b0feh		;9220
-	call 041a0h		;9223
+	call 041a0h		;9223   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop hl			;9226
 	scf			;9227
 	ret nz			;9228
@@ -2690,9 +2690,9 @@ L_9237:
 	inc hl			;9237
 	ld a,(hl)			;9238
 	push hl			;9239
-	call 040f0h		;923a
+	call 040f0h		;923a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b103h		;923d
-	call 041a0h		;9240
+	call 041a0h		;9240   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop hl			;9243
 	scf			;9244
 	ret nz			;9245
@@ -2731,7 +2731,7 @@ L_9270:
 	push hl			;9270
 	call L_927C		;9271
 	ld bc,02010h		;9274
-	call 0474dh		;9277
+	call 0474dh		;9277   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	pop hl			;927a
 	ret			;927b
 L_927C:
@@ -2748,7 +2748,7 @@ L_9287:
 	ld a,b			;9287
 	dec a			;9288
 	ld hl,09292h		;9289
-	call 043f6h		;928c
+	call 043f6h		;928c   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld e,l			;928f
 	ld d,h			;9290
 	ret			;9291
@@ -2773,14 +2773,14 @@ L_929A:
 	ld bc,02010h		;929f
 	pop af			;92a2
 	jr c,L_92A8		;92a3
-	jp 0475ah		;92a5
+	jp 0475ah		;92a5   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 L_92A8:
 	ld h,d			;92a8
 	ld l,e			;92a9
-	ld a,(0ca42h)		;92aa
+	ld a,(0ca42h)		;92aa   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;92ad
 	xor a			;92ae
-	jp 046ffh		;92af
+	jp 046ffh		;92af   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 L_92B2:
 	ld a,(hl)			;92b2
 	inc hl			;92b3
@@ -2795,64 +2795,64 @@ L_92B2:
 L_92C2:
 	dec a			;92c2
 	call L_87F4		;92c3
-	ld a,(0ca42h)		;92c6
+	ld a,(0ca42h)		;92c6   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;92c9
 	rlca			;92ca
 	rlca			;92cb
 	rlca			;92cc
 	or 0c8h		;92cd
-	jp 047edh		;92cf
+	jp 047edh		;92cf   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 L_92D2:
-	call 040f0h		;92d2
+	call 040f0h		;92d2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0beb7h		;92d5
 L_92D8:
-	jp 041cah		;92d8
+	jp 041cah		;92d8   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 L_92DB:
-	call 040f0h		;92db
+	call 040f0h		;92db   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0beb2h		;92de
 	jr L_92D8		;92e1
 L_92E3:
-	call 040f0h		;92e3
+	call 040f0h		;92e3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be60h		;92e6
 	jr L_92D8		;92e9
 L_92EB:
-	call 040f0h		;92eb
+	call 040f0h		;92eb   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be42h		;92ee
 	jr L_92D8		;92f1
 L_92F3:
 	call 05dfdh		;92f3
 	jr L_92D8		;92f6
 L_92F8:
-	call 041cah		;92f8
+	call 041cah		;92f8   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aed6h		;92fb
 L_92FE:
-	jp 040f0h		;92fe
+	jp 040f0h		;92fe   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9301:
-	call 041cah		;9301
+	call 041cah		;9301   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0af30h		;9304
 	jr L_92FE		;9307
 L_9309:
-	call 041cah		;9309
+	call 041cah		;9309   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0aff3h		;930c
 	jr L_92FE		;930f
 L_9311:
-	call 041cah		;9311
+	call 041cah		;9311   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b172h		;9314
 	jr L_92FE		;9317
 L_9319:
-	call 041cah		;9319
+	call 041cah		;9319   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b3e5h		;931c
 	jr L_92FE		;931f
 L_9321:
-	call 041cah		;9321
+	call 041cah		;9321   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b8c4h		;9324
 	jr L_92FE		;9327
 L_9329:
-	call 041cah		;9329
+	call 041cah		;9329   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b957h		;932c
 	jr L_92FE		;932f
 L_9331:
-	call 041cah		;9331
+	call 041cah		;9331   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b960h		;9334
 	jr L_92FE		;9337
 L_9339:
@@ -2914,7 +2914,7 @@ L_9375:
 L_9399:
 	ld b,003h		;9399
 L_939B:
-	ld a,(0ca07h)		;939b
+	ld a,(0ca07h)		;939b   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and b			;939e
 	ret z			;939f
 	ld hl,0cb0dh		;93a0
@@ -2970,9 +2970,9 @@ L_93E5:
 	ld (0cb01h),a		;93f5
 	ret			;93f8
 L_93F9:
-	call 041a0h		;93f9
+	call 041a0h		;93f9   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a634h		;93fc
-	jp 040f0h		;93ff
+	jp 040f0h		;93ff   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9402:
 	ld a,(0cb16h)		;9402
 	or a			;9405
@@ -3071,7 +3071,7 @@ L_94AD:
 	call L_94D6		;94ad
 	ld a,(0cb0ah)		;94b0
 	ld de,09520h		;94b3
-	call 04403h		;94b6
+	call 04403h		;94b6   ; palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 	ld a,(0cb0eh)		;94b9
 	or a			;94bc
 	ret z			;94bd
@@ -3196,7 +3196,7 @@ L_956B:
 	or a			;9582
 	ret z			;9583
 	dec a			;9584
-	call 0424dh		;9585
+	call 0424dh		;9585   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9588: 4 destinos del despachador p00:424D (call en p02:9585, el
@@ -3246,7 +3246,7 @@ L_95BD:
 	ret nz			;95c9
 	ld a,(0cb0eh)		;95ca
 	dec a			;95cd
-	call 0424dh		;95ce
+	call 0424dh		;95ce   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_95D1: 4 destinos del despachador p00:424D (call en p02:95CE, el
@@ -3264,10 +3264,10 @@ L_95D9:
 	ld a,(0cb03h)		;95d9
 	cp 010h		;95dc
 	ret nc			;95de
-	ld a,(0ca4ah)		;95df
+	ld a,(0ca4ah)		;95df   ; lee la zona
 	cp 007h		;95e2
 	jr nz,L_95FA		;95e4
-	ld a,(0ca4bh)		;95e6
+	ld a,(0ca4bh)		;95e6   ; lee la sala de la zona
 	cp 012h		;95e9
 	jr nz,L_95FA		;95eb
 	ld a,(0d880h)		;95ed
@@ -3285,11 +3285,11 @@ L_95FA:
 L_9606:
 	ld hl,0bf00h		;9606
 	ld (0cb02h),hl		;9609
-	ld a,(0ca4ah)		;960c
+	ld a,(0ca4ah)		;960c   ; lee la zona
 	or a			;960f
 	ret nz			;9610
 	ld h,054h		;9611
-	ld a,(0ca4bh)		;9613
+	ld a,(0ca4bh)		;9613   ; lee la sala de la zona
 	cp 00ah		;9616
 	jr z,L_961F		;9618
 	ld h,034h		;961a
@@ -3302,29 +3302,29 @@ L_961F:
 L_9625:
 	ld hl,0bf10h		;9625
 L_9628:
-	ld a,(0ca76h)		;9628
+	ld a,(0ca76h)		;9628   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 039h		;962b
 	jr nz,L_9635		;962d
-	ld a,(0ca4bh)		;962f
+	ld a,(0ca4bh)		;962f   ; lee la sala de la zona
 	dec a			;9632
 	jr z,L_965D		;9633
 L_9635:
-	ld a,(0ca76h)		;9635
+	ld a,(0ca76h)		;9635   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;9638
 	ret nz			;9639
-	call 0418eh		;963a
+	call 0418eh		;963a   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9643		;963d
-	jp 040f0h		;9640
+	jp 040f0h		;9640   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9643:
 	ld a,(hl)			;9643
 	cp 0ffh		;9644
 	ret z			;9646
 	push hl			;9647
-	ld a,(0ca4ah)		;9648
+	ld a,(0ca4ah)		;9648   ; lee la zona
 	cp (hl)			;964b
 	jr nz,L_9663		;964c
 	inc hl			;964e
-	ld a,(0ca4bh)		;964f
+	ld a,(0ca4bh)		;964f   ; lee la sala de la zona
 	cp (hl)			;9652
 	jr nz,L_9663		;9653
 	inc hl			;9655
@@ -3345,10 +3345,10 @@ L_9669:
 	ld a,(0cb03h)		;9669
 	cp 0c0h		;966c
 	ret c			;966e
-	ld a,(0ca4ah)		;966f
+	ld a,(0ca4ah)		;966f   ; lee la zona
 	cp 00ah		;9672
 	jr nz,L_9691		;9674
-	ld a,(0ca4bh)		;9676
+	ld a,(0ca4bh)		;9676   ; lee la sala de la zona
 	cp 004h		;9679
 	jr nz,L_9691		;967b
 	ld a,(0d7d5h)		;967d
@@ -3372,12 +3372,12 @@ L_969D:
 L_96A2:
 	ld hl,01100h		;96a2
 	ld (0cb02h),hl		;96a5
-	ld a,(0ca4ah)		;96a8
+	ld a,(0ca4ah)		;96a8   ; lee la zona
 	or a			;96ab
 	jr z,L_96C5		;96ac
 	cp 009h		;96ae
 	ret nz			;96b0
-	ld a,(0ca4bh)		;96b1
+	ld a,(0ca4bh)		;96b1   ; lee la sala de la zona
 	cp 003h		;96b4
 	ret nz			;96b6
 	ld bc,04038h		;96b7
@@ -3388,7 +3388,7 @@ L_96A2:
 	jr L_96D4		;96c3
 L_96C5:
 	ld bc,03808h		;96c5
-	ld a,(0ca4bh)		;96c8
+	ld a,(0ca4bh)		;96c8   ; lee la sala de la zona
 	cp 00ah		;96cb
 	jr z,L_96D4		;96cd
 	ld b,070h		;96cf
@@ -3473,7 +3473,7 @@ L_9756:
 L_975C:
 	ld a,(0cb0eh)		;975c
 	dec a			;975f
-	call 0424dh		;9760
+	call 0424dh		;9760   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9763: 4 destinos del despachador p00:424D (call en p02:9760, el
@@ -3581,7 +3581,7 @@ DATA_97F0:
 
 L_97F8:
 	dec a			;97f8
-	call 0424dh		;97f9
+	call 0424dh		;97f9   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_97FC: 4 destinos del despachador p00:424D (call en p02:97F9, el
@@ -3634,7 +3634,7 @@ L_9841:
 	ld hl,0cb1ah		;9841
 	ld (hl),004h		;9844
 	ld hl,0cb15h		;9846
-	ld a,(0ca07h)		;9849
+	ld a,(0ca07h)		;9849   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and 00fh		;984c
 	jr z,L_9852		;984e
 	ld (hl),001h		;9850
@@ -3643,7 +3643,7 @@ L_9852:
 	ret nz			;9853
 	ld a,(0cb0ah)		;9854
 	ld hl,0988ah		;9857
-	call 04248h		;985a
+	call 04248h		;985a   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld hl,0cb15h		;985d
 	ld (hl),a			;9860
 	ld a,(0cb13h)		;9861
@@ -3653,7 +3653,7 @@ L_9852:
 L_986A:
 	ld a,(0cb13h)		;986a
 	ld hl,09888h		;986d
-	call 04248h		;9870
+	call 04248h		;9870   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (0cb14h),a		;9873
 	or a			;9876
 	jr z,L_987C		;9877
@@ -3680,7 +3680,7 @@ DATA_resto_9888:
 
 
 L_9892:
-	ld a,(0ca07h)		;9892
+	ld a,(0ca07h)		;9892   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and 00fh		;9895
 	jr nz,L_98A9		;9897
 	ld hl,0cb18h		;9899
@@ -3715,7 +3715,7 @@ L_98C2:
 	ld a,b			;98c5
 	add a,a			;98c6
 	add a,b			;98c7
-	call 0423eh		;98c8
+	call 0423eh		;98c8   ; suma_a_hl: HL = HL + A
 	ld de,0cb00h		;98cb
 	ldi		;98ce
 	ldi		;98d0
@@ -3813,7 +3813,7 @@ L_995E:
 	ld a,(0cb0eh)		;9961
 	dec a			;9964
 	add a,a			;9965
-	call 0423eh		;9966
+	call 0423eh		;9966   ; suma_a_hl: HL = HL + A
 	ld a,(0cb03h)		;9969
 	add a,(hl)			;996c
 	ld e,a			;996d
@@ -3858,22 +3858,22 @@ L_9997:
 	ld a,(0ca41h)		;999c
 	or a			;999f
 	ret nz			;99a0
-	call 04206h		;99a1
+	call 04206h		;99a1   ; bancos_30: pone el 30 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_99AA		;99a4
-	jp 040f0h		;99a7
+	jp 040f0h		;99a7   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_99AA:
 	ld a,(0cb0eh)		;99aa
 	cp 003h		;99ad
 	ret nc			;99af
 	ld hl,0be4bh		;99b0
-	ld a,(0ca76h)		;99b3
+	ld a,(0ca76h)		;99b3   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;99b6
 	jr nz,L_99C6		;99b7
 	call L_9A5B		;99b9
 	ret c			;99bc
-	ld a,(0ca4ah)		;99bd
+	ld a,(0ca4ah)		;99bd   ; lee la zona
 	ld hl,0baa8h		;99c0
-	call 043f6h		;99c3
+	call 043f6h		;99c3   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 L_99C6:
 	ld a,(hl)			;99c6
 	cp 0ffh		;99c7
@@ -3884,23 +3884,23 @@ L_99C6:
 	ld a,(0cb00h)		;99cf
 	cp 00bh		;99d2
 	ret z			;99d4
-	ld a,(0ca76h)		;99d5
+	ld a,(0ca76h)		;99d5   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;99d8
 	ld a,006h		;99d9
 	jr z,L_99DE		;99db
 	inc a			;99dd
 L_99DE:
-	call 0423eh		;99de
+	call 0423eh		;99de   ; suma_a_hl: HL = HL + A
 	jr L_99C6		;99e1
 L_99E3:
-	ld a,(0ca76h)		;99e3
+	ld a,(0ca76h)		;99e3   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;99e6
 	jr z,L_99EC		;99e7
 	cp (hl)			;99e9
 	ret nz			;99ea
 	inc hl			;99eb
 L_99EC:
-	ld a,(0ca4bh)		;99ec
+	ld a,(0ca4bh)		;99ec   ; lee la sala de la zona
 	cp (hl)			;99ef
 	ret nz			;99f0
 	inc hl			;99f1
@@ -3987,11 +3987,11 @@ L_9A5E:
 	add hl,de			;9a6c
 	jr L_9A5E		;9a6d
 L_9A6F:
-	ld a,(0ca4ah)		;9a6f
+	ld a,(0ca4ah)		;9a6f   ; lee la zona
 	cp (hl)			;9a72
 	jr nz,L_9A94		;9a73
 	inc hl			;9a75
-	ld a,(0ca4bh)		;9a76
+	ld a,(0ca4bh)		;9a76   ; lee la sala de la zona
 	cp (hl)			;9a79
 	jr nz,L_9A94		;9a7a
 	inc hl			;9a7c
@@ -4014,13 +4014,13 @@ L_9A94:
 	and a			;9a94
 	ret			;9a95
 L_9A96:
-	call 041a0h		;9a96
+	call 041a0h		;9a96   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a14dh		;9a99
 	call 0a2aah		;9a9c
 	call 0a139h		;9a9f
-	jp 040f0h		;9aa2
+	jp 040f0h		;9aa2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9AA5:
-	ld a,(0ca4ah)		;9aa5
+	ld a,(0ca4ah)		;9aa5   ; lee la zona
 	cp 006h		;9aa8
 	ret nz			;9aaa
 	call L_9AB4		;9aab
@@ -4031,16 +4031,16 @@ L_9AB4:
 	ld a,(hl)			;9ab7
 	or a			;9ab8
 	jr z,L_9AC4		;9ab9
-	ld a,(0ca07h)		;9abb
+	ld a,(0ca07h)		;9abb   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and 030h		;9abe
 	ret z			;9ac0
 	ld (hl),000h		;9ac1
 	ret			;9ac3
 L_9AC4:
-	ld a,(0ca08h)		;9ac4
+	ld a,(0ca08h)		;9ac4   ; lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 	and 020h		;9ac7
 	ret z			;9ac9
-	ld a,(0ca07h)		;9aca
+	ld a,(0ca07h)		;9aca   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and 010h		;9acd
 	ret z			;9acf
 	ld (hl),001h		;9ad0
@@ -4070,13 +4070,13 @@ L_9AF3:
 	ld a,(0ca41h)		;9af5
 	or a			;9af8
 	ret nz			;9af9
-	ld a,(0ca76h)		;9afa
+	ld a,(0ca76h)		;9afa   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;9afd
 	ret nz			;9afe
 	ld a,(0d8c0h)		;9aff
 	or a			;9b02
 	ret nz			;9b03
-	ld a,(0ca4bh)		;9b04
+	ld a,(0ca4bh)		;9b04   ; lee la sala de la zona
 	cp 007h		;9b07
 	ret z			;9b09
 	cp 010h		;9b0a
@@ -4188,7 +4188,7 @@ L_9BBE:
 	or a			;9bc1
 	ret z			;9bc2
 	dec a			;9bc3
-	call 0424dh		;9bc4
+	call 0424dh		;9bc4   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9BC7: 4 destinos del despachador p00:424D (call en p02:9BC4, el
@@ -4211,9 +4211,9 @@ L_9BD5:
 L_9BD8:
 	jp L_9341		;9bd8
 L_9BDB:
-	call 041a0h		;9bdb
+	call 041a0h		;9bdb   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a387h		;9bde
-	jp 040f0h		;9be1
+	jp 040f0h		;9be1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9BE4:
 	ld a,(0caa0h)		;9be4
 	or a			;9be7
@@ -4233,15 +4233,15 @@ L_9BE4:
 	ld (hl),a			;9c00
 	ret			;9c01
 L_9C02:
-	ld a,(0ca76h)		;9c02
+	ld a,(0ca76h)		;9c02   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 038h		;9c05
 	jr nz,L_9C12		;9c07
 	ld hl,0bd9bh		;9c09
-	ld a,(0ca4bh)		;9c0c
+	ld a,(0ca4bh)		;9c0c   ; lee la sala de la zona
 	dec a			;9c0f
 	jr z,L_9C27		;9c10
 L_9C12:
-	ld a,(0ca4ah)		;9c12
+	ld a,(0ca4ah)		;9c12   ; lee la zona
 	cp 012h		;9c15
 	ld hl,0bd7dh		;9c17
 	jr z,L_9C22		;9c1a
@@ -4249,15 +4249,15 @@ L_9C12:
 	cp 013h		;9c1f
 	ret nz			;9c21
 L_9C22:
-	ld a,(0ca76h)		;9c22
+	ld a,(0ca76h)		;9c22   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;9c25
 	ret nz			;9c26
 L_9C27:
 	xor a			;9c27
 	ld (0e25eh),a		;9c28
-	call 041a0h		;9c2b
+	call 041a0h		;9c2b   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_9CF4		;9c2e
-	call 040f0h		;9c31
+	call 040f0h		;9c31   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0e25eh)		;9c34
 	or a			;9c37
 	ret z			;9c38
@@ -4321,9 +4321,9 @@ L_9C9C:
 	call L_9CB8		;9ca6
 	pop af			;9ca9
 	add a,070h		;9caa
-	call 040f0h		;9cac
+	call 040f0h		;9cac   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b0d3h		;9caf
-	call 041a0h		;9cb2
+	call 041a0h		;9cb2   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop de			;9cb5
 	pop bc			;9cb6
 L_9CB7:
@@ -4359,20 +4359,20 @@ L_9CDA:
 	rra			;9cde
 	and 00fh		;9cdf
 	ld hl,0bd1bh		;9ce1
-	call 041a0h		;9ce4
-	call 043f6h		;9ce7
+	call 041a0h		;9ce4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+	call 043f6h		;9ce7   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld b,(hl)			;9cea
 	inc hl			;9ceb
 	ld c,(hl)			;9cec
 	inc hl			;9ced
 	call 05094h		;9cee
-	jp 040f0h		;9cf1
+	jp 040f0h		;9cf1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9CF4:
 	ld a,(hl)			;9cf4
 	cp 0ffh		;9cf5
 	ret z			;9cf7
 	push hl			;9cf8
-	ld a,(0ca4bh)		;9cf9
+	ld a,(0ca4bh)		;9cf9   ; lee la sala de la zona
 	cp (hl)			;9cfc
 	jr nz,L_9D2F		;9cfd
 	inc hl			;9cff
@@ -4395,9 +4395,9 @@ L_9CF4:
 	add a,070h		;9d16
 	push bc			;9d18
 	push de			;9d19
-	call 040f0h		;9d1a
+	call 040f0h		;9d1a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b0feh		;9d1d
-	call 041a0h		;9d20
+	call 041a0h		;9d20   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop de			;9d23
 	pop bc			;9d24
 	pop hl			;9d25
@@ -4425,7 +4425,7 @@ L_9D36:
 L_9D43:
 	add a,a			;9d43
 	ld hl,09da2h		;9d44
-	call 0423eh		;9d47
+	call 0423eh		;9d47   ; suma_a_hl: HL = HL + A
 	push hl			;9d4a
 	push de			;9d4b
 	ld a,(0cb03h)		;9d4c
@@ -4491,14 +4491,14 @@ DATA_resto_9DA2:
 
 
 L_9DA8:
-	call 041a0h		;9da8
+	call 041a0h		;9da8   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a330h		;9dab
-	jp 040f0h		;9dae
+	jp 040f0h		;9dae   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9DB1:
 	call 06e0dh		;9db1
-	call 041a0h		;9db4
+	call 041a0h		;9db4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a3c8h		;9db7
-	jp 040f0h		;9dba
+	jp 040f0h		;9dba   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9DBD:
 	ld b,000h		;9dbd
 	ld a,(0ffa7h)		;9dbf
@@ -4570,7 +4570,7 @@ L_9E26:
 	ret			;9e2a
 L_9E2B:
 	ld d,001h		;9e2b
-	call 04be4h		;9e2d
+	call 04be4h		;9e2d   ; borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 	call 07206h		;9e30
 	call L_8502		;9e33
 	call 04276h		;9e36
@@ -4589,10 +4589,10 @@ L_9E2B:
 	ld hl,00000h		;9e5b
 	ld (0ca5fh),hl		;9e5e
 	xor a			;9e61
-	ld (0ca42h),a		;9e62
-	ld (0ca4ah),a		;9e65
+	ld (0ca42h),a		;9e62   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld (0ca4ah),a		;9e65   ; guarda la zona
 	ld (0caadh),a		;9e68
-	ld (0ca22h),a		;9e6b
+	ld (0ca22h),a		;9e6b   ; guarda la fase de la partida (indice de las listas de p06:B40C)
 	inc a			;9e6e
 	ld (0cabah),a		;9e6f
 	ld a,01ch		;9e72
@@ -4608,7 +4608,7 @@ L_9E2B:
 	ld (0c702h),hl		;9e8e
 	jp 04365h		;9e91
 L_9E94:
-	ld a,(0ca97h)		;9e94
+	ld a,(0ca97h)		;9e94   ; lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 	or a			;9e97
 	call z,L_85B0		;9e98
 	ld hl,0ffffh		;9e9b
@@ -4619,7 +4619,7 @@ L_9E94:
 	ld (0d44ah),a		;9ea6
 	ld hl,0d8d8h		;9ea9
 	ld bc,00007h		;9eac
-	call 04236h		;9eaf
+	call 04236h		;9eaf   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call L_8FB6		;9eb2
 	call L_8AC6		;9eb5
 	call L_8AD7		;9eb8
@@ -4629,7 +4629,7 @@ L_9E94:
 	call L_9F50		;9ec4
 	call L_9F65		;9ec7
 	call L_8C04		;9eca
-	call 04266h		;9ecd
+	call 04266h		;9ecd   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 051cah		;9ed0
 	call 05ba1h		;9ed3
 	call L_804E		;9ed6

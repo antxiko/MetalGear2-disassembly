@@ -14,13 +14,13 @@
 ; ======================================================================
 
 
-L_4000:
-	jp L_4009		;4000
-L_4003:
-	jp L_4024		;4003
-L_4006:
-	jp L_428F		;4006
-L_4009:
+entrada_arranque:		; jp p16:4009
+	jp calla_todo		;4000   ; calla_todo: arranque del sonido: todo callado
+entrada_pide:		; jp p16:4024
+	jp pide_sonido		;4003   ; pide_sonido: pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+entrada_cuadro:		; jp p16:428F
+	jp sonido_cada_cuadro		;4006   ; sonido_cada_cuadro: el sonido de un cuadro: los ocho canales
+calla_todo:		; arranque del sonido: todo callado
 	ld hl,0ffffh		;4009
 	ld (0c64bh),hl		;400c
 	ld hl,0c64dh		;400f
@@ -31,10 +31,10 @@ L_4009:
 	call L_532C		;401c
 	ld a,0bfh		;401f
 	jp L_51A4		;4021
-L_4024:
+pide_sonido:		; pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
 	ld c,a			;4024
-	ld (0c661h),a		;4025
-	call L_4CE3		;4028
+	ld (0c661h),a		;4025   ; guarda el ultimo sonido pedido
+	call banco_de_musica		;4028   ; banco_de_musica: el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
 	ld a,c			;402b
 	cp 0f0h		;402c
 	jp c,L_4063		;402e
@@ -59,7 +59,7 @@ L_4024:
 	cp 0f2h		;405e
 	call z,L_41B8		;4060
 L_4063:
-	ld hl,065a9h		;4063
+	ld hl,065a9h		;4063   ; sonidos: 171 palabras
 	add a,c			;4066
 	ld e,a			;4067
 	ld d,000h		;4068
@@ -81,7 +81,7 @@ L_406F:
 	jp z,L_413D		;407c
 	cp 030h		;407f
 	jp nz,L_40A1		;4081
-	ld a,(0c661h)		;4084
+	ld a,(0c661h)		;4084   ; lee el ultimo sonido pedido
 	cp 040h		;4087
 	jp nz,L_4092		;4089
 	ld a,(0c480h)		;408c
@@ -92,15 +92,15 @@ L_4092:
 	ld hl,0c481h		;4093
 	cp (hl)			;4096
 	ret c			;4097
-	call L_411A		;4098
+	call arranca_canal		;4098   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c4c1h		;409b
-	jp L_411A		;409e
+	jp arranca_canal		;409e   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 L_40A1:
 	ld a,c			;40a1
 	ld hl,0c401h		;40a2
 	cp (hl)			;40a5
 	ret c			;40a6
-	ld a,(0c661h)		;40a7
+	ld a,(0c661h)		;40a7   ; lee el ultimo sonido pedido
 	cp 082h		;40aa
 	jp z,L_40B4		;40ac
 	cp 088h		;40af
@@ -118,37 +118,37 @@ L_40C0:
 	cp 0cfh		;40c4
 	jp nz,L_40ED		;40c6
 	ld hl,0c401h		;40c9
-	call L_411A		;40cc
+	call arranca_canal		;40cc   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c441h		;40cf
-	call L_411A		;40d2
+	call arranca_canal		;40d2   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c501h		;40d5
-	call L_411A		;40d8
+	call arranca_canal		;40d8   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c541h		;40db
-	call L_411A		;40de
+	call arranca_canal		;40de   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c581h		;40e1
-	call L_411A		;40e4
+	call arranca_canal		;40e4   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c5c1h		;40e7
-	jp L_411A		;40ea
+	jp arranca_canal		;40ea   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 L_40ED:
 	ld hl,0c401h		;40ed
-	call L_411A		;40f0
+	call arranca_canal		;40f0   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c441h		;40f3
-	call L_411A		;40f6
+	call arranca_canal		;40f6   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c481h		;40f9
-	call L_411A		;40fc
+	call arranca_canal		;40fc   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c4c1h		;40ff
-	call L_411A		;4102
+	call arranca_canal		;4102   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c501h		;4105
-	call L_411A		;4108
+	call arranca_canal		;4108   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c541h		;410b
-	call L_411A		;410e
+	call arranca_canal		;410e   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c581h		;4111
-	call L_411A		;4114
+	call arranca_canal		;4114   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 	ld hl,0c5c1h		;4117
-L_411A:
+arranca_canal:		; pone en marcha un canal con el puntero de partitura de DE
 	ld (hl),c			;411a
 	dec hl			;411b
-	ld a,(0c661h)		;411c
+	ld a,(0c661h)		;411c   ; lee el ultimo sonido pedido
 	ld (hl),a			;411f
 	inc hl			;4120
 	inc hl			;4121
@@ -179,7 +179,7 @@ L_413D:
 	ld hl,0c4c1h		;413e
 	cp (hl)			;4141
 	ret c			;4142
-	jp L_411A		;4143
+	jp arranca_canal		;4143   ; arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 L_4146:
 	ld a,(0c640h)		;4146
 	and 006h		;4149
@@ -265,14 +265,14 @@ L_41C6:
 	res 4,a		;4200
 	ld (0c48eh),a		;4202
 	ld a,03fh		;4205
-	ld (09000h),a		;4207
+	ld (09000h),a		;4207   ; 0x3F en 0x9000: los registros del SCC en 0x9800
 	ld hl,00000h		;420a
 	ld (0988bh),hl		;420d
 	ld (0988dh),hl		;4210
 	ld a,012h		;4213
-	ld (09000h),a		;4215
+	ld (09000h),a		;4215   ; el mapper: pone en 0x8000 el banco de A
 	ld a,006h		;4218
-	ld (0c661h),a		;421a
+	ld (0c661h),a		;421a   ; guarda el ultimo sonido pedido
 	ld c,a			;421d
 	ret			;421e
 L_421F:
@@ -298,14 +298,14 @@ L_421F:
 	res 4,a		;4253
 	ld (0c48eh),a		;4255
 	ld a,03fh		;4258
-	ld (09000h),a		;425a
+	ld (09000h),a		;425a   ; 0x3F en 0x9000: los registros del SCC en 0x9800
 	xor a			;425d
 	ld (0988ah),a		;425e
 	ld hl,00000h		;4261
 	ld (0988bh),hl		;4264
 	ld (0988dh),hl		;4267
 	ld a,012h		;426a
-	ld (09000h),a		;426c
+	ld (09000h),a		;426c   ; el mapper: pone en 0x8000 el banco de A
 	ret			;426f
 L_4270:
 	xor a			;4270
@@ -319,11 +319,11 @@ L_4270:
 	ld hl,0ffffh		;4286
 	ld (0c64bh),hl		;4289
 	jp L_532C		;428c
-L_428F:
+sonido_cada_cuadro:		; el sonido de un cuadro: los ocho canales
 	ld a,(0c643h)		;428f
 	call L_51A4		;4292
-	call L_4D3A		;4295
-	ld a,(0fda2h)		;4298
+	call pon_banco_de_musica		;4295   ; pon_banco_de_musica: pone en 0xA000 el banco de 0xC68F
+	ld a,(0fda2h)		;4298   ; lee una copia de cuadros para el sonido (p16:4298)
 	ld hl,0c660h		;429b
 	cp (hl)			;429e
 	jp z,L_42C6		;429f
@@ -335,12 +335,12 @@ L_428F:
 	set 7,(ix+02bh)		;42b6
 	ld ix,0c580h		;42ba
 	set 7,(ix+02bh)		;42be
-	ld a,(0fda2h)		;42c2
+	ld a,(0fda2h)		;42c2   ; lee una copia de cuadros para el sonido (p16:4298)
 	ld (hl),a			;42c5
 L_42C6:
 	inc (hl)			;42c6
 	ld a,(hl)			;42c7
-	ld (0fda2h),a		;42c8
+	ld (0fda2h),a		;42c8   ; guarda una copia de cuadros para el sonido (p16:4298)
 	ld a,(0c698h)		;42cb
 	or a			;42ce
 	jp nz,L_50CC		;42cf
@@ -350,33 +350,33 @@ L_42C6:
 	bit 0,(hl)		;42da
 	call nz,L_4B56		;42dc
 	ld a,001h		;42df
-	ld (0c644h),a		;42e1
+	ld (0c644h),a		;42e1   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c400h		;42e4
-	call L_4369		;42e8
+	call canal_cada_cuadro		;42e8   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,002h		;42eb
-	ld (0c644h),a		;42ed
+	ld (0c644h),a		;42ed   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c440h		;42f0
-	call L_4369		;42f4
+	call canal_cada_cuadro		;42f4   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,004h		;42f7
-	ld (0c644h),a		;42f9
+	ld (0c644h),a		;42f9   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c480h		;42fc
-	call L_4369		;4300
+	call canal_cada_cuadro		;4300   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,008h		;4303
-	ld (0c644h),a		;4305
+	ld (0c644h),a		;4305   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c4c0h		;4308
-	call L_4369		;430c
+	call canal_cada_cuadro		;430c   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,010h		;430f
-	ld (0c644h),a		;4311
+	ld (0c644h),a		;4311   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c500h		;4314
-	call L_4369		;4318
+	call canal_cada_cuadro		;4318   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,020h		;431b
-	ld (0c644h),a		;431d
+	ld (0c644h),a		;431d   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c540h		;4320
-	call L_4369		;4324
+	call canal_cada_cuadro		;4324   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,040h		;4327
-	ld (0c644h),a		;4329
+	ld (0c644h),a		;4329   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c580h		;432c
-	call L_4369		;4330
+	call canal_cada_cuadro		;4330   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	ld a,(0ca5fh)		;4333
 	cp 001h		;4336
 	jp nz,L_434B		;4338
@@ -386,22 +386,22 @@ L_42C6:
 	ld (ix+03fh),009h		;4347
 L_434B:
 	ld a,080h		;434b
-	ld (0c644h),a		;434d
+	ld (0c644h),a		;434d   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c5c0h		;4350
-	call L_4369		;4354
+	call canal_cada_cuadro		;4354   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	jp L_50CC		;4357
 L_435A:
 	ld a,008h		;435a
-	ld (0c644h),a		;435c
+	ld (0c644h),a		;435c   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c4c0h		;435f
-	call L_4369		;4363
+	call canal_cada_cuadro		;4363   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 	jp L_50CC		;4366
-L_4369:
-	ld a,(ix+000h)		;4369
+canal_cada_cuadro:		; un cuadro de un canal: cuenta la nota y lee la siguiente
+	ld a,(ix+000h)		;4369   ; lee el sonido del canal (0 = callado)
 	or a			;436c
 	ret z			;436d
-	dec (ix+004h)		;436e
-	ld a,(ix+004h)		;4371
+	dec (ix+004h)		;436e   ; baja lo que le queda a la nota
+	ld a,(ix+004h)		;4371   ; lee lo que le queda a la nota
 	cp 0ffh		;4374
 	jp z,L_4380		;4376
 	or a			;4379
@@ -413,19 +413,19 @@ L_4380:
 L_4386:
 	or (ix+01fh)		;4386
 	jp nz,L_46AF		;4389
-	ld l,(ix+002h)		;438c
-	ld h,(ix+003h)		;438f
-L_4392:
+	ld l,(ix+002h)		;438c   ; lee el puntero de la partitura (bajo)
+	ld h,(ix+003h)		;438f   ; lee el puntero de la partitura (alto)
+lee_partitura:		; la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
 	ld a,(hl)			;4392
 	cp 0ffh		;4393
-	jp z,L_4C19		;4395
+	jp z,fin_de_partitura		;4395   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	cp 0d0h		;4398
 	jp c,L_43A6		;439a
 	ex de,hl			;439d
-	call L_4D41		;439e
+	call orden_de_partitura		;439e   ; orden_de_partitura: salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
 	ex de,hl			;43a1
 	inc hl			;43a2
-	jp L_4392		;43a3
+	jp lee_partitura		;43a3   ; lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
 L_43A6:
 	ld a,(ix+00bh)		;43a6
 	bit 1,a		;43a9
@@ -446,7 +446,7 @@ L_43BE:
 L_43C5:
 	djnz L_43BE		;43c5
 L_43C7:
-	ld (ix+004h),a		;43c7
+	ld (ix+004h),a		;43c7   ; guarda lo que le queda a la nota
 	ld c,a			;43ca
 	push bc			;43cb
 	ld (ix+029h),004h		;43cc
@@ -456,7 +456,7 @@ L_43C7:
 L_43D8:
 	srl d		;43d8
 	jp nc,L_43E5		;43da
-	ld a,(ix+004h)		;43dd
+	ld a,(ix+004h)		;43dd   ; lee lo que le queda a la nota
 	add a,b			;43e0
 	ld b,a			;43e1
 	ld a,e			;43e2
@@ -477,7 +477,7 @@ L_43E5:
 	rr b		;43ff
 	ld (ix+029h),b		;4401
 	pop bc			;4404
-	ld (ix+004h),c		;4405
+	ld (ix+004h),c		;4405   ; guarda lo que le queda a la nota
 	ld a,(hl)			;4408
 	and 0f0h		;4409
 	rrca			;440b
@@ -485,13 +485,13 @@ L_43E5:
 	rrca			;440d
 	rrca			;440e
 	inc hl			;440f
-	ld (ix+002h),l		;4410
-	ld (ix+003h),h		;4413
+	ld (ix+002h),l		;4410   ; guarda el puntero de la partitura (bajo)
+	ld (ix+003h),h		;4413   ; guarda el puntero de la partitura (alto)
 	bit 7,(ix+00bh)		;4416
 	ret nz			;441a
 	cp 00ch		;441b
 	jp nc,L_45B9		;441d
-	ld hl,045beh		;4420
+	ld hl,045beh		;4420   ; sonido_45BE: datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D,
 	ld e,a			;4423
 	ld d,000h		;4424
 	add hl,de			;4426
@@ -594,7 +594,7 @@ L_44E9:
 	or a			;4508
 	call z,L_4799		;4509
 L_450C:
-	ld a,(0c644h)		;450c
+	ld a,(0c644h)		;450c   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 010h		;450f
 	jp nz,L_4551		;4511
 	ld a,(0c68bh)		;4514
@@ -712,7 +712,7 @@ L_45EF:
 	and 00fh		;45f0
 	ld e,a			;45f2
 L_45F3:
-	ld a,(0c644h)		;45f3
+	ld a,(0c644h)		;45f3   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 008h		;45f6
 	jp nc,L_4604		;45f8
 	bit 2,(ix+00fh)		;45fb
@@ -731,10 +731,10 @@ L_4613:
 	bit 7,(ix+00bh)		;4613
 	ret nz			;4617
 	inc hl			;4618
-	ld (ix+002h),l		;4619
-	ld (ix+003h),h		;461c
+	ld (ix+002h),l		;4619   ; guarda el puntero de la partitura (bajo)
+	ld (ix+003h),h		;461c   ; guarda el puntero de la partitura (alto)
 	ld a,(ix+014h)		;461f
-	ld (ix+004h),a		;4622
+	ld (ix+004h),a		;4622   ; guarda lo que le queda a la nota
 	ret			;4625
 L_4626:
 	set 7,(ix+00bh)		;4626
@@ -747,7 +747,7 @@ L_4626:
 	cp 001h		;4639
 	jp nz,L_4645		;463b
 	xor a			;463e
-	ld hl,05486h		;463f
+	ld hl,05486h		;463f   ; sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
 	jp L_4649		;4642
 L_4645:
 	call L_4674		;4645
@@ -764,7 +764,7 @@ L_4649:
 	ld a,(hl)			;4652
 L_4653:
 	set 1,(ix+00bh)		;4653
-	call L_4392		;4657
+	call lee_partitura		;4657   ; lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
 	res 1,(ix+00bh)		;465a
 	res 7,(ix+00bh)		;465e
 	ld a,(ix+014h)		;4662
@@ -782,7 +782,7 @@ L_4674:
 	ld a,(ix+017h)		;4682
 	or a			;4685
 	jp nz,L_468D		;4686
-	ld hl,05486h		;4689
+	ld hl,05486h		;4689   ; sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
 	ret			;468c
 L_468D:
 	ld hl,0549eh		;468d
@@ -825,7 +825,7 @@ L_46AF:
 	bit 0,(ix+02bh)		;46de
 	call nz,L_4862		;46e2
 L_46E5:
-	ld a,(0c644h)		;46e5
+	ld a,(0c644h)		;46e5   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 010h		;46e8
 	ret nz			;46ea
 	ld a,(0c68bh)		;46eb
@@ -1030,7 +1030,7 @@ L_486E:
 	or a			;487a
 	jp z,L_4887		;487b
 	ld a,(ix+029h)		;487e
-	cp (ix+004h)		;4881
+	cp (ix+004h)		;4881   ; compara con lo que le queda a la nota
 	jp nc,L_491C		;4884
 L_4887:
 	bit 3,(ix+02bh)		;4887
@@ -1125,7 +1125,7 @@ L_4944:
 	or a			;4947
 	jp z,L_4954		;4948
 	ld a,(ix+029h)		;494b
-	cp (ix+004h)		;494e
+	cp (ix+004h)		;494e   ; compara con lo que le queda a la nota
 	jp nc,L_49EE		;4951
 L_4954:
 	bit 7,(ix+02ah)		;4954
@@ -1309,7 +1309,7 @@ L_4AC9:
 	add a,080h		;4ace
 	cp c			;4ad0
 	jp z,L_4B12		;4ad1
-	ld (ix+000h),c		;4ad4
+	ld (ix+000h),c		;4ad4   ; guarda el sonido del canal (0 = callado)
 	jp c,L_4AF5		;4ad7
 	sub c			;4ada
 	call L_4B1B		;4adb
@@ -1322,10 +1322,10 @@ L_4AE5:
 	add a,a			;4ae5
 	djnz L_4AE5		;4ae6
 	pop bc			;4ae8
-	add a,(ix+000h)		;4ae9
+	add a,(ix+000h)		;4ae9   ; le suma el sonido del canal (0 = callado)
 	ld c,080h		;4aec
 	sub c			;4aee
-	ld (ix+000h),a		;4aef
+	ld (ix+000h),a		;4aef   ; guarda el sonido del canal (0 = callado)
 	jp L_4B12		;4af2
 L_4AF5:
 	sub c			;4af5
@@ -1343,11 +1343,11 @@ L_4B03:
 	djnz L_4B03		;4b04
 	pop bc			;4b06
 	ld c,a			;4b07
-	ld a,(ix+000h)		;4b08
+	ld a,(ix+000h)		;4b08   ; lee el sonido del canal (0 = callado)
 	sub c			;4b0b
 	ld c,080h		;4b0c
 	sub c			;4b0e
-	ld (ix+000h),a		;4b0f
+	ld (ix+000h),a		;4b0f   ; guarda el sonido del canal (0 = callado)
 L_4B12:
 	inc hl			;4b12
 	inc de			;4b13
@@ -1415,42 +1415,42 @@ L_4B56:
 	bit 4,a		;4b78
 	jp nz,L_4B8B		;4b7a
 	ld ix,0c480h		;4b7d
-	call L_4C19		;4b81
+	call fin_de_partitura		;4b81   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	ld ix,0c4c0h		;4b84
-	call L_4C19		;4b88
+	call fin_de_partitura		;4b88   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 L_4B8B:
 	ld ix,0c400h		;4b8b
-	call L_4C19		;4b8f
+	call fin_de_partitura		;4b8f   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	ld ix,0c580h		;4b92
-	call L_4C19		;4b96
+	call fin_de_partitura		;4b96   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 L_4B99:
 	ld ix,0c540h		;4b99
-	call L_4C19		;4b9d
+	call fin_de_partitura		;4b9d   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 L_4BA0:
 	ld ix,0c440h		;4ba0
-	call L_4C19		;4ba4
+	call fin_de_partitura		;4ba4   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	ld ix,0c500h		;4ba7
-	call L_4C19		;4bab
+	call fin_de_partitura		;4bab   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	ld ix,0c5c0h		;4bae
-	call L_4C19		;4bb2
+	call fin_de_partitura		;4bb2   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	call L_4146		;4bb5
 	ret			;4bb8
 L_4BB9:
 	ld ix,0c480h		;4bb9
-	call L_4C19		;4bbd
+	call fin_de_partitura		;4bbd   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	ld ix,0c4c0h		;4bc0
-	call L_4C19		;4bc4
+	call fin_de_partitura		;4bc4   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	call L_4146		;4bc7
 	ret			;4bca
 L_4BCB:
 	ld ix,0c580h		;4bcb
-	call L_4C19		;4bcf
+	call fin_de_partitura		;4bcf   ; fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 	jp L_4BA0		;4bd2
 L_4BD5:
 	ld hl,0c640h		;4bd5
 	bit 5,(hl)		;4bd8
 	jp nz,L_4C04		;4bda
-	ld a,(0c644h)		;4bdd
+	ld a,(0c644h)		;4bdd   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	bit 7,(hl)		;4be0
 	jp nz,L_4BF5		;4be2
 	bit 6,(hl)		;4be5
@@ -1485,8 +1485,8 @@ L_4C04:
 L_4C16:
 	ld e,000h		;4c16
 	ret			;4c18
-L_4C19:
-	ld a,(0c644h)		;4c19
+fin_de_partitura:		; la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+	ld a,(0c644h)		;4c19   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 001h		;4c1c
 	jp nz,L_4C88		;4c1e
 	ld a,(ix+000h)		;4c21
@@ -1537,7 +1537,7 @@ L_4C7B:
 	ld (0cb58h),a		;4c82
 	jp L_4CA2		;4c85
 L_4C88:
-	ld a,(0c644h)		;4c88
+	ld a,(0c644h)		;4c88   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 040h		;4c8b
 	jp nz,L_4CA2		;4c8d
 	ld a,(ix+000h)		;4c90
@@ -1560,7 +1560,7 @@ L_4CA2:
 	ld (ix+00fh),a		;4cb8
 	ld (ix+010h),a		;4cbb
 	ld (ix+02bh),a		;4cbe
-	ld a,(0c644h)		;4cc1
+	ld a,(0c644h)		;4cc1   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 008h		;4cc4
 	ret nc			;4cc6
 	cp 004h		;4cc7
@@ -1579,20 +1579,20 @@ L_4CDE:
 	res 2,(hl)		;4cde
 	res 3,(hl)		;4ce0
 	ret			;4ce2
-L_4CE3:
+banco_de_musica:		; el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
 	cp 06ah		;4ce3
 	ret c			;4ce5
 	cp 0f0h		;4ce6
 	ret nc			;4ce8
 	sub 06ah		;4ce9
-	ld hl,04cf9h		;4ceb
+	ld hl,04cf9h		;4ceb   ; sonido_4CF9: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6C, 0x6D, 0x6E,
 	add a,l			;4cee
 	ld l,a			;4cef
 	jp nc,L_4CF4		;4cf0
 	inc h			;4cf3
 L_4CF4:
 	ld a,(hl)			;4cf4
-	ld (0c68fh),a		;4cf5
+	ld (0c68fh),a		;4cf5   ; guarda el banco de 0xA000 de la musica que suena
 	ret			;4cf8
 
 ; ----------------------------------------------------------------------
@@ -1613,13 +1613,13 @@ DATA_sonido_4CF9:
 ; ======================================================================
 
 
-L_4D3A:
-	ld a,(0c68fh)		;4d3a
-	ld (0b000h),a		;4d3d
+pon_banco_de_musica:		; pone en 0xA000 el banco de 0xC68F
+	ld a,(0c68fh)		;4d3a   ; lee el banco de 0xA000 de la musica que suena
+	ld (0b000h),a		;4d3d   ; el mapper: pone en 0xA000 el banco de A
 	ret			;4d40
-L_4D41:
+orden_de_partitura:		; salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
 	sub 0d0h		;4d41
-	ld hl,04d52h		;4d43
+	ld hl,04d52h		;4d43   ; sonido_4D52: datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x28, 0x6A, 0x6B, 0x6C,
 	add a,a			;4d46
 	add a,l			;4d47
 	ld l,a			;4d48
@@ -1794,7 +1794,7 @@ L_4E3C:
 	dec de			;4e4f
 	ret			;4e50
 L_4E51:
-	ld a,(0c644h)		;4e51
+	ld a,(0c644h)		;4e51   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 004h		;4e54
 	ld a,(0c647h)		;4e56
 	jp nz,L_4E66		;4e59
@@ -1812,7 +1812,7 @@ L_4E70:
 	ld a,(de)			;4e71
 	and 01fh		;4e72
 	ld b,a			;4e74
-	ld a,(0c644h)		;4e75
+	ld a,(0c644h)		;4e75   ; lee el canal de sonido que se esta tocando (1, 2, 4...)
 	cp 004h		;4e78
 	ld a,b			;4e7a
 	jp nz,L_4E8C		;4e7b
@@ -2195,12 +2195,12 @@ L_50FB:
 L_510E:
 	ld e,(hl)			;510e
 	ld a,b			;510f
-	call L_547E		;5110
+	call escribe_psg		;5110   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 	inc hl			;5113
 	inc b			;5114
 	ld e,(hl)			;5115
 	ld a,b			;5116
-	call L_547E		;5117
+	call escribe_psg		;5117   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 	inc hl			;511a
 	ld e,(hl)			;511b
 	ld a,c			;511c
@@ -2209,7 +2209,7 @@ L_510E:
 	inc hl			;511f
 	bit 3,(hl)		;5120
 	ret nz			;5122
-	call L_547E		;5123
+	call escribe_psg		;5123   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 	bit 2,(hl)		;5126
 	ret z			;5128
 	set 3,(hl)		;5129
@@ -2235,7 +2235,7 @@ L_5141:
 	ld e,a			;514e
 	ld a,006h		;514f
 L_5151:
-	jp L_547E		;5151
+	jp escribe_psg		;5151   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 L_5154:
 	ld hl,0c647h		;5154
 	bit 7,(hl)		;5157
@@ -2244,25 +2244,25 @@ L_5154:
 	ld a,(0c649h)		;515c
 	ld e,a			;515f
 	ld a,00bh		;5160
-	call L_547E		;5162
+	call escribe_psg		;5162   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 	bit 6,(hl)		;5165
 	ret z			;5167
 	res 6,(hl)		;5168
 	ld a,(0c64ah)		;516a
 	ld e,a			;516d
 	ld a,00ch		;516e
-	call L_547E		;5170
+	call escribe_psg		;5170   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 	bit 5,(hl)		;5173
 	ret z			;5175
 	res 5,(hl)		;5176
 	ld a,(0c648h)		;5178
 	ld e,a			;517b
 	ld a,00dh		;517c
-	jp L_547E		;517e
+	jp escribe_psg		;517e   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 L_5181:
 	ld hl,0c40fh		;5181
 	ld a,(hl)			;5184
-	ld hl,051b4h		;5185
+	ld hl,051b4h		;5185   ; sonido_51B4: datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05,
 	call L_51AD		;5188
 	ld b,(hl)			;518b
 	ld hl,0c44fh		;518c
@@ -2272,7 +2272,7 @@ L_5181:
 	ld c,(hl)			;5196
 	ld hl,0c48fh		;5197
 	ld a,(hl)			;519a
-	ld hl,051bch		;519b
+	ld hl,051bch		;519b   ; sonido_51BC: datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05,
 	call L_51AD		;519e
 	ld a,(hl)			;51a1
 	or b			;51a2
@@ -2281,7 +2281,7 @@ L_51A4:
 	ld e,a			;51a4
 	ld (0c643h),a		;51a5
 	ld a,007h		;51a8
-	jp L_547E		;51aa
+	jp escribe_psg		;51aa   ; escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 L_51AD:
 	and 003h		;51ad
 	ld e,a			;51af
@@ -2597,11 +2597,11 @@ L_532C:
 	ret z			;53c1
 L_53C2:
 	ld a,03fh		;53c2
-	ld (09000h),a		;53c4
+	ld (09000h),a		;53c4   ; 0x3F en 0x9000: los registros del SCC en 0x9800
 	ld a,(hl)			;53c7
 	ld (de),a			;53c8
 	ld a,012h		;53c9
-	ld (09000h),a		;53cb
+	ld (09000h),a		;53cb   ; el mapper: pone en 0x8000 el banco de A
 	ret			;53ce
 L_53CF:
 	ld ix,0c4c0h		;53cf
@@ -2660,7 +2660,7 @@ L_544B:
 	ld de,09860h		;545e
 L_5461:
 	ld a,03fh		;5461
-	ld (09000h),a		;5463
+	ld (09000h),a		;5463   ; 0x3F en 0x9000: los registros del SCC en 0x9800
 	xor a			;5466
 	ld (0988fh),a		;5467
 	ld b,020h		;546a
@@ -2673,9 +2673,9 @@ L_546C:
 	ld a,(0c65ch)		;5472
 	ld (0988fh),a		;5475
 	ld a,012h		;5478
-	ld (09000h),a		;547a
+	ld (09000h),a		;547a   ; el mapper: pone en 0x8000 el banco de A
 	ret			;547d
-L_547E:
+escribe_psg:		; escribe A en el registro del PSG (PR2 p13:73A6)
 	out (0a0h),a		;547e
 	ex af,af'			;5480
 	ld a,e			;5481

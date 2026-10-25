@@ -99,3 +99,138 @@ F 0x54B2 16
 D 0x5741 0x5842 resto_5741  lo apuntan con el banco puesto p16:4FCD (0x583E), p16:5039 (0x583E); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p16:4FCD, p16:5039 (257 bytes)
 F 0x5741 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0x4000 entrada_arranque jp p16:4009
+L 0x4003 entrada_pide jp p16:4024
+L 0x4006 entrada_cuadro jp p16:428F
+L 0x4009 calla_todo arranque del sonido: todo callado
+L 0x4024 pide_sonido pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+L 0x411A arranca_canal pone en marcha un canal con el puntero de partitura de DE
+L 0x428F sonido_cada_cuadro el sonido de un cuadro: los ocho canales
+L 0x4369 canal_cada_cuadro un cuadro de un canal: cuenta la nota y lee la siguiente
+L 0x4392 lee_partitura la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+L 0x4C19 fin_de_partitura la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+L 0x4CE3 banco_de_musica el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
+L 0x4D3A pon_banco_de_musica pone en 0xA000 el banco de 0xC68F
+L 0x4D41 orden_de_partitura salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
+L 0x547E escribe_psg escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x4000 calla_todo: arranque del sonido: todo callado
+C 0x4003 pide_sonido: pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+C 0x4006 sonido_cada_cuadro: el sonido de un cuadro: los ocho canales
+C 0x4025 guarda el ultimo sonido pedido
+C 0x4028 banco_de_musica: el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
+C 0x4063 sonidos: 171 palabras
+C 0x4084 lee el ultimo sonido pedido
+C 0x4098 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x409E arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40A7 lee el ultimo sonido pedido
+C 0x40CC arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40D2 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40D8 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40DE arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40E4 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40EA arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40F0 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40F6 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x40FC arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x4102 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x4108 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x410E arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x4114 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x411C lee el ultimo sonido pedido
+C 0x4143 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x4207 0x3F en 0x9000: los registros del SCC en 0x9800
+C 0x4215 el mapper: pone en 0x8000 el banco de A
+C 0x421A guarda el ultimo sonido pedido
+C 0x425A 0x3F en 0x9000: los registros del SCC en 0x9800
+C 0x426C el mapper: pone en 0x8000 el banco de A
+C 0x4295 pon_banco_de_musica: pone en 0xA000 el banco de 0xC68F
+C 0x4298 lee una copia de cuadros para el sonido (p16:4298)
+C 0x42C2 lee una copia de cuadros para el sonido (p16:4298)
+C 0x42C8 guarda una copia de cuadros para el sonido (p16:4298)
+C 0x42E1 guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x42E8 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x42ED guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x42F4 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x42F9 guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4300 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x4305 guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x430C canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x4311 guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4318 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x431D guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4324 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x4329 guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4330 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x434D guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4354 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x435C guarda el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4363 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x4369 lee el sonido del canal (0 = callado)
+C 0x436E baja lo que le queda a la nota
+C 0x4371 lee lo que le queda a la nota
+C 0x438C lee el puntero de la partitura (bajo)
+C 0x438F lee el puntero de la partitura (alto)
+C 0x4395 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x439E orden_de_partitura: salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
+C 0x43A3 lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+C 0x43C7 guarda lo que le queda a la nota
+C 0x43DD lee lo que le queda a la nota
+C 0x4405 guarda lo que le queda a la nota
+C 0x4410 guarda el puntero de la partitura (bajo)
+C 0x4413 guarda el puntero de la partitura (alto)
+C 0x4420 sonido_45BE: datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D,
+C 0x450C lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x45F3 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4619 guarda el puntero de la partitura (bajo)
+C 0x461C guarda el puntero de la partitura (alto)
+C 0x4622 guarda lo que le queda a la nota
+C 0x463F sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
+C 0x4657 lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+C 0x4689 sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
+C 0x46E5 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4881 compara con lo que le queda a la nota
+C 0x494E compara con lo que le queda a la nota
+C 0x4AD4 guarda el sonido del canal (0 = callado)
+C 0x4AE9 le suma el sonido del canal (0 = callado)
+C 0x4AEF guarda el sonido del canal (0 = callado)
+C 0x4B08 lee el sonido del canal (0 = callado)
+C 0x4B0F guarda el sonido del canal (0 = callado)
+C 0x4B81 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4B88 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4B8F fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4B96 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4B9D fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BA4 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BAB fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BB2 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BBD fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BC4 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BCF fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BDD lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4C19 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4C88 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4CC1 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4CEB sonido_4CF9: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6C, 0x6D, 0x6E,
+C 0x4CF5 guarda el banco de 0xA000 de la musica que suena
+C 0x4D3A lee el banco de 0xA000 de la musica que suena
+C 0x4D3D el mapper: pone en 0xA000 el banco de A
+C 0x4D43 sonido_4D52: datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x28, 0x6A, 0x6B, 0x6C,
+C 0x4E51 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4E75 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x5110 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5117 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5123 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5151 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5162 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5170 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x517E escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5185 sonido_51B4: datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05,
+C 0x519B sonido_51BC: datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05,
+C 0x51AA escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x53C4 0x3F en 0x9000: los registros del SCC en 0x9800
+C 0x53CB el mapper: pone en 0x8000 el banco de A
+C 0x5463 0x3F en 0x9000: los registros del SCC en 0x9800
+C 0x547A el mapper: pone en 0x8000 el banco de A
+# --- fin de las anotaciones de anota.py ---

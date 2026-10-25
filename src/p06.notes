@@ -55,3 +55,145 @@ F 0xB552 16
 D 0xB65B 0xC000 resto_B65B  lo apuntan con el banco puesto p06:B5D3 (0xB65B), p06:B596 (0xB68B), p06:B59C (0xB69B), p06:B5E5 (0xB6BB), p06:B5F1 (0xB6CB), p02:8FEC (0xB6D7); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:B5D3, p06:B596, p06:B59C, p06:B5E5, p06:B5F1, p02:8FEC (2469 bytes)
 F 0xB65B 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xB0AD lee_mando_y_teclas el mando a 0xCA08/0xCA07 y las teclas de funcion a 0xCA0A/0xCA09
+L 0xB0BE guarda_mando (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
+L 0xB0C8 mando A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
+L 0xB109 teclas_de_funcion A = las filas 6 y 7 de la matriz, en 6 bits
+L 0xB129 matriz_del_teclado en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
+C 0xA0B1 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA0BA borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA0F2 guarda 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xA10D suma_a_de: DE = DE + A
+C 0xA11B llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA199 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA1B8 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA1BE lee la zona
+C 0xA1FF lee la sala de la zona
+C 0xA210 lee la sala de la zona
+C 0xA225 lee la sala de la zona
+C 0xA23A lee la sala de la zona
+C 0xA26F lee la sala de la zona
+C 0xA288 lee la sala de la zona
+C 0xA296 lee la sala de la zona
+C 0xA29F lee la sala de la zona
+C 0xA33D lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA347 lee la zona
+C 0xA34E lee la sala de la zona
+C 0xA39F lee la sala de la zona
+C 0xA3EF borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA3F8 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA401 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA40A borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA413 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA41C borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA425 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA432 lee la zona
+C 0xA457 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA461 lee la zona
+C 0xA468 lee la sala de la zona
+C 0xA485 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA48C lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA4ED lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA4F6 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA4FD lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA51F lee la zona
+C 0xA52C lee la sala de la zona
+C 0xA536 lee la sala de la zona
+C 0xA571 suma_a_hl: HL = HL + A
+C 0xA59E despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA615 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA65C lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xA665 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA671 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA684 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xA6A0 suma_a_hl: HL = HL + A
+C 0xA6E1 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA79A lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA7A0 lee la zona
+C 0xA7A7 lee la sala de la zona
+C 0xA7ED despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA94B palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA962 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA9B0 suma_a_hl: HL = HL + A
+C 0xAA26 suma_a_hl: HL = HL + A
+C 0xAAE3 mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
+C 0xAAE9 lee la zona
+C 0xAAF7 lee la sala de la zona
+C 0xAB03 mosaico_AB1D: un mosaico de 2 x 2 caracteres, un byte cada uno
+C 0xAB0D lee la sala de la zona
+C 0xAB13 lee la sala de la zona
+C 0xAB2B lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAB30 lee la zona
+C 0xAB36 lee la sala de la zona
+C 0xAB53 mosaico_AB7D: un mosaico de 5 x 4 caracteres, un byte cada uno
+C 0xAB71 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAB7A copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xABA3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xABAD copia_en_y: orden YMMM del VDP
+C 0xABB8 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xABBB lee la zona
+C 0xABC1 lee la sala de la zona
+C 0xABD5 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
+C 0xABE1 suma_a_hl: HL = HL + A
+C 0xAC2C borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xAC2F lee la zona
+C 0xAC38 lee la sala de la zona
+C 0xACE2 lee la zona
+C 0xAD3F lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAD4B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xAD9D palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xADA0 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
+C 0xADA6 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
+C 0xAE65 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAE98 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xAEB6 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xAEC1 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xAEC7 lee la zona
+C 0xAECA palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAECD lee la sala de la zona
+C 0xAEF3 suma_a_hl: HL = HL + A
+C 0xAEFF despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAFA4 guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB073 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
+C 0xB078 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
+C 0xB07D borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
+C 0xB082 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
+C 0xB085 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xB09A apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
+C 0xB0AD matriz_del_teclado: en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
+C 0xB0B0 mando: A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
+C 0xB0B3 guarda_mando: (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
+C 0xB0B6 teclas_de_funcion: A = las filas 6 y 7 de la matriz, en 6 bits
+C 0xB0B9 apunta a las teclas de funcion pulsadas (filas 6 y 7 de la matriz)
+C 0xB0BE apunta a el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xB129 lee el estado de la partida (p01:729F: 8 estados) y el byte siguiente (16 bits)
+C 0xB133 apunta a las 6 primeras filas de la matriz del teclado (en el estado 5, paso 8)
+C 0xB136 apunta a lo recien pulsado de esas 6 filas
+C 0xB152 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB17C guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB18D guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB198 guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB1B5 guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB1D6 guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB1DA lee la zona
+C 0xB1E5 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB207 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xB213 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB22C copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xB26A palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB2DC borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB2FD suma_a_de: DE = DE + A
+C 0xB308 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0xB331 suma_a_hl: HL = HL + A
+C 0xB385 suma_a_hl: HL = HL + A
+C 0xB3A0 suma_a_hl: HL = HL + A
+C 0xB3C9 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB53F lee la zona
+C 0xB546 lee la sala de la zona
+C 0xB5C1 lee la zona
+C 0xB5D6 suma_a_de: DE = DE + A
+C 0xB5E8 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xB5F4 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+# --- fin de las anotaciones de anota.py ---

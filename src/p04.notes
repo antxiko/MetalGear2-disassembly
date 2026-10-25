@@ -21,3 +21,253 @@ F 0x96FF 16
 D 0x98E0 0x98FB resto_98E0  lo apuntan con el banco puesto p04:984C (0x98E0), p04:9856 (0x98E9), p04:985B (0x98F2); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p04:984C, p04:9856, p04:985B (27 bytes)
 F 0x98E0 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0x80AE lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
+C 0x80B3 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x80BB lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
+C 0x80C0 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x80C8 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
+C 0x80CD bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x80D5 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
+C 0x80DA bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x80E6 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
+C 0x80EB bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x80F3 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
+C 0x80F8 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8142 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0x8145 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x814A bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x814F bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8153 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x81C2 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x81CF palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x81FE rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0x8212 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x8278 suma_a_de: DE = DE + A
+C 0x827B lee la zona
+C 0x8282 lee la sala de la zona
+C 0x82F1 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x8381 suma_a_hl: HL = HL + A
+C 0x83BD lee la copia del banco de 0xA000
+C 0x83C1 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x84BC palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x8556 hl_negativo: HL = -HL (PR2 p00:5BBD)
+C 0x8682 guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0x868B byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0x868E despachador: salta a la palabra A de la tabla que va detras del call
+C 0x86B4 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x86B9 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x86BE bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x86CA guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0x870F suma_a_de: DE = DE + A
+C 0x8730 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x8736 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8751 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8759 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8764 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x87BE bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x87C1 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x87CB palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x87DB suma_a_hl: HL = HL + A
+C 0x87E1 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x87EA palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x87F9 suma_a_hl: HL = HL + A
+C 0x8802 suma_a_hl: HL = HL + A
+C 0x880A bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8827 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x8846 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x8893 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0x8896 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x88AB borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x88B4 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x88D4 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0x88D7 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x88DD guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
+C 0x88E3 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x88E6 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0x88E9 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x8904 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8912 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x8929 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x892C bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x893D bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8954 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0x895A bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8960 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
+C 0x896C bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8986 lee la zona
+C 0x89A8 lee la copia del banco de 0xA000
+C 0x89AC bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x89B4 lee la copia del banco de 0xA000
+C 0x89B8 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x89E0 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x8A5A salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0x8A64 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0x8A72 despachador: salta a la palabra A de la tabla que va detras del call
+C 0x8AA3 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8AAB bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8AB3 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8AB9 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8ABC bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8AD0 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8B96 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0x8BD2 lee la sala de la zona
+C 0x8C5F suma_a_hl: HL = HL + A
+C 0x8C68 lee la copia del banco de 0xA000
+C 0x8C6C bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8C77 lee la copia del banco de 0xA000
+C 0x8C7B bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8C83 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8C89 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CA2 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CAB bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CBB apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0x8CC7 scroll_a_cero: R#23 = 0 (el desplazamiento vertical)
+C 0x8CF6 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x8D03 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
+C 0x8D08 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
+C 0x8D2F espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0x8D62 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D68 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D6E bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D74 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D7E bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D8D bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D99 lee la zona
+C 0x8D9F palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x8DA5 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x8DA8 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DB0 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DBB byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0x8DDB bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DEE bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E2D bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E30 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E37 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E3D bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E43 suma_a_de: DE = DE + A
+C 0x8EBE lee la copia del banco de 0xA000
+C 0x8EC2 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8ECD lee la copia del banco de 0xA000
+C 0x8ED1 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8EE9 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0x8F0D bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8F13 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8F27 despachador: salta a la palabra A de la tabla que va detras del call
+C 0x8F49 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x8FBF azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x8FF4 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x913F lee la zona
+C 0x9146 lee la sala de la zona
+C 0x9184 lee la zona
+C 0x9190 lee la sala de la zona
+C 0x91A6 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x9256 lee la zona
+C 0x925C lee la sala de la zona
+C 0x926C lee la copia del banco de 0xA000
+C 0x9270 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x928B lee la copia del banco de 0xA000
+C 0x928F bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x929A lee la copia del banco de 0xA000
+C 0x929E bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x92A8 lee la copia del banco de 0xA000
+C 0x92AC bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x92B4 lee la copia del banco de 0xA000
+C 0x92B8 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x92C7 lee la copia del banco de 0xA000
+C 0x92CB bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x92D3 lee la copia del banco de 0xA000
+C 0x92D7 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x92DF lee la copia del banco de 0xA000
+C 0x92E3 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9311 lee la zona
+C 0x931B lee la sala de la zona
+C 0x932F lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x93C2 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x9429 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0x9491 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x94C0 guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0x950F bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9515 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9526 suma_a_hl: HL = HL + A
+C 0x953C lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x959C lee la zona
+C 0x95A4 lee la sala de la zona
+C 0x95DE lee la sala de la zona
+C 0x9602 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x9623 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x9691 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x96A8 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0x96BA lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x96BF lee la zona
+C 0x96CE lee la sala de la zona
+C 0x96D6 lee la sala de la zona
+C 0x96F7 suma_a_hl: HL = HL + A
+C 0x9707 apunta a el mapa de la sala: 24 x 24 caracteres
+C 0x9739 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x9747 suma_a_hl: HL = HL + A
+C 0x97AD lee la zona
+C 0x97C8 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x97E1 apunta a el mapa de la sala: 24 x 24 caracteres
+C 0x97F9 suma_a_hl: HL = HL + A
+C 0x9817 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9820 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x9826 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x982C bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9835 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x983B bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9899 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x989F borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0x98A3 lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
+C 0x98A8 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x98B1 lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
+C 0x98B6 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x98C0 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x98D7 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x98FB bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x98FE bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9926 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9929 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x993D copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0x9942 suma_a_de: DE = DE + A
+C 0x9949 lee la copia del banco de 0xA000
+C 0x994D bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9955 lee la copia del banco de 0xA000
+C 0x9959 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9976 lee la copia del banco de 0xA000
+C 0x997A bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9A70 lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
+C 0x9A75 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9AA9 lee la copia del banco de 0xA000
+C 0x9AAD bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9AB5 lee la copia del banco de 0xA000
+C 0x9AB9 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9AC4 lee la copia del banco de 0xA000
+C 0x9AC8 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9AD0 lee la copia del banco de 0xA000
+C 0x9AD4 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9ADC lee la copia del banco de 0xA000
+C 0x9AE0 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9AE8 lee la copia del banco de 0xA000
+C 0x9AEC bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9AFF bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9B96 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x9C69 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x9CAA lee la copia del banco de 0xA000
+C 0x9CAE bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9CBF suma_a_hl: HL = HL + A
+C 0x9CD5 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x9CE3 bancos_1: pone el 1 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x9CE6 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x9CF6 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x9D59 despachador: salta a la palabra A de la tabla que va detras del call
+C 0x9ED4 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x9F10 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x9F51 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x9F58 lee la sala de la zona
+C 0x9F61 lee la sala de la zona
+C 0x9FA0 suma_a_hl: HL = HL + A
+C 0x9FDA suma_a_de: DE = DE + A
+C 0x9FE5 suma_a_hl: HL = HL + A
+# --- fin de las anotaciones de anota.py ---

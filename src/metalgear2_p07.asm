@@ -27,11 +27,11 @@ lb55ah:	equ 0x0b55a
 L_A000:
 	ld hl,0d8c0h		;a000
 	ld bc,0000dh		;a003
-	jp 04236h		;a006
+	jp 04236h		;a006   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_A009:
 	call L_A03A		;a009
 	ld a,(0d8c1h)		;a00c
-	call 0424dh		;a00f
+	call 0424dh		;a00f   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A012: 20 destinos del despachador p00:424D (call en p07:A00F, el
@@ -110,7 +110,7 @@ L_A0A2:
 	add a,a			;a0a8
 	add a,b			;a0a9
 	ld hl,0dc80h		;a0aa
-	jp 0423eh		;a0ad
+	jp 0423eh		;a0ad   ; suma_a_hl: HL = HL + A
 L_A0B0:
 	ld hl,0d8c3h		;a0b0
 	dec (hl)			;a0b3
@@ -141,7 +141,7 @@ L_A0E2:
 	ld a,(0caa0h)		;a0ea
 	or a			;a0ed
 	jr nz,L_A10D		;a0ee
-	ld a,(0ca76h)		;a0f0
+	ld a,(0ca76h)		;a0f0   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 018h		;a0f3
 	jr nz,L_A10D		;a0f5
 	ld a,027h		;a0f7
@@ -507,7 +507,7 @@ L_A3A9:
 	call L_A296		;a3b1
 	ld hl,0d8c3h		;a3b4
 	ld (hl),020h		;a3b7
-	call 045f1h		;a3b9
+	call 045f1h		;a3b9   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	jp L_A076		;a3bc
 L_A3BF:
 	ld a,(0d8c3h)		;a3bf
@@ -519,7 +519,7 @@ L_A3C9:
 	ld c,012h		;a3c9
 	jp 00047h		;a3cb   ; BIOS WRTVDP - Writes data in the VDP-register
 L_A3CE:
-	call 045f1h		;a3ce
+	call 045f1h		;a3ce   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	ld hl,0d8c3h		;a3d1
 	dec (hl)			;a3d4
 	ret nz			;a3d5
@@ -559,11 +559,11 @@ L_A40D:
 	ld (0ca77h),a		;a41b
 	ld hl,0d7c0h		;a41e
 	ld bc,0000fh		;a421
-	call 04236h		;a424
+	call 04236h		;a424   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call L_A49D		;a427
 	ld hl,0cb80h		;a42a
 	ld bc,0005fh		;a42d
-	call 04236h		;a430
+	call 04236h		;a430   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call L_A470		;a433
 	call 08578h		;a436
 	call 0875dh		;a439
@@ -597,7 +597,7 @@ L_A470:
 	ld a,(0d658h)		;a477
 	or a			;a47a
 	ret z			;a47b
-	ld a,(0ca4ah)		;a47c
+	ld a,(0ca4ah)		;a47c   ; lee la zona
 	cp 00dh		;a47f
 	ret z			;a481
 	ld a,(0ca5fh)		;a482
@@ -609,7 +609,7 @@ L_A487:
 L_A48D:
 	cp 009h		;a48d
 	ret nz			;a48f
-	ld a,(0ca4ah)		;a490
+	ld a,(0ca4ah)		;a490   ; lee la zona
 	cp 00ah		;a493
 	ret nz			;a495
 	ld a,(0ca5fh)		;a496
@@ -619,18 +619,18 @@ L_A48D:
 L_A49D:
 	ld hl,0df80h		;a49d
 	ld bc,0003fh		;a4a0
-	jp 04236h		;a4a3
+	jp 04236h		;a4a3   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_A4A6:
-	call 045f6h		;a4a6
+	call 045f6h		;a4a6   ; apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 	xor a			;a4a9
 	call 04452h		;a4aa
 	ld a,001h		;a4ad
 	call 04452h		;a4af
 	call 08281h		;a4b2
 	call 05470h		;a4b5
-	ld a,(0ca42h)		;a4b8
+	ld a,(0ca42h)		;a4b8   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	xor 001h		;a4bb
-	ld (0ca42h),a		;a4bd
+	ld (0ca42h),a		;a4bd   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 0547ch		;a4c0
 	call 08524h		;a4c3
 	call 071a2h		;a4c6
@@ -639,7 +639,7 @@ L_A4A6:
 	or a			;a4cf
 	call z,L_A8C3		;a4d0
 	call 071c2h		;a4d3
-	ld a,(0ca42h)		;a4d6
+	ld a,(0ca42h)		;a4d6   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 04879h		;a4d9
 	ld a,(0d7d5h)		;a4dc
 	bit 7,a		;a4df
@@ -647,12 +647,12 @@ L_A4A6:
 	ld hl,0e248h		;a4e3
 	ld (hl),000h		;a4e6
 L_A4E8:
-	jp 04609h		;a4e8
+	jp 04609h		;a4e8   ; enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 L_A4EB:
 	ld a,(0cb21h)		;a4eb
 	cp 002h		;a4ee
 	jr nz,L_A4FD		;a4f0
-	ld a,(0ca76h)		;a4f2
+	ld a,(0ca76h)		;a4f2   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 02ah		;a4f5
 	ret z			;a4f7
 	ld a,(0cb62h)		;a4f8
@@ -700,7 +700,7 @@ L_A52D:
 	ld (0d8c2h),a		;a53f
 	ret			;a542
 L_A543:
-	ld a,(0ca4ah)		;a543
+	ld a,(0ca4ah)		;a543   ; lee la zona
 	cp (hl)			;a546
 	ret nz			;a547
 	inc hl			;a548
@@ -711,20 +711,20 @@ L_A543:
 	jr z,L_A561		;a550
 	jr L_A569		;a552
 L_A554:
-	ld a,(0ca76h)		;a554
+	ld a,(0ca76h)		;a554   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 018h		;a557
 	ret nz			;a559
-	ld a,(0ca4bh)		;a55a
+	ld a,(0ca4bh)		;a55a   ; lee la sala de la zona
 	dec a			;a55d
 	ret nz			;a55e
 	jr L_A56E		;a55f
 L_A561:
-	ld a,(0ca76h)		;a561
+	ld a,(0ca76h)		;a561   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 02eh		;a564
 	ret nz			;a566
 	jr L_A56E		;a567
 L_A569:
-	ld a,(0ca4bh)		;a569
+	ld a,(0ca4bh)		;a569   ; lee la sala de la zona
 	cp (hl)			;a56c
 	ret nz			;a56d
 L_A56E:
@@ -783,15 +783,15 @@ L_A5C3:
 	call L_A5E9		;a5c3
 L_A5C6:
 	ld de,(0d8cfh)		;a5c6
-	ld a,(0ca42h)		;a5ca
+	ld a,(0ca42h)		;a5ca   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;a5cd
 	rlca			;a5ce
 	or 002h		;a5cf
 	ld bc,00808h		;a5d1
-	jp 04767h		;a5d4
+	jp 04767h		;a5d4   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_A5D7:
 	call L_A5E9		;a5d7
-	ld a,(0ca4ah)		;a5da
+	ld a,(0ca4ah)		;a5da   ; lee la zona
 	cp 007h		;a5dd
 	ld a,010h		;a5df
 	jr c,L_A5E5		;a5e1
@@ -801,7 +801,7 @@ L_A5E5:
 	ld h,a			;a5e6
 	jr L_A5C6		;a5e7
 L_A5E9:
-	ld a,(0ca4ah)		;a5e9
+	ld a,(0ca4ah)		;a5e9   ; lee la zona
 	ld hl,07028h		;a5ec
 	cp 012h		;a5ef
 	ret z			;a5f1
@@ -860,7 +860,7 @@ L_A61D:
 	ld (0d8c4h),a		;a64f
 	ret			;a652
 L_A653:
-	ld a,(0ca4ah)		;a653
+	ld a,(0ca4ah)		;a653   ; lee la zona
 	cp 012h		;a656
 	ret z			;a658
 	cp 011h		;a659
@@ -872,15 +872,15 @@ L_A653:
 	ld (0d8c4h),a		;a663
 	ret			;a666
 L_A667:
-	ld a,(0ca4ah)		;a667
+	ld a,(0ca4ah)		;a667   ; lee la zona
 	cp 006h		;a66a
 	jr z,L_A678		;a66c
 	ld hl,0a686h		;a66e
-	call 04248h		;a671
+	call 04248h		;a671   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (0d8cdh),a		;a674
 	ret			;a677
 L_A678:
-	ld a,(0ca4bh)		;a678
+	ld a,(0ca4bh)		;a678   ; lee la sala de la zona
 	cp 023h		;a67b
 	ld a,0ffh		;a67d
 	jr z,L_A682		;a67f
@@ -921,12 +921,12 @@ L_A69A:
 	ld hl,0aa0fh		;a6b5
 	ld a,(0d8c2h)		;a6b8
 	dec a			;a6bb
-	call 043f6h		;a6bc
+	call 043f6h		;a6bc   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,(0d8cch)		;a6bf
 	add a,a			;a6c2
 	add a,a			;a6c3
 	inc a			;a6c4
-	call 0423eh		;a6c5
+	call 0423eh		;a6c5   ; suma_a_hl: HL = HL + A
 	ld b,(hl)			;a6c8
 	inc hl			;a6c9
 	ld a,(hl)			;a6ca
@@ -980,7 +980,7 @@ L_A72B:
 	ld (0d8c1h),a		;a72d
 	ret			;a730
 L_A731:
-	ld a,(0ca4ah)		;a731
+	ld a,(0ca4ah)		;a731   ; lee la zona
 	sub 00bh		;a734
 	cp 006h		;a736
 	push bc			;a738
@@ -1047,7 +1047,7 @@ L_A7A4:
 	inc hl			;a7a9
 	ld (hl),008h		;a7aa
 	ld a,02ah		;a7ac
-	ld (0ca76h),a		;a7ae
+	ld (0ca76h),a		;a7ae   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,b			;a7b1
 	jp 08d98h		;a7b2
 L_A7B5:
@@ -1065,7 +1065,7 @@ L_A7C5:
 	inc hl			;a7ca
 	ld (hl),007h		;a7cb
 	ld a,02eh		;a7cd
-	ld (0ca76h),a		;a7cf
+	ld (0ca76h),a		;a7cf   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,b			;a7d2
 	jp 08d98h		;a7d3
 L_A7D6:
@@ -1076,7 +1076,7 @@ L_A7D6:
 	ld (0ca51h),a		;a7de
 L_A7E1:
 	xor a			;a7e1
-	ld (0ca76h),a		;a7e2
+	ld (0ca76h),a		;a7e2   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,(0ca5fh)		;a7e5
 	and a			;a7e8
 	ld a,b			;a7e9
@@ -1095,7 +1095,7 @@ L_A7FD:
 	ld a,008h		;a7fd
 	ld (0ca51h),a		;a7ff
 	ld a,018h		;a802
-	ld (0ca76h),a		;a804
+	ld (0ca76h),a		;a804   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,b			;a807
 	jp 08d98h		;a808
 L_A80B:
@@ -1112,7 +1112,7 @@ L_A80E:
 	add hl,de			;a81b
 	jr L_A80E		;a81c
 L_A81E:
-	ld a,(0ca4ah)		;a81e
+	ld a,(0ca4ah)		;a81e   ; lee la zona
 	cp (hl)			;a821
 	jr nz,L_A838		;a822
 	inc hl			;a824
@@ -1152,7 +1152,7 @@ L_A862:
 	ld bc,04020h		;a865
 	xor a			;a868
 	ld d,a			;a869
-	call 046ffh		;a86a
+	call 046ffh		;a86a   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld de,0c0e0h		;a86d
 	ld hl,0a0b0h		;a870
 	call L_A88E		;a873
@@ -1169,7 +1169,7 @@ L_A88E:
 L_A890:
 	ld bc,01010h		;a890
 L_A893:
-	jp 04767h		;a893
+	jp 04767h		;a893   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_A896:
 	call L_A8B9		;a896
 	ld b,000h		;a899
@@ -1189,7 +1189,7 @@ L_A896:
 	ld d,a			;a8b0
 L_A8B1:
 	ld bc,0101ah		;a8b1
-	ld a,(0ca42h)		;a8b4
+	ld a,(0ca42h)		;a8b4   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jr L_A893		;a8b7
 L_A8B9:
 	ld hl,0c0d4h		;a8b9
@@ -1200,11 +1200,11 @@ L_A8B9:
 L_A8C3:
 	ld hl,0502dh		;a8c3
 	ld bc,02019h		;a8c6
-	ld a,(0ca42h)		;a8c9
+	ld a,(0ca42h)		;a8c9   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;a8cc
 	xor a			;a8cd
 L_A8CE:
-	jp 046ffh		;a8ce
+	jp 046ffh		;a8ce   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 L_A8D1:
 	call L_A8D6		;a8d1
 	jr L_A8F0		;a8d4
@@ -1219,10 +1219,10 @@ L_A8D6:
 	call L_A8FF		;a8e2
 L_A8E5:
 	ld bc,0101ah		;a8e5
-	ld a,(0ca42h)		;a8e8
+	ld a,(0ca42h)		;a8e8   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;a8eb
 	rlca			;a8ec
-	jp 04767h		;a8ed
+	jp 04767h		;a8ed   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_A8F0:
 	ld a,(0d8c9h)		;a8f0
 	add a,0c0h		;a8f3
@@ -1253,11 +1253,11 @@ L_A918:
 	ld hl,0aa0fh		;a91b
 	ld a,(0d8c2h)		;a91e
 	dec a			;a921
-	call 043f6h		;a922
+	call 043f6h		;a922   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,(0d8cch)		;a925
 	add a,a			;a928
 	add a,a			;a929
-	call 04248h		;a92a
+	call 04248h		;a92a   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (0d8d2h),a		;a92d
 	ret			;a930
 L_A931:
@@ -1279,11 +1279,11 @@ L_A945:
 	ret z			;a949
 	dec a			;a94a
 	ld hl,0aa0fh		;a94b
-	call 043f6h		;a94e
+	call 043f6h		;a94e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,(0d8cch)		;a951
 	add a,a			;a954
 	add a,a			;a955
-	call 04248h		;a956
+	call 04248h		;a956   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (0d8cdh),a		;a959
 	ret			;a95c
 L_A95D:
@@ -1303,18 +1303,18 @@ L_A96D:
 	add hl,bc			;a977
 L_A978:
 	ld bc,00808h		;a978
-	ld a,(0ca42h)		;a97b
+	ld a,(0ca42h)		;a97b   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;a97e
 	rlca			;a97f
 	or 002h		;a980
-	jp 04767h		;a982
+	jp 04767h		;a982   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_A985:
-	call 0421fh		;a985
+	call 0421fh		;a985   ; bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
 	ld de,0dc80h		;a988
-	ld hl,08000h		;a98b
+	ld hl,08000h		;a98b   ; copia_8000: 80 bytes que p07
 	ld bc,00050h		;a98e
 	ldir		;a991
-	jp 041adh		;a993
+	jp 041adh		;a993   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_A996:
 	ld ix,0dc80h		;a996
 	ld b,010h		;a99a
@@ -1376,11 +1376,11 @@ L_A9F9:
 	ld a,(ix+000h)		;a9f9
 	dec a			;a9fc
 	ld hl,0aa0fh		;a9fd
-	call 043f6h		;aa00
+	call 043f6h		;aa00   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,(ix+004h)		;aa03
 	add a,a			;aa06
 	add a,a			;aa07
-	call 04248h		;aa08
+	call 04248h		;aa08   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	ld (ix+005h),a		;aa0b
 	ret			;aa0e
 
@@ -1422,7 +1422,7 @@ L_AB44:
 	ld a,(0d8c0h)		;ab44
 	or a			;ab47
 	ret nz			;ab48
-	ld a,(0ca4ah)		;ab49
+	ld a,(0ca4ah)		;ab49   ; lee la zona
 	or a			;ab4c
 	ret z			;ab4d
 	cp 007h		;ab4e
@@ -1433,9 +1433,9 @@ L_AB44:
 	ld a,(0ca51h)		;ab57
 	cp 007h		;ab5a
 	ret nz			;ab5c
-	call 0421fh		;ab5d
+	call 0421fh		;ab5d   ; bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
 	call L_AB66		;ab60
-	jp 041adh		;ab63
+	jp 041adh		;ab63   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_AB66:
 	ld a,(0dc85h)		;ab66
 	or a			;ab69
@@ -1462,7 +1462,7 @@ L_AB8D:
 	ld hl,08080h		;ab8e
 	add a,a			;ab91
 	add a,a			;ab92
-	jp 0423eh		;ab93
+	jp 0423eh		;ab93   ; suma_a_hl: HL = HL + A
 L_AB96:
 	xor a			;ab96
 	ld (0d8d1h),a		;ab97
@@ -1477,15 +1477,15 @@ L_ABA2:
 	ld a,(hl)			;aba8
 	ld c,002h		;aba9
 L_ABAB:
-	call 0421fh		;abab
+	call 0421fh		;abab   ; bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
 	call L_ABB4		;abae
-	jp 041adh		;abb1
+	jp 041adh		;abb1   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_ABB4:
 	add a,a			;abb4
 	add a,a			;abb5
 	add a,a			;abb6
 	ld hl,08050h		;abb7
-	call 0423eh		;abba
+	call 0423eh		;abba   ; suma_a_hl: HL = HL + A
 	push hl			;abbd
 	call L_AC33		;abbe
 	ld b,018h		;abc1
@@ -1520,16 +1520,16 @@ L_ABB4:
 	call L_AC33		;abf2
 	ld b,020h		;abf5
 L_ABF7:
-	ld a,(0ca42h)		;abf7
+	ld a,(0ca42h)		;abf7   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	push bc			;abfa
 	push hl			;abfb
-	call 04680h		;abfc
+	call 04680h		;abfc   ; linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 	jr L_AC09		;abff
 L_AC01:
-	ld a,(0ca42h)		;ac01
+	ld a,(0ca42h)		;ac01   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	push bc			;ac04
 	push hl			;ac05
-	call 0467ch		;ac06
+	call 0467ch		;ac06   ; linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 L_AC09:
 	pop hl			;ac09
 	pop bc			;ac0a
@@ -1592,7 +1592,7 @@ L_AC6A:
 	ld a,(0ca8dh)		;ac6a
 	or a			;ac6d
 	jp nz,L_AD1E		;ac6e
-	ld a,(0ca4ah)		;ac71
+	ld a,(0ca4ah)		;ac71   ; lee la zona
 	cp 00fh		;ac74
 	jr nz,L_AC7E		;ac76
 	call L_B5CC		;ac78
@@ -1977,7 +1977,7 @@ L_AF2F:
 	djnz L_AF17		;af36
 	ret			;af38
 L_AF39:
-	ld a,(0ca4ah)		;af39
+	ld a,(0ca4ah)		;af39   ; lee la zona
 	cp 012h		;af3c
 	ret nz			;af3e
 	call L_B84A		;af3f
@@ -2037,7 +2037,7 @@ L_AF9D:
 	call L_B8E4		;af9e
 	exx			;afa1
 	jr nz,L_AFE4		;afa2
-	ld a,(0ca4ah)		;afa4
+	ld a,(0ca4ah)		;afa4   ; lee la zona
 	cp 00ch		;afa7
 	jr nz,L_AFC0		;afa9
 	ld a,(ix+00ah)		;afab
@@ -2046,7 +2046,7 @@ L_AF9D:
 	ld a,(ix+00bh)		;afb2
 	cp 006h		;afb5
 	jr nz,L_AFC0		;afb7
-	ld a,(0ca4bh)		;afb9
+	ld a,(0ca4bh)		;afb9   ; lee la sala de la zona
 	cp 003h		;afbc
 	jr nz,L_AFE4		;afbe
 L_AFC0:
@@ -2406,7 +2406,7 @@ L_B23A:
 	or a			;b246
 	jr nz,L_B253		;b247
 	ld b,004h		;b249
-	ld a,(0ca76h)		;b24b
+	ld a,(0ca76h)		;b24b   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;b24e
 	jr nz,L_B253		;b24f
 	ld b,001h		;b251
@@ -2481,7 +2481,7 @@ L_B2CB:
 	ld a,r		;b2cb
 	and l			;b2cd
 	ld hl,0b2e9h		;b2ce
-	call 0423eh		;b2d1
+	call 0423eh		;b2d1   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;b2d4
 	push af			;b2d5
 	cp 031h		;b2d6
@@ -2547,7 +2547,7 @@ L_B32E:
 	djnz L_B313		;b335
 	ret			;b337
 L_B338:
-	ld a,(0ca4bh)		;b338
+	ld a,(0ca4bh)		;b338   ; lee la sala de la zona
 	cp 002h		;b33b
 	ret nz			;b33d
 	ld ix,0d820h		;b33e
@@ -2664,8 +2664,8 @@ L_B401:
 	ret nc			;b40d
 	ld a,(0cab5h)		;b40e
 	ld hl,0b447h		;b411
-	call 0423eh		;b414
-	ld a,(0ca03h)		;b417
+	call 0423eh		;b414   ; suma_a_hl: HL = HL + A
+	ld a,(0ca03h)		;b417   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	ld b,a			;b41a
 	add a,a			;b41b
 	add a,a			;b41c
@@ -2783,7 +2783,7 @@ L_B4B6:
 L_B4C0:
 	ld hl,lb520h		;b4c0
 	ld a,(ix+000h)		;b4c3
-	call 0423eh		;b4c6
+	call 0423eh		;b4c6   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;b4c9
 	ld (ix+001h),a		;b4ca
 	ld (ix+016h),000h		;b4cd
@@ -2791,21 +2791,21 @@ L_B4C0:
 L_B4D5:
 	ld hl,0d460h		;b4d5
 	ld bc,0005fh		;b4d8
-	call 04236h		;b4db
+	call 04236h		;b4db   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0d4c0h		;b4de
 	ld bc,0001fh		;b4e1
-	call 04236h		;b4e4
+	call 04236h		;b4e4   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0dc68h		;b4e7
 	ld bc,00017h		;b4ea
 	ld a,0e0h		;b4ed
-	call 04237h		;b4ef
+	call 04237h		;b4ef   ; llena_bloque: pone A en BC + 1 bytes desde HL
 	ld a,(0d8a4h)		;b4f2
 	and a			;b4f5
 	ret z			;b4f6
 	ld hl,0dc28h		;b4f7
 	ld bc,0000fh		;b4fa
 	ld a,0e0h		;b4fd
-	jp 04237h		;b4ff
+	jp 04237h		;b4ff   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_B502:
 	ld a,(ix+000h)		;b502
 	cp 005h		;b505
@@ -2835,7 +2835,7 @@ DATA_B521:
 L_B52C:
 	ld a,c			;b52c
 	ld hl,lb534h		;b52d
-	call 0423eh		;b530
+	call 0423eh		;b530   ; suma_a_hl: HL = HL + A
 	ld c,(hl)			;b533
 L_B534:
 	ret			;b534
@@ -2863,7 +2863,7 @@ L_B53D:
 	ret z			;b54f
 	ld a,(ix+000h)		;b550
 	ld hl,lb55ah		;b553
-	call 0423eh		;b556
+	call 0423eh		;b556   ; suma_a_hl: HL = HL + A
 	ld c,(hl)			;b559
 L_B55A:
 	ret			;b55a
@@ -2954,10 +2954,10 @@ L_B5C8:
 	cp e			;b5ca
 	ret			;b5cb
 L_B5CC:
-	ld a,(0ca4ah)		;b5cc
+	ld a,(0ca4ah)		;b5cc   ; lee la zona
 	cp 00ah		;b5cf
 	jr nz,L_B5E6		;b5d1
-	ld a,(0ca4bh)		;b5d3
+	ld a,(0ca4bh)		;b5d3   ; lee la sala de la zona
 	cp 00bh		;b5d6
 	jr z,L_B5F2		;b5d8
 	cp 00ch		;b5da
@@ -3013,7 +3013,7 @@ L_B624:
 	ld a,(0cb01h)		;b624
 	cp 00ch		;b627
 	jr nc,$+29		;b629
-	call 0424dh		;b62b
+	call 0424dh		;b62b   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B62E: 12 destinos del despachador p00:424D (call en p07:B62B, el
@@ -3055,10 +3055,10 @@ L_B669:
 	ld de,00810h		;b66c
 	ret			;b66f
 L_B670:
-	ld a,(0ca4ah)		;b670
+	ld a,(0ca4ah)		;b670   ; lee la zona
 	cp 00ah		;b673
 	jr nz,L_B68A		;b675
-	ld a,(0ca4bh)		;b677
+	ld a,(0ca4bh)		;b677   ; lee la sala de la zona
 	cp 00bh		;b67a
 	jr z,L_B690		;b67c
 	cp 00ch		;b67e
@@ -3083,7 +3083,7 @@ L_B69B:
 	ld a,(0cb01h)		;b69b
 	cp 00ch		;b69e
 	jr nc,L_B646		;b6a0
-	call 0424dh		;b6a2
+	call 0424dh		;b6a2   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B6A5: 12 destinos del despachador p00:424D (call en p07:B6A2, el
@@ -3123,7 +3123,7 @@ L_B6DE:
 	ld a,(0cb01h)		;b6de
 	cp 00ch		;b6e1
 	jp nc,L_B646		;b6e3
-	call 0424dh		;b6e6
+	call 0424dh		;b6e6   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B6E9: 12 destinos del despachador p00:424D (call en p07:B6E6, el
@@ -3153,7 +3153,7 @@ L_B70F:
 	dec a			;b715
 	ld hl,0b72ch		;b716
 	add a,a			;b719
-	call 0423eh		;b71a
+	call 0423eh		;b71a   ; suma_a_hl: HL = HL + A
 	call L_AC33		;b71d
 	ld a,(0cb03h)		;b720
 	add a,l			;b723
@@ -3179,7 +3179,7 @@ DATA_resto_B72C:
 
 L_B734:
 	ld a,(iy+000h)		;b734
-	call 0424dh		;b737
+	call 0424dh		;b737   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B73A: 10 destinos del despachador p00:424D (call en p07:B737, el
@@ -3264,7 +3264,7 @@ L_B7BF:
 	or a			;b7c3
 	jp z,L_B646		;b7c4
 	ld d,004h		;b7c7
-	ld a,(0ca76h)		;b7c9
+	ld a,(0ca76h)		;b7c9   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;b7cc
 	jr nz,L_B7E0		;b7cd
 	dec d			;b7cf
@@ -3304,7 +3304,7 @@ L_B804:
 	or a			;b80b
 	jp z,L_B646		;b80c
 	ld b,004h		;b80f
-	ld a,(0ca76h)		;b811
+	ld a,(0ca76h)		;b811   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;b814
 	jr nz,L_B826		;b815
 	dec b			;b817
@@ -3347,7 +3347,7 @@ L_B84A:
 	add a,a			;b85d
 	add a,a			;b85e
 	ld hl,0b879h		;b85f
-	call 0423eh		;b862
+	call 0423eh		;b862   ; suma_a_hl: HL = HL + A
 	ld e,(hl)			;b865
 	inc hl			;b866
 	ld d,(hl)			;b867
@@ -3386,7 +3386,7 @@ L_B889:
 	or a			;b893
 	jp z,L_B646		;b894
 	dec a			;b897
-	call 0424dh		;b898
+	call 0424dh		;b898   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B89B: 4 destinos del despachador p00:424D (call en p07:B898, el
@@ -3473,11 +3473,11 @@ L_B91D:
 	and a			;b92d
 	jr nz,L_B977		;b92e
 L_B930:
-	call 041ddh		;b930
+	call 041ddh		;b930   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 	push de			;b933
 	call 07e35h		;b934
 	pop de			;b937
-	call 041adh		;b938
+	call 041adh		;b938   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	jr c,L_B977		;b93b
 	ld a,e			;b93d
 	cp (ix+00ah)		;b93e
@@ -3500,7 +3500,7 @@ L_B95A:
 	ld c,a			;b95f
 	add a,a			;b960
 	add a,c			;b961
-	call 0423eh		;b962
+	call 0423eh		;b962   ; suma_a_hl: HL = HL + A
 L_B965:
 	ld a,(hl)			;b965
 	and a			;b966
@@ -3559,7 +3559,7 @@ L_B9CA:
 	ld a,(ix+016h)		;b9ca
 	and a			;b9cd
 	jr z,L_B977		;b9ce
-	ld a,(0ca76h)		;b9d0
+	ld a,(0ca76h)		;b9d0   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;b9d3
 	jr z,L_B9DD		;b9d4
 	ld a,(ix+012h)		;b9d6
@@ -3627,7 +3627,7 @@ L_BA3A:
 L_BA4D:
 	add a,a			;ba4d
 	add a,a			;ba4e
-	call 0423eh		;ba4f
+	call 0423eh		;ba4f   ; suma_a_hl: HL = HL + A
 L_BA52:
 	ld a,(hl)			;ba52
 	ld e,a			;ba53
@@ -3654,7 +3654,7 @@ L_BA71:
 	ld a,(ix+00dh)		;ba71
 	sub 008h		;ba74
 	ld hl,0ba8ah		;ba76
-	call 043f6h		;ba79
+	call 043f6h		;ba79   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld a,(ix+005h)		;ba7c
 	add a,h			;ba7f
 	ld h,a			;ba80
@@ -3709,7 +3709,7 @@ L_BB10:
 	jr c,L_BB52		;bb3d
 	call L_BD08		;bb3f
 	jr c,L_BB52		;bb42
-	ld a,(0ca76h)		;bb44
+	ld a,(0ca76h)		;bb44   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;bb47
 	jr nz,L_BB4F		;bb48
 	call L_BBE1		;bb4a
@@ -3832,10 +3832,10 @@ L_BC01:
 	or a			;bc01
 	ret			;bc02
 L_BC03:
-	ld a,(0ca4ah)		;bc03
+	ld a,(0ca4ah)		;bc03   ; lee la zona
 	cp 00ah		;bc06
 	jr nz,L_BC01		;bc08
-	ld a,(0ca4bh)		;bc0a
+	ld a,(0ca4bh)		;bc0a   ; lee la sala de la zona
 	cp 00eh		;bc0d
 	jr nz,L_BC01		;bc0f
 	exx			;bc11
@@ -3865,7 +3865,7 @@ L_BC38:
 	ld hl,0aa83h		;bc3a
 L_BC3D:
 	push hl			;bc3d
-	ld a,(0ca4ah)		;bc3e
+	ld a,(0ca4ah)		;bc3e   ; lee la zona
 	cp (hl)			;bc41
 	jr nz,L_BC87		;bc42
 	inc hl			;bc44
@@ -3874,22 +3874,22 @@ L_BC3D:
 	jr z,L_BC87		;bc48
 	cp 0ffh		;bc4a
 	jr nz,L_BC5D		;bc4c
-	ld a,(0ca76h)		;bc4e
+	ld a,(0ca76h)		;bc4e   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 018h		;bc51
 	jr nz,L_BC87		;bc53
-	ld a,(0ca4bh)		;bc55
+	ld a,(0ca4bh)		;bc55   ; lee la sala de la zona
 	dec a			;bc58
 	jr nz,L_BC87		;bc59
 	jr L_BC70		;bc5b
 L_BC5D:
 	cp 0feh		;bc5d
 	jr nz,L_BC6A		;bc5f
-	ld a,(0ca76h)		;bc61
+	ld a,(0ca76h)		;bc61   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 02eh		;bc64
 	jr nz,L_BC87		;bc66
 	jr L_BC70		;bc68
 L_BC6A:
-	ld a,(0ca4bh)		;bc6a
+	ld a,(0ca4bh)		;bc6a   ; lee la sala de la zona
 	cp (hl)			;bc6d
 	jr nz,L_BC87		;bc6e
 L_BC70:
@@ -3960,10 +3960,10 @@ L_BCC5:
 	add a,012h		;bcce
 	ret			;bcd0
 L_BCD1:
-	ld a,(0ca4ah)		;bcd1
+	ld a,(0ca4ah)		;bcd1   ; lee la zona
 	cp 013h		;bcd4
 	jr nz,L_BCFA		;bcd6
-	ld a,(0ca4bh)		;bcd8
+	ld a,(0ca4bh)		;bcd8   ; lee la sala de la zona
 	cp 004h		;bcdb
 	jr nz,L_BCFA		;bcdd
 	ld b,003h		;bcdf
@@ -3974,7 +3974,7 @@ L_BCE1:
 	add a,a			;bce4
 	add a,a			;bce5
 	ld hl,0bcfch		;bce6
-	call 0423eh		;bce9
+	call 0423eh		;bce9   ; suma_a_hl: HL = HL + A
 	ld e,(hl)			;bcec
 	inc hl			;bced
 	ld d,(hl)			;bcee
@@ -4002,7 +4002,7 @@ DATA_resto_BCFC:
 
 
 L_BD08:
-	ld a,(0ca4ah)		;bd08
+	ld a,(0ca4ah)		;bd08   ; lee la zona
 	cp 004h		;bd0b
 	jr nz,$-19		;bd0d
 	call L_BD2F		;bd0f
@@ -4012,7 +4012,7 @@ L_BD14:
 	exx			;bd15
 	dec a			;bd16
 	add a,a			;bd17
-	call 0423eh		;bd18
+	call 0423eh		;bd18   ; suma_a_hl: HL = HL + A
 	call L_AC33		;bd1b
 	ld de,00c38h		;bd1e
 	exx			;bd21
@@ -4029,7 +4029,7 @@ L_BD2F:
 	exx			;bd31
 	ld hl,0bd62h		;bd32
 	exx			;bd35
-	ld a,(0ca4bh)		;bd36
+	ld a,(0ca4bh)		;bd36   ; lee la sala de la zona
 	cp 017h		;bd39
 	ret z			;bd3b
 	exx			;bd3c
@@ -4178,7 +4178,7 @@ L_BE40:
 	ld a,(0d800h)		;be40
 	cp 002h		;be43
 	ret nz			;be45
-	ld a,(0ca4bh)		;be46
+	ld a,(0ca4bh)		;be46   ; lee la sala de la zona
 	cp 008h		;be49
 	ret nz			;be4b
 	ld a,(0d816h)		;be4c
@@ -4236,7 +4236,7 @@ L_BE9F:
 	cp 00ch		;beb0
 	jr nc,L_BEBE		;beb2
 	ld hl,0bf2ch		;beb4
-	call 043f6h		;beb7
+	call 043f6h		;beb7   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 L_BEBA:
 	ld a,b			;beba
 	sub l			;bebb
@@ -4248,7 +4248,7 @@ L_BEBE:
 	add a,a			;bec1
 	ld hl,0bf4ch		;bec2
 L_BEC5:
-	call 0423eh		;bec5
+	call 0423eh		;bec5   ; suma_a_hl: HL = HL + A
 	ld e,(hl)			;bec8
 	inc hl			;bec9
 	ld d,(hl)			;beca
@@ -4343,9 +4343,9 @@ L_BF64:
 	pop hl			;bf71
 	pop de			;bf72
 	ret c			;bf73
-	call 041ddh		;bf74
+	call 041ddh		;bf74   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 	call L_BF7D		;bf77
-	jp 041adh		;bf7a
+	jp 041adh		;bf7a   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_BF7D:
 	ld hl,0cb74h		;bf7d
 	ld (hl),000h		;bf80
@@ -4375,10 +4375,10 @@ L_BF94:
 	ld d,032h		;bfa6
 	jr L_BFBF		;bfa8
 L_BFAA:
-	ld a,(0ca4ah)		;bfaa
+	ld a,(0ca4ah)		;bfaa   ; lee la zona
 	cp 00ch		;bfad
 	jr nz,L_BF8C		;bfaf
-	ld a,(0ca4bh)		;bfb1
+	ld a,(0ca4bh)		;bfb1   ; lee la sala de la zona
 	cp 006h		;bfb4
 	jr nz,L_BF8C		;bfb6
 	exx			;bfb8

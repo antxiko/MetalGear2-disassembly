@@ -45,3 +45,131 @@ F 0xBE9E 16
 D 0xBF89 0xBF98 resto_BF89  lo apuntan con el banco puesto p15:BF7A (0xBF89); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:BF7A (15 bytes)
 F 0xBF89 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0xA027 suma_a_hl: HL = HL + A
+C 0xA052 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA055 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA061 lee la zona
+C 0xA064 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA06E lee la sala de la zona
+C 0xA089 lee la zona
+C 0xA0A1 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA0D4 lee la sala de la zona
+C 0xA0E5 lee la zona
+C 0xA125 suma_a_hl: HL = HL + A
+C 0xA154 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA15F copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA182 lee la sala de la zona
+C 0xA186 lee la zona
+C 0xA1AE palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA1F7 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA224 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA258 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA260 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA285 suma_a_de: DE = DE + A
+C 0xA28A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA28F linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
+C 0xA2C6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA2CB linea_horizontal_guarda: p00:467C guardando AF, HL, DE y BC
+C 0xA2F1 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA2F4 lee la zona
+C 0xA36C despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA3C7 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA3D6 lee la zona
+C 0xA3ED lee la zona
+C 0xA41F despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA443 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA448 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA4B7 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA4C0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA4EE suma_a_hl: HL = HL + A
+C 0xA51C lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA537 bancos_27: pone el 27 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xA56F bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xA585 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA5A4 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA620 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA625 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA654 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA693 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA6A1 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA6FA suma_a_hl: HL = HL + A
+C 0xA71F despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA759 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA76C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA7D7 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA853 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA85C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA8A0 suma_a_hl: HL = HL + A
+C 0xA8C2 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA923 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA9B6 lee la zona
+C 0xA9BC palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA9D1 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA9DC apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xA9E4 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA9F5 apunta a la zona
+C 0xAA19 lee la zona
+C 0xAA28 lee la sala de la zona
+C 0xAA6C lee la sala de la zona
+C 0xAA7C lee la sala de la zona
+C 0xAAA8 lee la zona
+C 0xAAB6 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0xAAE4 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAAF3 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0xAB55 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAB8A lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xABB9 lee la zona
+C 0xABD9 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xABE6 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xABEB suma_a_hl: HL = HL + A
+C 0xABF4 suma_a_hl: HL = HL + A
+C 0xAC03 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAC40 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAC64 guarda la zona
+C 0xAC67 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAC70 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAC83 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xACE1 lee la zona
+C 0xACE7 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xACEE suma_a_de: DE = DE + A
+C 0xB81E palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB86D llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB887 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB8A7 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB8D1 suma_a_de: DE = DE + A
+C 0xB8E0 suma_a_hl: HL = HL + A
+C 0xB8E5 suma_a_de: DE = DE + A
+C 0xB8FE salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xB925 lee la sala de la zona
+C 0xB96C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB97C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xB9B4 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xB9C8 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xBA39 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBA42 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBA47 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBA4E copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBA6F salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xBA8A palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xBB33 lee la sala de la zona
+C 0xBB99 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xBCB4 lee la zona
+C 0xBCBA lee la sala de la zona
+C 0xBDD5 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xBE05 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBE0F lee la sala de la zona
+C 0xBE22 lee la zona
+C 0xBE2B lee la zona
+C 0xBE4E palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xBE69 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBE77 lee la zona
+C 0xBE7E lee la sala de la zona
+C 0xBE97 suma_a_de: DE = DE + A
+C 0xBF14 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBF6D lee la zona
+C 0xBF7D suma_a_hl: HL = HL + A
+C 0xBFCA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBFD4 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+# --- fin de las anotaciones de anota.py ---

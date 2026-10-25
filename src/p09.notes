@@ -43,3 +43,204 @@ F 0xBFA5 16
 D 0xBFE1 0xC000 resto_BFE1  lo apuntan con el banco puesto p09:BEC8 (0xBFE1); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p09:BEC8 (31 bytes)
 F 0xBFE1 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xA4F0 secuencia_de_mensajes los mensajes de una secuencia del banco 50, uno tras otro con su espera
+C 0xA006 lee la zona
+C 0xA00C lee la sala de la zona
+C 0xA022 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA04C guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0xA070 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0xA078 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA07B lee la zona
+C 0xA09A despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA0A5 lee la sala de la zona
+C 0xA15B apunta a la fase de la partida (indice de las listas de p06:B40C)
+C 0xA1CF lee la zona
+C 0xA1D5 lee la sala de la zona
+C 0xA22B llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA2B0 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA2C8 lee la zona
+C 0xA2CE lee la sala de la zona
+C 0xA347 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA35C lee la zona
+C 0xA362 lee la sala de la zona
+C 0xA3BD lee la zona
+C 0xA3C3 lee la sala de la zona
+C 0xA434 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA43A lee la sala de la zona
+C 0xA446 lee la zona
+C 0xA44C lee la sala de la zona
+C 0xA488 lee la zona
+C 0xA48E lee la sala de la zona
+C 0xA4B5 guarda el paso del estado de la partida
+C 0xA4BF borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA4CA llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA4DF secuencia_de_mensajes: los mensajes de una secuencia del banco 50, uno tras otro con su espera
+C 0xA504 bancos_50: pone el 50 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xA507 lee_palabra: HL = la palabra que hay en HL
+C 0xA50A suma_a_hl: HL = HL + A
+C 0xA511 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xA521 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xA52C bancos_50: pone el 50 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xA52F lee_palabra: HL = la palabra que hay en HL
+C 0xA532 suma_a_hl: HL = HL + A
+C 0xA543 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xA54E bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xA577 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA57A esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0xA585 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xA597 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA5A6 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA5AF espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA5B5 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA5D1 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA5E9 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA606 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA61E lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA63E tabla_800C: 14 destinos del despachador p00
+C 0xA681 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA68D guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0xA699 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA6BF lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA71A lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA767 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xA76E copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xA7F3 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xA866 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA8FA guarda el paso del estado de la partida
+C 0xA964 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAA69 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAA77 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAB07 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAB75 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xABAA esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0xABAD esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
+C 0xAC69 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAC89 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xACA7 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xACD1 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xACD6 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xAD09 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xAD17 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xAD5E tabla_802C: 8 destinos del despachador p00
+C 0xAD9A lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xADB0 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xADDC guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xADEA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xADFB copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xAEEA pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xAEED pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xAEFE pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xAF01 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xAF5C pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0xAF5F pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xAF6A llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xAF73 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xAF79 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB0BA despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB0E6 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB125 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
+C 0xB12A copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xB135 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xB138 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB140 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB145 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB14A marco: cuatro lineas: un marco de D x E desde HL
+C 0xB18A llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB207 guarda el paso del estado de la partida
+C 0xB250 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
+C 0xB27D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB288 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xB293 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB2BD lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB2C3 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB2EB despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB2FF guarda el paso del estado de la partida
+C 0xB318 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB3C9 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB4E6 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0xB4EC bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xB5F7 guarda el paso del estado de la partida
+C 0xB62C borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB64B borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB6A0 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB6D2 lee la fase de la partida (indice de las listas de p06:B40C)
+C 0xB6F1 guarda la espera antes de la siguiente accion de la conversacion
+C 0xB708 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0xB70B esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
+C 0xB70E lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB71C borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB71F lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB727 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB742 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB74A lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB74E apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
+C 0xB751 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0xB75C borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB76D lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB776 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0xB7C5 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xB7D5 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB7E7 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB7EC lee lo recien pulsado de las teclas de funcion
+C 0xB81B apunta a la fase de la partida (indice de las listas de p06:B40C)
+C 0xB82F apunta a 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB88E despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB8BC lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xB8D7 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xB8DF apunta a la espera antes de la siguiente accion de la conversacion
+C 0xB8E6 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB8FF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB902 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xB94B despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB994 lee el mensaje que toca (16 bits)
+C 0xB9A0 lee el mensaje que toca (16 bits)
+C 0xB9D1 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB9D8 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB9FE linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
+C 0xBA0B marco: cuatro lineas: un marco de D x E desde HL
+C 0xBA1A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBA2D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBA32 marco: cuatro lineas: un marco de D x E desde HL
+C 0xBA76 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xBA85 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xBAAC guarda la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xBB23 guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0xBB3E linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
+C 0xBB58 linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
+C 0xBB74 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBB7B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBB8F marco: cuatro lineas: un marco de D x E desde HL
+C 0xBBD4 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xBBD9 apunta a la espera antes de la siguiente accion de la conversacion
+C 0xBBE1 apunta a la espera antes de la siguiente accion de la conversacion
+C 0xBBE9 lee 1 si una conversacion ha encontrado su ficha
+C 0xBBF2 apunta a la espera antes de la siguiente accion de la conversacion
+C 0xBC01 guarda 1 si una conversacion ha encontrado su ficha
+C 0xBC35 apunta a la espera antes de la siguiente accion de la conversacion
+C 0xBC49 lee el mensaje que toca (16 bits)
+C 0xBC73 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xBC7B siguiente_accion: la accion que sigue en la conversacion (0xFE [espera]...) o acaba
+C 0xBC7E apunta a la espera antes de la siguiente accion de la conversacion
+C 0xBC86 lee el mensaje que toca (16 bits)
+C 0xBCA6 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xBCB7 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xBCF2 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xBD00 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xBDB1 suma_a_hl: HL = HL + A
+C 0xBDF1 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBDF7 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xBDFF lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBE11 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xBE19 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBE2E lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBE43 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBE4D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBECB suma_a_hl: HL = HL + A
+C 0xBED2 suma_a_hl: HL = HL + A
+C 0xBF52 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBF9E byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xBFB8 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBFBE despachador: salta a la palabra A de la tabla que va detras del call
+# --- fin de las anotaciones de anota.py ---
