@@ -50,7 +50,7 @@ L_A000:
 	ld a,(0d816h)		;a014
 	and a			;a017
 	ret z			;a018
-	ld a,(0cb80h)		;a019
+	ld a,(0cb80h)		;a019   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	cp 005h		;a01c
 	ret nz			;a01e
 	ld a,(0cb81h)		;a01f
@@ -86,7 +86,7 @@ L_A000:
 	cp 040h		;a052
 	ret nc			;a054
 	xor a			;a055
-	ld (0cb80h),a		;a056
+	ld (0cb80h),a		;a056   ; guarda las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld (0cb52h),a		;a059
 	inc a			;a05c
 	ld (0caeah),a		;a05d
@@ -148,7 +148,7 @@ L_A0AB:
 	xor a			;a0bd
 	ld (0ca58h),a		;a0be
 	inc a			;a0c1
-	ld hl,0d638h		;a0c2
+	ld hl,0d638h		;a0c2   ; apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 	ld (hl),a			;a0c5
 	inc hl			;a0c6
 	ld (hl),a			;a0c7
@@ -243,7 +243,7 @@ L_A16B:
 	ld a,(0cb0fh)		;a16b   ; lee 1 si Snake ha chocado en este cuadro
 	or a			;a16e
 	ret nz			;a16f
-	ld a,(0cb31h)		;a170
+	ld a,(0cb31h)		;a170   ; lee 1 en el estado 2 de Snake
 	or a			;a173
 	ret nz			;a174
 	ld hl,0cb34h		;a175
@@ -623,11 +623,11 @@ L_A3C8:
 	ld (0cb3ch),a		;a3da
 	ld hl,0d8d9h		;a3dd
 	set 7,(hl)		;a3e0
-	ld hl,0d8d8h		;a3e2
+	ld hl,0d8d8h		;a3e2   ; apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
 	ld a,(hl)			;a3e5
 	or 0fch		;a3e6
 	ld (hl),a			;a3e8
-	ld hl,0d600h		;a3e9
+	ld hl,0d600h		;a3e9   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld bc,0001fh		;a3ec
 	call 04236h		;a3ef   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0d624h		;a3f2
@@ -875,7 +875,7 @@ L_A57A:
 	dec a			;a596
 	ret			;a597
 L_A598:
-	ld a,(0caa0h)		;a598
+	ld a,(0caa0h)		;a598   ; lee cuantos siguen a Snake por su rastro (1-4)
 	or a			;a59b
 	ret z			;a59c
 	dec a			;a59d
@@ -894,11 +894,11 @@ DATA_tabla_A5A1:
 
 
 L_A5A9:
-	ld hl,0e240h		;a5a9
+	ld hl,0e240h		;a5a9   ; apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	jr L_A5B9		;a5ac
 L_A5AE:
 	call L_A5A9		;a5ae
-	ld hl,0e248h		;a5b1
+	ld hl,0e248h		;a5b1   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	jr L_A5B9		;a5b4
 L_A5B6:
 	ld hl,0dfd8h		;a5b6
@@ -1631,7 +1631,7 @@ L_AA73:
 	or a			;aa84
 	jr nz,L_AAC6		;aa85
 L_AA87:
-	ld a,(0caa8h)		;aa87
+	ld a,(0caa8h)		;aa87   ; lee 1 mientras se ve el rotulo de la cosa cogida
 	or a			;aa8a
 	ret nz			;aa8b
 	ld a,(0e1d0h)		;aa8c
@@ -1640,10 +1640,10 @@ L_AA87:
 	ld a,(0e1f0h)		;aa91
 	or a			;aa94
 	ret nz			;aa95
-	ld a,(0e256h)		;aa96
+	ld a,(0e256h)		;aa96   ; lee la direccion en la que se mira la sala de al lado (estado 0x0E)
 	or a			;aa99
 	ret nz			;aa9a
-	ld a,(0cac0h)		;aa9b
+	ld a,(0cac0h)		;aa9b   ; lee 1 en pausa (F1)
 	or a			;aa9e
 	ret nz			;aa9f
 	ld a,(0cb00h)		;aaa0   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -2291,14 +2291,14 @@ DATA_tabla_AF02:
 
 
 L_AF4A:
-	ld hl,0d7d0h		;af4a
+	ld hl,0d7d0h		;af4a   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	set 6,(hl)		;af4d
 	ld hl,0d7ddh		;af4f
 	res 1,(hl)		;af52
 L_AF54:
 	ret			;af54
 L_AF55:
-	ld hl,0d7d0h		;af55
+	ld hl,0d7d0h		;af55   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	set 1,(hl)		;af58
 	ld hl,0d7ddh		;af5a
 	res 5,(hl)		;af5d

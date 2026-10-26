@@ -47,6 +47,7 @@ F 0xBFE1 16
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 L 0xA4F0 secuencia_de_mensajes los mensajes de una secuencia del banco 50, uno tras otro con su espera
 L 0xB4E6 a_p12_7fa0 p12:7FA0 con el banco 12 en 0x6000
+C 0xA000 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA006 lee la zona
 C 0xA00C lee la sala de la zona
 C 0xA01C lee la Y de Snake
@@ -78,7 +79,9 @@ C 0xA160 sonido_7d: pide el sonido 0x7D (de los que tienen la partitura en un ba
 C 0xA190 rachas_b3a6: 
 C 0xA193 a_p03_b5b5: p03:B5B5 con el banco 3 en 0xA000
 C 0xA196 rachas_9638_bancos_9: 
+C 0xA199 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA19D rachas_b34a_bancos_9: 
+C 0xA1BE lee las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 C 0xA1CF lee la zona
 C 0xA1D5 lee la sala de la zona
 C 0xA1F0 a_p04_92eb: p04:92EB con el banco 4 en 0x8000
@@ -90,20 +93,28 @@ C 0xA21B a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 C 0xA22B llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA233 sonido_05: pide el sonido 0x05
 C 0xA236 a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xA241 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
+C 0xA258 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xA264 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xA26D apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA279 a_p03_b563: p03:B563 con el banco 3 en 0xA000
 C 0xA288 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA290 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA29C a_p03_b563: p03:B563 con el banco 3 en 0xA000
 C 0xA2A1 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA2A5 apunta a 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xA2AD a_p03_b607: p03:B607 con el banco 3 en 0xA000
 C 0xA2B0 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA2B6 lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xA2C2 lee cuantos siguen a Snake por su rastro (1-4)
 C 0xA2C8 lee la zona
 C 0xA2CE lee la sala de la zona
 C 0xA2D6 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 C 0xA2DB guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA2E5 guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xA2E8 a_p03_b610: p03:B610 con el banco 3 en 0xA000
+C 0xA2EB lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xA2F5 apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 C 0xA301 a_p03_b4e6: p03:B4E6 con el banco 3 en 0xA000
 C 0xA30D lee la Y de Snake
 C 0xA316 lee la X de Snake
@@ -113,6 +124,8 @@ C 0xA347 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA34D lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA35C lee la zona
 C 0xA362 lee la sala de la zona
+C 0xA368 apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xA374 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA37E a_p12_6d78_b_9: a_p12_6d78 y deja el banco 9
 C 0xA382 guarda la Y de Snake
 C 0xA387 guarda la X de Snake
@@ -146,12 +159,14 @@ C 0xA45D rachas_6517_a_fc00:
 C 0xA466 lee la X de Snake
 C 0xA472 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 C 0xA47D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA482 lee las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 C 0xA488 lee la zona
 C 0xA48E lee la sala de la zona
 C 0xA494 lee la Y de Snake
 C 0xA49C guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xA4A1 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 C 0xA4B5 guarda el paso del estado de la partida
+C 0xA4B9 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA4BF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA4CA llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA4DF secuencia_de_mensajes: los mensajes de una secuencia del banco 50, uno tras otro con su espera
@@ -167,9 +182,11 @@ C 0xA52F lee_palabra: HL = la palabra que hay en HL
 C 0xA532 suma_a_hl: HL = HL + A
 C 0xA543 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xA54E bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xA571 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA577 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA57A esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xA585 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xA591 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA597 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA5A6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA5A9 cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
@@ -195,8 +212,11 @@ C 0xA634 sonido_01: pide el sonido 0x01
 C 0xA639 sonido_9e: pide el sonido 0x9E (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA63E tabla_800C: 14 destinos del despachador p00
 C 0xA644 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA650 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA65C lee la X de Snake
+C 0xA668 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA671 guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
+C 0xA676 guarda cuantos siguen a Snake por su rastro (1-4)
 C 0xA681 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xA684 sonido_05: pide el sonido 0x05
 C 0xA68D guarda la musica pendiente: la rutina que la pide (16 bits)
@@ -205,8 +225,12 @@ C 0xA699 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA6BC guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA6BF lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA6C7 lee la Y de Snake
+C 0xA6DA guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xA6DD guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA6E4 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA6EE a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA6FD guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xA70C guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA714 lee la X de Snake
 C 0xA71A lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA723 lee la X de Snake
@@ -236,6 +260,8 @@ C 0xA7D9 a_p03_b866: p03:B866 con el banco 3 en 0xA000
 C 0xA7DC a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xA7F3 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA7F8 guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
+C 0xA802 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xA819 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA822 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA825 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xA829 guarda 1 mientras Snake se da la vuelta
@@ -244,6 +270,7 @@ C 0xA834 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3
 C 0xA83C a_p03_b607: p03:B607 con el banco 3 en 0xA000
 C 0xA848 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xA84F guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
+C 0xA854 guarda cuantos siguen a Snake por su rastro (1-4)
 C 0xA857 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xA85A dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
 C 0xA860 orden_sonido_f6: la orden 0xF6 al sonido
@@ -266,6 +293,8 @@ C 0xA902 a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
 C 0xA90D a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xA912 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA91A guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA91E guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xA93A guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 C 0xA94E a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xA955 sonido_05: pide el sonido 0x05
 C 0xA95B apunta a la espera hasta poner la musica pendiente
@@ -273,12 +302,19 @@ C 0xA964 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA987 orden_sonido_f4: la orden 0xF4 al sonido
 C 0xA996 sonido_7d: pide el sonido 0x7D (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA9A1 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA9A6 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xA9D4 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xA9E9 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xA9FA guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA9FD guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xAA03 a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
 C 0xAA0C a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xAA11 guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xAA3D guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 C 0xAA49 guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xAA4C a_p03_b603: p03:B603 con el banco 3 en 0xA000
 C 0xAA55 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xAA59 guarda cuantos siguen a Snake por su rastro (1-4)
 C 0xAA5F guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xAA66 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xAA69 lee el contador de cuadros (uno mas en cada interrupcion)
@@ -360,6 +396,9 @@ C 0xADB0 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xADB8 lee la Y de Snake
 C 0xADC7 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xADCA dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
+C 0xADD1 guarda cuantos siguen a Snake por su rastro (1-4)
+C 0xADD4 guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xADD7 guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 C 0xADDC guarda la fase de la partida (indice de las listas de p06:B40C)
 C 0xADE4 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xADEA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -450,11 +489,15 @@ C 0xB22F a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xB234 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB237 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB23A guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xB246 guarda cuantos siguen a Snake por su rastro (1-4)
 C 0xB250 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
+C 0xB260 guarda lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
+C 0xB26C lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB27D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB288 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xB293 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB296 sonido_22: pide el sonido 0x22
+C 0xB2A1 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 C 0xB2BD lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB2C3 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xB2CE sonido_05: pide el sonido 0x05
@@ -506,6 +549,7 @@ C 0xB61F guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xB62C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB64B borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB68E dibujos_9eb2: los dibujos de p46:9EB2 en la VRAM de 0x6000
+C 0xB69A apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 C 0xB6A0 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB6CF guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xB6D2 lee la fase de la partida (indice de las listas de p06:B40C)
@@ -537,6 +581,7 @@ C 0xB7C5 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xB7D5 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB7E7 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB7EC lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
+C 0xB7F3 guarda dos fichas de 8 bytes de los mosaicos de quien habla
 C 0xB7F9 guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xB80C guarda el quinto byte de la ficha de la sala (p02:877F)
 C 0xB812 dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
@@ -633,6 +678,7 @@ C 0xBF33 sonido_05: pide el sonido 0x05
 C 0xBF3F sonido_29: pide el sonido 0x29
 C 0xBF42 a_p15_bdb8: p15:BDB8 con el banco 15 en 0xA000
 C 0xBF52 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBF5D lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xBF8B sonido_02: pide el sonido 0x02
 C 0xBF92 p02:8C24
 C 0xBF95 p02:8EB6

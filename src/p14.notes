@@ -151,6 +151,8 @@ C 0xAFA5 suma_a_hl: HL = HL + A
 C 0xAFD2 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAFE6 lee la zona
 C 0xAFED lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xAFFE guarda el paso del estado 2 de Snake
+C 0xB002 guarda 1 en el estado 2 de Snake
 C 0xB005 guarda la marcha de Snake: el indice de las velocidades de p02:9520
 C 0xB008 guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
 C 0xB00C guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -165,12 +167,18 @@ C 0xB041 lee la sala de la zona
 C 0xB06B lee la zona
 C 0xB074 guarda copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 C 0xB077 guarda la zona
+C 0xB090 apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
+C 0xB09E guarda cuantos siguen a Snake por su rastro (1-4)
+C 0xB0A1 guarda lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
+C 0xB0AA apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
 C 0xB0CD p02:8EF8
 C 0xB0F3 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xB0F7 guarda la Y de Snake
 C 0xB0FC guarda la X de Snake
 C 0xB100 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB104 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 C 0xB10A borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB10D apunta a otras banderas de la partida (p03:B0D3, p03:B0FE)
 C 0xB113 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB128 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB131 p04:9961
@@ -213,6 +221,7 @@ C 0xB499 a_p08_a13b: p08:A13B con el banco 8 en 0xA000
 C 0xB49F suma_a_hl: HL = HL + A
 C 0xB4BD lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB4C2 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xB4CC lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB4EA lee la zona
 C 0xB4F0 lee la sala de la zona
 C 0xB524 sonido_38: pide el sonido 0x38
@@ -220,6 +229,7 @@ C 0xB548 lee la zona
 C 0xB555 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xB558 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB55D lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xB573 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB59D sonido_8e_y_9955_bancos_14: 
 C 0xB5A0 sprites_de_sala_si_b_14: sprites_de_sala_si y deja el banco 14
 C 0xB5E8 lee la zona
@@ -230,12 +240,14 @@ C 0xB626 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB629 marco: cuatro lineas: un marco de D x E desde HL
 C 0xB660 lee la Y de Snake
 C 0xB666 lee la X de Snake
+C 0xB687 lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xB6C4 guarda 1 si la sala tiene ficha en la lista de p02:877F
 C 0xB6D4 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB6DA lee la zona
 C 0xB6E3 fichas_e280_de_sala: la lista de p56 de HL: la ficha de la sala, y sus piezas a 0xE280
 C 0xB6F7 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xB70F borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB712 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB732 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xB743 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB746 linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
@@ -248,8 +260,10 @@ C 0xB786 fichas_e280_a: las piezas A de p56:A53A a 0xE280
 C 0xB78C apunta a a cero al encontrar la ficha de la sala
 C 0xB79C guarda 1 si la sala tiene ficha en la lista de p02:877F
 C 0xB79F apunta a el quinto byte de la ficha de la sala (p02:877F)
+C 0xB7A5 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB7B9 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB7CA lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB7EF lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xB80C lee la X de Snake
 C 0xB812 lee la Y de Snake
 C 0xB83C sonido_8e_y_9955_bancos_14: 
@@ -265,8 +279,10 @@ C 0xB9F6 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xBA23 suma_a_hl: HL = HL + A
 C 0xBA2C suma_a_hl: HL = HL + A
 C 0xBA62 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBA7D guarda otra espera de 16 bits que baja en la interrupcion
 C 0xBA81 orden_sonido_f4: la orden 0xF4 al sonido
 C 0xBA8E sonido_82: pide el sonido 0x82 (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
+C 0xBA91 lee otra espera de 16 bits que baja en la interrupcion
 C 0xBA98 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBA9E borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBAA7 borra_bloque: pone a cero BC + 1 bytes desde HL

@@ -143,7 +143,7 @@ L_A0A1:
 	ld (hl),001h		;a0ad
 	ret			;a0af
 L_A0B0:
-	ld a,(0cb21h)		;a0b0
+	ld a,(0cb21h)		;a0b0   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;a0b3
 	ret nz			;a0b4
 	ld hl,0e1d5h		;a0b5
@@ -277,7 +277,7 @@ L_A194:
 	call L_A0DB		;a198
 	ld hl,080a0h		;a19b
 L_A19E:
-	ld a,(0cb21h)		;a19e
+	ld a,(0cb21h)		;a19e   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 020h		;a1a1
 	ret c			;a1a3
 	cp 023h		;a1a4
@@ -337,7 +337,7 @@ L_A1F0:
 	inc hl			;a201
 	ld (hl),002h		;a202
 L_A204:
-	ld a,(0cb21h)		;a204
+	ld a,(0cb21h)		;a204   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00eh		;a207
 	ret nz			;a209
 	call L_A286		;a20a
@@ -411,7 +411,7 @@ L_A26E:
 	pop hl			;a27d
 	ret nc			;a27e
 	ld (hl),000h		;a27f
-	ld a,(0cb21h)		;a281
+	ld a,(0cb21h)		;a281   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp b			;a284
 	ret nz			;a285
 L_A286:
@@ -864,7 +864,7 @@ L_A56C:
 	ld bc,0201fh		;a572
 	jp 0475ah		;a575   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 L_A578:
-	ld a,(0cb21h)		;a578
+	ld a,(0cb21h)		;a578   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 003h		;a57b
 	jr z,L_A589		;a57d
 	ld a,(0ca4ah)		;a57f   ; lee la zona
@@ -927,7 +927,7 @@ L_A5C2:
 	ld (0cb00h),a		;a5d5   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	xor a			;a5d8
 	ld (0cb01h),a		;a5d9   ; guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
-	ld (0cb31h),a		;a5dc
+	ld (0cb31h),a		;a5dc   ; guarda 1 en el estado 2 de Snake
 	ld a,l			;a5df
 	and 0f8h		;a5e0
 	ld l,a			;a5e2
@@ -961,7 +961,7 @@ L_A5FC:
 	cp c			;a607
 	ret			;a608
 L_A609:
-	ld a,(0cb80h)		;a609
+	ld a,(0cb80h)		;a609   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	cp 008h		;a60c
 	jp nz,L_A589		;a60e
 	ld a,(0cb83h)		;a611
@@ -1336,13 +1336,13 @@ L_A8F1:
 	ret c			;a8f6
 	cp 00dh		;a8f7
 	ret nc			;a8f9
-	ld hl,0d7d0h		;a8fa
+	ld hl,0d7d0h		;a8fa   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	set 2,(hl)		;a8fd
 	ld hl,0d7ddh		;a8ff
 	res 3,(hl)		;a902
 	ret			;a904
 L_A905:
-	ld hl,0d7d0h		;a905
+	ld hl,0d7d0h		;a905   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	res 0,(hl)		;a908
 	ld hl,0d7e2h		;a90a
 	set 3,(hl)		;a90d
@@ -1579,7 +1579,7 @@ DATA_tabla_AA8F:
 
 
 L_AAA9:
-	ld a,(0ca1ch)		;aaa9
+	ld a,(0ca1ch)		;aaa9   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;aaac
 	jr z,L_AAB2		;aaad
 	ld a,(0d8a5h)		;aaaf
@@ -1604,7 +1604,7 @@ L_AAB8:
 	jr L_AB22		;aad9
 L_AADB:
 	call 07a38h		;aadb   ; a_p03_b6c8_b_10: a_p03_b6c8 y deja el banco 10
-	ld a,(0e270h)		;aade
+	ld a,(0e270h)		;aade   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;aae1
 	ret nz			;aae2
 	ld de,00d10h		;aae3
@@ -1626,7 +1626,7 @@ L_AAFC:
 	ret nz			;ab01
 	ld a,001h		;ab02
 	ld (0cb3ch),a		;ab04
-	ld (0ca1ch),a		;ab07
+	ld (0ca1ch),a		;ab07   ; guarda 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	xor a			;ab0a
 	ld (0d8a5h),a		;ab0b
 	ld (ix+00dh),a		;ab0e
@@ -2163,7 +2163,7 @@ L_AED6:
 	call 04650h		;af21   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	jp 04606h		;af24   ; enciende_todo: la pantalla y los sprites encendidos
 L_AF27:
-	ld hl,0df80h		;af27
+	ld hl,0df80h		;af27   ; apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 	ld bc,0003fh		;af2a
 	jp 04236h		;af2d   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_AF30:
@@ -2193,7 +2193,7 @@ L_AF30:
 	call L_B17D		;af71
 	call 08ed8h		;af74   ; sprites_a_vram_b_1_2_10: sprites_a_vram y deja los bancos 1, 2 y 10
 	ld hl,(0ca50h)		;af77   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-	ld (0ca70h),hl		;af7a
+	ld (0ca70h),hl		;af7a   ; guarda la fila y la columna de la sala desde la que se mira (16 bits)
 	ld hl,0cabdh		;af7d
 	ld (hl),001h		;af80
 	call 04650h		;af82   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
@@ -2281,7 +2281,7 @@ L_B008:
 	ld hl,0804ah		;b008
 	jp 064b7h		;b00b   ; letrero_de_50: el letrero con sitio de la palabra HL del banco 50
 L_B00E:
-	ld ix,0d600h		;b00e
+	ld ix,0d600h		;b00e   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld b,00dh		;b012
 	ld a,001h		;b014
 	ld (0d708h),a		;b016
@@ -2307,7 +2307,7 @@ L_B02E:
 	inc (hl)			;b040
 	ret			;b041
 L_B042:
-	ld ix,0d638h		;b042
+	ld ix,0d638h		;b042   ; apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 	ld b,022h		;b046
 	ld a,001h		;b048
 	ld (0d708h),a		;b04a
@@ -2819,7 +2819,7 @@ L_B3F4:
 	ld a,099h		;b3f4
 	jp 046f2h		;b3f6   ; borra_bloque_pagina: p00:46FF en la pagina en la que se dibuja (0xCA42)
 L_B3F9:
-	ld hl,0d600h		;b3f9
+	ld hl,0d600h		;b3f9   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld de,0e088h		;b3fc
 	jr L_B414		;b3ff
 L_B401:
@@ -2829,7 +2829,7 @@ L_B401:
 	jp c,L_B9B4		;b409
 	cp 023h		;b40c
 	jp nc,L_B9B4		;b40e
-	ld hl,0d638h		;b411
+	ld hl,0d638h		;b411   ; apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 L_B414:
 	ld a,(0d704h)		;b414
 L_B417:
@@ -2889,17 +2889,17 @@ L_B44D:
 	ld hl,0d702h		;b46a
 	ldi		;b46d
 	ldi		;b46f
-	ld de,0cb20h		;b471
+	ld de,0cb20h		;b471   ; apunta a lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	call L_B87B		;b474
 	call 0992ah		;b477   ; pon_cb35: 0xCB35 = 1 si 0xCB20 es 1, 2, 5 o 6
 	call L_B5C8		;b47a
 	ld a,(0d70ah)		;b47d
 	ld (0cb24h),a		;b480
 	call L_B48C		;b483
-	ld a,(0cb20h)		;b486
+	ld a,(0cb20h)		;b486   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	jp L_B897		;b489
 L_B48C:
-	ld a,(0cb20h)		;b48c
+	ld a,(0cb20h)		;b48c   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	call 0424dh		;b48f   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
@@ -2959,7 +2959,7 @@ L_B4FF:
 	and a			;b4ff
 	ret			;b500
 L_B501:
-	ld a,(0cb21h)		;b501
+	ld a,(0cb21h)		;b501   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00ah		;b504
 	jr z,L_B50E		;b506
 	cp 00bh		;b508
@@ -3016,7 +3016,7 @@ L_B54F:
 	scf			;b556
 	ret			;b557
 L_B558:
-	ld a,(0cb31h)		;b558
+	ld a,(0cb31h)		;b558   ; lee 1 en el estado 2 de Snake
 	or a			;b55b
 	jr nz,L_B572		;b55c
 	ld a,(0cb00h)		;b55e   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -3054,15 +3054,15 @@ L_B57B:
 	ld hl,0d702h		;b5a4
 	ldi		;b5a7
 	ldi		;b5a9
-	ld de,0cb21h		;b5ab
+	ld de,0cb21h		;b5ab   ; apunta a lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	call L_B87B		;b5ae
 	call L_B5C8		;b5b1
 	call L_B872		;b5b4
 	call L_B78D		;b5b7
-	ld a,(0cb20h)		;b5ba
+	ld a,(0cb20h)		;b5ba   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	cp 00ch		;b5bd
 	call nz,085aah		;b5bf   ; rachas_b007_af4c_bancos_10:
-	ld a,(0cb21h)		;b5c2
+	ld a,(0cb21h)		;b5c2   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	jp L_B897		;b5c5
 L_B5C8:
 	ld a,(0cb00h)		;b5c8   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -3128,7 +3128,7 @@ L_B647:
 	and a			;b647
 	ret			;b648
 L_B649:
-	ld a,(0cb20h)		;b649
+	ld a,(0cb20h)		;b649   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	cp 005h		;b64c
 	jr nz,L_B647		;b64e
 	ld a,(0d704h)		;b650
@@ -3317,14 +3317,14 @@ L_B773:
 	and a			;b78b
 	ret			;b78c
 L_B78D:
-	ld a,(0cb21h)		;b78d
+	ld a,(0cb21h)		;b78d   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 004h		;b790
 	jp z,L_B839		;b792
 	cp 007h		;b795
 	jr z,L_B7F3		;b797
 	ld hl,0cac4h		;b799   ; apunta a lo largo de la barra de la derecha llena
 	call L_B7C8		;b79c
-	ld a,(0dff0h)		;b79f
+	ld a,(0dff0h)		;b79f   ; lee 1 mientras corre la tercera barra
 	or a			;b7a2
 	jr nz,L_B7B0		;b7a3
 	call L_B7DD		;b7a5
@@ -3386,7 +3386,7 @@ L_B80C:
 	inc hl			;b812
 	ld (hl),a			;b813
 	ld hl,0ca54h		;b814   ; apunta a el ancho de la tercera barra (lo maximo)
-	ld a,(0dff0h)		;b817
+	ld a,(0dff0h)		;b817   ; lee 1 mientras corre la tercera barra
 	or a			;b81a
 	jr nz,L_B823		;b81b
 	ld a,020h		;b81d
@@ -3410,7 +3410,7 @@ L_B82C:
 	ld (hl),a			;b837
 	ret			;b838
 L_B839:
-	ld a,(0dff0h)		;b839
+	ld a,(0dff0h)		;b839   ; lee 1 mientras corre la tercera barra
 	or a			;b83c
 	jr z,L_B851		;b83d
 	ld hl,0ca54h		;b83f   ; apunta a el ancho de la tercera barra (lo maximo)
@@ -3439,7 +3439,7 @@ L_B869:
 	call L_B7DD		;b86c
 	jp 0431eh		;b86f   ; barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 L_B872:
-	ld a,(0cb21h)		;b872
+	ld a,(0cb21h)		;b872   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 001h		;b875
 	jp z,08593h		;b877   ; rachas_b34a: p37:B34A a la VRAM de 0x1E200 (A = 1)
 	ret			;b87a
@@ -3476,7 +3476,7 @@ L_B897:
 	ld (0d706h),a		;b8ac
 	ld (0ca69h),a		;b8af   ; guarda el quinto byte de la ficha de la sala (p02:877F)
 	ld (0e236h),a		;b8b2
-	ld a,(0cb21h)		;b8b5
+	ld a,(0cb21h)		;b8b5   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;b8b8
 	jp z,08ec0h		;b8ba   ; a_p03_b4e0_2: p03:B4E0 con el banco 3 en 0xA000
 	ret			;b8bd
@@ -3568,7 +3568,7 @@ L_B934:
 	ld de,03c94h		;b951
 	jp 047edh		;b954   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 L_B957:
-	ld hl,0cb80h		;b957
+	ld hl,0cb80h		;b957   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld bc,0005fh		;b95a
 	jp 04236h		;b95d   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_B960:
@@ -3669,15 +3669,15 @@ L_B9DA:
 	pop de			;b9e3
 	ret			;b9e4
 L_B9E5:
-	ld a,(0cb20h)		;b9e5
+	ld a,(0cb20h)		;b9e5   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	or a			;b9e8
 	jr z,L_BA09		;b9e9
 	dec a			;b9eb
 	ld hl,0a6afh		;b9ec
 	call 0649ch		;b9ef   ; palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
 	call L_BA32		;b9f2
-	ld a,(0cb20h)		;b9f5
-	ld hl,0d600h		;b9f8
+	ld a,(0cb20h)		;b9f5   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
+	ld hl,0d600h		;b9f8   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld de,0e088h		;b9fb
 	call L_B417		;b9fe
 	jr L_BA09		;ba01
@@ -3685,20 +3685,20 @@ L_BA03:
 	ld hl,0d8a4h		;ba03
 	call L_B3E5		;ba06
 L_BA09:
-	ld a,(0cb21h)		;ba09
+	ld a,(0cb21h)		;ba09   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	or a			;ba0c
 	ret z			;ba0d
 	dec a			;ba0e
 	ld hl,0a6cbh		;ba0f
 	call 0649ch		;ba12   ; palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
 	call L_BA2A		;ba15
-	ld a,(0cb21h)		;ba18
+	ld a,(0cb21h)		;ba18   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	ld de,0e0b8h		;ba1b
 	cp 020h		;ba1e
 	ret c			;ba20
 	cp 023h		;ba21
 	ret nc			;ba23
-	ld hl,0d638h		;ba24
+	ld hl,0d638h		;ba24   ; apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 	jp L_B417		;ba27
 L_BA2A:
 	ld de,0d8a4h		;ba2a
@@ -3707,7 +3707,7 @@ L_BA2A:
 L_BA32:
 	ld de,0d074h		;ba32
 	ld bc,02010h		;ba35
-	ld a,(0cb20h)		;ba38
+	ld a,(0cb20h)		;ba38   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	cp 003h		;ba3b
 	jr c,L_BA43		;ba3d
 	ld b,010h		;ba3f
@@ -3893,7 +3893,7 @@ L_BB50:
 	ret z			;bb5a
 	ld a,(0d704h)		;bb5b
 	dec a			;bb5e
-	ld hl,0d638h		;bb5f
+	ld hl,0d638h		;bb5f   ; apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 	add a,a			;bb62
 	add a,a			;bb63
 	call 0423eh		;bb64   ; suma_a_hl: HL = HL + A
@@ -3958,7 +3958,7 @@ L_BBDD:
 	ld a,(0cb4bh)		;bbdd   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;bbe0
 	ret z			;bbe1
-	ld hl,0d600h		;bbe2
+	ld hl,0d600h		;bbe2   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld de,00004h		;bbe5
 	ld b,031h		;bbe8
 L_BBEA:
@@ -3973,7 +3973,7 @@ L_BBEA:
 	res 0,(hl)		;bbf8
 	xor a			;bbfa
 	ld (0cb4bh),a		;bbfb   ; guarda con el puesto, la vida baja un punto cada 16 cuadros
-	ld (0e1e8h),a		;bbfe
+	ld (0e1e8h),a		;bbfe   ; guarda 1 mientras hay una llamada
 	ld (0d7bbh),a		;bc01
 	ld hl,0d88ch		;bc04
 	ld (hl),0ffh		;bc07
@@ -4242,7 +4242,7 @@ L_BF14:
 	sub (ix+001h)		;bf1e
 	cp (ix+005h)		;bf21
 	ret nc			;bf24
-	ld a,(0cb31h)		;bf25
+	ld a,(0cb31h)		;bf25   ; lee 1 en el estado 2 de Snake
 	and a			;bf28
 	ld de,0060ch		;bf29
 	jr z,L_BF31		;bf2c
@@ -4301,7 +4301,7 @@ L_BF8A:
 	sub (ix+002h)		;bf8d
 	cp (ix+005h)		;bf90
 	ret nc			;bf93
-	ld a,(0cb31h)		;bf94
+	ld a,(0cb31h)		;bf94   ; lee 1 en el estado 2 de Snake
 	and a			;bf97
 	ld de,00c10h		;bf98
 	jr z,L_BFA0		;bf9b
@@ -4328,7 +4328,7 @@ L_BFBC:
 	ld a,(0cab6h)		;bfbc
 	or a			;bfbf
 	ret nz			;bfc0
-	ld a,(0cb21h)		;bfc1
+	ld a,(0cb21h)		;bfc1   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	ld b,020h		;bfc4
 	cp b			;bfc6
 	ld hl,0d6b4h		;bfc7
@@ -4359,7 +4359,7 @@ L_BFD9:
 	ret nc			;bfef
 	xor a			;bff0
 	ld (hl),a			;bff1
-	ld (0cb21h),a		;bff2
+	ld (0cb21h),a		;bff2   ; guarda lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	ld a,(0d8a4h)		;bff5
 	or a			;bff8
 	ret nz			;bff9

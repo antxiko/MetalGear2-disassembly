@@ -3260,7 +3260,7 @@ L_5310:
 	call 07df4h		;5326   ; cosas_fijas_en_la_otra: lo mismo en la otra pagina
 	call 08415h		;5329   ; borra_cb80:
 	call 08281h		;532c   ; llama_ab91: p06:AB91 guardando el banco de 0xA000
-	call 0b1a3h		;532f
+	call 0b1a3h		;532f   ; borra_aviso: X = 0xD0, Y = 0, 0x20 x 0x14 a 0 en las dos paginas
 	call 08894h		;5332   ; llama_aebb: p06:AEBB con el banco 6 en 0xA000
 	call 08290h		;5335   ; llama_abbb: p06:ABBB guardando el banco de 0xA000
 	call 083dch		;5338   ; piezas_de_83dc: en las zonas 1-6, fila 3, columna 7: dos piezas (p02:8409) en Y = 0x88, X = 0x58 y 0x60
@@ -3283,7 +3283,7 @@ L_5310:
 	call 0a0e6h		;536b   ; p08:A0E6
 	call bancos_1_2_3		;536e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call cambia_de_pagina		;5371   ; cambia de pagina: la sala nueva a la vista
-	call 0ba53h		;5374   ; p03:BA53
+	call 0ba53h		;5374   ; al_entrar_en_la_sala: 0xE1E8 = 0xDFF0 = 0; fuera del agua, sin la barra de la derecha
 	call 08b47h		;5377   ; a_p09_a163: p09:A163 con el banco 9 en 0xA000
 	call enciende_sprites		;537a   ; otra vez con sprites
 	call sala_zona_12_otra_vez		;537d   ; sala_zona_12_otra_vez: en la zona 0x12, las salas 2 (con 0xD888) y 3 (con 0xD881) se pintan otra vez
@@ -3298,7 +3298,7 @@ L_5310:
 	call 0a000h		;5396   ; p10:A000
 	call 0a477h		;5399   ; p10:A477
 	call bancos_1_2_3		;539c   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b4d1h		;539f   ; p03:B4D1
+	call 0b4d1h		;539f   ; cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que siguen
 	call bancos_10		;53a2   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a82fh		;53a5   ; p10:A82F
 	call bancos_1_2_6		;53a8   ; bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3306,7 +3306,7 @@ L_5310:
 	call bancos_11		;53ae   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a601h		;53b1   ; p11:A601
 	call bancos_1_2_3		;53b4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b108h		;53b7
+	call 0b108h		;53b7   ; llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 	call 08fdfh		;53ba   ; cosas_de_la_sala: las cosas de la sala (0xD7C0) de las listas de p06 y las pinta
 	call bancos_14		;53bd   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b4b9h		;53c0   ; p14:B4B9
@@ -3601,10 +3601,10 @@ L_55DA:
 	call bancos_1_2_3		;560e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call cambia_de_pagina		;5611   ; la sala a la vista
 	call copia_marcador		;5614   ; el marcador a la otra pagina
-	call 0ba53h		;5617
+	call 0ba53h		;5617   ; al_entrar_en_la_sala: 0xE1E8 = 0xDFF0 = 0; fuera del agua, sin la barra de la derecha
 	call 08b47h		;561a   ; a_p09_a163: p09:A163 con el banco 9 en 0xA000
 	call enciende_sprites		;561d   ; otra vez con sprites
-	call 0b4d1h		;5620
+	call 0b4d1h		;5620   ; cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que siguen
 	call bancos_10		;5623   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a0d3h		;5626
 	call 0a000h		;5629
@@ -3612,7 +3612,7 @@ L_55DA:
 	call bancos_1_2_11		;562f   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a601h		;5632
 	call bancos_1_2_3		;5635   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b108h		;5638
+	call 0b108h		;5638   ; llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 	call bancos_14		;563b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b6c3h		;563e
 	call bancos_4_5		;5641   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4112,7 +4112,7 @@ L_59CC:
 	call mapas_de_bits_especiales		;59d7   ; especial: p00:5CAE y p00:55DA
 	jp L_55DA		;59da
 limpia_sala:		; 0xD8D8-0xD8DF a cero
-	ld hl,0d8d8h		;59dd
+	ld hl,0d8d8h		;59dd   ; apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
 	ld bc,00007h		;59e0
 	call borra_bloque		;59e3   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call apaga_sprites		;59e6   ; sin sprites, todos fuera
@@ -4821,7 +4821,7 @@ sala_con_cb21:		; salvo en la zona 0x12, la especial 0x29 o con 0xD433: p12:6E4B
 	ld a,(0d433h)		;5ee0
 	and a			;5ee3
 	ret nz			;5ee4
-	ld a,(0cb21h)		;5ee5
+	ld a,(0cb21h)		;5ee5   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 008h		;5ee8
 	jp nz,a_p12_6e4b		;5eea   ; a_p12_6e4b: p12:6E4B con el banco 12 en 0x6000
 	jp a_p12_6e4f		;5eed   ; a_p12_6e4f: p12:6E4F con el banco 12 en 0x6000

@@ -584,7 +584,7 @@ L_83B5:
 	jp 041a3h		;83cc
 L_83CF:
 	push bc			;83cf
-	ld a,(0cb80h)		;83d0
+	ld a,(0cb80h)		;83d0   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	cp 008h		;83d3
 	call z,L_8630		;83d5
 	pop bc			;83d8
@@ -648,7 +648,7 @@ L_841D:
 	jr nc,L_8455		;843e
 	call L_96BA		;8440
 	jr c,L_8455		;8443
-	ld a,(0cb21h)		;8445
+	ld a,(0cb21h)		;8445   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00ah		;8448
 	jr z,L_845B		;844a
 	cp 00bh		;844c
@@ -725,7 +725,7 @@ L_84B2:
 	ld l,(ix+004h)		;84d4
 	call L_8571		;84d7
 	ret c			;84da
-	ld a,(0cb21h)		;84db
+	ld a,(0cb21h)		;84db   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	sub 00ah		;84de
 	cp 002h		;84e0
 	jp nc,L_9949		;84e2
@@ -1853,19 +1853,19 @@ L_8CC5:
 	call 045beh		;8cc7   ; scroll_a_cero: R#23 = 0 (el desplazamiento vertical)
 	xor a			;8cca
 	ld (0d8aeh),a		;8ccb
-	ld (0ca1ch),a		;8cce
+	ld (0ca1ch),a		;8cce   ; guarda 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	ld (0d8a5h),a		;8cd1
 	ld (0d8a4h),a		;8cd4
 	ld (0d6b0h),a		;8cd7
-	ld (0cb21h),a		;8cda
-	ld (0cb20h),a		;8cdd
+	ld (0cb21h),a		;8cda   ; guarda lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+	ld (0cb20h),a		;8cdd   ; guarda lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	ld (0cb35h),a		;8ce0
 	ld (0cb00h),a		;8ce3   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld (0cb01h),a		;8ce6   ; guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	ld (0d760h),a		;8ce9
 	inc a			;8cec
 	ld (0cb3ch),a		;8ced
-	ld hl,0cc80h		;8cf0
+	ld hl,0cc80h		;8cf0   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
 	ld bc,0007fh		;8cf3
 	call 04236h		;8cf6   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,009h		;8cf9
@@ -2524,7 +2524,7 @@ DATA_resto_915C:
 
 
 L_917C:
-	ld a,(0caa0h)		;917c
+	ld a,(0caa0h)		;917c   ; lee cuantos siguen a Snake por su rastro (1-4)
 	cp 004h		;917f
 	jp z,05a0fh		;9181   ; d41a_y_compania: C = 0
 	ld a,(0ca4ah)		;9184   ; lee la zona
@@ -2730,7 +2730,7 @@ L_92EB:
 	ld (hl),002h		;92f1
 	ret			;92f3
 L_92F4:
-	ld a,(0caa0h)		;92f4
+	ld a,(0caa0h)		;92f4   ; lee cuantos siguen a Snake por su rastro (1-4)
 	cp 004h		;92f7
 	ret z			;92f9
 	call L_96BA		;92fa

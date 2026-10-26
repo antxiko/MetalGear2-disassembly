@@ -1971,6 +1971,7 @@ C 0x5323 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5326 cosas_fijas_en_la_otra: lo mismo en la otra pagina
 C 0x5329 borra_cb80: 
 C 0x532C llama_ab91: p06:AB91 guardando el banco de 0xA000
+C 0x532F borra_aviso: X = 0xD0, Y = 0, 0x20 x 0x14 a 0 en las dos paginas
 C 0x5332 llama_aebb: p06:AEBB con el banco 6 en 0xA000
 C 0x5335 llama_abbb: p06:ABBB guardando el banco de 0xA000
 C 0x5338 piezas_de_83dc: en las zonas 1-6, fila 3, columna 7: dos piezas (p02:8409) en Y = 0x88, X = 0x58 y 0x60
@@ -1989,7 +1990,7 @@ C 0x5365 paleta_de_la_sala: la paleta comun y la de la sala
 C 0x5368 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x536B p08:A0E6
 C 0x536E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5374 p03:BA53
+C 0x5374 al_entrar_en_la_sala: 0xE1E8 = 0xDFF0 = 0; fuera del agua, sin la barra de la derecha
 C 0x5377 a_p09_a163: p09:A163 con el banco 9 en 0xA000
 C 0x537D sala_zona_12_otra_vez: en la zona 0x12, las salas 2 (con 0xD888) y 3 (con 0xD881) se pintan otra vez
 C 0x5384 copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
@@ -2001,7 +2002,7 @@ C 0x5393 p10:A0D3
 C 0x5396 p10:A000
 C 0x5399 p10:A477
 C 0x539C bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x539F p03:B4D1
+C 0x539F cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que siguen
 C 0x53A2 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53A5 p10:A82F
 C 0x53A8 bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2009,6 +2010,7 @@ C 0x53AB p06:AC26
 C 0x53AE bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53B1 p11:A601
 C 0x53B4 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x53B7 llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 C 0x53BA cosas_de_la_sala: las cosas de la sala (0xD7C0) de las listas de p06 y las pinta
 C 0x53BD bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53C0 p14:B4B9
@@ -2087,10 +2089,13 @@ C 0x5602 umbrales_de_la_sala: los umbrales de los juegos de piezas de la sala (p
 C 0x5605 paleta_de_la_sala: la paleta comun y la de la sala
 C 0x5608 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x560E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5617 al_entrar_en_la_sala: 0xE1E8 = 0xDFF0 = 0; fuera del agua, sin la barra de la derecha
 C 0x561A a_p09_a163: p09:A163 con el banco 9 en 0xA000
+C 0x5620 cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que siguen
 C 0x5623 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x562F bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5635 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5638 llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 C 0x563B bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5641 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x564A bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2170,6 +2175,7 @@ C 0x5972 sala_de_lista_a_e500: la sala de la ficha IX de la lista HL, con los bl
 C 0x5975 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5984 bancos_de_mapa: 24-25-26 y los bancos del mapa de la zona (p00:545C)
 C 0x59BB prepara_la_zona: C = la zona (o la de antes): las zonas 0x0B-0x10 no rehacen la pantalla
+C 0x59DD apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
 C 0x59E3 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x59E9 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0x59EC esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
@@ -2302,6 +2308,7 @@ C 0x5EC9 sala_a_ram: los 6 x 6 bloques de HL, de 4 x 4 caracteres, en el mapa de
 C 0x5ECF bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5ED4 lee la zona
 C 0x5EDA lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x5EE5 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x5EEA a_p12_6e4b: p12:6E4B con el banco 12 en 0x6000
 C 0x5EED a_p12_6e4f: p12:6E4F con el banco 12 en 0x6000
 C 0x5EF4 a_p07_a4a6: p07:A4A6 con el banco 7 en 0xA000

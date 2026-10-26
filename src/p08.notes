@@ -66,6 +66,7 @@ C 0xA0FF lee la zona
 C 0xA11E lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA138 a_p02_8475_2: paleta_de_la_sala (p02:8475) con el banco 2
 C 0xA13B lee la zona
+C 0xA144 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA14B paleta_bccf: la paleta de p56:BCCF
 C 0xA14E lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA152 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
@@ -113,6 +114,7 @@ C 0xA5B3 sonido_57: pide el sonido 0x57
 C 0xA5C1 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA5CA palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA5F5 suma_a_hl: HL = HL + A
+C 0xA631 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA671 p04:90C8
 C 0xA690 p04:808B
 C 0xA708 llena_bloque: pone A en BC + 1 bytes desde HL
@@ -124,9 +126,12 @@ C 0xA7DA lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7E3 lee la sala de la zona
 C 0xA7FB sonido_24: pide el sonido 0x24
 C 0xA806 lee la sala de la zona
+C 0xA810 lee 1 en el estado 2 de Snake
+C 0xA815 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA83C suma_a_hl: HL = HL + A
 C 0xA842 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA850 lee la sala de la zona
+C 0xA855 lee 1 en el estado 2 de Snake
 C 0xA8B2 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA8C5 suma_a_hl: HL = HL + A
 C 0xA8D6 despachador: salta a la palabra A de la tabla que va detras del call
@@ -135,6 +140,7 @@ C 0xA94A azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA959 hl_negativo: HL = -HL (PR2 p00:5BBD)
 C 0xA960 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA996 lee la Y de Snake
+C 0xA9A6 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xAA1E hl_negativo: HL = -HL (PR2 p00:5BBD)
 C 0xAA24 p04:90A9
 C 0xAA27 p04:908C
@@ -169,6 +175,8 @@ C 0xAE1D p04:8E82
 C 0xAE55 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAE60 p04:808E
 C 0xAE7B lee la zona
+C 0xAE9B lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xAEC6 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xAED2 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAEE5 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xAEEF palabra_de_tabla: HL = la palabra A de la tabla de HL

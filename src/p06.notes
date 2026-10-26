@@ -63,11 +63,14 @@ L 0xB0C8 mando A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 
 L 0xB109 teclas_de_funcion A = las filas 6 y 7 de la matriz, en 6 bits
 L 0xB129 matriz_del_teclado en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
 C 0xA006 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA019 lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA033 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0xA056 guarda las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA07B sonido_48: pide el sonido 0x48
 C 0xA0AB apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA0B1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA0BA borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA0C2 apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 C 0xA0C8 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA0D3 guarda la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha) y el byte siguiente (16 bits)
 C 0xA0E5 apunta a la Y de Snake
@@ -76,6 +79,7 @@ C 0xA10D suma_a_de: DE = DE + A
 C 0xA11B llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA157 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xA16B lee 1 si Snake ha chocado en este cuadro
+C 0xA170 lee 1 en el estado 2 de Snake
 C 0xA178 lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xA193 a_p03_af05: p03:AF05 con el banco 3 en 0xA000
 C 0xA199 despachador: salta a la palabra A de la tabla que va detras del call
@@ -119,6 +123,8 @@ C 0xA39F lee la sala de la zona
 C 0xA3B3 lee la Y de Snake
 C 0xA3BC lee la X de Snake
 C 0xA3C9 apunta a con el puesto, la vida baja un punto cada 16 cuadros
+C 0xA3E2 apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
+C 0xA3E9 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 C 0xA3EF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA3F8 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA401 borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -145,7 +151,10 @@ C 0xA51F lee la zona
 C 0xA52C lee la sala de la zona
 C 0xA536 lee la sala de la zona
 C 0xA571 suma_a_hl: HL = HL + A
+C 0xA598 lee cuantos siguen a Snake por su rastro (1-4)
 C 0xA59E despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA5A9 apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xA5B1 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA5C3 lee la Y de Snake
 C 0xA5CA lee la X de Snake
 C 0xA5CF lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -203,6 +212,9 @@ C 0xA984 p02:9CB7
 C 0xA9B0 suma_a_hl: HL = HL + A
 C 0xAA26 suma_a_hl: HL = HL + A
 C 0xAA33 p04:9CB7
+C 0xAA87 lee 1 mientras se ve el rotulo de la cosa cogida
+C 0xAA96 lee la direccion en la que se mira la sala de al lado (estado 0x0E)
+C 0xAA9B lee 1 en pausa (F1)
 C 0xAAA0 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAAE3 mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
 C 0xAAE6 mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
@@ -251,6 +263,8 @@ C 0xAECD lee la sala de la zona
 C 0xAEE8 apunta a 8 sitios de 4 bytes [numero][Y][X][...] en los que se entra yendo hacia arriba
 C 0xAEF3 suma_a_hl: HL = HL + A
 C 0xAEFF despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAF4A apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
+C 0xAF55 apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 C 0xAF6F sonido_05: pide el sonido 0x05
 C 0xAF72 sonido_9c: pide el sonido 0x9C (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAF8F sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)

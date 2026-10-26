@@ -60,7 +60,7 @@ L_A019:
 	ld a,(0ca4bh)		;a035   ; lee la sala de la zona
 	cp 00eh		;a038
 	ret nz			;a03a
-	ld a,(0cb21h)		;a03b
+	ld a,(0cb21h)		;a03b   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00fh		;a03e
 	ret nz			;a040
 	ld a,(0ca90h)		;a041
@@ -1948,11 +1948,11 @@ L_AD52:
 	xor a			;ad5c
 	ld (0cac8h),a		;ad5d
 	inc a			;ad60
-	ld (0dff0h),a		;ad61
+	ld (0dff0h),a		;ad61   ; guarda 1 mientras corre la tercera barra
 	ld (0cae0h),a		;ad64
 	ld (0cae2h),a		;ad67   ; guarda 1 mientras se ve la barra de la derecha
 	ld a,010h		;ad6a
-	ld (0dff2h),a		;ad6c
+	ld (0dff2h),a		;ad6c   ; guarda la espera de la tercera barra
 	call 07a8dh		;ad6f   ; a_p03_bb38: p03:BB38 con el banco 3 en 0xA000
 	jr L_AD80		;ad72
 L_AD74:
@@ -2240,7 +2240,7 @@ L_AF32:
 	ld (ix+00dh),008h		;af32
 	xor a			;af36
 	ld (ix+00ch),a		;af37
-	ld (0dff0h),a		;af3a
+	ld (0dff0h),a		;af3a   ; guarda 1 mientras corre la tercera barra
 	inc a			;af3d
 	ld (0e258h),a		;af3e
 	ld (0d4f2h),a		;af41
@@ -2869,7 +2869,7 @@ L_B3FF:
 	jr L_B3DD		;b405
 L_B407:
 	call L_B374		;b407
-	ld a,(0cb31h)		;b40a
+	ld a,(0cb31h)		;b40a   ; lee 1 en el estado 2 de Snake
 	and a			;b40d
 	jr z,L_B41E		;b40e
 	call 04256h		;b410   ; azar: A = un numero al azar (0xCA03 rotado mas R)
@@ -2939,7 +2939,7 @@ L_B46C:
 L_B477:
 	call 08100h		;b477
 	jr nz,L_B49A		;b47a
-	ld a,(0cb31h)		;b47c
+	ld a,(0cb31h)		;b47c   ; lee 1 en el estado 2 de Snake
 	and a			;b47f
 	ret nz			;b480
 	call 08079h		;b481
@@ -3677,7 +3677,7 @@ L_BA35:
 	jr L_BA54		;ba43
 L_BA45:
 	call 079e1h		;ba45   ; a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
-	ld a,(0e270h)		;ba48
+	ld a,(0e270h)		;ba48   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;ba4b
 	ret nz			;ba4c
 	ld d,013h		;ba4d
@@ -3887,7 +3887,7 @@ L_BB9E:
 L_BBA2:
 	xor a			;bba2
 	ld (ix+00ch),a		;bba3
-	ld (0e1e8h),a		;bba6
+	ld (0e1e8h),a		;bba6   ; guarda 1 mientras hay una llamada
 	ld (0d7bbh),a		;bba9
 	inc a			;bbac
 	ld (0cb3ch),a		;bbad
@@ -3910,7 +3910,7 @@ L_BBC1:
 	jp L_BA54		;bbd6
 L_BBD9:
 	call 079e1h		;bbd9   ; a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
-	ld a,(0e270h)		;bbdc
+	ld a,(0e270h)		;bbdc   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;bbdf
 	ret nz			;bbe0
 	call 06cc2h		;bbe1   ; sonido_a0: pide el sonido 0xA0 (de los que tienen la partitura en un banco de musica, p16:4CE3)
@@ -4004,7 +4004,7 @@ L_BC9F:
 	jp 04680h		;bcb2   ; linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 L_BCB5:
 	call 079e1h		;bcb5   ; a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
-	ld a,(0e270h)		;bcb8
+	ld a,(0e270h)		;bcb8   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;bcbb
 	ret nz			;bcbc
 	ld a,068h		;bcbd
@@ -4258,7 +4258,7 @@ L_BED0:
 	call L_BEE7		;bee1
 	jp L_BDF9		;bee4
 L_BEE7:
-	ld hl,0cb21h		;bee7
+	ld hl,0cb21h		;bee7   ; apunta a lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	ld a,(hl)			;beea
 	sub 00ah		;beeb
 	cp 002h		;beed

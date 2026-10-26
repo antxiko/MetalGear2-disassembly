@@ -198,7 +198,7 @@ L_A13B:
 	cp 002h		;a140
 	ret nc			;a142
 	ld b,a			;a143
-	ld a,(0cb21h)		;a144
+	ld a,(0cb21h)		;a144   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 003h		;a147
 	jr nz,L_A14E		;a149
 	jp 071fah		;a14b   ; paleta_bccf: la paleta de p56:BCCF
@@ -888,7 +888,7 @@ L_A618:
 	ld a,(0cab6h)		;a62b
 	and a			;a62e
 	jr nz,L_A638		;a62f
-	ld a,(0cb21h)		;a631
+	ld a,(0cb21h)		;a631   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 021h		;a634
 	jr z,L_A63F		;a636
 L_A638:
@@ -1117,10 +1117,10 @@ L_A806:
 	ld a,(0cab6h)		;a80b
 	and a			;a80e
 	ret nz			;a80f
-	ld a,(0cb31h)		;a810
+	ld a,(0cb31h)		;a810   ; lee 1 en el estado 2 de Snake
 	and a			;a813
 	ret nz			;a814
-	ld a,(0cb21h)		;a815
+	ld a,(0cb21h)		;a815   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 022h		;a818
 	ret nz			;a81a
 	ld hl,0d43bh		;a81b
@@ -1157,7 +1157,7 @@ L_A842:
 	ld a,(0ca4bh)		;a850   ; lee la sala de la zona
 	and a			;a853
 	ret nz			;a854
-	ld a,(0cb31h)		;a855
+	ld a,(0cb31h)		;a855   ; lee 1 en el estado 2 de Snake
 	and a			;a858
 	ret nz			;a859
 	call L_A8BB		;a85a
@@ -1326,7 +1326,7 @@ L_A991:
 	ld a,(0cab6h)		;a9a0
 	and a			;a9a3
 	jr nz,L_A9AE		;a9a4
-	ld a,(0cb21h)		;a9a6
+	ld a,(0cb21h)		;a9a6   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 022h		;a9a9
 	jp z,L_A9FC		;a9ab
 L_A9AE:
@@ -2019,7 +2019,7 @@ L_AE87:
 	ld a,(ix+00bh)		;ae94
 	cp 009h		;ae97
 	jr nz,L_AEA8		;ae99
-	ld a,(0cb21h)		;ae9b
+	ld a,(0cb21h)		;ae9b   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 003h		;ae9e
 	jr z,L_AEA8		;aea0
 	ld a,(0cacdh)		;aea2
@@ -2043,7 +2043,7 @@ L_AEBF:
 	ld a,(ix+00bh)		;aebf
 	cp 009h		;aec2
 	jr nz,L_AED2		;aec4
-	ld a,(0cb21h)		;aec6
+	ld a,(0cb21h)		;aec6   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 003h		;aec9
 	jr z,L_AED2		;aecb
 	ld a,(0cacdh)		;aecd

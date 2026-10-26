@@ -15,7 +15,7 @@
 
 
 L_A000:
-	ld a,(0cb21h)		;a000
+	ld a,(0cb21h)		;a000   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 009h		;a003
 	ret nz			;a005
 	ld a,(0ca4ah)		;a006   ; lee la zona
@@ -237,7 +237,7 @@ L_A163:
 	jp 08c5ah		;a193   ; a_p03_b5b5: p03:B5B5 con el banco 3 en 0xA000
 L_A196:
 	call 06f72h		;a196   ; rachas_9638_bancos_9:
-	ld a,(0cb21h)		;a199
+	ld a,(0cb21h)		;a199   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;a19c
 	jp z,0858dh		;a19d   ; rachas_b34a_bancos_9:
 	ret			;a1a0
@@ -253,7 +253,7 @@ L_A1A1:
 	call L_A3F2		;a1b5
 	call L_A440		;a1b8
 	call L_A47D		;a1bb
-	ld a,(0d7d0h)		;a1be
+	ld a,(0d7d0h)		;a1be   ; lee las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	bit 4,a		;a1c1
 	ret z			;a1c3
 	ld a,(0e040h)		;a1c4
@@ -322,7 +322,7 @@ L_A239:
 	pop ix		;a23e
 	ret			;a240
 L_A241:
-	ld ix,0cb80h		;a241
+	ld ix,0cb80h		;a241   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld b,006h		;a245
 L_A247:
 	ld a,(ix+000h)		;a247
@@ -337,17 +337,17 @@ L_A24F:
 	or a			;a256
 	ret			;a257
 L_A258:
-	ld a,(0cb21h)		;a258
+	ld a,(0cb21h)		;a258   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;a25b
 	ret nz			;a25d
 	ld a,(0d7d5h)		;a25e
 	bit 7,a		;a261
 	ret nz			;a263
-	ld hl,0e248h		;a264
+	ld hl,0e248h		;a264   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld (hl),000h		;a267
 	call L_A2B0		;a269
 	ret nz			;a26c
-	ld hl,0e248h		;a26d
+	ld hl,0e248h		;a26d   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld de,01060h		;a270
 	ld bc,00301h		;a273
 	call L_A4CD		;a276
@@ -362,7 +362,7 @@ L_A27C:
 	call 08c7ah		;a288   ; a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 	ld hl,0d7deh		;a28b
 	res 3,(hl)		;a28e
-	ld hl,0e248h		;a290
+	ld hl,0e248h		;a290   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld de,01060h		;a293
 	ld bc,00301h		;a296
 	call L_A4CD		;a299
@@ -387,7 +387,7 @@ L_A2BC:
 	rla			;a2bf
 	rla			;a2c0
 	ret c			;a2c1
-	ld a,(0caa0h)		;a2c2
+	ld a,(0caa0h)		;a2c2   ; lee cuantos siguen a Snake por su rastro (1-4)
 	cp 002h		;a2c5
 	ret nz			;a2c7
 	ld a,(0ca4ah)		;a2c8   ; lee la zona
@@ -406,12 +406,12 @@ L_A2BC:
 	ld (0d8a8h),a		;a2e5   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	jp 08c8ah		;a2e8   ; a_p03_b610: p03:B610 con el banco 3 en 0xA000
 L_A2EB:
-	ld a,(0cb21h)		;a2eb
+	ld a,(0cb21h)		;a2eb   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;a2ee
 	ret z			;a2f0
 	call L_A341		;a2f1
 	ret nz			;a2f4
-	ld hl,0e240h		;a2f5
+	ld hl,0e240h		;a2f5   ; apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	ld de,04d9dh		;a2f8
 	ld bc,00201h		;a2fb
 	call L_A4CD		;a2fe
@@ -469,11 +469,11 @@ L_A353:
 	ld a,(0ca4bh)		;a362   ; lee la sala de la zona
 	cp 004h		;a365
 	ret nz			;a367
-	ld hl,0e240h		;a368
+	ld hl,0e240h		;a368   ; apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	ld de,064bch		;a36b
 	ld bc,00101h		;a36e
 	call L_A4CD		;a371
-	ld hl,0e248h		;a374
+	ld hl,0e248h		;a374   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld d,084h		;a377
 	call L_A4CD		;a379
 	ld a,e			;a37c
@@ -603,7 +603,7 @@ L_A47D:
 	ld a,(0ca41h)		;a47d   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	or a			;a480
 	ret nz			;a481
-	ld a,(0d7d0h)		;a482
+	ld a,(0d7d0h)		;a482   ; lee las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	bit 4,a		;a485
 	ret nz			;a487
 	ld a,(0ca4ah)		;a488   ; lee la zona
@@ -636,7 +636,7 @@ L_A4A6:
 	ld (0ca01h),a		;a4b5   ; guarda el paso del estado de la partida
 	ret			;a4b8
 L_A4B9:
-	ld hl,0cb80h		;a4b9
+	ld hl,0cb80h		;a4b9   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld bc,0005fh		;a4bc
 	call 04236h		;a4bf   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0dc04h		;a4c2
@@ -746,7 +746,7 @@ L_A562:
 	ld (0e042h),a		;a56d
 	ret			;a570
 L_A571:
-	ld hl,0cb80h		;a571
+	ld hl,0cb80h		;a571   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld bc,0005fh		;a574
 	call 04236h		;a577   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	jp 04266h		;a57a   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
@@ -762,7 +762,7 @@ L_A588:
 	ld a,(0d7d5h)		;a58b
 	bit 7,a		;a58e
 	ret nz			;a590
-	ld hl,0e248h		;a591
+	ld hl,0e248h		;a591   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld bc,00007h		;a594
 	jp 04236h		;a597   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_A59A:
@@ -870,7 +870,7 @@ L_A644:
 	inc hl			;a64d
 	ld (hl),a			;a64e
 	inc a			;a64f
-	ld (0e248h),a		;a650
+	ld (0e248h),a		;a650   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 L_A653:
 	ld hl,0e041h		;a653
 	inc (hl)			;a656
@@ -884,14 +884,14 @@ L_A658:
 	ret nc			;a662
 	ld a,003h		;a663
 	ld (0e24eh),a		;a665
-	ld (0e248h),a		;a668
+	ld (0e248h),a		;a668   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	jr L_A653		;a66b
 L_A66D:
 	xor a			;a66d
 	ld (0e040h),a		;a66e
 	ld (0d8a8h),a		;a671   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	ld a,002h		;a674
-	ld (0caa0h),a		;a676
+	ld (0caa0h),a		;a676   ; guarda cuantos siguen a Snake por su rastro (1-4)
 	ld hl,0c0d4h		;a679
 	ld bc,0402ch		;a67c
 	xor a			;a67f
@@ -941,8 +941,8 @@ L_A6D2:
 	jp L_A4DF		;a6d5
 L_A6D8:
 	ld a,002h		;a6d8
-	ld (0e240h),a		;a6da
-	ld (0e248h),a		;a6dd
+	ld (0e240h),a		;a6da   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+	ld (0e248h),a		;a6dd   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld (0e24eh),a		;a6e0
 	inc a			;a6e3
 	ld (0cb0eh),a		;a6e4   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -956,7 +956,7 @@ L_A6F1:
 	cp 070h		;a6f7
 	jr c,L_A705		;a6f9
 	ld a,001h		;a6fb
-	ld (0e240h),a		;a6fd
+	ld (0e240h),a		;a6fd   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	ld hl,0e246h		;a700
 	ld (hl),003h		;a703
 L_A705:
@@ -964,7 +964,7 @@ L_A705:
 	cp 0e0h		;a708
 	ret nz			;a70a
 	xor a			;a70b
-	ld (0e248h),a		;a70c
+	ld (0e248h),a		;a70c   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld (0e249h),a		;a70f
 	jr L_A6CD		;a712
 L_A714:
@@ -1076,7 +1076,7 @@ L_A7F6:
 	ld (0e249h),a		;a7fb
 	ld (0e24eh),a		;a7fe
 	inc a			;a801
-	ld (0e248h),a		;a802
+	ld (0e248h),a		;a802   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld hl,0e24bh		;a805
 	ld (hl),0beh		;a808
 	inc l			;a80a
@@ -1088,7 +1088,7 @@ L_A811:
 	cp 060h		;a814
 	ret nc			;a816
 	ld a,001h		;a817
-	ld (0e248h),a		;a819
+	ld (0e248h),a		;a819   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	call L_A76A		;a81c
 	ld a,(0cb35h)		;a81f
 	ld (0cb00h),a		;a822   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -1113,7 +1113,7 @@ L_A848:
 	ld (0e040h),a		;a84c
 	ld (0d8a8h),a		;a84f   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	ld a,003h		;a852
-	ld (0caa0h),a		;a854
+	ld (0caa0h),a		;a854   ; guarda cuantos siguen a Snake por su rastro (1-4)
 	call 098bfh		;a857   ; estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 	call 08cf0h		;a85a   ; dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
 	call 08e81h		;a85d
@@ -1213,7 +1213,7 @@ L_A90D:
 	ld a,001h		;a918
 	ld (0cb14h),a		;a91a   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 	inc a			;a91d
-	ld (0e240h),a		;a91e
+	ld (0e240h),a		;a91e   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	jp L_A895		;a921
 L_A924:
 	ld a,(0e245h)		;a924
@@ -1227,7 +1227,7 @@ L_A932:
 	cp 04dh		;a935
 	ret nc			;a937
 	ld a,001h		;a938
-	ld (0e240h),a		;a93a
+	ld (0e240h),a		;a93a   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	jp L_A895		;a93d
 L_A940:
 	ld a,002h		;a940
@@ -1280,7 +1280,7 @@ L_A99B:
 L_A9A1:
 	call 08caah		;a9a1   ; a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 	ld a,002h		;a9a4
-	ld (0e248h),a		;a9a6
+	ld (0e248h),a		;a9a6   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 L_A9A9:
 	ld hl,0e041h		;a9a9
 	inc (hl)			;a9ac
@@ -1306,7 +1306,7 @@ L_A9C8:
 	ld a,002h		;a9ce
 	ld (0e24eh),a		;a9d0
 	dec a			;a9d3
-	ld (0e248h),a		;a9d4
+	ld (0e248h),a		;a9d4   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld hl,0e043h		;a9d7
 	ld (hl),030h		;a9da
 	jr L_A9A9		;a9dc
@@ -1317,7 +1317,7 @@ L_A9DE:
 	ld a,001h		;a9e3
 	ld (0e24eh),a		;a9e5
 	inc a			;a9e8
-	ld (0e248h),a		;a9e9
+	ld (0e248h),a		;a9e9   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	jr L_A9A9		;a9ec
 L_A9EE:
 	ld a,(0e24bh)		;a9ee
@@ -1326,7 +1326,7 @@ L_A9EE:
 	ld a,002h		;a9f4
 	ld (0e24eh),a		;a9f6
 	dec a			;a9f9
-	ld (0e248h),a		;a9fa
+	ld (0e248h),a		;a9fa   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld (0d8a8h),a		;a9fd   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	call L_A9A9		;aa00
 	jp 08c9ah		;aa03   ; a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
@@ -1336,7 +1336,7 @@ L_AA06:
 L_AA0C:
 	call 08caah		;aa0c   ; a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 	ld a,002h		;aa0f
-	ld (0e240h),a		;aa11
+	ld (0e240h),a		;aa11   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	jr L_A9A9		;aa14
 L_AA16:
 	ld a,(0e243h)		;aa16
@@ -1359,7 +1359,7 @@ L_AA31:
 	ld a,002h		;aa37
 	ld (0e246h),a		;aa39
 	dec a			;aa3c
-	ld (0e240h),a		;aa3d
+	ld (0e240h),a		;aa3d   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	xor a			;aa40
 	ld (0e249h),a		;aa41
 	call L_A9A9		;aa44
@@ -1372,7 +1372,7 @@ L_AA4F:
 L_AA55:
 	call 08caah		;aa55   ; a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 	xor a			;aa58
-	ld (0caa0h),a		;aa59
+	ld (0caa0h),a		;aa59   ; guarda cuantos siguen a Snake por su rastro (1-4)
 	ld (0e040h),a		;aa5c
 	ld (0d8a8h),a		;aa5f   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	inc a			;aa62
@@ -1791,9 +1791,9 @@ L_ADC7:
 	call 08cf0h		;adca   ; dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
 	xor a			;adcd
 	ld (0e040h),a		;adce
-	ld (0caa0h),a		;add1
-	ld (0e248h),a		;add4
-	ld (0e240h),a		;add7
+	ld (0caa0h),a		;add1   ; guarda cuantos siguen a Snake por su rastro (1-4)
+	ld (0e248h),a		;add4   ; guarda la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+	ld (0e240h),a		;add7   ; guarda la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
 	ld a,005h		;adda
 	ld (0ca22h),a		;addc   ; guarda la fase de la partida (indice de las listas de p06:B40C)
 	ld hl,0d7dah		;addf
@@ -2328,7 +2328,7 @@ L_B22C:
 	ld a,003h		;b240
 	ld (0dfd8h),a		;b242
 	inc a			;b245
-	ld (0caa0h),a		;b246
+	ld (0caa0h),a		;b246   ; guarda cuantos siguen a Snake por su rastro (1-4)
 	ld de,0e088h		;b249
 	ex de,hl			;b24c
 	ld bc,01810h		;b24d
@@ -2340,11 +2340,11 @@ L_B256:
 	or a			;b25c
 	ret nz			;b25d
 	ld a,001h		;b25e
-	ld (0cb20h),a		;b260
+	ld (0cb20h),a		;b260   ; guarda lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	ld hl,0d874h		;b263
 	call L_B2BA		;b266
 	ld hl,0d8a4h		;b269
-	ld a,(0cb21h)		;b26c
+	ld a,(0cb21h)		;b26c   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 01dh		;b26f
 	call z,L_B2BA		;b271
 	ld hl,00080h		;b274
@@ -2367,7 +2367,7 @@ L_B256:
 	ld (0e040h),a		;b29a
 	inc a			;b29d
 	ld (0cb55h),a		;b29e
-	ld hl,0d600h		;b2a1
+	ld hl,0d600h		;b2a1   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld bc,00000h		;b2a4
 	call L_B2B4		;b2a7
 	ld hl,0d6a8h		;b2aa
@@ -2907,7 +2907,7 @@ L_B68E:
 	call L_B75F		;b691
 	ld bc,00f07h		;b694
 	call 00047h		;b697   ; BIOS WRTVDP - Writes data in the VDP-register
-	ld hl,0df80h		;b69a
+	ld hl,0df80h		;b69a   ; apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 	ld bc,0003fh		;b69d
 	call 04236h		;b6a0   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	xor a			;b6a3
@@ -3060,7 +3060,7 @@ L_B7E7:
 	ret z			;b7f1
 L_B7F2:
 	xor a			;b7f2
-	ld (0e260h),a		;b7f3
+	ld (0e260h),a		;b7f3   ; guarda dos fichas de 8 bytes de los mosaicos de quien habla
 	ld (0e268h),a		;b7f6
 	ld (0d8a8h),a		;b7f9   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	ld (0cad0h),a		;b7fc
@@ -4169,7 +4169,7 @@ L_BF42:
 	jr z,L_BF86		;bf57
 	cp 002h		;bf59
 	jr z,L_BF86		;bf5b
-	ld a,(0cb21h)		;bf5d
+	ld a,(0cb21h)		;bf5d   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;bf60
 	jr nz,L_BF86		;bf61
 	ld a,(0ca5fh)		;bf63

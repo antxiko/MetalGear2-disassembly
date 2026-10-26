@@ -863,7 +863,7 @@ L_A601:
 	call L_A607		;a601
 	jp L_AEB2		;a604
 L_A607:
-	ld ix,0cc00h		;a607
+	ld ix,0cc00h		;a607   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld b,008h		;a60b
 L_A60D:
 	push bc			;a60d
@@ -876,7 +876,7 @@ L_A60D:
 	djnz L_A60D		;a61b
 	ret			;a61d
 L_A61E:
-	ld ix,0cc00h		;a61e
+	ld ix,0cc00h		;a61e   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld b,008h		;a622
 L_A624:
 	ld a,(ix+000h)		;a624
@@ -942,7 +942,7 @@ L_A67E:
 	ld bc,00808h		;a68c
 	ret			;a68f
 L_A690:
-	ld ix,0cc00h		;a690
+	ld ix,0cc00h		;a690   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld b,008h		;a694
 L_A696:
 	ld a,(ix+000h)		;a696
@@ -962,7 +962,7 @@ L_A6AC:
 	ex de,hl			;a6af
 	jp 0475ah		;a6b0   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 L_A6B3:
-	ld ix,0cc00h		;a6b3
+	ld ix,0cc00h		;a6b3   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld b,008h		;a6b7
 L_A6B9:
 	ld a,(ix+000h)		;a6b9
@@ -997,10 +997,10 @@ L_A6E1:
 	ld a,(0cb44h)		;a6f1
 	or a			;a6f4
 	call z,L_A88F		;a6f5
-	ld a,(0cb20h)		;a6f8
+	ld a,(0cb20h)		;a6f8   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	or a			;a6fb
 	jr nz,L_A70B		;a6fc
-	ld a,(0cb80h)		;a6fe
+	ld a,(0cb80h)		;a6fe   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	cp 005h		;a701
 	jp z,L_A89A		;a703
 	ld a,(0cb52h)		;a706
@@ -1025,7 +1025,7 @@ DATA_tabla_A70F:
 
 
 L_A729:
-	ld ix,0cb80h		;a729
+	ld ix,0cb80h		;a729   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld hl,0dc10h		;a72d
 	ld de,0da40h		;a730
 	ld b,006h		;a733
@@ -1058,7 +1058,7 @@ L_A748:
 	pop hl			;a760
 	ret			;a761
 L_A762:
-	ld ix,0cb80h		;a762
+	ld ix,0cb80h		;a762   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(ix+000h)		;a766
 	cp 008h		;a769
 	ret nz			;a76b
@@ -1098,7 +1098,7 @@ L_A7A8:
 	call L_A7E3		;a7ac
 	pop bc			;a7af
 L_A7B0:
-	ld ix,0cb80h		;a7b0
+	ld ix,0cb80h		;a7b0   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(ix+000h)		;a7b4
 	cp b			;a7b7
 	ret nz			;a7b8
@@ -1132,12 +1132,12 @@ L_A7E3:
 	ret z			;a7ee
 	cp 00fh		;a7ef
 	ret z			;a7f1
-	ld a,(0cb21h)		;a7f2
+	ld a,(0cb21h)		;a7f2   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;a7f5
 	ret z			;a7f7
 	call L_A822		;a7f8
 	ret nc			;a7fb
-	ld a,(0cb80h)		;a7fc
+	ld a,(0cb80h)		;a7fc   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	or a			;a7ff
 	ret nz			;a800
 	ld a,(0cb22h)		;a801
@@ -1156,7 +1156,7 @@ L_A7E3:
 	ld bc,0000fh		;a81c
 	jp 04237h		;a81f   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_A822:
-	ld hl,0df80h		;a822
+	ld hl,0df80h		;a822   ; apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 	ld b,008h		;a825
 	ld de,00008h		;a827
 L_A82A:
@@ -1168,7 +1168,7 @@ L_A82A:
 	scf			;a830
 	ret			;a831
 L_A832:
-	ld ix,0cb80h		;a832
+	ld ix,0cb80h		;a832   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(ix+000h)		;a836
 	cp 006h		;a839
 	ret nz			;a83b
@@ -1192,7 +1192,7 @@ L_A855:
 	ld h,080h		;a859
 	ret			;a85b
 L_A85C:
-	ld ix,0cc80h		;a85c
+	ld ix,0cc80h		;a85c   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
 	ld b,010h		;a860
 L_A862:
 	push bc			;a862
@@ -1230,7 +1230,7 @@ L_A89A:
 	ld (hl),000h		;a8a1
 	ret			;a8a3
 L_A8A4:
-	ld ix,0cb80h		;a8a4
+	ld ix,0cb80h		;a8a4   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	call L_A8EE		;a8a8
 	ld a,(ix+003h)		;a8ab
 	cp 0c0h		;a8ae
@@ -1270,7 +1270,7 @@ L_A8EE:
 	ld a,(ix+00ch)		;a8f1
 	sub 007h		;a8f4
 	ld e,a			;a8f6
-	ld a,(0cb21h)		;a8f7
+	ld a,(0cb21h)		;a8f7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;a8fa
 	jr nz,L_A900		;a8fc
 	ld e,0e0h		;a8fe
@@ -1285,7 +1285,7 @@ L_A900:
 	ld bc,0000fh		;a910
 	jp 04237h		;a913   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_A916:
-	ld ix,0df80h		;a916
+	ld ix,0df80h		;a916   ; apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 	ld b,008h		;a91a
 L_A91C:
 	ld a,(ix+000h)		;a91c
@@ -1309,7 +1309,7 @@ L_A93F:
 	djnz L_A91C		;a944
 	ret			;a946
 L_A947:
-	ld ix,0df80h		;a947
+	ld ix,0df80h		;a947   ; apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 	ld b,008h		;a94b
 L_A94D:
 	ld a,(ix+000h)		;a94d
@@ -1518,7 +1518,7 @@ L_AADA:
 	cp 008h		;aae4
 	jp z,06c77h		;aae6   ; sonido_5c: pide el sonido 0x5C
 L_AAE9:
-	ld ix,0cb80h		;aae9
+	ld ix,0cb80h		;aae9   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(ix+000h)		;aaed
 	cp 008h		;aaf0
 	ret z			;aaf2
@@ -1720,11 +1720,11 @@ L_AC58:
 	ret z			;ac69
 	jr L_ACB6		;ac6a
 L_AC6C:
-	ld ix,0cb80h		;ac6c
+	ld ix,0cb80h		;ac6c   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(ix+000h)		;ac70
 	cp b			;ac73
 	ret z			;ac74
-	ld a,(0df80h)		;ac75
+	ld a,(0df80h)		;ac75   ; lee 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 	or a			;ac78
 	ret nz			;ac79
 	ld (ix+000h),b		;ac7a
@@ -2222,7 +2222,7 @@ L_B004:
 	ld a,(0ca76h)		;b004   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 039h		;b007
 	ret z			;b009
-	ld ix,0cb80h		;b00a
+	ld ix,0cb80h		;b00a   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(ix+000h)		;b00e
 	cp 005h		;b011
 	ret z			;b013
@@ -2295,7 +2295,7 @@ L_B078:
 	ld (hl),a			;b09e
 	call 06a7fh		;b09f   ; sonido_21: pide el sonido 0x21
 	push ix		;b0a2
-	ld a,(0cb20h)		;b0a4
+	ld a,(0cb20h)		;b0a4   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	call 08f95h		;b0a7   ; a_p03_be60: p03:BE60 con el banco 3 en 0xA000
 	pop ix		;b0aa
 	ret			;b0ac
@@ -2500,7 +2500,7 @@ L_B211:
 	ld a,(hl)			;b21a
 	or a			;b21b
 	ret nz			;b21c
-	ld a,(0cb21h)		;b21d
+	ld a,(0cb21h)		;b21d   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 01dh		;b220
 	ld a,002h		;b222
 	ld b,a			;b224
@@ -2729,7 +2729,7 @@ DATA_resto_B36C:
 
 
 L_B380:
-	ld ix,0cc00h		;b380
+	ld ix,0cc00h		;b380   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld b,008h		;b384
 L_B386:
 	ld a,(ix+000h)		;b386
@@ -3014,7 +3014,7 @@ L_B563:
 	ret nz			;b570
 	jp L_A6AC		;b571
 L_B574:
-	ld ix,0cc80h		;b574
+	ld ix,0cc80h		;b574   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
 	ld b,010h		;b578
 L_B57A:
 	ld a,(ix+000h)		;b57a
@@ -3158,7 +3158,7 @@ L_B66E:
 	inc (ix+001h)		;b679
 	ret			;b67c
 L_B67D:
-	ld a,(0caa0h)		;b67d
+	ld a,(0caa0h)		;b67d   ; lee cuantos siguen a Snake por su rastro (1-4)
 	dec a			;b680
 	call 0424dh		;b681   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -3201,7 +3201,7 @@ L_B6B0:
 	ld hl,0e243h		;b6b3
 	cp (hl)			;b6b6
 	jr nc,L_B6C8		;b6b7
-	ld a,(0e248h)		;b6b9
+	ld a,(0e248h)		;b6b9   ; lee la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	cp (hl)			;b6bc
 	jr nc,L_B6E5		;b6bd
 	ld hl,0cb03h		;b6bf   ; apunta a la Y de Snake
@@ -3679,7 +3679,7 @@ L_BA03:
 	cp 010h		;ba1b
 	jr z,L_BA2A		;ba1d
 L_BA1F:
-	ld a,(0cb21h)		;ba1f
+	ld a,(0cb21h)		;ba1f   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00ah		;ba22
 	jr z,L_BA32		;ba24
 	cp 00bh		;ba26
@@ -3959,7 +3959,7 @@ L_BBBF:
 	ld hl,08000h		;bbc1
 	ld (0ca8ah),hl		;bbc4
 L_BBC7:
-	ld a,(0cb21h)		;bbc7
+	ld a,(0cb21h)		;bbc7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 010h		;bbca
 	ret nz			;bbcc
 	call L_BBF5		;bbcd
@@ -4060,7 +4060,7 @@ L_BC62:
 	ld hl,0c0a0h		;bc6c
 	call L_BCB1		;bc6f
 	call L_BC2F		;bc72
-	ld a,(0cb21h)		;bc75
+	ld a,(0cb21h)		;bc75   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00fh		;bc78
 	ret nz			;bc7a
 	ld hl,0d7d7h		;bc7b
@@ -4093,7 +4093,7 @@ L_BCAA:
 	ld (hl),d			;bcaf
 	ret			;bcb0
 L_BCB1:
-	ld a,(0cb21h)		;bcb1
+	ld a,(0cb21h)		;bcb1   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00fh		;bcb4
 	ret nz			;bcb6
 	push hl			;bcb7
@@ -4113,7 +4113,7 @@ L_BCD1:
 	ld a,(0cb00h)		;bcd1   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 006h		;bcd4
 	ret z			;bcd6
-	ld a,(0cb21h)		;bcd7
+	ld a,(0cb21h)		;bcd7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;bcda
 	ret nz			;bcdb
 	ld a,(0cb00h)		;bcdc   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -4161,7 +4161,7 @@ L_BD31:
 	ld a,(0cb0fh)		;bd31   ; lee 1 si Snake ha chocado en este cuadro
 	or a			;bd34
 	ret z			;bd35
-	ld hl,0cb80h		;bd36
+	ld hl,0cb80h		;bd36   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld de,00010h		;bd39
 	ld b,006h		;bd3c
 L_BD3E:
@@ -4249,7 +4249,7 @@ L_BDBD:
 	pop ix		;bdc8
 	ret			;bdca
 L_BDCB:
-	ld ix,0cc00h		;bdcb
+	ld ix,0cc00h		;bdcb   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld b,008h		;bdcf
 L_BDD1:
 	ld a,(ix+000h)		;bdd1
@@ -4264,7 +4264,7 @@ L_BDDF:
 	djnz L_BDD1		;bde4
 	ret			;bde6
 L_BDE7:
-	ld ix,0cc80h		;bde7
+	ld ix,0cc80h		;bde7   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
 	ld b,010h		;bdeb
 L_BDED:
 	ld a,(ix+000h)		;bded

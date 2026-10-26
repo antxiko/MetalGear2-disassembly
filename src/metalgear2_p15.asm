@@ -28,7 +28,7 @@ L_A000:
 L_A005:
 	call L_A049		;a005
 L_A008:
-	ld a,(0ca1ch)		;a008
+	ld a,(0ca1ch)		;a008   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;a00b
 	ret nz			;a00c
 	ld ix,0d500h		;a00d
@@ -235,7 +235,7 @@ DATA_resto_A16D:
 
 
 L_A17B:
-	ld a,(0cb21h)		;a17b
+	ld a,(0cb21h)		;a17b   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 003h		;a17e
 	jr z,L_A1A6		;a180
 	ld a,(0ca4bh)		;a182   ; lee la sala de la zona
@@ -548,7 +548,7 @@ L_A399:
 	scf			;a3a5
 	ret			;a3a6
 L_A3A7:
-	ld a,(0cb21h)		;a3a7
+	ld a,(0cb21h)		;a3a7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	sub 011h		;a3aa
 	cp 00ch		;a3ac
 	ret nc			;a3ae
@@ -598,7 +598,7 @@ L_A3E1:
 	ld a,(ix+005h)		;a3e1
 	cp b			;a3e4
 	jr nz,L_A406		;a3e5
-	ld a,(0cb21h)		;a3e7
+	ld a,(0cb21h)		;a3e7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 010h		;a3ea
 	ret nz			;a3ec
 	ld a,(0ca4ah)		;a3ed   ; lee la zona
@@ -659,7 +659,7 @@ L_A44B:
 	and a			;a44e
 	scf			;a44f
 	ret nz			;a450
-	ld a,(0cb31h)		;a451
+	ld a,(0cb31h)		;a451   ; lee 1 en el estado 2 de Snake
 	and a			;a454
 	ret nz			;a455
 	call L_A399		;a456
@@ -878,7 +878,7 @@ L_A5AF:
 	ld a,(ix+009h)		;a5af
 	and a			;a5b2
 	jr nz,L_A5C6		;a5b3
-	ld a,(0cb31h)		;a5b5
+	ld a,(0cb31h)		;a5b5   ; lee 1 en el estado 2 de Snake
 	and a			;a5b8
 	ret nz			;a5b9
 	call L_A528		;a5ba
@@ -927,7 +927,7 @@ L_A600:
 L_A614:
 	ld b,a			;a614
 	ld c,(ix+007h)		;a615
-	ld a,(0ca1ch)		;a618
+	ld a,(0ca1ch)		;a618   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;a61b
 	ld d,001h		;a61c
 	jr nz,L_A624		;a61e
@@ -979,7 +979,7 @@ L_A65F:
 	ld a,(ix+009h)		;a65f
 	and a			;a662
 	jr nz,L_A687		;a663
-	ld a,(0cb31h)		;a665
+	ld a,(0cb31h)		;a665   ; lee 1 en el estado 2 de Snake
 	and a			;a668
 	ret nz			;a669
 	call L_A52D		;a66a
@@ -1113,7 +1113,7 @@ L_A72A:
 	ld a,(ix+009h)		;a72a
 	and a			;a72d
 	jr nz,L_A752		;a72e
-	ld a,(0cb31h)		;a730
+	ld a,(0cb31h)		;a730   ; lee 1 en el estado 2 de Snake
 	and a			;a733
 	ret nz			;a734
 	call L_A532		;a735
@@ -1383,7 +1383,7 @@ L_A8CD:
 	ld a,(ix+009h)		;a8cd
 	and a			;a8d0
 	jp nz,L_A5C6		;a8d1
-	ld a,(0cb31h)		;a8d4
+	ld a,(0cb31h)		;a8d4   ; lee 1 en el estado 2 de Snake
 	and a			;a8d7
 	ret nz			;a8d8
 	call L_A528		;a8d9
@@ -1675,7 +1675,7 @@ L_AAA2:
 	cp 006h		;aab3
 	ret nz			;aab5
 	call 045f1h		;aab6   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-	ld hl,0ca1ch		;aab9
+	ld hl,0ca1ch		;aab9   ; apunta a 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	ld a,(hl)			;aabc
 	ld (0ca1dh),a		;aabd
 	xor a			;aac0
@@ -1695,7 +1695,7 @@ L_AADF:
 	ld (0d8a4h),a		;aae1
 	ld (0ca42h),a		;aae4   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld a,(0ca1dh)		;aae7
-	ld (0ca1ch),a		;aaea
+	ld (0ca1ch),a		;aaea   ; guarda 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	ld bc,01600h		;aaed
 	call 00047h		;aaf0   ; BIOS WRTVDP - Writes data in the VDP-register
 	jp 045f1h		;aaf3   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
@@ -1739,7 +1739,7 @@ L_AB2E:
 	ld (0cb28h),a		;ab38
 	ld (0cb0ah),a		;ab3b   ; guarda la marcha de Snake: el indice de las velocidades de p02:9520
 	ld (0cb16h),a		;ab3e   ; guarda 1 mientras Snake se da la vuelta
-	ld (0cb31h),a		;ab41
+	ld (0cb31h),a		;ab41   ; guarda 1 en el estado 2 de Snake
 	inc a			;ab44
 	ld (0cb14h),a		;ab45   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 	ld a,020h		;ab48
@@ -1786,7 +1786,7 @@ L_AB9C:
 	jp 08d60h		;aba1
 L_ABA4:
 	ld hl,0012ch		;aba4
-	ld (0caf7h),hl		;aba7
+	ld (0caf7h),hl		;aba7   ; guarda otra espera de 16 bits que baja en la interrupcion
 	ld a,001h		;abaa
 	ld (0caf6h),a		;abac
 	ret			;abaf
@@ -3006,7 +3006,7 @@ DATA_resto_BE9E:
 
 
 L_BED7:
-	ld a,(0caa0h)		;bed7
+	ld a,(0caa0h)		;bed7   ; lee cuantos siguen a Snake por su rastro (1-4)
 	cp 004h		;beda
 	jr z,L_BF0A		;bedc
 	ld a,(0ca5fh)		;bede

@@ -1666,9 +1666,9 @@ L_AFF8:
 	cp 005h		;aff9
 	jr c,L_B012		;affb
 	xor a			;affd
-	ld (0cb2eh),a		;affe
+	ld (0cb2eh),a		;affe   ; guarda el paso del estado 2 de Snake
 	inc a			;b001
-	ld (0cb31h),a		;b002
+	ld (0cb31h),a		;b002   ; guarda 1 en el estado 2 de Snake
 	ld (0cb0ah),a		;b005   ; guarda la marcha de Snake: el indice de las velocidades de p02:9520
 	ld (0cb15h),a		;b008   ; guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
 	inc a			;b00b
@@ -1743,18 +1743,18 @@ L_B07C:
 	inc a			;b08d
 	jr nz,L_B104		;b08e
 L_B090:
-	ld hl,0d7d0h		;b090
+	ld hl,0d7d0h		;b090   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	res 4,(hl)		;b093
 	inc hl			;b095
 	res 5,(hl)		;b096
 	ld hl,0d7dah		;b098
 	res 3,(hl)		;b09b
 	xor a			;b09d
-	ld (0caa0h),a		;b09e
-	ld (0d600h),a		;b0a1
+	ld (0caa0h),a		;b09e   ; guarda cuantos siguen a Snake por su rastro (1-4)
+	ld (0d600h),a		;b0a1   ; guarda lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld (0d601h),a		;b0a4
 	ld (0d602h),a		;b0a7
-	ld hl,0d8d8h		;b0aa
+	ld hl,0d8d8h		;b0aa   ; apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
 	ld (hl),0feh		;b0ad
 	inc hl			;b0af
 	ld (hl),0ffh		;b0b0
@@ -1798,10 +1798,10 @@ L_B0F3:
 	ld (0cb0eh),a		;b100   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ret			;b103
 L_B104:
-	ld hl,0d600h		;b104
+	ld hl,0d600h		;b104   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld bc,000ffh		;b107
 	call 04236h		;b10a   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	ld hl,0d7f0h		;b10d
+	ld hl,0d7f0h		;b10d   ; apunta a otras banderas de la partida (p03:B0D3, p03:B0FE)
 	ld bc,0000fh		;b110
 	call 04236h		;b113   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,001h		;b116
@@ -2333,7 +2333,7 @@ L_B4B9:
 	ld a,(0ca5fh)		;b4c7
 	or a			;b4ca
 	ret nz			;b4cb
-	ld a,(0cb21h)		;b4cc
+	ld a,(0cb21h)		;b4cc   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;b4cf
 	ret z			;b4d1
 	ld hl,0b4feh		;b4d2
@@ -2435,7 +2435,7 @@ L_B558:
 	ld a,(hl)			;b56f
 	or a			;b570
 	jr nz,L_B585		;b571
-	ld a,(0cb21h)		;b573
+	ld a,(0cb21h)		;b573   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;b576
 	ret z			;b578
 	ld a,(0ca73h)		;b579
@@ -2590,7 +2590,7 @@ L_B67E:
 	ld (hl),004h		;b684
 	ret			;b686
 L_B687:
-	ld a,(0cb80h)		;b687
+	ld a,(0cb80h)		;b687   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	cp 008h		;b68a
 	jr z,L_B691		;b68c
 	cp 006h		;b68e
@@ -2669,7 +2669,7 @@ L_B709:
 	ld bc,0003fh		;b70c
 	jp 04236h		;b70f   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_B712:
-	ld a,(0cb21h)		;b712
+	ld a,(0cb21h)		;b712   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;b715
 	ret nz			;b716
 	ld ix,0e280h		;b717
@@ -2745,7 +2745,7 @@ L_B795:
 	ld (hl),001h		;b7a2
 	ret			;b7a4
 L_B7A5:
-	ld a,(0cb21h)		;b7a5
+	ld a,(0cb21h)		;b7a5   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;b7a8
 	ret nz			;b7a9
 	ld ix,0e280h		;b7aa
@@ -2787,7 +2787,7 @@ L_B7D5:
 	djnz L_B7D5		;b7ec
 	ret			;b7ee
 L_B7EF:
-	ld a,(0cb80h)		;b7ef
+	ld a,(0cb80h)		;b7ef   ; lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	cp 008h		;b7f2
 	jr z,L_B7F9		;b7f4
 	cp 006h		;b7f6
@@ -3175,7 +3175,7 @@ L_BA75:
 	ret nz			;ba78
 	inc (hl)			;ba79
 	ld bc,000b4h		;ba7a
-	ld (0caf7h),bc		;ba7d
+	ld (0caf7h),bc		;ba7d   ; guarda otra espera de 16 bits que baja en la interrupcion
 	jp 06be4h		;ba81   ; orden_sonido_f4: la orden 0xF4 al sonido
 L_BA84:
 	call L_BA91		;ba84
@@ -3185,7 +3185,7 @@ L_BA84:
 	inc (hl)			;ba8d
 	jp 06abfh		;ba8e   ; sonido_82: pide el sonido 0x82 (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 L_BA91:
-	ld bc,(0caf7h)		;ba91
+	ld bc,(0caf7h)		;ba91   ; lee otra espera de 16 bits que baja en la interrupcion
 	ld a,b			;ba95
 	or c			;ba96
 	ret			;ba97

@@ -323,13 +323,13 @@ L_61F8:
 	ld hl,0d7deh		;6211
 	set 4,(hl)		;6214
 	xor a			;6216
-	ld (0caa0h),a		;6217
+	ld (0caa0h),a		;6217   ; guarda cuantos siguen a Snake por su rastro (1-4)
 L_621A:
 	ld hl,0c706h		;621a
 	ld a,(0ca22h)		;621d   ; lee la fase de la partida (indice de las listas de p06:B40C)
 	ld (hl),a			;6220
 	inc hl			;6221
-	ld a,(0caa0h)		;6222
+	ld a,(0caa0h)		;6222   ; lee cuantos siguen a Snake por su rastro (1-4)
 	ld (hl),a			;6225
 	inc hl			;6226
 	ld a,(0cab5h)		;6227   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
@@ -345,15 +345,15 @@ L_621A:
 	call L_62A4		;623d
 	ld a,c			;6240
 	ld (0c70bh),a		;6241
-	ld hl,0d7d0h		;6244
+	ld hl,0d7d0h		;6244   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	ld de,0c70ch		;6247
 	ld bc,00015h		;624a
 	ldir		;624d
-	ld hl,0d7f0h		;624f
+	ld hl,0d7f0h		;624f   ; apunta a otras banderas de la partida (p03:B0D3, p03:B0FE)
 	ld de,0c721h		;6252
 	ld bc,00005h		;6255
 	ldir		;6258
-	ld de,0d600h		;625a
+	ld de,0d600h		;625a   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld hl,0c726h		;625d
 	ld c,006h		;6260
 L_6262:
@@ -514,7 +514,7 @@ L_6327:
 	ld (0ca22h),a		;635a   ; guarda la fase de la partida (indice de las listas de p06:B40C)
 	inc hl			;635d
 	ld a,(hl)			;635e
-	ld (0caa0h),a		;635f
+	ld (0caa0h),a		;635f   ; guarda cuantos siguen a Snake por su rastro (1-4)
 	inc hl			;6362
 	ld a,(hl)			;6363
 	ld (0cab5h),a		;6364   ; guarda el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
@@ -528,15 +528,15 @@ L_6327:
 	ld a,(0c70bh)		;6378
 	call L_63DE		;637b
 	ld hl,0c70ch		;637e
-	ld de,0d7d0h		;6381
+	ld de,0d7d0h		;6381   ; apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 	ld bc,00015h		;6384
 	ldir		;6387
 	ld hl,0c721h		;6389
-	ld de,0d7f0h		;638c
+	ld de,0d7f0h		;638c   ; apunta a otras banderas de la partida (p03:B0D3, p03:B0FE)
 	ld bc,00005h		;638f
 	ldir		;6392
 	ld hl,0c726h		;6394
-	ld de,0d600h		;6397
+	ld de,0d600h		;6397   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld c,006h		;639a
 L_639C:
 	ld b,008h		;639c
@@ -1039,7 +1039,7 @@ L_67E1:
 	push af			;67ec
 	jp 041a3h		;67ed
 L_67F0:
-	ld hl,0cc80h		;67f0
+	ld hl,0cc80h		;67f0   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
 	ld bc,0017fh		;67f3
 	call 04236h		;67f6   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,(0ca76h)		;67f9   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1187,7 +1187,7 @@ L_68E3:
 	ld a,(0ca4ah)		;68e3   ; lee la zona
 	cp 008h		;68e6
 	jr nz,L_68F0		;68e8
-	ld a,(0caa0h)		;68ea
+	ld a,(0caa0h)		;68ea   ; lee cuantos siguen a Snake por su rastro (1-4)
 	cp 002h		;68ed
 	ret nc			;68ef
 L_68F0:
@@ -1763,10 +1763,10 @@ L_6CE0:
 L_6CF0:
 	res 4,(hl)		;6cf0
 L_6CF2:
-	ld a,(0cb21h)		;6cf2
+	ld a,(0cb21h)		;6cf2   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;6cf5
 	ret z			;6cf7
-	ld a,(0ca1ch)		;6cf8
+	ld a,(0ca1ch)		;6cf8   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;6cfb
 	ret nz			;6cfc
 	ld a,(0e040h)		;6cfd
@@ -1839,10 +1839,10 @@ L_6D6E:
 	ld b,038h		;6d75
 	ret			;6d77
 L_6D78:
-	ld a,(0cb21h)		;6d78
+	ld a,(0cb21h)		;6d78   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;6d7b
 	ret z			;6d7d
-	ld a,(0ca1ch)		;6d7e
+	ld a,(0ca1ch)		;6d7e   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;6d81
 	ret nz			;6d82
 	ld a,(0ca5fh)		;6d83
@@ -1965,7 +1965,7 @@ L_6E17:
 	ld a,(0ca76h)		;6e28   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 029h		;6e2b
 	jr z,L_6E38		;6e2d
-	ld a,(0cb21h)		;6e2f
+	ld a,(0cb21h)		;6e2f   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 008h		;6e32
 	jr z,L_6E38		;6e34
 	or a			;6e36
@@ -1993,7 +1993,7 @@ L_6E50:
 	ld a,(0caa9h)		;6e53
 	and a			;6e56
 	ret nz			;6e57
-	ld hl,0cc80h		;6e58
+	ld hl,0cc80h		;6e58   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
 	ld b,030h		;6e5b
 L_6E5D:
 	push hl			;6e5d
@@ -2796,7 +2796,7 @@ L_733A:
 	xor 001h		;735b
 L_735D:
 	ex af,af'			;735d
-	ld a,(0cb21h)		;735e
+	ld a,(0cb21h)		;735e   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;7361
 	ret z			;7363
 	ex af,af'			;7364
@@ -2898,7 +2898,7 @@ L_73F0:
 	ret			;73f7
 L_73F8:
 	ld d,a			;73f8
-	ld a,(0cb21h)		;73f9
+	ld a,(0cb21h)		;73f9   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;73fc
 	ld a,d			;73fe
 	ret z			;73ff
@@ -2950,7 +2950,7 @@ DATA_resto_7435:
 
 
 L_7445:
-	ld a,(0cb21h)		;7445
+	ld a,(0cb21h)		;7445   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;7448
 	ret z			;744a
 	ld a,(0ca4bh)		;744b   ; lee la sala de la zona
@@ -3398,7 +3398,7 @@ L_7789:
 	ld a,(0cb00h)		;778e   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	dec a			;7791
 	ret nz			;7792
-	ld a,(0cb20h)		;7793
+	ld a,(0cb20h)		;7793   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	cp 003h		;7796
 	jr c,L_77A1		;7798
 	cp 005h		;779a
@@ -3987,7 +3987,7 @@ L_7B73:
 L_7B84:
 	ret			;7b84
 L_7B85:
-	ld a,(0cb21h)		;7b85
+	ld a,(0cb21h)		;7b85   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;7b88
 	jr nz,L_7B91		;7b8a
 	ld a,(0cb62h)		;7b8c
@@ -4011,7 +4011,7 @@ L_7BA5:
 	ld a,007h		;7bab
 	jp 04767h		;7bad   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_7BB0:
-	ld a,(0cb21h)		;7bb0
+	ld a,(0cb21h)		;7bb0   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;7bb3
 	jr nz,L_7BBC		;7bb5
 	ld a,(0cb62h)		;7bb7
@@ -4258,7 +4258,7 @@ L_7D51:
 	ld a,(0e040h)		;7d51
 	or a			;7d54
 	ret nz			;7d55
-	ld a,(0caa8h)		;7d56
+	ld a,(0caa8h)		;7d56   ; lee 1 mientras se ve el rotulo de la cosa cogida
 	or a			;7d59
 	ret nz			;7d5a
 	ld a,(0cb4bh)		;7d5b   ; lee con el puesto, la vida baja un punto cada 16 cuadros
