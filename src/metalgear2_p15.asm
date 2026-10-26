@@ -732,7 +732,7 @@ L_A4C3:
 	jr z,L_A4D8		;a4cc
 	cp 013h		;a4ce
 	jr nz,L_A4F4		;a4d0
-	ld a,(0ca5fh)		;a4d2
+	ld a,(0ca5fh)		;a4d2   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;a4d5
 	jr nz,L_A4F4		;a4d6
 L_A4D8:
@@ -1266,8 +1266,8 @@ L_A807:
 	ld e,(ix+002h)		;a81d
 	ld a,0cah		;a820
 L_A822:
-	ld (0d8e0h),hl		;a822   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7 y el byte siguiente (16 bits)
-	ld (0d8e2h),a		;a825   ; guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter
+	ld (0d8e0h),hl		;a822   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+	ld (0d8e2h),a		;a825   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	ld d,(ix+003h)		;a828
 	push de			;a82b
 	push bc			;a82c
@@ -1275,7 +1275,7 @@ L_A822:
 	add a,c			;a82e
 	add a,b			;a82f
 	ld d,a			;a830
-	ld a,(0d8e2h)		;a831   ; lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
+	ld a,(0d8e2h)		;a831   ; lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	rra			;a834
 	ld h,0e6h		;a835
 	jr nc,L_A83A		;a837
@@ -1288,14 +1288,14 @@ L_A83A:
 	pop de			;a842
 	ld a,(0d8e1h)		;a843
 	ld l,a			;a846
-	ld a,(0d8e2h)		;a847   ; lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
+	ld a,(0d8e2h)		;a847   ; lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	add a,b			;a84a
 	ld h,a			;a84b
 L_A84C:
 	ld a,c			;a84c
 	sub b			;a84d
 	ld b,a			;a84e
-	ld a,(0d8e0h)		;a84f   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;a84f   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	ld c,a			;a852
 L_A853:
 	ld a,(0ca42h)		;a853   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -1617,13 +1617,13 @@ L_AA4D:
 	ld (0d4e4h),a		;aa4e
 	ld a,c			;aa51
 	ld (0d4e2h),a		;aa52
-	ld a,(0ca5fh)		;aa55
+	ld a,(0ca5fh)		;aa55   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;aa58
 	call z,07a43h		;aa59   ; musica_de_la_zona_bancos_15:
 L_AA5C:
 	jp 04606h		;aa5c   ; enciende_todo: la pantalla y los sprites encendidos
 L_AA5F:
-	ld a,(0ca5fh)		;aa5f
+	ld a,(0ca5fh)		;aa5f   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;aa62
 	ret z			;aa63
 	call 059efh		;aa64   ; limpia_sprites_y_d300:
@@ -1861,7 +1861,7 @@ DATA_AC11:
 
 
 L_AC3B:
-	ld a,(0ca5fh)		;ac3b
+	ld a,(0ca5fh)		;ac3b   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;ac3e
 	ret z			;ac3f
 	ld a,(0ca76h)		;ac40   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1892,7 +1892,7 @@ L_AC5E:
 	call 08d4bh		;ac76
 	pop bc			;ac79
 	call L_ABB9		;ac7a
-	ld hl,0d300h		;ac7d
+	ld hl,0d300h		;ac7d   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 	ld bc,000ffh		;ac80
 	call 04236h		;ac83   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,(0d820h)		;ac86
@@ -2360,7 +2360,7 @@ L_B92D:
 L_B959:
 	dec (ix+00eh)		;b959
 	ret nz			;b95c
-	call 086c2h		;b95d   ; p04:86C2
+	call 086c2h		;b95d   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 	ld (ix+00eh),000h		;b960
 	ld (ix+01fh),014h		;b964
 L_B968:
@@ -2690,7 +2690,7 @@ L_BBAD:
 	ld a,l			;bbdb
 	sub 008h		;bbdc
 	cp 0a8h		;bbde
-	jp c,09af4h		;bbe0   ; p04:9AF4
+	jp c,09af4h		;bbe0   ; lanza_7: lo lanzado de tipo 7
 L_BBE3:
 	ld (ix+00fh),000h		;bbe3
 	ret			;bbe7
@@ -2838,7 +2838,7 @@ L_BDB2:
 	pop bc			;bdb6
 	ret			;bdb7
 L_BDB8:
-	ld ix,0d800h		;bdb8
+	ld ix,0d800h		;bdb8   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;bdbc
 L_BDBE:
 	call L_BDCE		;bdbe
@@ -2932,7 +2932,7 @@ L_BE48:
 	ld a,(0cab5h)		;be48   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	ld hl,lbe54h		;be4b
 	call 043f6h		;be4e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld (0d42bh),hl		;be51
+	ld (0d42bh),hl		;be51   ; guarda la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 L_BE54:
 	ld a,b			;be54
 	nop			;be55
@@ -3009,7 +3009,7 @@ L_BED7:
 	ld a,(0caa0h)		;bed7   ; lee cuantos siguen a Snake por su rastro (1-4)
 	cp 004h		;beda
 	jr z,L_BF0A		;bedc
-	ld a,(0ca5fh)		;bede
+	ld a,(0ca5fh)		;bede   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;bee1
 	jr z,L_BF0A		;bee2
 	ld hl,0d7dah		;bee4
@@ -3022,10 +3022,10 @@ L_BED7:
 	cp 002h		;bef3
 	ret nz			;bef5
 L_BEF6:
-	ld ix,0d300h		;bef6
+	ld ix,0d300h		;bef6   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 	ld b,004h		;befa
 L_BEFC:
-	ld a,(ix+000h)		;befc
+	ld a,(ix+000h)		;befc   ; lee el tipo del actor (0 = libre)
 	and a			;beff
 	ret nz			;bf00
 	ld de,00040h		;bf01

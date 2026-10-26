@@ -129,7 +129,7 @@ C 0xA994 lee la sala de la zona
 C 0xA9B8 lee la sala de la zona
 C 0xA9C4 lee la sala de la zona
 C 0xA9DC lee la sala de la zona
-C 0xA9EE apunta a 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0xA9EE apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0xA9F4 lee la sala de la zona
 C 0xAA06 lee la sala de la zona
 C 0xAA14 lee la sala de la zona
@@ -139,7 +139,7 @@ C 0xAA4E lee la sala de la zona
 C 0xAA56 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAA60 lee la sala de la zona
 C 0xAA6C lee la sala de la zona
-C 0xAA80 p04:86D0
+C 0xAA80 si_c692: con 0xC692, lo borra y salta a HL
 C 0xAA89 tabla_AA8F: 13 destinos del despachador p00
 C 0xAA8C despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAAA9 lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
@@ -166,7 +166,7 @@ C 0xABB9 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xABCE sonido_05: pide el sonido 0x05
 C 0xAC23 lee la Y de Snake
 C 0xAC27 lee la X de Snake
-C 0xAC48 p04:9B30
+C 0xAC48 lanza_6_e0: tipo 6 con el desplazamiento 0x00E0
 C 0xAC5F azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAC77 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xACBC suma_a_hl: HL = HL + A
@@ -307,6 +307,7 @@ C 0xB713 lee la sala de la zona
 C 0xB71C lee la sala de la zona
 C 0xB726 lee la sala de la zona
 C 0xB73B bancos_4: pone el 4 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xB73E sin_llegadas: acarreo en las zonas sin llegadas: la 0x10, la 0x0C salas 0-3, la 0x0D sala 0
 C 0xB741 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xB747 lee la zona
 C 0xB756 lee la sala de la zona
@@ -443,6 +444,8 @@ C 0xBF25 lee 1 en el estado 2 de Snake
 C 0xBF31 lee la X de Snake
 C 0xBF44 guarda la X de Snake
 C 0xBF4F sonido_34: pide el sonido 0x34
+C 0xBF52 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xBF5B guarda la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 C 0xBF62 sonido_56: pide el sonido 0x56
 C 0xBF77 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xBF8A lee la X de Snake

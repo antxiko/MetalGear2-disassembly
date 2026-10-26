@@ -95,6 +95,7 @@ C 0xA46C lee la Y de Snake
 C 0xA47B lee la X de Snake
 C 0xA4B7 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA4C0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA4D2 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA4EE suma_a_hl: HL = HL + A
 C 0xA501 lee la Y de Snake
 C 0xA509 lee la X de Snake
@@ -134,11 +135,11 @@ C 0xA76C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xA7BF lee la Y de Snake
 C 0xA7C8 lee la X de Snake
 C 0xA7D7 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA822 guarda 1: el juego de dibujos solo pinta sus listas 6 y 7 y el byte siguiente (16 bits)
-C 0xA825 guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter
-C 0xA831 lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
-C 0xA847 lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
-C 0xA84F lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0xA822 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+C 0xA825 guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+C 0xA831 lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+C 0xA847 lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+C 0xA84F lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0xA853 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA85C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xA894 punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
@@ -162,8 +163,10 @@ C 0xAA0B borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes d
 C 0xAA16 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
 C 0xAA19 lee la zona
 C 0xAA28 lee la sala de la zona
+C 0xAA55 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAA59 musica_de_la_zona_bancos_15: 
 C 0xAA5C enciende_todo: la pantalla y los sprites encendidos
+C 0xAA5F lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAA64 limpia_sprites_y_d300: 
 C 0xAA67 a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAA6C lee la sala de la zona
@@ -212,6 +215,7 @@ C 0xABF4 suma_a_hl: HL = HL + A
 C 0xAC03 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAC08 guarda la Y de Snake
 C 0xAC0D guarda la X de Snake
+C 0xAC3B lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAC40 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC45 a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAC4A a_p04_924c_3: p04:924C con el banco 4 en 0x8000
@@ -223,6 +227,7 @@ C 0xAC67 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC6C p02:8D3C
 C 0xAC70 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC73 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+C 0xAC7D apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xAC83 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xAC97 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
 C 0xAC9A a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
@@ -247,7 +252,7 @@ C 0xB8E5 suma_a_de: DE = DE + A
 C 0xB8FE salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xB925 lee la sala de la zona
 C 0xB94A sprites_de_6860: 
-C 0xB95D p04:86C2
+C 0xB95D pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 C 0xB96C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB97C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xB9B4 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
@@ -266,7 +271,7 @@ C 0xBB3C sonido_36: pide el sonido 0x36
 C 0xBB3F sonido_37: pide el sonido 0x37
 C 0xBB78 apunta_con_b_bancos_15: 
 C 0xBB99 azar: A = un numero al azar (0xCA03 rotado mas R)
-C 0xBBE0 p04:9AF4
+C 0xBBE0 lanza_7: lo lanzado de tipo 7
 C 0xBCB4 lee la zona
 C 0xBCBA lee la sala de la zona
 C 0xBCE7 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
@@ -285,6 +290,7 @@ C 0xBD8D copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD96 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD9F copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBDB3 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBDB8 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xBDD5 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBE05 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBE0F lee la sala de la zona
@@ -293,11 +299,15 @@ C 0xBE2B lee la zona
 C 0xBE35 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xBE48 lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 C 0xBE4E palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xBE51 guarda la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 C 0xBE69 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBE77 lee la zona
 C 0xBE7E lee la sala de la zona
 C 0xBE97 suma_a_de: DE = DE + A
 C 0xBED7 lee cuantos siguen a Snake por su rastro (1-4)
+C 0xBEDE lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xBEF6 apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+C 0xBEFC lee el tipo del actor (0 = libre)
 C 0xBF14 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBF22 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xBF5B lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)

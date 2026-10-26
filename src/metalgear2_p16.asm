@@ -377,7 +377,7 @@ L_42C6:
 	ld (0c644h),a		;4329   ; guarda el canal de sonido que se esta tocando (1, 2, 4...)
 	ld ix,0c580h		;432c
 	call canal_cada_cuadro		;4330   ; canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
-	ld a,(0ca5fh)		;4333
+	ld a,(0ca5fh)		;4333   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	cp 001h		;4336
 	jp nz,L_434B		;4338
 	ld (ix+03ch),009h		;433b
@@ -743,7 +743,7 @@ L_4626:
 	ld a,(0c580h)		;462e
 	cp 074h		;4631
 	jp nz,L_4645		;4633
-	ld a,(0ca5fh)		;4636
+	ld a,(0ca5fh)		;4636   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	cp 001h		;4639
 	jp nz,L_4645		;463b
 	xor a			;463e

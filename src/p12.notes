@@ -156,8 +156,11 @@ C 0x67F6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x67F9 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x67FE lee la zona
 C 0x6855 suma_a_de: DE = DE + A
+C 0x685A lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x685F lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x6865 lee la zona
+C 0x6874 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0x687B lee el tipo del actor (0 = libre)
 C 0x6893 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6897 lee la zona
 C 0x689D palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -167,12 +170,16 @@ C 0x68BC lee la zona
 C 0x68C3 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x68E3 lee la zona
 C 0x68EA lee cuantos siguen a Snake por su rastro (1-4)
+C 0x68F0 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0x68F6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x68FD lee la zona
 C 0x6903 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x6906 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0x6919 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x695C lee la zona
 C 0x6977 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-C 0x697B p04:8E75
+C 0x697B nibbles: E = el nibble alto de A, D = el bajo
+C 0x69AE apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0x69BD lee la copia del banco de 0xA000
 C 0x69C1 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x69C4 p08:AD58
@@ -180,39 +187,62 @@ C 0x69CC lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x69D7 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x69E3 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x69F5 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x69FA apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+C 0x6A00 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0x6A15 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6A28 lee la zona
 C 0x6A2E lee la sala de la zona
 C 0x6A37 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0x6A40 suma_a_hl: HL = HL + A
 C 0x6A4B azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x6A5D apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0x6A63 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x6A67 apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+C 0x6A6C lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0x6A77 guarda el tipo del actor (0 = libre)
+C 0x6A7A guarda la fila de la sala del actor
+C 0x6A7D la columna de la sala del actor = 0x06
 C 0x6A8B suma_a_de: DE = DE + A
+C 0x6A8F guarda la Y del actor
+C 0x6A94 guarda la X del actor
+C 0x6A99 guarda el dibujo del actor (bit 0: el paso)
 C 0x6AB0 suma_a_hl: HL = HL + A
 C 0x6AB3 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0x6ABC apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+C 0x6ADF lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x6B03 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6B32 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0x6B42 lee la zona
 C 0x6B48 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x6B53 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6B5D lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0x6B74 guarda la Y del actor
+C 0x6B79 guarda la X del actor
+C 0x6B84 guarda la fila de la sala del actor
+C 0x6B8A guarda la columna de la sala del actor
+C 0x6B95 guarda el tipo del actor (0 = libre)
+C 0x6BAC apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x6BB2 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6BB5 lee la zona
 C 0x6BB8 tabla_6BBE: 19 destinos del despachador p00
 C 0x6BBB despachador: salta a la palabra A de la tabla que va detras del call
+C 0x6BE6 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x6BFF suma_a_hl: HL = HL + A
 C 0x6C10 suma_a_hl: HL = HL + A
 C 0x6C1B suma_a_hl: HL = HL + A
+C 0x6C90 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x6CA2 suma_a_hl: HL = HL + A
 C 0x6CDA suma_a_hl: HL = HL + A
 C 0x6CF2 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x6CF8 lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
+C 0x6D10 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x6D1C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x6D60 sonido_08: pide el sonido 8
 C 0x6D68 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6D6B linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 C 0x6D78 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x6D7E lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
+C 0x6D83 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x6DCF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6DD9 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x6DE1 punto: orden PSET del VDP con la operacion logica de E
@@ -224,6 +254,7 @@ C 0x6E66 suma_a_hl: HL = HL + A
 C 0x6E86 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x6E90 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x6EA0 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x6EB9 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x6EBE lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6EC5 punto: orden PSET del VDP con la operacion logica de E
 C 0x6ECE lee la zona
@@ -241,6 +272,8 @@ C 0x6F94 lee el slot de la RAM de 0x8000 (p01:7243)
 C 0x6FA4 lee el registro de slots primarios del arranque
 C 0x6FB8 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
 C 0x6FBD suma_a_de: DE = DE + A
+C 0x7009 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0x7022 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x703C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7041 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x705A lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -254,16 +287,23 @@ C 0x7083 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7087 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x708D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x7097 punto: orden PSET del VDP con la operacion logica de E
+C 0x70A0 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0x70A4 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0x70AE lee el tipo del actor (0 = libre)
 C 0x70CB lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x70D9 lee el tipo del actor (0 = libre)
 C 0x70E9 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0x70EC le resta la fila de la sala del actor
 C 0x70F4 lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0x70F7 le resta la columna de la sala del actor
+C 0x711A apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x716D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x719C lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x71AC lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x71BC lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x71CD palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x71D7 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x71DB apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x7213 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x721D lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x7260 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -281,9 +321,9 @@ C 0x734B lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x735E lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x736F copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0x737C copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
-C 0x738A guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x738A guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x7397 lee la sala de la zona
-C 0x73C0 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x73C0 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x73C6 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x73CA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x73F9 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -381,16 +421,16 @@ C 0x78FB palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x7901 suma_a_hl: HL = HL + A
 C 0x7932 suma_a_hl: HL = HL + A
 C 0x7935 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0x7938 guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x7938 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x7949 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0x794C guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
-C 0x7957 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
-C 0x7961 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
-C 0x796B lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x794C guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x7957 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x7961 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x796B lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x797B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0x797E lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x797E lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x798B copia_en_y: orden YMMM del VDP
-C 0x79A0 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x79A0 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x79A5 suma_a_hl: HL = HL + A
 C 0x79BE copia_en_y: orden YMMM del VDP
 C 0x79C1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -479,11 +519,15 @@ C 0x7DB3 lee la Y de Snake
 C 0x7DB9 lee la X de Snake
 C 0x7DBF pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7DC2 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x7DDC apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0x7DE3 lee el tipo del actor (0 = libre)
 C 0x7E02 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x7E09 lee el dibujo del actor (bit 0: el paso)
 C 0x7E16 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x7E23 suma_a_hl: HL = HL + A
 C 0x7E3B lee la copia del banco de 0x8000
 C 0x7E3F bancos_4: pone el 4 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0x7E42 se_ve_el_actor_si: p14:B9DC guardando HL, DE y BC
 C 0x7E7F palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x7EC7 suma_a_hl: HL = HL + A
 C 0x7F0F suma_a_hl: HL = HL + A

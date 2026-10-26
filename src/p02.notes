@@ -1177,6 +1177,7 @@ C 0x80D0 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x8113 p12:7C77
 C 0x8122 lee la zona
 C 0x8131 lee la fase de la partida (indice de las listas de p06:B40C)
+C 0x8147 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x814B musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x8153 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x815C lee la fase de la partida (indice de las listas de p06:B40C)
@@ -1366,6 +1367,7 @@ C 0x8748 palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 C 0x8754 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8757 p06:AA49
 C 0x875A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8762 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0x8768 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x876B bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x876E busca_la_sala: fichas de 6 bytes [sala][4 a 0xCA6B][1 a 0xCA69]... hasta 0xFF; en una sala especial, la primera
@@ -1435,6 +1437,7 @@ C 0x8A52 guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x8A58 guarda la espera hasta poner la musica pendiente
 C 0x8A67 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x8A6C sonido_05: pide el sonido 0x05
+C 0x8A83 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x8A8E guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x8A91 borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
 C 0x8ABE bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2054,6 +2057,7 @@ C 0x9E3F pantalla_del_marcador: el marcador entero: p01:6DDA, p02:850C, el mosai
 C 0x9E42 piezas_en_pagina_2: borra la pagina 2...
 C 0x9E48 rachas_b7a1: 
 C 0x9E4E guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0x9E5E guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna y el byte siguiente (16 bits)
 C 0x9E62 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x9E65 guarda la zona
 C 0x9E6B guarda la fase de la partida (indice de las listas de p06:B40C)
@@ -2074,6 +2078,7 @@ C 0x9EE2 a_p06_a598: p06:A598 con el banco 6 en 0xA000
 C 0x9EFF a_p10_a234: p10:A234 con el banco 10 en 0xA000
 C 0x9F7D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x9F91 sonido_66: pide el sonido 0x66
+C 0x9F99 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x9F9E lee 1 si Snake ha chocado en este cuadro
 C 0x9FCC lee la X de Snake
 C 0x9FDD d446_si: con 0xCA5F < 2, 0xD446 = 4

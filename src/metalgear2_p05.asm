@@ -30,7 +30,7 @@ DATA_partida_A000:
 
 
 L_A001:
-	dec (ix+00eh)		;a001
+	dec (ix+00eh)		;a001   ; baja la espera del actor
 	ret nz			;a004
 	xor a			;a005
 	ld (0d441h),a		;a006
@@ -48,10 +48,10 @@ L_A019:
 	ld a,(0e1c0h)		;a01f
 	and a			;a022
 	ret z			;a023
-	ld a,(ix+000h)		;a024
+	ld a,(ix+000h)		;a024   ; lee el tipo del actor (0 = libre)
 	cp 007h		;a027
 	ret nz			;a029
-	ld a,(ix+001h)		;a02a
+	ld a,(ix+001h)		;a02a   ; lee el paso del actor
 	cp 029h		;a02d
 	ret z			;a02f
 	sub 01ch		;a030
@@ -68,29 +68,29 @@ L_A019:
 	ret nz			;a046
 	xor a			;a047
 	ld (ix+00ch),a		;a048
-	ld (ix+00eh),010h		;a04b
-	ld a,(ix+001h)		;a04f
+	ld (ix+00eh),010h		;a04b   ; la espera del actor = 0x10
+	ld a,(ix+001h)		;a04f   ; lee el paso del actor
 	cp 021h		;a052
 	ld a,01ch		;a054
 	jr nz,L_A05E		;a056
-	ld (ix+00dh),000h		;a058
+	ld (ix+00dh),000h		;a058   ; el dibujo del actor (bit 0: el paso) = 0x00
 	ld a,029h		;a05c
 L_A05E:
-	ld (ix+001h),a		;a05e
+	ld (ix+001h),a		;a05e   ; guarda el paso del actor
 	ret			;a061
 L_A062:
-	dec (ix+00eh)		;a062
+	dec (ix+00eh)		;a062   ; baja la espera del actor
 	ret nz			;a065
 	call 09d25h		;a066
 	ld a,003h		;a069
 	call 08e25h		;a06b
 	jp L_A27B		;a06e
 L_A071:
-	dec (ix+00eh)		;a071
+	dec (ix+00eh)		;a071   ; baja la espera del actor
 	ret nz			;a074
-	ld (ix+00eh),010h		;a075
-	ld (ix+001h),020h		;a079
-	jp 09d25h		;a07d   ; p04:9D25
+	ld (ix+00eh),010h		;a075   ; la espera del actor = 0x10
+	ld (ix+001h),020h		;a079   ; el paso del actor = 0x20
+	jp 09d25h		;a07d   ; aviso_8b_20:
 L_A080:
 	ld b,098h		;a080
 	call L_A08A		;a082
@@ -98,7 +98,7 @@ L_A080:
 	xor a			;a086
 	jp 08e25h		;a087
 L_A08A:
-	ld a,(ix+005h)		;a08a
+	ld a,(ix+005h)		;a08a   ; lee la X del actor
 	cp b			;a08d
 	jr c,L_A095		;a08e
 	call L_A27B		;a090
@@ -109,7 +109,7 @@ L_A095:
 	scf			;a098
 	ret			;a099
 L_A09A:
-	ld a,(ix+003h)		;a09a
+	ld a,(ix+003h)		;a09a   ; lee la Y del actor
 	cp 02ah		;a09d
 	jp nc,0900bh		;a09f
 	ld a,003h		;a0a2
@@ -120,12 +120,12 @@ L_A0AA:
 	call L_A08A		;a0ac
 	ret c			;a0af
 	xor a			;a0b0
-	ld (ix+00dh),a		;a0b1
+	ld (ix+00dh),a		;a0b1   ; guarda el dibujo del actor (bit 0: el paso)
 	ld (ix+00ch),a		;a0b4
-	ld (ix+00eh),010h		;a0b7
+	ld (ix+00eh),010h		;a0b7   ; la espera del actor = 0x10
 	ret			;a0bb
 L_A0BC:
-	dec (ix+00eh)		;a0bc
+	dec (ix+00eh)		;a0bc   ; baja la espera del actor
 	ret nz			;a0bf
 	ld a,002h		;a0c0
 	ld (0e1c0h),a		;a0c2
@@ -140,11 +140,11 @@ L_A0D5:
 	call 06c33h		;a0d5   ; sonido_46: pide el sonido 0x46
 	jp L_A27B		;a0d8
 L_A0DB:
-	inc (ix+00eh)		;a0db
-	jp 09e51h		;a0de   ; p04:9E51
+	inc (ix+00eh)		;a0db   ; sube la espera del actor
+	jp 09e51h		;a0de   ; mira_cada_16: cada 16 cuadros, p06:B5E2
 L_A0E1:
 	call 0900bh		;a0e1
-	ld a,(ix+003h)		;a0e4
+	ld a,(ix+003h)		;a0e4   ; lee la Y del actor
 	cp 030h		;a0e7
 	ret nc			;a0e9
 	jr L_A10A		;a0ea
@@ -155,12 +155,12 @@ L_A0EE:
 	ld a,(0d430h)		;a0ee
 	cp 002h		;a0f1
 	jr z,L_A0EC		;a0f3
-	ld a,(ix+000h)		;a0f5
+	ld a,(ix+000h)		;a0f5   ; lee el tipo del actor (0 = libre)
 	cp 002h		;a0f8
 	jr nz,L_A0EC		;a0fa
 	call 08100h		;a0fc
 	jr nz,L_A0EC		;a0ff
-	ld a,(ix+007h)		;a101
+	ld a,(ix+007h)		;a101   ; lee la velocidad del actor en Y (alta)
 	and a			;a104
 	ld bc,00006h		;a105
 	jr nz,L_A10D		;a108
@@ -171,27 +171,27 @@ L_A10D:
 	push bc			;a10e
 	call 08e25h		;a10f
 	pop bc			;a112
-	ld (ix+001h),c		;a113
+	ld (ix+001h),c		;a113   ; guarda el paso del actor
 	scf			;a116
 	ret			;a117
 L_A118:
 	call 0900bh		;a118
 	call 080e6h		;a11b
-	ld a,(ix+00bh)		;a11e
+	ld a,(ix+00bh)		;a11e   ; lee la columna de la sala del actor
 	cp 005h		;a121
 	ret nz			;a123
-	ld a,(ix+005h)		;a124
+	ld a,(ix+005h)		;a124   ; lee la X del actor
 	cp 090h		;a127
 	ret nc			;a129
 	ld bc,0001bh		;a12a
 	jr L_A10D		;a12d
 L_A12F:
 	call 0900bh		;a12f
-	ld a,(ix+003h)		;a132
+	ld a,(ix+003h)		;a132   ; lee la Y del actor
 	cp 018h		;a135
 	ret nc			;a137
 	xor a			;a138
-	ld (ix+000h),a		;a139
+	ld (ix+000h),a		;a139   ; guarda el tipo del actor (0 = libre)
 	inc a			;a13c
 	ld (0d430h),a		;a13d
 	ld a,040h		;a140
@@ -200,24 +200,24 @@ L_A12F:
 	jp 080f3h		;a148
 L_A14B:
 	call 0900bh		;a14b
-	ld a,(ix+005h)		;a14e
+	ld a,(ix+005h)		;a14e   ; lee la X del actor
 	cp 070h		;a151
 	ret nc			;a153
-	ld (ix+001h),017h		;a154
+	ld (ix+001h),017h		;a154   ; el paso del actor = 0x17
 L_A158:
-	ld (ix+00dh),002h		;a158
+	ld (ix+00dh),002h		;a158   ; el dibujo del actor (bit 0: el paso) = 0x02
 	ld a,001h		;a15c
 	jp 08e25h		;a15e
 L_A161:
 	call 0900bh		;a161
-	ld a,(ix+005h)		;a164
+	ld a,(ix+005h)		;a164   ; lee la X del actor
 	cp 048h		;a167
 	ret nc			;a169
 	ld hl,0cac9h		;a16a
 L_A16D:
 	xor a			;a16d
-	ld (ix+001h),a		;a16e
-	ld (ix+00dh),a		;a171
+	ld (ix+001h),a		;a16e   ; guarda el paso del actor
+	ld (ix+00dh),a		;a171   ; guarda el dibujo del actor (bit 0: el paso)
 	ld (ix+00ch),a		;a174
 	inc a			;a177
 	ld (hl),a			;a178
@@ -232,11 +232,11 @@ L_A188:
 	ld c,002h		;a18b
 L_A18D:
 	call 0900bh		;a18d
-	ld a,(ix+003h)		;a190
+	ld a,(ix+003h)		;a190   ; lee la Y del actor
 	cp 0b0h		;a193
 	ret c			;a195
-	ld (ix+001h),d		;a196
-	ld (ix+00dh),e		;a199
+	ld (ix+001h),d		;a196   ; guarda el paso del actor
+	ld (ix+00dh),e		;a199   ; guarda el dibujo del actor (bit 0: el paso)
 	ld a,c			;a19c
 	jp 08e25h		;a19d
 L_A1A0:
@@ -245,20 +245,20 @@ L_A1A0:
 	jr L_A18D		;a1a5
 L_A1A7:
 	call 0900bh		;a1a7
-	ld a,(ix+005h)		;a1aa
+	ld a,(ix+005h)		;a1aa   ; lee la X del actor
 	cp 050h		;a1ad
 	ret nc			;a1af
 	call L_A158		;a1b0
 	jp L_A27B		;a1b3
 L_A1B6:
 	call 0900bh		;a1b6
-	ld a,(ix+005h)		;a1b9
+	ld a,(ix+005h)		;a1b9   ; lee la X del actor
 	cp 0b0h		;a1bc
 	ret c			;a1be
 	ld hl,0cacah		;a1bf
 	jp L_A16D		;a1c2
 L_A1C5:
-	dec (ix+00eh)		;a1c5
+	dec (ix+00eh)		;a1c5   ; baja la espera del actor
 	ret nz			;a1c8
 	ld a,(0d521h)		;a1c9
 	and a			;a1cc
@@ -271,24 +271,24 @@ L_A1C5:
 L_A1DB:
 	ld (0d599h),a		;a1db
 L_A1DE:
-	ld (ix+00eh),008h		;a1de
+	ld (ix+00eh),008h		;a1de   ; la espera del actor = 0x08
 	jp L_A27B		;a1e2
 L_A1E5:
-	dec (ix+00eh)		;a1e5
+	dec (ix+00eh)		;a1e5   ; baja la espera del actor
 	ret nz			;a1e8
 	ld hl,0d2c0h		;a1e9
 	ld bc,0003fh		;a1ec
 	call 04236h		;a1ef   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	push ix		;a1f2
 	ld ix,0d2c0h		;a1f4
-	ld (ix+000h),018h		;a1f8
+	ld (ix+000h),018h		;a1f8   ; el tipo del actor (0 = libre) = 0x18
 	ld (ix+010h),0ffh		;a1fc
 	call 08153h		;a200
 	pop ix		;a203
 	ld (ix+00eh),008h		;a205
 	jp L_A27B		;a209
 L_A20C:
-	dec (ix+00eh)		;a20c
+	dec (ix+00eh)		;a20c   ; baja la espera del actor
 	ret nz			;a20f
 	call L_A23A		;a210
 	xor a			;a213
@@ -308,24 +308,24 @@ L_A20C:
 L_A233:
 	jp 04767h		;a233   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_A236:
-	dec (ix+00eh)		;a236
+	dec (ix+00eh)		;a236   ; baja la espera del actor
 	ret nz			;a239
 L_A23A:
-	ld (ix+001h),004h		;a23a
+	ld (ix+001h),004h		;a23a   ; el paso del actor = 0x04
 	ret			;a23e
 L_A23F:
 	push ix		;a23f
 	ld ix,0d2c0h		;a241
-	ld (ix+000h),000h		;a245
+	ld (ix+000h),000h		;a245   ; el tipo del actor (0 = libre) = 0x00
 	call 0834ch		;a249
 	pop ix		;a24c
 	jr L_A27B		;a24e
 L_A250:
 	call L_A0EE		;a250
 	ret c			;a253
-	call 09f6bh		;a254   ; p04:9F6B
+	call 09f6bh		;a254   ; llega_a_64: el tipo 8 en la fila 1 columna 9: al llegar a Y = 0x64, el paso 0x22 con 8 cuadros y, con 0xD510 = 0x0C, la bandera de 0xD519
 	ret z			;a257
-	call 09f22h		;a258   ; p04:9F22
+	call 09f22h		;a258   ; llega_a_b4: el tipo 9 en la fila 1 columna 7: al llegar a Y = 0xB4, el paso 0x28 y (en la sala 4 o la especial 0x18) la bandera de 0xD509
 	ret z			;a25b
 	call 08e82h		;a25c
 	jp c,L_A27B		;a25f
@@ -334,33 +334,33 @@ L_A265:
 	ld a,(ix+01ah)		;a265
 	and a			;a268
 	jr z,L_A2AA		;a269
-	ld a,(ix+00dh)		;a26b
+	ld a,(ix+00dh)		;a26b   ; lee el dibujo del actor (bit 0: el paso)
 	and 0feh		;a26e
 	ld (ix+015h),a		;a270
 	ld (ix+00ch),000h		;a273
-	ld (ix+00eh),080h		;a277
+	ld (ix+00eh),080h		;a277   ; la espera del actor = 0x80
 L_A27B:
-	inc (ix+001h)		;a27b
+	inc (ix+001h)		;a27b   ; sube el paso del actor
 	ret			;a27e
 L_A27F:
 	call L_A285		;a27f
 	jr z,L_A27B		;a282
 	ret			;a284
 L_A285:
-	dec (ix+00eh)		;a285
+	dec (ix+00eh)		;a285   ; baja la espera del actor
 	ret z			;a288
 	ld b,000h		;a289
-	bit 4,(ix+00eh)		;a28b
+	bit 4,(ix+00eh)		;a28b   ; mira el bit 4 de la espera del actor
 	jr z,L_A29A		;a28f
 	ld b,008h		;a291
-	bit 5,(ix+00eh)		;a293
+	bit 5,(ix+00eh)		;a293   ; mira el bit 5 de la espera del actor
 	jr z,L_A29A		;a297
 	inc b			;a299
 L_A29A:
 	ld a,(ix+015h)		;a29a
 	and 0feh		;a29d
 	add a,b			;a29f
-	ld (ix+00dh),a		;a2a0
+	ld (ix+00dh),a		;a2a0   ; guarda el dibujo del actor (bit 0: el paso)
 	or 001h		;a2a3
 	ret			;a2a5
 L_A2A6:
@@ -369,7 +369,7 @@ L_A2A6:
 L_A2AA:
 	jp L_A23A		;a2aa
 L_A2AD:
-	ld a,(ix+001h)		;a2ad
+	ld a,(ix+001h)		;a2ad   ; lee el paso del actor
 	cp 025h		;a2b0
 	jp z,09e9ah		;a2b2
 	cp 026h		;a2b5
@@ -416,7 +416,7 @@ L_A300:
 	call 04256h		;a300   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and b			;a303
 	add a,c			;a304
-	ld (ix+00eh),a		;a305
+	ld (ix+00eh),a		;a305   ; guarda la espera del actor
 	ret			;a308
 L_A309:
 	ld a,(0d42ah)		;a309
@@ -428,7 +428,7 @@ L_A309:
 	jr nz,L_A33E		;a317
 	call L_A3C0		;a319
 	jr c,L_A33E		;a31c
-	dec (ix+00eh)		;a31e
+	dec (ix+00eh)		;a31e   ; baja la espera del actor
 	jp nz,0900bh		;a321
 	inc (ix+00fh)		;a324
 	ld a,(ix+00fh)		;a327
@@ -459,11 +459,11 @@ L_A357:
 	jr L_A2EC		;a35a
 L_A35C:
 	ld (ix+00ch),000h		;a35c
-	ld (ix+00eh),0c0h		;a360
+	ld (ix+00eh),0c0h		;a360   ; la espera del actor = 0xC0
 	jp L_A27B		;a364
 L_A367:
-	call 09d1bh		;a367   ; p04:9D1B
-	ld (ix+001h),003h		;a36a
+	call 09d1bh		;a367   ; aviso_82_20:
+	ld (ix+001h),003h		;a36a   ; el paso del actor = 0x03
 	call 04256h		;a36e   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 003h		;a371
 	jp 08e25h		;a373
@@ -483,10 +483,10 @@ DATA_A376:
 
 
 L_A3C0:
-	ld a,(0d42bh)		;a3c0
+	ld a,(0d42bh)		;a3c0   ; lee la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 	and a			;a3c3
 	ret z			;a3c4
-	ld hl,0d300h		;a3c5
+	ld hl,0d300h		;a3c5   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 	ld de,0d340h		;a3c8
 	ld a,(de)			;a3cb
 	and (hl)			;a3cc
@@ -554,8 +554,8 @@ L_A415:
 L_A419:
 	ld d,000h		;a419
 L_A41B:
-	ld h,(ix+005h)		;a41b
-	ld a,(ix+003h)		;a41e
+	ld h,(ix+005h)		;a41b   ; lee la X del actor
+	ld a,(ix+003h)		;a41e   ; lee la Y del actor
 	sub 006h		;a421
 	ld l,a			;a423
 	ld b,000h		;a424
@@ -606,11 +606,11 @@ L_A45D:
 	ld a,(ix+00ch)		;a45d
 	rra			;a460
 	ld bc,010b0h		;a461
-	ld a,(ix+003h)		;a464
+	ld a,(ix+003h)		;a464   ; lee la Y del actor
 	jr c,L_A478		;a467
-	ld a,(ix+009h)		;a469
+	ld a,(ix+009h)		;a469   ; lee la velocidad del actor en X (alta)
 	rla			;a46c
-	ld a,(ix+005h)		;a46d
+	ld a,(ix+005h)		;a46d   ; lee la X del actor
 	ld bc,000b4h		;a470
 	jr nc,L_A478		;a473
 	ld bc,010b0h		;a475
@@ -622,20 +622,20 @@ L_A47B:
 	ld a,(0d42ah)		;a47b
 	and a			;a47e
 	jp nz,L_A367		;a47f
-	dec (ix+00eh)		;a482
+	dec (ix+00eh)		;a482   ; baja la espera del actor
 	jr z,L_A496		;a485
-	ld a,(ix+00eh)		;a487
+	ld a,(ix+00eh)		;a487   ; lee la espera del actor
 	and 00fh		;a48a
 	ret nz			;a48c
 	jp 08f0dh		;a48d
 L_A490:
-	dec (ix+00eh)		;a490
+	dec (ix+00eh)		;a490   ; baja la espera del actor
 	jp nz,09e51h		;a493
 L_A496:
-	ld (ix+001h),001h		;a496
+	ld (ix+001h),001h		;a496   ; el paso del actor = 0x01
 	jp L_A32E		;a49a
 L_A49D:
-	call 09038h		;a49d   ; p04:9038
+	call 09038h		;a49d   ; choca_de_frente: A = los choques (C) en su eje: 3 vertical, 0x0C horizontal
 	jp z,0900bh		;a4a0
 	call L_A27B		;a4a3
 	jp L_A57C		;a4a6
@@ -643,7 +643,7 @@ L_A4A9:
 	ld a,(ix+00ch)		;a4a9
 	rra			;a4ac
 	jr nc,L_A4C0		;a4ad
-	ld a,(ix+007h)		;a4af
+	ld a,(ix+007h)		;a4af   ; lee la velocidad del actor en Y (alta)
 	rla			;a4b2
 	ld a,000h		;a4b3
 	ld de,00101h		;a4b5
@@ -652,7 +652,7 @@ L_A4A9:
 	ld de,01002h		;a4bb
 	jr L_A4CF		;a4be
 L_A4C0:
-	ld a,(ix+009h)		;a4c0
+	ld a,(ix+009h)		;a4c0   ; lee la velocidad del actor en X (alta)
 	rla			;a4c3
 	ld a,002h		;a4c4
 	ld de,00104h		;a4c6
@@ -695,12 +695,12 @@ L_A509:
 	ld a,(ix+02ah)		;a509
 	cp b			;a50c
 	jp nc,0900bh		;a50d
-	ld h,(ix+005h)		;a510
-	ld l,(ix+003h)		;a513
+	ld h,(ix+005h)		;a510   ; lee la X del actor
+	ld l,(ix+003h)		;a513   ; lee la Y del actor
 	ld a,(ix+00ch)		;a516
 	rra			;a519
 	jr nc,L_A54B		;a51a
-	ld a,(ix+007h)		;a51c
+	ld a,(ix+007h)		;a51c   ; lee la velocidad del actor en Y (alta)
 	rla			;a51f
 	ld b,008h		;a520
 	jr nc,L_A526		;a522
@@ -732,7 +732,7 @@ L_A526:
 	ld l,a			;a548
 	jr L_A526		;a549
 L_A54B:
-	ld a,(ix+009h)		;a54b
+	ld a,(ix+009h)		;a54b   ; lee la velocidad del actor en X (alta)
 	rla			;a54e
 	ld b,008h		;a54f
 	jr nc,L_A555		;a551
@@ -800,10 +800,10 @@ L_A5A3:
 	ld de,00006h		;a5a3
 	ld bc,00beeh		;a5a6
 L_A5A9:
-	ld a,(ix+003h)		;a5a9
+	ld a,(ix+003h)		;a5a9   ; lee la Y del actor
 	add a,c			;a5ac
 	ld l,a			;a5ad
-	ld a,(ix+005h)		;a5ae
+	ld a,(ix+005h)		;a5ae   ; lee la X del actor
 	add a,b			;a5b1
 	ld h,a			;a5b2
 	ld bc,00500h		;a5b3
@@ -853,18 +853,18 @@ DATA_resto_A5E2:
 L_A5EA:
 	call 09dceh		;a5ea
 	ret nc			;a5ed
-	ld (ix+001h),00ah		;a5ee
+	ld (ix+001h),00ah		;a5ee   ; el paso del actor = 0x0A
 	ret			;a5f2
 L_A5F3:
 	call 08100h		;a5f3
 	jp nz,086a4h		;a5f6
 	ld hl,06bcch		;a5f9
 	call 086d5h		;a5fc
-	ld a,(ix+001h)		;a5ff
+	ld a,(ix+001h)		;a5ff   ; lee el paso del actor
 	ld hl,0a614h		;a602
 	call 0424eh		;a605   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	call 08082h		;a608
-	ld a,(ix+001h)		;a60b
+	ld a,(ix+001h)		;a60b   ; lee el paso del actor
 	cp 006h		;a60e
 	ret c			;a610
 	jp 08671h		;a611
@@ -885,7 +885,7 @@ DATA_resto_A614:
 
 
 L_A638:
-	inc (ix+001h)		;a638
+	inc (ix+001h)		;a638   ; sube el paso del actor
 	ret			;a63b
 L_A63C:
 	call 08079h		;a63c
@@ -901,11 +901,11 @@ L_A63C:
 	set 7,(hl)		;a64e
 	ld a,001h		;a650
 	ld (0cb3ch),a		;a652
-	ld (ix+00eh),020h		;a655
+	ld (ix+00eh),020h		;a655   ; la espera del actor = 0x20
 	call L_A638		;a659
 	jp 086c2h		;a65c
 L_A65F:
-	dec (ix+00eh)		;a65f
+	dec (ix+00eh)		;a65f   ; baja la espera del actor
 	ret nz			;a662
 	ld de,00010h		;a663
 L_A666:
@@ -922,24 +922,24 @@ L_A675:
 	pop bc			;a679
 	ret nz			;a67a
 	ld (ix+01ch),000h		;a67b
-	ld (ix+00eh),c		;a67f
+	ld (ix+00eh),c		;a67f   ; guarda la espera del actor
 	call 079c7h		;a682   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 	call L_A638		;a685
 	scf			;a688
 	ret			;a689
 L_A68A:
 	call L_A6AF		;a68a
-	dec (ix+00eh)		;a68d
+	dec (ix+00eh)		;a68d   ; baja la espera del actor
 	jr z,L_A6A7		;a690
-	ld a,(ix+00eh)		;a692
+	ld a,(ix+00eh)		;a692   ; lee la espera del actor
 	cp 01dh		;a695
 	call z,L_A6A2		;a697
 	cp 010h		;a69a
 	ret nz			;a69c
-	ld (ix+00dh),007h		;a69d
+	ld (ix+00dh),007h		;a69d   ; el dibujo del actor (bit 0: el paso) = 0x07
 	ret			;a6a1
 L_A6A2:
-	ld (ix+00dh),002h		;a6a2
+	ld (ix+00dh),002h		;a6a2   ; el dibujo del actor (bit 0: el paso) = 0x02
 	ret			;a6a6
 L_A6A7:
 	call L_A6F0		;a6a7
@@ -954,7 +954,7 @@ L_A6B6:
 	inc hl			;a6b7
 	ld (hl),058h		;a6b8
 	inc hl			;a6ba
-	ld a,(ix+00eh)		;a6bb
+	ld a,(ix+00eh)		;a6bb   ; lee la espera del actor
 	rra			;a6be
 	ld a,028h		;a6bf
 	ld e,02ch		;a6c1
@@ -1007,8 +1007,8 @@ L_A704:
 	xor a			;a704
 	ld (0cb3ch),a		;a705
 	ld (ix+011h),a		;a708
-	ld (ix+00eh),a		;a70b
-	ld (ix+00dh),a		;a70e
+	ld (ix+00eh),a		;a70b   ; guarda la espera del actor
+	ld (ix+00dh),a		;a70e   ; guarda el dibujo del actor (bit 0: el paso)
 	inc a			;a711
 	ld (ix+016h),a		;a712
 	jp L_A638		;a715
@@ -1018,31 +1018,31 @@ L_A718:
 	jr z,L_A73C		;a71c
 	call L_A767		;a71e
 	jr c,L_A73C		;a721
-	ld a,(ix+007h)		;a723
+	ld a,(ix+007h)		;a723   ; lee la velocidad del actor en Y (alta)
 	and a			;a726
 	jr nz,L_A731		;a727
-	ld a,(ix+005h)		;a729
+	ld a,(ix+005h)		;a729   ; lee la X del actor
 	cp 080h		;a72c
 	jp nc,L_A8BF		;a72e
 L_A731:
 	call L_A803		;a731
-	ld a,(ix+00eh)		;a734
+	ld a,(ix+00eh)		;a734   ; lee la espera del actor
 	and a			;a737
 	ret nz			;a738
 	jp L_A7E6		;a739
 L_A73C:
-	ld (ix+001h),009h		;a73c
+	ld (ix+001h),009h		;a73c   ; el paso del actor = 0x09
 	ld hl,0a75fh		;a740
 L_A743:
 	call 04256h		;a743   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 003h		;a746
 	call 043f6h		;a748   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld (ix+018h),l		;a74b
-	ld (ix+019h),h		;a74e
+	ld (ix+018h),l		;a74b   ; guarda la cuenta del paso del dibujo del actor
+	ld (ix+019h),h		;a74e   ; guarda la rapidez del paso del dibujo del actor (0-3)
 	xor a			;a751
 	ld (ix+00ch),a		;a752
 	ld (ix+016h),a		;a755
-	ld (ix+00eh),008h		;a758
+	ld (ix+00eh),008h		;a758   ; la espera del actor = 0x08
 	jp 06c4bh		;a75c   ; sonido_4b: pide el sonido 0x4B
 
 ; ----------------------------------------------------------------------
@@ -1070,12 +1070,12 @@ L_A767:
 	cp 030h		;a774
 	ret			;a776
 L_A777:
-	ld a,(ix+00dh)		;a777
+	ld a,(ix+00dh)		;a777   ; lee el dibujo del actor (bit 0: el paso)
 	rrca			;a77a
 	and 003h		;a77b
 L_A77D:
 	ld b,a			;a77d
-	ld a,(ix+000h)		;a77e
+	ld a,(ix+000h)		;a77e   ; lee el tipo del actor (0 = libre)
 L_A781:
 	ld hl,0a7adh		;a781
 	call 043f6h		;a784   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -1083,9 +1083,9 @@ L_A781:
 	ld a,b			;a788
 	ld hl,0a79ch		;a789
 	call 0424eh		;a78c   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	call 08097h		;a78f   ; p04:8097
+	call 08097h		;a78f   ; pon_velocidad_x: la velocidad en X = DE
 	ex de,hl			;a792
-	call 080a7h		;a793   ; p04:80A7
+	call 080a7h		;a793   ; pon_velocidad_y: la velocidad en Y = DE
 	ld a,003h		;a796
 	ld (ix+00ch),a		;a798
 	ret			;a79b
@@ -1131,38 +1131,38 @@ L_A7C3:
 	jp z,L_A862		;a7c7
 	call L_A767		;a7ca
 	jp nc,L_A862		;a7cd
-	ld a,(ix+007h)		;a7d0
+	ld a,(ix+007h)		;a7d0   ; lee la velocidad del actor en Y (alta)
 	and a			;a7d3
 	jr nz,L_A7DE		;a7d4
-	ld a,(ix+005h)		;a7d6
+	ld a,(ix+005h)		;a7d6   ; lee la X del actor
 	cp 090h		;a7d9
 	jp nc,L_A8BF		;a7db
 L_A7DE:
 	call L_A803		;a7de
-	ld a,(ix+00eh)		;a7e1
+	ld a,(ix+00eh)		;a7e1   ; lee la espera del actor
 	and a			;a7e4
 	ret nz			;a7e5
 L_A7E6:
-	ld a,(ix+00dh)		;a7e6
+	ld a,(ix+00dh)		;a7e6   ; lee el dibujo del actor (bit 0: el paso)
 	ld (ix+01bh),a		;a7e9
 	call L_A8D2		;a7ec
 	ld bc,00c0bh		;a7ef
-	ld (ix+00eh),b		;a7f2
+	ld (ix+00eh),b		;a7f2   ; guarda la espera del actor
 	ld (ix+00ch),000h		;a7f5
-	ld a,(ix+001h)		;a7f9
+	ld a,(ix+001h)		;a7f9   ; lee el paso del actor
 	ld (ix+01ah),a		;a7fc
-	ld (ix+001h),c		;a7ff
+	ld (ix+001h),c		;a7ff   ; guarda el paso del actor
 	ret			;a802
 L_A803:
 	call 086deh		;a803
 	ld (ix+00fh),000h		;a806
-	dec (ix+00eh)		;a80a
+	dec (ix+00eh)		;a80a   ; baja la espera del actor
 	ret z			;a80d
-	ld a,(ix+003h)		;a80e
+	ld a,(ix+003h)		;a80e   ; lee la Y del actor
 	sub 020h		;a811
 	cp 0a0h		;a813
 	jr nc,L_A82F		;a815
-	ld a,(ix+005h)		;a817
+	ld a,(ix+005h)		;a817   ; lee la X del actor
 	sub 008h		;a81a
 	cp 0b0h		;a81c
 	jr nc,L_A82F		;a81e
@@ -1176,7 +1176,7 @@ L_A82D:
 	and c			;a82d
 	ret z			;a82e
 L_A82F:
-	ld (ix+00eh),000h		;a82f
+	ld (ix+00eh),000h		;a82f   ; la espera del actor = 0x00
 	ld (ix+00fh),001h		;a833
 	call 0808bh		;a837
 	ld a,003h		;a83a
@@ -1191,19 +1191,19 @@ L_A847:
 	call 04256h		;a84a   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 007h		;a84d
 	add a,008h		;a84f
-	ld (ix+00eh),a		;a851
+	ld (ix+00eh),a		;a851   ; guarda la espera del actor
 	ld c,a			;a854
-	ld a,(ix+000h)		;a855
+	ld a,(ix+000h)		;a855   ; lee el tipo del actor (0 = libre)
 	cp 005h		;a858
 	ret nz			;a85a
 	ld a,c			;a85b
 	add a,010h		;a85c
-	ld (ix+00eh),a		;a85e
+	ld (ix+00eh),a		;a85e   ; guarda la espera del actor
 	ret			;a861
 L_A862:
 	ld hl,0a86dh		;a862
 	call L_A743		;a865
-	ld (ix+001h),00ah		;a868
+	ld (ix+001h),00ah		;a868   ; el paso del actor = 0x0A
 	ret			;a86c
 
 ; ----------------------------------------------------------------------
@@ -1222,7 +1222,7 @@ DATA_resto_A86D:
 L_A875:
 	call 04256h		;a875   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	ld d,a			;a878
-	ld a,(ix+00dh)		;a879
+	ld a,(ix+00dh)		;a879   ; lee el dibujo del actor (bit 0: el paso)
 	cp 004h		;a87c
 	jr nc,L_A88A		;a87e
 	ld a,d			;a880
@@ -1254,7 +1254,7 @@ L_A89C:
 	call 0423eh		;a8a8   ; suma_a_hl: HL = HL + A
 	ld d,(hl)			;a8ab
 L_A8AC:
-	ld (ix+00dh),d		;a8ac
+	ld (ix+00dh),d		;a8ac   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;a8af
 L_A8B0:
 	ld a,d			;a8b0
@@ -1282,14 +1282,14 @@ DATA_resto_A8BB:
 
 
 L_A8BF:
-	ld a,(ix+00dh)		;a8bf
+	ld a,(ix+00dh)		;a8bf   ; lee el dibujo del actor (bit 0: el paso)
 	and 0feh		;a8c2
 	cp 004h		;a8c4
 	ld a,006h		;a8c6
 	jr z,L_A8CC		;a8c8
 	ld a,004h		;a8ca
 L_A8CC:
-	ld (ix+00dh),a		;a8cc
+	ld (ix+00dh),a		;a8cc   ; guarda el dibujo del actor (bit 0: el paso)
 	jp L_A777		;a8cf
 L_A8D2:
 	call L_B4E1		;a8d2
@@ -1297,63 +1297,63 @@ L_A8D2:
 	add a,a			;a8d6
 	add a,008h		;a8d7
 	inc a			;a8d9
-	ld (ix+00dh),a		;a8da
+	ld (ix+00dh),a		;a8da   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;a8dd
 L_A8DE:
 	call L_A8ED		;a8de
 	ret nz			;a8e1
 	ld (ix+016h),001h		;a8e2
-	ld (ix+001h),008h		;a8e6
+	ld (ix+001h),008h		;a8e6   ; el paso del actor = 0x08
 	jp L_A777		;a8ea
 L_A8ED:
-	dec (ix+00eh)		;a8ed
+	dec (ix+00eh)		;a8ed   ; baja la espera del actor
 	ret z			;a8f0
-	ld a,(ix+003h)		;a8f1
-	ld b,(ix+018h)		;a8f4
-	ld (ix+003h),b		;a8f7
-	ld (ix+018h),a		;a8fa
-	ld a,(ix+005h)		;a8fd
-	ld b,(ix+019h)		;a900
-	ld (ix+005h),b		;a903
-	ld (ix+019h),a		;a906
+	ld a,(ix+003h)		;a8f1   ; lee la Y del actor
+	ld b,(ix+018h)		;a8f4   ; lee la cuenta del paso del dibujo del actor
+	ld (ix+003h),b		;a8f7   ; guarda la Y del actor
+	ld (ix+018h),a		;a8fa   ; guarda la cuenta del paso del dibujo del actor
+	ld a,(ix+005h)		;a8fd   ; lee la X del actor
+	ld b,(ix+019h)		;a900   ; lee la rapidez del paso del dibujo del actor (0-3)
+	ld (ix+005h),b		;a903   ; guarda la X del actor
+	ld (ix+019h),a		;a906   ; guarda la rapidez del paso del dibujo del actor (0-3)
 	ret			;a909
 L_A90A:
 	call L_A8ED		;a90a
 	ret nz			;a90d
 	ld (ix+016h),001h		;a90e
-	ld (ix+001h),007h		;a912
+	ld (ix+001h),007h		;a912   ; el paso del actor = 0x07
 	jp L_A777		;a916
 L_A919:
-	dec (ix+00eh)		;a919
+	dec (ix+00eh)		;a919   ; baja la espera del actor
 	jr z,L_A92A		;a91c
-	ld a,(ix+00eh)		;a91e
+	ld a,(ix+00eh)		;a91e   ; lee la espera del actor
 	and 003h		;a921
 	ret z			;a923
 	cp 002h		;a924
 	ret nz			;a926
-	jp 09b06h		;a927   ; p04:9B06
+	jp 09b06h		;a927   ; lanza_5: p06:A942 y lo lanzado de tipo 5
 L_A92A:
 	ld a,(ix+01ah)		;a92a
-	ld (ix+001h),a		;a92d
+	ld (ix+001h),a		;a92d   ; guarda el paso del actor
 	call 090c8h		;a930
 	ld a,(ix+00fh)		;a933
 	and a			;a936
 	jp z,L_A844		;a937
 	ld a,(ix+01bh)		;a93a
-	ld (ix+00dh),a		;a93d
+	ld (ix+00dh),a		;a93d   ; guarda el dibujo del actor (bit 0: el paso)
 	jp L_A83F		;a940
 L_A943:
 	call L_A638		;a943
 	ld a,001h		;a946
 	ld (0cb3ch),a		;a948
-	ld (ix+00eh),018h		;a94b
+	ld (ix+00eh),018h		;a94b   ; la espera del actor = 0x18
 	ld de,00100h		;a94f
-	ld a,(ix+003h)		;a952
+	ld a,(ix+003h)		;a952   ; lee la Y del actor
 	cp 040h		;a955
 	jr c,L_A968		;a957
 	cp 090h		;a959
 	jr nc,L_A968		;a95b
-	ld a,(ix+005h)		;a95d
+	ld a,(ix+005h)		;a95d   ; lee la X del actor
 	cp 028h		;a960
 	jr c,L_A980		;a962
 	cp 098h		;a964
@@ -1361,44 +1361,44 @@ L_A943:
 L_A968:
 	ld (ix+00ch),002h		;a968
 	ld b,006h		;a96c
-	ld a,(ix+005h)		;a96e
+	ld a,(ix+005h)		;a96e   ; lee la X del actor
 	cp 080h		;a971
 	jr c,L_A97A		;a973
 	call nc,04442h		;a975   ; de_negativo: DE = -DE
 	ld b,004h		;a978
 L_A97A:
-	ld (ix+00dh),b		;a97a
+	ld (ix+00dh),b		;a97a   ; guarda el dibujo del actor (bit 0: el paso)
 	jp 08097h		;a97d
 L_A980:
 	ld (ix+00ch),001h		;a980
 	ld b,002h		;a984
-	ld a,(ix+003h)		;a986
+	ld a,(ix+003h)		;a986   ; lee la Y del actor
 	cp 060h		;a989
 	jr c,L_A992		;a98b
 	call 04442h		;a98d   ; de_negativo: DE = -DE
 	ld b,000h		;a990
 L_A992:
-	ld (ix+00dh),b		;a992
+	ld (ix+00dh),b		;a992   ; guarda el dibujo del actor (bit 0: el paso)
 	jp 080a7h		;a995
 L_A998:
-	dec (ix+00eh)		;a998
+	dec (ix+00eh)		;a998   ; baja la espera del actor
 	jp nz,086deh		;a99b
 	xor a			;a99e
 	ld (ix+00ch),a		;a99f
-	ld (ix+00eh),020h		;a9a2
-	ld (ix+00dh),010h		;a9a6
+	ld (ix+00eh),020h		;a9a2   ; la espera del actor = 0x20
+	ld (ix+00dh),010h		;a9a6   ; el dibujo del actor (bit 0: el paso) = 0x10
 	call L_A9B9		;a9aa
 	call 06c1bh		;a9ad   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ld hl,06c37h		;a9b0
 	call 07c85h		;a9b3   ; pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 	jp L_A638		;a9b6
 L_A9B9:
-	ld a,(ix+003h)		;a9b9
+	ld a,(ix+003h)		;a9b9   ; lee la Y del actor
 	ld b,a			;a9bc
 	sub 040h		;a9bd
 	cp 058h		;a9bf
 	ret nc			;a9c1
-	ld a,(ix+005h)		;a9c2
+	ld a,(ix+005h)		;a9c2   ; lee la X del actor
 	cp 030h		;a9c5
 	ld c,018h		;a9c7
 	jr c,L_A9E0		;a9c9
@@ -1415,10 +1415,10 @@ L_A9B9:
 	cp 010h		;a9dd
 	ret nc			;a9df
 L_A9E0:
-	ld (ix+005h),c		;a9e0
+	ld (ix+005h),c		;a9e0   ; guarda la X del actor
 	ret			;a9e3
 L_A9E4:
-	dec (ix+00eh)		;a9e4
+	dec (ix+00eh)		;a9e4   ; baja la espera del actor
 	ret nz			;a9e7
 	call 06bach		;a9e8   ; sonido_9c: pide el sonido 0x9C (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ld (ix+011h),000h		;a9eb
@@ -1431,7 +1431,7 @@ L_A9E4:
 	jr c,L_A9FE		;a9fb
 	inc b			;a9fd
 L_A9FE:
-	ld a,(ix+003h)		;a9fe
+	ld a,(ix+003h)		;a9fe   ; lee la Y del actor
 	ld c,000h		;aa01
 	cp 040h		;aa03
 	jr c,L_AA0D		;aa05
@@ -1467,15 +1467,15 @@ L_AA26:
 	ld c,020h		;aa26
 	call L_A675		;aa28
 	ret nc			;aa2b
-	ld (ix+00eh),010h		;aa2c
-	inc (ix+00dh)		;aa30
+	ld (ix+00eh),010h		;aa2c   ; la espera del actor = 0x10
+	inc (ix+00dh)		;aa30   ; sube el dibujo del actor (bit 0: el paso)
 	jp 06c1bh		;aa33   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_AA36:
-	dec (ix+00eh)		;aa36
+	dec (ix+00eh)		;aa36   ; baja la espera del actor
 	ret nz			;aa39
 	xor a			;aa3a
 	ld (0cb3ch),a		;aa3b
-	ld (ix+001h),020h		;aa3e
+	ld (ix+001h),020h		;aa3e   ; el paso del actor = 0x20
 	ret			;aa42
 L_AA43:
 	ld de,0d8a0h		;aa43
@@ -1525,10 +1525,10 @@ L_AA7B:
 	inc (hl)			;aa7c
 	inc hl			;aa7d
 	ld (hl),010h		;aa7e
-	ld ix,0d800h		;aa80
-	ld (ix+000h),00bh		;aa84
+	ld ix,0d800h		;aa80   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+	ld (ix+000h),00bh		;aa84   ; el tipo de la ficha de 0xD800 = 0x0B
 	call 08c65h		;aa88
-	ld (ix+000h),000h		;aa8b
+	ld (ix+000h),000h		;aa8b   ; el tipo de la ficha de 0xD800 = 0x00
 	ret			;aa8f
 L_AA90:
 	ex de,hl			;aa90
@@ -1539,24 +1539,24 @@ L_AA90:
 	xor a			;aa96
 	ld (hl),a			;aa97
 	ld (0d8ach),a		;aa98
-	ld hl,0d800h		;aa9b
+	ld hl,0d800h		;aa9b   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld bc,0007fh		;aa9e
 	call 04236h		;aaa1   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0d7d6h		;aaa4
 	set 5,(hl)		;aaa7
 	ld hl,0aaefh		;aaa9
-	ld ix,0d800h		;aaac
+	ld ix,0d800h		;aaac   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld bc,00400h		;aab0
 L_AAB3:
-	ld (ix+000h),00bh		;aab3
+	ld (ix+000h),00bh		;aab3   ; el tipo de la ficha de 0xD800 = 0x0B
 	ld a,(hl)			;aab7
-	ld (ix+003h),a		;aab8
+	ld (ix+003h),a		;aab8   ; guarda la Y de la ficha de 0xD800
 	inc hl			;aabb
 	ld a,(hl)			;aabc
-	ld (ix+005h),a		;aabd
+	ld (ix+005h),a		;aabd   ; guarda la X de la ficha de 0xD800
 	inc hl			;aac0
 	ld a,(hl)			;aac1
-	ld (ix+00dh),a		;aac2
+	ld (ix+00dh),a		;aac2   ; guarda el dibujo de la ficha de 0xD800
 	inc hl			;aac5
 	ld (ix+01ah),c		;aac6
 	ld de,(0ca50h)		;aac9   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
@@ -1568,7 +1568,7 @@ L_AAB3:
 	inc c			;aadc
 	djnz L_AAB3		;aadd
 	xor a			;aadf
-	ld (0d800h),a		;aae0
+	ld (0d800h),a		;aae0   ; guarda 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld (0d820h),a		;aae3
 	ld (0d840h),a		;aae6
 	ld (0d860h),a		;aae9
@@ -1683,8 +1683,8 @@ L_AB80:
 	xor a			;ab85
 	ld (0cb3ch),a		;ab86
 	ld a,00bh		;ab89
-	ld (0d800h),a		;ab8b
-	ld ix,0d800h		;ab8e
+	ld (0d800h),a		;ab8b   ; guarda 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+	ld ix,0d800h		;ab8e   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	jp 08685h		;ab92
 L_AB95:
 	push de			;ab95
@@ -1709,7 +1709,7 @@ L_ABA2:
 	jr z,$+85		;abac
 	call 08079h		;abae
 	ex de,hl			;abb1
-	ld hl,0d800h		;abb2
+	ld hl,0d800h		;abb2   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld bc,00400h		;abb5
 L_ABB8:
 	push bc			;abb8
@@ -1778,13 +1778,13 @@ L_ABFD:
 	cp 070h		;abfe
 	ret			;ac00
 L_AC01:
-	ld ix,0d800h		;ac01
+	ld ix,0d800h		;ac01   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;ac05
 L_AC07:
-	ld a,(ix+000h)		;ac07
+	ld a,(ix+000h)		;ac07   ; lee el tipo de la ficha de 0xD800
 	and a			;ac0a
 	jr z,L_AC17		;ac0b
-	ld a,(ix+001h)		;ac0d
+	ld a,(ix+001h)		;ac0d   ; lee el paso de la ficha de 0xD800
 	sub 003h		;ac10
 	cp 002h		;ac12
 	call c,08759h		;ac14   ; a_p14_ae76: p14:AE76 con el banco 14 en 0xA000
@@ -1799,14 +1799,14 @@ L_AC1F:
 	jp nz,086a4h		;ac24
 	ld hl,06bcch		;ac27
 	call 086d5h		;ac2a
-	ld a,(ix+001h)		;ac2d
+	ld a,(ix+001h)		;ac2d   ; lee el paso del actor
 	ld hl,0ac48h		;ac30
 	call 0424eh		;ac33   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	call 08082h		;ac36
 	ld a,(0ca4bh)		;ac39   ; lee la sala de la zona
 	cp 002h		;ac3c
 	ret c			;ac3e
-	ld a,(ix+001h)		;ac3f
+	ld a,(ix+001h)		;ac3f   ; lee el paso del actor
 	cp 00fh		;ac42
 	ret nc			;ac44
 	jp 08671h		;ac45
@@ -1850,8 +1850,8 @@ L_AC95:
 	ld e,064h		;ac9a
 	ld b,001h		;ac9c
 L_AC9E:
-	ld h,(ix+00bh)		;ac9e
-	ld d,(ix+005h)		;aca1
+	ld h,(ix+00bh)		;ac9e   ; lee la columna de la sala del actor
+	ld d,(ix+005h)		;aca1   ; lee la X del actor
 	call L_ACAB		;aca4
 	ret nc			;aca7
 	jp L_AD80		;aca8
@@ -1875,21 +1875,21 @@ L_ACBF:
 	ret			;acc0
 L_ACC1:
 	call L_AC88		;acc1
-	ld h,(ix+00ah)		;acc4
+	ld h,(ix+00ah)		;acc4   ; lee la fila de la sala del actor
 	ld l,002h		;acc7
-	ld d,(ix+003h)		;acc9
+	ld d,(ix+003h)		;acc9   ; lee la Y del actor
 	ld e,038h		;accc
 	ld b,001h		;acce
 	call L_ACAB		;acd0
 	ret nc			;acd3
 	ld (ix+00ch),000h		;acd4
-	ld (ix+00eh),010h		;acd8
+	ld (ix+00eh),010h		;acd8   ; la espera del actor = 0x10
 	jp L_AD80		;acdc
 L_ACDF:
-	ld a,(ix+00eh)		;acdf
+	ld a,(ix+00eh)		;acdf   ; lee la espera del actor
 	and a			;ace2
 	jr z,L_ACEF		;ace3
-	dec (ix+00eh)		;ace5
+	dec (ix+00eh)		;ace5   ; baja la espera del actor
 	ret nz			;ace8
 	ld de,00350h		;ace9
 	jp 061ceh		;acec   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
@@ -1901,7 +1901,7 @@ L_ACEF:
 	jp L_AD80		;acfa
 L_ACFD:
 	call L_AC88		;acfd
-	ld a,(ix+003h)		;ad00
+	ld a,(ix+003h)		;ad00   ; lee la Y del actor
 	cp 070h		;ad03
 	ret c			;ad05
 	ld a,003h		;ad06
@@ -1918,16 +1918,16 @@ L_AD19:
 	ld l,003h		;ad1c
 	ld e,064h		;ad1e
 	ld b,002h		;ad20
-	ld h,(ix+00ah)		;ad22
-	ld d,(ix+003h)		;ad25
+	ld h,(ix+00ah)		;ad22   ; lee la fila de la sala del actor
+	ld d,(ix+003h)		;ad25   ; lee la Y del actor
 	call L_ACAB		;ad28
 	ret nc			;ad2b
 	jp L_AD80		;ad2c
 L_AD2F:
-	ld a,(ix+00eh)		;ad2f
+	ld a,(ix+00eh)		;ad2f   ; lee la espera del actor
 	and a			;ad32
 	jr z,L_AD3F		;ad33
-	dec (ix+00eh)		;ad35
+	dec (ix+00eh)		;ad35   ; baja la espera del actor
 	ret nz			;ad38
 	ld de,00450h		;ad39
 	jp 061ceh		;ad3c   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
@@ -1961,7 +1961,7 @@ L_AD74:
 	call L_AECB		;ad7a
 	call 05929h		;ad7d   ; sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 L_AD80:
-	inc (ix+001h)		;ad80
+	inc (ix+001h)		;ad80   ; sube el paso del actor
 	ret			;ad83
 L_AD84:
 	call L_ADB2		;ad84
@@ -1979,9 +1979,9 @@ L_AD98:
 	ld a,b			;ad98
 	ld hl,ladcfh		;ad99
 	call 043f6h		;ad9c   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld (ix+019h),l		;ad9f
+	ld (ix+019h),l		;ad9f   ; guarda la rapidez del paso del dibujo del actor (0-3)
 	ld (ix+01ah),h		;ada2
-	ld (ix+001h),00dh		;ada5
+	ld (ix+001h),00dh		;ada5   ; el paso del actor = 0x0D
 	jp L_AE9E		;ada9
 L_ADAC:
 	call L_AC88		;adac
@@ -1989,7 +1989,7 @@ L_ADAC:
 L_ADB2:
 	ld b,000h		;adb2
 	ld a,(0ca51h)		;adb4   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
-	cp (ix+00bh)		;adb7
+	cp (ix+00bh)		;adb7   ; compara con la columna de la sala del actor
 	jr nz,L_ADC3		;adba
 	cp 008h		;adbc
 	ld b,003h		;adbe
@@ -1998,7 +1998,7 @@ L_ADB2:
 	ret			;adc2
 L_ADC3:
 	ld a,(0ca50h)		;adc3   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
-	cp (ix+00ah)		;adc6
+	cp (ix+00ah)		;adc6   ; compara con la fila de la sala del actor
 	ret nz			;adc9
 	cp 002h		;adca
 	ld b,001h		;adcc
@@ -2027,19 +2027,19 @@ L_ADD9:
 	ld a,(ix+01bh)		;adea
 	cp 002h		;aded
 	jr c,L_AE06		;adef
-	ld a,(ix+00ah)		;adf1
+	ld a,(ix+00ah)		;adf1   ; lee la fila de la sala del actor
 	cp 007h		;adf4
 	ld b,03ch		;adf6
 	jr z,L_ADFC		;adf8
 	ld b,06ch		;adfa
 L_ADFC:
-	ld a,(ix+005h)		;adfc
+	ld a,(ix+005h)		;adfc   ; lee la X del actor
 	sub b			;adff
 	cp 008h		;ae00
 	ret nc			;ae02
 	jp L_AE9E		;ae03
 L_AE06:
-	ld a,(ix+003h)		;ae06
+	ld a,(ix+003h)		;ae06   ; lee la Y del actor
 	sub 06eh		;ae09
 	cp 008h		;ae0b
 	ret nc			;ae0d
@@ -2048,14 +2048,14 @@ L_AE11:
 	ld a,(ix+01bh)		;ae11
 	cp 002h		;ae14
 	jr c,L_AE27		;ae16
-	ld a,(ix+003h)		;ae18
-	sub (ix+019h)		;ae1b
+	ld a,(ix+003h)		;ae18   ; lee la Y del actor
+	sub (ix+019h)		;ae1b   ; le resta la rapidez del paso del dibujo del actor (0-3)
 	ld a,000h		;ae1e
 	jp nc,L_AECB		;ae20
 	inc a			;ae23
 	jp L_AECB		;ae24
 L_AE27:
-	ld a,(ix+005h)		;ae27
+	ld a,(ix+005h)		;ae27   ; lee la X del actor
 	sub (ix+01ah)		;ae2a
 	ld a,002h		;ae2d
 	jp nc,L_AECB		;ae2f
@@ -2068,10 +2068,10 @@ L_AE36:
 	push hl			;ae3e
 	ex de,hl			;ae3f
 	call 043f6h		;ae40   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld a,(ix+003h)		;ae43
+	ld a,(ix+003h)		;ae43   ; lee la Y del actor
 	add a,l			;ae46
 	ld l,a			;ae47
-	ld a,(ix+005h)		;ae48
+	ld a,(ix+005h)		;ae48   ; lee la X del actor
 	add a,h			;ae4b
 	ld h,a			;ae4c
 	call 07f3dh		;ae4d   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
@@ -2101,45 +2101,45 @@ L_AE5C:
 	or a			;ae69
 	ret			;ae6a
 L_AE6B:
-	ld a,(ix+003h)		;ae6b
+	ld a,(ix+003h)		;ae6b   ; lee la Y del actor
 	cp d			;ae6e
 	jr c,L_AE84		;ae6f
 	cp e			;ae71
 	jr nc,L_AE8D		;ae72
-	ld a,(ix+005h)		;ae74
+	ld a,(ix+005h)		;ae74   ; lee la X del actor
 	cp h			;ae77
 	jr c,L_AE95		;ae78
 	cp l			;ae7a
 	ret c			;ae7b
-	inc (ix+00bh)		;ae7c
-	ld (ix+005h),h		;ae7f
+	inc (ix+00bh)		;ae7c   ; sube la columna de la sala del actor
+	ld (ix+005h),h		;ae7f   ; guarda la X del actor
 	jr L_AE9C		;ae82
 L_AE84:
-	inc (ix+00ah)		;ae84
+	inc (ix+00ah)		;ae84   ; sube la fila de la sala del actor
 	dec e			;ae87
-	ld (ix+003h),e		;ae88
+	ld (ix+003h),e		;ae88   ; guarda la Y del actor
 	jr L_AE9C		;ae8b
 L_AE8D:
-	dec (ix+00ah)		;ae8d
-	ld (ix+003h),d		;ae90
+	dec (ix+00ah)		;ae8d   ; baja la fila de la sala del actor
+	ld (ix+003h),d		;ae90   ; guarda la Y del actor
 	jr L_AE9C		;ae93
 L_AE95:
-	dec (ix+00bh)		;ae95
+	dec (ix+00bh)		;ae95   ; baja la columna de la sala del actor
 	dec l			;ae98
-	ld (ix+005h),l		;ae99
+	ld (ix+005h),l		;ae99   ; guarda la X del actor
 L_AE9C:
 	or a			;ae9c
 	ret			;ae9d
 L_AE9E:
 	ld de,00000h		;ae9e
-	ld a,(ix+003h)		;aea1
-	sub (ix+019h)		;aea4
+	ld a,(ix+003h)		;aea1   ; lee la Y del actor
+	sub (ix+019h)		;aea4   ; le resta la rapidez del paso del dibujo del actor (0-3)
 	jr nc,L_AEAC		;aea7
 	inc d			;aea9
 	neg		;aeaa
 L_AEAC:
 	ld b,a			;aeac
-	ld a,(ix+005h)		;aead
+	ld a,(ix+005h)		;aead   ; lee la X del actor
 	sub (ix+01ah)		;aeb0
 	jr nc,L_AEB8		;aeb3
 	inc e			;aeb5
@@ -2163,15 +2163,15 @@ L_AECB:
 	ld (ix+01bh),a		;aecb
 	ld b,a			;aece
 	add a,a			;aecf
-	ld (ix+00dh),a		;aed0
+	ld (ix+00dh),a		;aed0   ; guarda el dibujo del actor (bit 0: el paso)
 	ld a,b			;aed3
 	ld hl,0aeech		;aed4
 	call 043f6h		;aed7   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	xor a			;aeda
-	ld (ix+007h),l		;aedb
-	ld (ix+006h),a		;aede
-	ld (ix+009h),h		;aee1
-	ld (ix+008h),a		;aee4
+	ld (ix+007h),l		;aedb   ; guarda la velocidad del actor en Y (alta)
+	ld (ix+006h),a		;aede   ; guarda la velocidad del actor en Y (baja)
+	ld (ix+009h),h		;aee1   ; guarda la velocidad del actor en X (alta)
+	ld (ix+008h),a		;aee4   ; guarda la velocidad del actor en X (baja)
 	ld (ix+00ch),003h		;aee7
 	ret			;aeeb
 
@@ -2194,15 +2194,15 @@ L_AEF4:
 	ld a,b			;aefa
 	and a			;aefb
 	jp nz,L_AD98		;aefc
-	ld d,(ix+003h)		;aeff
-	ld e,(ix+005h)		;af02
+	ld d,(ix+003h)		;aeff   ; lee la Y del actor
+	ld e,(ix+005h)		;af02   ; lee la X del actor
 	ld a,(ix+01bh)		;af05
 	ld hl,0af18h		;af08
 	call 0424eh		;af0b   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	ret nc			;af0e
 	xor a			;af0f
 	ld (0cb3ch),a		;af10
-	ld (ix+001h),00ch		;af13
+	ld (ix+001h),00ch		;af13   ; el paso del actor = 0x0C
 	ret			;af17
 
 ; ----------------------------------------------------------------------
@@ -2237,7 +2237,7 @@ L_AF2D:
 	ccf			;af30
 	ret			;af31
 L_AF32:
-	ld (ix+00dh),008h		;af32
+	ld (ix+00dh),008h		;af32   ; el dibujo del actor (bit 0: el paso) = 0x08
 	xor a			;af36
 	ld (ix+00ch),a		;af37
 	ld (0dff0h),a		;af3a   ; guarda 1 mientras corre la tercera barra
@@ -2248,14 +2248,14 @@ L_AF32:
 	ld (0cae0h),a		;af45
 	call 07a0ah		;af48   ; a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 	call 06c1bh		;af4b   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-	ld (ix+003h),080h		;af4e
-	ld (ix+005h),060h		;af52
+	ld (ix+003h),080h		;af4e   ; la Y del actor = 0x80
+	ld (ix+005h),060h		;af52   ; la X del actor = 0x60
 	jp L_AD80		;af56
 L_AF59:
 	call 08100h		;af59
 	ret nz			;af5c
 	ld a,(0cb05h)		;af5d   ; lee la X de Snake
-	sub (ix+005h)		;af60
+	sub (ix+005h)		;af60   ; le resta la X del actor
 	jr nc,L_AF67		;af63
 	neg		;af65
 L_AF67:
@@ -2263,7 +2263,7 @@ L_AF67:
 	ret nc			;af69
 	ld a,(0cb03h)		;af6a   ; lee la Y de Snake
 	add a,028h		;af6d
-	sub (ix+003h)		;af6f
+	sub (ix+003h)		;af6f   ; le resta la Y del actor
 	cp 050h		;af72
 	ret nc			;af74
 	ld a,001h		;af75
@@ -2278,7 +2278,7 @@ L_AF86:
 	call 079c7h		;af8a   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 	jp L_AD80		;af8d
 L_AF90:
-	ld (ix+001h),020h		;af90
+	ld (ix+001h),020h		;af90   ; el paso del actor = 0x20
 	xor a			;af94
 	ld (0d4f2h),a		;af95
 	ld a,(0ca4bh)		;af98   ; lee la sala de la zona
@@ -2306,7 +2306,7 @@ L_AFBD:
 	jr z,L_AFC5		;afc1
 	ld (hl),002h		;afc3
 L_AFC5:
-	ld a,(ix+018h)		;afc5
+	ld a,(ix+018h)		;afc5   ; lee la cuenta del paso del dibujo del actor
 	and a			;afc8
 	jr nz,L_AFE6		;afc9
 L_AFCB:
@@ -2317,23 +2317,23 @@ L_AFCB:
 	jr nz,L_AFDA		;afd4
 	ld (ix+016h),001h		;afd6
 L_AFDA:
-	ld a,(ix+001h)		;afda
+	ld a,(ix+001h)		;afda   ; lee el paso del actor
 	ld hl,0b032h		;afdd
 	call 0424eh		;afe0   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	call 08082h		;afe3
 L_AFE6:
-	ld a,(ix+001h)		;afe6
+	ld a,(ix+001h)		;afe6   ; lee el paso del actor
 	sub 003h		;afe9
 	cp 004h		;afeb
 	call c,08671h		;afed
-	ld a,(ix+001h)		;aff0
+	ld a,(ix+001h)		;aff0   ; lee el paso del actor
 	cp 009h		;aff3
 	jp nc,08728h		;aff5
-	ld a,(ix+018h)		;aff8
+	ld a,(ix+018h)		;aff8   ; lee la cuenta del paso del dibujo del actor
 	and a			;affb
 	jp z,08728h		;affc
 	call L_B020		;afff
-	dec (ix+018h)		;b002
+	dec (ix+018h)		;b002   ; baja la cuenta del paso del dibujo del actor
 	call z,L_B00B		;b005
 	jp 08739h		;b008
 L_B00B:
@@ -2342,18 +2342,18 @@ L_B00B:
 	ld a,(ix+015h)		;b013
 	ld (ix+00ch),a		;b016
 	ld a,(ix+01dh)		;b019
-	ld (ix+00dh),a		;b01c
+	ld (ix+00dh),a		;b01c   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;b01f
 L_B020:
 	ld b,(ix+01dh)		;b020
-	ld a,(ix+018h)		;b023
+	ld a,(ix+018h)		;b023   ; lee la cuenta del paso del dibujo del actor
 	sub 002h		;b026
 	cp 003h		;b028
 	jr nc,L_B02D		;b02a
 	inc b			;b02c
 L_B02D:
 	ld a,b			;b02d
-	ld (ix+00dh),a		;b02e
+	ld (ix+00dh),a		;b02e   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;b031
 
 ; ----------------------------------------------------------------------
@@ -2370,7 +2370,7 @@ DATA_resto_B032:
 
 
 L_B040:
-	ld (ix+00eh),030h		;b040
+	ld (ix+00eh),030h		;b040   ; la espera del actor = 0x30
 	ld a,001h		;b044
 	ld (0cb3ch),a		;b046
 	ld hl,0d7d7h		;b049
@@ -2381,12 +2381,12 @@ L_B040:
 	call 079e9h		;b055   ; a_p03_b11f: p03:B11F con el banco 3 en 0xA000
 	jp L_B0B5		;b058
 L_B05B:
-	dec (ix+00eh)		;b05b
-	ld a,(ix+00eh)		;b05e
+	dec (ix+00eh)		;b05b   ; baja la espera del actor
+	ld a,(ix+00eh)		;b05e   ; lee la espera del actor
 	cp 020h		;b061
 	ret nc			;b063
 	call 079f1h		;b064   ; a_p03_b132: p03:B132 con el banco 3 en 0xA000
-	ld a,(ix+00eh)		;b067
+	ld a,(ix+00eh)		;b067   ; lee la espera del actor
 	and a			;b06a
 	ret nz			;b06b
 	call 079fah		;b06c   ; a_p03_b19a: p03:B19A con el banco 3 en 0xA000
@@ -2416,11 +2416,11 @@ L_B09A:
 	jr nz,L_B0B9		;b0a5
 	call 04256h		;b0a7   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 007h		;b0aa
-	ld (ix+00dh),a		;b0ac
+	ld (ix+00dh),a		;b0ac   ; guarda el dibujo del actor (bit 0: el paso)
 	call L_A777		;b0af
 	call L_B29D		;b0b2
 L_B0B5:
-	inc (ix+001h)		;b0b5
+	inc (ix+001h)		;b0b5   ; sube el paso del actor
 	ret			;b0b8
 L_B0B9:
 	call 05955h		;b0b9   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
@@ -2428,8 +2428,8 @@ L_B0BC:
 	ld a,(ix+01bh)		;b0bc
 	dec a			;b0bf
 	add a,a			;b0c0
-	ld (ix+00dh),a		;b0c1
-	ld (ix+001h),005h		;b0c4
+	ld (ix+00dh),a		;b0c1   ; guarda el dibujo del actor (bit 0: el paso)
+	ld (ix+001h),005h		;b0c4   ; el paso del actor = 0x05
 	jp L_A777		;b0c8
 L_B0CB:
 	call 04256h		;b0cb   ; azar: A = un numero al azar (0xCA03 rotado mas R)
@@ -2446,11 +2446,11 @@ L_B0D6:
 	ld a,(0ca03h)		;b0e1   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b0e4
 	ret nz			;b0e6
-	ld a,(ix+00ah)		;b0e7
+	ld a,(ix+00ah)		;b0e7   ; lee la fila de la sala del actor
 	dec a			;b0ea
 	add a,a			;b0eb
 	ld b,a			;b0ec
-	ld a,(ix+00bh)		;b0ed
+	ld a,(ix+00bh)		;b0ed   ; lee la columna de la sala del actor
 	sub 007h		;b0f0
 	add a,b			;b0f2
 	ld hl,0b0fah		;b0f3
@@ -2482,22 +2482,22 @@ L_B102:
 	jp nz,L_B295		;b115
 	ld (ix+00ch),000h		;b118
 	ld (ix+01ch),018h		;b11c
-	ld (ix+001h),006h		;b120
+	ld (ix+001h),006h		;b120   ; el paso del actor = 0x06
 	ret			;b124
 L_B125:
 	call L_A803		;b125
-	ld a,(ix+000h)		;b128
+	ld a,(ix+000h)		;b128   ; lee el tipo del actor (0 = libre)
 	cp 005h		;b12b
 	jr nz,L_B137		;b12d
-	ld a,(ix+00dh)		;b12f
+	ld a,(ix+00dh)		;b12f   ; lee el dibujo del actor (bit 0: el paso)
 	and 0feh		;b132
-	ld (ix+00dh),a		;b134
+	ld (ix+00dh),a		;b134   ; guarda el dibujo del actor (bit 0: el paso)
 L_B137:
-	ld a,(ix+003h)		;b137
+	ld a,(ix+003h)		;b137   ; lee la Y del actor
 	sub 018h		;b13a
 	cp 0a0h		;b13c
 	jr nc,L_B159		;b13e
-	ld a,(ix+005h)		;b140
+	ld a,(ix+005h)		;b140   ; lee la X del actor
 	sub 008h		;b143
 	cp 0b0h		;b145
 	jr nc,L_B159		;b147
@@ -2505,18 +2505,18 @@ L_B137:
 	ld a,c			;b14c
 	and a			;b14d
 	jp nz,L_A844		;b14e
-	ld a,(ix+00eh)		;b151
+	ld a,(ix+00eh)		;b151   ; lee la espera del actor
 	and a			;b154
 	ret nz			;b155
 	jp L_A83F		;b156
 L_B159:
 	call 0808bh		;b159
-	ld (ix+00eh),010h		;b15c
+	ld (ix+00eh),010h		;b15c   ; la espera del actor = 0x10
 	ret			;b160
 L_B161:
 	ld h,000h		;b161
-	ld c,(ix+00ah)		;b163
-	ld b,(ix+00bh)		;b166
+	ld c,(ix+00ah)		;b163   ; lee la fila de la sala del actor
+	ld b,(ix+00bh)		;b166   ; lee la columna de la sala del actor
 	ld de,(0ca50h)		;b169   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	ld a,e			;b16d
 	cp c			;b16e
@@ -2560,58 +2560,58 @@ L_B19F:
 	ld a,(ix+01bh)		;b1a2
 	and a			;b1a5
 	jp z,L_B295		;b1a6
-	ld a,(ix+003h)		;b1a9
+	ld a,(ix+003h)		;b1a9   ; lee la Y del actor
 	sub 018h		;b1ac
 	cp 0a7h		;b1ae
 	jp nc,L_B247		;b1b0
-	ld a,(ix+005h)		;b1b3
+	ld a,(ix+005h)		;b1b3   ; lee la X del actor
 	sub 008h		;b1b6
 	cp 0b0h		;b1b8
 	jp nc,L_B25E		;b1ba
-	ld a,(ix+007h)		;b1bd
+	ld a,(ix+007h)		;b1bd   ; lee la velocidad del actor en Y (alta)
 	and a			;b1c0
 	ld a,(ix+01bh)		;b1c1
 	jr z,L_B1ED		;b1c4
 	cp 003h		;b1c6
 	jr c,L_B213		;b1c8
-	ld a,(ix+00ah)		;b1ca
+	ld a,(ix+00ah)		;b1ca   ; lee la fila de la sala del actor
 	dec a			;b1cd
 	ld c,048h		;b1ce
 	jr z,L_B1D4		;b1d0
 	ld c,068h		;b1d2
 L_B1D4:
-	ld a,(ix+003h)		;b1d4
+	ld a,(ix+003h)		;b1d4   ; lee la Y del actor
 	sub c			;b1d7
 	cp 010h		;b1d8
 	jr nc,L_B213		;b1da
-	ld a,(ix+00bh)		;b1dc
+	ld a,(ix+00bh)		;b1dc   ; lee la columna de la sala del actor
 	cp 007h		;b1df
 	ld a,006h		;b1e1
 	jr z,L_B1E7		;b1e3
 	ld a,004h		;b1e5
 L_B1E7:
-	ld (ix+00dh),a		;b1e7
+	ld (ix+00dh),a		;b1e7   ; guarda el dibujo del actor (bit 0: el paso)
 	jp L_A777		;b1ea
 L_B1ED:
 	cp 003h		;b1ed
 	jr nc,L_B213		;b1ef
-	ld a,(ix+00bh)		;b1f1
+	ld a,(ix+00bh)		;b1f1   ; lee la columna de la sala del actor
 	cp 007h		;b1f4
 	ld bc,08c08h		;b1f6
 	jr z,L_B1FD		;b1f9
 	ld b,02ch		;b1fb
 L_B1FD:
-	ld a,(ix+005h)		;b1fd
+	ld a,(ix+005h)		;b1fd   ; lee la X del actor
 	sub b			;b200
 	cp c			;b201
 	jr nc,L_B213		;b202
-	ld a,(ix+00ah)		;b204
+	ld a,(ix+00ah)		;b204   ; lee la fila de la sala del actor
 	dec a			;b207
 	ld a,002h		;b208
 	jr nz,L_B20D		;b20a
 	xor a			;b20c
 L_B20D:
-	ld (ix+00dh),a		;b20d
+	ld (ix+00dh),a		;b20d   ; guarda el dibujo del actor (bit 0: el paso)
 	jp L_A777		;b210
 L_B213:
 	ld hl,0d8a3h		;b213
@@ -2623,14 +2623,14 @@ L_B213:
 	ld a,c			;b21f
 	and a			;b220
 	ret z			;b221
-	ld a,(ix+007h)		;b222
+	ld a,(ix+007h)		;b222   ; lee la velocidad del actor en Y (alta)
 	and a			;b225
 	ld a,003h		;b226
-	ld d,(ix+005h)		;b228
+	ld d,(ix+005h)		;b228   ; lee la X del actor
 	ld e,003h		;b22b
 	jr nz,L_B236		;b22d
 	ld a,00ch		;b22f
-	ld d,(ix+003h)		;b231
+	ld d,(ix+003h)		;b231   ; lee la Y del actor
 	ld e,001h		;b234
 L_B236:
 	and c			;b236
@@ -2643,39 +2643,39 @@ L_B23E:
 	ld a,e			;b23e
 	dec a			;b23f
 	add a,a			;b240
-	ld (ix+00dh),a		;b241
+	ld (ix+00dh),a		;b241   ; guarda el dibujo del actor (bit 0: el paso)
 	jp L_A777		;b244
 L_B247:
-	ld a,(ix+007h)		;b247
+	ld a,(ix+007h)		;b247   ; lee la velocidad del actor en Y (alta)
 	rla			;b24a
 	jr c,L_B254		;b24b
-	dec (ix+00ah)		;b24d
+	dec (ix+00ah)		;b24d   ; baja la fila de la sala del actor
 	ld a,021h		;b250
 	jr L_B259		;b252
 L_B254:
-	inc (ix+00ah)		;b254
+	inc (ix+00ah)		;b254   ; sube la fila de la sala del actor
 	ld a,0bfh		;b257
 L_B259:
-	ld (ix+003h),a		;b259
+	ld (ix+003h),a		;b259   ; guarda la Y del actor
 	jr L_B273		;b25c
 L_B25E:
-	ld a,(ix+009h)		;b25e
+	ld a,(ix+009h)		;b25e   ; lee la velocidad del actor en X (alta)
 	rla			;b261
 	jr c,L_B26B		;b262
-	inc (ix+00bh)		;b264
+	inc (ix+00bh)		;b264   ; sube la columna de la sala del actor
 	ld a,00ah		;b267
 	jr L_B270		;b269
 L_B26B:
-	dec (ix+00bh)		;b26b
+	dec (ix+00bh)		;b26b   ; baja la columna de la sala del actor
 	ld a,0b6h		;b26e
 L_B270:
-	ld (ix+005h),a		;b270
+	ld (ix+005h),a		;b270   ; guarda la X del actor
 L_B273:
-	ld (ix+00eh),020h		;b273
+	ld (ix+00eh),020h		;b273   ; la espera del actor = 0x20
 	call 05955h		;b277   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 	jp L_B161		;b27a
 L_B27D:
-	ld a,(ix+018h)		;b27d
+	ld a,(ix+018h)		;b27d   ; lee la cuenta del paso del dibujo del actor
 	and a			;b280
 	ret nz			;b281
 	call 08100h		;b282
@@ -2685,9 +2685,9 @@ L_B27D:
 	jr z,L_B295		;b28d
 	and 003h		;b28f
 	ret nz			;b291
-	jp 09b40h		;b292   ; p04:9B40
+	jp 09b40h		;b292   ; lanza_6_f0: tipo 6 con el desplazamiento 0x00F0
 L_B295:
-	ld (ix+001h),003h		;b295
+	ld (ix+001h),003h		;b295   ; el paso del actor = 0x03
 	ld (ix+00ch),003h		;b299
 L_B29D:
 	call 04256h		;b29d   ; azar: A = un numero al azar (0xCA03 rotado mas R)
@@ -2697,19 +2697,19 @@ L_B29D:
 	ret			;b2a7
 L_B2A8:
 	call 08079h		;b2a8
-	ld (ix+018h),l		;b2ab
-	ld (ix+019h),h		;b2ae
+	ld (ix+018h),l		;b2ab   ; guarda la cuenta del paso del dibujo del actor
+	ld (ix+019h),h		;b2ae   ; guarda la rapidez del paso del dibujo del actor (0-3)
 	ret			;b2b1
 L_B2B2:
 	call L_B2D8		;b2b2
-	jp nc,086a4h		;b2b5   ; p04:86A4
+	jp nc,086a4h		;b2b5   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;b2b8
 	call 086d5h		;b2bb
-	ld a,(ix+001h)		;b2be
+	ld a,(ix+001h)		;b2be   ; lee el paso del actor
 	ld hl,0b2e8h		;b2c1
 	call 0424eh		;b2c4   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	call 08082h		;b2c7
-	jp 08671h		;b2ca   ; p04:8671
+	jp 08671h		;b2ca   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 L_B2CD:
 	call 08728h		;b2cd
 	ld a,(ix+014h)		;b2d0
@@ -2742,28 +2742,28 @@ DATA_resto_B2E8:
 L_B2F8:
 	ld a,001h		;b2f8
 	ld (0cb3ch),a		;b2fa
-	ld (ix+00dh),008h		;b2fd
+	ld (ix+00dh),008h		;b2fd   ; el dibujo del actor (bit 0: el paso) = 0x08
 	ld hl,0d7d6h		;b301
 	set 1,(hl)		;b304
 	ld (ix+00ch),a		;b306
-	ld (ix+007h),002h		;b309
+	ld (ix+007h),002h		;b309   ; la velocidad del actor en Y (alta) = 0x02
 	call 086c2h		;b30d
 L_B310:
-	inc (ix+001h)		;b310
+	inc (ix+001h)		;b310   ; sube el paso del actor
 	ret			;b313
 L_B314:
 	call L_B3E3		;b314
 	call L_B341		;b317
 	ld a,(0ca50h)		;b31a   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
-	cp (ix+00ah)		;b31d
+	cp (ix+00ah)		;b31d   ; compara con la fila de la sala del actor
 	ret nz			;b320
-	ld a,(ix+003h)		;b321
+	ld a,(ix+003h)		;b321   ; lee la Y del actor
 	cp 018h		;b324
 	call nc,L_B33C		;b326
 	cp 030h		;b329
 	ret c			;b32b
 	ld (ix+00ch),000h		;b32c
-	ld (ix+00dh),001h		;b330
+	ld (ix+00dh),001h		;b330   ; el dibujo del actor (bit 0: el paso) = 0x01
 	ld de,00c50h		;b334
 	call 061ceh		;b337   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 	jr L_B310		;b33a
@@ -2795,7 +2795,7 @@ L_B35F:
 	call 05955h		;b36e   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 	call 08685h		;b371
 L_B374:
-	ld a,(ix+000h)		;b374
+	ld a,(ix+000h)		;b374   ; lee el tipo del actor (0 = libre)
 	cp 00ah		;b377
 	ld b,010h		;b379
 	jr nz,L_B37F		;b37b
@@ -2804,14 +2804,14 @@ L_B37F:
 	call 04256h		;b37f   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 00fh		;b382
 	add a,b			;b384
-	ld (ix+00eh),a		;b385
+	ld (ix+00eh),a		;b385   ; guarda la espera del actor
 	ret			;b388
 L_B389:
 	call L_B46C		;b389
 	jp c,L_B43B		;b38c
 	call L_B3E3		;b38f
 	call L_B49C		;b392
-	ld a,(ix+00dh)		;b395
+	ld a,(ix+00dh)		;b395   ; lee el dibujo del actor (bit 0: el paso)
 	cp 002h		;b398
 	ld a,003h		;b39a
 	jr c,L_B3A0		;b39c
@@ -2819,7 +2819,7 @@ L_B389:
 L_B3A0:
 	and c			;b3a0
 	jr nz,L_B407		;b3a1
-	dec (ix+00eh)		;b3a3
+	dec (ix+00eh)		;b3a3   ; baja la espera del actor
 	jr z,L_B407		;b3a6
 	call L_B42D		;b3a8
 	call L_B341		;b3ab
@@ -2836,12 +2836,12 @@ L_B3BE:
 	ld a,001h		;b3c1
 L_B3C3:
 	ld (ix+01eh),a		;b3c3
-	ld a,(ix+00dh)		;b3c6
+	ld a,(ix+00dh)		;b3c6   ; lee el dibujo del actor (bit 0: el paso)
 	ld (ix+01dh),a		;b3c9
-	ld (ix+00dh),008h		;b3cc
+	ld (ix+00dh),008h		;b3cc   ; el dibujo del actor (bit 0: el paso) = 0x08
 	ld (ix+00ch),000h		;b3d0
-	ld (ix+00eh),004h		;b3d4
-	ld (ix+001h),007h		;b3d8
+	ld (ix+00eh),004h		;b3d4   ; la espera del actor = 0x04
+	ld (ix+001h),007h		;b3d8   ; el paso del actor = 0x07
 	ret			;b3dc
 L_B3DD:
 	xor a			;b3dd
@@ -2883,7 +2883,7 @@ L_B41E:
 	call L_B426		;b421
 	jr L_B3FF		;b424
 L_B426:
-	ld (ix+00dh),c		;b426
+	ld (ix+00dh),c		;b426   ; guarda el dibujo del actor (bit 0: el paso)
 	ld a,c			;b429
 	jp L_A77D		;b42a
 L_B42D:
@@ -2898,7 +2898,7 @@ L_B437:
 L_B43B:
 	xor a			;b43b
 	ld (ix+00ch),a		;b43c
-	ld (ix+00eh),020h		;b43f
+	ld (ix+00eh),020h		;b43f   ; la espera del actor = 0x20
 	call L_B310		;b443
 	call L_B450		;b446
 	ld a,(ix+014h)		;b449
@@ -2914,7 +2914,7 @@ L_B450:
 	and 007h		;b458
 	ld hl,0b464h		;b45a
 	call 04248h		;b45d   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
-	ld (ix+00dh),a		;b460
+	ld (ix+00dh),a		;b460   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;b463
 
 ; ----------------------------------------------------------------------
@@ -2944,14 +2944,14 @@ L_B477:
 	ret nz			;b480
 	call 08079h		;b481
 	ld a,l			;b484
-	sub (ix+003h)		;b485
+	sub (ix+003h)		;b485   ; le resta la Y del actor
 	jr nc,L_B48C		;b488
 	neg		;b48a
 L_B48C:
 	cp 060h		;b48c
 	ret nc			;b48e
 	ld a,h			;b48f
-	sub (ix+005h)		;b490
+	sub (ix+005h)		;b490   ; le resta la X del actor
 	jr nc,L_B497		;b493
 	neg		;b495
 L_B497:
@@ -2994,7 +2994,7 @@ L_B4B4:
 	jr L_B4AC		;b4c8
 L_B4CA:
 	ld a,(0ca50h)		;b4ca   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
-	cp (ix+00ah)		;b4cd
+	cp (ix+00ah)		;b4cd   ; compara con la fila de la sala del actor
 	jr z,L_B4D7		;b4d0
 	ld b,001h		;b4d2
 	ret c			;b4d4
@@ -3023,14 +3023,14 @@ L_B4E1:
 	ld b,000h		;b4f5
 	ret			;b4f7
 L_B4F8:
-	ld d,(ix+005h)		;b4f8
-	ld e,(ix+003h)		;b4fb
+	ld d,(ix+005h)		;b4f8   ; lee la X del actor
+	ld e,(ix+003h)		;b4fb   ; lee la Y del actor
 	call 08079h		;b4fe
 	jp 079d1h		;b501   ; a_p02_86c3: angulo_hacia (p02:86C3) con el banco 2
 L_B504:
 	call 08100h		;b504
 	jr nz,L_B53F		;b507
-	dec (ix+00eh)		;b509
+	dec (ix+00eh)		;b509   ; baja la espera del actor
 	jr z,L_B52F		;b50c
 	call L_B46C		;b50e
 	jr nc,L_B528		;b511
@@ -3043,9 +3043,9 @@ L_B51F:
 	ld a,(0ca03h)		;b51f   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b522
 	ret nz			;b524
-	jp 09b19h		;b525   ; p04:9B19
+	jp 09b19h		;b525   ; lanza_8_b: p06:A95A y lo lanzado de tipo 8
 L_B528:
-	ld (ix+00eh),020h		;b528
+	ld (ix+00eh),020h		;b528   ; la espera del actor = 0x20
 	jp L_B310		;b52c
 L_B52F:
 	ld (ix+01bh),010h		;b52f
@@ -3053,18 +3053,18 @@ L_B52F:
 L_B535:
 	call 08100h		;b535
 	jr nz,L_B53F		;b538
-	dec (ix+00eh)		;b53a
+	dec (ix+00eh)		;b53a   ; baja la espera del actor
 	jr nz,L_B51F		;b53d
 L_B53F:
-	ld (ix+001h),004h		;b53f
+	ld (ix+001h),004h		;b53f   ; el paso del actor = 0x04
 	jp L_B41E		;b543
 L_B546:
-	dec (ix+00eh)		;b546
+	dec (ix+00eh)		;b546   ; baja la espera del actor
 	ret nz			;b549
 	ld (ix+00ch),003h		;b54a
 	ld a,(ix+01dh)		;b54e
-	ld (ix+00dh),a		;b551
-	ld (ix+001h),004h		;b554
+	ld (ix+00dh),a		;b551   ; guarda el dibujo del actor (bit 0: el paso)
+	ld (ix+001h),004h		;b554   ; el paso del actor = 0x04
 	ld a,(ix+01eh)		;b558
 	and a			;b55b
 	jr z,L_B563		;b55c
@@ -3075,7 +3075,7 @@ L_B563:
 	ret nz			;b566
 	jp 06cd2h		;b567   ; sonido_68: pide el sonido 0x68
 L_B56A:
-	ld a,(ix+001h)		;b56a
+	ld a,(ix+001h)		;b56a   ; lee el paso del actor
 	cp 005h		;b56d
 	ret c			;b56f
 	jp 08739h		;b570
@@ -3084,14 +3084,14 @@ L_B573:
 	and a			;b576
 	ret z			;b577
 	ld hl,06bcch		;b578
-	call 086d5h		;b57b   ; p04:86D5
+	call 086d5h		;b57b   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld a,(0ca76h)		;b57e   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;b581
 	ret nz			;b582
-	ld a,(ix+001h)		;b583
+	ld a,(ix+001h)		;b583   ; lee el paso del actor
 	ld hl,0b58fh		;b586
 	call 0424eh		;b589   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	jp 08082h		;b58c   ; p04:8082
+	jp 08082h		;b58c   ; llama_ba36: p14:BA36 con el byte 0x0C del actor
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B58F: lo apuntan con el banco puesto p05:B586 (0xB58F); el
@@ -3113,15 +3113,15 @@ L_B5B5:
 	and a			;b5b8
 	ret z			;b5b9
 	call 06ca6h		;b5ba   ; sonido_89: pide el sonido 0x89 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-	ld (ix+00eh),008h		;b5bd
+	ld (ix+00eh),008h		;b5bd   ; la espera del actor = 0x08
 	ld a,001h		;b5c1
 	ld (0cb3ch),a		;b5c3
 	jr L_B5DF		;b5c6
 L_B5C8:
-	ld a,(ix+00eh)		;b5c8
+	ld a,(ix+00eh)		;b5c8   ; lee la espera del actor
 	and a			;b5cb
 	jr z,L_B5D4		;b5cc
-	dec (ix+00eh)		;b5ce
+	dec (ix+00eh)		;b5ce   ; baja la espera del actor
 	ret nz			;b5d1
 	jr L_B5F0		;b5d2
 L_B5D4:
@@ -3131,7 +3131,7 @@ L_B5D4:
 	inc a			;b5db
 	ld (0d509h),a		;b5dc
 L_B5DF:
-	inc (ix+001h)		;b5df
+	inc (ix+001h)		;b5df   ; sube el paso del actor
 	ret			;b5e2
 L_B5E3:
 	ld a,(0ca4bh)		;b5e3   ; lee la sala de la zona
@@ -3159,31 +3159,31 @@ L_B608:
 	ld a,(0ca4bh)		;b608   ; lee la sala de la zona
 	cp 006h		;b60b
 	ret nz			;b60d
-	ld (ix+00dh),004h		;b60e
+	ld (ix+00dh),004h		;b60e   ; el dibujo del actor (bit 0: el paso) = 0x04
 	ld a,001h		;b612
 	ld (0cb3ch),a		;b614
 	ld (ix+016h),a		;b617
 	ld hl,0d7dah		;b61a
 	set 7,(hl)		;b61d
-	ld (ix+00eh),020h		;b61f
+	ld (ix+00eh),020h		;b61f   ; la espera del actor = 0x20
 	ld (ix+00ch),002h		;b623
-	ld (ix+009h),0ffh		;b627
-	ld (ix+008h),000h		;b62b
+	ld (ix+009h),0ffh		;b627   ; la velocidad del actor en X (alta) = 0xFF
+	ld (ix+008h),000h		;b62b   ; la velocidad del actor en X (baja) = 0x00
 	call 06bd0h		;b62f   ; sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jr L_B5DF		;b632
 L_B634:
 	call 086deh		;b634
-	dec (ix+00eh)		;b637
+	dec (ix+00eh)		;b637   ; baja la espera del actor
 	ret nz			;b63a
 	ld (ix+00ch),000h		;b63b
-	ld (ix+00dh),002h		;b63f
-	ld (ix+00eh),020h		;b643
+	ld (ix+00dh),002h		;b63f   ; el dibujo del actor (bit 0: el paso) = 0x02
+	ld (ix+00eh),020h		;b643   ; la espera del actor = 0x20
 	jr L_B5DF		;b647
 L_B649:
-	ld a,(ix+00eh)		;b649
+	ld a,(ix+00eh)		;b649   ; lee la espera del actor
 	and a			;b64c
 	jr z,L_B659		;b64d
-	dec (ix+00eh)		;b64f
+	dec (ix+00eh)		;b64f   ; baja la espera del actor
 	ret nz			;b652
 	ld de,0126ch		;b653
 	jp 061d3h		;b656   ; mensaje_de_50_en: p03:B612 con DE
@@ -3241,7 +3241,7 @@ L_B6D8:
 	jp nc,L_B736		;b6db
 	call 086deh		;b6de
 	call L_B49C		;b6e1
-	ld a,(ix+00dh)		;b6e4
+	ld a,(ix+00dh)		;b6e4   ; lee el dibujo del actor (bit 0: el paso)
 	rrca			;b6e7
 	and 003h		;b6e8
 	inc a			;b6ea
@@ -3250,7 +3250,7 @@ L_B6EC:
 	rr c		;b6ec
 	djnz L_B6EC		;b6ee
 	jr c,L_B700		;b6f0
-	dec (ix+00eh)		;b6f2
+	dec (ix+00eh)		;b6f2   ; baja la espera del actor
 	jr z,L_B700		;b6f5
 	ld de,020c1h		;b6f7
 	ld hl,008b9h		;b6fa
@@ -3265,10 +3265,10 @@ L_B700:
 	ret nz			;b70f
 	xor a			;b710
 	ld (ix+00ch),a		;b711
-	ld (ix+018h),a		;b714
-	ld (ix+00eh),020h		;b717
-	ld (ix+001h),00ah		;b71b
-	ld a,(ix+00dh)		;b71f
+	ld (ix+018h),a		;b714   ; guarda la cuenta del paso del dibujo del actor
+	ld (ix+00eh),020h		;b717   ; la espera del actor = 0x20
+	ld (ix+001h),00ah		;b71b   ; el paso del actor = 0x0A
+	ld a,(ix+00dh)		;b71f   ; lee el dibujo del actor (bit 0: el paso)
 	and 0feh		;b722
 	ld (ix+01bh),a		;b724
 	ret			;b727
@@ -3276,7 +3276,7 @@ L_B728:
 	call L_B4A9		;b728
 	ld a,c			;b72b
 	add a,a			;b72c
-	ld (ix+00dh),a		;b72d
+	ld (ix+00dh),a		;b72d   ; guarda el dibujo del actor (bit 0: el paso)
 L_B730:
 	call L_B374		;b730
 	jp L_A777		;b733
@@ -3286,11 +3286,11 @@ L_B736:
 L_B73D:
 	call 08100h		;b73d
 	jr nz,L_B74F		;b740
-	ld a,(ix+00dh)		;b742
+	ld a,(ix+00dh)		;b742   ; lee el dibujo del actor (bit 0: el paso)
 	ld hl,0b751h		;b745
 	call 0423eh		;b748   ; suma_a_hl: HL = HL + A
 	ld b,(hl)			;b74b
-	jp 084a4h		;b74c   ; p04:84A4
+	jp 084a4h		;b74c   ; lo_tiene_delante: acarreo si Snake no esta en la direccion B del actor; si esta, mira si le ve (p04:8518)
 L_B74F:
 	scf			;b74f
 	ret			;b750
@@ -3313,7 +3313,7 @@ L_B761:
 	and a			;b764
 	jr z,L_B781		;b765
 L_B767:
-	ld a,(ix+00dh)		;b767
+	ld a,(ix+00dh)		;b767   ; lee el dibujo del actor (bit 0: el paso)
 	and 007h		;b76a
 	ld b,004h		;b76c
 	cp b			;b76e
@@ -3323,7 +3323,7 @@ L_B773:
 	call 04256h		;b773   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 002h		;b776
 	add a,b			;b778
-	ld (ix+00dh),a		;b779
+	ld (ix+00dh),a		;b779   ; guarda el dibujo del actor (bit 0: el paso)
 	call L_B730		;b77c
 	jr L_B78F		;b77f
 L_B781:
@@ -3335,7 +3335,7 @@ L_B781:
 	jp 09b0dh		;b78c
 L_B78F:
 	ld (ix+00ch),003h		;b78f
-	dec (ix+001h)		;b793
+	dec (ix+001h)		;b793   ; baja el paso del actor
 	ret			;b796
 L_B797:
 	ld a,(ix+017h)		;b797
@@ -3343,13 +3343,13 @@ L_B797:
 	jr nz,L_B767		;b79b
 	call L_B73D		;b79d
 	jr nc,$-106		;b7a0
-	dec (ix+00eh)		;b7a2
+	dec (ix+00eh)		;b7a2   ; baja la espera del actor
 	jr z,L_B7DA		;b7a5
-	ld a,(ix+00eh)		;b7a7
+	ld a,(ix+00eh)		;b7a7   ; lee la espera del actor
 	and 007h		;b7aa
 	ret nz			;b7ac
-	ld a,(ix+018h)		;b7ad
-	inc (ix+018h)		;b7b0
+	ld a,(ix+018h)		;b7ad   ; lee la cuenta del paso del dibujo del actor
+	inc (ix+018h)		;b7b0   ; sube la cuenta del paso del dibujo del actor
 	rra			;b7b3
 	ld b,000h		;b7b4
 	jr nc,L_B7BE		;b7b6
@@ -3360,7 +3360,7 @@ L_B797:
 L_B7BE:
 	ld a,(ix+01bh)		;b7be
 	add a,b			;b7c1
-	ld (ix+00dh),a		;b7c2
+	ld (ix+00dh),a		;b7c2   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;b7c5
 L_B7C6:
 	ld a,(ix+017h)		;b7c6
@@ -3371,9 +3371,9 @@ L_B7C6:
 	ld a,(0ca03h)		;b7d1   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b7d4
 	ret nz			;b7d6
-	jp 09b0dh		;b7d7   ; p04:9B0D
+	jp 09b0dh		;b7d7   ; lanza_8: p06:A942, su desplazamiento en 0xD43C y lo lanzado de tipo 8
 L_B7DA:
-	ld (ix+001h),008h		;b7da
+	ld (ix+001h),008h		;b7da   ; el paso del actor = 0x08
 	jp L_B728		;b7de
 L_B7E1:
 	xor a			;b7e1
@@ -3386,8 +3386,8 @@ L_B7E1:
 	inc a			;b7f4
 	ld (0cb3ch),a		;b7f5
 	ld (0cb14h),a		;b7f8   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
-	ld (ix+00eh),00ch		;b7fb
-	ld (ix+00dh),080h		;b7ff
+	ld (ix+00eh),00ch		;b7fb   ; la espera del actor = 0x0C
+	ld (ix+00dh),080h		;b7ff   ; el dibujo del actor (bit 0: el paso) = 0x80
 	ld hl,0dc10h		;b803
 	ld bc,00010h		;b806
 	ld a,0e0h		;b809
@@ -3399,12 +3399,12 @@ L_B811:
 	call L_B5DF		;b817
 	jp 05dd3h		;b81a
 L_B81D:
-	dec (ix+00eh)		;b81d
+	dec (ix+00eh)		;b81d   ; baja la espera del actor
 	jr z,L_B82C		;b820
-	ld a,(ix+00eh)		;b822
+	ld a,(ix+00eh)		;b822   ; lee la espera del actor
 	and 003h		;b825
 	ret nz			;b827
-	inc (ix+00dh)		;b828
+	inc (ix+00dh)		;b828   ; sube el dibujo del actor (bit 0: el paso)
 	ret			;b82b
 L_B82C:
 	push ix		;b82c
@@ -3417,7 +3417,7 @@ L_B82C:
 	ld (ix+00eh),0c0h		;b841
 	call L_B5DF		;b845
 	call 06caeh		;b848   ; sonido_64: pide el sonido 0x64
-	jp 09d2ah		;b84b   ; p04:9D2A
+	jp 09d2ah		;b84b   ; aviso_0a_30:
 L_B84E:
 	call 04256h		;b84e   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	rrca			;b851
@@ -3442,10 +3442,10 @@ L_B865:
 	ld hl,0b87ah		;b866
 	call 043f6h		;b869   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	xor a			;b86c
-	ld (ix+008h),a		;b86d
-	ld (ix+009h),l		;b870
-	ld (ix+006h),a		;b873
-	ld (ix+007h),h		;b876
+	ld (ix+008h),a		;b86d   ; guarda la velocidad del actor en X (baja)
+	ld (ix+009h),l		;b870   ; guarda la velocidad del actor en X (alta)
+	ld (ix+006h),a		;b873   ; guarda la velocidad del actor en Y (baja)
+	ld (ix+007h),h		;b876   ; guarda la velocidad del actor en Y (alta)
 	ret			;b879
 
 ; ----------------------------------------------------------------------
@@ -3463,22 +3463,22 @@ DATA_resto_B87A:
 
 L_B882:
 	call 086deh		;b882
-	ld a,(ix+007h)		;b885
+	ld a,(ix+007h)		;b885   ; lee la velocidad del actor en Y (alta)
 	and a			;b888
 	jr z,L_B897		;b889
-	ld a,(ix+003h)		;b88b
+	ld a,(ix+003h)		;b88b   ; lee la Y del actor
 	sub 018h		;b88e
 	cp 0a4h		;b890
 	jp nc,0809eh		;b892
 	jr L_B8A1		;b895
 L_B897:
-	ld a,(ix+005h)		;b897
+	ld a,(ix+005h)		;b897   ; lee la X del actor
 	sub 00ch		;b89a
 	cp 0a8h		;b89c
 	jp nc,0808eh		;b89e
 L_B8A1:
 	call 090c8h		;b8a1
-	ld a,(ix+007h)		;b8a4
+	ld a,(ix+007h)		;b8a4   ; lee la velocidad del actor en Y (alta)
 	and a			;b8a7
 	jr z,L_B8B5		;b8a8
 	rla			;b8aa
@@ -3489,7 +3489,7 @@ L_B8B1:
 	ld b,00ch		;b8b1
 	jr L_B8C1		;b8b3
 L_B8B5:
-	ld a,(ix+009h)		;b8b5
+	ld a,(ix+009h)		;b8b5   ; lee la velocidad del actor en X (alta)
 	rla			;b8b8
 	ld a,004h		;b8b9
 	jr c,L_B8BF		;b8bb
@@ -3499,7 +3499,7 @@ L_B8BF:
 L_B8C1:
 	and c			;b8c1
 	jr nz,L_B8D1		;b8c2
-	ld a,(ix+00eh)		;b8c4
+	ld a,(ix+00eh)		;b8c4   ; lee la espera del actor
 	and 01fh		;b8c7
 	jr nz,L_B8D4		;b8c9
 	ld c,b			;b8cb
@@ -3508,49 +3508,49 @@ L_B8C1:
 L_B8D1:
 	call 0808bh		;b8d1
 L_B8D4:
-	dec (ix+00eh)		;b8d4
-	ld a,(ix+00eh)		;b8d7
+	dec (ix+00eh)		;b8d4   ; baja la espera del actor
+	ld a,(ix+00eh)		;b8d7   ; lee la espera del actor
 	cp 060h		;b8da
-	jp z,09d2fh		;b8dc   ; p04:9D2F
+	jp z,09d2fh		;b8dc   ; aviso_8c_30:
 	and a			;b8df
 	ret nz			;b8e0
 	call 09d2fh		;b8e1
 	ld (ix+00ch),000h		;b8e4
 	jr L_B8FF		;b8e8
 L_B8EA:
-	dec (ix+00eh)		;b8ea
+	dec (ix+00eh)		;b8ea   ; baja la espera del actor
 	jr z,L_B8FF		;b8ed
-	ld a,(ix+00eh)		;b8ef
+	ld a,(ix+00eh)		;b8ef   ; lee la espera del actor
 	and 007h		;b8f2
 	ret nz			;b8f4
-	ld a,(ix+00dh)		;b8f5
+	ld a,(ix+00dh)		;b8f5   ; lee el dibujo del actor (bit 0: el paso)
 	rra			;b8f8
 	ccf			;b8f9
 	rla			;b8fa
-	ld (ix+00dh),a		;b8fb
+	ld (ix+00dh),a		;b8fb   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;b8fe
 L_B8FF:
-	ld (ix+00dh),016h		;b8ff
-	ld (ix+00eh),040h		;b903
+	ld (ix+00dh),016h		;b8ff   ; el dibujo del actor (bit 0: el paso) = 0x16
+	ld (ix+00eh),040h		;b903   ; la espera del actor = 0x40
 	jp L_B5DF		;b907
 L_B90A:
-	dec (ix+00eh)		;b90a
-	ld a,(ix+00eh)		;b90d
+	dec (ix+00eh)		;b90a   ; baja la espera del actor
+	ld a,(ix+00eh)		;b90d   ; lee la espera del actor
 	cp 020h		;b910
-	jp z,09d34h		;b912   ; p04:9D34
+	jp z,09d34h		;b912   ; aviso_8d_30:
 	and a			;b915
 	ret nz			;b916
 	jp L_B5DF		;b917
 L_B91A:
 	xor a			;b91a
 	ld (0cb3ch),a		;b91b
-	ld (ix+001h),020h		;b91e
+	ld (ix+001h),020h		;b91e   ; el paso del actor = 0x20
 	ret			;b922
 L_B923:
 	ld a,(0d8aah)		;b923
 	and a			;b926
 	ret z			;b927
-	ld a,(ix+001h)		;b928
+	ld a,(ix+001h)		;b928   ; lee el paso del actor
 	ld hl,0b934h		;b92b
 	call 0424eh		;b92e   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	jp 08082h		;b931
@@ -3572,37 +3572,37 @@ DATA_resto_B934:
 
 L_B960:
 	xor a			;b960
-	ld (ix+00dh),a		;b961
+	ld (ix+00dh),a		;b961   ; guarda el dibujo del actor (bit 0: el paso)
 	inc a			;b964
 	ld (0cb3ch),a		;b965
-	ld (ix+00eh),018h		;b968
+	ld (ix+00eh),018h		;b968   ; la espera del actor = 0x18
 	jp L_BA54		;b96c
 L_B96F:
-	dec (ix+00eh)		;b96f
+	dec (ix+00eh)		;b96f   ; baja la espera del actor
 	ret nz			;b972
 	ld d,009h		;b973
 	jp L_BA4F		;b975
 L_B978:
 	call L_B5F6		;b978
 	ret nz			;b97b
-	ld (ix+00eh),a		;b97c
+	ld (ix+00eh),a		;b97c   ; guarda la espera del actor
 	inc a			;b97f
 	ld (0d509h),a		;b980
 	ld (0cb3ch),a		;b983
-	ld (ix+00dh),002h		;b986
+	ld (ix+00dh),002h		;b986   ; el dibujo del actor (bit 0: el paso) = 0x02
 	call L_A777		;b98a
 	jp L_BA54		;b98d
 L_B990:
 	call L_B9DA		;b990
 	call 086deh		;b993
 	call L_B9AF		;b996
-	ld a,(ix+00ah)		;b999
+	ld a,(ix+00ah)		;b999   ; lee la fila de la sala del actor
 	cp 002h		;b99c
 	ret nz			;b99e
-	ld a,(ix+003h)		;b99f
+	ld a,(ix+003h)		;b99f   ; lee la Y del actor
 	cp 05eh		;b9a2
 	ret c			;b9a4
-	ld (ix+00dh),004h		;b9a5
+	ld (ix+00dh),004h		;b9a5   ; el dibujo del actor (bit 0: el paso) = 0x04
 	call L_A777		;b9a9
 	jp L_BA54		;b9ac
 L_B9AF:
@@ -3612,24 +3612,24 @@ L_B9AF:
 L_B9B8:
 	call L_B9DA		;b9b8
 	call L_B9AF		;b9bb
-	ld a,(ix+00bh)		;b9be
+	ld a,(ix+00bh)		;b9be   ; lee la columna de la sala del actor
 	cp 008h		;b9c1
 	ret nz			;b9c3
-	ld a,(ix+005h)		;b9c4
+	ld a,(ix+005h)		;b9c4   ; lee la X del actor
 	cp 050h		;b9c7
 	ret nc			;b9c9
 	xor a			;b9ca
 	ld (ix+00ch),a		;b9cb
 	ld (0cb3ch),a		;b9ce
-	ld (ix+00dh),006h		;b9d1
+	ld (ix+00dh),006h		;b9d1   ; el dibujo del actor (bit 0: el paso) = 0x06
 	call 07a70h		;b9d5   ; a_p03_b108: p03:B108 con el banco 3 en 0xA000
 	jr L_BA54		;b9d8
 L_B9DA:
 	ld a,(0d88ch)		;b9da
 	inc a			;b9dd
 	jr z,L_B9ED		;b9de
-	inc (ix+00eh)		;b9e0
-	ld a,(ix+00eh)		;b9e3
+	inc (ix+00eh)		;b9e0   ; sube la espera del actor
+	ld a,(ix+00eh)		;b9e3   ; lee la espera del actor
 	and 007h		;b9e6
 	ld bc,00a07h		;b9e8
 	jr z,L_B9F0		;b9eb
@@ -3647,7 +3647,7 @@ L_B9F3:
 	ret nz			;ba00
 	ld a,001h		;ba01
 	ld (0d509h),a		;ba03
-	ld (ix+00dh),006h		;ba06
+	ld (ix+00dh),006h		;ba06   ; el dibujo del actor (bit 0: el paso) = 0x06
 	jr L_BA54		;ba0a
 L_BA0C:
 	ld a,(0ca4bh)		;ba0c   ; lee la sala de la zona
@@ -3658,13 +3658,13 @@ L_BA0C:
 	ld hl,0d7d9h		;ba17
 	set 1,(hl)		;ba1a
 	call 06b95h		;ba1c   ; sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-	ld (ix+00eh),010h		;ba1f
+	ld (ix+00eh),010h		;ba1f   ; la espera del actor = 0x10
 	jr L_BA54		;ba23
 L_BA25:
-	ld a,(ix+00eh)		;ba25
+	ld a,(ix+00eh)		;ba25   ; lee la espera del actor
 	and a			;ba28
 	jr z,L_BA35		;ba29
-	dec (ix+00eh)		;ba2b
+	dec (ix+00eh)		;ba2b   ; baja la espera del actor
 	ret nz			;ba2e
 	ld de,00f10h		;ba2f
 	jp 061ceh		;ba32   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
@@ -3685,7 +3685,7 @@ L_BA4F:
 	ld e,010h		;ba4f
 	call 061ceh		;ba51   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 L_BA54:
-	inc (ix+001h)		;ba54
+	inc (ix+001h)		;ba54   ; sube el paso del actor
 L_BA57:
 	ret			;ba57
 L_BA58:
@@ -3716,16 +3716,16 @@ L_BA7A:
 	ccf			;ba84
 	rl b		;ba85
 L_BA87:
-	ld (ix+018h),b		;ba87
+	ld (ix+018h),b		;ba87   ; guarda la cuenta del paso del dibujo del actor
 	ld a,b			;ba8a
 	add a,a			;ba8b
-	ld (ix+00dh),a		;ba8c
+	ld (ix+00dh),a		;ba8c   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;ba8f
 L_BA90:
 	call L_BB08		;ba90
 	ret nz			;ba93
 	call 090c8h		;ba94
-	ld a,(ix+007h)		;ba97
+	ld a,(ix+007h)		;ba97   ; lee la velocidad del actor en Y (alta)
 	and a			;ba9a
 	ld a,003h		;ba9b
 	jr nz,L_BAA1		;ba9d
@@ -3735,7 +3735,7 @@ L_BAA1:
 	jr nz,L_BA6E		;baa2
 	call 086deh		;baa4
 	call L_BAF1		;baa7
-	ld a,(ix+007h)		;baaa
+	ld a,(ix+007h)		;baaa   ; lee la velocidad del actor en Y (alta)
 	and a			;baad
 	ld bc,00c06h		;baae
 	jr nz,L_BAB7		;bab1
@@ -3758,7 +3758,7 @@ L_BAC6:
 	jr c,L_BAE3		;bac7
 L_BAC9:
 	call L_BAF1		;bac9
-	ld a,(ix+018h)		;bacc
+	ld a,(ix+018h)		;bacc   ; lee la cuenta del paso del dibujo del actor
 	cp 002h		;bacf
 	jr c,L_BAD7		;bad1
 	ld a,h			;bad3
@@ -3778,27 +3778,27 @@ L_BAE3:
 	xor a			;bae3
 	ld (ix+00ch),a		;bae4
 	ld (ix+00fh),a		;bae7
-	ld (ix+00eh),018h		;baea
+	ld (ix+00eh),018h		;baea   ; la espera del actor = 0x18
 	jp L_BA54		;baee
 L_BAF1:
 	call 08079h		;baf1
 	ld d,l			;baf4
-	ld l,(ix+005h)		;baf5
-	ld e,(ix+003h)		;baf8
+	ld l,(ix+005h)		;baf5   ; lee la X del actor
+	ld e,(ix+003h)		;baf8   ; lee la Y del actor
 	ret			;bafb
 L_BAFC:
 	call L_B4E1		;bafc
 	ld a,008h		;baff
 	add a,b			;bb01
-	ld (ix+00dh),a		;bb02
+	ld (ix+00dh),a		;bb02   ; guarda el dibujo del actor (bit 0: el paso)
 	jp 06a15h		;bb05   ; sonido_09: pide el sonido 0x09
 L_BB08:
 	ld a,(ix+017h)		;bb08
 	and a			;bb0b
 	ret z			;bb0c
-	ld (ix+001h),00ch		;bb0d
+	ld (ix+001h),00ch		;bb0d   ; el paso del actor = 0x0C
 	call L_BB2E		;bb11
-	ld a,(ix+00dh)		;bb14
+	ld a,(ix+00dh)		;bb14   ; lee el dibujo del actor (bit 0: el paso)
 	cp 008h		;bb17
 	jr nc,L_BB2A		;bb19
 	srl a		;bb1b
@@ -3807,7 +3807,7 @@ L_BB1D:
 	and 003h		;bb1f
 	ld b,a			;bb21
 	add a,a			;bb22
-	ld (ix+00dh),a		;bb23
+	ld (ix+00dh),a		;bb23   ; guarda el dibujo del actor (bit 0: el paso)
 	ld a,b			;bb26
 	jp L_A77D		;bb27
 L_BB2A:
@@ -3822,9 +3822,9 @@ L_BB2E:
 L_BB38:
 	call L_BB08		;bb38
 	ret nz			;bb3b
-	dec (ix+00eh)		;bb3c
+	dec (ix+00eh)		;bb3c   ; baja la espera del actor
 	jr z,L_BB54		;bb3f
-	ld a,(ix+00eh)		;bb41
+	ld a,(ix+00eh)		;bb41   ; lee la espera del actor
 	and 003h		;bb44
 	ret nz			;bb46
 	ld a,(ix+00fh)		;bb47
@@ -3846,13 +3846,13 @@ L_BB63:
 	ret c			;bb69
 	dec (ix+00fh)		;bb6a
 	jr z,$+26		;bb6d
-	ld a,(ix+00dh)		;bb6f
+	ld a,(ix+00dh)		;bb6f   ; lee el dibujo del actor (bit 0: el paso)
 	rrca			;bb72
 	and 003h		;bb73
 	ld hl,0bb83h		;bb75
 	call 04248h		;bb78   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	add a,a			;bb7b
-	ld (ix+00dh),a		;bb7c
+	ld (ix+00dh),a		;bb7c   ; guarda el dibujo del actor (bit 0: el paso)
 	ld a,(hl)			;bb7f
 	jp L_A77D		;bb80
 
@@ -3870,16 +3870,16 @@ DATA_resto_BB83:
 
 
 L_BB87:
-	ld (ix+001h),00ah		;bb87
+	ld (ix+001h),00ah		;bb87   ; el paso del actor = 0x0A
 	jp L_BA6E		;bb8b
 L_BB8E:
-	ld a,(ix+007h)		;bb8e
+	ld a,(ix+007h)		;bb8e   ; lee la velocidad del actor en Y (alta)
 	and a			;bb91
-	ld a,(ix+003h)		;bb92
+	ld a,(ix+003h)		;bb92   ; lee la Y del actor
 	ld b,058h		;bb95
 	jr nz,L_BB9E		;bb97
 	ld b,048h		;bb99
-	ld a,(ix+005h)		;bb9b
+	ld a,(ix+005h)		;bb9b   ; lee la X del actor
 L_BB9E:
 	sub b			;bb9e
 	cp 030h		;bb9f
@@ -3891,13 +3891,13 @@ L_BBA2:
 	ld (0d7bbh),a		;bba9
 	inc a			;bbac
 	ld (0cb3ch),a		;bbad
-	ld (ix+00dh),00ch		;bbb0
-	ld (ix+00eh),020h		;bbb4
+	ld (ix+00dh),00ch		;bbb0   ; el dibujo del actor (bit 0: el paso) = 0x0C
+	ld (ix+00eh),020h		;bbb4   ; la espera del actor = 0x20
 	call 07a0ah		;bbb8   ; a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 	call 06c1bh		;bbbb   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jp L_BA54		;bbbe
 L_BBC1:
-	dec (ix+00eh)		;bbc1
+	dec (ix+00eh)		;bbc1   ; baja la espera del actor
 	ret nz			;bbc4
 	ld h,000h		;bbc5
 	ld l,h			;bbc7
@@ -4009,13 +4009,13 @@ L_BCB5:
 	ret nz			;bcbc
 	ld a,068h		;bcbd
 	ld (0cb03h),a		;bcbf   ; guarda la Y de Snake
-	ld (ix+003h),a		;bcc2
+	ld (ix+003h),a		;bcc2   ; guarda la Y del actor
 	ld a,070h		;bcc5
 	ld (0cb05h),a		;bcc7   ; guarda la X de Snake
 	ld a,003h		;bcca
 	ld (0cb0eh),a		;bccc   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	ld (ix+005h),050h		;bccf
-	ld (ix+00eh),010h		;bcd3
+	ld (ix+005h),050h		;bccf   ; la X del actor = 0x50
+	ld (ix+00eh),010h		;bcd3   ; la espera del actor = 0x10
 	ld a,001h		;bcd7
 	ld (0d8aah),a		;bcd9
 	call 045d7h		;bcdc   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
@@ -4023,11 +4023,11 @@ L_BCB5:
 	call 04609h		;bce2   ; enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 	jp L_BA54		;bce5
 L_BCE8:
-	dec (ix+00eh)		;bce8
+	dec (ix+00eh)		;bce8   ; baja la espera del actor
 	ret nz			;bceb
 	xor a			;bcec
 	ld (0d8aah),a		;bced
-	ld (ix+001h),020h		;bcf0
+	ld (ix+001h),020h		;bcf0   ; el paso del actor = 0x20
 	ret			;bcf4
 L_BCF5:
 	ld a,(0ca4ah)		;bcf5   ; lee la zona
@@ -4050,17 +4050,17 @@ L_BCF5:
 	pop ix		;bd21
 	jp 0413fh		;bd23   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 L_BD26:
-	ld a,(ix+005h)		;bd26
+	ld a,(ix+005h)		;bd26   ; lee la X del actor
 	sub 010h		;bd29
 	ld d,a			;bd2b
-	ld a,(ix+003h)		;bd2c
+	ld a,(ix+003h)		;bd2c   ; lee la Y del actor
 	sub 010h		;bd2f
 	ld e,a			;bd31
 	ld hl,0743dh		;bd32
 	ld bc,00402h		;bd35
 	jp 0741eh		;bd38
 L_BD3B:
-	ld a,(ix+001h)		;bd3b
+	ld a,(ix+001h)		;bd3b   ; lee el paso del actor
 	cp 00fh		;bd3e
 	jp nc,08728h		;bd40
 	jp 08739h		;bd43
@@ -4068,7 +4068,7 @@ L_BD46:
 	ld a,(0ca4bh)		;bd46   ; lee la sala de la zona
 	cp 005h		;bd49
 	ret nz			;bd4b
-	ld a,(ix+001h)		;bd4c
+	ld a,(ix+001h)		;bd4c   ; lee el paso del actor
 	ld hl,0bd58h		;bd4f
 	call 0424eh		;bd52   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	jp 08082h		;bd55
@@ -4097,29 +4097,29 @@ L_BD84:
 	ld (0cb3ch),a		;bd8f
 	ld hl,0d7d8h		;bd92
 	set 3,(hl)		;bd95
-	ld (ix+00eh),010h		;bd97
-	ld (ix+00dh),004h		;bd9b
+	ld (ix+00eh),010h		;bd97   ; la espera del actor = 0x10
+	ld (ix+00dh),004h		;bd9b   ; el dibujo del actor (bit 0: el paso) = 0x04
 	ld hl,06bb8h		;bd9f
 	call 07c85h		;bda2   ; pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 	ld a,0b4h		;bda5
 	ld (0ca18h),a		;bda7   ; guarda la espera hasta poner la musica pendiente
 	jr L_BDF9		;bdaa
 L_BDAC:
-	dec (ix+00eh)		;bdac
+	dec (ix+00eh)		;bdac   ; baja la espera del actor
 	ret nz			;bdaf
-	ld (ix+00eh),009h		;bdb0
+	ld (ix+00eh),009h		;bdb0   ; la espera del actor = 0x09
 	ld (ix+00fh),000h		;bdb4
 	jr L_BDF9		;bdb8
 L_BDBA:
-	dec (ix+00eh)		;bdba
+	dec (ix+00eh)		;bdba   ; baja la espera del actor
 	jr z,L_BDD0		;bdbd
-	ld a,(ix+00eh)		;bdbf
+	ld a,(ix+00eh)		;bdbf   ; lee la espera del actor
 	and 007h		;bdc2
 	ret nz			;bdc4
 	inc (ix+00fh)		;bdc5
 	ld a,(ix+00fh)		;bdc8
 	add a,a			;bdcb
-	ld (ix+00dh),a		;bdcc
+	ld (ix+00dh),a		;bdcc   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;bdcf
 L_BDD0:
 	ld d,014h		;bdd0
@@ -4139,13 +4139,13 @@ L_BDD9:
 	inc a			;bde9
 	ld (0d8abh),a		;bdea
 	inc a			;bded
-	ld (ix+00dh),a		;bdee
+	ld (ix+00dh),a		;bdee   ; guarda el dibujo del actor (bit 0: el paso)
 	call L_A777		;bdf1
 	ld a,004h		;bdf4
 L_BDF6:
 	ld (0cb0eh),a		;bdf6   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 L_BDF9:
-	inc (ix+001h)		;bdf9
+	inc (ix+001h)		;bdf9   ; sube el paso del actor
 	ret			;bdfc
 L_BDFD:
 	call L_BE95		;bdfd
@@ -4174,21 +4174,21 @@ L_BE28:
 	call 06247h		;be2b   ; mensaje_cada_cuadro_bancos_5:
 	ret nz			;be2e
 	call 079c7h		;be2f   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
-	ld (ix+00eh),05ah		;be32
+	ld (ix+00eh),05ah		;be32   ; la espera del actor = 0x5A
 	call 06be8h		;be36   ; orden_sonido_f6: la orden 0xF6 al sonido
 	jr L_BDF9		;be39
 L_BE3B:
-	dec (ix+00eh)		;be3b
+	dec (ix+00eh)		;be3b   ; baja la espera del actor
 	ret nz			;be3e
 	xor a			;be3f
 	call 079e9h		;be40   ; a_p03_b11f: p03:B11F con el banco 3 en 0xA000
 	call 06b12h		;be43   ; sonido_05: pide el sonido 0x05
 	call 06b95h		;be46   ; sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-	ld (ix+00eh),020h		;be49
+	ld (ix+00eh),020h		;be49   ; la espera del actor = 0x20
 	jr L_BDF9		;be4d
 L_BE4F:
 	call 079f1h		;be4f   ; a_p03_b132: p03:B132 con el banco 3 en 0xA000
-	dec (ix+00eh)		;be52
+	dec (ix+00eh)		;be52   ; baja la espera del actor
 	ret nz			;be55
 	call 079fah		;be56   ; a_p03_b19a: p03:B19A con el banco 3 en 0xA000
 	ld a,001h		;be59
@@ -4204,12 +4204,12 @@ L_BE6C:
 	call 06247h		;be6c   ; mensaje_cada_cuadro_bancos_5:
 	ret nz			;be6f
 	call 079c7h		;be70   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
-	ld (ix+00eh),020h		;be73
+	ld (ix+00eh),020h		;be73   ; la espera del actor = 0x20
 	ld a,017h		;be77
 	ld (0cb00h),a		;be79   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	xor a			;be7c
 	ld (0cb3ch),a		;be7d
-	ld (ix+00dh),006h		;be80
+	ld (ix+00dh),006h		;be80   ; el dibujo del actor (bit 0: el paso) = 0x06
 	ld a,003h		;be84
 	ld b,a			;be86
 	call L_A781		;be87
@@ -4224,26 +4224,26 @@ L_BE95:
 	dec a			;be9a
 	jr nz,L_BEB1		;be9b
 	call 086deh		;be9d
-	ld a,(ix+003h)		;bea0
+	ld a,(ix+003h)		;bea0   ; lee la Y del actor
 	cp 050h		;bea3
 	ret c			;bea5
 	ld hl,0d8abh		;bea6
 	inc (hl)			;bea9
-	ld (ix+00dh),004h		;beaa
+	ld (ix+00dh),004h		;beaa   ; el dibujo del actor (bit 0: el paso) = 0x04
 	jp L_A777		;beae
 L_BEB1:
 	call 086deh		;beb1
-	ld a,(ix+005h)		;beb4
+	ld a,(ix+005h)		;beb4   ; lee la X del actor
 	cp 070h		;beb7
 	ret nc			;beb9
-	ld (ix+00dh),006h		;beba
+	ld (ix+00dh),006h		;beba   ; el dibujo del actor (bit 0: el paso) = 0x06
 	xor a			;bebe
 	ld (ix+00ch),a		;bebf
 	ld (0d8abh),a		;bec2
 	ret			;bec5
 L_BEC6:
 	ld a,(0cb05h)		;bec6   ; lee la X de Snake
-	sub (ix+005h)		;bec9
+	sub (ix+005h)		;bec9   ; le resta la X del actor
 	jr nc,L_BED0		;becc
 	neg		;bece
 L_BED0:
@@ -4279,7 +4279,7 @@ L_BF08:
 	jr nz,L_BF19		;bf10
 	ld a,(0ca53h)		;bf12   ; lee la vida de Snake (lo largo de la barra)
 	and a			;bf15
-	call nz,09d20h		;bf16   ; p04:9D20
+	call nz,09d20h		;bf16   ; aviso_09_18:
 L_BF19:
 	ld a,(0cb0eh)		;bf19   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ld b,a			;bf1c
@@ -4289,14 +4289,14 @@ L_BF19:
 	call 08079h		;bf24
 	ld a,e			;bf27
 	add a,l			;bf28
-	ld (ix+003h),a		;bf29
+	ld (ix+003h),a		;bf29   ; guarda la Y del actor
 	ld a,d			;bf2c
 	add a,h			;bf2d
-	ld (ix+005h),a		;bf2e
+	ld (ix+005h),a		;bf2e   ; guarda la X del actor
 	ld a,b			;bf31
 	dec a			;bf32
 	add a,008h		;bf33
-	ld (ix+00dh),a		;bf35
+	ld (ix+00dh),a		;bf35   ; guarda el dibujo del actor (bit 0: el paso)
 	ret			;bf38
 
 ; ----------------------------------------------------------------------
@@ -4317,7 +4317,7 @@ L_BF48:
 	xor a			;bf48
 	ld (ix+00ch),a		;bf49
 	ld (ix+016h),a		;bf4c
-	ld (ix+00eh),018h		;bf4f
+	ld (ix+00eh),018h		;bf4f   ; la espera del actor = 0x18
 	ld a,002h		;bf53
 	ld (0d500h),a		;bf55
 	ld a,00dh		;bf58
@@ -4344,7 +4344,7 @@ L_BF65:
 	ld (0d88bh),a		;bf82
 	ret			;bf85
 L_BF86:
-	dec (ix+00eh)		;bf86
+	dec (ix+00eh)		;bf86   ; baja la espera del actor
 	ret nz			;bf89
 	call 06c1bh		;bf8a   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	call 07a88h		;bf8d   ; rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
@@ -4385,16 +4385,16 @@ L_BFDA:
 	ret nz			;bfdd
 	call 079c7h		;bfde   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 	call 06be8h		;bfe1   ; orden_sonido_f6: la orden 0xF6 al sonido
-	ld (ix+00eh),020h		;bfe4
+	ld (ix+00eh),020h		;bfe4   ; la espera del actor = 0x20
 	jp L_BDF9		;bfe8
 L_BFEB:
-	ld a,(ix+00eh)		;bfeb
+	ld a,(ix+00eh)		;bfeb   ; lee la espera del actor
 	and a			;bfee
 	jr z,L_BFF8		;bfef
-	dec (ix+00eh)		;bff1
+	dec (ix+00eh)		;bff1   ; baja la espera del actor
 	ret nz			;bff4
 	jp 06b12h		;bff5   ; sonido_05: pide el sonido 0x05
 L_BFF8:
 	ld a,001h		;bff8
 	ld (0e070h),a		;bffa
-	jp 08c65h		;bffd   ; p04:8C65
+	jp 08c65h		;bffd   ; bandera_y_b14e:

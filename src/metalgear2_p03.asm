@@ -898,7 +898,7 @@ L_A631:
 estado_0a:		; el estado 0x0A: p03:A68B, anda y, sin 0xCA5F, p06:A330: con acarreo la X = A y el estado 0x16
 	call estado_de_cb35_en_0a		;a634   ; estado_de_cb35_en_0a: en la zona 0x0A, salas 0x0B, 0x0C, 0x10 y 0x11: el estado de 0xCB35 y la marcha 0
 	call anda_y_sitios		;a637   ; anda_y_sitios: con 0xCB80 = 6, solo p03:ADA6
-	ld a,(0ca5fh)		;a63a
+	ld a,(0ca5fh)		;a63a   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;a63d
 	ret nz			;a63e
 	call zona_9_u_0b		;a63f   ; en la zona 9 sin el bit 1 de 0xD7DC, o la 0x0B con el bit 2 de 0xD7D6, nada
@@ -1834,7 +1834,7 @@ L_ACC8:
 	ld b,002h		;acd3
 	jp 09367h		;acd5   ; pon_cb28: 0xCB28 = B, 0xCB29 = C
 estado_16:		; el estado 0x16: con 0xCA5F, p04:924C; Snake sube un punto por cuadro hasta la Y de 0xCAA7
-	ld a,(0ca5fh)		;acd8
+	ld a,(0ca5fh)		;acd8   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;acdb
 	call nz,079a3h		;acdc   ; a_p04_924c: p04:924C con el banco 4 en 0x8000
 	ld hl,0cb03h		;acdf   ; apunta a la Y de Snake
@@ -2137,7 +2137,7 @@ L_AEEC:
 	jr L_AEE6		;aef1
 d446_o_9949:		; sin 0xCA5F, 0xD446 = 4; con 0xCA5F = 1, p04:9949
 	push ix		;aef3
-	ld a,(0ca5fh)		;aef5
+	ld a,(0ca5fh)		;aef5   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;aef8
 	push af			;aef9
 	call z,pon_d446		;aefa   ; pon_d446: 0xD446 = 4
@@ -2148,14 +2148,14 @@ d446_o_9949:		; sin 0xCA5F, 0xD446 = 4; con 0xCA5F = 1, p04:9949
 	ret			;af04
 d446_si:		; con 0xCA5F < 2, 0xD446 = 4
 	push ix		;af05
-	ld a,(0ca5fh)		;af07
+	ld a,(0ca5fh)		;af07   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	cp 002h		;af0a
 	call c,pon_d446		;af0c   ; pon_d446: 0xD446 = 4
 	pop ix		;af0f
 	ret			;af11
 pon_d446:		; 0xD446 = 4
 	ld a,004h		;af12
-	ld (0d446h),a		;af14
+	ld (0d446h),a		;af14   ; guarda la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 	ret			;af17
 fichas_de_cada_cuadro:		; las fichas de 0xCB80, 0xCC00 y 0xCC80, p11:AF47 y p11:B23F
 	call fichas_cb80		;af18   ; fichas_cb80: las 6 fichas de 16 bytes de 0xCB80 (lo que lanza Snake)
@@ -3865,7 +3865,7 @@ pinta_mosaico_de_quien_habla:		; con B = 0, nada; si el dibujo no es el de quien
 	ld e,001h		;b9e8
 L_B9EA:
 	ld a,e			;b9ea   ; 0xD8E2 = 0 o 1
-	ld (0d8e2h),a		;b9eb   ; guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter
+	ld (0d8e2h),a		;b9eb   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	ld a,b			;b9ee   ; el dibujo - 1
 	dec a			;b9ef
 	push af			;b9f0
@@ -3941,7 +3941,7 @@ L_BA64:
 	ld a,(0ca76h)		;ba64   ; en la especial 0x2E con 0xCA5F: p03:BB1B con 1
 	cp 02eh		;ba67
 	jr nz,L_BA76		;ba69
-	ld a,(0ca5fh)		;ba6b
+	ld a,(0ca5fh)		;ba6b   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;ba6e
 	jr z,L_BA76		;ba6f
 	ld a,001h		;ba71
@@ -3971,7 +3971,7 @@ L_BA97:
 	ld a,(0ca76h)		;ba97   ; en la especial 0x31 con 0xCA5F, nada mas
 	cp 031h		;ba9a
 	jr nz,L_BAA3		;ba9c
-	ld a,(0ca5fh)		;ba9e
+	ld a,(0ca5fh)		;ba9e   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;baa1
 	ret nz			;baa2
 L_BAA3:
@@ -4072,7 +4072,7 @@ tercera_barra_cada_cuadro:		; sin 0xDFF0: p03:BB91
 	ld a,(0cac8h)		;bb5b   ; con 0xCAC8 y sin 0xCA5F: se acaba con la paleta de la sala
 	or a			;bb5e
 	jr z,L_BB76		;bb5f
-	ld a,(0ca5fh)		;bb61
+	ld a,(0ca5fh)		;bb61   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;bb64
 	jr nz,L_BB76		;bb65
 	ld (0cae2h),a		;bb67   ; guarda 1 mientras se ve la barra de la derecha

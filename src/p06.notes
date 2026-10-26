@@ -62,6 +62,7 @@ L 0xB0BE guarda_mando (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
 L 0xB0C8 mando A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
 L 0xB109 teclas_de_funcion A = las filas 6 y 7 de la matriz, en 6 bits
 L 0xB129 matriz_del_teclado en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
+C 0xA000 lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xA006 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA019 lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA033 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
@@ -133,6 +134,7 @@ C 0xA413 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA41C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA425 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA428 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xA42D lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA432 lee la zona
 C 0xA457 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA461 lee la zona
@@ -180,7 +182,7 @@ C 0xA6E8 guarda 1 si Snake ha chocado en este cuadro
 C 0xA6ED guarda 1 si Snake ha chocado en este cuadro
 C 0xA6F5 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA6FF apunta a con el puesto, la vida baja un punto cada 16 cuadros
-C 0xA710 apunta a 0: p01:62B5 copia con ldir; 1: caracter a caracter
+C 0xA710 apunta a de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 C 0xA71D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA722 lee la Y de Snake
 C 0xA726 lee la X de Snake
@@ -199,10 +201,13 @@ C 0xA7C1 lee la X de Snake
 C 0xA7CA lee la Y de Snake
 C 0xA7D0 lee la X de Snake
 C 0xA7ED despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA816 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xA832 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA858 sonido_0b: pide el sonido 0x0B
-C 0xA86A p04:9D03
+C 0xA866 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xA86A aviso_84_18: 
 C 0xA8C1 sonido_14: pide el sonido 0x14
-C 0xA8E5 p04:9CAA
+C 0xA8E5 a_p06_aa18_guarda: p06:AA18 guardando el banco de 0xA000
 C 0xA8E8 sonido_0e: pide el sonido 0x0E
 C 0xA8F3 lee la Y de Snake
 C 0xA924 sonido_43: pide el sonido 0x43
@@ -210,8 +215,9 @@ C 0xA94B palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA962 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA984 p02:9CB7
 C 0xA9B0 suma_a_hl: HL = HL + A
+C 0xAA22 apunta a los 22 sprites que se reparten los actores (1 = ocupado)
 C 0xAA26 suma_a_hl: HL = HL + A
-C 0xAA33 p04:9CB7
+C 0xAA33 sprite_de_lanzado: HL = el sprite (byte 0x0E) desde el 10 (0xDC28)
 C 0xAA87 lee 1 mientras se ve el rotulo de la cosa cogida
 C 0xAA96 lee la direccion en la que se mira la sala de al lado (estado 0x0E)
 C 0xAA9B lee 1 en pausa (F1)
@@ -299,23 +305,36 @@ C 0xB22C copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xB239 borra_pagina_0: la pagina 0 a cero y R#23 = 0
 C 0xB24C pieza_de_sala_a_la_otra: el caracter A de la sala (p00:4A36) de la pagina 2 a la otra
 C 0xB26A palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xB2C6 p04:90CE
+C 0xB26E lee la Y y la X a las que acuden los actores (16 bits)
+C 0xB2C6 choques_en_hl: 
+C 0xB2D6 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB2DC borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB2E4 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB2FD suma_a_de: DE = DE + A
 C 0xB308 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0xB326 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB331 suma_a_hl: HL = HL + A
+C 0xB33B apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
+C 0xB35A apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB367 sonido_54: pide el sonido 0x54
 C 0xB385 suma_a_hl: HL = HL + A
 C 0xB3A0 suma_a_hl: HL = HL + A
 C 0xB3C9 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB3CF lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB532 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xB53F lee la zona
 C 0xB546 lee la sala de la zona
+C 0xB55C apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xB562 lee el tipo del actor (0 = libre)
 C 0xB56F p02:806F
+C 0xB574 lee el tipo del actor (0 = libre)
+C 0xB57B lee el paso del actor
 C 0xB581 p02:8100
+C 0xB593 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xB5C1 lee la zona
 C 0xB5D6 suma_a_de: DE = DE + A
-C 0xB5D9 p04:8E40
+C 0xB5D9 velocidad_de_tabla: las dos velocidades del actor de la tabla DE (4 bytes por direccion C) y el byte 0x0C (1 vertical, 2 horizontal)
 C 0xB5E8 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xB5F4 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xB64B lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 # --- fin de las anotaciones de anota.py ---

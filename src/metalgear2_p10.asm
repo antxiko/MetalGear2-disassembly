@@ -1475,7 +1475,7 @@ L_A9E8:
 	set 0,(hl)		;a9eb
 	ret			;a9ed
 L_A9EE:
-	ld hl,0d8e0h		;a9ee   ; apunta a 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld hl,0d8e0h		;a9ee   ; apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	res 1,(hl)		;a9f1
 	ret			;a9f3
 L_A9F4:
@@ -1558,7 +1558,7 @@ L_AA78:
 	and a			;aa7b
 	ret z			;aa7c
 	ld hl,06bcch		;aa7d
-	call 086d0h		;aa80   ; p04:86D0
+	call 086d0h		;aa80   ; si_c692: con 0xC692, lo borra y salta a HL
 	call L_AAA9		;aa83
 	ld a,(ix+001h)		;aa86
 	ld hl,0aa8fh		;aa89   ; tabla_AA8F: 13 destinos del despachador p00
@@ -1799,7 +1799,7 @@ L_AC3A:
 	add a,h			;ac44
 	sub 010h		;ac45
 	ld h,a			;ac47
-	jp 09b30h		;ac48   ; p04:9B30
+	jp 09b30h		;ac48   ; lanza_6_e0: tipo 6 con el desplazamiento 0x00E0
 L_AC4B:
 	ld (ix+011h),001h		;ac4b
 	ld a,(ix+001h)		;ac4f
@@ -3269,7 +3269,7 @@ L_B737:
 	call L_B6A4		;b737
 	ret nc			;b73a
 	call 04224h		;b73b   ; bancos_4: pone el 4 en 0x8000 (con su copia en 0xC381-0xC383)
-	call 096bah		;b73e
+	call 096bah		;b73e   ; sin_llegadas: acarreo en las zonas sin llegadas: la 0x10, la 0x0C salas 0-3, la 0x0D sala 0
 	call 041cah		;b741   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	ret c			;b744
 	ld b,004h		;b745
@@ -4269,11 +4269,11 @@ L_BF47:
 	ret nz			;bf4a
 	ld (ix+007h),004h		;bf4b
 	call 06ae6h		;bf4f   ; sonido_34: pide el sonido 0x34
-	ld a,(0ca5fh)		;bf52
+	ld a,(0ca5fh)		;bf52   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	cp 002h		;bf55
 	jr nc,L_BF5E		;bf57
 	ld a,002h		;bf59
-	ld (0d446h),a		;bf5b
+	ld (0d446h),a		;bf5b   ; guarda la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 L_BF5E:
 	dec (ix+006h)		;bf5e
 	ret nz			;bf61

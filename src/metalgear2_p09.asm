@@ -3498,7 +3498,7 @@ L_BAC1:
 	cp 082h		;baf0
 	jr z,L_BAFE		;baf2
 L_BAF4:
-	ld a,(0ca5fh)		;baf4
+	ld a,(0ca5fh)		;baf4   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;baf7
 	jp nz,08c24h		;baf8
 	jp 08e81h		;bafb
@@ -3506,14 +3506,14 @@ L_BAFE:
 	call 06b12h		;bafe   ; sonido_05: pide el sonido 0x05
 	call L_BAF4		;bb01
 	call L_BB12		;bb04
-	ld a,(0ca5fh)		;bb07
+	ld a,(0ca5fh)		;bb07   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;bb0a
 	ret nz			;bb0b
 	ld hl,0ca18h		;bb0c   ; apunta a la espera hasta poner la musica pendiente
 	ld (hl),0ffh		;bb0f
 	ret			;bb11
 L_BB12:
-	ld a,(0d800h)		;bb12
+	ld a,(0d800h)		;bb12   ; lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	cp 001h		;bb15
 	ret nz			;bb17
 	ld a,(0ca50h)		;bb18   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
@@ -4172,7 +4172,7 @@ L_BF42:
 	ld a,(0cb21h)		;bf5d   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	dec a			;bf60
 	jr nz,L_BF86		;bf61
-	ld a,(0ca5fh)		;bf63
+	ld a,(0ca5fh)		;bf63   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;bf66
 	jr nz,L_BF86		;bf67
 	ld a,(0d8c0h)		;bf69
@@ -4198,7 +4198,7 @@ L_BF86:
 	ld (hl),000h		;bf89
 L_BF8B:
 	call 06c0fh		;bf8b   ; sonido_02: pide el sonido 0x02
-	ld a,(0ca5fh)		;bf8e
+	ld a,(0ca5fh)		;bf8e   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;bf91
 	jp nz,08c24h		;bf92   ; p02:8C24
 	jp 08eb6h		;bf95   ; p02:8EB6

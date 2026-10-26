@@ -1313,6 +1313,7 @@ C 0xA624 lee 1 si Snake ha chocado en este cuadro
 C 0xA62E sonido_31: pide el sonido 0x31
 C 0xA634 estado_de_cb35_en_0a: en la zona 0x0A, salas 0x0B, 0x0C, 0x10 y 0x11: el estado de 0xCB35 y la marcha 0
 C 0xA637 anda_y_sitios: con 0xCB80 = 6, solo p03:ADA6
+C 0xA63A lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA655 lee la sala de la zona
 C 0xA668 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA66C lee la zona
@@ -1507,6 +1508,7 @@ C 0xACBB guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el
 C 0xACC2 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xACC5 copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
 C 0xACD5 pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xACD8 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xACDC a_p04_924c: p04:924C con el banco 4 en 0x8000
 C 0xACDF apunta a la Y de Snake
 C 0xACE9 lee la Y de Snake
@@ -1546,9 +1548,12 @@ C 0xAEAC lee 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][gra
 C 0xAEB7 sonido_5c: pide el sonido 0x5C
 C 0xAEDA sonido_5c: pide el sonido 0x5C
 C 0xAEE0 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAEF5 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAEFA pon_d446: 0xD446 = 4
 C 0xAEFF a_p04_9949: p04:9949 con el banco 4 en 0x8000
+C 0xAF07 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAF0C pon_d446: 0xD446 = 4
+C 0xAF14 guarda la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 C 0xAF18 fichas_cb80: las 6 fichas de 16 bytes de 0xCB80 (lo que lanza Snake)
 C 0xAF1B fichas_cc00: las 8 fichas de 16 bytes de 0xCC00 (p11:B494)
 C 0xAF1E fichas_cc80: las 16 fichas de 8 bytes de 0xCC80 (p11:B66E)
@@ -1753,7 +1758,7 @@ C 0xB95B dos_lineas_a_0: las lineas de 0x20 de ancho a 0 en la pagina de dibujar
 C 0xB982 quita_mosaico_de_quien_habla: la ficha A de 0xE260 libre y su sitio (0x20 x 0x30) a 0
 C 0xB995 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB99D borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-C 0xB9EB guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter
+C 0xB9EB guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 C 0xB9F9 rectangulo_de_44: la ficha A de la tabla de HL en el banco 44-45: [dy][dx][filas][columnas][caracteres]
 C 0xBA42 a_p06_a543: p06:A543 con el banco 6 en 0xA000
 C 0xBA4C rectangulo_de_44: la ficha A de la tabla de HL en el banco 44-45: [dy][dx][filas][columnas][caracteres]
@@ -1762,11 +1767,13 @@ C 0xBA54 guarda 1 mientras hay una llamada
 C 0xBA57 guarda 1 mientras corre la tercera barra
 C 0xBA5A lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xBA61 guarda 1 mientras se ve la barra de la derecha
+C 0xBA6B lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBA73 empieza_tercera_barra: 0xCAC8 = A, 0xDFF0 = 1, la paleta A de p02:851E, la barra de la derecha y la llamada 0
 C 0xBA7F lee la zona
 C 0xBA86 terna_con_ca5f: con el nibble bajo, solo vale con 0xCA5F (acarreo si no)
 C 0xBA8B terna_de_esta_sala: Z si es esta sala; con el nibble alto, en la especial 0x29 con 0xCAE0 = 1
 C 0xBA8E terna_casa: 
+C 0xBA9E lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBAAE guarda la tercera barra (lo que queda)
 C 0xBABE borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xBAD3 lee la sala de la zona
@@ -1779,6 +1786,7 @@ C 0xBB38 marco_derecha_ca54: con la barra de la derecha: su rotulo y su marco co
 C 0xBB46 p00:42B0
 C 0xBB4C lee 1 mientras corre la tercera barra
 C 0xBB52 guarda 1 mientras se ve la barra de la derecha
+C 0xBB61 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBB67 guarda 1 mientras se ve la barra de la derecha
 C 0xBB6A borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xBB6D paleta_de_la_sala: la paleta comun y la de la sala

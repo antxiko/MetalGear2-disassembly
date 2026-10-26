@@ -1713,7 +1713,9 @@ C 0x4276 dibujos_8037: los dibujos de p46:8037 en la VRAM de 0xA000
 C 0x4279 a_p12_6f41: p12:6F41 con el banco 12 en 0x6000
 C 0x4282 mosaicos_del_marcador: cuatro mosaicos del banco 46 en el marcador
 C 0x4288 borra_barra_de_vida: borra la barra de vida con el ancho de 0xCA52
+C 0x428E lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x4293 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x4296 vida_en_alerta: 
 C 0x429C barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
 C 0x42A2 barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
 C 0x42A8 lee lo largo de la barra de la derecha llena
@@ -1995,8 +1997,8 @@ C 0x5377 a_p09_a163: p09:A163 con el banco 9 en 0xA000
 C 0x537D sala_zona_12_otra_vez: en la zona 0x12, las salas 2 (con 0xD888) y 3 (con 0xD881) se pintan otra vez
 C 0x5384 copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
 C 0x5387 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x538A p04:917C
-C 0x538D p04:88B7
+C 0x538A alerta_cada_cuadro: con 4 que siguen o desde la zona 0x10, p00:5A0F; en la 0x0C desde la sala 3, tambien
+C 0x538D pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 C 0x5390 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5393 p10:A0D3
 C 0x5396 p10:A000
@@ -2020,7 +2022,7 @@ C 0x53C9 p15:BCB4
 C 0x53CC bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53CF a_p11_a389: p11:A389 con el banco 11 en 0xA000
 C 0x53ED bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x53F0 p04:818B
+C 0x53F0 pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 C 0x53F3 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53F6 p10:BE6D
 C 0x53F9 p10:BC1E
@@ -2046,9 +2048,11 @@ C 0x547C copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
 C 0x547F bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5482 copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
 C 0x5485 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5488 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x5492 marco_c4: p00:5F90 y las lineas de p00:439D, salvo en la zona 0x12 sala 8 con 0xD8A4
 C 0x5498 a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
 C 0x549E a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
+C 0x54A4 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x54A8 copia_marcador_a_esta: copia las lineas 0x16-0x51 de la otra pagina a la de dibujar (YMMM)
 C 0x54B4 sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 C 0x54B7 bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
@@ -2058,19 +2062,24 @@ C 0x54C0 umbrales_de_la_sala: los umbrales de los juegos de piezas de la sala (p
 C 0x54C3 sala_banco_15: p15:A005 con el banco 15
 C 0x54CC paleta_de_la_sala: la paleta comun y la de la sala
 C 0x54D5 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x54D8 pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 C 0x54DB bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x54DE ventana_c4_en_la_otra: p00:54FA con la pagina de dibujar cambiada un momento
 C 0x54E1 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x54E4 ventana_c4_en_la_otra: p00:54FA con la pagina de dibujar cambiada un momento
 C 0x54E7 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x54EA apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x54FA lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x550C borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x550F bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5512 rotulos_de_alerta: los rotulos de p04:98E0 y, segun la alerta, los de p04:98E9 o p04:98F2...
+C 0x5515 imagen_de_alerta: la imagen de la alerta (p56:A242 con la 1, p56:A2A6 con la 2) con p12:6FC4 y dos franjas a la VRAM
 C 0x5518 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x554E guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x5553 guarda la espera hasta poner la musica pendiente
 C 0x5556 p12:6BE4
 C 0x556D musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
+C 0x5571 guarda las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0x557E borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x5584 llama_ab91: p06:AB91 guardando el banco de 0xA000
 C 0x559A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2098,6 +2107,8 @@ C 0x5635 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5638 llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 C 0x563B bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5641 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5644 alerta_cada_cuadro: con 4 que siguen o desde la zona 0x10, p00:5A0F; en la 0x0C desde la sala 3, tambien
+C 0x5647 pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 C 0x564A bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x564D p08:A7DA
 C 0x5650 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2119,7 +2130,7 @@ C 0x5723 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con 
 C 0x5726 lee la sala de la zona
 C 0x575F borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0x5762 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5765 p04:89A8
+C 0x5765 a_p06_b239_guarda: p06:B239 guardando el banco de 0xA000
 C 0x5768 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x576E bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5771 p15:A005
@@ -2127,6 +2138,7 @@ C 0x5774 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5777 lee la zona
 C 0x577D lee la sala de la zona
 C 0x579A sala_banco_15: p15:A005 con el banco 15
+C 0x57B7 guarda la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 C 0x57E9 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0x57EC lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x57F3 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
@@ -2143,13 +2155,14 @@ C 0x5842 p15:A000
 C 0x5845 bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5848 a_p12_746b: p12:746B con el banco 12 en 0x6000
 C 0x584B bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x584E p04:8986
+C 0x584E mosaico_zona_7: en la zona 7 fila 8 columna 7, con 0xD800 = 1 y 0xD801 = 0: el mosaico en X = 0x48
 C 0x5851 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x585A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x585D llama_abbb: p06:ABBB guardando el banco de 0xA000
 C 0x5860 piezas_de_83dc: en las zonas 1-6, fila 3, columna 7: dos piezas (p02:8409) en Y = 0x88, X = 0x58 y 0x60
 C 0x5866 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x586C bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x586F pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 C 0x5872 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5878 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x587C cosas_de_la_sala: las cosas de la sala (0xD7C0) de las listas de p06 y las pinta
@@ -2185,7 +2198,10 @@ C 0x59FD borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes d
 C 0x5A06 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x5A09 d41a_y_compania: C = 0
 C 0x5A0C enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
+C 0x5A1A guarda cuantos actores han llegado con la alerta
+C 0x5A1D guarda cuantos actores hay de los que llegan
 C 0x5A25 limpia_sala: 0xD8D8-0xD8DF a cero
+C 0x5A4A guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x5A4E sala_de_entrada: por la salida 1: 0xCA50 = 1; por la 2, la pareja de C en p02:827A
 C 0x5A6C sonido_04: pide el sonido 0x04
 C 0x5A72 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2239,6 +2255,7 @@ C 0x5D4C bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x5D4F bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5D55 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5D5E borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x5D61 pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 C 0x5D66 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x5D6E bancos_6_12: el 6 en 0xA000 y el 12 en 0x6000
 C 0x5D74 p12:6000
@@ -2301,6 +2318,8 @@ C 0x5E87 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5E8F p10:AAA9
 C 0x5E92 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E99 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5EA5 a_p06_b239_guarda: p06:B239 guardando el banco de 0xA000
+C 0x5EAB pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 C 0x5EB3 vuelve_el_mapa: el mapa guardado en 0xE2C0 otra vez a 0xDD00 y lo de la sala en la otra pagina
 C 0x5EB9 enciende_todo: la pantalla y los sprites encendidos
 C 0x5EC5 guarda el puntero a los bloques de 4 x 4 de la sala y el byte siguiente (16 bits)

@@ -623,8 +623,11 @@ C 0xBA76 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xBA85 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xBAAC guarda la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xBABE sonido_05: pide el sonido 0x05
+C 0xBAF4 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBAFE sonido_05: pide el sonido 0x05
+C 0xBB07 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBB0C apunta a la espera hasta poner la musica pendiente
+C 0xBB12 lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xBB18 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xBB23 guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0xBB3E linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
@@ -679,7 +682,9 @@ C 0xBF3F sonido_29: pide el sonido 0x29
 C 0xBF42 a_p15_bdb8: p15:BDB8 con el banco 15 en 0xA000
 C 0xBF52 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBF5D lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xBF63 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBF8B sonido_02: pide el sonido 0x02
+C 0xBF8E lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xBF92 p02:8C24
 C 0xBF95 p02:8EB6
 C 0xBF9E byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)

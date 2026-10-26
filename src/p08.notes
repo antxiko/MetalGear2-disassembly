@@ -58,8 +58,10 @@ F 0xBE7D 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0xA007 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA055 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA06B lee la sala de la zona
 C 0xA09D suma_a_hl: HL = HL + A
+C 0xA0BC guarda cuantos actores han llegado con la alerta
 C 0xA0EB apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA0FB lee la sala de la zona
 C 0xA0FF lee la zona
@@ -85,14 +87,17 @@ C 0xA1AA apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
 C 0xA1B0 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 C 0xA1B3 lee la zona
 C 0xA1B9 lee la columna de la sala en la zona (uno mas al salir por la derecha)
-C 0xA1C4 p04:929A
-C 0xA1DB p04:8ECD
-C 0xA1DE p04:8ED9
-C 0xA1EF p04:8F16
+C 0xA1BF lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xA1C4 a_p06_b55a_guarda: p06:B55A guardando el banco de 0xA000 (y su acarreo)
+C 0xA1DB a_p06_b626_guarda: p06:B626 guardando el banco de 0xA000
+C 0xA1DE actor_paso_9: el paso 9: los tipos 0x0B y 0x0C, o al acabar la espera, vuelven a lo de antes (bytes 0x20, 0x22, 0x15)
+C 0xA1E6 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xA1EF actor_por_paso: si no se ve, nada; el paso 8 p06:B626, el 9 p04:8ED9, los demas por p04:8F2A
 C 0xA1FF despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA21E bloques_de_77ef: la sala de la ficha IX de p24:77EF con los bloques de p25:9EE4, a 0xE500
 C 0xA245 suma_a_hl: HL = HL + A
 C 0xA279 bloques_de_77ef: la sala de la ficha IX de p24:77EF con los bloques de p25:9EE4, a 0xE500
+C 0xA27D guarda las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xA2BC es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA2CD lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA2D2 sonido_51: pide el sonido 0x51
@@ -106,7 +111,7 @@ C 0xA499 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA4B8 lee la sala de la zona
 C 0xA4C8 suma_a_hl: HL = HL + A
 C 0xA4EA suma_a_hl: HL = HL + A
-C 0xA518 p04:80E6
+C 0xA518 a_p14_b88f_guarda: p14:B88F guardando el banco de 0xA000
 C 0xA53F suma_a_hl: HL = HL + A
 C 0xA561 sonido_5d: pide el sonido 0x5D
 C 0xA564 sonido_3b: pide el sonido 0x3B
@@ -115,8 +120,8 @@ C 0xA5C1 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA5CA palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA5F5 suma_a_hl: HL = HL + A
 C 0xA631 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
-C 0xA671 p04:90C8
-C 0xA690 p04:808B
+C 0xA671 choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
+C 0xA690 da_la_vuelta_al_actor: las dos velocidades del actor cambiadas de signo
 C 0xA708 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA75B de_negativo: DE = -DE
 C 0xA76B lee el contador de cuadros (uno mas en cada interrupcion)
@@ -124,15 +129,29 @@ C 0xA76F p04:902E
 C 0xA7CF azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA7DA lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7E3 lee la sala de la zona
+C 0xA7EB apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xA7F1 lee el tipo del actor (0 = libre)
 C 0xA7FB sonido_24: pide el sonido 0x24
 C 0xA806 lee la sala de la zona
 C 0xA810 lee 1 en el estado 2 de Snake
 C 0xA815 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xA82C apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xA83C suma_a_hl: HL = HL + A
 C 0xA842 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA850 lee la sala de la zona
 C 0xA855 lee 1 en el estado 2 de Snake
+C 0xA87D apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xA883 el paso del actor = 0x08
+C 0xA887 baja la fila de la sala del actor
+C 0xA88A la Y del actor = 0x4C
+C 0xA88E la X del actor = 0x60
+C 0xA893 guarda la velocidad del actor en Y (baja)
+C 0xA896 la velocidad del actor en Y (alta) = 0x03
+C 0xA89A guarda la velocidad del actor en X (baja)
+C 0xA89D guarda la velocidad del actor en X (alta)
 C 0xA8B2 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA8B7 guarda la espera del actor
+C 0xA8BB apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xA8C5 suma_a_hl: HL = HL + A
 C 0xA8D6 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA8F7 de_negativo: DE = -DE
@@ -142,8 +161,8 @@ C 0xA960 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA996 lee la Y de Snake
 C 0xA9A6 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xAA1E hl_negativo: HL = -HL (PR2 p00:5BBD)
-C 0xAA24 p04:90A9
-C 0xAA27 p04:908C
+C 0xAA24 lados_de_snake: B = los lados en los que esta Snake: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha
+C 0xAA27 eje_hacia_snake: A = 3 si Snake esta mas lejos en Y, 0x0C si en X
 C 0xAA4F despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAA72 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAA7A lee el contador de cuadros (uno mas en cada interrupcion)
@@ -161,21 +180,31 @@ C 0xABAA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xABAF llama_7a27_1_bancos_8: 
 C 0xABC0 lee la Y de Snake
 C 0xABCD lee la X de Snake
+C 0xABE5 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAC2F sonido_32: pide el sonido 0x32
 C 0xAC4A sonido_55: pide el sonido 0x55
 C 0xAC53 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAC5C suma_a_hl: HL = HL + A
-C 0xAC7F p04:8E65
+C 0xAC7F destino_del_tramo: el destino del tramo: la fila y la columna (bytes 0x12-0x13) y el punto (0x14)
 C 0xAC86 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAD4D despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAD58 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xAD5E lee el tipo del actor (0 = libre)
+C 0xAD68 lee el paso del actor
 C 0xAD7C lee la zona
 C 0xAD82 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAD8F suma_a_hl: HL = HL + A
-C 0xAE1D p04:8E82
+C 0xADF6 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xAE07 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xAE1D llega_al_destino: en la sala del destino, acarreo si aun no ha llegado al punto (segun hacia donde va)
 C 0xAE55 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xAE60 p04:808E
+C 0xAE60 vuelve_en_x: la velocidad en X cambiada de signo
 C 0xAE7B lee la zona
+C 0xAE81 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xAE88 lee el tipo del actor (0 = libre)
+C 0xAE94 lee la columna de la sala del actor
 C 0xAE9B lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xAEA8 el dibujo del actor (bit 0: el paso) = 0x00
 C 0xAEC6 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xAED2 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAEE5 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
@@ -185,12 +214,13 @@ C 0xAF08 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con 
 C 0xAF0E despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAF38 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAF57 suma_a_hl: HL = HL + A
+C 0xAF73 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAFEF despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB006 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB019 sonido_15: pide el sonido 0x15
 C 0xB028 suma_a_hl: HL = HL + A
 C 0xB02F llena_bloque: pone A en BC + 1 bytes desde HL
-C 0xB035 p04:834C
+C 0xB035 quita_actor: sus sprites libres y fuera; el 0x13 apunta en 0xD4F8, el 0x0B con alerta 0xCA67 = 0
 C 0xBC61 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBC80 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xBC83 dibujos_7118_bancos_8: 

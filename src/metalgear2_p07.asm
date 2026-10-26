@@ -600,7 +600,7 @@ L_A470:
 	ld a,(0ca4ah)		;a47c   ; lee la zona
 	cp 00dh		;a47f
 	ret z			;a481
-	ld a,(0ca5fh)		;a482
+	ld a,(0ca5fh)		;a482   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;a485
 	ret z			;a486
 L_A487:
@@ -612,7 +612,7 @@ L_A48D:
 	ld a,(0ca4ah)		;a490   ; lee la zona
 	cp 00ah		;a493
 	ret nz			;a495
-	ld a,(0ca5fh)		;a496
+	ld a,(0ca5fh)		;a496   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;a499
 	ret z			;a49a
 	jr L_A487		;a49b
@@ -1077,7 +1077,7 @@ L_A7D6:
 L_A7E1:
 	xor a			;a7e1
 	ld (0ca76h),a		;a7e2   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
-	ld a,(0ca5fh)		;a7e5
+	ld a,(0ca5fh)		;a7e5   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;a7e8
 	ld a,b			;a7e9
 	jr z,L_A7FA		;a7ea
@@ -1602,7 +1602,7 @@ L_AC7E:
 	call L_B670		;ac7e
 	ret nz			;ac81
 L_AC82:
-	ld ix,0ce00h		;ac82
+	ld ix,0ce00h		;ac82   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;ac86
 L_AC88:
 	exx			;ac88
@@ -1611,7 +1611,7 @@ L_AC88:
 	jr nz,L_ACD9		;ac8d
 	call L_B5AF		;ac8f
 	jr nc,L_ACD9		;ac92
-	ld a,(ix+000h)		;ac94
+	ld a,(ix+000h)		;ac94   ; lee el tipo del actor (0 = libre)
 	and 07fh		;ac97
 	ld c,a			;ac99
 	cp 018h		;ac9a
@@ -1627,16 +1627,16 @@ L_AC88:
 	cp 013h		;acad
 	ld c,004h		;acaf
 	jr nz,L_ACB9		;acb1
-	ld (ix+001h),002h		;acb3
+	ld (ix+001h),002h		;acb3   ; el paso del actor = 0x02
 	ld c,00ch		;acb7
 L_ACB9:
 	xor a			;acb9
 	call L_B377		;acba
-	ld a,(ix+000h)		;acbd
+	ld a,(ix+000h)		;acbd   ; lee el tipo del actor (0 = libre)
 	and 07fh		;acc0
 	cp 010h		;acc2
 	jr nc,L_ACD9		;acc4
-	ld a,(0ca5fh)		;acc6
+	ld a,(0ca5fh)		;acc6   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	cp 002h		;acc9
 	jr nc,L_ACD9		;accb
 	ld a,(0cb21h)		;accd   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -1684,7 +1684,7 @@ L_AD0E:
 L_AD1E:
 	call L_B5CC		;ad1e
 	ret nz			;ad21
-	ld ix,0ce00h		;ad22
+	ld ix,0ce00h		;ad22   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;ad26
 L_AD28:
 	exx			;ad28
@@ -1693,7 +1693,7 @@ L_AD28:
 	jr nz,L_AD4D		;ad2d
 	call L_B5AF		;ad2f
 	jr nc,L_AD4D		;ad32
-	ld a,(ix+000h)		;ad34
+	ld a,(ix+000h)		;ad34   ; lee el tipo del actor (0 = libre)
 	and 07fh		;ad37
 	cp 016h		;ad39
 	jr z,L_AD4D		;ad3b
@@ -1721,7 +1721,7 @@ L_AD57:
 	ret nz			;ad60
 	call L_B5CC		;ad61
 	ret nz			;ad64
-	ld ix,0d460h		;ad65
+	ld ix,0d460h		;ad65   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 	ld b,006h		;ad69
 L_AD6B:
 	exx			;ad6b
@@ -1749,10 +1749,10 @@ L_AD93:
 	exx			;ad93
 	call L_B734		;ad94
 	jr nz,L_ADFD		;ad97
-	ld ix,0ce00h		;ad99
+	ld ix,0ce00h		;ad99   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;ad9d
 L_AD9F:
-	ld a,(ix+000h)		;ad9f
+	ld a,(ix+000h)		;ad9f   ; lee el tipo del actor (0 = libre)
 	cp 014h		;ada2
 	jr z,L_ADAD		;ada4
 	ld a,(iy+000h)		;ada6
@@ -1774,7 +1774,7 @@ L_ADAD:
 	call L_AE3D		;adc7
 	jr L_ADFD		;adca
 L_ADCC:
-	ld a,(ix+000h)		;adcc
+	ld a,(ix+000h)		;adcc   ; lee el tipo del actor (0 = libre)
 	and 07fh		;adcf
 	sub 016h		;add1
 	cp 002h		;add3
@@ -1782,7 +1782,7 @@ L_ADCC:
 	xor a			;add7
 	ld (iy+000h),a		;add8
 	ld (0cb52h),a		;addb
-	ld a,(ix+000h)		;adde
+	ld a,(ix+000h)		;adde   ; lee el tipo del actor (0 = libre)
 	and 07fh		;ade1
 	sub 010h		;ade3
 	cp 002h		;ade5
@@ -1854,14 +1854,14 @@ L_AE3D:
 L_AE57:
 	call L_B5CC		;ae57
 	ret nz			;ae5a
-	ld ix,0d800h		;ae5b
+	ld ix,0d800h		;ae5b   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;ae5f
 L_AE61:
 	exx			;ae61
 	call L_B97A		;ae62
 	exx			;ae65
 	jr nz,L_AE7A		;ae66
-	ld a,(ix+000h)		;ae68
+	ld a,(ix+000h)		;ae68   ; lee el tipo de la ficha de 0xD800
 	cp 009h		;ae6b
 	jr z,L_AE7A		;ae6d
 	call L_B5AF		;ae6f
@@ -1884,7 +1884,7 @@ L_AE8B:
 	exx			;ae8b
 	call L_B734		;ae8c
 	jr nz,L_AEC7		;ae8f
-	ld ix,0d800h		;ae91
+	ld ix,0d800h		;ae91   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,020h		;ae95
 L_AE97:
 	exx			;ae97
@@ -1922,7 +1922,7 @@ L_AEC7:
 L_AED1:
 	call L_B70F		;aed1
 	ret nz			;aed4
-	ld ix,0ce00h		;aed5
+	ld ix,0ce00h		;aed5   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;aed9
 L_AEDB:
 	exx			;aedb
@@ -1931,7 +1931,7 @@ L_AEDB:
 	jr nz,L_AF03		;aee0
 	call L_B5AF		;aee2
 	jr nc,L_AF03		;aee5
-	ld a,(ix+000h)		;aee7
+	ld a,(ix+000h)		;aee7   ; lee el tipo del actor (0 = libre)
 	and 07fh		;aeea
 	cp 00ah		;aeec
 	jr z,L_AF03		;aeee
@@ -1955,10 +1955,10 @@ L_AF03:
 L_AF0D:
 	call L_B70F		;af0d
 	ret nz			;af10
-	ld ix,0d800h		;af11
+	ld ix,0d800h		;af11   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;af15
 L_AF17:
-	ld a,(ix+000h)		;af17
+	ld a,(ix+000h)		;af17   ; lee el tipo de la ficha de 0xD800
 	cp 00ah		;af1a
 	jr z,L_AF2F		;af1c
 	exx			;af1e
@@ -1982,7 +1982,7 @@ L_AF39:
 	ret nz			;af3e
 	call L_B84A		;af3f
 	ret nz			;af42
-	ld ix,0d800h		;af43
+	ld ix,0d800h		;af43   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;af47
 L_AF49:
 	exx			;af49
@@ -2030,7 +2030,7 @@ L_AF91:
 	exx			;af91
 	call L_B787		;af92
 	jr nz,L_AFED		;af95
-	ld ix,0ce00h		;af97
+	ld ix,0ce00h		;af97   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;af9b
 L_AF9D:
 	exx			;af9d
@@ -2040,10 +2040,10 @@ L_AF9D:
 	ld a,(0ca4ah)		;afa4   ; lee la zona
 	cp 00ch		;afa7
 	jr nz,L_AFC0		;afa9
-	ld a,(ix+00ah)		;afab
+	ld a,(ix+00ah)		;afab   ; lee la fila de la sala del actor
 	cp 003h		;afae
 	jr nz,L_AFC0		;afb0
-	ld a,(ix+00bh)		;afb2
+	ld a,(ix+00bh)		;afb2   ; lee la columna de la sala del actor
 	cp 006h		;afb5
 	jr nz,L_AFC0		;afb7
 	ld a,(0ca4bh)		;afb9   ; lee la sala de la zona
@@ -2052,12 +2052,12 @@ L_AF9D:
 L_AFC0:
 	call L_B5AF		;afc0
 	jr nc,L_AFE4		;afc3
-	ld a,(ix+000h)		;afc5
+	ld a,(ix+000h)		;afc5   ; lee el tipo del actor (0 = libre)
 	and 07fh		;afc8
 	sub 016h		;afca
 	cp 002h		;afcc
 	jr c,L_AFE4		;afce
-	ld a,(ix+000h)		;afd0
+	ld a,(ix+000h)		;afd0   ; lee el tipo del actor (0 = libre)
 	and 07fh		;afd3
 	sub 010h		;afd5
 	cp 002h		;afd7
@@ -2088,7 +2088,7 @@ L_AFFE:
 	exx			;affe
 	call L_B787		;afff
 	jr nz,L_B02D		;b002
-	ld ix,0d800h		;b004
+	ld ix,0d800h		;b004   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;b008
 L_B00A:
 	exx			;b00a
@@ -2168,7 +2168,7 @@ L_B08C:
 	exx			;b08c
 	call L_B7B6		;b08d
 	jr nz,L_B0DB		;b090
-	ld ix,0ce00h		;b092
+	ld ix,0ce00h		;b092   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;b096
 L_B098:
 	ld a,(iy+000h)		;b098
@@ -2179,10 +2179,10 @@ L_B098:
 	cp (ix+01bh)		;b0a3
 	jr z,L_B0D2		;b0a6
 L_B0A8:
-	ld a,(ix+00ah)		;b0a8
+	ld a,(ix+00ah)		;b0a8   ; lee la fila de la sala del actor
 	cp (iy+004h)		;b0ab
 	jr nz,L_B0D2		;b0ae
-	ld a,(ix+00bh)		;b0b0
+	ld a,(ix+00bh)		;b0b0   ; lee la columna de la sala del actor
 	cp (iy+005h)		;b0b3
 	jr nz,L_B0D2		;b0b6
 	exx			;b0b8
@@ -2191,7 +2191,7 @@ L_B0A8:
 	jr nz,L_B0D2		;b0bd
 	call L_B5AF		;b0bf
 	jr nc,L_B0D2		;b0c2
-	ld a,(ix+000h)		;b0c4
+	ld a,(ix+000h)		;b0c4   ; lee el tipo del actor (0 = libre)
 	and 07fh		;b0c7
 	sub 016h		;b0c9
 	cp 002h		;b0cb
@@ -2218,7 +2218,7 @@ L_B0EC:
 	exx			;b0ec
 	call L_B7B6		;b0ed
 	jr nz,L_B13F		;b0f0
-	ld ix,0d800h		;b0f2
+	ld ix,0d800h		;b0f2   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;b0f6
 L_B0F8:
 	exx			;b0f8
@@ -2232,12 +2232,12 @@ L_B0F8:
 	jr z,L_B117		;b108
 	cp 002h		;b10a
 	jr z,L_B136		;b10c
-	ld a,(ix+000h)		;b10e
+	ld a,(ix+000h)		;b10e   ; lee el tipo de la ficha de 0xD800
 	cp 00bh		;b111
 	jr nz,L_B136		;b113
 	jr L_B11E		;b115
 L_B117:
-	ld a,(ix+000h)		;b117
+	ld a,(ix+000h)		;b117   ; lee el tipo de la ficha de 0xD800
 	cp 00bh		;b11a
 	jr z,L_B136		;b11c
 L_B11E:
@@ -2290,7 +2290,7 @@ L_B170:
 	or a			;b173
 	ret nz			;b174
 	call L_B889		;b175
-	ld ix,0ce00h		;b178
+	ld ix,0ce00h		;b178   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;b17c
 L_B17E:
 	exx			;b17e
@@ -2299,11 +2299,11 @@ L_B17E:
 	jr nz,L_B1A7		;b183
 	call L_B5AF		;b185
 	jr nc,L_B1A7		;b188
-	ld a,(ix+000h)		;b18a
+	ld a,(ix+000h)		;b18a   ; lee el tipo del actor (0 = libre)
 	and 07fh		;b18d
 	cp 013h		;b18f
 	jr nc,L_B1A7		;b191
-	ld a,(ix+000h)		;b193
+	ld a,(ix+000h)		;b193   ; lee el tipo del actor (0 = libre)
 	and 07fh		;b196
 	sub 010h		;b198
 	cp 002h		;b19a
@@ -2322,14 +2322,14 @@ L_B1A7:
 	ret			;b1b0
 L_B1B1:
 	call L_B889		;b1b1
-	ld ix,0d800h		;b1b4
+	ld ix,0d800h		;b1b4   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;b1b8
 L_B1BA:
 	exx			;b1ba
 	call L_B9B5		;b1bb
 	exx			;b1be
 	jr nz,L_B1D6		;b1bf
-	ld a,(ix+000h)		;b1c1
+	ld a,(ix+000h)		;b1c1   ; lee el tipo de la ficha de 0xD800
 	cp 008h		;b1c4
 	jr z,L_B1CC		;b1c6
 	cp 005h		;b1c8
@@ -2420,14 +2420,14 @@ L_B258:
 L_B25D:
 	call L_B6CC		;b25d
 	ret nz			;b260
-	ld ix,0ce00h		;b261
+	ld ix,0ce00h		;b261   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;b265
 L_B267:
 	exx			;b267
 	call L_B90A		;b268
 	exx			;b26b
 	jr nz,L_B290		;b26c
-	ld a,(ix+000h)		;b26e
+	ld a,(ix+000h)		;b26e   ; lee el tipo del actor (0 = libre)
 	and 07fh		;b271
 	cp 018h		;b273
 	jr nz,L_B290		;b275
@@ -2551,10 +2551,10 @@ L_B338:
 	cp 002h		;b33b
 	ret nz			;b33d
 	ld ix,0d820h		;b33e
-	ld a,(ix+000h)		;b342
+	ld a,(ix+000h)		;b342   ; lee el tipo de la ficha de 0xD800
 	cp 009h		;b345
 	ret nz			;b347
-	ld a,(ix+00dh)		;b348
+	ld a,(ix+00dh)		;b348   ; lee el dibujo de la ficha de 0xD800
 	sub 008h		;b34b
 	cp 004h		;b34d
 	ret nc			;b34f
@@ -2655,7 +2655,7 @@ L_B3F8:
 	call 07af0h		;b3fb   ; a_p04_8326: p04:8326 con el banco 4 en 0x8000
 	jp 07ae0h		;b3fe   ; a_p04_82fd: p04:82FD con el banco 4 en 0x8000
 L_B401:
-	ld a,(0ca5fh)		;b401
+	ld a,(0ca5fh)		;b401   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;b404
 	ret nz			;b405
 	ld a,(ix+000h)		;b406
@@ -2789,7 +2789,7 @@ L_B4C0:
 	ld (ix+016h),000h		;b4cd
 	ld (ix+017h),004h		;b4d1
 L_B4D5:
-	ld hl,0d460h		;b4d5
+	ld hl,0d460h		;b4d5   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 	ld bc,0005fh		;b4d8
 	call 04236h		;b4db   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0d4c0h		;b4de
@@ -4175,7 +4175,7 @@ L_BE3E:
 	and a			;be3e
 	ret			;be3f
 L_BE40:
-	ld a,(0d800h)		;be40
+	ld a,(0d800h)		;be40   ; lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	cp 002h		;be43
 	ret nz			;be45
 	ld a,(0ca4bh)		;be46   ; lee la sala de la zona

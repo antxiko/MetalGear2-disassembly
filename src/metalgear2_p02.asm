@@ -218,7 +218,7 @@ L_813C:
 	and a			;8143
 	jr nz,L_814F		;8144
 	push de			;8146
-	ld a,(0ca5fh)		;8147
+	ld a,(0ca5fh)		;8147   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;814a
 	call z,07c77h		;814b   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	pop de			;814e
@@ -1129,7 +1129,7 @@ a_p06_aa49:		; p06:AA49 con el banco 6 en 0xA000
 borra_ce00:		; 0xD417 = 0x1E y 0xCE00-0xD3FF a cero
 	ld a,01eh		;875d
 	ld (0d417h),a		;875f
-	ld hl,0ce00h		;8762
+	ld hl,0ce00h		;8762   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld bc,005ffh		;8765
 	jp 04236h		;8768   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 fichas_e280_de_sala:		; la lista de p56 de HL: la ficha de la sala, y sus piezas a 0xE280
@@ -1553,7 +1553,7 @@ L_8A7B:
 	ld a,(0d430h)		;8a7d   ; con 0xD430 = 1 o 0xCA5F >= 2, nada pendiente
 	dec a			;8a80
 	jr z,L_8A8B		;8a81
-	ld a,(0ca5fh)		;8a83
+	ld a,(0ca5fh)		;8a83   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	cp 002h		;8a86
 	jp c,L_89F4		;8a88
 L_8A8B:
@@ -4587,7 +4587,7 @@ partida_nueva:		; la partida desde el principio
 	ld hl,0d7f1h		;9e56   ; el bit 7 de 0xD7F1 a uno
 	set 7,(hl)		;9e59
 	ld hl,00000h		;9e5b   ; 0xCA5F = 0xCA60 = 0
-	ld (0ca5fh),hl		;9e5e
+	ld (0ca5fh),hl		;9e5e   ; guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna y el byte siguiente (16 bits)
 	xor a			;9e61   ; la pagina 0, la zona 0, 0xCAAD = 0 y la fase 0
 	ld (0ca42h),a		;9e62   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld (0ca4ah),a		;9e65   ; guarda la zona
@@ -4744,7 +4744,7 @@ cuenta_cb3a:		; con 0xCB39, sin 0xCA5F, chocando y sin 0xCB3C
 	ld a,(0cb39h)		;9f94
 	or a			;9f97
 	ret z			;9f98
-	ld a,(0ca5fh)		;9f99
+	ld a,(0ca5fh)		;9f99   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;9f9c
 	ret nz			;9f9d
 	ld a,(0cb0fh)		;9f9e   ; lee 1 si Snake ha chocado en este cuadro

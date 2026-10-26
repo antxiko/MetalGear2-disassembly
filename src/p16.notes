@@ -163,6 +163,7 @@ C 0x431D guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4324 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 C 0x4329 guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4330 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x4333 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x434D guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4354 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 C 0x435C guarda el canal de sonido que se esta tocando (1, 2, 4...)
@@ -186,6 +187,7 @@ C 0x45F3 lee el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4619 guarda el puntero de la partitura (bajo)
 C 0x461C guarda el puntero de la partitura (alto)
 C 0x4622 guarda lo que le queda a la nota
+C 0x4636 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x463F sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
 C 0x4657 lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
 C 0x4689 sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,

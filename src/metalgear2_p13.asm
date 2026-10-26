@@ -2199,7 +2199,7 @@ L_92D1:
 	ld bc,00d02h		;9302
 	call 0489ch		;9305   ; caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 	ld hl,0afb6h		;9308
-	ld de,0d800h		;930b
+	ld de,0d800h		;930b   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld bc,01a03h		;930e
 	call 0489ch		;9311   ; caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 	ld de,04040h		;9314

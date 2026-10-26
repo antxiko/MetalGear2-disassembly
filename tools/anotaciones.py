@@ -130,6 +130,7 @@ RAM = {
     0xCA1C: ("1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)", "p03:A041, p03:A083"),
     0xCA20: ("la rutina de la musica que suena (16 bits; p00:5B50)", "p00:5B50, p00:5B58"),
     0xCA22: ("la fase de la partida (indice de las listas de p06:B40C)", "p01:7D19"),
+    0xCA26: ("1 mientras suena la musica de un actor", "p04:8671, p04:86A4"),
     0xCA41: ("la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)", "p02:9602, p02:9699, p02:96F9, p02:9717, p02:80AD"),
     0xCA42: ("la pagina de la VRAM en la que se dibuja (0/1, se alterna)", "p00:543A"),
     0xCA44: ("el puntero a los bloques de 4 x 4 de la sala", "p00:58D8, p00:58E8"),
@@ -153,6 +154,7 @@ RAM = {
     0xCA5C: ("el angulo hacia el destino dentro del octante (p08:BE7D)", "p02:86ED"),
     0xCA5D: ("el angulo hacia el destino entero (0-0xFF)", "p02:8703"),
     0xCA5E: ("la rapidez de p02:8667", "p02:8667"),
+    0xCA5F: ("la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna", "p14:B20B, p04:9357, p04:9250"),
     0xCA65: ("el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)", "p02:88DA, p02:8943"),
     0xCA68: ("1 si la sala tiene ficha en la lista de p02:877F", "p02:879A"),
     0xCA69: ("el quinto byte de la ficha de la sala (p02:877F)", "p02:87A8"),
@@ -212,6 +214,18 @@ RAM = {
     0xCBE0: ("8 sitios de 4 bytes [numero][Y][X][...] en los que se entra yendo hacia arriba", "p02:88A4, p02:8949"),
     0xCC00: ("8 fichas de 16 bytes que mueve p11:B494", "p03:AF5C"),
     0xCC80: ("16 fichas de 8 bytes que mueve p11:B66E", "p03:AF73"),
+    0xCE00: ("los actores: 24 fichas de 0x40 bytes (p04:800D)", "p04:800D, p04:818B"),
+    0xD300: ("las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)", "p04:9786, p04:9518"),
+    0xD400: ("los 22 sprites que se reparten los actores (1 = ocupado)", "p04:820A"),
+    0xD410: ("los 6 sprites de lo que lanzan los actores (1 = ocupado)", "p04:9B70"),
+    0xD416: ("cuantos actores han llegado con la alerta", "p04:9786, p04:839F"),
+    0xD41C: ("la Y y la X a las que acuden los actores (16 bits)", "p04:9994"),
+    0xD426: ("cuantos actores hay de los que llegan", "p04:9786, p04:980D"),
+    0xD427: ("cuantos pueden llegar como mucho", "p04:980D"),
+    0xD42B: ("la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba", "p04:946F, p04:9877"),
+    0xD446: ("la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)", "p04:9982, p03:AF12"),
+    0xD450: ("1: la linea de vista va a lo lanzado y no a Snake", "p04:8421, p04:8662"),
+    0xD460: ("6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)", "p04:9A85, p04:9B5C"),
     0xD600: ("lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1", "p03:BE03, p03:BE93, p03:BDAD"),
     0xD638: ("la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)", "p03:BEB2, p03:BEB7"),
     0xD770: ("las cosas dejadas: 0x23 en 0xD770, 0x29 en 0xD775, la de la especial 0x29 en 0xD77A", "p02:90B9, p02:8FB6"),
@@ -222,10 +236,11 @@ RAM = {
     0xD7C0: ("las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]", "p02:8FDF, p02:9084"),
     0xD7D0: ("las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)", "p03:B0AD, p03:B0E1"),
     0xD7F0: ("otras banderas de la partida (p03:B0D3, p03:B0FE)", "p03:B0D3"),
+    0xD800: ("4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10", "p04:89C3, p04:8940"),
     0xD8A8: ("1: la ventana del mensaje es estrecha (0xB8 x 0x28)", "p01:61D0, p01:6526"),
     0xD8D8: ("las banderas de la sala (se borran al cambiar de sala, p00:59DD)", "p03:B0CE, p03:B103"),
-    0xD8E0: ("1: el juego de dibujos solo pinta sus listas 6 y 7", "p00:4D5A, p00:4D6F"),
-    0xD8E2: ("0: p01:62B5 copia con ldir; 1: caracter a caracter", "p01:62A0, p01:62F0"),
+    0xD8E0: ("de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)", "p00:4D5A, p04:9BDD"),
+    0xD8E2: ("de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)", "p01:62A0, p04:9BE0"),
     0xDA00: ("la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)", "p00:4F97"),
     0xDC00: ("la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]", "p01:68D2, p00:4266"),
     0xDD00: ("el mapa de la sala: 24 x 24 caracteres", "p00:58DD, p00:57BA"),
@@ -273,7 +288,45 @@ CAMPOS_CANAL = {
     0x04: "lo que le queda a la nota",
 }
 CARGAS_CANAL = tuple(0xC400 + 0x40 * k for k in range(8))
-FICHAS = ((CARGAS_CANAL, {16: ((0x4369, 0x4C19),)}, CAMPOS_CANAL),)
+# los actores: 24 fichas de 0x40 bytes en 0xCE00 (p04:800D las recorre; p04:8159
+# salta por el tipo a los bancos 5 y 8). Campos leidos en p04:8100 (fila y
+# columna), p04:808B (velocidades), p04:900B (el paso del dibujo) y p05:A001.
+CAMPOS_ACTOR = {
+    0x00: "el tipo del actor (0 = libre)",
+    0x01: "el paso del actor",
+    0x02: "la Y del actor (fraccion)",
+    0x03: "la Y del actor",
+    0x04: "la X del actor (fraccion)",
+    0x05: "la X del actor",
+    0x06: "la velocidad del actor en Y (baja)",
+    0x07: "la velocidad del actor en Y (alta)",
+    0x08: "la velocidad del actor en X (baja)",
+    0x09: "la velocidad del actor en X (alta)",
+    0x0A: "la fila de la sala del actor",
+    0x0B: "la columna de la sala del actor",
+    0x0D: "el dibujo del actor (bit 0: el paso)",
+    0x0E: "la espera del actor",
+    0x18: "la cuenta del paso del dibujo del actor",
+    0x19: "la rapidez del paso del dibujo del actor (0-3)",
+}
+CARGAS_ACTOR = tuple(0xCE00 + 0x40 * k for k in range(24))
+
+# las 4 fichas de 0x20 bytes de 0xD800 (p04:89C3): la misma forma en lo que se
+# ha leido (p04:89EC, p04:8B52, p04:8C14)
+CAMPOS_D800 = {
+    0x00: "el tipo de la ficha de 0xD800",
+    0x01: "el paso de la ficha de 0xD800",
+    0x03: "la Y de la ficha de 0xD800",
+    0x05: "la X de la ficha de 0xD800",
+    0x0D: "el dibujo de la ficha de 0xD800",
+    0x0E: "la espera de la ficha de 0xD800",
+    0x17: "la espera del parpadeo de la ficha de 0xD800",
+}
+CARGAS_D800 = (0xD800, 0xD820, 0xD840, 0xD860)
+
+FICHAS = ((CARGAS_CANAL, {16: ((0x4369, 0x4C19),)}, CAMPOS_CANAL),
+          (CARGAS_ACTOR, {4: ((0x8000, 0x86ED), (0x8D7E, 0xA000)), 5: ((0xA000, 0xC000),)}, CAMPOS_ACTOR),
+          (CARGAS_D800, {4: ((0x86ED, 0x8D7E),)}, CAMPOS_D800))
 
 
 def _rutinas_txt():

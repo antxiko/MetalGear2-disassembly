@@ -430,11 +430,11 @@ rehace_marcador:		; el marcador: lineas, marco y barra de vida
 barras_de_vida:		; la barra de vida y, con 0xCA5F, p04:9889
 	call borra_barra_de_vida		;4288   ; borra_barra_de_vida: borra la barra de vida con el ancho de 0xCA52
 	call pinta_barra_de_vida		;428b   ; y la pinta con lo que queda (0xCA53)
-	ld a,(0ca5fh)		;428e
+	ld a,(0ca5fh)		;428e   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;4291   ; sin 0xCA5F, ya esta
 	ret z			;4292
 	call bancos_4_5		;4293   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09889h		;4296
+	call 09889h		;4296   ; vida_en_alerta:
 	jp bancos_1_2_3		;4299   ; y los bancos de siempre
 barras_bancos_1_2_10:		; p00:4288 y los bancos 1, 2 y 10
 	call barras_de_vida		;429c   ; barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
@@ -3291,8 +3291,8 @@ L_5310:
 	and a			;5383
 	call z,copia_marcador		;5384   ; copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
 	call bancos_4_5		;5387   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0917ch		;538a   ; p04:917C
-	call 088b7h		;538d   ; p04:88B7
+	call 0917ch		;538a   ; alerta_cada_cuadro: con 4 que siguen o desde la zona 0x10, p00:5A0F; en la 0x0C desde la sala 3, tambien
+	call 088b7h		;538d   ; pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 	call bancos_1_2_10		;5390   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a0d3h		;5393   ; p10:A0D3
 	call 0a000h		;5396   ; p10:A000
@@ -3332,7 +3332,7 @@ L_53E8:
 	ld a,b			;53e9
 	ld (0d41fh),a		;53ea   ; y lo mismo en 0xD41F
 	call bancos_4_5		;53ed   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0818bh		;53f0   ; p04:818B
+	call 0818bh		;53f0   ; pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 	call bancos_1_2_10		;53f3   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be6dh		;53f6   ; p10:BE6D
 	call 0bc1eh		;53f9   ; p10:BC1E
@@ -3417,7 +3417,7 @@ copia_marcador_bancos_5:
 	call copia_marcador		;5482   ; copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
 	jp bancos_1_4_5		;5485   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 marcador_y_ventana:		; con 0xCA5F puesto va por p00:549B
-	ld a,(0ca5fh)		;5488
+	ld a,(0ca5fh)		;5488   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;548b
 	jr nz,L_549B		;548c
 	ld a,(0cabah)		;548e   ; sin 0xCABA, p00:4365
@@ -3430,7 +3430,7 @@ L_549B:
 	call a_p12_6e3a		;549e   ; a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
 	jp ventana_c4_en_la_otra		;54a1   ; y p00:54EA
 copia_marcador:		; sin 0xCA5F, el marcador de una pagina a la otra
-	ld a,(0ca5fh)		;54a4
+	ld a,(0ca5fh)		;54a4   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;54a7
 	jp z,copia_marcador_a_esta		;54a8   ; copia_marcador_a_esta: copia las lineas 0x16-0x51 de la otra pagina a la de dibujar (YMMM)
 	call marco_c4		;54ab   ; con el, p00:4365...
@@ -3449,7 +3449,7 @@ entra_en_sala_corta:		; la entrada a la sala con 0xD8A4: menos cosas
 	call cambia_de_pagina		;54cf   ; ...la sala nueva a la vista...
 	call enciende_sprites		;54d2   ; ...y otra vez con sprites
 	call bancos_4_5		;54d5   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 088b7h		;54d8
+	call 088b7h		;54d8   ; pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 	jp bancos_1_2_3		;54db   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 ventana_c4_bancos_7:
 	call ventana_c4_en_la_otra		;54de   ; ventana_c4_en_la_otra: p00:54FA con la pagina de dibujar cambiada un momento
@@ -3470,7 +3470,7 @@ ventana_c4_en_la_otra:		; p00:54FA con la pagina de dibujar cambiada un momento
 	ld (hl),a			;54f8   ; y la de antes
 	ret			;54f9
 pinta_ventana_c4:		; solo con 0xCA5F puesto
-	ld a,(0ca5fh)		;54fa
+	ld a,(0ca5fh)		;54fa   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;54fd
 	ret z			;54fe
 	exx			;54ff
@@ -3481,8 +3481,8 @@ pinta_ventana_c4:		; solo con 0xCA5F puesto
 	ld bc,03838h		;5509   ; ...0x38 x 0x38 puntos
 	call borra_bloque_vram		;550c   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	call bancos_4_5		;550f   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0984ch		;5512
-	call 098fbh		;5515
+	call 0984ch		;5512   ; rotulos_de_alerta: los rotulos de p04:98E0 y, segun la alerta, los de p04:98E9 o p04:98F2...
+	call 098fbh		;5515   ; imagen_de_alerta: la imagen de la alerta (p56:A242 con la 1, p56:A2A6 con la 2) con p12:6FC4 y dos franjas a la VRAM
 	call bancos_1_2_3		;5518   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	exx			;551b
 	ret			;551c
@@ -3530,7 +3530,7 @@ L_5560:
 	call nz,07c77h		;556d   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 L_5570:
 	xor a			;5570   ; 0xD300 = 0
-	ld (0d300h),a		;5571
+	ld (0d300h),a		;5571   ; guarda las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 	inc a			;5574   ; 0xD433 = 1
 	ld (0d433h),a		;5575
 	ld hl,0cc00h		;5578   ; borra 0xCC00-0xCC7F
@@ -3616,8 +3616,8 @@ L_55DA:
 	call bancos_14		;563b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b6c3h		;563e
 	call bancos_4_5		;5641   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0917ch		;5644
-	call 0818bh		;5647
+	call 0917ch		;5644   ; alerta_cada_cuadro: con 4 que siguen o desde la zona 0x10, p00:5A0F; en la 0x0C desde la sala 3, tambien
+	call 0818bh		;5647   ; pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 	call bancos_8		;564a   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a7dah		;564d   ; p08:A7DA
 	call bancos_1_2_10		;5650   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3764,7 +3764,7 @@ L_575A:
 	jp borra_pantalla_de		;575f   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 a_p04_89a8:		; p04:89A8 con el banco 4 en 0x8000
 	call bancos_4_5		;5762   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 089a8h		;5765   ; p04:89A8
+	call 089a8h		;5765   ; a_p06_b239_guarda: p06:B239 guardando el banco de 0xA000
 	jp bancos_1_2_3		;5768   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_576B:
 	call pinta_mapa		;576b   ; el mapa a la otra pagina
@@ -3808,7 +3808,7 @@ L_57B0:
 	xor a			;57b0   ; a cero: 0xD458, 0xCA28 y 0xD446
 	ld (0d458h),a		;57b1
 	ld (0ca28h),a		;57b4
-	ld (0d446h),a		;57b7
+	ld (0d446h),a		;57b7   ; guarda la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 	ld hl,0dd00h		;57ba   ; desde el mapa de la sala
 	ld de,00000h		;57bd   ; desde X = 0, Y = 0
 	ld b,018h		;57c0   ; 24 filas
@@ -3888,7 +3888,7 @@ L_57FE:
 	call bancos_12_4_56		;5845   ; bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call a_p12_746b		;5848   ; a_p12_746b: p12:746B con el banco 12 en 0x6000
 	call bancos_1_4_5		;584b   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08986h		;584e   ; p04:8986
+	call 08986h		;584e   ; mosaico_zona_7: en la zona 7 fila 8 columna 7, con 0xD800 = 1 y 0xD801 = 0: el mosaico en X = 0x48
 	call bancos_1_4_8		;5851   ; bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ae7bh		;5854
 	call 0a0e6h		;5857
@@ -3901,7 +3901,7 @@ L_57FE:
 	call bancos_10		;5866   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0be6dh		;5869
 	call bancos_4_5		;586c   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0818bh		;586f
+	call 0818bh		;586f   ; pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 	call bancos_1_2_3		;5872   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp 07c20h		;5875   ; y p01:7C20
 sala_8fdf_o_9043:		; p02:8FDF en las salas normales, p02:9043 en las especiales
@@ -4137,8 +4137,8 @@ d41a_y_compania_c:		; 0xD41A = 0xD41F = 2
 	ld (0d41ah),a		;5a13
 	ld (0d41fh),a		;5a16
 	ld a,c			;5a19   ; 0xD416 = 0xD426 = C
-	ld (0d416h),a		;5a1a
-	ld (0d426h),a		;5a1d
+	ld (0d416h),a		;5a1a   ; guarda cuantos actores han llegado con la alerta
+	ld (0d426h),a		;5a1d   ; guarda cuantos actores hay de los que llegan
 	xor a			;5a20   ; 0xCA60 = 0
 	ld (0ca60h),a		;5a21
 	ret			;5a24
@@ -4164,7 +4164,7 @@ L_5A44:
 	cp 007h		;5a45
 	jr nz,L_5A4D		;5a47
 	xor a			;5a49
-	ld (0ca5fh),a		;5a4a
+	ld (0ca5fh),a		;5a4a   ; guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 L_5A4D:
 	push bc			;5a4d
 	call 08257h		;5a4e   ; sala_de_entrada: por la salida 1: 0xCA50 = 1; por la 2, la pareja de C en p02:827A
@@ -4641,7 +4641,7 @@ prepara_d400:
 	ld hl,0d400h		;5d58   ; 0xD400-0xD415 a cero
 	ld bc,00015h		;5d5b
 	call borra_bloque		;5d5e   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	call 0818bh		;5d61
+	call 0818bh		;5d61   ; pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 	jr L_5D82		;5d64
 llama_6be6:
 	call bancos_12		;5d66   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
@@ -4790,11 +4790,11 @@ L_5E8C:
 	push hl			;5ea1
 	xor 001h		;5ea2
 	ld (hl),a			;5ea4
-	call 089a8h		;5ea5
+	call 089a8h		;5ea5   ; a_p06_b239_guarda: p06:B239 guardando el banco de 0xA000
 	pop hl			;5ea8
 	pop af			;5ea9
 	ld (hl),a			;5eaa   ; la pagina de antes
-	call 088b7h		;5eab
+	call 088b7h		;5eab   ; pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 	pop hl			;5eae   ; el banco de antes...
 	ld a,l			;5eaf
 	call bancos_0_1		;5eb0   ; ...otra vez en 0x8000 (y el siguiente en 0xA000)

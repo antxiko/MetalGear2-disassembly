@@ -1012,7 +1012,7 @@ L_AB19:
 	ld (ix+003h),a		;ab30
 	ld (hl),a			;ab33
 	ld (de),a			;ab34
-	ld hl,0d400h		;ab35
+	ld hl,0d400h		;ab35   ; apunta a los 22 sprites que se reparten los actores (1 = ocupado)
 	ld a,b			;ab38
 	call 0423eh		;ab39   ; suma_a_hl: HL = HL + A
 	xor a			;ab3c
@@ -1159,7 +1159,7 @@ L_AC26:
 	call 07a59h		;ac2a   ; llama_7a27_1_bancos_14:
 	jp L_ABFB		;ac2d
 L_AC30:
-	call 08685h		;ac30   ; p04:8685
+	call 08685h		;ac30   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 	xor a			;ac33
 	ld (0cb3ch),a		;ac34
 	ld (ix+011h),a		;ac37
@@ -1170,7 +1170,7 @@ L_AC30:
 	jp L_ABFB		;ac45
 L_AC48:
 	ld de,00200h		;ac48
-	call 08107h		;ac4b   ; p04:8107
+	call 08107h		;ac4b   ; en_esta_columna: Z si el actor esta en la columna de ahora
 	jr z,L_AC54		;ac4e
 	jr nc,L_AC5F		;ac50
 	jr L_AC5C		;ac52
@@ -1255,7 +1255,7 @@ L_ACED:
 	ret nz			;acf0
 	inc (ix+00dh)		;acf1
 	ld (ix+00eh),004h		;acf4
-	call 09af8h		;acf8   ; p04:9AF8
+	call 09af8h		;acf8   ; lanza_3: lo lanzado de tipo 3
 	jp L_ABFB		;acfb
 L_ACFE:
 	dec (ix+00eh)		;acfe
@@ -1417,7 +1417,7 @@ L_AE24:
 	ld (ix+00ch),002h		;ae2d
 	ret			;ae31
 L_AE32:
-	call 086deh		;ae32   ; p04:86DE
+	call 086deh		;ae32   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	call L_AEEE		;ae35
 	jr c,L_AE76		;ae38
 	ld a,(ix+00eh)		;ae3a
@@ -1530,7 +1530,7 @@ L_AF0F:
 	jr z,L_AF1D		;af12
 	ld a,(ix+00eh)		;af14
 	and 007h		;af17
-	jp z,09b3bh		;af19   ; p04:9B3B
+	jp z,09b3bh		;af19   ; lanza_6_a942:
 	ret			;af1c
 L_AF1D:
 	inc (ix+00fh)		;af1d
@@ -1599,7 +1599,7 @@ L_AF77:
 	call 06b12h		;af90   ; sonido_05: pide el sonido 0x05
 	jp 06c3fh		;af93   ; sonido_86: pide el sonido 0x86 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_AF96:
-	ld hl,0d800h		;af96
+	ld hl,0d800h		;af96   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld bc,00400h		;af99
 L_AF9C:
 	ld a,(hl)			;af9c
@@ -1625,7 +1625,7 @@ L_AFBA:
 	ld (ix+000h),000h		;afba
 	push ix		;afbe
 	pop hl			;afc0
-	ld de,0d800h		;afc1
+	ld de,0d800h		;afc1   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	or a			;afc4
 	sbc hl,de		;afc5
 	srl l		;afc7
@@ -1817,7 +1817,7 @@ L_B128:
 	ret z			;b12d
 	sub 01bh		;b12e
 	ret nc			;b130
-	call 09961h		;b131   ; p04:9961
+	call 09961h		;b131   ; d43e_a_ff: 0xD43E = 0xFF
 	call L_B214		;b134
 	xor a			;b137
 	ld (0caf6h),a		;b138
@@ -1865,8 +1865,8 @@ L_B185:
 	ld l,a			;b18d
 	ld (0ca19h),hl		;b18e   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	ld (0d425h),a		;b191
-	ld a,(0d416h)		;b194
-	ld (0d426h),a		;b197
+	ld a,(0d416h)		;b194   ; lee cuantos actores han llegado con la alerta
+	ld (0d426h),a		;b197   ; guarda cuantos actores hay de los que llegan
 	ld a,(0ca4bh)		;b19a   ; lee la sala de la zona
 	ld c,a			;b19d
 	ld a,(0ca4ah)		;b19e   ; lee la zona
@@ -1938,11 +1938,11 @@ L_B208:
 	ld b,003h		;b208
 L_B20A:
 	ld a,b			;b20a
-	ld (0ca5fh),a		;b20b
+	ld (0ca5fh),a		;b20b   ; guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	call L_B233		;b20e
-	jp 09814h		;b211   ; p04:9814
+	jp 09814h		;b211   ; marcador_de_alerta_bancos_14:
 L_B214:
-	ld hl,0d300h		;b214
+	ld hl,0d300h		;b214   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 	ld b,004h		;b217
 L_B219:
 	push bc			;b219
@@ -1968,10 +1968,10 @@ L_B233:
 	call 0423eh		;b23b   ; suma_a_hl: HL = HL + A
 	ld c,(hl)			;b23e
 	push ix		;b23f
-	ld ix,0ce00h		;b241
+	ld ix,0ce00h		;b241   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;b245
 L_B247:
-	ld a,(ix+000h)		;b247
+	ld a,(ix+000h)		;b247   ; lee el tipo del actor (0 = libre)
 	and a			;b24a
 	jr z,L_B253		;b24b
 	call 08100h		;b24d
@@ -1983,7 +1983,7 @@ L_B253:
 	djnz L_B247		;b258
 	pop ix		;b25a
 	ld a,c			;b25c
-	ld (0d427h),a		;b25d
+	ld (0d427h),a		;b25d   ; guarda cuantos pueden llegar como mucho
 	ret			;b260
 
 ; ----------------------------------------------------------------------
@@ -2000,7 +2000,7 @@ DATA_resto_B261:
 
 
 L_B269:
-	ld ix,0d460h		;b269
+	ld ix,0d460h		;b269   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 	ld b,006h		;b26d
 L_B26F:
 	ld a,(ix+000h)		;b26f
@@ -2019,13 +2019,13 @@ L_B27C:
 L_B284:
 	push ix		;b284
 	xor a			;b286
-	ld (0d416h),a		;b287
+	ld (0d416h),a		;b287   ; guarda cuantos actores han llegado con la alerta
 	ld (0d451h),a		;b28a
 	call L_B269		;b28d
-	ld ix,0ce00h		;b290
+	ld ix,0ce00h		;b290   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;b294
 L_B296:
-	ld a,(ix+000h)		;b296
+	ld a,(ix+000h)		;b296   ; lee el tipo del actor (0 = libre)
 	and a			;b299
 	push hl			;b29a
 	push bc			;b29b
@@ -2066,7 +2066,7 @@ L_B2D1:
 	ld (ix+001h),007h		;b2d1
 	ret			;b2d5
 L_B2D6:
-	ld a,(0ca5fh)		;b2d6
+	ld a,(0ca5fh)		;b2d6   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;b2d9
 	jr nz,L_B2E8		;b2da
 	ld a,(ix+00dh)		;b2dc
@@ -2075,7 +2075,7 @@ L_B2D6:
 	ld (ix+016h),a		;b2e5
 L_B2E8:
 	ld (ix+00ch),000h		;b2e8
-	call 0806fh		;b2ec   ; p04:806F
+	call 0806fh		;b2ec   ; se_ve_el_actor_si: p14:B9DC guardando HL, DE y BC
 	jr c,L_B2F6		;b2ef
 	call 08100h		;b2f1
 	jr z,L_B2FB		;b2f4
@@ -2085,7 +2085,7 @@ L_B2F6:
 L_B2FB:
 	res 7,(ix+000h)		;b2fb
 	ld (ix+001h),000h		;b2ff
-	ld hl,0d416h		;b303
+	ld hl,0d416h		;b303   ; apunta a cuantos actores han llegado con la alerta
 	inc (hl)			;b306
 	ld (ix+01ch),004h		;b307
 	ld a,(ix+000h)		;b30b
@@ -2104,7 +2104,7 @@ L_B320:
 	ld (ix+001h),a		;b320
 	call 08100h		;b323
 	ret nz			;b326
-	ld hl,0d416h		;b327
+	ld hl,0d416h		;b327   ; apunta a cuantos actores han llegado con la alerta
 	inc (hl)			;b32a
 	ret			;b32b
 L_B32C:
@@ -2119,8 +2119,8 @@ L_B32C:
 	ld (ix+001h),003h		;b341
 	call 08100h		;b345
 	ret nz			;b348
-	call 08273h		;b349   ; p04:8273
-	call 080f3h		;b34c   ; p04:80F3
+	call 08273h		;b349   ; lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
+	call 080f3h		;b34c   ; a_p14_ba17_guarda: p14:BA17 guardando el banco de 0xA000
 L_B34F:
 	ld a,(ix+00dh)		;b34f
 	add a,a			;b352
@@ -2145,15 +2145,15 @@ L_B34F:
 L_B374:
 	jp 047edh		;b374   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 L_B377:
-	ld ix,0ce00h		;b377
+	ld ix,0ce00h		;b377   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 	ld b,018h		;b37b
 L_B37D:
-	ld a,(ix+000h)		;b37d
+	ld a,(ix+000h)		;b37d   ; lee el tipo del actor (0 = libre)
 	cp 015h		;b380
 	jr nz,L_B391		;b382
 	call 08100h		;b384
 	jr nz,L_B391		;b387
-	ld a,(ix+001h)		;b389
+	ld a,(ix+001h)		;b389   ; lee el paso del actor
 	cp 003h		;b38c
 	call z,L_B34F		;b38e
 L_B391:
@@ -2183,7 +2183,7 @@ L_B3C1:
 	ld a,(ix+00dh)		;b3c1
 	rra			;b3c4
 	and 003h		;b3c5
-	jp 08e2ah		;b3c7   ; p04:8E2A
+	jp 08e2ah		;b3c7   ; a_p06_b592_bancos_14:
 L_B3CA:
 	ld a,(ix+000h)		;b3ca
 	and 07fh		;b3cd
@@ -2219,7 +2219,7 @@ L_B403:
 	call 06b99h		;b406   ; sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 	call L_B284		;b409
 	ld a,003h		;b40c
-	ld (0ca5fh),a		;b40e
+	ld (0ca5fh),a		;b40e   ; guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	call 09814h		;b411
 	pop bc			;b414
 	pop de			;b415
@@ -2330,7 +2330,7 @@ L_B4B9:
 	ld a,(0ca65h)		;b4c2   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	or a			;b4c5
 	ret nz			;b4c6
-	ld a,(0ca5fh)		;b4c7
+	ld a,(0ca5fh)		;b4c7   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;b4ca
 	ret nz			;b4cb
 	ld a,(0cb21h)		;b4cc   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -2552,7 +2552,7 @@ L_B63B:
 	ld (0e230h),a		;b644
 	ret			;b647
 L_B648:
-	ld a,(0ca5fh)		;b648
+	ld a,(0ca5fh)		;b648   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;b64b
 	jr nz,L_B63B		;b64c
 	ld a,(0e231h)		;b64e
@@ -2635,7 +2635,7 @@ L_B6C3:
 	ld hl,0d7e2h		;b6c7
 	res 1,(hl)		;b6ca
 	call L_B709		;b6cc
-	ld a,(0ca5fh)		;b6cf
+	ld a,(0ca5fh)		;b6cf   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;b6d2
 	ret nz			;b6d3
 	ld a,(0ca76h)		;b6d4   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -2713,7 +2713,7 @@ L_B761:
 	ld a,(0ca68h)		;b761   ; lee 1 si la sala tiene ficha en la lista de p02:877F
 	or a			;b764
 	ret z			;b765
-	ld a,(0ca5fh)		;b766
+	ld a,(0ca5fh)		;b766   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;b769
 	jr nz,L_B795		;b76a
 	call L_B7C5		;b76c
@@ -2763,7 +2763,7 @@ L_B7B0:
 	djnz L_B7B0		;b7c2
 	ret			;b7c4
 L_B7C5:
-	ld a,(0ca5fh)		;b7c5
+	ld a,(0ca5fh)		;b7c5   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;b7c8
 	ret nz			;b7c9
 	ld a,(0ca41h)		;b7ca   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -2772,7 +2772,7 @@ L_B7C5:
 	ld ix,0e280h		;b7cf
 	ld b,008h		;b7d3
 L_B7D5:
-	ld a,(0ca5fh)		;b7d5
+	ld a,(0ca5fh)		;b7d5   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;b7d8
 	ret nz			;b7d9
 	ld a,(ix+000h)		;b7da
@@ -2958,7 +2958,7 @@ L_B90F:
 	ret z			;b910
 	dec a			;b911
 	ld b,a			;b912
-	ld hl,0d400h		;b913
+	ld hl,0d400h		;b913   ; apunta a los 22 sprites que se reparten los actores (1 = ocupado)
 	call 0423eh		;b916   ; suma_a_hl: HL = HL + A
 	xor a			;b919
 	ld (hl),a			;b91a
@@ -2972,18 +2972,18 @@ L_B90F:
 L_B927:
 	call 08100h		;b927
 	jr nz,L_B92F		;b92a
-	call 081bfh		;b92c   ; p04:81BF
+	call 081bfh		;b92c   ; pinta_actor_bancos_14:
 L_B92F:
 	or a			;b92f
 	ret			;b930
 L_B931:
 	push ix		;b931
 	pop hl			;b933
-	ld de,0d300h		;b934
+	ld de,0d300h		;b934   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 	call 00020h		;b937   ; BIOS DCOMPR - Compares HL with DE
 	ccf			;b93a
 	ret nc			;b93b
-	ld a,(0ca5fh)		;b93c
+	ld a,(0ca5fh)		;b93c   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;b93f
 	ret z			;b940
 	ld iy,0d500h		;b941
@@ -3127,7 +3127,7 @@ L_BA19:
 	ld hl,0dc28h		;ba20
 	call 0423eh		;ba23   ; suma_a_hl: HL = HL + A
 	ld (hl),0e0h		;ba26
-	ld hl,0d400h		;ba28
+	ld hl,0d400h		;ba28   ; apunta a los 22 sprites que se reparten los actores (1 = ocupado)
 	ld a,c			;ba2b
 	call 0423eh		;ba2c   ; suma_a_hl: HL = HL + A
 	xor a			;ba2f
@@ -3782,7 +3782,7 @@ DATA_resto_BDF7:
 
 
 L_BE57:
-	ld hl,0d8e0h		;be57   ; apunta a 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld hl,0d8e0h		;be57   ; apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	ld bc,00006h		;be5a
 	call 04236h		;be5d   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0c700h		;be60   ; apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
@@ -3791,7 +3791,7 @@ L_BE57:
 	ld de,0c804h		;be6a
 L_BE6D:
 	ld a,081h		;be6d
-	ld (0d8e0h),a		;be6f   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;be6f   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	ld c,(hl)			;be72
 	ld (0d8e1h),de		;be73
 	inc de			;be77
@@ -3805,7 +3805,7 @@ L_BE6D:
 	cp (hl)			;be83
 	jr z,L_BEC3		;be84
 	ld a,001h		;be86
-	ld (0d8e0h),a		;be88   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;be88   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 L_BE8B:
 	ld c,(hl)			;be8b
 	inc hl			;be8c
@@ -3827,22 +3827,22 @@ L_BEA3:
 	dec de			;bea4
 	push hl			;bea5
 	ld hl,(0d8e1h)		;bea6
-	ld a,(0d8e0h)		;bea9   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;bea9   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	set 7,a		;beac
 	ld (hl),a			;beae
 	pop hl			;beaf
 	ld (0d8e1h),de		;beb0
 	jr L_BE6D		;beb4
 L_BEB6:
-	ld a,(0d8e0h)		;beb6   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;beb6   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	cp 07fh		;beb9
 	jr z,L_BEA3		;bebb
 	inc a			;bebd
-	ld (0d8e0h),a		;bebe   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;bebe   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	jr L_BE8B		;bec1
 L_BEC3:
 	ld a,002h		;bec3
-	ld (0d8e0h),a		;bec5   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;bec5   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 L_BEC8:
 	inc hl			;bec8
 	call L_BEF0		;bec9
@@ -3852,18 +3852,18 @@ L_BEC8:
 	jr z,L_BEE3		;bed0
 L_BED2:
 	ld de,(0d8e1h)		;bed2
-	ld a,(0d8e0h)		;bed6   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;bed6   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	ld (de),a			;bed9
 	inc de			;beda
 	inc de			;bedb
 	ld (0d8e1h),de		;bedc
 	jp L_BE6D		;bee0
 L_BEE3:
-	ld a,(0d8e0h)		;bee3   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;bee3   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	cp 07fh		;bee6
 	jr z,L_BED2		;bee8
 	inc a			;beea
-	ld (0d8e0h),a		;beeb   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;beeb   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	jr L_BEC8		;beee
 L_BEF0:
 	push hl			;bef0
@@ -3879,11 +3879,11 @@ L_BEFC:
 	ld a,(hl)			;befd
 	ld (de),a			;befe
 	inc de			;beff
-	ld a,(0d8e0h)		;bf00   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;bf00   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	inc a			;bf03
-	ld (0d8e0h),a		;bf04   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;bf04   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 L_BF07:
-	ld a,(0d8e0h)		;bf07   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;bf07   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	inc a			;bf0a
 	set 7,a		;bf0b
 	cp 080h		;bf0d
@@ -3902,11 +3902,11 @@ L_BF07:
 	ld a,081h		;bf21
 	jr L_BF31		;bf23
 L_BF25:
-	ld (0d8e0h),a		;bf25   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld (0d8e0h),a		;bf25   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 L_BF28:
 	xor a			;bf28
 	ld (de),a			;bf29
-	ld a,(0d8e0h)		;bf2a   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+	ld a,(0d8e0h)		;bf2a   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 	ld hl,(0d8e1h)		;bf2d
 	ld (hl),a			;bf30
 L_BF31:

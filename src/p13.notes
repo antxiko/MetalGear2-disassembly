@@ -218,6 +218,7 @@ C 0x92DA pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP
 C 0x92ED borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x92F9 caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 C 0x9305 caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
+C 0x930B apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x9311 caracteres_a_4_bits: B caracteres de un bit pasados a cuatro con el color C
 C 0x931D bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9320 enciende_todo: la pantalla y los sprites encendidos
