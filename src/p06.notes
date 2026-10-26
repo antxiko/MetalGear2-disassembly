@@ -315,6 +315,7 @@ C 0xB308 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80
 C 0xB326 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB331 suma_a_hl: HL = HL + A
 C 0xB33B apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
+C 0xB342 lee el tipo de lo lanzado
 C 0xB35A apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB367 sonido_54: pide el sonido 0x54
 C 0xB385 suma_a_hl: HL = HL + A

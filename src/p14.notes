@@ -207,6 +207,7 @@ C 0xB241 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xB247 lee el tipo del actor (0 = libre)
 C 0xB25D guarda cuantos pueden llegar como mucho
 C 0xB269 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
+C 0xB26F lee el tipo de lo lanzado
 C 0xB277 p04:9CA1
 C 0xB287 guarda cuantos actores han llegado con la alerta
 C 0xB290 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)

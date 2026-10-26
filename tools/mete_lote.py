@@ -63,6 +63,7 @@ def main(argv):
     tmp = os.path.join(RAIZ, "work", "lote_resto.txt")
     open(tmp, "w", encoding="utf-8", newline="\n").write("\n".join(resto) + "\n")
     subprocess.run([sys.executable, os.path.join(AQUI, "mete_notas.py"), tmp], check=True)
+    subprocess.run([sys.executable, os.path.join(AQUI, "sync_nombres.py")], check=True)
     print("%d nombres, %d notas" % (len(nombres), len(resto)))
 
 

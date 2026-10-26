@@ -2003,7 +2003,7 @@ L_B269:
 	ld ix,0d460h		;b269   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 	ld b,006h		;b26d
 L_B26F:
-	ld a,(ix+000h)		;b26f
+	ld a,(ix+000h)		;b26f   ; lee el tipo de lo lanzado
 	and a			;b272
 	jr z,L_B27C		;b273
 	push bc			;b275

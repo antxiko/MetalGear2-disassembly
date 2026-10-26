@@ -1983,7 +1983,7 @@ C 0x5341 p12:685A
 C 0x5344 p12:69CC
 C 0x5347 a_p12_746b: p12:746B con el banco 12 en 0x6000
 C 0x534A bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x534D p05:BCF5
+C 0x534D mosaico_de_13_5: en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x18, 0x84) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
 C 0x5350 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5353 p08:AE7B
 C 0x5356 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)

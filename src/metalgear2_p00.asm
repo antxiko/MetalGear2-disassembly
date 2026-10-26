@@ -3270,7 +3270,7 @@ L_5310:
 	call 069cch		;5344   ; p12:69CC
 	call a_p12_746b		;5347   ; a_p12_746b: p12:746B con el banco 12 en 0x6000
 	call bancos_1_4_5		;534a   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bcf5h		;534d   ; p05:BCF5
+	call 0bcf5h		;534d   ; mosaico_de_13_5: en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x18, 0x84) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
 	call bancos_8		;5350   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ae7bh		;5353   ; p08:AE7B
 	call bancos_1_2_3		;5356   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)

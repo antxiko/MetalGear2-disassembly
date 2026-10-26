@@ -505,7 +505,7 @@ cae_el_actor:		; el sonido 0x0F, fuera (p04:834C) y p04:92F4; el tipo 3 ademas q
 	xor a			;833e
 	ld (hl),a			;833f
 	ld (0d431h),a		;8340
-	ld a,(ix+019h)		;8343   ; lee la rapidez del paso del dibujo del actor (0-3)
+	ld a,(ix+019h)		;8343
 	cp 005h		;8346
 	ret z			;8348
 	jp 07a12h		;8349
@@ -602,7 +602,7 @@ ve_a_snake:		; con lo lanzado 8, p04:8630
 	ret nc			;83ec
 	cp 003h		;83ed   ; ...el 3 solo con la rapidez 0
 	jr nz,L_83FE		;83ef
-	ld a,(ix+019h)		;83f1   ; lee la rapidez del paso del dibujo del actor (0-3)
+	ld a,(ix+019h)		;83f1
 	and a			;83f4
 	ret nz			;83f5
 	jr L_83FE		;83f6
@@ -2300,11 +2300,11 @@ L_900B:
 	cp 003h		;901f
 	ret nz			;9021
 L_9022:
-	inc (ix+018h)		;9022   ; sube la cuenta del paso del dibujo del actor
-	ld a,(ix+018h)		;9025   ; lee la cuenta del paso del dibujo del actor
+	inc (ix+018h)		;9022
+	ld a,(ix+018h)		;9025
 	cp b			;9028
 	ret c			;9029
-	ld (ix+018h),000h		;902a   ; la cuenta del paso del dibujo del actor = 0x00
+	ld (ix+018h),000h		;902a
 L_902E:
 	ld a,(ix+00dh)		;902e   ; cambia el bit 0 del dibujo
 	rra			;9031
@@ -3739,7 +3739,7 @@ L_99EE:
 acude_el_3:		; el 3 en esta sala, en el paso 1 y con la rapidez < 5: guarda el paso y al 4
 	call en_esta_sala		;9a11   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;9a14
-	ld a,(ix+019h)		;9a15   ; lee la rapidez del paso del dibujo del actor (0-3)
+	ld a,(ix+019h)		;9a15
 	cp 005h		;9a18
 	ret nc			;9a1a
 	ld a,(ix+001h)		;9a1b   ; lee el paso del actor
@@ -3800,7 +3800,7 @@ lanzado_cada_cuadro:		; sin 0xD445, las 6 fichas de lo que lanzan los actores: p
 	ld b,006h		;9a89
 L_9A8B:
 	push bc			;9a8b
-	ld a,(ix+000h)		;9a8c
+	ld a,(ix+000h)		;9a8c   ; lee el tipo de lo lanzado
 	and a			;9a8f
 	jr z,L_9AA0		;9a90
 	call a_p06_a7e9_guarda		;9a92   ; a_p06_a7e9_guarda: p06:A7E9 guardando el banco de 0xA000
@@ -3891,8 +3891,8 @@ DATA_9B20:
 
 
 lanza_al_byte_18:		; hacia (H, L) = los bytes 0x19 y 0x18 del actor
-	ld h,(ix+019h)		;9b28   ; lee la rapidez del paso del dibujo del actor (0-3)
-	ld l,(ix+018h)		;9b2b   ; lee la cuenta del paso del dibujo del actor
+	ld h,(ix+019h)		;9b28
+	ld l,(ix+018h)		;9b2b
 	jr lanza		;9b2e
 lanza_6_e0:		; tipo 6 con el desplazamiento 0x00E0
 	ld bc,000e0h		;9b30
@@ -4067,23 +4067,23 @@ L_9C7F:
 	or 001h		;9c7f
 	ret			;9c81
 choca_lo_lanzado:		; lo lanzado de tipo 4 en adelante: fuera de la sala o contra lo solido, se acaba (p06:AA18), salvo el 3 y el 7
-	ld a,(ix+000h)		;9c82   ; lee el tipo del actor (0 = libre)
+	ld a,(ix+000h)		;9c82   ; lee el tipo de lo lanzado
 	cp 004h		;9c85
 	ret c			;9c87
 	cp 005h		;9c88   ; el 5 mira su propio recuadro (p04:9CC2)
 	jp z,dentro_del_recuadro		;9c8a   ; dentro_del_recuadro: el 5: fuera de Y 0x18-0xB7 o X 8-0xB7, se acaba
-	ld a,(ix+003h)		;9c8d   ; lee la Y del actor
+	ld a,(ix+003h)		;9c8d   ; lee la Y de lo lanzado
 	ld l,a			;9c90
 	cp 0c0h		;9c91
 	jr nc,L_9CA1		;9c93
-	ld a,(ix+005h)		;9c95   ; lee la X del actor
+	ld a,(ix+005h)		;9c95   ; lee la X de lo lanzado
 	ld h,a			;9c98
 	cp 0c0h		;9c99
 	jr nc,L_9CA1		;9c9b
 	call 07f88h		;9c9d   ; cuatro_hacia_abajo: acarreo si (H, L) y los 3 puntos de 8 en 8 hacia abajo son solidos o estan fuera
 	ret nc			;9ca0
 L_9CA1:
-	ld a,(ix+000h)		;9ca1   ; lee el tipo del actor (0 = libre)
+	ld a,(ix+000h)		;9ca1   ; lee el tipo de lo lanzado
 	cp 003h		;9ca4
 	ret z			;9ca6
 	cp 007h		;9ca7
@@ -4095,17 +4095,17 @@ a_p06_aa18_guarda:		; p06:AA18 guardando el banco de 0xA000
 	call 0aa18h		;9cb1   ; p06:AA18
 	jp L_9ABF		;9cb4
 sprite_de_lanzado:		; HL = el sprite (byte 0x0E) desde el 10 (0xDC28)
-	ld a,(ix+00eh)		;9cb7   ; lee la espera del actor
+	ld a,(ix+00eh)		;9cb7   ; lee el sprite de lo lanzado
 	add a,a			;9cba
 	add a,a			;9cbb
 	ld hl,0dc28h		;9cbc
 	jp 0423eh		;9cbf   ; suma_a_hl: HL = HL + A
 dentro_del_recuadro:		; el 5: fuera de Y 0x18-0xB7 o X 8-0xB7, se acaba
-	ld a,(ix+003h)		;9cc2   ; lee la Y del actor
+	ld a,(ix+003h)		;9cc2   ; lee la Y de lo lanzado
 	sub 018h		;9cc5
 	cp 0a0h		;9cc7
 	jr nc,L_9CA1		;9cc9
-	ld a,(ix+005h)		;9ccb   ; lee la X del actor
+	ld a,(ix+005h)		;9ccb   ; lee la X de lo lanzado
 	sub 008h		;9cce
 	cp 0b0h		;9cd0
 	jr nc,L_9CA1		;9cd2
@@ -4174,7 +4174,7 @@ aviso_8c_30:
 aviso_8d_30:
 	ld bc,08d30h		;9d34
 	jr aviso_de_actor		;9d37
-actor_corriente:		; los tipos 1, 2 y 4-9: con el bit 7, p04:8EE9; con la alerta 1, p05:A2AD; con la 2-3 y paso < 0x15, a por Snake
+actor_corriente:		; los tipos 0, 1 y 3-8 (p04:815B): con el bit 7, p04:8EE9; con la alerta 1, p05:A2AD; con la 2-3 y paso < 0x15, a por Snake
 	ld a,(ix+000h)		;9d39   ; lee el tipo del actor (0 = libre)
 	rla			;9d3c
 	jp c,L_8EE9		;9d3d
@@ -4182,7 +4182,7 @@ actor_corriente:		; los tipos 1, 2 y 4-9: con el bit 7, p04:8EE9; con la alerta 
 	and a			;9d43
 	jr z,L_9D53		;9d44
 	cp 001h		;9d46
-	jp z,0a2adh		;9d48   ; p05:A2AD
+	jp z,0a2adh		;9d48   ; actor_en_alerta_1: la alerta 1: los pasos 0x25 y 0x26 (lanzar), los demas por p05:A2BD
 	ld a,(ix+001h)		;9d4b   ; lee el paso del actor
 	cp 015h		;9d4e
 	jp c,actor_por_paso		;9d50   ; actor_por_paso: si no se ve, nada; el paso 8 p06:B626, el 9 p04:8ED9, los demas por p04:8F2A
@@ -4327,7 +4327,7 @@ llega_al_principio:		; en el punto de partida: la direccion, la Y, la X, el paso
 aviso_y_espera:		; el aviso 5, 0x20 cuadros (byte 0x1C) y p05:A27B
 	call aviso_05_20		;9e9a   ; aviso_05_20:
 	ld (ix+01ch),020h		;9e9d
-	jp 0a27bh		;9ea1   ; p05:A27B
+	jp 0a27bh		;9ea1   ; paso_siguiente: el paso siguiente del actor
 lanza_cada_4:		; durante 0x1C cuadros, cada 4 lanza hacia Snake; al acabar, lo de antes y el aviso 6
 	dec (ix+01ch)		;9ea4
 	jr z,L_9EB2		;9ea7
@@ -4366,7 +4366,7 @@ L_9EEE:
 	call en_esta_sala		;9ef4   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	call z,pinta_actor		;9ef7   ; pinta_actor: sus sprites (p04:81C5) con el banco 8
 L_9EFA:
-	jp 0a23ah		;9efa   ; p05:A23A
+	jp 0a23ah		;9efa   ; al_paso_4: el paso 4
 aparece_en_68_30:		; Y = 0x68, X = 0x30, el dibujo 2, en la fila 1 columna 9
 	ld (ix+01bh),000h		;9efd
 	ld (ix+003h),068h		;9f01   ; la Y del actor = 0x68

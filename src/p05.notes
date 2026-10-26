@@ -1,4 +1,137 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+C 0xA1F2 el actor 19 (0xD2C0) de tipo 0x18 con el byte 0x10 = 0xFF, y sus sprites
+C 0xA205 8 cuadros y el paso siguiente
+C 0xA221 de X = 0x48, Y = 0x40...
+C 0xA224 ...a X = 0x28, Y = 0x40...
+C 0xA227 ...0x18 x 0x20
+C 0xA2F2 ...y una espera al azar: 0x20-0x5F o 0x18-0x37 segun el actor
+C 0xA30F al borde (p05:A45D), chocando de frente o cerca de los que llegan: otra direccion
+C 0xA31E la espera; mientras, anda
+C 0xA324 cada 4 vueltas, parado 0xC0 cuadros
+C 0xA33E da la vuelta
+C 0xA34B en su eje, hacia el lado mas abierto (p05:A3F3, p05:A442)
+C 0xA426 solido? se acabo
+C 0xA43F un paso mas
+C 0xA4DA lo de los lados...
+C 0xA4E3 ...si no hay salida, mira de frente: libre, anda; si no, gira
+C 0xA4F4 cuenta las salidas (como mucho 5, o 3 en la zona 0x0A filas 0-3)
+C 0xA510 recorre la linea hasta el borde: dos puntos a los lados
+C 0xA577 da con algo: gira a la derecha (p05:A5E6)
+C 0xA589 ...libre? si no, otra vez
+C 0xA595 su velocidad
+C 0xA5B9 ...solido? al bit
+C 0xA5C1 el siguiente, D y E mas alla
+C 0xA608 p14:BA36
+C 0xA60B desde el paso 6, la musica del actor
+C 0xA6DA y sus colores de p05:A6E3
+C 0xA723 parado en Y y por la derecha (X >= 0x80): p05:A8BF
+C 0xA73C el paso 9
+C 0xA85B el tipo 5, 16 cuadros mas
+C 0xA968 en horizontal: hacia la izquierda si esta a la derecha
+C 0xA980 en vertical: hacia arriba si esta abajo
+C 0xAAB3 [tipo 0x0B]...
+C 0xAAB7 ...la Y, la X y el dibujo de la lista...
+C 0xAAC6 ...su numero (0x1A)...
+C 0xAAC9 ...en esta sala...
+C 0xAAD3 ...con el byte 0x10 = 0x20
+C 0xAADF los tipos a 0 (aun no estan)
+C 0xAAEC los sprites de p35:8773
+C 0xABAE cada 32 vueltas, nada
+C 0xABB2 las 4 fichas de 0xD800
+C 0xABBE paradas (paso 0)...
+C 0xABC4 ...si Snake esta de su lado (p05:ABE3), el paso 1
+C 0xAC39 desde la sala 2 y en los pasos 0-0x0E, la musica del actor
+C 0xADEA hacia los lados: hasta X = 0x3C (fila 7) o 0x6C
+C 0xAE06 hacia arriba o abajo: hasta Y = 0x6E
+C 0xAE11 lo solido: gira hacia el destino (bytes 0x19-0x1A)
+C 0xAEAC B = la distancia en Y
+C 0xAEAD la X contra el destino...
+C 0xAEB8 ...la mayor manda
+C 0xAFC5 mientras el byte 0x18 cuenta, solo eso
+C 0xAFCB la espera de 0x1F; al acabar, el byte 0x16 = 1
+C 0xAFDA por su paso (p05:B032)
+C 0xAFE6 en los pasos 3-6, su musica
+C 0xAFF0 desde el paso 9, o sin la cuenta de 0x18, los sprites 10-13 fuera
+C 0xAFFF el dibujo de la cuenta...
+C 0xB002 ...que baja; al acabar, lo de antes (p05:B00B)
+C 0xB008 sus sprites
+C 0xB159 fuera: da la vuelta y 16 cuadros
+C 0xB1BD por el pasillo de su sala, gira a la puerta
+C 0xB21F sin choque, nada
+C 0xB222 en vertical mira la X; en horizontal, la Y
+C 0xB238 de la mitad (0x60) hacia el otro lado
+C 0xB23E el dibujo de la direccion y su velocidad
+C 0xB3AE cada 0x1C cuadros, al azar; a los 0x10, lanza
+C 0xB54E el dibujo de antes...
+C 0xB554 ...el paso 4...
+C 0xB558 ...y con el byte 0x1E, el byte 0x14 = 1
+C 0xB707 cada 4 giros, parado 0x20 cuadros mirando (el paso 0x0A)
+C 0xBBF2 el sprite 28 con Y = 0xD8 (los que siguen no se ven)
+C 0xBBF7 los sprites 30 y 31 en (0x27, 0x88) y (0x37, 0x90), patrones 0xF8 y 0xFC
+C 0xBC0C sus colores al 0x0A
+C 0xBC77 p00:5DD3
+C 0xBC7A quita los dos mosaicos de quien habla
+C 0xBC82 la paleta de la sala y la pagina en negro
+C 0xBC88 el barrido desde (0x60, 0x60)
+C 0xBC91 los sprites 28-31 fuera
+C 0xA3DA a menos de 0x10 en Y...
+C 0xA3DD ...y la X...
+C 0xA3E1 ...a menos de 0x0C
+C 0xA3EA IX...
+C 0xA3ED .../ 16
+C 0xA4A9 el eje...
+C 0xA4B2 en vertical: hacia arriba (0) o abajo (1)
+C 0xA6B6 la Y del par
+C 0xA6B8 X = 0x58
+C 0xA6BE segun la espera, los patrones 0x28/0x2C o 0x30/0x34
+C 0xA767 la Y y la X de Snake
+C 0xA76B la X en 0x38-0xC7...
+C 0xA771 ...y la Y en 0x50-0x7F
+C 0xA88A en vertical: 0 o 2 al azar
+C 0xA8B0 la direccion del dibujo...
+C 0xA8B6 ...el bit de C
+C 0xA9BC B = la Y
+C 0xA9BD en 0x40-0x97...
+C 0xA9C5 ...la X: por debajo de 0x30, 0x18...
+C 0xA9CB ...de 0x48, 0x48...
+C 0xA9D1 ...desde 0x98, 0xA8...
+C 0xA9D7 ...desde 0x78 con la Y en 0x70-0x7F, 0xA8
+C 0xAB19 0xCB3C = 1
+C 0xAB1E el paso siguiente...
+C 0xAB20 ...y 0x20 cuadros
+C 0xAB54 0xE25A = 0
+C 0xAB58 el paso siguiente, 8 cuadros
+C 0xAB5C las tres fichas de tipo 0x0B
+C 0xABCC la ficha siguiente
+C 0xAFA4 con 0xCA77, sin musica
+C 0xAFAB 0xD8A7...
+C 0xAFB0 ...0: sus pasos
+C 0xAFB3 ...2: uno menos y la sala de Snake
+C 0xB020 el dibujo de 0x1D...
+C 0xB023 ...+ 1 con la cuenta entre 2 y 4
+C 0xB27D con la cuenta de 0x18, nada
+C 0xB282 fuera de la sala, el paso 3
+C 0xB287 la cuenta de 0x1C...
+C 0xB28F ...cada 4, lanza
+C 0xB49C 0xD8A3 = 1 mientras...
+C 0xB4A2 ...los choques
+C 0xB4B4 el bit de la direccion...
+C 0xB4B7 ...libre: ya esta
+C 0xB4B8 la contraria...
+C 0xB4BE ...o, al azar, la del otro eje
+C 0xB4D7 la misma columna: por el angulo
+C 0xB4DC la columna de Snake a la izquierda (2) o a la derecha (3)
+C 0xB4E4 3 por debajo de 0x20 o desde 0xE0
+C 0xB4EC 1 por debajo de 0x60
+C 0xB4F1 2 por debajo de 0xA0
+C 0xB4F5 0 los demas
+C 0xB859 su bit en C
+C 0xB85C libre: esa
+C 0xB85E si no, la siguiente
+C 0xBABD a menos de B...
+C 0xBAC0 ...y a menos de C
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA001 partida_A000  los 1 ultimos bytes de la instruccion de p04:9FFE (C3 7B A2), que empieza en el banco 4; lo leen p04:9FFE (1 bytes)
 F 0xA000 1
@@ -61,7 +194,333 @@ F 0xBD58 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xA001 actor_0a_espera al acabar la espera: 0xD441 = 0; en esta sala, sus sprites y 0xD514 = 0xFF; y el paso 4
+L 0xA019 cambia_al_ver_e1c0 en la sala 0x0E con 0xE1C0, el tipo 7 (salvo en los pasos 0x1C-0x20 y 0x29) con 0xCB21 = 0x0F y 0xCA90 = 5: al paso 0x1C (0x29 desde el 0x21)
+L 0xA062 espera_aviso_y_3 al acabar la espera: el aviso 0x8B, la direccion 3 y el paso siguiente
+L 0xA071 espera_y_paso_20 al acabar la espera: otra de 16, el paso 0x20 y el aviso 0x8B
+L 0xA080 hasta_x_98 anda hasta X = 0x98 y la direccion 0
+L 0xA08A hasta_x_b desde la X de B, el paso siguiente (sin acarreo); antes, anda (acarreo)
+L 0xA09A hasta_y_2a hasta Y = 0x2A anda; despues la direccion 3 y el paso siguiente
+L 0xA0AA hasta_x_aa hasta X = 0xAA; despues parado 16 cuadros
+L 0xA0BC e1c0_a_2 al acabar la espera: 0xE1C0 = 2, la fase al menos 8 (y la musica), el sonido 0x46 y el paso siguiente
+L 0xA0DB espera_mas la espera uno mas y p04:9E51
+L 0xA0E1 hasta_y_30 anda; por encima de Y = 0x30, la direccion 2 y el paso 7
+L 0xA0EC sin_acarreo 
+L 0xA0EE tipo_2_en_la_sala fuera de 0xD430 = 2, el tipo 2 en esta sala: parado (la direccion 0, el paso 6) o hacia abajo (2, el paso 7), con acarreo
+L 0xA10D direccion_y_paso la direccion B, el paso C y acarreo
+L 0xA118 hasta_columna_5 anda; en la columna 5 por debajo de X = 0x90, la direccion 0 y el paso 0x1B
+L 0xA12F se_va_por_arriba anda; por encima de Y = 0x18, fuera, 0xD430 = 1 y 0xD431 = 0x40
+L 0xA14B hasta_x_70 anda; por debajo de X = 0x70, el paso 0x17 con el dibujo 2 y la direccion 1
+L 0xA158 dibujo_2_dir_1 
+L 0xA161 hasta_x_48 anda; por debajo de X = 0x48: parado, 0xCAC9 = 1, la espera de 8 y, en esta sala, el sonido 0x46 y p08:A13B
+L 0xA16D parado_con_bandera 
+L 0xA188 hasta_y_b0_16 anda; desde Y = 0xB0, el paso 0x16, el dibujo 4 y la direccion 2
+L 0xA18D hasta_y_b0 
+L 0xA1A0 hasta_y_b0_1a como p05:A188 con el paso 0x1A, el dibujo 6 y la direccion 3
+L 0xA1A7 hasta_x_50 anda; por debajo de X = 0x50, el dibujo 2, la direccion 1 y el paso siguiente
+L 0xA1B6 hasta_x_b0 anda; desde X = 0xB0, parado con 0xCACA = 1
+L 0xA1C5 bandera_d529_o_d599 al acabar la espera, sin 0xD521: 0xD529 = 1 en esta sala o 0xD599 = 1 fuera; 8 cuadros y el paso siguiente
+L 0xA1E5 actor_19_tipo_18 al acabar la espera: el actor 19 (0xD2C0) a cero
+L 0xA20C quita_el_19 al acabar la espera: el paso 4, 0xD521 = 0xD529 = 0xD599 = 0 y, en esta sala, un rectangulo de la pagina 1 o 0
+L 0xA236 espera_y_paso_4 al acabar la espera, el paso 4
+L 0xA23A al_paso_4 el paso 4
+L 0xA23F quita_el_19_b el actor 19 libre, sin sprites, y el paso siguiente
+L 0xA250 sigue_el_tramo p05:A0EE; los tipos 8 y 9 en su sitio; si no ha llegado, anda; si ha llegado, el paso siguiente
+L 0xA265 parada_si con el byte 0x1A, parado 0x80 cuadros con el dibujo de antes; si no, el paso 4
+L 0xA27B paso_siguiente el paso siguiente del actor
+L 0xA27F mira_alrededor mira a los lados (p05:A285); al acabar, el paso siguiente
+L 0xA285 mira_a_los_lados la espera; segun sus bits 4 y 5, el dibujo de frente, + 8 o + 9 (Z al acabar)
+L 0xA2A6 mira_y_paso_4 mira a los lados; al acabar, el paso 4
+L 0xA2AD actor_en_alerta_1 la alerta 1: los pasos 0x25 y 0x26 (lanzar), los demas por p05:A2BD
+L 0xA2D5 busca_paso_0 buscar: el paso siguiente, la direccion de la entrada (0xD41E o 0xD449) y una espera al azar
+L 0xA2EC busca_en_direccion la direccion A a 0x1D, su velocidad...
+L 0xA309 busca_paso_1 con 0xD42A, el aviso y el paso 3
+L 0xA32E gira_al_otro_eje al otro eje, al azar segun el actor
+L 0xA35C parado_c0 parado 0xC0 cuadros y el paso siguiente
+L 0xA367 aviso_y_paso_3 el aviso 0x82, el paso 3 y una direccion al azar
+L 0xA3C0 cerca_de_los_que_llegan con la alerta 1 contando, acarreo si los actores 20 y 21 estan juntos (a menos de 0x10 en Y y 0x0C en X)
+L 0xA3EA numero_del_actor A = el byte bajo de IX / 16
+L 0xA3F3 lado_mas_abierto_x cuanto hay libre a la derecha y a la izquierda (p05:A419): 2 o 3 hacia el mas abierto
+L 0xA415 libre_en_y D = 1: en vertical
+L 0xA419 libre_en_x B = cuantos pasos de C hay libres desde el actor (Y - 6)
+L 0xA442 lado_mas_abierto_y lo mismo arriba y abajo: 0 o 1 hacia el mas abierto
+L 0xA45D al_borde acarreo si esta dentro: en vertical Y 0x10-0xBF, en horizontal X 0-0xB3 (0x10-0xBF hacia la izquierda)
+L 0xA47B busca_paso_2 con 0xD42A, el aviso; la espera mirando (p06:B5E2 cada 16); al acabar, otra direccion
+L 0xA490 busca_paso_3 la espera mirando; al acabar, el paso 1 y otra direccion
+L 0xA49D anda_hasta_chocar sin chocar de frente, anda; si choca, el paso siguiente y gira
+L 0xA4A9 busca_por_el_pasillo la direccion de ahora (0-3) con sus bits de lado (D) y de frente (E) y su tabla (p05:A59B)
+L 0xA57C gira_izquierda gira a la izquierda (p05:A5E2) hasta una direccion libre
+L 0xA57F gira_segun_tabla la direccion nueva de la tabla de HL...
+L 0xA5A3 cinco_puntos_abajo C = los 5 puntos solidos (un bit cada uno) desde (Y - 0x12, X + 0x0B), de 6 en 6 hacia abajo
+L 0xA5A9 cinco_puntos desde la Y + C y la X + B...
+L 0xA5CA cinco_puntos_abajo_b 
+L 0xA5D2 cinco_puntos_lado 
+L 0xA5DA cinco_puntos_lado_b 
+L 0xA5EA vuelve_al_camino p04:9DCE: con acarreo, el paso 0x0A
+L 0xA5F3 actor_de_a5f3 fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
+L 0xA638 paso_siguiente_b el paso siguiente
+L 0xA63C espera_a_snake con Snake en Y 0x50-0x7F, X 0x78-0x7F: el bit 7 de 0xD7D1, 0xCB3C = 1, 0x20 cuadros y la musica 0xA6
+L 0xA65F mensaje_10 al acabar la espera, el mensaje 0x10 del banco 50
+L 0xA666 mensaje_y_paso el mensaje D del banco 50 en ventana estrecha y el paso siguiente
+L 0xA66C fin_del_mensaje_40 al acabar el mensaje: 0x40 cuadros, p01:7A27 y el sonido 0x4A
+L 0xA675 fin_del_mensaje al acabar el mensaje (Z): el byte 0x1C = 0, la espera C, p01:7A27 y el paso siguiente (acarreo)
+L 0xA68A sprites_en_escena los sprites de p05:A6AF y la espera: en 0x1D el dibujo 2, en 0x10 el 7; al acabar, el mensaje 0x110
+L 0xA6A2 dibujo_2 
+L 0xA6A7 escena_fin 
+L 0xA6AF tres_pares_de_sprites los sprites 24-29 en tres pares de Y = 0x60, 0x56, 0x4C y X = 0x58, con los patrones 0x28/0x2C o 0x30/0x34
+L 0xA6F0 sin_sprites_24 los sprites 24-31 fuera
+L 0xA6FB fin_del_mensaje_y_musica al acabar el mensaje, la musica del actor
+L 0xA704 actor_suelto 0xCB3C = 0, los bytes 0x11, 0x0E, 0x0D a 0, el 0x16 a 1 y el paso siguiente
+L 0xA718 actor_5_paso con el byte 0x17 = 1 o Snake en el recuadro (p05:A767): el paso 9 y un salto (p05:A75F); si no, anda y, al acabar, gira
+L 0xA743 salto_al_azar una de las 4 palabras de HL a los bytes 0x18-0x19, sin eje, 8 cuadros y el sonido 0x4B
+L 0xA767 snake_en_el_recuadro acarreo si Snake esta en X 0x38-0xC7 e Y 0x50-0x7F
+L 0xA777 velocidad_del_dibujo la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+L 0xA77D velocidad_de_b 
+L 0xA781 velocidad_de_tipo la velocidad del tipo A (p05:A7AD) en la direccion B (p05:A79C), y el byte 0x0C = 3
+L 0xA7A4 velocidad_y_menos 
+L 0xA7A7 velocidad_y_mas 
+L 0xA7AC velocidad_x_menos 
+L 0xA7AF velocidad_x_mas 
+L 0xA7C3 actor_5_paso_b como p05:A718 al reves: fuera del recuadro, p05:A862
+L 0xA7E6 para_y_gira guarda el dibujo (0x1B), p05:A8D2, 0x0C cuadros, sin eje, guarda el paso (0x1A) y al 0x0B
+L 0xA803 anda_en_recuadro el paso del dibujo, y fuera del recuadro (Y 0x20-0xBF, X 8-0xB7) o chocando: da la vuelta
+L 0xA83F gira_a_snake_x hacia Snake en X (p05:A875) con una espera de 8-15
+L 0xA844 gira_a_snake_y hacia Snake en Y (p05:A894) con una espera de 8-15
+L 0xA862 salta_y_paso_0a un salto al azar de p05:A86D y el paso 0x0A
+L 0xA875 dibujo_hacia_x el dibujo de lado o del otro eje, al azar, sin chocar
+L 0xA894 dibujo_al_azar un dibujo de direccion al azar (0, 2, 4, 6)
+L 0xA89C dibujo_libre si choca por alli, el de p05:A8BB
+L 0xA8B0 choca_por_d acarreo si C tiene el bit de la direccion D
+L 0xA8BF dibujo_de_lado el dibujo 4 o 6 (el contrario) y su velocidad
+L 0xA8D2 dibujo_por_b4e1 el dibujo 9 + 2 * B (p05:B4E1)
+L 0xA8DE salto_paso_8 el salto (p05:A8ED); al acabar, el paso 8 con su velocidad
+L 0xA8ED salto la espera; cambia la Y y la X con los bytes 0x18-0x19 (el sitio de destino)
+L 0xA90A salto_paso_7 el salto; al acabar, el paso 7 con su velocidad
+L 0xA919 lanza_cada_4_b la espera; cada 4 cuadros (en el 2), lanza el 5; al acabar, el paso de antes y gira
+L 0xA943 entra_en_escena el paso siguiente, 0xCB3C = 1, 0x18 cuadros y hacia el centro por el eje que toca
+L 0xA998 llega_a_escena anda; al acabar, parado con el dibujo 0x10, en su sitio (p05:A9B9), el sonido 0x93 y la musica de p01:6C37
+L 0xA9B9 sitio_en_escena con la Y 0x40-0x97: la X a 0x18, 0x48 o 0xA8 segun donde este
+L 0xA9E4 mensaje_por_sitio al acabar la espera: el sonido 0x9C y el mensaje de p05:AA1D segun la fila de Snake y la suya (3 x 3)
+L 0xAA26 tras_el_mensaje al acabar el mensaje, 0x10 cuadros, el dibujo siguiente y el sonido 0x93
+L 0xAA36 al_paso_20 al acabar la espera, 0xCB3C = 0 y el paso 0x20
+L 0xAA43 pasos_de_d8a0 con 0xD8A0, por su paso (p05:AA4D)
+L 0xAA59 d8a0_cuenta la espera de 0xD8A1; cada 16, el paso siguiente y p11:A000
+L 0xAA64 d8a0_deja_cosa al acabar la espera: 0xD8A0 = 0, la cosa 0x28 en (0x70, 0x60), 0xD4EB = 1 y el sonido 0x42
+L 0xAA7B d8a0_quita_0b el paso siguiente, 0x10 cuadros y fuera la ficha 0xD800 de tipo 0x0B
+L 0xAA90 d8a0_cuatro_0b el paso siguiente, 0x40 cuadros, las 4 fichas de 0xD800 de tipo 0x0B desde p05:AAEF y el bit 5 de 0xD7D6
+L 0xAAFB escena_d8ac con 0xC693, el sonido 0x84; los pasos de 0xD8AC (p05:AB08)
+L 0xAB18 escena_d8ac_0 0xCB3C = 1, el paso siguiente y 0x20 cuadros
+L 0xAB23 escena_d8ac_1 al acabar la espera: 0x40 cuadros, el paso siguiente, el sonido 0x81 y p03:B11F con 0
+L 0xAB32 escena_d8ac_2 p03:B132; al acabar la espera, 0x20 cuadros, 0xE25A = 1, p03:B19A y la conversacion 0
+L 0xAB4A escena_d8ac_3 al acabar la espera, el paso siguiente y el sonido 0xA6
+L 0xAB53 escena_d8ac_4 0xE25A = 0, 8 cuadros y las fichas 0xD820-0xD860 de tipo 0x0B
+L 0xAB68 escena_d8ac_5 al acabar la espera, el mensaje 0x810 del banco 50
+L 0xAB74 escena_d8ac_6 al acabar el mensaje, p01:7A27 y el paso siguiente
+L 0xAB80 escena_d8ac_7 0xD8A0 = 3, 0xCB3C = 0, la ficha 0xD800 de tipo 0x0B y su musica
+L 0xAB95 escena_d8ac_8 p14:AF96: sin ninguno, 0xD8A0 = 4; cada 4 cuadros, las fichas de 0xD800 paradas en el lado de Snake se ponen en marcha
+L 0xABD6 quedan_fichas p14:AF96: C = cuantas quedan; con 0, 0xD8A0 = 4 y Z
+L 0xABE3 snake_de_su_lado por el numero de ficha C: Snake por debajo de Y = 0x60, por encima de 0x80, a la derecha de X = 0x50, a la izquierda de 0x70
+L 0xAC01 fichas_d800_en_3_4 las fichas de 0xD800 en los pasos 3-4: p14:AE76
+L 0xAC1F actor_de_la_especial_29 solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
+L 0xAC6E especial_29_paso_0 desde la sala 2: 0xCB3C = 1, la direccion 2, el bit 0 de 0xD7D1, la musica 0xA6 y el paso siguiente
+L 0xAC88 anda_y_suena cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
+L 0xAC95 especial_29_paso_1 anda hasta la columna 7, X = 0x64, y gira a la direccion 1
+L 0xAC9E llega_en_x la columna (H) y la X (D) del actor contra L y E
+L 0xACAB llega_a cambia de sala si sale (p05:AE5C); si H = L y D esta a menos de 8 de E, la direccion B y acarreo
+L 0xACC1 especial_29_paso_2 anda hasta la fila 2, Y = 0x38: direccion 1, parado 0x10 cuadros
+L 0xACDF especial_29_paso_3 al acabar la espera, el mensaje 0x350; al acabar el mensaje, p01:7A27, el eje 3 y el paso siguiente
+L 0xACFD especial_29_paso_4 anda hasta Y = 0x70 y gira a la direccion 3
+L 0xAD0D especial_29_paso_5 anda hasta la columna 8, X = 0x64, y gira a la direccion 0
+L 0xAD19 especial_29_paso_6 anda hasta la fila 3, Y = 0x64, y gira a la direccion 2
+L 0xAD2F especial_29_paso_7 al acabar la espera, el mensaje 0x450; despues p01:7A27, el sonido 0x23 y el mensaje 0x550
+L 0xAD4C mensaje_y_paso_c el mensaje DE y el paso siguiente
+L 0xAD52 especial_29_paso_9 al acabar el mensaje: p01:7A27, la musica, y la tercera barra con 0xCAE0 = 1 (p03:BB38)
+L 0xAD74 especial_29_paso_a el byte 0x16 = 1, la direccion 3, su sala especial a 0xE500 y el paso siguiente
+L 0xAD80 paso_siguiente_c el paso siguiente
+L 0xAD84 especial_29_paso_b segun la sala de Snake (p05:ADB2): 0, anda (p05:ADAC) con 0xD8A3 = 1; si no, el destino de p05:ADCF y el paso 0x0D
+L 0xADAC anda_especial anda y p05:B125
+L 0xADB2 lado_de_snake B = donde esta Snake respecto al actor: 3 o 4 en su columna (la 8 o no), 1 o 2 en su fila (la 2 o no); 0 si no
+L 0xADD9 especial_29_paso_c cambia de sala si sale; si no, anda y, con lo solido delante, gira hacia el destino
+L 0xAE36 solido_delante acarreo si delante (p05:AE54 por la direccion A) hay algo solido, con 0xD8A3 = 1 mientras
+L 0xAE5C cambia_de_sala_si_sale fuera de Y 0x20-0xC0 o X 8-0xB8: a la sala de al lado (p05:AE6B) y su sala especial a 0xE500 (sin acarreo)
+L 0xAE6B sale_a_la_de_al_lado por arriba: fila + 1 y abajo; por abajo: fila - 1 y arriba; por los lados, la columna y al otro lado
+L 0xAE9E hacia_el_destino la direccion hacia el destino (bytes 0x19-0x1A) por el eje mas largo
+L 0xAECB pon_direccion la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
+L 0xAEF4 especial_29_paso_d anda; si Snake esta en otra sala, otro destino; al pasar del centro (0x70, p05:AF18), 0xCB3C = 0 y el paso 0x0C
+L 0xAF20 por_encima_de_70 
+L 0xAF24 por_debajo_de_70 
+L 0xAF29 izquierda_de_70 
+L 0xAF2D derecha_de_70 
+L 0xAF32 especial_29_paso_e el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xCAE0 = 2, p03:B1A3, el sonido 0x93 y a Y = 0x80, X = 0x60
+L 0xAF59 especial_29_paso_f con Snake cerca (0x20 en X, 0x50 en Y): 0xCB3C = 1, la musica de p01:6BAC y el mensaje 0x610
+L 0xAF86 especial_29_paso_10 al acabar el mensaje, p01:7A27 y el paso siguiente
+L 0xAF90 especial_29_paso_11 el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
+L 0xAFA4 actor_de_d8a7 con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
+L 0xB00B fin_de_la_cuenta 8 cuadros en 0x1F, el byte 0x16 = 0, el eje (0x15) y el dibujo (0x1D) de antes
+L 0xB020 dibujo_de_la_cuenta el dibujo de 0x1D, + 1 con la cuenta de 0x18 entre 2 y 4
+L 0xB040 d8a7_paso_0 0x30 cuadros, 0xCB3C = 1, el bit 1 de 0xD7D7, sin musica pendiente y p03:B11F con 0
+L 0xB05B d8a7_paso_1 la espera; desde 0x20, p03:B132; al acabar, p03:B19A, el sonido 0x81, 0xD8A7 = 0xE25A = 1 y la conversacion
+L 0xB080 d8a7_paso_2 0xE25A = 0xCB3C = 0 y la musica del actor
+L 0xB08D d8a7_paso_3 una cuenta al azar (p05:B0CB), 16 cuadros, la sala de Snake; en ella, una direccion al azar; si no, hacia ella
+L 0xB0B5 paso_siguiente_d el paso siguiente
+L 0xB0B9 va_a_otra_sala la sala de la ficha a 0xE500 y hacia la de Snake: el paso 5
+L 0xB0BC hacia_la_sala la direccion de 0x1B, el paso 5 y su velocidad
+L 0xB0CB cuenta_al_azar 0x1E = 0x30-0x6F al azar
+L 0xB0D6 cuenta_y_lanza la cuenta de 0x1E; desde 0x18 y cada 4 cuadros, segun su sala (p05:B0FA)
+L 0xB102 d8a7_paso_4 la cuenta; en la sala de Snake anda en el recuadro y, tras 0x1C, si esta en esta sala, el paso 6
+L 0xB125 anda_en_recuadro_b anda; el 5 sin el paso del dibujo; dentro del recuadro, gira hacia Snake al chocar o al acabar la espera
+L 0xB161 sala_de_snake 0x1B = hacia donde esta la sala de Snake (1-4; 0 la misma)
+L 0xB193 mas_columna 
+L 0xB196 mas_fila 
+L 0xB199 menos_fila 
+L 0xB19C menos_columna 
+L 0xB19F d8a7_paso_5 la cuenta; en la sala de Snake, p05:B295; al borde, a la sala de al lado (p05:B247, p05:B25E)
+L 0xB247 sale_por_arriba_o_abajo hacia abajo: fila - 1, Y = 0x21; hacia arriba: fila + 1, Y = 0xBF
+L 0xB25E sale_por_un_lado hacia la derecha: columna + 1, X = 0x0A; hacia la izquierda: columna - 1, X = 0xB6
+L 0xB273 en_la_sala_nueva 0x20 cuadros, su sala a 0xE500 y otra vez hacia la de Snake
+L 0xB27D lanza_al_cruzarse sin la cuenta de 0x18, en esta sala: 0x1C cuadros lanzando el 6 cada 4; al acabar o fuera, el paso 3
+L 0xB295 al_paso_3 el paso 3, el eje 3 y una cuenta al azar
+L 0xB29D cuenta_1c_al_azar el byte 0x1C = 0x10-0x2F al azar
+L 0xB2A8 guarda_snake_en_18 los bytes 0x18-0x19 = la Y y la X de Snake
+L 0xB2B2 actor_de_las_salas_4_5 en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
+L 0xB2CD sprites_si_14 los sprites 10-13 fuera y, sin el byte 0x14, los suyos
+L 0xB2D8 en_4_5 acarreo con la fila y la columna de Snake entre 4 y 5
+L 0xB2F8 salas_4_5_paso_0 0xCB3C = 1, el dibujo 8, el bit 1 de 0xD7D6, hacia abajo y la musica 0xA6
+L 0xB310 paso_siguiente_e el paso siguiente
+L 0xB314 salas_4_5_paso_1 baja; en la fila de Snake, desde Y = 0x30 se para (dibujo 1) con el mensaje 0xC50
+L 0xB33C sin_byte_14 
+L 0xB341 cambia_de_sala_en_4_5 fuera de Y 0x10-0xC0 o X 0x0C-0xB4: a la sala de al lado con su sala a 0xE500
+L 0xB34E salas_4_5_paso_2 al acabar el mensaje: 0xCB3C = 0, p01:7A27 y el paso siguiente
+L 0xB35F salas_4_5_paso_3 el byte 0x16 = 1, su velocidad, el eje 1, el paso siguiente, su sala a 0xE500 y su musica
+L 0xB374 espera_al_azar una espera de 0x10-0x1F (4-0x13 el 0x0A)
+L 0xB389 salas_4_5_paso_4 cerca de Snake (p05:B46C): p05:B43B; si choca o se acaba la espera, gira (p05:B407); el bit 0x13 parpadea
+L 0xB3BE lanza_y_para p05:B563 y para 4 cuadros con el dibujo 8 (el paso 7)
+L 0xB3C3 para_con_dibujo_8 
+L 0xB3DD para_sin_14 
+L 0xB3E3 suena_1e en esta sala, sin el byte 0x14, el sonido 0x1E cada 4 cuadros
+L 0xB3F5 otra_cuenta otra cuenta de 0x10-0x2F y lanza
+L 0xB407 gira_al_azar una espera; con Snake en el estado 2 una direccion al azar, si no hacia Snake (p05:B4A9)
+L 0xB426 pon_dibujo_c el dibujo C y su velocidad
+L 0xB42D parpadeo_13 el byte 0x13 = 0xFF o 0 cada 4 cuadros
+L 0xB43B cerca_de_snake para 0x20 cuadros mirando a Snake (p05:B450) y el paso siguiente
+L 0xB450 mira_a_snake el dibujo de la direccion de 8 hacia Snake (p05:B464)
+L 0xB46C snake_a_menos_de_60 acarreo con Snake en esta sala a menos de 0x60 en Y y en X (salvo en el estado 2); con el byte 0x1B contando, no
+L 0xB49C choques_con_d8a3 los choques del actor con 0xD8A3 = 1 mientras
+L 0xB4A9 hacia_la_sala_de_snake la direccion hacia la sala de Snake (p05:B4CA), y si choca, otra
+L 0xB4AC direccion_que_no_choca si la direccion B choca, otra (la contraria o una al azar)
+L 0xB4CA direccion_a_la_sala B = hacia la fila de Snake (0, 1) o su columna (2, 3); en su sala, p05:B4E1
+L 0xB4E1 direccion_por_angulo B = el cuarto del angulo hacia Snake: 3 (0xE0-0x1F), 1 (0x20-0x5F), 2 (0x60-0x9F), 0 (0xA0-0xDF)
+L 0xB4F8 angulo_a_snake el angulo del actor a Snake (p02:86C3)
+L 0xB504 salas_4_5_paso_5 fuera de la sala, el paso 4; la espera; cerca de Snake mira y lanza el 8 cada 4; si no, 0x20 cuadros y el paso siguiente
+L 0xB51F lanza_8_cada_4 cada 4 cuadros, lanza el 8
+L 0xB528 espera_20_y_paso 
+L 0xB52F cuenta_1b_10 0x10 cuadros en 0x1B y el paso 4
+L 0xB535 salas_4_5_paso_6 la espera lanzando; al acabar o fuera, el paso 4
+L 0xB53F al_paso_4_y_gira el paso 4 y hacia Snake
+L 0xB546 salas_4_5_paso_7 al acabar la espera, el eje 3 y el dibujo de antes
+L 0xB563 suena_68 en esta sala, el sonido 0x68
+L 0xB56A sprites_desde_paso_5 desde el paso 5, sus sprites
+L 0xB573 actor_de_d8a9 con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
+L 0xB5B5 d8a9_paso_0 con 0xD6B0: el sonido 0x89, 8 cuadros, 0xCB3C = 1 y el paso siguiente
+L 0xB5C8 d8a9_paso_1 tras la espera, el mensaje 0x1110; al acabar, 0xCB3C = 0, 0xD509 = 1 y el paso siguiente
+L 0xB5DF paso_siguiente_f el paso siguiente
+L 0xB5E3 d8a9_paso_sala_1 en la sala 1: 0xCB3C = 1, el paso siguiente y el mensaje 0x1110
+L 0xB5F0 mensaje_1110 
+L 0xB5F6 acaba_mensaje_1 Z al acabar el mensaje, con p01:7A27 (A = 1)
+L 0xB5FF acaba_mensaje_0 Z al acabar el mensaje, con p01:7A27 (A = 0)
+L 0xB608 d8a9_en_sala_6 en la sala 6: el dibujo 4, 0xCB3C = 1, el byte 0x16 = 1, el bit 7 de 0xD7DA, 0x20 cuadros hacia la izquierda y la musica 0xA6
+L 0xB634 d8a9_anda anda; al acabar la espera, parado con el dibujo 2 otros 0x20
+L 0xB649 d8a9_mensajes tras la espera, el mensaje 0x126C; al acabar, dos mosaicos de quien habla (0 y 0x0A), la pantalla limpia, la paleta de p56:B914 y el mensaje 0x770
+L 0xB69B d8a9_fin_mensajes p03:B8AC; al acabar el mensaje, quita los mosaicos, la sala otra vez y en marcha con su musica
+L 0xB6D8 d8a9_busca si no ve a Snake delante (p05:B73D), el paso siguiente; si no, anda y, al chocar o acabar la espera, gira hacia Snake
+L 0xB728 gira_hacia_snake la direccion hacia Snake, una espera y su velocidad
+L 0xB730 espera_y_velocidad 
+L 0xB736 sin_eje_y_paso 
+L 0xB73D ve_delante en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
+L 0xB761 d8a9_lanza con el byte 0x17, otra direccion al azar; si ve a Snake, lanza el 8 cada 4 cuadros; si no, vuelve al paso de antes
+L 0xB767 otra_direccion la direccion contraria en su eje, o la de al lado, al azar
+L 0xB78F vuelve_al_paso_de_antes 
+L 0xB797 d8a9_mira sin verle, mira a los lados cada 8 cuadros; al acabar, el paso 8
+L 0xB7C6 d8a9_lanza_b si le ve, lanza el 8 cada 4 cuadros; si no, el paso 8
+L 0xB7DA al_paso_8_y_gira 
+L 0xB7E1 escena_de_b7e1 Snake en el estado 0 quieto, 0xCB3C = 1, 0x0C cuadros, el dibujo 0x80 y los sprites 4-7 fuera
+L 0xB811 escena_de_b811 las rachas de p41:BC6E, el sonido 0x14, el paso siguiente y p00:5DD3
+L 0xB81D escena_de_b81d cada 4 cuadros el dibujo siguiente; al acabar: los sprites de p36:858D, una direccion libre, el dibujo 0x14, 0xC0 cuadros, el sonido 0x64 y el aviso 0x0A
+L 0xB84E direccion_libre_azar una direccion al azar sin choque (C), con su velocidad de p05:B87A
+L 0xB882 rebota anda; al borde (Y 0x18-0xBB, X 0x0C-0xB3) da la vuelta; al chocar, otra direccion libre; a 0x60 y al acabar, el aviso 0x8C
+L 0xB8EA parpadea_dibujo cada 8 cuadros cambia el paso del dibujo; al acabar, p05:B8FF
+L 0xB8FF dibujo_16_y_40 el dibujo 0x16, 0x40 cuadros y el paso siguiente
+L 0xB90A espera_y_aviso_8d la espera; a 0x20, el aviso 0x8D; al acabar, el paso siguiente
+L 0xB91A suelta_y_paso_20 0xCB3C = 0 y el paso 0x20
+L 0xB923 actor_de_d8aa con 0xD8AA, sus pasos (p05:B934)
+L 0xB960 d8aa_paso_0 el dibujo 0, 0xCB3C = 1, 0x18 cuadros y el paso siguiente
+L 0xB96F d8aa_paso_1 al acabar la espera, el mensaje 0x910
+L 0xB978 d8aa_paso_2 al acabar el mensaje: 0xD509 = 0xCB3C = 1, hacia abajo y el paso siguiente
+L 0xB990 d8aa_paso_3 el borde, anda y cambia de sala; en la fila 2 desde Y = 0x5E, hacia la izquierda
+L 0xB9AF cambia_de_sala_b a la sala de al lado si sale (p05:AE6B)
+L 0xB9B8 d8aa_paso_4 en la columna 8 a la izquierda de X = 0x50: parado, 0xCB3C = 0, el dibujo 6 y p03:B108
+L 0xB9DA borde_con_d88c con 0xD88C a 0xFF, R#7 = 0x0F; si no, cada 8 cuadros R#7 = 0x0A (parpadea)
+L 0xB9F3 d8aa_paso_5 el borde; con 0xD88C a 0xFF en la sala 3, 0xD509 = 1, el dibujo 6 y el paso siguiente
+L 0xBA0C d8aa_paso_6 en la sala 2: 0xCB3C = 1, el bit 1 de 0xD7D9, el sonido 0x81 y 16 cuadros
+L 0xBA25 d8aa_paso_7 tras la espera, el mensaje 0xF10; al acabar, el byte 0x16 = 1 y el barrido desde (0x60, 0x60)
+L 0xBA45 d8aa_paso_8 el barrido; al acabar, el mensaje 0x1310
+L 0xBA4F mensaje_d10 el mensaje (D, 0x10)
+L 0xBA54 paso_siguiente_g el paso siguiente
+L 0xBA58 d8aa_paso_9 al acabar el mensaje: 0xCB3C = 0, su musica, p03:B108, el paso siguiente y hacia Snake
+L 0xBA6E hacia_snake_0 hacia Snake (A = 0) con su velocidad
+L 0xBA71 hacia_snake_1 hacia Snake por el otro eje (A = 1)
+L 0xBA7A direccion_a_snake_18 B = la direccion hacia Snake (p05:B4E1; con A, la del otro eje); a 0x18 y el dibujo
+L 0xBA90 d8aa_paso_a si choca, hacia Snake; cerca en su eje (0x0C y 6), parado 0x18 cuadros y el paso siguiente; cerca del eje de Snake, hacia el
+L 0xBAF1 de_y_hl_con_snake D = la Y de Snake, H = su X, E = la Y del actor, L = su X
+L 0xBAFC mira_y_suena_09 el dibujo 8 + la direccion hacia Snake y el sonido 9
+L 0xBB08 dando_la_vuelta_17 con el byte 0x17: el paso 0x0C, una cuenta al azar y la direccion contraria (Z si no)
+L 0xBB2E cuenta_0f_azar el byte 0x0F = 1-4 al azar
+L 0xBB38 d8aa_paso_b parado; cada 4 cuadros, mira (p05:BAFC) o hacia Snake; al acabar, al azar, otra vuelta o el paso siguiente
+L 0xBB63 d8aa_paso_c anda en el pasillo central (p05:BB8E); fuera, el giro de p05:BB83 hasta acabar la cuenta, y el paso 0x0A
+L 0xBB87 al_paso_0a_hacia_snake 
+L 0xBB8E en_el_pasillo acarreo en el pasillo: en vertical Y 0x58-0x87, en horizontal X 0x48-0x77
+L 0xBBA2 d8aa_paso_d sin llamada, 0xCB3C = 1, el dibujo 0x0C, 0x20 cuadros, p03:B1A3 y el sonido 0x93
+L 0xBBC1 d8aa_paso_e al acabar la espera, la otra pagina entera a esta y el barrido desde (0x60, 0x60)
+L 0xBBD9 d8aa_paso_f al acabar el barrido: el sonido 0xA0, 0xD8AA = 2, sin sprites, las rachas de p43:BE79, dos sprites, dos mosaicos de quien habla (0 y 8) y el mensaje 0x1070
+L 0xBC4A d8aa_paso_10 p03:B8AC; al acabar el mensaje, la pantalla apagada, 0xCD00-0xCDFF a cero, quita los dos mosaicos y Snake quieto en el estado 0
+L 0xBC9F hueco_de_mosaico en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+L 0xBCB5 d8aa_paso_11 al acabar el barrido: Snake y el actor en Y = 0x68 (Snake en X = 0x70 mirando a la izquierda, el actor en 0x50), 0xD8AA = 1 y los sprites limpios
+L 0xBCE8 d8aa_paso_12 al acabar la espera, 0xD8AA = 0 y el paso 0x20
+L 0xBCF5 mosaico_de_13_5 en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x18, 0x84) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
+L 0xBD26 mosaico_de_la_ficha el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+L 0xBD3B sprites_hasta_paso_0f hasta el paso 0x0F, sus sprites; desde el, fuera
+L 0xBD46 actor_de_la_sala_5 en la sala 5, sus pasos (p05:BD58)
+L 0xBD84 sala_5_paso_0 0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
+L 0xBDAC sala_5_paso_1 al acabar la espera, 9 cuadros y el paso siguiente
+L 0xBDBA sala_5_paso_2 cada 8 cuadros el dibujo siguiente; al acabar, el mensaje 0x1460
+L 0xBDD2 mensaje_d60 
+L 0xBDD4 mensaje_de_y_paso 
+L 0xBDD9 sala_5_paso_3 al acabar el mensaje: Snake en el estado 0x17, 0xD8AB = 1, el dibujo 2, y Snake hacia la derecha
+L 0xBDF6 snake_hacia_a la direccion de Snake = A y el paso siguiente
+L 0xBDF9 paso_siguiente_h 
+L 0xBDFD sala_5_paso_4 cuando Snake llega a X = 0x98, hacia arriba
+L 0xBE0A sala_5_paso_5 cuando llega a Y = 0x38, 0xCB42 = 1 y hacia la izquierda
+L 0xBE1C sala_5_paso_6 0xCB3C = 1 y el mensaje 0x1560
+L 0xBE28 sala_5_paso_7 al acabar el mensaje, 0x5A cuadros y la orden 0xF6
+L 0xBE3B sala_5_paso_8 al acabar la espera: p03:B11F con 0, los sonidos 5 y 0x81 y 0x20 cuadros
+L 0xBE4F sala_5_paso_9 p03:B132; al acabar, p03:B19A, 0xE25A = 1 y la conversacion 2
+L 0xBE64 sala_5_paso_a el sonido 0x84 y el mensaje 0x1660
+L 0xBE6C sala_5_paso_b al acabar el mensaje: 0x20 cuadros, Snake en el estado 0x17 hacia abajo, el actor hacia la izquierda, el sonido 5 y su musica
+L 0xBE95 anda_d8ab con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, hasta X = 0x70, y para
+L 0xBEC6 sala_5_junto_a_snake a menos de 5 en X de Snake: 0xCB3C = 0, 0xCB42 = 1, el byte 0x16 = 1, p05:BEE7 y el paso siguiente
+L 0xBEE7 quita_cb21_0a con 0xCB21 = 0x0A u 0x0B: lo quita, el estado de 0xCB35 y el hueco de 0xD8A4 (0x18 x 0x10) al color 9
+L 0xBF08 sigue_a_snake cada 64 cuadros (con vida) el aviso 9; el actor en el sitio de Snake mas lo de su direccion (p05:BF37), con el dibujo 8 + la direccion
+L 0xBF41 paso_si_en_sala en esta sala, el paso siguiente
+L 0xBF48 sala_5_suelta sin eje, 0x18 cuadros, 0xD500 = 2, 0xD510 = 0x0D, el bit 7 de 0xD7D6 y el paso siguiente
+L 0xBF65 mosaico_en_la_otra con los juegos 6-7, el mosaico de la ficha en la otra pagina y 0xD88B = 0xFF
+L 0xBF86 sala_5_fin al acabar la espera: el sonido 0x93, la musica de la zona, sin sprites y el mosaico
+L 0xBF9C sala_5_snake_baja 0xE070 = 0; con el bit 5 de 0xD7D9, el bit 4, Snake hacia abajo en el estado 0x17
+L 0xBFB8 sala_5_snake_llega con Snake desde Y = 0x80: 0xCB3C = 0xCB42 = 1, Snake hacia la derecha y la musica de p01:6BB0
+L 0xBFD4 mensaje_1718 
+L 0xBFDA sala_5_tras_mensaje al acabar el mensaje, la orden 0xF6 y 0x20 cuadros
+L 0xBFEB sala_5_espera_y_sonido tras la espera, el sonido 5; despues 0xE070 = 1 y su bandera de 0xD87F con p06:B14E
 C 0xA001 baja la espera del actor
+C 0xA016 al_paso_4: el paso 4
 C 0xA019 lee la sala de la zona
 C 0xA024 lee el tipo del actor (0 = libre)
 C 0xA02A lee el paso del actor
@@ -72,20 +531,26 @@ C 0xA04F lee el paso del actor
 C 0xA058 el dibujo del actor (bit 0: el paso) = 0x00
 C 0xA05E guarda el paso del actor
 C 0xA062 baja la espera del actor
+C 0xA06E paso_siguiente: el paso siguiente del actor
 C 0xA071 baja la espera del actor
 C 0xA075 la espera del actor = 0x10
 C 0xA079 el paso del actor = 0x20
 C 0xA07D aviso_8b_20: 
+C 0xA082 hasta_x_b: desde la X de B, el paso siguiente (sin acarreo); antes, anda (acarreo)
 C 0xA08A lee la X del actor
+C 0xA090 paso_siguiente: el paso siguiente del actor
 C 0xA095 p04:900B
 C 0xA09A lee la Y del actor
 C 0xA0A4 a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
+C 0xA0A7 paso_siguiente: el paso siguiente del actor
+C 0xA0AC hasta_x_b: desde la X de B, el paso siguiente (sin acarreo); antes, anda (acarreo)
 C 0xA0B1 guarda el dibujo del actor (bit 0: el paso)
 C 0xA0B7 la espera del actor = 0x10
 C 0xA0BC baja la espera del actor
 C 0xA0C5 apunta a la fase de la partida (indice de las listas de p06:B40C)
 C 0xA0CF guarda la fase de la partida (indice de las listas de p06:B40C)
 C 0xA0D5 sonido_46: pide el sonido 0x46
+C 0xA0D8 paso_siguiente: el paso siguiente del actor
 C 0xA0DB sube la espera del actor
 C 0xA0DE mira_cada_16: cada 16 cuadros, p06:B5E2
 C 0xA0E4 lee la Y del actor
@@ -108,96 +573,129 @@ C 0xA190 lee la Y del actor
 C 0xA196 guarda el paso del actor
 C 0xA199 guarda el dibujo del actor (bit 0: el paso)
 C 0xA1AA lee la X del actor
+C 0xA1B0 dibujo_2_dir_1: 
+C 0xA1B3 paso_siguiente: el paso siguiente del actor
 C 0xA1B9 lee la X del actor
+C 0xA1C2 parado_con_bandera: 
 C 0xA1C5 baja la espera del actor
 C 0xA1DE la espera del actor = 0x08
+C 0xA1E2 paso_siguiente: el paso siguiente del actor
 C 0xA1E5 baja la espera del actor
 C 0xA1EF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA1F8 el tipo del actor (0 = libre) = 0x18
+C 0xA209 paso_siguiente: el paso siguiente del actor
 C 0xA20C baja la espera del actor
+C 0xA210 al_paso_4: el paso 4
 C 0xA22A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA233 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xA236 baja la espera del actor
 C 0xA23A el paso del actor = 0x04
 C 0xA245 el tipo del actor (0 = libre) = 0x00
+C 0xA250 tipo_2_en_la_sala: fuera de 0xD430 = 2, el tipo 2 en esta sala: parado (la direccion 0, el paso 6) o hacia abajo (2, el paso 7), con acarreo
 C 0xA254 llega_a_64: el tipo 8 en la fila 1 columna 9: al llegar a Y = 0x64, el paso 0x22 con 8 cuadros y, con 0xD510 = 0x0C, la bandera de 0xD519
 C 0xA258 llega_a_b4: el tipo 9 en la fila 1 columna 7: al llegar a Y = 0xB4, el paso 0x28 y (en la sala 4 o la especial 0x18) la bandera de 0xD509
+C 0xA25F paso_siguiente: el paso siguiente del actor
 C 0xA26B lee el dibujo del actor (bit 0: el paso)
 C 0xA277 la espera del actor = 0x80
 C 0xA27B sube el paso del actor
+C 0xA27F mira_a_los_lados: la espera; segun sus bits 4 y 5, el dibujo de frente, + 8 o + 9 (Z al acabar)
 C 0xA285 baja la espera del actor
 C 0xA28B mira el bit 4 de la espera del actor
 C 0xA293 mira el bit 5 de la espera del actor
 C 0xA2A0 guarda el dibujo del actor (bit 0: el paso)
+C 0xA2A6 mira_a_los_lados: la espera; segun sus bits 4 y 5, el dibujo de frente, + 8 o + 9 (Z al acabar)
+C 0xA2AA al_paso_4: el paso 4
 C 0xA2AD lee el paso del actor
 C 0xA2BA despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA2D5 paso_siguiente: el paso siguiente del actor
 C 0xA2DF lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA300 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA305 guarda la espera del actor
-C 0xA31E baja la espera del actor
+C 0xA319 cerca_de_los_que_llegan: con la alerta 1 contando, acarreo si los actores 20 y 21 estan juntos (a menos de 0x10 en Y y 0x0C en X)
+C 0xA336 numero_del_actor: A = el byte bajo de IX / 16
+C 0xA352 lado_mas_abierto_x: cuanto hay libre a la derecha y a la izquierda (p05:A419): 2 o 3 hacia el mas abierto
+C 0xA357 lado_mas_abierto_y: lo mismo arriba y abajo: 0 o 1 hacia el mas abierto
 C 0xA360 la espera del actor = 0xC0
+C 0xA364 paso_siguiente: el paso siguiente del actor
 C 0xA367 aviso_82_20: 
 C 0xA36A el paso del actor = 0x03
 C 0xA36E azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA3C0 lee la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 C 0xA3C5 apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+C 0xA3F5 libre_en_x: B = cuantos pasos de C hay libres desde el actor (Y - 6)
+C 0xA3FB libre_en_x: B = cuantos pasos de C hay libres desde el actor (Y - 6)
 C 0xA41B lee la X del actor
 C 0xA41E lee la Y del actor
 C 0xA429 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xA444 libre_en_y: D = 1: en vertical
+C 0xA44A libre_en_y: D = 1: en vertical
 C 0xA464 lee la Y del actor
 C 0xA469 lee la velocidad del actor en X (alta)
 C 0xA46D lee la X del actor
+C 0xA47F aviso_y_paso_3: el aviso 0x82, el paso 3 y una direccion al azar
 C 0xA482 baja la espera del actor
 C 0xA487 lee la espera del actor
 C 0xA490 baja la espera del actor
 C 0xA496 el paso del actor = 0x01
+C 0xA49A gira_al_otro_eje: al otro eje, al azar segun el actor
 C 0xA49D choca_de_frente: A = los choques (C) en su eje: 3 vertical, 0x0C horizontal
+C 0xA4A3 paso_siguiente: el paso siguiente del actor
+C 0xA4A6 gira_izquierda: gira a la izquierda (p05:A5E2) hasta una direccion libre
 C 0xA4AF lee la velocidad del actor en Y (alta)
 C 0xA4C0 lee la velocidad del actor en X (alta)
 C 0xA4D6 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xA4F1 gira_izquierda: gira a la izquierda (p05:A5E2) hasta una direccion libre
 C 0xA4F7 lee la zona
 C 0xA500 lee la fila de la sala en la zona (uno mas al salir por arriba)
-C 0xA510 lee la X del actor
 C 0xA513 lee la Y del actor
 C 0xA51C lee la velocidad del actor en Y (alta)
+C 0xA529 paso_siguiente: el paso siguiente del actor
 C 0xA532 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA53F es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA54B lee la velocidad del actor en X (alta)
+C 0xA558 paso_siguiente: el paso siguiente del actor
 C 0xA55E es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA56B es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA582 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xA5A9 lee la Y del actor
 C 0xA5AE lee la X del actor
-C 0xA5B9 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA5EE el paso del actor = 0x0A
 C 0xA5FF lee el paso del actor
 C 0xA605 salta_por_tabla: salta a la palabra A de la tabla de HL
-C 0xA60B lee el paso del actor
 C 0xA638 sube el paso del actor
 C 0xA655 la espera del actor = 0x20
+C 0xA659 paso_siguiente_b: el paso siguiente
 C 0xA65F baja la espera del actor
 C 0xA666 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xA669 paso_siguiente_b: el paso siguiente
+C 0xA66E fin_del_mensaje: al acabar el mensaje (Z): el byte 0x1C = 0, la espera C, p01:7A27 y el paso siguiente (acarreo)
 C 0xA672 sonido_4a: pide el sonido 0x4A
 C 0xA676 mensaje_cada_cuadro_bancos_5: 
 C 0xA67F guarda la espera del actor
 C 0xA682 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xA685 paso_siguiente_b: el paso siguiente
+C 0xA68A tres_pares_de_sprites: los sprites 24-29 en tres pares de Y = 0x60, 0x56, 0x4C y X = 0x58, con los patrones 0x28/0x2C o 0x30/0x34
 C 0xA68D baja la espera del actor
 C 0xA692 lee la espera del actor
+C 0xA697 dibujo_2: 
 C 0xA69D el dibujo del actor (bit 0: el paso) = 0x07
 C 0xA6A2 el dibujo del actor (bit 0: el paso) = 0x02
+C 0xA6A7 sin_sprites_24: los sprites 24-31 fuera
 C 0xA6BB lee la espera del actor
 C 0xA6E0 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 C 0xA6F8 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA6FD fin_del_mensaje: al acabar el mensaje (Z): el byte 0x1C = 0, la espera C, p01:7A27 y el paso siguiente (acarreo)
 C 0xA70B guarda la espera del actor
 C 0xA70E guarda el dibujo del actor (bit 0: el paso)
-C 0xA723 lee la velocidad del actor en Y (alta)
+C 0xA715 paso_siguiente_b: el paso siguiente
+C 0xA71E snake_en_el_recuadro: acarreo si Snake esta en X 0x38-0xC7 e Y 0x50-0x7F
 C 0xA729 lee la X del actor
+C 0xA72E dibujo_de_lado: el dibujo 4 o 6 (el contrario) y su velocidad
+C 0xA731 anda_en_recuadro: el paso del dibujo, y fuera del recuadro (Y 0x20-0xBF, X 8-0xB7) o chocando: da la vuelta
 C 0xA734 lee la espera del actor
-C 0xA73C el paso del actor = 0x09
+C 0xA739 para_y_gira: guarda el dibujo (0x1B), p05:A8D2, 0x0C cuadros, sin eje, guarda el paso (0x1A) y al 0x0B
 C 0xA743 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA748 palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xA74B guarda la cuenta del paso del dibujo del actor
-C 0xA74E guarda la rapidez del paso del dibujo del actor (0-3)
 C 0xA758 la espera del actor = 0x08
 C 0xA75C sonido_4b: pide el sonido 0x4B
 C 0xA777 lee el dibujo del actor (bit 0: el paso)
@@ -208,10 +706,16 @@ C 0xA78F pon_velocidad_x: la velocidad en X = DE
 C 0xA793 pon_velocidad_y: la velocidad en Y = DE
 C 0xA7A4 de_negativo: DE = -DE
 C 0xA7AC de_negativo: DE = -DE
+C 0xA7C7 salta_y_paso_0a: un salto al azar de p05:A86D y el paso 0x0A
+C 0xA7CA snake_en_el_recuadro: acarreo si Snake esta en X 0x38-0xC7 e Y 0x50-0x7F
+C 0xA7CD salta_y_paso_0a: un salto al azar de p05:A86D y el paso 0x0A
 C 0xA7D0 lee la velocidad del actor en Y (alta)
 C 0xA7D6 lee la X del actor
+C 0xA7DB dibujo_de_lado: el dibujo 4 o 6 (el contrario) y su velocidad
+C 0xA7DE anda_en_recuadro: el paso del dibujo, y fuera del recuadro (Y 0x20-0xBF, X 8-0xB7) o chocando: da la vuelta
 C 0xA7E1 lee la espera del actor
 C 0xA7E6 lee el dibujo del actor (bit 0: el paso)
+C 0xA7EC dibujo_por_b4e1: el dibujo 9 + 2 * B (p05:B4E1)
 C 0xA7F2 guarda la espera del actor
 C 0xA7F9 lee el paso del actor
 C 0xA7FF guarda el paso del actor
@@ -219,35 +723,45 @@ C 0xA80A baja la espera del actor
 C 0xA80E lee la Y del actor
 C 0xA817 lee la X del actor
 C 0xA82F la espera del actor = 0x00
+C 0xA83F dibujo_hacia_x: el dibujo de lado o del otro eje, al azar, sin chocar
+C 0xA844 dibujo_al_azar: un dibujo de direccion al azar (0, 2, 4, 6)
+C 0xA847 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xA84A azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA851 guarda la espera del actor
 C 0xA855 lee el tipo del actor (0 = libre)
 C 0xA85E guarda la espera del actor
+C 0xA865 salto_al_azar: una de las 4 palabras de HL a los bytes 0x18-0x19, sin eje, 8 cuadros y el sonido 0x4B
 C 0xA868 el paso del actor = 0x0A
 C 0xA875 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA879 lee el dibujo del actor (bit 0: el paso)
 C 0xA894 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA89C choca_por_d: acarreo si C tiene el bit de la direccion D
 C 0xA8A8 suma_a_hl: HL = HL + A
 C 0xA8AC guarda el dibujo del actor (bit 0: el paso)
 C 0xA8BF lee el dibujo del actor (bit 0: el paso)
 C 0xA8CC guarda el dibujo del actor (bit 0: el paso)
+C 0xA8CF velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+C 0xA8D2 direccion_por_angulo: B = el cuarto del angulo hacia Snake: 3 (0xE0-0x1F), 1 (0x20-0x5F), 2 (0x60-0x9F), 0 (0xA0-0xDF)
 C 0xA8DA guarda el dibujo del actor (bit 0: el paso)
+C 0xA8DE salto: la espera; cambia la Y y la X con los bytes 0x18-0x19 (el sitio de destino)
 C 0xA8E6 el paso del actor = 0x08
+C 0xA8EA velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xA8ED baja la espera del actor
 C 0xA8F1 lee la Y del actor
-C 0xA8F4 lee la cuenta del paso del dibujo del actor
 C 0xA8F7 guarda la Y del actor
-C 0xA8FA guarda la cuenta del paso del dibujo del actor
 C 0xA8FD lee la X del actor
-C 0xA900 lee la rapidez del paso del dibujo del actor (0-3)
 C 0xA903 guarda la X del actor
-C 0xA906 guarda la rapidez del paso del dibujo del actor (0-3)
+C 0xA90A salto: la espera; cambia la Y y la X con los bytes 0x18-0x19 (el sitio de destino)
 C 0xA912 el paso del actor = 0x07
+C 0xA916 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xA919 baja la espera del actor
 C 0xA91E lee la espera del actor
 C 0xA927 lanza_5: p06:A942 y lo lanzado de tipo 5
 C 0xA92D guarda el paso del actor
+C 0xA937 gira_a_snake_y: hacia Snake en Y (p05:A894) con una espera de 8-15
 C 0xA93D guarda el dibujo del actor (bit 0: el paso)
+C 0xA940 gira_a_snake_x: hacia Snake en X (p05:A875) con una espera de 8-15
+C 0xA943 paso_siguiente_b: el paso siguiente
 C 0xA94B la espera del actor = 0x18
 C 0xA952 lee la Y del actor
 C 0xA95D lee la X del actor
@@ -260,8 +774,10 @@ C 0xA992 guarda el dibujo del actor (bit 0: el paso)
 C 0xA998 baja la espera del actor
 C 0xA9A2 la espera del actor = 0x20
 C 0xA9A6 el dibujo del actor (bit 0: el paso) = 0x10
+C 0xA9AA sitio_en_escena: con la Y 0x40-0x97: la X a 0x18, 0x48 o 0xA8 segun donde este
 C 0xA9AD sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA9B3 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xA9B6 paso_siguiente_b: el paso siguiente
 C 0xA9B9 lee la Y del actor
 C 0xA9C2 lee la X del actor
 C 0xA9E0 guarda la X del actor
@@ -270,6 +786,8 @@ C 0xA9E8 sonido_9c: pide el sonido 0x9C (de los que tienen la partitura en un ba
 C 0xA9F1 lee la Y de Snake
 C 0xA9FE lee la Y del actor
 C 0xAA14 suma_a_hl: HL = HL + A
+C 0xAA1A mensaje_y_paso: el mensaje D del banco 50 en ventana estrecha y el paso siguiente
+C 0xAA28 fin_del_mensaje: al acabar el mensaje (Z): el byte 0x1C = 0, la espera C, p01:7A27 y el paso siguiente (acarreo)
 C 0xAA2C la espera del actor = 0x10
 C 0xAA30 sube el dibujo del actor (bit 0: el paso)
 C 0xAA33 sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
@@ -285,13 +803,10 @@ C 0xAA8B el tipo de la ficha de 0xD800 = 0x00
 C 0xAA9B apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xAAA1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xAAAC apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
-C 0xAAB3 el tipo de la ficha de 0xD800 = 0x0B
 C 0xAAB8 guarda la Y de la ficha de 0xD800
 C 0xAABD guarda la X de la ficha de 0xD800
 C 0xAAC2 guarda el dibujo de la ficha de 0xD800
-C 0xAAC9 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xAAE0 guarda 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
-C 0xAAEC sprites_de_8773: 
 C 0xAB05 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAB2B sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAB2F a_p03_b11f: p03:B11F con el banco 3 en 0xA000
@@ -304,7 +819,7 @@ C 0xAB74 mensaje_cada_cuadro_bancos_5:
 C 0xAB78 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAB8B guarda 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xAB8E apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
-C 0xABB2 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xAB96 quedan_fichas: p14:AF96: C = cuantas quedan; con 0, 0xD8A0 = 4 y Z
 C 0xABD6 a_p14_af96: p14:AF96 con el banco 14 en 0xA000
 C 0xABE4 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAC01 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
@@ -314,24 +829,41 @@ C 0xAC14 a_p14_ae76: p14:AE76 con el banco 14 en 0xA000
 C 0xAC1F lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC2D lee el paso del actor
 C 0xAC33 salta_por_tabla: salta a la palabra A de la tabla de HL
-C 0xAC39 lee la sala de la zona
 C 0xAC3F lee el paso del actor
 C 0xAC6E lee la sala de la zona
+C 0xAC7A pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
+C 0xAC85 paso_siguiente_c: el paso siguiente
 C 0xAC8F sonido_51: pide el sonido 0x51
 C 0xAC92 sonido_52: pide el sonido 0x52
+C 0xAC95 anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 C 0xAC9E lee la columna de la sala del actor
 C 0xACA1 lee la X del actor
+C 0xACA4 llega_a: cambia de sala si sale (p05:AE5C); si H = L y D esta a menos de 8 de E, la direccion B y acarreo
+C 0xACA8 paso_siguiente_c: el paso siguiente
+C 0xACAC cambia_de_sala_si_sale: fuera de Y 0x20-0xC0 o X 8-0xB8: a la sala de al lado (p05:AE6B) y su sala especial a 0xE500 (sin acarreo)
+C 0xACBA pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
+C 0xACC1 anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 C 0xACC4 lee la fila de la sala del actor
 C 0xACC9 lee la Y del actor
+C 0xACD0 llega_a: cambia de sala si sale (p05:AE5C); si H = L y D esta a menos de 8 de E, la direccion B y acarreo
 C 0xACD8 la espera del actor = 0x10
+C 0xACDC paso_siguiente_c: el paso siguiente
 C 0xACDF lee la espera del actor
 C 0xACE5 baja la espera del actor
 C 0xACEC mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 C 0xACEF mensaje_cada_cuadro_bancos_5: 
 C 0xACF3 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xACFA paso_siguiente_c: el paso siguiente
+C 0xACFD anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 C 0xAD00 lee la Y del actor
+C 0xAD08 pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
+C 0xAD0D anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
+C 0xAD16 llega_en_x: la columna (H) y la X (D) del actor contra L y E
+C 0xAD19 anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 C 0xAD22 lee la fila de la sala del actor
 C 0xAD25 lee la Y del actor
+C 0xAD28 llega_a: cambia de sala si sale (p05:AE5C); si H = L y D esta a menos de 8 de E, la direccion B y acarreo
+C 0xAD2C paso_siguiente_c: el paso siguiente
 C 0xAD2F lee la espera del actor
 C 0xAD35 baja la espera del actor
 C 0xAD3C mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
@@ -339,31 +871,46 @@ C 0xAD3F mensaje_cada_cuadro_bancos_5:
 C 0xAD43 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAD46 sonido_23: pide el sonido 0x23
 C 0xAD4C mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xAD4F paso_siguiente_c: el paso siguiente
 C 0xAD52 mensaje_cada_cuadro_bancos_5: 
 C 0xAD56 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAD61 guarda 1 mientras corre la tercera barra
 C 0xAD67 guarda 1 mientras se ve la barra de la derecha
 C 0xAD6C guarda la espera de la tercera barra
 C 0xAD6F a_p03_bb38: p03:BB38 con el banco 3 en 0xA000
+C 0xAD7A pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
 C 0xAD7D sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 C 0xAD80 sube el paso del actor
+C 0xAD84 lado_de_snake: B = donde esta Snake respecto al actor: 3 o 4 en su columna (la 8 o no), 1 o 2 en su fila (la 2 o no); 0 si no
+C 0xAD91 anda_especial: anda y p05:B125
 C 0xAD9C palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xAD9F guarda la rapidez del paso del dibujo del actor (0-3)
 C 0xADA5 el paso del actor = 0x0D
+C 0xADA9 hacia_el_destino: la direccion hacia el destino (bytes 0x19-0x1A) por el eje mas largo
+C 0xADAC anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
+C 0xADAF anda_en_recuadro_b: anda; el 5 sin el paso del dibujo; dentro del recuadro, gira hacia Snake al chocar o al acabar la espera
 C 0xADB4 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xADB7 compara con la columna de la sala del actor
 C 0xADC3 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xADC6 compara con la fila de la sala del actor
+C 0xADD9 cambia_de_sala_si_sale: fuera de Y 0x20-0xC0 o X 8-0xB8: a la sala de al lado (p05:AE6B) y su sala especial a 0xE500 (sin acarreo)
+C 0xADDC paso_siguiente_c: el paso siguiente
+C 0xADDF anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
+C 0xADE5 solido_delante: acarreo si delante (p05:AE54 por la direccion A) hay algo solido, con 0xD8A3 = 1 mientras
 C 0xADF1 lee la fila de la sala del actor
 C 0xADFC lee la X del actor
-C 0xAE06 lee la Y del actor
+C 0xAE03 hacia_el_destino: la direccion hacia el destino (bytes 0x19-0x1A) por el eje mas largo
+C 0xAE0E hacia_el_destino: la direccion hacia el destino (bytes 0x19-0x1A) por el eje mas largo
 C 0xAE18 lee la Y del actor
-C 0xAE1B le resta la rapidez del paso del dibujo del actor (0-3)
+C 0xAE20 pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
+C 0xAE24 pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
 C 0xAE27 lee la X del actor
+C 0xAE2F pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
+C 0xAE33 pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
 C 0xAE40 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAE43 lee la Y del actor
 C 0xAE48 lee la X del actor
 C 0xAE4D es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xAE62 sale_a_la_de_al_lado: por arriba: fila + 1 y abajo; por abajo: fila - 1 y arriba; por los lados, la columna y al otro lado
 C 0xAE66 sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 C 0xAE6B lee la Y del actor
 C 0xAE74 lee la X del actor
@@ -376,14 +923,14 @@ C 0xAE90 guarda la Y del actor
 C 0xAE95 baja la columna de la sala del actor
 C 0xAE99 guarda la X del actor
 C 0xAEA1 lee la Y del actor
-C 0xAEA4 le resta la rapidez del paso del dibujo del actor (0-3)
-C 0xAEAD lee la X del actor
 C 0xAED0 guarda el dibujo del actor (bit 0: el paso)
 C 0xAED7 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAEDB guarda la velocidad del actor en Y (alta)
 C 0xAEDE guarda la velocidad del actor en Y (baja)
 C 0xAEE1 guarda la velocidad del actor en X (alta)
 C 0xAEE4 guarda la velocidad del actor en X (baja)
+C 0xAEF4 anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
+C 0xAEF7 lado_de_snake: B = donde esta Snake respecto al actor: 3 o 4 en su columna (la 8 o no), 1 o 2 en su fila (la 2 o no); 0 si no
 C 0xAEFF lee la Y del actor
 C 0xAF02 lee la X del actor
 C 0xAF0B salta_por_tabla: salta a la palabra A de la tabla de HL
@@ -394,29 +941,28 @@ C 0xAF48 a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 C 0xAF4B sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAF4E la Y del actor = 0x80
 C 0xAF52 la X del actor = 0x60
+C 0xAF56 paso_siguiente_c: el paso siguiente
 C 0xAF5D lee la X de Snake
 C 0xAF60 le resta la X del actor
 C 0xAF6A lee la Y de Snake
 C 0xAF6F le resta la Y del actor
 C 0xAF7D pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xAF83 mensaje_y_paso_c: el mensaje DE y el paso siguiente
 C 0xAF86 mensaje_cada_cuadro_bancos_5: 
 C 0xAF8A llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xAF8D paso_siguiente_c: el paso siguiente
 C 0xAF90 el paso del actor = 0x20
 C 0xAF98 lee la sala de la zona
+C 0xAFB8 sala_de_snake: 0x1B = hacia donde esta la sala de Snake (1-4; 0 la misma)
 C 0xAFBD lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xAFC5 lee la cuenta del paso del dibujo del actor
-C 0xAFDA lee el paso del actor
 C 0xAFE0 salta_por_tabla: salta a la palabra A de la tabla de HL
-C 0xAFE6 lee el paso del actor
-C 0xAFF0 lee el paso del actor
-C 0xAFF8 lee la cuenta del paso del dibujo del actor
-C 0xB002 baja la cuenta del paso del dibujo del actor
+C 0xB005 fin_de_la_cuenta: 8 cuadros en 0x1F, el byte 0x16 = 0, el eje (0x15) y el dibujo (0x1D) de antes
 C 0xB01C guarda el dibujo del actor (bit 0: el paso)
-C 0xB023 lee la cuenta del paso del dibujo del actor
 C 0xB02E guarda el dibujo del actor (bit 0: el paso)
 C 0xB040 la espera del actor = 0x30
 C 0xB051 guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0xB055 a_p03_b11f: p03:B11F con el banco 3 en 0xA000
+C 0xB058 paso_siguiente_d: el paso siguiente
 C 0xB05B baja la espera del actor
 C 0xB05E lee la espera del actor
 C 0xB064 a_p03_b132: p03:B132 con el banco 3 en 0xA000
@@ -424,43 +970,65 @@ C 0xB067 lee la espera del actor
 C 0xB06C a_p03_b19a: p03:B19A con el banco 3 en 0xA000
 C 0xB06F sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xB07A conversacion_de_a: la conversacion de p48:8010 (A = 0), p48:8012 (1) o p48:8014 (2)
+C 0xB07D paso_siguiente_d: el paso siguiente
+C 0xB08A paso_siguiente_d: el paso siguiente
+C 0xB08D cuenta_al_azar: 0x1E = 0x30-0x6F al azar
+C 0xB09E sala_de_snake: 0x1B = hacia donde esta la sala de Snake (1-4; 0 la misma)
 C 0xB0A7 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB0AC guarda el dibujo del actor (bit 0: el paso)
+C 0xB0AF velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+C 0xB0B2 cuenta_1c_al_azar: el byte 0x1C = 0x10-0x2F al azar
 C 0xB0B5 sube el paso del actor
 C 0xB0B9 sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 C 0xB0C1 guarda el dibujo del actor (bit 0: el paso)
 C 0xB0C4 el paso del actor = 0x05
+C 0xB0C8 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xB0CB azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB0E1 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB0E7 lee la fila de la sala del actor
 C 0xB0ED lee la columna de la sala del actor
 C 0xB0F6 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB102 cuenta_y_lanza: la cuenta de 0x1E; desde 0x18 y cada 4 cuadros, segun su sala (p05:B0FA)
+C 0xB10B anda_en_recuadro_b: anda; el 5 sin el paso del dibujo; dentro del recuadro, gira hacia Snake al chocar o al acabar la espera
+C 0xB115 al_paso_3: el paso 3, el eje 3 y una cuenta al azar
 C 0xB120 el paso del actor = 0x06
+C 0xB125 anda_en_recuadro: el paso del dibujo, y fuera del recuadro (Y 0x20-0xBF, X 8-0xB7) o chocando: da la vuelta
 C 0xB128 lee el tipo del actor (0 = libre)
 C 0xB12F lee el dibujo del actor (bit 0: el paso)
 C 0xB134 guarda el dibujo del actor (bit 0: el paso)
 C 0xB137 lee la Y del actor
 C 0xB140 lee la X del actor
+C 0xB14E gira_a_snake_y: hacia Snake en Y (p05:A894) con una espera de 8-15
 C 0xB151 lee la espera del actor
+C 0xB156 gira_a_snake_x: hacia Snake en X (p05:A875) con una espera de 8-15
 C 0xB15C la espera del actor = 0x10
 C 0xB163 lee la fila de la sala del actor
 C 0xB166 lee la columna de la sala del actor
 C 0xB169 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0xB171 mas_fila: 
+C 0xB174 menos_fila: 
+C 0xB17B menos_columna: 
+C 0xB17E mas_columna: 
+C 0xB19F cuenta_y_lanza: la cuenta de 0x1E; desde 0x18 y cada 4 cuadros, segun su sala (p05:B0FA)
+C 0xB1A6 al_paso_3: el paso 3, el eje 3 y una cuenta al azar
 C 0xB1A9 lee la Y del actor
+C 0xB1B0 sale_por_arriba_o_abajo: hacia abajo: fila - 1, Y = 0x21; hacia arriba: fila + 1, Y = 0xBF
 C 0xB1B3 lee la X del actor
-C 0xB1BD lee la velocidad del actor en Y (alta)
+C 0xB1BA sale_por_un_lado: hacia la derecha: columna + 1, X = 0x0A; hacia la izquierda: columna - 1, X = 0xB6
 C 0xB1CA lee la fila de la sala del actor
 C 0xB1D4 lee la Y del actor
 C 0xB1DC lee la columna de la sala del actor
 C 0xB1E7 guarda el dibujo del actor (bit 0: el paso)
+C 0xB1EA velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xB1F1 lee la columna de la sala del actor
 C 0xB1FD lee la X del actor
 C 0xB204 lee la fila de la sala del actor
 C 0xB20D guarda el dibujo del actor (bit 0: el paso)
-C 0xB222 lee la velocidad del actor en Y (alta)
+C 0xB210 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xB228 lee la X del actor
 C 0xB231 lee la Y del actor
 C 0xB241 guarda el dibujo del actor (bit 0: el paso)
+C 0xB244 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xB247 lee la velocidad del actor en Y (alta)
 C 0xB24D baja la fila de la sala del actor
 C 0xB254 sube la fila de la sala del actor
@@ -471,12 +1039,11 @@ C 0xB26B baja la columna de la sala del actor
 C 0xB270 guarda la X del actor
 C 0xB273 la espera del actor = 0x20
 C 0xB277 sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
-C 0xB27D lee la cuenta del paso del dibujo del actor
+C 0xB27A sala_de_snake: 0x1B = hacia donde esta la sala de Snake (1-4; 0 la misma)
 C 0xB292 lanza_6_f0: tipo 6 con el desplazamiento 0x00F0
 C 0xB295 el paso del actor = 0x03
 C 0xB29D azar: A = un numero al azar (0xCA03 rotado mas R)
-C 0xB2AB guarda la cuenta del paso del dibujo del actor
-C 0xB2AE guarda la rapidez del paso del dibujo del actor (0-3)
+C 0xB2B2 en_4_5: acarreo con la fila y la columna de Snake entre 4 y 5
 C 0xB2B5 acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 C 0xB2BE lee el paso del actor
 C 0xB2C4 salta_por_tabla: salta a la palabra A de la tabla de HL
@@ -487,21 +1054,34 @@ C 0xB2E0 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xB2FD el dibujo del actor (bit 0: el paso) = 0x08
 C 0xB309 la velocidad del actor en Y (alta) = 0x02
 C 0xB310 sube el paso del actor
+C 0xB314 suena_1e: en esta sala, sin el byte 0x14, el sonido 0x1E cada 4 cuadros
+C 0xB317 cambia_de_sala_en_4_5: fuera de Y 0x10-0xC0 o X 0x0C-0xB4: a la sala de al lado con su sala a 0xE500
 C 0xB31A lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB31D compara con la fila de la sala del actor
 C 0xB321 lee la Y del actor
+C 0xB326 sin_byte_14: 
 C 0xB330 el dibujo del actor (bit 0: el paso) = 0x01
 C 0xB337 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xB347 sale_a_la_de_al_lado: por arriba: fila + 1 y abajo; por abajo: fila - 1 y arriba; por los lados, la columna y al otro lado
 C 0xB34B sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 C 0xB34E mensaje_cada_cuadro_bancos_5: 
 C 0xB351 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xB35A llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xB364 velocidad_de_b: 
+C 0xB36B paso_siguiente_e: el paso siguiente
 C 0xB36E sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 C 0xB374 lee el tipo del actor (0 = libre)
 C 0xB37F azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB385 guarda la espera del actor
+C 0xB389 snake_a_menos_de_60: acarreo con Snake en esta sala a menos de 0x60 en Y y en X (salvo en el estado 2); con el byte 0x1B contando, no
+C 0xB38C cerca_de_snake: para 0x20 cuadros mirando a Snake (p05:B450) y el paso siguiente
+C 0xB38F suena_1e: en esta sala, sin el byte 0x14, el sonido 0x1E cada 4 cuadros
+C 0xB392 choques_con_d8a3: los choques del actor con 0xD8A3 = 1 mientras
 C 0xB395 lee el dibujo del actor (bit 0: el paso)
 C 0xB3A3 baja la espera del actor
+C 0xB3A8 parpadeo_13: el byte 0x13 = 0xFF o 0 cada 4 cuadros
+C 0xB3AB cambia_de_sala_en_4_5: fuera de Y 0x10-0xC0 o X 0x0C-0xB4: a la sala de al lado con su sala a 0xE500
+C 0xB3BE suena_68: en esta sala, el sonido 0x68
 C 0xB3C6 lee el dibujo del actor (bit 0: el paso)
 C 0xB3CC el dibujo del actor (bit 0: el paso) = 0x08
 C 0xB3D4 la espera del actor = 0x04
@@ -509,30 +1089,45 @@ C 0xB3D8 el paso del actor = 0x07
 C 0xB3EC lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB3F2 sonido_1e: pide el sonido 0x1E
 C 0xB3F5 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xB407 espera_al_azar: una espera de 0x10-0x1F (4-0x13 el 0x0A)
 C 0xB40A lee 1 en el estado 2 de Snake
 C 0xB410 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xB416 direccion_que_no_choca: si la direccion B choca, otra (la contraria o una al azar)
+C 0xB419 pon_dibujo_c: el dibujo C y su velocidad
+C 0xB41E hacia_la_sala_de_snake: la direccion hacia la sala de Snake (p05:B4CA), y si choca, otra
+C 0xB421 pon_dibujo_c: el dibujo C y su velocidad
 C 0xB426 guarda el dibujo del actor (bit 0: el paso)
+C 0xB42A velocidad_de_b: 
 C 0xB42D lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB43F la espera del actor = 0x20
+C 0xB443 paso_siguiente_e: el paso siguiente
+C 0xB446 mira_a_snake: el dibujo de la direccion de 8 hacia Snake (p05:B464)
+C 0xB450 angulo_a_snake: el angulo del actor a Snake (p02:86C3)
 C 0xB45D byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xB460 guarda el dibujo del actor (bit 0: el paso)
 C 0xB47C lee 1 en el estado 2 de Snake
 C 0xB485 le resta la Y del actor
 C 0xB490 le resta la X del actor
+C 0xB4A9 direccion_a_la_sala: B = hacia la fila de Snake (0, 1) o su columna (2, 3); en su sala, p05:B4E1
+C 0xB4AD choques_con_d8a3: los choques del actor con 0xD8A3 = 1 mientras
 C 0xB4CA lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB4CD compara con la fila de la sala del actor
+C 0xB4E1 angulo_a_snake: el angulo del actor a Snake (p02:86C3)
 C 0xB4F8 lee la X del actor
 C 0xB4FB lee la Y del actor
 C 0xB501 a_p02_86c3: angulo_hacia (p02:86C3) con el banco 2
 C 0xB509 baja la espera del actor
+C 0xB50E snake_a_menos_de_60: acarreo con Snake en esta sala a menos de 0x60 en Y y en X (salvo en el estado 2); con el byte 0x1B contando, no
+C 0xB519 mira_a_snake: el dibujo de la direccion de 8 hacia Snake (p05:B464)
+C 0xB51C guarda_snake_en_18: los bytes 0x18-0x19 = la Y y la X de Snake
 C 0xB51F lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB525 lanza_8_b: p06:A95A y lo lanzado de tipo 8
 C 0xB528 la espera del actor = 0x20
+C 0xB52C paso_siguiente_e: el paso siguiente
 C 0xB53A baja la espera del actor
 C 0xB53F el paso del actor = 0x04
 C 0xB546 baja la espera del actor
 C 0xB551 guarda el dibujo del actor (bit 0: el paso)
-C 0xB554 el paso del actor = 0x04
 C 0xB567 sonido_68: pide el sonido 0x68
 C 0xB56A lee el paso del actor
 C 0xB57B si_c693: con 0xC693, lo borra y salta a HL
@@ -544,8 +1139,10 @@ C 0xB5BA sonido_89: pide el sonido 0x89 (de los que tienen la partitura en un ba
 C 0xB5BD la espera del actor = 0x08
 C 0xB5C8 lee la espera del actor
 C 0xB5CE baja la espera del actor
+C 0xB5D4 acaba_mensaje_1: Z al acabar el mensaje, con p01:7A27 (A = 1)
 C 0xB5DF sube el paso del actor
 C 0xB5E3 lee la sala de la zona
+C 0xB5ED paso_siguiente_f: el paso siguiente
 C 0xB5F3 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 C 0xB5F6 mensaje_cada_cuadro_bancos_5: 
 C 0xB5FA llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
@@ -563,6 +1160,7 @@ C 0xB643 la espera del actor = 0x20
 C 0xB649 lee la espera del actor
 C 0xB64F baja la espera del actor
 C 0xB656 mensaje_de_50_en: p03:B612 con DE
+C 0xB659 acaba_mensaje_0: Z al acabar el mensaje, con p01:7A27 (A = 0)
 C 0xB65D dibujos_de_93e5_bancos_5: 
 C 0xB662 dibujos_de_93e5_bancos_5: 
 C 0xB66E copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
@@ -574,7 +1172,9 @@ C 0xB682 a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xB68C a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xB68F apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 C 0xB695 mensaje_de_50_en: p03:B612 con DE
+C 0xB698 paso_siguiente_f: el paso siguiente
 C 0xB69B a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xB69E acaba_mensaje_0: Z al acabar el mensaje, con p01:7A27 (A = 0)
 C 0xB6A2 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xB6AC a_p03_b866: p03:B866 con el banco 3 en 0xA000
 C 0xB6B1 a_p03_b866: p03:B866 con el banco 3 en 0xA000
@@ -583,29 +1183,42 @@ C 0xB6C0 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB6C3 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xB6C6 enciende_todo: la pantalla y los sprites encendidos
 C 0xB6C9 sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
+C 0xB6CC espera_al_azar: una espera de 0x10-0x1F (4-0x13 el 0x0A)
+C 0xB6CF velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+C 0xB6D5 paso_siguiente_f: el paso siguiente
+C 0xB6D8 ve_delante: en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
+C 0xB6DB sin_eje_y_paso: 
+C 0xB6E1 choques_con_d8a3: los choques del actor con 0xD8A3 = 1 mientras
 C 0xB6E4 lee el dibujo del actor (bit 0: el paso)
 C 0xB6F2 baja la espera del actor
-C 0xB714 guarda la cuenta del paso del dibujo del actor
+C 0xB700 gira_hacia_snake: la direccion hacia Snake, una espera y su velocidad
 C 0xB717 la espera del actor = 0x20
 C 0xB71B el paso del actor = 0x0A
 C 0xB71F lee el dibujo del actor (bit 0: el paso)
+C 0xB728 hacia_la_sala_de_snake: la direccion hacia la sala de Snake (p05:B4CA), y si choca, otra
 C 0xB72D guarda el dibujo del actor (bit 0: el paso)
+C 0xB730 espera_al_azar: una espera de 0x10-0x1F (4-0x13 el 0x0A)
+C 0xB733 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+C 0xB73A paso_siguiente_f: el paso siguiente
 C 0xB742 lee el dibujo del actor (bit 0: el paso)
 C 0xB748 suma_a_hl: HL = HL + A
 C 0xB74C lo_tiene_delante: acarreo si Snake no esta en la direccion B del actor; si esta, mira si le ve (p04:8518)
 C 0xB767 lee el dibujo del actor (bit 0: el paso)
 C 0xB773 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB779 guarda el dibujo del actor (bit 0: el paso)
+C 0xB77C espera_y_velocidad: 
+C 0xB781 ve_delante: en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
 C 0xB786 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB793 baja el paso del actor
+C 0xB79D ve_delante: en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
 C 0xB7A2 baja la espera del actor
 C 0xB7A7 lee la espera del actor
-C 0xB7AD lee la cuenta del paso del dibujo del actor
-C 0xB7B0 sube la cuenta del paso del dibujo del actor
 C 0xB7C2 guarda el dibujo del actor (bit 0: el paso)
+C 0xB7CC ve_delante: en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
 C 0xB7D1 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB7D7 lanza_8: p06:A942, su desplazamiento en 0xD43C y lo lanzado de tipo 8
 C 0xB7DA el paso del actor = 0x08
+C 0xB7DE gira_hacia_snake: la direccion hacia Snake, una espera y su velocidad
 C 0xB7E8 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xB7EB guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB7EE guarda 1 mientras Snake se da la vuelta
@@ -613,12 +1226,16 @@ C 0xB7F8 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xB7FB la espera del actor = 0x0C
 C 0xB7FF el dibujo del actor (bit 0: el paso) = 0x80
 C 0xB80B llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB80E paso_siguiente_f: el paso siguiente
 C 0xB811 rachas_bc6e: las rachas de p41:BC6E a la VRAM de 0xFE00
 C 0xB814 sonido_14: pide el sonido 0x14
+C 0xB817 paso_siguiente_f: el paso siguiente
 C 0xB81D baja la espera del actor
 C 0xB822 lee la espera del actor
 C 0xB828 sube el dibujo del actor (bit 0: el paso)
 C 0xB82E sprites_de_858d: p36:858D...
+C 0xB836 direccion_libre_azar: una direccion al azar sin choque (C), con su velocidad de p05:B87A
+C 0xB845 paso_siguiente_f: el paso siguiente
 C 0xB848 sonido_64: pide el sonido 0x64
 C 0xB84B aviso_0a_30: 
 C 0xB84E azar: A = un numero al azar (0xCA03 rotado mas R)
@@ -633,6 +1250,7 @@ C 0xB897 lee la X del actor
 C 0xB8A4 lee la velocidad del actor en Y (alta)
 C 0xB8B5 lee la velocidad del actor en X (alta)
 C 0xB8C4 lee la espera del actor
+C 0xB8CC direccion_libre_azar: una direccion al azar sin choque (C), con su velocidad de p05:B87A
 C 0xB8D4 baja la espera del actor
 C 0xB8D7 lee la espera del actor
 C 0xB8DC aviso_8c_30: 
@@ -642,26 +1260,41 @@ C 0xB8F5 lee el dibujo del actor (bit 0: el paso)
 C 0xB8FB guarda el dibujo del actor (bit 0: el paso)
 C 0xB8FF el dibujo del actor (bit 0: el paso) = 0x16
 C 0xB903 la espera del actor = 0x40
+C 0xB907 paso_siguiente_f: el paso siguiente
 C 0xB90A baja la espera del actor
 C 0xB90D lee la espera del actor
 C 0xB912 aviso_8d_30: 
+C 0xB917 paso_siguiente_f: el paso siguiente
 C 0xB91E el paso del actor = 0x20
 C 0xB928 lee el paso del actor
 C 0xB92E salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xB961 guarda el dibujo del actor (bit 0: el paso)
 C 0xB968 la espera del actor = 0x18
+C 0xB96C paso_siguiente_g: el paso siguiente
 C 0xB96F baja la espera del actor
+C 0xB975 mensaje_d10: el mensaje (D, 0x10)
+C 0xB978 acaba_mensaje_1: Z al acabar el mensaje, con p01:7A27 (A = 1)
 C 0xB97C guarda la espera del actor
 C 0xB986 el dibujo del actor (bit 0: el paso) = 0x02
+C 0xB98A velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+C 0xB98D paso_siguiente_g: el paso siguiente
+C 0xB990 borde_con_d88c: con 0xD88C a 0xFF, R#7 = 0x0F; si no, cada 8 cuadros R#7 = 0x0A (parpadea)
+C 0xB996 cambia_de_sala_b: a la sala de al lado si sale (p05:AE6B)
 C 0xB999 lee la fila de la sala del actor
 C 0xB99F lee la Y del actor
 C 0xB9A5 el dibujo del actor (bit 0: el paso) = 0x04
+C 0xB9A9 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
+C 0xB9AC paso_siguiente_g: el paso siguiente
+C 0xB9B5 sale_a_la_de_al_lado: por arriba: fila + 1 y abajo; por abajo: fila - 1 y arriba; por los lados, la columna y al otro lado
+C 0xB9B8 borde_con_d88c: con 0xD88C a 0xFF, R#7 = 0x0F; si no, cada 8 cuadros R#7 = 0x0A (parpadea)
+C 0xB9BB cambia_de_sala_b: a la sala de al lado si sale (p05:AE6B)
 C 0xB9BE lee la columna de la sala del actor
 C 0xB9C4 lee la X del actor
 C 0xB9D1 el dibujo del actor (bit 0: el paso) = 0x06
 C 0xB9D5 a_p03_b108: p03:B108 con el banco 3 en 0xA000
 C 0xB9E0 sube la espera del actor
 C 0xB9E3 lee la espera del actor
+C 0xB9F3 borde_con_d88c: con 0xD88C a 0xFF, R#7 = 0x0F; si no, cada 8 cuadros R#7 = 0x0A (parpadea)
 C 0xB9FB lee la sala de la zona
 C 0xBA06 el dibujo del actor (bit 0: el paso) = 0x06
 C 0xBA0C lee la sala de la zona
@@ -670,33 +1303,53 @@ C 0xBA1F la espera del actor = 0x10
 C 0xBA25 lee la espera del actor
 C 0xBA2B baja la espera del actor
 C 0xBA32 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xBA35 acaba_mensaje_1: Z al acabar el mensaje, con p01:7A27 (A = 1)
 C 0xBA40 a_p03_b67d: p03:B67D con el banco 3 en 0xA000
 C 0xBA45 a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
 C 0xBA48 lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 C 0xBA51 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 C 0xBA54 sube el paso del actor
+C 0xBA58 acaba_mensaje_1: Z al acabar el mensaje, con p01:7A27 (A = 1)
 C 0xBA68 a_p03_b108: p03:B108 con el banco 3 en 0xA000
-C 0xBA87 guarda la cuenta del paso del dibujo del actor
+C 0xBA6B paso_siguiente_g: el paso siguiente
+C 0xBA73 direccion_a_snake_18: B = la direccion hacia Snake (p05:B4E1; con A, la del otro eje); a 0x18 y el dibujo
+C 0xBA77 velocidad_de_b: 
+C 0xBA7B direccion_por_angulo: B = el cuarto del angulo hacia Snake: 3 (0xE0-0x1F), 1 (0x20-0x5F), 2 (0x60-0x9F), 0 (0xA0-0xDF)
 C 0xBA8C guarda el dibujo del actor (bit 0: el paso)
+C 0xBA90 dando_la_vuelta_17: con el byte 0x17: el paso 0x0C, una cuenta al azar y la direccion contraria (Z si no)
 C 0xBA97 lee la velocidad del actor en Y (alta)
+C 0xBAA7 de_y_hl_con_snake: D = la Y de Snake, H = su X, E = la Y del actor, L = su X
 C 0xBAAA lee la velocidad del actor en Y (alta)
-C 0xBACC lee la cuenta del paso del dibujo del actor
+C 0xBAC9 de_y_hl_con_snake: D = la Y de Snake, H = su X, E = la Y del actor, L = su X
+C 0xBAE0 hacia_snake_0: hacia Snake (A = 0) con su velocidad
 C 0xBAEA la espera del actor = 0x18
+C 0xBAEE paso_siguiente_g: el paso siguiente
 C 0xBAF5 lee la X del actor
 C 0xBAF8 lee la Y del actor
+C 0xBAFC direccion_por_angulo: B = el cuarto del angulo hacia Snake: 3 (0xE0-0x1F), 1 (0x20-0x5F), 2 (0x60-0x9F), 0 (0xA0-0xDF)
 C 0xBB02 guarda el dibujo del actor (bit 0: el paso)
 C 0xBB05 sonido_09: pide el sonido 0x09
 C 0xBB0D el paso del actor = 0x0C
+C 0xBB11 cuenta_0f_azar: el byte 0x0F = 1-4 al azar
 C 0xBB14 lee el dibujo del actor (bit 0: el paso)
 C 0xBB23 guarda el dibujo del actor (bit 0: el paso)
+C 0xBB27 velocidad_de_b: 
 C 0xBB2E azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xBB38 dando_la_vuelta_17: con el byte 0x17: el paso 0x0C, una cuenta al azar y la direccion contraria (Z si no)
 C 0xBB3C baja la espera del actor
 C 0xBB41 lee la espera del actor
+C 0xBB51 direccion_a_snake_18: B = la direccion hacia Snake (p05:B4E1; con A, la del otro eje); a 0x18 y el dibujo
 C 0xBB54 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xBB5A hacia_snake_1: hacia Snake por el otro eje (A = 1)
+C 0xBB5D cuenta_0f_azar: el byte 0x0F = 1-4 al azar
+C 0xBB60 paso_siguiente_g: el paso siguiente
+C 0xBB66 en_el_pasillo: acarreo en el pasillo: en vertical Y 0x58-0x87, en horizontal X 0x48-0x77
 C 0xBB6F lee el dibujo del actor (bit 0: el paso)
 C 0xBB78 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xBB7C guarda el dibujo del actor (bit 0: el paso)
+C 0xBB80 velocidad_de_b: 
 C 0xBB87 el paso del actor = 0x0A
+C 0xBB8B hacia_snake_0: hacia Snake (A = 0) con su velocidad
 C 0xBB8E lee la velocidad del actor en Y (alta)
 C 0xBB92 lee la Y del actor
 C 0xBB9B lee la X del actor
@@ -705,9 +1358,11 @@ C 0xBBB0 el dibujo del actor (bit 0: el paso) = 0x0C
 C 0xBBB4 la espera del actor = 0x20
 C 0xBBB8 a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 C 0xBBBB sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xBBBE paso_siguiente_g: el paso siguiente
 C 0xBBC1 baja la espera del actor
 C 0xBBCD copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xBBD3 a_p03_b68e: p03:B68E con el banco 3 en 0xA000
+C 0xBBD6 paso_siguiente_g: el paso siguiente
 C 0xBBD9 a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
 C 0xBBDC lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 C 0xBBE1 sonido_a0: pide el sonido 0xA0 (de los que tienen la partitura en un banco de musica, p16:4CE3)
@@ -725,21 +1380,23 @@ C 0xBC2C enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 C 0xBC34 a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xBC3E a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xBC44 mensaje_de_50_en: p03:B612 con DE
+C 0xBC47 paso_siguiente_g: el paso siguiente
 C 0xBC4A a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xBC4D acaba_mensaje_0: Z al acabar el mensaje, con p01:7A27 (A = 0)
 C 0xBC51 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xBC5A borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBC5E hueco_de_mosaico: en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+C 0xBC63 hueco_de_mosaico: en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
 C 0xBC6A guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xBC6D guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBC70 guarda 1 mientras Snake se da la vuelta
 C 0xBC74 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
-C 0xBC77 p00:5DD3
-C 0xBC7A a_p03_b866: p03:B866 con el banco 3 en 0xA000
 C 0xBC7F a_p03_b866: p03:B866 con el banco 3 en 0xA000
-C 0xBC82 a_p02_8475: paleta_de_la_sala (p02:8475) con el banco 2
 C 0xBC85 borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
 C 0xBC8B a_p03_b67d: p03:B67D con el banco 3 en 0xA000
 C 0xBC8E enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 C 0xBC99 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBC9C paso_siguiente_g: el paso siguiente
 C 0xBCA8 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xBCB2 linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 C 0xBCB5 a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
@@ -753,15 +1410,17 @@ C 0xBCD3 la espera del actor = 0x10
 C 0xBCDC esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0xBCDF esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBCE2 enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
+C 0xBCE5 paso_siguiente_g: el paso siguiente
 C 0xBCE8 baja la espera del actor
 C 0xBCF0 el paso del actor = 0x20
 C 0xBCF5 lee la zona
 C 0xBCFB lee la sala de la zona
 C 0xBD01 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBD07 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
+C 0xBD1E mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
 C 0xBD23 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0xBD26 lee la X del actor
-C 0xBD2C lee la Y del actor
+C 0xBD26 lee la X de la ficha de 0xD800
+C 0xBD2C lee la Y de la ficha de 0xD800
 C 0xBD3B lee el paso del actor
 C 0xBD46 lee la sala de la zona
 C 0xBD4C lee el paso del actor
@@ -780,10 +1439,15 @@ C 0xBDD9 mensaje_cada_cuadro_bancos_5:
 C 0xBDDD llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xBDE2 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBDEE guarda el dibujo del actor (bit 0: el paso)
+C 0xBDF1 velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xBDF6 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xBDF9 sube el paso del actor
+C 0xBDFD anda_d8ab: con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, hasta X = 0x70, y para
 C 0xBE00 lee la X de Snake
+C 0xBE0A anda_d8ab: con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, hasta X = 0x70, y para
 C 0xBE0D lee la Y de Snake
+C 0xBE1C anda_d8ab: con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, hasta X = 0x70, y para
+C 0xBE28 anda_d8ab: con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, hasta X = 0x70, y para
 C 0xBE2B mensaje_cada_cuadro_bancos_5: 
 C 0xBE2F llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xBE32 la espera del actor = 0x5A
@@ -798,18 +1462,24 @@ C 0xBE52 baja la espera del actor
 C 0xBE56 a_p03_b19a: p03:B19A con el banco 3 en 0xA000
 C 0xBE5F conversacion_de_a: la conversacion de p48:8010 (A = 0), p48:8012 (1) o p48:8014 (2)
 C 0xBE64 sonido_84: pide el sonido 0x84 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xBE69 mensaje_d60: 
 C 0xBE6C mensaje_cada_cuadro_bancos_5: 
 C 0xBE70 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xBE73 la espera del actor = 0x20
 C 0xBE79 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBE80 el dibujo del actor (bit 0: el paso) = 0x06
+C 0xBE87 velocidad_de_tipo: la velocidad del tipo A (p05:A7AD) en la direccion B (p05:A79C), y el byte 0x0C = 3
+C 0xBE8C snake_hacia_a: la direccion de Snake = A y el paso siguiente
 C 0xBE8F sonido_05: pide el sonido 0x05
 C 0xBEA0 lee la Y del actor
 C 0xBEAA el dibujo del actor (bit 0: el paso) = 0x04
+C 0xBEAE velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 C 0xBEB4 lee la X del actor
 C 0xBEBA el dibujo del actor (bit 0: el paso) = 0x06
 C 0xBEC6 lee la X de Snake
 C 0xBEC9 le resta la X del actor
+C 0xBEE1 quita_cb21_0a: con 0xCB21 = 0x0A u 0x0B: lo quita, el estado de 0xCB35 y el hueco de 0xD8A4 (0x18 x 0x10) al color 9
+C 0xBEE4 paso_siguiente_h: 
 C 0xBEE7 apunta a lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xBEF7 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBEFA guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
@@ -821,24 +1491,33 @@ C 0xBF20 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBF29 guarda la Y del actor
 C 0xBF2E guarda la X del actor
 C 0xBF35 guarda el dibujo del actor (bit 0: el paso)
+C 0xBF45 paso_siguiente_h: 
 C 0xBF4F la espera del actor = 0x18
+C 0xBF62 paso_siguiente_h: 
 C 0xBF68 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xBF6B apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBF74 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0xBF77 mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
 C 0xBF7A bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xBF86 baja la espera del actor
 C 0xBF8A sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xBF8D rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
 C 0xBF90 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xBF96 mosaico_en_la_otra: con los juegos 6-7, el mosaico de la ficha en la otra pagina y 0xD88B = 0xFF
+C 0xBF99 paso_siguiente_h: 
 C 0xBFAD guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xBFB2 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xBFB5 paso_siguiente_h: 
 C 0xBFB8 lee la Y de Snake
 C 0xBFC8 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xBFCE pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xBFD1 paso_siguiente_h: 
+C 0xBFD7 mensaje_de_y_paso: 
 C 0xBFDA mensaje_cada_cuadro_bancos_5: 
 C 0xBFDE llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xBFE1 orden_sonido_f6: la orden 0xF6 al sonido
 C 0xBFE4 la espera del actor = 0x20
+C 0xBFE8 paso_siguiente_h: 
 C 0xBFEB lee la espera del actor
 C 0xBFF1 baja la espera del actor
 C 0xBFF5 sonido_05: pide el sonido 0x05

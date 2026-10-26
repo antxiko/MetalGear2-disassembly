@@ -2934,7 +2934,7 @@ L_B33B:
 	ld ix,0d460h		;b33b   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 	ld bc,00600h		;b33f
 L_B342:
-	ld a,(ix+000h)		;b342
+	ld a,(ix+000h)		;b342   ; lee el tipo de lo lanzado
 	and a			;b345
 	jr z,L_B34E		;b346
 	call L_B357		;b348

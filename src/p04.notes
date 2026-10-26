@@ -758,7 +758,7 @@ L 0x9D25 aviso_8b_20
 L 0x9D2A aviso_0a_30 
 L 0x9D2F aviso_8c_30 
 L 0x9D34 aviso_8d_30 
-L 0x9D39 actor_corriente los tipos 1, 2 y 4-9: con el bit 7, p04:8EE9; con la alerta 1, p05:A2AD; con la 2-3 y paso < 0x15, a por Snake
+L 0x9D39 actor_corriente los tipos 0, 1 y 3-8 (p04:815B): con el bit 7, p04:8EE9; con la alerta 1, p05:A2AD; con la 2-3 y paso < 0x15, a por Snake
 L 0x9DB0 hacia_la_esquina_1 hacia el segundo punto del camino (bytes 0x26-0x27)
 L 0x9DB9 d44f_de_1_a_2 Z si 0xD44F era 1 (y pasa a 2)
 L 0x9DC2 camino_paso_1 con 0xD44F: el paso 0x0E y al punto de partida; si no, anda hasta la esquina y gira hacia la siguiente
@@ -870,7 +870,6 @@ C 0x8326 lee el tipo del actor (0 = libre)
 C 0x832A sonido_0f: pide el sonido 0x0F
 C 0x832D quita_actor: sus sprites libres y fuera; el 0x13 apunta en 0xD4F8, el 0x0B con alerta 0xCA67 = 0
 C 0x8330 tras_la_caida: con menos de 4 que siguen y p04:96BA sin acarreo: con la alerta 2 cuenta (p04:930D), con 3 se acaba (p04:9306)
-C 0x8343 lee la rapidez del paso del dibujo del actor (0-3)
 C 0x834C lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
 C 0x834F lee el tipo del actor (0 = libre)
 C 0x8353 quita_actor_si: 
@@ -887,7 +886,6 @@ C 0x83C1 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x83C7 p08:AEBF
 C 0x83D0 lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0x83D5 ve_lo_lanzado: con lo lanzado 8, sin 0xD44F y sin alerta: el actor que lo tiene delante y lo ve, 0xD44F = 1 y p04:9CFE
-C 0x83F1 lee la rapidez del paso del dibujo del actor (0-3)
 C 0x83F8 lee el paso del actor
 C 0x8413 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x8422 guarda 1: la linea de vista va a lo lanzado y no a Snake
@@ -1261,9 +1259,6 @@ C 0x8FD4 choques_del_actor: C = por donde choca el actor (bits 0-3), con los pun
 C 0x8FD7 lados_de_snake: B = los lados en los que esta Snake: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha
 C 0x8FDA eje_hacia_snake: A = 3 si Snake esta mas lejos en Y, 0x0C si en X
 C 0x901C lee el tipo del actor (0 = libre)
-C 0x9022 sube la cuenta del paso del dibujo del actor
-C 0x9025 lee la cuenta del paso del dibujo del actor
-C 0x902A la cuenta del paso del dibujo del actor = 0x00
 C 0x9034 guarda el dibujo del actor (bit 0: el paso)
 C 0x9038 choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 C 0x9048 apunta a la Y y la X a las que acuden los actores (16 bits)
@@ -1551,7 +1546,6 @@ C 0x99EE guarda el paso del actor
 C 0x99F1 lee la Y del actor
 C 0x99F7 lee la X del actor
 C 0x9A11 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-C 0x9A15 lee la rapidez del paso del dibujo del actor (0-3)
 C 0x9A1B lee el paso del actor
 C 0x9A24 el paso del actor = 0x04
 C 0x9A28 lanza_1_b: lo lanzado de tipo 1
@@ -1570,6 +1564,7 @@ C 0x9A70 lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 C 0x9A75 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9A78 p06:B256
 C 0x9A85 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
+C 0x9A8C lee el tipo de lo lanzado
 C 0x9A92 a_p06_a7e9_guarda: p06:A7E9 guardando el banco de 0xA000
 C 0x9A97 llama_ba36_a: 
 C 0x9A9A choca_lo_lanzado: lo lanzado de tipo 4 en adelante: fuera de la sala o contra lo solido, se acaba (p06:AA18), salvo el 3 y el 7
@@ -1597,8 +1592,6 @@ C 0x9AFF bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9B06 a_p06_a942_guarda: p06:A942 guardando el banco de 0xA000
 C 0x9B0F a_p06_a942_guarda: p06:A942 guardando el banco de 0xA000
 C 0x9B1B a_p06_a95a_guarda: p06:A95A guardando el banco de 0xA000
-C 0x9B28 lee la rapidez del paso del dibujo del actor (0-3)
-C 0x9B2B lee la cuenta del paso del dibujo del actor
 C 0x9B3B a_p06_a942_guarda: p06:A942 guardando el banco de 0xA000
 C 0x9B40 lee el tipo del actor (0 = libre)
 C 0x9B4D a_p06_a942_guarda: p06:A942 guardando el banco de 0xA000
@@ -1620,19 +1613,19 @@ C 0x9C3B sonido_1a: pide el sonido 0x1A
 C 0x9C69 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x9C72 a_p14_b842_guarda: p14:B842 guardando el banco de 0xA000
 C 0x9C76 en_ocho: el angulo de 0xCA5D en 8 trozos de 0x20 (centrados)
-C 0x9C82 lee el tipo del actor (0 = libre)
+C 0x9C82 lee el tipo de lo lanzado
 C 0x9C8A dentro_del_recuadro: el 5: fuera de Y 0x18-0xB7 o X 8-0xB7, se acaba
-C 0x9C8D lee la Y del actor
-C 0x9C95 lee la X del actor
+C 0x9C8D lee la Y de lo lanzado
+C 0x9C95 lee la X de lo lanzado
 C 0x9C9D cuatro_hacia_abajo: acarreo si (H, L) y los 3 puntos de 8 en 8 hacia abajo son solidos o estan fuera
-C 0x9CA1 lee el tipo del actor (0 = libre)
+C 0x9CA1 lee el tipo de lo lanzado
 C 0x9CAA lee la copia del banco de 0xA000
 C 0x9CAE bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9CB1 p06:AA18
-C 0x9CB7 lee la espera del actor
+C 0x9CB7 lee el sprite de lo lanzado
 C 0x9CBF suma_a_hl: HL = HL + A
-C 0x9CC2 lee la Y del actor
-C 0x9CCB lee la X del actor
+C 0x9CC2 lee la Y de lo lanzado
+C 0x9CCB lee la X de lo lanzado
 C 0x9CD5 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x9CD8 p12:74BC
 C 0x9CE3 bancos_1: pone el 1 en 0x6000 (con su copia en 0xC381-0xC383)
@@ -1643,7 +1636,7 @@ C 0x9CF9 p12:75C3
 C 0x9D12 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0x9D39 lee el tipo del actor (0 = libre)
 C 0x9D40 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
-C 0x9D48 p05:A2AD
+C 0x9D48 actor_en_alerta_1: la alerta 1: los pasos 0x25 y 0x26 (lanzar), los demas por p05:A2BD
 C 0x9D4B lee el paso del actor
 C 0x9D50 actor_por_paso: si no se ve, nada; el paso 8 p06:B626, el 9 p04:8ED9, los demas por p04:8F2A
 C 0x9D56 lee el paso del actor
@@ -1680,7 +1673,7 @@ C 0x9E84 guarda la Y del actor
 C 0x9E8A guarda la X del actor
 C 0x9E90 guarda el paso del actor
 C 0x9E9A aviso_05_20: 
-C 0x9EA1 p05:A27B
+C 0x9EA1 paso_siguiente: el paso siguiente del actor
 C 0x9EAF lanza_4: p06:A942 y lo lanzado de tipo 4 hacia Snake
 C 0x9EBB guarda el paso del actor
 C 0x9EBE aviso_06_20: 
@@ -1695,7 +1688,7 @@ C 0x9EEE guarda la fila de la sala del actor
 C 0x9EF1 guarda la columna de la sala del actor
 C 0x9EF4 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0x9EF7 pinta_actor: sus sprites (p04:81C5) con el banco 8
-C 0x9EFA p05:A23A
+C 0x9EFA al_paso_4: el paso 4
 C 0x9F01 la Y del actor = 0x68
 C 0x9F05 la X del actor = 0x30
 C 0x9F09 el dibujo del actor (bit 0: el paso) = 0x02

@@ -291,6 +291,8 @@ CARGAS_CANAL = tuple(0xC400 + 0x40 * k for k in range(8))
 # los actores: 24 fichas de 0x40 bytes en 0xCE00 (p04:800D las recorre; p04:8159
 # salta por el tipo a los bancos 5 y 8). Campos leidos en p04:8100 (fila y
 # columna), p04:808B (velocidades), p04:900B (el paso del dibujo) y p05:A001.
+# Los bytes 0x18 en adelante cambian de uso segun el tipo (p04:900B los usa para
+# el paso del dibujo, p05:AE1B como destino): no van en la tabla.
 CAMPOS_ACTOR = {
     0x00: "el tipo del actor (0 = libre)",
     0x01: "el paso del actor",
@@ -306,8 +308,6 @@ CAMPOS_ACTOR = {
     0x0B: "la columna de la sala del actor",
     0x0D: "el dibujo del actor (bit 0: el paso)",
     0x0E: "la espera del actor",
-    0x18: "la cuenta del paso del dibujo del actor",
-    0x19: "la rapidez del paso del dibujo del actor (0-3)",
 }
 CARGAS_ACTOR = tuple(0xCE00 + 0x40 * k for k in range(24))
 
@@ -324,9 +324,26 @@ CAMPOS_D800 = {
 }
 CARGAS_D800 = (0xD800, 0xD820, 0xD840, 0xD860)
 
+# lo que lanzan los actores: 6 fichas de 16 bytes en 0xD460 (p04:9B55 las llena)
+CAMPOS_LANZADO = {
+    0x00: "el tipo de lo lanzado",
+    0x01: "el paso de lo lanzado",
+    0x03: "la Y de lo lanzado",
+    0x05: "la X de lo lanzado",
+    0x06: "la velocidad de lo lanzado en Y (baja)",
+    0x07: "la velocidad de lo lanzado en Y (alta)",
+    0x08: "la velocidad de lo lanzado en X (baja)",
+    0x09: "la velocidad de lo lanzado en X (alta)",
+    0x0E: "el sprite de lo lanzado",
+}
+CARGAS_LANZADO = tuple(0xD460 + 0x10 * k for k in range(6))
+
 FICHAS = ((CARGAS_CANAL, {16: ((0x4369, 0x4C19),)}, CAMPOS_CANAL),
-          (CARGAS_ACTOR, {4: ((0x8000, 0x86ED), (0x8D7E, 0xA000)), 5: ((0xA000, 0xC000),)}, CAMPOS_ACTOR),
-          (CARGAS_D800, {4: ((0x86ED, 0x8D7E),)}, CAMPOS_D800))
+          # antes que los actores: donde las dos valen, manda la carga de IX
+          (CARGAS_D800, {4: ((0x86ED, 0x8D7E),), 5: ((0xBD26, 0xBD3B),)}, CAMPOS_D800),
+          (CARGAS_LANZADO, {4: ((0x9A80, 0x9AA9), (0x9C82, 0x9CD5))}, CAMPOS_LANZADO),
+          (CARGAS_ACTOR, {4: ((0x8000, 0x86ED), (0x8D7E, 0x9A80), (0x9AA9, 0x9C82), (0x9CD5, 0xA000)),
+                          5: ((0xA000, 0xBD26), (0xBD3B, 0xC000))}, CAMPOS_ACTOR))
 
 
 def _rutinas_txt():

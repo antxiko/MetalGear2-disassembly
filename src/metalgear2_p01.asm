@@ -3489,7 +3489,7 @@ L_77EA:
 	call 041a0h		;77f3   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a4e8h		;77f6   ; p06:A4E8
 	call 04142h		;77f9   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa43h		;77fc   ; p05:AA43
+	call 0aa43h		;77fc   ; pasos_de_d8a0: con 0xD8A0, por su paso (p05:AA4D)
 	call 089c3h		;77ff   ; fichas_d800: las 4 fichas de 0x20 bytes de 0xD800 (o la de 0xD860 en las especiales)
 	call 041f4h		;7802   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a316h		;7805
