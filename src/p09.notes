@@ -46,51 +46,102 @@ F 0xBFE1 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 L 0xA4F0 secuencia_de_mensajes los mensajes de una secuencia del banco 50, uno tras otro con su espera
+L 0xB4E6 a_p12_7fa0 p12:7FA0 con el banco 12 en 0x6000
 C 0xA006 lee la zona
 C 0xA00C lee la sala de la zona
+C 0xA01C lee la Y de Snake
 C 0xA022 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA028 p01:7CB5
 C 0xA02B p01:6CC6
-C 0xA041 p02:8E11
+C 0xA02E apunta a la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA041 cambia_de_zona_b_1_2_9: cambia_de_zona y deja los bancos 1, 2 y 9
+C 0xA046 guarda la espera hasta poner la musica pendiente
 C 0xA04C guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0xA051 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA05E p01:6F56
 C 0xA070 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xA078 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA07B lee la zona
-C 0xA090 p02:8EAE
+C 0xA090 a_p11_bf0f: p11:BF0F con el banco 11 en 0xA000
 C 0xA09A despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA0A5 lee la sala de la zona
+C 0xA0BD guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA124 apunta a la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8)
+C 0xA12B apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA130 apunta a la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA14F sprites_de_sala_bancos_9: 
-C 0xA152 p02:85A4
+C 0xA152 rachas_b007_af4c_bancos_1_2_9: 
 C 0xA158 p02:8C42
 C 0xA15B apunta a la fase de la partida (indice de las listas de p06:B40C)
-C 0xA190 p02:864A
-C 0xA193 p02:8C5A
+C 0xA190 rachas_b3a6: 
+C 0xA193 a_p03_b5b5: p03:B5B5 con el banco 3 en 0xA000
 C 0xA196 p01:6F72
-C 0xA19D p02:858D
+C 0xA19D rachas_b34a_bancos_9: 
 C 0xA1CF lee la zona
 C 0xA1D5 lee la sala de la zona
-C 0xA1F0 p01:7B7F
-C 0xA21B p02:8C7A
+C 0xA1F0 a_p04_92eb: p04:92EB con el banco 4 en 0x8000
+C 0xA209 guarda 1 mientras Snake se da la vuelta
+C 0xA20D guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA213 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA21B a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 C 0xA22B llena_bloque: pone A en BC + 1 bytes desde HL
-C 0xA279 p02:8C4A
+C 0xA236 a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xA279 a_p03_b563: p03:B563 con el banco 3 en 0xA000
+C 0xA288 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA29C a_p03_b563: p03:B563 con el banco 3 en 0xA000
+C 0xA2A1 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA2AD a_p03_b607: p03:B607 con el banco 3 en 0xA000
 C 0xA2B0 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA2B6 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA2C8 lee la zona
 C 0xA2CE lee la sala de la zona
-C 0xA2E8 p02:8C8A
-C 0xA301 p02:8C52
+C 0xA2D6 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA2DB guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA2E8 a_p03_b610: p03:B610 con el banco 3 en 0xA000
+C 0xA301 a_p03_b4e6: p03:B4E6 con el banco 3 en 0xA000
+C 0xA30D lee la Y de Snake
+C 0xA316 lee la X de Snake
+C 0xA328 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA338 a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
 C 0xA347 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA34D lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA35C lee la zona
 C 0xA362 lee la sala de la zona
+C 0xA37E a_p12_6d78_b_9: a_p12_6d78 y deja el banco 9
+C 0xA382 guarda la Y de Snake
+C 0xA387 guarda la X de Snake
+C 0xA38C guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA38F guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA395 a_p12_7688_2: p12:7688 con el banco 12 en 0x6000
+C 0xA398 a_p03_b4e6: p03:B4E6 con el banco 3 en 0xA000
+C 0xA39B a_p03_b563: p03:B563 con el banco 3 en 0xA000
+C 0xA3A0 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA3A8 a_p03_b603: p03:B603 con el banco 3 en 0xA000
 C 0xA3BD lee la zona
 C 0xA3C3 lee la sala de la zona
+C 0xA3C9 lee la Y de Snake
+C 0xA3CF lee la X de Snake
+C 0xA3DA a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA402 lee la Y de Snake
+C 0xA40B lee la X de Snake
+C 0xA416 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA423 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA431 a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
 C 0xA434 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA43A lee la sala de la zona
 C 0xA446 lee la zona
 C 0xA44C lee la sala de la zona
+C 0xA452 lee la Y de Snake
+C 0xA45A guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xA45D rachas_6517_a_fc00: 
+C 0xA466 lee la X de Snake
+C 0xA472 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
+C 0xA47D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA488 lee la zona
 C 0xA48E lee la sala de la zona
+C 0xA494 lee la Y de Snake
+C 0xA49C guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA4A1 a_p03_b0dc: p03:B0DC con el banco 3 en 0xA000
 C 0xA4B5 guarda el paso del estado de la partida
 C 0xA4BF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA4CA llena_bloque: pone A en BC + 1 bytes desde HL
@@ -100,7 +151,7 @@ C 0xA507 lee_palabra: HL = la palabra que hay en HL
 C 0xA50A suma_a_hl: HL = HL + A
 C 0xA511 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xA514 p01:64FE
-C 0xA51D p01:657F
+C 0xA51D mensaje_cada_cuadro_b_9: mensaje_cada_cuadro y deja el banco 9
 C 0xA521 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xA52C bancos_50: pone el 50 en 0x8000 (con su copia en 0xC381-0xC383)
 C 0xA52F lee_palabra: HL = la palabra que hay en HL
@@ -112,90 +163,224 @@ C 0xA57A esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xA585 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xA597 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA5A6 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xA5AC p00:5F34
+C 0xA5AC a_p12_76e9_2: p12:76E9 con el banco 12 en 0x6000
 C 0xA5AF espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-C 0xA5B2 p02:8C62
+C 0xA5B2 a_p03_b593: p03:B593 con el banco 3 en 0xA000
 C 0xA5B5 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-C 0xA5C4 p02:8C72
-C 0xA5C7 p00:5F2B
-C 0xA5CA p02:8C6A
+C 0xA5BB a_p03_b5b5: p03:B5B5 con el banco 3 en 0xA000
+C 0xA5C4 a_p03_b404: p03:B404 con el banco 3 en 0xA000
+C 0xA5C7 a_p12_7688_2: p12:7688 con el banco 12 en 0x6000
+C 0xA5CA a_p03_b4e0: p03:B4E0 con el banco 3 en 0xA000
 C 0xA5D1 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA5E9 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA5FE guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA606 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA610 apunta a la Y de Snake
+C 0xA619 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA61E lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA628 apunta a la X de Snake
 C 0xA63E tabla_800C: 14 destinos del despachador p00
+C 0xA644 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA65C lee la X de Snake
 C 0xA681 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xA68D guarda la musica pendiente: la rutina que la pide (16 bits)
+C 0xA690 apunta a la espera hasta poner la musica pendiente
 C 0xA699 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA6BC guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA6BF lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA6C7 lee la Y de Snake
+C 0xA6E4 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA6EE a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA714 lee la X de Snake
 C 0xA71A lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA723 lee la X de Snake
+C 0xA72C guarda la X de Snake: la parte fraccionaria (0xCB04-0xCB05 en 8.8) y el byte siguiente (16 bits)
+C 0xA731 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA736 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA748 p01:6FA3
 C 0xA74B p01:713E
+C 0xA756 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA75B guarda 1 mientras Snake se da la vuelta
 C 0xA767 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xA76E copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA789 borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+C 0xA78C paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xA79D a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xA7A7 a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xA7AA p01:6BB0
+C 0xA7AD a_p03_b607: p03:B607 con el banco 3 en 0xA000
+C 0xA7B3 a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xA7BC a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xA7BF a_p03_b65d: p03:B65D con el banco 3 en 0xA000
+C 0xA7CA a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xA7D4 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xA7D9 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xA7DC a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xA7F3 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
-C 0xA83C p02:8C82
+C 0xA822 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA825 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA829 guarda 1 mientras Snake se da la vuelta
+C 0xA82D guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA834 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA83C a_p03_b607: p03:B607 con el banco 3 en 0xA000
+C 0xA848 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA857 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xA85A dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
 C 0xA866 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA889 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xA88F borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+C 0xA89E apunta a el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA8B0 apunta a el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA8B5 paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xA8C6 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xA8D0 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xA8D8 a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xA8E2 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xA8E7 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xA8EA a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xA8ED p01:63DD
 C 0xA8FA guarda el paso del estado de la partida
+C 0xA902 a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
+C 0xA90D a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA912 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA91A guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA94E a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xA95B apunta a la espera hasta poner la musica pendiente
 C 0xA964 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA9A1 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xAA03 a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
+C 0xAA0C a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xAA4C a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xAA55 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xAA66 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xAA69 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xAA77 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAABA rachas_935d_a_ff00: 
 C 0xAAD8 p01:6F94
 C 0xAADB p01:6F4A
-C 0xAAE1 p02:8CD8
+C 0xAAE1 a_p10_a6a4: p10:A6A4 con el banco 10 en 0xA000
 C 0xAAE4 p01:6C43
+C 0xAAE7 mosaico_ae3b_bancos_9: 
+C 0xAAEA a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
+C 0xAAF2 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAB07 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAB15 a_p10_a6c2: p10:A6C2 con el banco 10 en 0xA000
+C 0xAB3F guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAB48 p01:7121
-C 0xAB4D p02:8CE0
+C 0xAB4D a_p10_a6c2: p10:A6C2 con el banco 10 en 0xA000
 C 0xAB61 p01:6BD4
+C 0xAB6C a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xAB75 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xAB82 lee la X de Snake
+C 0xAB8A guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAB8F guarda 1 mientras Snake se da la vuelta
 C 0xAB9C rachas_6517_a_fc00: 
 C 0xABAA esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xABAD esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0xABB3 borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+C 0xABBD paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xABD1 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xABDB a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xABE9 p01:6BB8
+C 0xABEC a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xAC08 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xAC0D a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xAC10 a_p03_b65d: p03:B65D con el banco 3 en 0xA000
+C 0xAC38 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAC3B guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAC3F guarda 1 mientras Snake se da la vuelta
+C 0xAC46 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xAC49 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xAC55 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xAC69 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xAC89 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xACA7 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xACD1 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xACD6 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xACE2 colores_ae19_bancos_9: 
-C 0xACE5 p02:8566
+C 0xACE5 mosaico_ae59: 
 C 0xACEB p01:6C23
 C 0xAD09 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAD17 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xAD2E a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xAD31 borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+C 0xAD3A paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xAD4B a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xAD55 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xAD5B a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xAD5E tabla_802C: 8 destinos del despachador p00
+C 0xAD65 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xAD6A a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xAD6D a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xAD73 p02:8D1D
-C 0xAD76 p02:8547
+C 0xAD76 mosaico_ae3b_b_bancos_9: 
 C 0xAD79 p01:7129
+C 0xAD82 a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xAD88 apunta a el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAD8E guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAD94 p01:6CBE
+C 0xAD97 a_p12_6d78_b_9: a_p12_6d78 y deja el banco 9
 C 0xAD9A lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xADA2 lee la X de Snake
+C 0xADAA guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xADB0 lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xADCA p02:8CF0
+C 0xADB8 lee la Y de Snake
+C 0xADC7 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xADCA dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
 C 0xADDC guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xADE4 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xADEA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xADFB copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xAE1F p02:8E3B
+C 0xAE1F a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE28 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE31 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE3A a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE43 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE4C a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE55 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE5E a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE67 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE70 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE79 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAE82 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
 C 0xAEEA pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xAEED pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xAEFE pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xAF01 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xAF0A a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF13 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF1C a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF25 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF2E a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF37 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF40 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
+C 0xAF49 a_p01_6fd5_2: p01:6FD5 con el banco 1 en 0x6000
 C 0xAF5C pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xAF5F pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xAF6A llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAF73 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAF79 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAF9A guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAFB0 borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+C 0xAFBF paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xAFD0 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xAFDA a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xAFE2 a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xAFEC a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xAFF1 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xAFF4 a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xAFF7 p02:8C29
-C 0xAFFF p00:5F51
+C 0xAFFF a_p12_6d78_b_9: a_p12_6d78 y deja el banco 9
+C 0xB004 guarda la Y de Snake
+C 0xB009 guarda la X de Snake
+C 0xB00E guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB01E a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xB029 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xB060 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB078 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xB0A9 p02:8E81
-C 0xB0B4 p02:8E33
+C 0xB0AC apunta a la espera hasta poner la musica pendiente
+C 0xB0B4 a_p15_a316: p15:A316 con el banco 15 en 0xA000
 C 0xB0BA despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB0E6 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB125 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
@@ -205,14 +390,28 @@ C 0xB138 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB140 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xB145 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB14A marco: cuatro lineas: un marco de D x E desde HL
-C 0xB16C p02:8C9A
+C 0xB15E a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xB169 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xB16C a_p03_b5ff: p03:B5FF con el banco 3 en 0xA000
+C 0xB171 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB18A llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB19C rachas_b3a6: 
 C 0xB1AA borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+C 0xB1B7 paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xB1C8 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xB1D2 a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xB1D5 p01:6BB4
-C 0xB1E5 p02:8E26
-C 0xB1ED p02:8CE8
+C 0xB1DB a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
+C 0xB1E5 a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xB1EA a_p03_b866: p03:B866 con el banco 3 en 0xA000
+C 0xB1ED a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xB1F0 p01:63D8
 C 0xB207 guarda el paso del estado de la partida
+C 0xB21D a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xB22F a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xB234 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB237 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xB23A guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xB250 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB27D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB288 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
@@ -220,22 +419,43 @@ C 0xB293 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB296 p01:6A83
 C 0xB2BD lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB2C3 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB2D4 apunta a el rastro de Snake: las ultimas 16 posiciones [Y][X][direccion] (con 0xCAA0)
 C 0xB2EB despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB2F2 p01:63CE
 C 0xB2FF guarda el paso del estado de la partida
 C 0xB318 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB34A a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xB3C9 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB3CF lee la Y de Snake
+C 0xB3DB guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB3DE p02:8CB3
+C 0xB3E1 lee la Y de Snake
+C 0xB3E9 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB3EF lee la Y de Snake
+C 0xB3F7 guarda la Y de Snake
+C 0xB3FB lee la X de Snake
+C 0xB407 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB40D lee la X de Snake
+C 0xB415 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB41B lee la X de Snake
+C 0xB423 guarda la X de Snake
+C 0xB42D guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB432 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xB499 a_p12_7fa0: p12:7FA0 con el banco 12 en 0x6000
 C 0xB4E6 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xB4E9 p12:7FA0
 C 0xB4EC bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0xB582 p02:8E8E
-C 0xB585 p02:8E96
+C 0xB4FE a_p12_7fa0: p12:7FA0 con el banco 12 en 0x6000
+C 0xB558 a_p12_7fa0: p12:7FA0 con el banco 12 en 0x6000
+C 0xB582 a_p11_be0f: p11:BE0F con el banco 11 en 0xA000
+C 0xB585 a_p11_be6b: p11:BE6B con el banco 11 en 0xA000
+C 0xB5DC a_p03_b63e: p03:B63E con el banco 3 en 0xA000
+C 0xB5E1 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB5E7 p01:6BBC
 C 0xB5EA p01:63D3
 C 0xB5F7 guarda el paso del estado de la partida
-C 0xB60C p02:8C92
-C 0xB618 p02:8CAA
+C 0xB60C a_p03_b603: p03:B603 con el banco 3 en 0xA000
+C 0xB618 a_p03_b63e: p03:B63E con el banco 3 en 0xA000
 C 0xB62C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB64B borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB68E p01:6F3C
@@ -250,8 +470,8 @@ C 0xB71C borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00
 C 0xB71F lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB727 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB72D p01:70FC
-C 0xB736 p02:8CCB
-C 0xB73F p02:8E1E
+C 0xB736 paleta_b914_b_9: paleta_b914 y deja el banco 9
+C 0xB73F a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xB742 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB747 p01:6A0D
 C 0xB74A lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
@@ -262,17 +482,20 @@ C 0xB766 p02:8E2E
 C 0xB76D lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB773 p02:8E77
 C 0xB776 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-C 0xB77C p02:8EA6
+C 0xB77C a_p11_bea2: p11:BEA2 con el banco 11 en 0xA000
 C 0xB77F p02:8E7C
+C 0xB7A7 a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xB7C5 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xB7D5 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB7E7 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB7EC lee lo recien pulsado de las teclas de funcion
+C 0xB80C guarda el quinto byte de la ficha de la sala (p02:877F)
+C 0xB812 dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
 C 0xB815 p00:5F23
 C 0xB81B apunta a la fase de la partida (indice de las listas de p06:B40C)
 C 0xB82F apunta a 1 si los mensajes salen de los bancos 50-51 y no de 48-49
-C 0xB837 p02:8E9E
-C 0xB83A p02:859E
+C 0xB837 a_p11_be94: p11:BE94 con el banco 11 en 0xA000
+C 0xB83A rachas_b007_af4c_bancos_9: 
 C 0xB85A p02:8E63
 C 0xB87D p01:710A
 C 0xB885 p01:710F
@@ -296,10 +519,14 @@ C 0xBA0B marco: cuatro lineas: un marco de D x E desde HL
 C 0xBA1A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBA2D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBA32 marco: cuatro lineas: un marco de D x E desde HL
-C 0xBA44 p02:8E16
+C 0xBA44 a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xBA5B a_p03_b814: p03:B814 con el banco 3 en 0xA000
+C 0xBA6C mensaje_cada_cuadro_b_9: mensaje_cada_cuadro y deja el banco 9
 C 0xBA76 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xBA85 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xBAAC guarda la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xBB0C apunta a la espera hasta poner la musica pendiente
+C 0xBB18 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xBB23 guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0xBB3E linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 C 0xBB58 linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
@@ -307,6 +534,7 @@ C 0xBB74 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBB7B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xBB8F marco: cuatro lineas: un marco de D x E desde HL
 C 0xBBB3 p01:64E8
+C 0xBBD1 mensaje_cada_cuadro_b_9: mensaje_cada_cuadro y deja el banco 9
 C 0xBBD4 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xBBD9 apunta a la espera antes de la siguiente accion de la conversacion
 C 0xBBE1 apunta a la espera antes de la siguiente accion de la conversacion
@@ -316,6 +544,7 @@ C 0xBC01 guarda 1 si una conversacion ha encontrado su ficha
 C 0xBC08 p01:63C0
 C 0xBC35 apunta a la espera antes de la siguiente accion de la conversacion
 C 0xBC49 lee el mensaje que toca (16 bits)
+C 0xBC69 mensaje_cada_cuadro_b_9: mensaje_cada_cuadro y deja el banco 9
 C 0xBC73 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0xBC7B siguiente_accion: la accion que sigue en la conversacion (0xFE [espera]...) o acaba
 C 0xBC7E apunta a la espera antes de la siguiente accion de la conversacion
@@ -337,7 +566,7 @@ C 0xBE2E lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xBE43 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBE4D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xBE54 p01:6383
-C 0xBE59 p02:8E43
+C 0xBE59 a_p06_aeff: p06:AEFF con el banco 6 en 0xA000
 C 0xBE5D p01:64F4
 C 0xBEBC p01:63B6
 C 0xBECB suma_a_hl: HL = HL + A
@@ -345,7 +574,7 @@ C 0xBED2 suma_a_hl: HL = HL + A
 C 0xBF02 p01:6AB3
 C 0xBF0A p01:6AA3
 C 0xBF3F p01:6A9F
-C 0xBF42 p01:7B8D
+C 0xBF42 a_p15_bdb8: p15:BDB8 con el banco 15 en 0xA000
 C 0xBF52 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBF8B p01:6C0F
 C 0xBF92 p02:8C24

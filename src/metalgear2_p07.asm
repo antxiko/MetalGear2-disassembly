@@ -56,7 +56,7 @@ L_A03A:
 	ld a,(0d8ceh)		;a03f
 	or a			;a042
 	jr nz,L_A04A		;a043
-	ld a,(0ca41h)		;a045
+	ld a,(0ca41h)		;a045   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	or a			;a048
 	ret z			;a049
 L_A04A:
@@ -145,7 +145,7 @@ L_A0E2:
 	cp 018h		;a0f3
 	jr nz,L_A10D		;a0f5
 	ld a,027h		;a0f7
-	call 08d7dh		;a0f9   ; p02:8D7D
+	call 08d7dh		;a0f9   ; a_p03_b0f6: p03:B0F6 con el banco 3 en 0xA000
 	jr nz,L_A10D		;a0fc
 	ld a,001h		;a0fe
 	ld (0caa0h),a		;a100
@@ -154,7 +154,7 @@ L_A0E2:
 	ld hl,0d7deh		;a108
 	res 4,(hl)		;a10b
 L_A10D:
-	call 08d75h		;a10d
+	call 08d75h		;a10d   ; a_p03_b4d1: p03:B4D1 con el banco 3 en 0xA000
 	call L_A076		;a110
 	jp L_A076		;a113
 L_A116:
@@ -167,7 +167,7 @@ L_A116:
 	call L_A862		;a123
 	jp 06a4ch		;a126
 L_A129:
-	ld a,(0cb0eh)		;a129
+	ld a,(0cb0eh)		;a129   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;a12c
 	jr nz,L_A158		;a12d
 	ld a,(0cb21h)		;a12f
@@ -179,7 +179,7 @@ L_A129:
 	ld b,a			;a13d
 	sub 004h		;a13e
 	ld c,a			;a140
-	ld a,(0cb03h)		;a141
+	ld a,(0cb03h)		;a141   ; lee la Y de Snake
 	cp b			;a144
 	ret nc			;a145
 	cp c			;a146
@@ -188,7 +188,7 @@ L_A129:
 	ld b,a			;a14c
 	add a,020h		;a14d
 	ld c,a			;a14f
-	ld a,(0cb05h)		;a150
+	ld a,(0cb05h)		;a150   ; lee la X de Snake
 	cp b			;a153
 	jr c,L_A158		;a154
 	cp c			;a156
@@ -403,7 +403,7 @@ L_A2C3:
 	ld (0d8c1h),a		;a2e5
 	ret			;a2e8
 L_A2E9:
-	ld a,(0ca41h)		;a2e9
+	ld a,(0ca41h)		;a2e9   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	or a			;a2ec
 	jr nz,L_A2FF		;a2ed
 	ld a,(0d8c9h)		;a2ef
@@ -423,14 +423,14 @@ L_A2FF:
 	inc a			;a30c
 	ld (0d456h),a		;a30d
 	ld c,003h		;a310
-	jp 08ddbh		;a312   ; p02:8DDB
+	jp 08ddbh		;a312   ; a_p11_bdbd_3: p11:BDBD con el banco 11 en 0xA000
 L_A315:
 	call L_A129		;a315
 	ret nc			;a318
 	call L_A40D		;a319
 	ld a,(0caa0h)		;a31c
 	or a			;a31f
-	call nz,08d75h		;a320
+	call nz,08d75h		;a320   ; a_p03_b4d1: p03:B4D1 con el banco 3 en 0xA000
 	ld a,006h		;a323
 	ld (0d8c1h),a		;a325
 	ret			;a328
@@ -528,7 +528,7 @@ L_A3CE:
 	call L_A8D1		;a3db
 	ld hl,0cabdh		;a3de
 	ld (hl),000h		;a3e1
-	call 08529h		;a3e3
+	call 08529h		;a3e3   ; paleta_bc9e: la paleta de p56:BC9E y los bancos 1, 2 y 7
 	call 04606h		;a3e6   ; enciende_todo: la pantalla y los sprites encendidos
 	call 06cd6h		;a3e9   ; p01:6CD6
 	xor a			;a3ec
@@ -540,7 +540,7 @@ L_A3F3:
 	or a			;a3f7
 	jr z,L_A3FF		;a3f8
 	ld (hl),000h		;a3fa
-	call 08529h		;a3fc   ; p02:8529
+	call 08529h		;a3fc   ; paleta_bc9e: la paleta de p56:BC9E y los bancos 1, 2 y 7
 L_A3FF:
 	ld hl,0cb57h		;a3ff
 	ld (hl),000h		;a402
@@ -553,11 +553,11 @@ L_A40D:
 	xor a			;a40d
 	ld (0dff8h),a		;a40e
 	ld (0d8c4h),a		;a411
-	ld (0cb16h),a		;a414
+	ld (0cb16h),a		;a414   ; guarda 1 mientras Snake se da la vuelta
 	inc a			;a417
 	ld (0d8c0h),a		;a418
 	ld (0ca77h),a		;a41b
-	ld hl,0d7c0h		;a41e
+	ld hl,0d7c0h		;a41e   ; apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
 	ld bc,0000fh		;a421
 	call 04236h		;a424   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call L_A49D		;a427
@@ -565,30 +565,30 @@ L_A40D:
 	ld bc,0005fh		;a42d
 	call 04236h		;a430   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call L_A470		;a433
-	call 08578h		;a436
-	call 0875dh		;a439   ; p02:875D
+	call 08578h		;a436   ; dibujos_b845: los dibujos de p37:B845 con los colores de p37:B809 en la VRAM de 0x6000
+	call 0875dh		;a439   ; borra_ce00: 0xD417 = 0x1E y 0xCE00-0xD3FF a cero
 	call 059efh		;a43c   ; limpia_sprites_y_d300:
 	call L_A4A6		;a43f
 	call L_AB96		;a442
-	ld hl,0ca4eh		;a445
+	ld hl,0ca4eh		;a445   ; apunta a el umbral de los caracteres 0x00-0x80 de la sala (de p56:A727; p00:5C28)
 	ld (hl),040h		;a448
 	inc hl			;a44a
 	ld (hl),081h		;a44b
 	ld a,050h		;a44d
-	ld (0cb03h),a		;a44f
+	ld (0cb03h),a		;a44f   ; guarda la Y de Snake
 	ld a,060h		;a452
-	ld (0cb05h),a		;a454
+	ld (0cb05h),a		;a454   ; guarda la X de Snake
 	ld a,00fh		;a457
-	ld (0cb00h),a		;a459
+	ld (0cb00h),a		;a459   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld a,(0cb31h)		;a45c
 	or a			;a45f
 	jr z,L_A464		;a460
 	ld a,002h		;a462
 L_A464:
-	ld (0cb01h),a		;a464
+	ld (0cb01h),a		;a464   ; guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	ld a,002h		;a467
-	ld (0cb0eh),a		;a469
-	ld (0cb0dh),a		;a46c
+	ld (0cb0eh),a		;a469   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+	ld (0cb0dh),a		;a46c   ; guarda la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ret			;a46f
 L_A470:
 	ld a,(0d8c2h)		;a470
@@ -626,13 +626,13 @@ L_A4A6:
 	call 04452h		;a4aa   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	ld a,001h		;a4ad
 	call 04452h		;a4af   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
-	call 08281h		;a4b2
+	call 08281h		;a4b2   ; llama_ab91: p06:AB91 guardando el banco de 0xA000
 	call 05470h		;a4b5   ; marcador_y_ventana_bancos_7:
 	ld a,(0ca42h)		;a4b8   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	xor 001h		;a4bb
 	ld (0ca42h),a		;a4bd   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 0547ch		;a4c0   ; copia_marcador_bancos_7:
-	call 08524h		;a4c3   ; p02:8524
+	call 08524h		;a4c3   ; paleta_bbf2: la paleta de p56:BBF2 y los bancos 1, 2 y 7
 	call 071a2h		;a4c6   ; p01:71A2
 	call L_A83A		;a4c9
 	ld a,(0d8a0h)		;a4cc
@@ -666,10 +666,10 @@ L_A4FD:
 	call z,L_A5D7		;a504
 	jp L_A8D1		;a507
 L_A50A:
-	ld a,(0cb00h)		;a50a
+	ld a,(0cb00h)		;a50a   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 003h		;a50d
 	ret nz			;a50f
-	ld a,(0cb0eh)		;a510
+	ld a,(0cb0eh)		;a510   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;a513
 	ret nz			;a514
 	ld hl,0aa83h		;a515
@@ -736,28 +736,28 @@ L_A56E:
 	inc hl			;a575
 	ld a,(hl)			;a576
 	ld (0d8cfh),a		;a577
-	ld a,(0cb03h)		;a57a
+	ld a,(0cb03h)		;a57a   ; lee la Y de Snake
 	sub 01ch		;a57d
 	cp (hl)			;a57f
 	ret c			;a580
 	ld a,(hl)			;a581
 	add a,010h		;a582
 	ld c,a			;a584
-	ld a,(0cb03h)		;a585
+	ld a,(0cb03h)		;a585   ; lee la Y de Snake
 	sub 01ch		;a588
 	cp c			;a58a
 	ret nc			;a58b
 	inc hl			;a58c
 	ld a,(hl)			;a58d
 	ld (0d8d0h),a		;a58e
-	ld a,(0cb05h)		;a591
+	ld a,(0cb05h)		;a591   ; lee la X de Snake
 	add a,004h		;a594
 	cp (hl)			;a596
 	ret c			;a597
 	ld a,(hl)			;a598
 	add a,010h		;a599
 	ld c,a			;a59b
-	ld a,(0cb05h)		;a59c
+	ld a,(0cb05h)		;a59c   ; lee la X de Snake
 	add a,004h		;a59f
 	cp c			;a5a1
 	ret nc			;a5a2
@@ -832,18 +832,18 @@ L_A5E9:
 L_A61D:
 	xor a			;a61d
 	ld (0d8c4h),a		;a61e
-	ld a,(0cb00h)		;a621
+	ld a,(0cb00h)		;a621   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 003h		;a624
 	ret nz			;a626
-	ld a,(0cb0eh)		;a627
+	ld a,(0cb0eh)		;a627   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;a62a
 	ret nz			;a62b
-	ld a,(0cb03h)		;a62c
+	ld a,(0cb03h)		;a62c   ; lee la Y de Snake
 	cp 040h		;a62f
 	ret c			;a631
 	cp 05ch		;a632
 	ret nc			;a634
-	ld a,(0cb05h)		;a635
+	ld a,(0cb05h)		;a635   ; lee la X de Snake
 	cp 03ch		;a638
 	ret c			;a63a
 	cp 048h		;a63b
@@ -904,13 +904,13 @@ DATA_resto_A686:
 
 
 L_A69A:
-	ld a,(0cb0eh)		;a69a
+	ld a,(0cb0eh)		;a69a   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;a69d
 	ret nz			;a69e
-	ld a,(0cb03h)		;a69f
+	ld a,(0cb03h)		;a69f   ; lee la Y de Snake
 	cp 050h		;a6a2
 	ret nc			;a6a4
-	ld a,(0cb05h)		;a6a5
+	ld a,(0cb05h)		;a6a5   ; lee la X de Snake
 	cp 058h		;a6a8
 	ret c			;a6aa
 	cp 069h		;a6ab
@@ -930,18 +930,18 @@ L_A69A:
 	ld b,(hl)			;a6c8
 	inc hl			;a6c9
 	ld a,(hl)			;a6ca
-	ld (0cb03h),a		;a6cb
+	ld (0cb03h),a		;a6cb   ; guarda la Y de Snake
 	inc hl			;a6ce
 	ld a,(hl)			;a6cf
-	ld (0cb05h),a		;a6d0
+	ld (0cb05h),a		;a6d0   ; guarda la X de Snake
 	ld a,002h		;a6d3
-	ld (0cb0eh),a		;a6d5
-	ld (0cb0dh),a		;a6d8
+	ld (0cb0eh),a		;a6d5   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+	ld (0cb0dh),a		;a6d8   ; guarda la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	xor a			;a6db
 	ld (0ca77h),a		;a6dc
 	push bc			;a6df
 	call 059efh		;a6e0   ; limpia_sprites_y_d300:
-	call 08d75h		;a6e3   ; p02:8D75
+	call 08d75h		;a6e3   ; a_p03_b4d1: p03:B4D1 con el banco 3 en 0xA000
 	pop bc			;a6e6
 	call L_A731		;a6e7
 	call L_A80B		;a6ea
@@ -984,7 +984,7 @@ L_A731:
 	sub 00bh		;a734
 	cp 006h		;a736
 	push bc			;a738
-	call c,08d86h		;a739   ; p02:8D86
+	call c,08d86h		;a739   ; dibujos_de_sala_b_7: dibujos_de_sala y deja el banco 7
 	pop bc			;a73c
 	ld a,(0d8c2h)		;a73d
 	cp 003h		;a740
@@ -999,7 +999,7 @@ L_A731:
 	jr z,L_A7B5		;a753
 	cp 00ah		;a755
 	jp nz,L_A7E1		;a757
-	ld hl,0ca50h		;a75a
+	ld hl,0ca50h		;a75a   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	push bc			;a75d
 	ld a,(0d8cdh)		;a75e
 	cp 001h		;a761
@@ -1016,13 +1016,13 @@ L_A771:
 	ld a,(0d8cdh)		;a771
 	cp 001h		;a774
 	jr nz,L_A7E1		;a776
-	ld hl,0ca50h		;a778
+	ld hl,0ca50h		;a778   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),001h		;a77b
 	inc hl			;a77d
 	ld (hl),009h		;a77e
 	jr L_A7E1		;a780
 L_A782:
-	ld hl,0ca50h		;a782
+	ld hl,0ca50h		;a782   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),004h		;a785
 	ld a,(0d8cdh)		;a787
 	rla			;a78a
@@ -1036,44 +1036,44 @@ L_A794:
 	ld a,(0d8cdh)		;a794
 	rla			;a797
 	jr nc,L_A7A4		;a798
-	ld hl,0ca50h		;a79a
+	ld hl,0ca50h		;a79a   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),005h		;a79d
 	inc hl			;a79f
 	ld (hl),005h		;a7a0
 	jr L_A7E1		;a7a2
 L_A7A4:
-	ld hl,0ca50h		;a7a4
+	ld hl,0ca50h		;a7a4   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),001h		;a7a7
 	inc hl			;a7a9
 	ld (hl),008h		;a7aa
 	ld a,02ah		;a7ac
 	ld (0ca76h),a		;a7ae   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,b			;a7b1
-	jp 08d98h		;a7b2
+	jp 08d98h		;a7b2   ; cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
 L_A7B5:
 	ld a,(0d8cdh)		;a7b5
 	rla			;a7b8
 	jr nc,L_A7C5		;a7b9
-	ld hl,0ca50h		;a7bb
+	ld hl,0ca50h		;a7bb   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),002h		;a7be
 	inc hl			;a7c0
 	ld (hl),007h		;a7c1
 	jr L_A7E1		;a7c3
 L_A7C5:
-	ld hl,0ca50h		;a7c5
+	ld hl,0ca50h		;a7c5   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),001h		;a7c8
 	inc hl			;a7ca
 	ld (hl),007h		;a7cb
 	ld a,02eh		;a7cd
 	ld (0ca76h),a		;a7cf   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,b			;a7d2
-	jp 08d98h		;a7d3
+	jp 08d98h		;a7d3   ; cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
 L_A7D6:
 	ld a,(0d8cdh)		;a7d6
 	rla			;a7d9
 	jr nc,L_A7FD		;a7da
 	ld a,007h		;a7dc
-	ld (0ca51h),a		;a7de
+	ld (0ca51h),a		;a7de   ; guarda la columna de la sala en la zona (uno mas al salir por la derecha)
 L_A7E1:
 	xor a			;a7e1
 	ld (0ca76h),a		;a7e2   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1083,21 +1083,21 @@ L_A7E1:
 	jr z,L_A7FA		;a7ea
 	push af			;a7ec
 	cp 00ch		;a7ed
-	call z,07ad0h		;a7ef   ; p01:7AD0
+	call z,07ad0h		;a7ef   ; a_p04_924c_2: p04:924C con el banco 4 en 0x8000
 	pop af			;a7f2
 	push af			;a7f3
 	cp 006h		;a7f4
-	call z,07ad0h		;a7f6
+	call z,07ad0h		;a7f6   ; a_p04_924c_2: p04:924C con el banco 4 en 0x8000
 	pop af			;a7f9
 L_A7FA:
-	jp 08d98h		;a7fa   ; p02:8D98
+	jp 08d98h		;a7fa   ; cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
 L_A7FD:
 	ld a,008h		;a7fd
-	ld (0ca51h),a		;a7ff
+	ld (0ca51h),a		;a7ff   ; guarda la columna de la sala en la zona (uno mas al salir por la derecha)
 	ld a,018h		;a802
 	ld (0ca76h),a		;a804   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	ld a,b			;a807
-	jp 08d98h		;a808
+	jp 08d98h		;a808   ; cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
 L_A80B:
 	ld hl,0aa83h		;a80b
 L_A80E:
@@ -1427,10 +1427,10 @@ L_AB44:
 	ret z			;ab4d
 	cp 007h		;ab4e
 	ret nc			;ab50
-	ld a,(0ca50h)		;ab51
+	ld a,(0ca50h)		;ab51   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp 003h		;ab54
 	ret nz			;ab56
-	ld a,(0ca51h)		;ab57
+	ld a,(0ca51h)		;ab57   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp 007h		;ab5a
 	ret nz			;ab5c
 	call 0421fh		;ab5d   ; bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
@@ -1570,7 +1570,7 @@ L_AC33:
 	ld l,a			;ac36
 	ret			;ac37
 L_AC38:
-	ld a,(0ca41h)		;ac38
+	ld a,(0ca41h)		;ac38   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	or a			;ac3b
 	ret nz			;ac3c
 	call L_AC6A		;ac3d
@@ -1643,7 +1643,7 @@ L_ACB9:
 	sub 00ah		;acd0
 	cp 002h		;acd2
 	push bc			;acd4
-	call nc,07ad8h		;acd5   ; p01:7AD8
+	call nc,07ad8h		;acd5   ; a_p04_9949_2: p04:9949 con el banco 4 en 0x8000
 	pop bc			;acd8
 L_ACD9:
 	exx			;acd9
@@ -1839,14 +1839,14 @@ L_AE3D:
 	push de			;ae3d
 	push bc			;ae3e
 	push hl			;ae3f
-	ld a,(0ca50h)		;ae40
+	ld a,(0ca50h)		;ae40   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	ld e,a			;ae43
-	ld a,(0ca51h)		;ae44
+	ld a,(0ca51h)		;ae44   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	ld d,a			;ae47
 	ld c,080h		;ae48
 	ld l,(iy+003h)		;ae4a
 	ld h,(iy+005h)		;ae4d
-	call 08db5h		;ae50
+	call 08db5h		;ae50   ; a_p03_b1be: p03:B1BE con el banco 3 en 0xA000
 	pop hl			;ae53
 	pop bc			;ae54
 	pop de			;ae55
@@ -2132,7 +2132,7 @@ L_B046:
 	jr nz,L_B060		;b04b
 	call L_B5AF		;b04d
 	jr nc,L_B060		;b050
-	ld a,(0cb00h)		;b052
+	ld a,(0cb00h)		;b052   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 002h		;b055
 	jr z,L_B06A		;b057
 	cp 00bh		;b059
@@ -2155,7 +2155,7 @@ L_B06A:
 	push de			;b076
 	ld hl,0d61ch		;b077
 	ld (hl),001h		;b07a
-	call 08d90h		;b07c   ; p02:8D90
+	call 08d90h		;b07c   ; a_p03_bda5: p03:BDA5 con el banco 3 en 0xA000
 	pop de			;b07f
 	pop hl			;b080
 	pop bc			;b081
@@ -2375,12 +2375,12 @@ L_B208:
 	ret nz			;b20c
 	call L_B23A		;b20d
 	ret nz			;b210
-	ld a,(0cb00h)		;b211
+	ld a,(0cb00h)		;b211   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 00bh		;b214
 	ret z			;b216
 	cp 002h		;b217
 	jr nz,L_B221		;b219
-	ld a,(0cb0eh)		;b21b
+	ld a,(0cb0eh)		;b21b   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	cp 003h		;b21e
 	ret c			;b220
 L_B221:
@@ -2393,16 +2393,16 @@ L_B221:
 	call L_B5AF		;b22b
 	ret nc			;b22e
 	call 06a38h		;b22f
-	call 08d9dh		;b232   ; p02:8D9D
+	call 08d9dh		;b232   ; a_p11_aee4_2: p11:AEE4 con el banco 11 en 0xA000
 	ld a,009h		;b235
-	jp 08da5h		;b237   ; p02:8DA5
+	jp 08da5h		;b237   ; a_p03_be51: p03:BE51 con el banco 3 en 0xA000
 L_B23A:
 	ld b,003h		;b23a
 	ld a,(0d8c0h)		;b23c
 	or a			;b23f
 	jr nz,L_B253		;b240
 	dec b			;b242
-	ld a,(0ca65h)		;b243
+	ld a,(0ca65h)		;b243   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	or a			;b246
 	jr nz,L_B253		;b247
 	ld b,004h		;b249
@@ -2438,7 +2438,7 @@ L_B267:
 	push bc			;b27f
 	push hl			;b280
 	call 06a38h		;b281
-	call 07ae8h		;b284   ; p01:7AE8
+	call 07ae8h		;b284   ; a_p04_834c: p04:834C con el banco 4 en 0x8000
 	call L_B2C0		;b287
 	pop hl			;b28a
 	pop bc			;b28b
@@ -2493,7 +2493,7 @@ L_B2CB:
 	ld (0cb73h),a		;b2e2
 L_B2E5:
 	pop af			;b2e5
-	jp 08dd3h		;b2e6   ; p02:8DD3
+	jp 08dd3h		;b2e6   ; a_p03_bd82: p03:BD82 con el banco 3 en 0xA000
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B2E9: lo apuntan con el banco puesto p07:B2CE (0xB2E9); el
@@ -2535,7 +2535,7 @@ L_B313:
 	push hl			;b325
 	push de			;b326
 	push bc			;b327
-	call 07b09h		;b328   ; p01:7B09
+	call 07b09h		;b328   ; a_p14_ab01: p14:AB01 con el banco 14 en 0xA000
 	pop bc			;b32b
 	pop de			;b32c
 	pop hl			;b32d
@@ -2580,7 +2580,7 @@ L_B371:
 	jr L_B393		;b375
 L_B377:
 	ld (0d4e7h),a		;b377
-	ld a,(0ca41h)		;b37a
+	ld a,(0ca41h)		;b37a   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	and a			;b37d
 	ret nz			;b37e
 	ld a,(0cb3ch)		;b37f
@@ -2589,15 +2589,15 @@ L_B377:
 	ld a,(ix+000h)		;b384
 	and 07fh		;b387
 	cp 014h		;b389
-	jp z,08dbdh		;b38b   ; p02:8DBD
+	jp z,08dbdh		;b38b   ; a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
 	cp 012h		;b38e
-	jp z,08dbdh		;b390
+	jp z,08dbdh		;b390   ; a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
 L_B393:
 	push hl			;b393
 	push de			;b394
 	push bc			;b395
 	call L_B3A5		;b396
-	call 08dc6h		;b399   ; p02:8DC6
+	call 08dc6h		;b399   ; barras_de_vida_b_1_2_7: barras_de_vida y deja los bancos 1, 2 y 7
 	call 08dcbh		;b39c   ; p02:8DCB
 	pop bc			;b39f
 	pop de			;b3a0
@@ -2607,7 +2607,7 @@ L_B3A5:
 	ld a,(0cb3dh)		;b3a5
 	or a			;b3a8
 	ret nz			;b3a9
-	ld a,(0cb00h)		;b3aa
+	ld a,(0cb00h)		;b3aa   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 014h		;b3ad
 	ret z			;b3af
 	ld a,(0d4e7h)		;b3b0
@@ -2621,7 +2621,7 @@ L_B3A5:
 	and 07fh		;b3bf
 	ld c,a			;b3c1
 L_B3C2:
-	ld hl,0ca53h		;b3c2
+	ld hl,0ca53h		;b3c2   ; apunta a la vida de Snake (lo largo de la barra)
 	ld a,(hl)			;b3c5
 	sub c			;b3c6
 	jr z,L_B3CD		;b3c7
@@ -2630,10 +2630,10 @@ L_B3C2:
 	ret			;b3cc
 L_B3CD:
 	ld (hl),000h		;b3cd
-	call 08dadh		;b3cf   ; p02:8DAD
-	ld a,(0ca53h)		;b3d2
+	call 08dadh		;b3cf   ; a_p10_bfbc_2: p10:BFBC con el banco 10 en 0xA000
+	ld a,(0ca53h)		;b3d2   ; lee la vida de Snake (lo largo de la barra)
 	or a			;b3d5
-	jp z,08dbdh		;b3d6
+	jp z,08dbdh		;b3d6   ; a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
 	ret			;b3d9
 L_B3DA:
 	push hl			;b3da
@@ -2649,11 +2649,11 @@ L_B3E3:
 	ld (ix+01fh),004h		;b3ec
 	dec (ix+010h)		;b3f0
 	jr z,L_B3F8		;b3f3
-	jp 07af9h		;b3f5   ; p01:7AF9
+	jp 07af9h		;b3f5   ; a_p04_8ebe: p04:8EBE con el banco 4 en 0x8000
 L_B3F8:
 	call L_B401		;b3f8
-	call 07af0h		;b3fb   ; p01:7AF0
-	jp 07ae0h		;b3fe   ; p01:7AE0
+	call 07af0h		;b3fb   ; a_p04_8326: p04:8326 con el banco 4 en 0x8000
+	jp 07ae0h		;b3fe   ; a_p04_82fd: p04:82FD con el banco 4 en 0x8000
 L_B401:
 	ld a,(0ca5fh)		;b401
 	and a			;b404
@@ -2695,7 +2695,7 @@ L_B433:
 	or b			;b442
 	ret z			;b443
 L_B444:
-	jp 07b01h		;b444   ; p01:7B01
+	jp 07b01h		;b444   ; a_p04_8c4a: p04:8C4A con el banco 4 en 0x8000
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B447: lo apuntan con el banco puesto p07:B411 (0xB447); el
@@ -2714,7 +2714,7 @@ L_B44E:
 	push hl			;b44e
 	push de			;b44f
 	push bc			;b450
-	call 07ac8h		;b451   ; p01:7AC8
+	call 07ac8h		;b451   ; a_p04_9ca1: p04:9CA1 con el banco 4 en 0x8000
 	jr L_B465		;b454
 L_B456:
 	ld a,(ix+010h)		;b456
@@ -2723,8 +2723,8 @@ L_B456:
 	push hl			;b45c
 	push de			;b45d
 	push bc			;b45e
-	call 07af0h		;b45f
-	call 07ae0h		;b462
+	call 07af0h		;b45f   ; a_p04_8326: p04:8326 con el banco 4 en 0x8000
+	call 07ae0h		;b462   ; a_p04_82fd: p04:82FD con el banco 4 en 0x8000
 L_B465:
 	pop bc			;b465
 	pop de			;b466
@@ -2884,7 +2884,7 @@ L_B563:
 	push bc			;b565
 	push iy		;b566
 	pop hl			;b568
-	call 05fe0h		;b569   ; p00:5FE0
+	call 05fe0h		;b569   ; a_p12_6e6c_b_7: a_p12_6e6c y deja el banco 7
 	xor a			;b56c
 	ld (iy+000h),a		;b56d
 	ld (0cb52h),a		;b570
@@ -2914,7 +2914,7 @@ L_B595:
 	ld a,0b0h		;b59b
 L_B59D:
 	ld h,a			;b59d
-	call 08db5h		;b59e   ; p02:8DB5
+	call 08db5h		;b59e   ; a_p03_b1be: p03:B1BE con el banco 3 en 0xA000
 L_B5A1:
 	jp L_B465		;b5a1
 L_B5A4:
@@ -2923,7 +2923,7 @@ L_B5A4:
 	push bc			;b5a6
 	push iy		;b5a7
 	pop hl			;b5a9
-	call 05fe0h		;b5aa
+	call 05fe0h		;b5aa   ; a_p12_6e6c_b_7: a_p12_6e6c y deja el banco 7
 	jr L_B5A1		;b5ad
 L_B5AF:
 	exx			;b5af
@@ -3010,7 +3010,7 @@ L_B61F:
 	ld e,a			;b622
 	ret			;b623
 L_B624:
-	ld a,(0cb01h)		;b624
+	ld a,(0cb01h)		;b624   ; lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	cp 00ch		;b627
 	jr nc,$+29		;b629
 	call 0424dh		;b62b   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -3039,7 +3039,7 @@ L_B649:
 L_B650:
 	call L_B8BB		;b650
 	ld de,00e06h		;b653
-	ld a,(0cb0eh)		;b656
+	ld a,(0cb0eh)		;b656   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	cp 003h		;b659
 	jr nc,L_B660		;b65b
 	ld de,0080dh		;b65d
@@ -3080,7 +3080,7 @@ L_B690:
 	pop af			;b699
 	ret			;b69a
 L_B69B:
-	ld a,(0cb01h)		;b69b
+	ld a,(0cb01h)		;b69b   ; lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	cp 00ch		;b69e
 	jr nc,L_B646		;b6a0
 	call 0424dh		;b6a2   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -3100,10 +3100,10 @@ DATA_tabla_B6A5:
 
 
 L_B6BD:
-	ld a,(0cb03h)		;b6bd
+	ld a,(0cb03h)		;b6bd   ; lee la Y de Snake
 	sub 00ch		;b6c0
 	ld l,a			;b6c2
-	ld a,(0cb05h)		;b6c3
+	ld a,(0cb05h)		;b6c3   ; lee la X de Snake
 	ld h,a			;b6c6
 	ld de,00508h		;b6c7
 	xor a			;b6ca
@@ -3120,7 +3120,7 @@ L_B6CC:
 	pop af			;b6dc
 	ret			;b6dd
 L_B6DE:
-	ld a,(0cb01h)		;b6de
+	ld a,(0cb01h)		;b6de   ; lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	cp 00ch		;b6e1
 	jp nc,L_B646		;b6e3
 	call 0424dh		;b6e6   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -3149,16 +3149,16 @@ L_B708:
 	ret			;b70e
 L_B70F:
 	ld de,00204h		;b70f
-	ld a,(0cb0eh)		;b712
+	ld a,(0cb0eh)		;b712   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;b715
 	ld hl,0b72ch		;b716
 	add a,a			;b719
 	call 0423eh		;b71a   ; suma_a_hl: HL = HL + A
 	call L_AC33		;b71d
-	ld a,(0cb03h)		;b720
+	ld a,(0cb03h)		;b720   ; lee la Y de Snake
 	add a,l			;b723
 	ld l,a			;b724
-	ld a,(0cb05h)		;b725
+	ld a,(0cb05h)		;b725   ; lee la X de Snake
 	add a,h			;b728
 	ld h,a			;b729
 	xor a			;b72a
@@ -3237,10 +3237,10 @@ L_B790:
 	ld a,(iy+000h)		;b790
 	or a			;b793
 	jp z,L_B646		;b794
-	ld a,(0ca50h)		;b797
+	ld a,(0ca50h)		;b797   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (iy+004h)		;b79a
 	ret nz			;b79d
-	ld a,(0ca51h)		;b79e
+	ld a,(0ca51h)		;b79e   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp (iy+005h)		;b7a1
 	ret nz			;b7a4
 L_B7A5:
@@ -3272,7 +3272,7 @@ L_B7BF:
 	and a			;b7d3
 	jr nz,L_B7E0		;b7d4
 	dec d			;b7d6
-	ld a,(0ca65h)		;b7d7
+	ld a,(0ca65h)		;b7d7   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	ld d,002h		;b7da
 	and a			;b7dc
 	jr nz,L_B7E0		;b7dd
@@ -3281,7 +3281,7 @@ L_B7E0:
 	ld a,e			;b7e0
 	cp d			;b7e1
 	jp nz,L_B646		;b7e2
-	ld de,(0ca50h)		;b7e5
+	ld de,(0ca50h)		;b7e5   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	ld a,e			;b7e9
 	cp (iy+004h)		;b7ea
 	ret nz			;b7ed
@@ -3312,7 +3312,7 @@ L_B804:
 	or a			;b81b
 	jr nz,L_B826		;b81c
 	dec b			;b81e
-	ld a,(0ca65h)		;b81f
+	ld a,(0ca65h)		;b81f   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	or a			;b822
 	jr nz,L_B826		;b823
 	dec b			;b825
@@ -3320,10 +3320,10 @@ L_B826:
 	ld a,b			;b826
 	cp (ix+000h)		;b827
 	ret nz			;b82a
-	ld a,(0ca50h)		;b82b
+	ld a,(0ca50h)		;b82b   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (ix+004h)		;b82e
 	ret nz			;b831
-	ld a,(0ca51h)		;b832
+	ld a,(0ca51h)		;b832   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp (ix+005h)		;b835
 	ret nz			;b838
 	ld a,(ix+002h)		;b839
@@ -3342,7 +3342,7 @@ L_B84A:
 	ld a,(0cb46h)		;b851
 	cp 004h		;b854
 	jp c,L_B646		;b856
-	ld a,(0cb0eh)		;b859
+	ld a,(0cb0eh)		;b859   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;b85c
 	add a,a			;b85d
 	add a,a			;b85e
@@ -3356,10 +3356,10 @@ L_B84A:
 	inc hl			;b86a
 	ld h,(hl)			;b86b
 	ld l,a			;b86c
-	ld a,(0cb03h)		;b86d
+	ld a,(0cb03h)		;b86d   ; lee la Y de Snake
 	add a,l			;b870
 	ld l,a			;b871
-	ld a,(0cb05h)		;b872
+	ld a,(0cb05h)		;b872   ; lee la X de Snake
 	add a,h			;b875
 	ld h,a			;b876
 	xor a			;b877
@@ -3416,14 +3416,14 @@ L_B8AE:
 	xor a			;b8b9
 	ret			;b8ba
 L_B8BB:
-	ld a,(0cb03h)		;b8bb
+	ld a,(0cb03h)		;b8bb   ; lee la Y de Snake
 	ld l,a			;b8be
-	ld a,(0cb05h)		;b8bf
+	ld a,(0cb05h)		;b8bf   ; lee la X de Snake
 	ld h,a			;b8c2
 	xor a			;b8c3
 	ret			;b8c4
 L_B8C5:
-	ld de,(0ca50h)		;b8c5
+	ld de,(0ca50h)		;b8c5   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	ld a,(ix+000h)		;b8c9
 	and 07fh		;b8cc
 	cp 010h		;b8ce
@@ -3453,7 +3453,7 @@ L_B8EC:
 	ld hl,0baceh		;b905
 	jr L_B91D		;b908
 L_B90A:
-	ld de,(0ca50h)		;b90a
+	ld de,(0ca50h)		;b90a   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 L_B90E:
 	ld a,(ix+000h)		;b90e
 	and 07fh		;b911
@@ -3519,7 +3519,7 @@ L_B977:
 	or 001h		;b977
 	ret			;b979
 L_B97A:
-	ld de,(0ca50h)		;b97a
+	ld de,(0ca50h)		;b97a   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	ld a,(ix+000h)		;b97e
 	sub 003h		;b981
 	jr c,L_B977		;b983
@@ -3546,7 +3546,7 @@ L_B999:
 	ld hl,0bad1h		;b9b0
 	jr L_B9CA		;b9b3
 L_B9B5:
-	ld de,(0ca50h)		;b9b5
+	ld de,(0ca50h)		;b9b5   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 L_B9B9:
 	ld a,(ix+000h)		;b9b9
 	cp 003h		;b9bc
@@ -3792,7 +3792,7 @@ L_BBBA:
 	or a			;bbc3
 	ret			;bbc4
 L_BBC5:
-	ld ix,0d7c0h		;bbc5
+	ld ix,0d7c0h		;bbc5   ; apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
 	ld b,004h		;bbc9
 L_BBCB:
 	exx			;bbcb
@@ -4073,10 +4073,10 @@ L_BD78:
 	ld a,(ix+000h)		;bd78
 	or a			;bd7b
 	jr z,L_BD9F		;bd7c
-	ld a,(0ca50h)		;bd7e
+	ld a,(0ca50h)		;bd7e   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (ix+004h)		;bd81
 	jr nz,L_BD9F		;bd84
-	ld a,(0ca51h)		;bd86
+	ld a,(0ca51h)		;bd86   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp (ix+005h)		;bd89
 	jr nz,L_BD9F		;bd8c
 	ld a,(ix+002h)		;bd8e
@@ -4095,10 +4095,10 @@ L_BDA1:
 	ld a,(ix+000h)		;bda1
 	or a			;bda4
 	jr z,L_BD9F		;bda5
-	ld a,(0ca50h)		;bda7
+	ld a,(0ca50h)		;bda7   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (ix+004h)		;bdaa
 	jr nz,L_BD9F		;bdad
-	ld a,(0ca51h)		;bdaf
+	ld a,(0ca51h)		;bdaf   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp (ix+005h)		;bdb2
 	jr nz,L_BD9F		;bdb5
 	ld a,(ix+002h)		;bdb7
@@ -4114,10 +4114,10 @@ L_BDC8:
 	ld a,(ix+000h)		;bdc8
 	or a			;bdcb
 	jr z,L_BD9F		;bdcc
-	ld a,(0ca50h)		;bdce
+	ld a,(0ca50h)		;bdce   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (ix+004h)		;bdd1
 	jr nz,L_BD9F		;bdd4
-	ld a,(0ca51h)		;bdd6
+	ld a,(0ca51h)		;bdd6   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp (ix+005h)		;bdd9
 	jr nz,L_BD9F		;bddc
 	ld a,(ix+002h)		;bdde
@@ -4133,10 +4133,10 @@ L_BDEF:
 	ld a,(ix+000h)		;bdef
 	or a			;bdf2
 	jr z,L_BD9F		;bdf3
-	ld a,(0ca50h)		;bdf5
+	ld a,(0ca50h)		;bdf5   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (ix+004h)		;bdf8
 	jr nz,L_BD9F		;bdfb
-	ld a,(0ca51h)		;bdfd
+	ld a,(0ca51h)		;bdfd   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp (ix+005h)		;be00
 	jr nz,L_BD9F		;be03
 	ld a,(ix+002h)		;be05
@@ -4215,14 +4215,14 @@ L_BE82:
 	jr c,L_BE9F		;be8b
 	ret			;be8d
 L_BE8E:
-	ld a,(0cb05h)		;be8e
+	ld a,(0cb05h)		;be8e   ; lee la X de Snake
 	sub 004h		;be91
 	ld b,a			;be93
-	ld a,(0cb03h)		;be94
+	ld a,(0cb03h)		;be94   ; lee la Y de Snake
 	ld c,a			;be97
 	call L_BE9F		;be98
 	ret nc			;be9b
-	jp 08dbdh		;be9c
+	jp 08dbdh		;be9c   ; a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
 L_BE9F:
 	ld a,(0d803h)		;be9f
 	sub c			;bea2

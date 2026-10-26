@@ -64,7 +64,7 @@ C 0xA0EB apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA0FB lee la sala de la zona
 C 0xA0FF lee la zona
 C 0xA11E lee la sala especial (0 = ninguna; indice de p24:64B6)
-C 0xA138 p01:7A5F
+C 0xA138 a_p02_8475_2: paleta_de_la_sala (p02:8475) con el banco 2
 C 0xA13B lee la zona
 C 0xA14B p01:71FA
 C 0xA14E lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -82,6 +82,7 @@ C 0xA1A4 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 C 0xA1AA apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
 C 0xA1B0 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 C 0xA1B3 lee la zona
+C 0xA1B9 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA1C4 p04:929A
 C 0xA1DB p04:8ECD
 C 0xA1DE p04:8ED9
@@ -96,6 +97,8 @@ C 0xA2DC despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA33B p01:6C5F
 C 0xA371 suma_a_hl: HL = HL + A
 C 0xA404 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA44D lee la X de Snake
+C 0xA45D lee la Y de Snake
 C 0xA499 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA4B8 lee la sala de la zona
 C 0xA4C8 suma_a_hl: HL = HL + A
@@ -128,6 +131,7 @@ C 0xA8F7 de_negativo: DE = -DE
 C 0xA94A azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA959 hl_negativo: HL = -HL (PR2 p00:5BBD)
 C 0xA960 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA996 lee la Y de Snake
 C 0xAA1E hl_negativo: HL = -HL (PR2 p00:5BBD)
 C 0xAA24 p04:90A9
 C 0xAA27 p04:908C
@@ -146,6 +150,8 @@ C 0xAB9C p01:6211
 C 0xABA4 p01:620B
 C 0xABAA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xABAF p01:7A2D
+C 0xABC0 lee la Y de Snake
+C 0xABCD lee la X de Snake
 C 0xAC2F p01:6ADA
 C 0xAC4A p01:6C73
 C 0xAC53 palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -179,9 +185,10 @@ C 0xBC83 dibujos_7118_bancos_8:
 C 0xBC86 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBC89 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0xBC8C p01:7072
-C 0xBC8F p02:84F4
+C 0xBC8F paleta_b98a_bancos_8: 
 C 0xBC9A copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
-C 0xBCA7 p00:5FEB
+C 0xBCA0 apunta a la Y de Snake
+C 0xBCA7 a_p12_6f41_b_8: a_p12_6f41 y deja el banco 8
 C 0xBCAA lineas_c3: las lineas de las listas de p00:43C8 (verticales) y p00:43E3 (horizontales), de 0x3A de largo en el color 0x0D
 C 0xBCAD copia_marcador_a_la_otra: copia las lineas 0x16-0x51 de la pagina en la que se dibuja a la otra (YMMM)
 C 0xBCB0 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
@@ -198,13 +205,29 @@ C 0xBD2C p01:6AB7
 C 0xBD3F p01:6ABB
 C 0xBD45 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xBD69 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
+C 0xBD9B lee la Y de Snake
+C 0xBDA2 apunta a la Y de Snake
 C 0xBDB5 lee la sala especial (0 = ninguna; indice de p24:64B6)
-C 0xBDD0 p02:8DE3
+C 0xBDBC apunta a la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xBDC6 guarda la Y de Snake
+C 0xBDCB guarda la X de Snake
+C 0xBDD0 cambia_de_zona_b_1_2_8: cambia_de_zona y deja los bancos 1, 2 y 8
 C 0xBDD4 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBDD7 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xBDE1 guarda la Y de Snake
+C 0xBDE6 guarda la X de Snake
+C 0xBDEB cambia_de_zona_b_1_2_8: cambia_de_zona y deja los bancos 1, 2 y 8
 C 0xBDFA lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xBE1B pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xBE1E pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xBE2F pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xBE32 pon_sprite_mas_4: p00:5D41 con el patron C + 4
-C 0xBE3B p02:8DE8
+C 0xBE3B a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE44 a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE4D a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE56 a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE5F a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE68 a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE71 a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
+C 0xBE7A a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 # --- fin de las anotaciones de anota.py ---

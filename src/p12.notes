@@ -46,7 +46,7 @@ F 0x7FBE 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0x6000 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-C 0x6003 p02:9DBD
+C 0x6003 que_hay_conectado: 0xC38B: bit 0 = hay disquetera (0xFFA7 no es un ret), bit 1 = hay Game Master 2
 C 0x6018 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x601B borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0x6033 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
@@ -93,10 +93,16 @@ C 0x62FA sonido_fb: pide el sonido 0xFB
 C 0x6309 sonido_3f: pide el sonido 0x3F
 C 0x6318 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x6327 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x632B apunta a la rutina de la musica que suena (16 bits; p00:5B50)
 C 0x6331 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6335 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x6338 apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 C 0x633C guarda la zona
 C 0x6341 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x6346 guarda la Y de Snake
+C 0x634B guarda la X de Snake
+C 0x6350 guarda la fila de la sala en la zona (uno mas al salir por arriba)
+C 0x6355 guarda la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x635A guarda la fase de la partida (indice de las listas de p06:B40C)
 C 0x63FC lee lo recien pulsado de las teclas de funcion
 C 0x6402 lee el estado de la partida (p01:729F: 8 estados)
@@ -112,9 +118,12 @@ C 0x6474 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6477 p14:BC7F
 C 0x647A p14:BBA7
 C 0x647D bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x64BB apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 C 0x64FB p06:AD94
 C 0x652C suma_a_hl: HL = HL + A
+C 0x658D lee el slot de la RAM de 0x8000 (p01:7243)
 C 0x659B apunta a el mapa de la sala: 24 x 24 caracteres
+C 0x65BB lee el registro de slots primarios del arranque
 C 0x6670 suma_a_hl: HL = HL + A
 C 0x66E7 p02:8000
 C 0x670D palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -126,11 +135,13 @@ C 0x67F6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x67F9 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x67FE lee la zona
 C 0x6855 suma_a_de: DE = DE + A
+C 0x685F lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x6865 lee la zona
 C 0x6893 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6897 lee la zona
 C 0x689D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x68A4 suma_a_hl: HL = HL + A
+C 0x68B4 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x68BC lee la zona
 C 0x68C3 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x68E3 lee la zona
@@ -138,6 +149,7 @@ C 0x68F6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x68FD lee la zona
 C 0x6903 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x695C lee la zona
+C 0x6977 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x697B p04:8E75
 C 0x69BD lee la copia del banco de 0xA000
 C 0x69C1 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -155,11 +167,13 @@ C 0x6A4B azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0x6A63 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6A8B suma_a_de: DE = DE + A
 C 0x6AB0 suma_a_hl: HL = HL + A
+C 0x6AB3 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0x6B03 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6B32 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0x6B42 lee la zona
 C 0x6B48 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x6B53 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x6B5D lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x6BB2 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6BB5 lee la zona
 C 0x6BB8 tabla_6BBE: 19 destinos del despachador p00
@@ -169,6 +183,7 @@ C 0x6C10 suma_a_hl: HL = HL + A
 C 0x6C1B suma_a_hl: HL = HL + A
 C 0x6CA2 suma_a_hl: HL = HL + A
 C 0x6CDA suma_a_hl: HL = HL + A
+C 0x6D1C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x6D60 sonido_08: pide el sonido 8
 C 0x6D68 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6D6B linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
@@ -178,11 +193,14 @@ C 0x6DE1 punto: orden PSET del VDP con la operacion logica de E
 C 0x6E1C lee la zona
 C 0x6E28 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x6E66 suma_a_hl: HL = HL + A
+C 0x6E86 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0x6E90 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x6EA0 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6EBE lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6EC5 punto: orden PSET del VDP con la operacion logica de E
 C 0x6ECE lee la zona
 C 0x6EDA suma_a_hl: HL = HL + A
+C 0x6EE8 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x6EF6 suma_a_hl: HL = HL + A
 C 0x6F16 lee la zona
 C 0x6F41 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -191,23 +209,42 @@ C 0x6F65 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x6F7B palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x6F82 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6F90 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0x6F94 lee el slot de la RAM de 0x8000 (p01:7243)
+C 0x6FA4 lee el registro de slots primarios del arranque
 C 0x6FB8 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
 C 0x6FBD suma_a_de: DE = DE + A
 C 0x703C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7041 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0x705A lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0x7060 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0x7066 lee la Y de Snake
+C 0x7069 guarda la Y de Snake antes de entrar en el sitio - 0x20
+C 0x706C lee la X de Snake
+C 0x706F guarda la X de Snake antes de entrar en el sitio
+C 0x7072 lee la Y de Snake antes de entrar en el sitio - 0x20 y el byte siguiente (16 bits)
 C 0x7083 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7087 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0x708D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x7097 punto: orden PSET del VDP con la operacion logica de E
+C 0x70A4 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0x70CB lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x70E9 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0x70F4 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x716D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x719C lee el contador de cuadros (uno mas en cada interrupcion)
+C 0x71AC lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0x71BC lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x71CD palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x71D7 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x7213 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0x721D lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x7260 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7263 linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
+C 0x7272 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x7278 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x7290 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x72A1 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x72AB lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x72AF lee la zona
 C 0x72FB suma_a_hl: HL = HL + A
 C 0x731B lee la zona
@@ -215,7 +252,9 @@ C 0x7344 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x734B lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x736F copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0x737C copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
+C 0x738A guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
 C 0x7397 lee la sala de la zona
+C 0x73C0 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
 C 0x73C6 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x73CA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7403 lee la sala de la zona
@@ -231,6 +270,7 @@ C 0x7470 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x7478 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0x747B lee la sala de la zona
 C 0x74B1 lee la sala de la zona
+C 0x74D7 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x74F1 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0x750B copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0x7513 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -245,22 +285,41 @@ C 0x755C suma_a_hl: HL = HL + A
 C 0x7570 pinta_letra: pinta la letra A en DE (0xF8 trae una de la segunda pagina)
 C 0x7585 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x758A copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x75BB lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0x75F9 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x7688 lee el paso del estado de la partida
+C 0x768E lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0x7697 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x76A1 bancos_63: pone el 63 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x76C2 bancos_12_2_3: pone el 12 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x76C5 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0x76C8 despachador: salta a la palabra A de la tabla que va detras del call
+C 0x76E9 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0x76F2 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x76F8 bancos_63: pone el 63 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7701 bancos_12_2_3: pone el 12 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x7704 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0x7707 despachador: salta a la palabra A de la tabla que va detras del call
+C 0x7735 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x7740 copia_en_y: orden YMMM del VDP
 C 0x774B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x774E lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x7757 lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0x775D lee la Y de Snake
+C 0x7763 lee la X de Snake
 C 0x776F apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x7774 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7777 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x777A lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x7783 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7786 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x778E lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0x77A1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x77A5 despachador: salta a la palabra A de la tabla que va detras del call
+C 0x77B8 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0x77BE palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x77C1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x77CF lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0x77D4 suma_a_hl: HL = HL + A
 C 0x77D7 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0x77E2 apunta a los caracteres de un dibujo pasados a 4 bits
@@ -269,6 +328,14 @@ C 0x77EF rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80
 C 0x77F9 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x77FE suma_a_de: DE = DE + A
 C 0x7802 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0x780D lee 1 mientras Snake se da la vuelta
+C 0x781A lee 1 mientras Snake se da la vuelta
+C 0x7829 lee 1 mientras Snake se da la vuelta
+C 0x782F lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x7840 lee la Y de Snake
+C 0x7849 lee la Y de Snake
+C 0x7851 lee la Y de Snake
+C 0x7857 lee la X de Snake
 C 0x785D apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x786A pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x786D pon_sprite_mas_4: p00:5D41 con el patron C + 4
@@ -277,54 +344,102 @@ C 0x7878 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x78A9 suma_a_hl: HL = HL + A
 C 0x78C9 suma_a_hl: HL = HL + A
 C 0x78E2 suma_a_hl: HL = HL + A
+C 0x78F8 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x78FB palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x7901 suma_a_hl: HL = HL + A
 C 0x7932 suma_a_hl: HL = HL + A
+C 0x7935 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x7938 guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x7949 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x794C guarda 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x7957 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x7961 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
+C 0x796B lee 1: el juego de dibujos solo pinta sus listas 6 y 7
 C 0x797B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x797E lee 1: el juego de dibujos solo pinta sus listas 6 y 7
 C 0x798B copia_en_y: orden YMMM del VDP
+C 0x79A0 lee 1: el juego de dibujos solo pinta sus listas 6 y 7
 C 0x79A5 suma_a_hl: HL = HL + A
 C 0x79BE copia_en_y: orden YMMM del VDP
+C 0x79C1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x79D2 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x79E0 suma_a_hl: HL = HL + A
+C 0x79E6 lee 1 si Snake ha chocado en este cuadro
+C 0x79F1 lee 1 si Snake ha chocado en este cuadro
 C 0x79F7 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0x79FC lee la X de Snake
+C 0x7A02 lee la Y de Snake
+C 0x7A09 lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0x7A14 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7A17 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7A1F pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7A22 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7A25 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0x7A28 lee la Y de Snake
+C 0x7A2E lee la X de Snake
 C 0x7A36 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7A39 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x7A49 lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0x7A59 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x7A5C lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x7A65 lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0x7A6D suma_a_hl: HL = HL + A
+C 0x7A8D lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0x7ABC lee la Y de Snake
 C 0x7ACF copia_en_y: orden YMMM del VDP
+C 0x7AD2 lee la Y de Snake
+C 0x7AD8 lee la X de Snake
 C 0x7AE2 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0x7AE8 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7B19 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x7B21 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x7B2D apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0x7B30 lee la Y de Snake
+C 0x7B34 lee la X de Snake
 C 0x7B3A pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7B3D pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7B44 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7B47 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7B51 suma_a_hl: HL = HL + A
 C 0x7B5D palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x7B73 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0x7B79 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x7B7C apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
+C 0x7B91 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x7B9B lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x7BAD copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x7BBC lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
+C 0x7BC6 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7BCE llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x7BD7 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x7BDA lee la Y de Snake
+C 0x7BE0 lee la X de Snake
 C 0x7BE6 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x7BEB pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7BEE pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x7BFA lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x7C0B borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x7C11 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x7C22 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x7C25 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x7C32 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x7C50 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x7C53 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x7C5B llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x7C72 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0x7C90 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0x7C97 lee 1 mientras Snake se da la vuelta
+C 0x7C9D lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0x7CC0 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7CC6 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x7CCC apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7D61 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0x7D72 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7D78 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x7D88 lee 1 mientras Snake se da la vuelta
+C 0x7D8F lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0x7DB3 lee la Y de Snake
+C 0x7DB9 lee la X de Snake
 C 0x7DBF pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x7DC2 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7E02 palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -343,6 +458,7 @@ C 0x7F5C palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x7F62 suma_a_hl: HL = HL + A
 C 0x7F6F suma_a_hl: HL = HL + A
 C 0x7F7E lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0x7F8C lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0x7FAB suma_a_hl: HL = HL + A
 C 0x7FC6 lee el contador de cuadros (uno mas en cada interrupcion)
 # --- fin de las anotaciones de anota.py ---

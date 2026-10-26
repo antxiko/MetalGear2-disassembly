@@ -51,7 +51,7 @@ L_808F:
 	call 06ba4h		;808f
 	call L_9152		;8092
 	ld hl,0e900h		;8095   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;8098
+	call 0463fh		;8098   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld hl,092b8h		;809b
 	call 04918h		;809e   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 	ld de,00000h		;80a1
@@ -73,7 +73,7 @@ L_80BE:
 	call 045fdh		;80c2   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call L_9152		;80c5
 	ld hl,0e900h		;80c8   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;80cb
+	call 0463fh		;80cb   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld hl,08068h		;80ce
 	ld de,0a040h		;80d1
 	ld bc,03040h		;80d4
@@ -146,7 +146,7 @@ L_8150:
 	ld hl,08b9eh		;815a
 	ld de,0dc00h		;815d   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;8160
-	ld hl,0da00h		;8163
+	ld hl,0da00h		;8163   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8166
 	ld bc,0004fh		;8169
 	ld (hl),007h		;816c
@@ -210,7 +210,7 @@ L_81DB:
 	ld de,0dc00h		;81e5   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08bbch		;81e8
 	call L_8B92		;81eb
-	ld hl,0da00h		;81ee
+	ld hl,0da00h		;81ee   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;81f1
 	ld bc,0004fh		;81f4
 	ld (hl),007h		;81f7
@@ -260,7 +260,7 @@ L_8247:
 	ld de,0dc00h		;8251   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08bdah		;8254
 	call L_8B92		;8257
-	ld hl,0da00h		;825a
+	ld hl,0da00h		;825a   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;825d
 	ld bc,0004fh		;8260
 	ld (hl),007h		;8263
@@ -321,7 +321,7 @@ L_82BC:
 	ld de,0dc00h		;82d3   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c40h		;82d6
 	call L_8B92		;82d9
-	ld hl,0da00h		;82dc
+	ld hl,0da00h		;82dc   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;82df
 	ld bc,0001fh		;82e2
 	ld (hl),007h		;82e5
@@ -381,7 +381,7 @@ L_834E:
 	ld de,0dc00h		;835d   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c61h		;8360
 	call L_8B92		;8363
-	ld hl,0da00h		;8366
+	ld hl,0da00h		;8366   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8369
 	ld bc,0001fh		;836c
 	ld (hl),007h		;836f
@@ -435,7 +435,7 @@ L_83C6:
 	call 04266h		;83cd   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045b9h		;83d0   ; borra_pagina_0: la pagina 0 a cero y R#23 = 0
 	ld hl,08f5eh		;83d3
-	call 0463fh		;83d6
+	call 0463fh		;83d6   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld hl,08000h		;83d9
 	ld de,01050h		;83dc
 	ld bc,05838h		;83df
@@ -458,7 +458,7 @@ L_83C6:
 	ld de,0dc00h		;8407   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08cc8h		;840a
 	call L_8B92		;840d
-	ld hl,0da00h		;8410
+	ld hl,0da00h		;8410   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8413
 	ld bc,0005fh		;8416
 	ld (hl),005h		;8419
@@ -476,18 +476,18 @@ L_842A:
 L_8434:
 	call L_87F5		;8434
 	call L_90AE		;8437
-	call 07b55h		;843a
+	call 07b55h		;843a   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld a,006h		;843d
 	jp L_8E2F		;843f
 L_8442:
 	call 04266h		;8442   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8445   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	xor a			;8448
-	call 07b5dh		;8449
+	call 07b5dh		;8449   ; a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 	ld a,001h		;844c
-	call 07b5dh		;844e
+	call 07b5dh		;844e   ; a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 	ld hl,08f83h		;8451
-	call 0463fh		;8454
+	call 0463fh		;8454   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld hl,L_8646		;8457
 	ld de,06c44h		;845a
 	ld c,006h		;845d
@@ -505,7 +505,7 @@ L_846B:
 	ld de,0dc00h		;8475   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c55h		;8478
 	call L_8B92		;847b
-	ld hl,0da00h		;847e
+	ld hl,0da00h		;847e   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8481
 	ld bc,0001fh		;8484
 	ld (hl),007h		;8487
@@ -571,7 +571,7 @@ L_8500:
 	ld de,0dc00h		;8502   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c46h		;8505
 	call L_8B92		;8508
-	ld hl,0da00h		;850b
+	ld hl,0da00h		;850b   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;850e
 	ld bc,0000fh		;8511
 	ld (hl),007h		;8514
@@ -612,7 +612,7 @@ L_8550:
 	ld de,0dc00h		;855a   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c67h		;855d
 	call L_8B92		;8560
-	ld hl,0da00h		;8563
+	ld hl,0da00h		;8563   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8566
 	ld bc,0001fh		;8569
 	ld (hl),007h		;856c
@@ -656,7 +656,7 @@ L_85B1:
 	ld hl,08bf8h		;85bb
 	ld de,0dc00h		;85be   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;85c1
-	ld hl,0da00h		;85c4
+	ld hl,0da00h		;85c4   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;85c7
 	ld bc,0001fh		;85ca
 	ld (hl),007h		;85cd
@@ -730,7 +730,7 @@ L_8646:
 	ld hl,08c4fh		;8660
 	ld de,0dc00h		;8663   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;8666
-	ld hl,0da00h		;8669
+	ld hl,0da00h		;8669   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;866c
 	ld bc,0001fh		;866f
 	ld (hl),007h		;8672
@@ -839,7 +839,7 @@ L_8742:
 	call 045fdh		;8742   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call L_9152		;8745
 	ld hl,0e900h		;8748   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;874b
+	call 0463fh		;874b   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call L_8A2D		;874e
 	jp L_8148		;8751
 L_8754:
@@ -851,7 +851,7 @@ L_8754:
 	ld hl,08c6dh		;8760
 	ld de,0dc00h		;8763   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	call L_8B92		;8766
-	ld hl,0da00h		;8769
+	ld hl,0da00h		;8769   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;876c
 	ld bc,000bfh		;876f
 	ld (hl),007h		;8772
@@ -1399,7 +1399,7 @@ L_8B41:
 	ldi		;8b45
 	inc de			;8b47
 	djnz L_8B41		;8b48
-	ld hl,0da00h		;8b4a
+	ld hl,0da00h		;8b4a   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,08b83h		;8b4d
 	jp 051e0h		;8b50   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 
@@ -1485,7 +1485,7 @@ L_8CE0:
 	ld de,0dc00h		;8cef   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,00ah		;8cf2
 	call L_8B92		;8cf4
-	ld hl,0da00h		;8cf7
+	ld hl,0da00h		;8cf7   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8cfa
 	ld bc,0009fh		;8cfd
 	ld (hl),007h		;8d00
@@ -1525,7 +1525,7 @@ L_8DAA:
 	jr nz,L_8DB7		;8db4
 	xor a			;8db6
 L_8DB7:
-	ld hl,0da00h		;8db7
+	ld hl,0da00h		;8db7   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld de,0da01h		;8dba
 	ld bc,0009fh		;8dbd
 	ld (hl),a			;8dc0
@@ -2120,7 +2120,7 @@ L_91D8:
 L_91E7:
 	push af			;91e7
 	ld hl,0e900h		;91e8   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;91eb
+	call 0463fh		;91eb   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop af			;91ee
 	ret			;91ef
 L_91F0:
@@ -2181,7 +2181,7 @@ L_92D1:
 	call 045f1h		;92d1   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call 0418eh		;92d4   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0ae95h		;92d7
-	call 0463fh		;92da
+	call 0463fh		;92da   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld b,00fh		;92dd
 	ld c,007h		;92df
 	call 00047h		;92e1   ; BIOS WRTVDP - Writes data in the VDP-register
@@ -2293,7 +2293,7 @@ L_9397:
 	push bc			;939e
 	call L_93BC		;939f
 	ld hl,0e900h		;93a2   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;93a5
+	call 0463fh		;93a5   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop bc			;93a8
 	pop hl			;93a9
 	inc hl			;93aa
@@ -2399,7 +2399,7 @@ L_942C:
 	push bc			;9435
 	call L_9457		;9436
 	ld hl,0e900h		;9439   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;943c
+	call 0463fh		;943c   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop bc			;943f
 	pop de			;9440
 	pop hl			;9441
@@ -2508,7 +2508,7 @@ L_94C6:
 	push bc			;94cd
 	call L_94E1		;94ce
 	ld hl,0e900h		;94d1   ; apunta a los caracteres de un dibujo pasados a 4 bits
-	call 0463fh		;94d4
+	call 0463fh		;94d4   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop bc			;94d7
 	pop hl			;94d8
 	inc hl			;94d9
@@ -2647,7 +2647,7 @@ L_95D6:
 	call 045f1h		;95e3   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962E		;95e6
 	ld hl,09ff2h		;95e9
-	call 0463fh		;95ec
+	call 0463fh		;95ec   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call 04606h		;95ef   ; enciende_todo: la pantalla y los sprites encendidos
 	call 06f07h		;95f2   ; p01:6F07
 	call 06f19h		;95f5   ; p01:6F19
@@ -2813,7 +2813,7 @@ L_9715:
 	call 00047h		;971f   ; BIOS WRTVDP - Writes data in the VDP-register
 	call 04266h		;9722   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0a01dh		;9725
-	call 0463fh		;9728
+	call 0463fh		;9728   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call 07190h		;972b   ; p01:7190
 	call 04606h		;972e   ; enciende_todo: la pantalla y los sprites encendidos
 	call 06bc0h		;9731   ; p01:6BC0
@@ -3027,7 +3027,7 @@ L_98B4:
 	call 04879h		;98cb   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 	call 04606h		;98ce   ; enciende_todo: la pantalla y los sprites encendidos
 	ld hl,0a01dh		;98d1
-	call 0463fh		;98d4
+	call 0463fh		;98d4   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call L_98EA		;98d7
 	xor a			;98da
 	ld hl,0d706h		;98db
@@ -3089,7 +3089,7 @@ L_9936:
 	inc (hl)			;9939
 	ret			;993a
 L_993B:
-	call 06585h		;993b   ; p01:6585
+	call 06585h		;993b   ; mensaje_cada_cuadro_b_13_14: mensaje_cada_cuadro y deja los bancos 13 y 14
 	ld a,(0e220h)		;993e   ; lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 	or a			;9941
 	ret nz			;9942
@@ -3253,7 +3253,7 @@ DATA_tabla_9A61:
 L_9A73:
 	call L_9936		;9a73
 	ld hl,0a156h		;9a76
-	call 0463fh		;9a79
+	call 0463fh		;9a79   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld a,(0d706h)		;9a7c
 	cp 00ah		;9a7f
 	jr z,L_9AAC		;9a81
@@ -3301,7 +3301,7 @@ L_9ACC:
 	call 04767h		;9ad7   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	jr L_9A9E		;9ada
 L_9ADC:
-	call 07b55h		;9adc
+	call 07b55h		;9adc   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld a,(0d706h)		;9adf
 	ld de,09cb4h		;9ae2
 	call 04403h		;9ae5   ; palabra_de_tabla_de: DE = la palabra A de la tabla de DE
@@ -3315,7 +3315,7 @@ L_9ADC:
 	ld (hl),020h		;9af8
 	ret			;9afa
 L_9AFB:
-	call 07b55h		;9afb
+	call 07b55h		;9afb   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld hl,0d703h		;9afe
 	dec (hl)			;9b01
 	ret nz			;9b02
@@ -3339,7 +3339,7 @@ L_9AFB:
 	ld (hl),d			;9b24
 	jp L_9936		;9b25
 L_9B28:
-	call 07b55h		;9b28
+	call 07b55h		;9b28   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld hl,0d703h		;9b2b
 	dec (hl)			;9b2e
 	ret nz			;9b2f
@@ -3384,7 +3384,7 @@ L_9B74:
 	ld (hl),0ffh		;9b77
 	jp L_9936		;9b79
 L_9B7C:
-	call 07b55h		;9b7c
+	call 07b55h		;9b7c   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld hl,0d703h		;9b7f
 	dec (hl)			;9b82
 	ret nz			;9b83
@@ -3409,12 +3409,12 @@ L_9BA3:
 	cp 00ah		;9bac
 	ret nz			;9bae
 	call 04ca6h		;9baf   ; dibujos_a34b: los bancos 32-34...
-	jp 07b40h		;9bb2   ; p01:7B40
+	jp 07b40h		;9bb2   ; a_p04_8957: p04:8957 con el banco 4 en 0x8000
 L_9BB5:
 	ld de,08000h		;9bb5
 	jp 06e2ch		;9bb8   ; p01:6E2C
 L_9BBB:
-	call 07b55h		;9bbb   ; p01:7B55
+	call 07b55h		;9bbb   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld c,001h		;9bbe
 	call L_9387		;9bc0
 	ld a,(0cadah)		;9bc3
@@ -3423,9 +3423,9 @@ L_9BBB:
 	call 045f1h		;9bc8   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962A		;9bcb
 	xor a			;9bce
-	call 07b5dh		;9bcf   ; p01:7B5D
+	call 07b5dh		;9bcf   ; a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 	ld a,001h		;9bd2
-	call 07b5dh		;9bd4
+	call 07b5dh		;9bd4   ; a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 	call 04606h		;9bd7   ; enciende_todo: la pantalla y los sprites encendidos
 	ld a,(0d706h)		;9bda
 	cp 00ch		;9bdd
@@ -3487,7 +3487,7 @@ L_9C3C:
 	ld hl,0d702h		;9c4b
 	ld (hl),000h		;9c4e
 	ld hl,0a06dh		;9c50
-	jp 0463fh		;9c53
+	jp 0463fh		;9c53   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 L_9C56:
 	jp L_960E		;9c56
 
@@ -3546,7 +3546,7 @@ L_9D01:
 	pop af			;9d07
 	pop de			;9d08
 	pop bc			;9d09
-	jp 07b4dh		;9d0a   ; p01:7B4D
+	jp 07b4dh		;9d0a   ; a_p03_b814_2: p03:B814 con el banco 3 en 0xA000
 L_9D0D:
 	call L_9D18		;9d0d
 	call L_9D3A		;9d10
@@ -3641,7 +3641,7 @@ L_9DA7:
 	call L_9DFB		;9dad
 	ret			;9db0
 L_9DB1:
-	ld ix,0cb00h		;9db1
+	ld ix,0cb00h		;9db1   ; apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld b,016h		;9db5
 L_9DB7:
 	ld a,(ix+000h)		;9db7
@@ -3681,7 +3681,7 @@ L_9DFB:
 	ld hl,0dc28h		;9dfb
 	ld bc,00058h		;9dfe
 	call 04236h		;9e01   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	ld ix,0cb00h		;9e04
+	ld ix,0cb00h		;9e04   ; apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld b,016h		;9e08
 	ld hl,0dc28h		;9e0a
 L_9E0D:
@@ -3712,7 +3712,7 @@ L_9E3B:
 	inc a			;9e3e
 	and 007h		;9e3f
 	ld (0d70ch),a		;9e41
-	ld ix,0cb00h		;9e44
+	ld ix,0cb00h		;9e44   ; apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld b,016h		;9e48
 L_9E4A:
 	ld a,(ix+000h)		;9e4a
@@ -3805,7 +3805,7 @@ L_9EDD:
 	pop hl			;9eee
 	pop bc			;9eef
 	djnz L_9EDD		;9ef0
-	ld hl,0da00h		;9ef2
+	ld hl,0da00h		;9ef2   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld a,00fh		;9ef5
 	ld bc,0009fh		;9ef7
 	jp 04237h		;9efa   ; llena_bloque: pone A en BC + 1 bytes desde HL
@@ -3829,7 +3829,7 @@ L_9F14:
 	ld d,a			;9f1a
 	jp 05d3dh		;9f1b   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 L_9F1E:
-	ld hl,0da00h		;9f1e
+	ld hl,0da00h		;9f1e   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld a,00fh		;9f21
 	ld bc,0001fh		;9f23
 	jp 04237h		;9f26   ; llena_bloque: pone A en BC + 1 bytes desde HL

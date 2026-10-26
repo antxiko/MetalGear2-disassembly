@@ -134,6 +134,7 @@ p00 0x45FD pantalla_limpia  la pantalla apagada, la pagina 0 borrada y otra vez 
 p00 0x4606 enciende_todo  la pantalla y los sprites encendidos
 p00 0x4609 enciende_sprites  R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 p00 0x4614 pon_color  el color A de la paleta = D (rojo y azul), E (verde)
+p00 0x463F pon_paleta_con_espera  pone la paleta de HL (p00:4642) esperando al VDP antes
 p00 0x4642 pon_paleta  pone la paleta de HL (PR2 p00:4AD8)
 p00 0x4650 espera_vdp  espera a que el VDP acabe la orden en curso (S#2 bit 0)
 p00 0x465C lee_estado_vdp  A = el registro de estado A del VDP (por R#15, que vuelve a 0)
@@ -229,6 +230,7 @@ p00 0x4E44 sprites_de_sala  los sprites de la sala: p35:6000 de la zona, parejas
 p00 0x4EF7 sprites_zona_0a  ...p00:4F18...
 p00 0x4F05 sprites_de_b1c3  el bloque 0x1A no esta en p35: viene de p58:B1C3
 p00 0x4F18 sprites_de_8c91  
+p00 0x4F21 sprites_y_fichas_b_1_2_3  sprites_y_fichas y deja los bancos 1, 2 y 3
 p00 0x4F27 sprites_de_zona_3  p36:93E6...
 p00 0x4F4C bloque_de_sprites  el bloque de sprites A de p35:60DB a la VRAM de DE (0 = ninguno)
 p00 0x4F55 sprites_y_fichas  rachas de sprites a la VRAM y sus fichas de 4 bytes (p00:5223)
@@ -259,7 +261,7 @@ p00 0x5291 patron_de_arriba_abajo  la mitad izquierda (16 lineas)...
 p00 0x52AB patrones_en_espejo  copia patrones de sprite de 16 x 16 en espejo (p00:457A)
 p00 0x52CF entra_en_sala  entra en la sala nueva (0xD440 = 0)
 p00 0x52D2 entra_en_sala_1  entra en la sala nueva con 0xD440 = 1
-p00 0x53FF guarda_la_entrada  guarda donde ha entrado Snake (la casilla de 0xCB03, 0xCB05) y su 0xCB0E
+p00 0x53FF guarda_la_entrada  guarda donde ha entrado Snake (su Y y su X dentro de los bordes) y su direccion
 p00 0x542B limpia_sprites  sin sprites, todos fuera en la RAM y en la VRAM, y otra vez con sprites
 p00 0x5437 cambia_de_pagina  limpia los sprites...
 p00 0x5444 bancos_de_mapa  24-25-26 y los bancos del mapa de la zona (p00:545C)
@@ -275,7 +277,7 @@ p00 0x54E4 ventana_c4_bancos_7_b
 p00 0x54EA ventana_c4_en_la_otra  p00:54FA con la pagina de dibujar cambiada un momento
 p00 0x54FA pinta_ventana_c4  solo con 0xCA5F puesto
 p00 0x551D sala_de_la_zona_7  con 0xD433 puesto, p00:55B6
-p00 0x55A0 snake_a_0x88  con 0xCB0E...
+p00 0x55A0 snake_a_0x88  entrando por arriba o abajo, la X de Snake = 0x88; por los lados, la Y
 p00 0x55B1 sala_de_bloques_de  p00:5590 con los bancos 24-26
 p00 0x55CF entra_en_sala_especial  entra en una sala de 0xCA76 (0xD440 = 0)
 p00 0x55D2 entra_en_sala_especial_1  entra en una sala de 0xCA76 con 0xD440 = 1
@@ -286,11 +288,12 @@ p00 0x569E carga_sala_especial  la sala B de las de 0xCA76 (p24:64B6) con los bl
 p00 0x56BB salas_especiales  deshace las salas de 0xCA76 en 0xE780 y da los bloques de la zona
 p00 0x5717 sala_en_la_pagina_de_dibujar  el marcador, la sala 0xCA4B y su mapa en la pagina de dibujar (p00:57E5)
 p00 0x5726 carga_y_pinta_sala  la sala 0xCA4B al mapa de 0xDD00 y a la otra pagina, con los casos de la zona 0x12
+p00 0x5762 a_p04_89a8  p04:89A8 con el banco 4 en 0x8000
 p00 0x576E sala_banco_15  p15:A005 con el banco 15
 p00 0x5777 sala_zona_12_otra_vez  en la zona 0x12, las salas 2 (con 0xD888) y 3 (con 0xD881) se pintan otra vez
 p00 0x57AE pinta_mapa  pinta los 24 x 24 caracteres de 0xDD00
 p00 0x57E5 pinta_mapa_aqui  C = 1: el mapa a la pagina de dibujar
-p00 0x57E9 vuelve_a_la_sala  p02:7BAA y la sala de 0xCA50
+p00 0x57E9 vuelve_a_la_sala  p01:7BAA y la sala de 0xCA50
 p00 0x57F2 cambia_a_la_sala  la sala BC: 0xCA50 = C, 0xCA51 = B
 p00 0x5878 sala_8fdf_o_9043  p02:8FDF en las salas normales, p02:9043 en las especiales
 p00 0x5882 sprites_de_la_sala  los sprites de la sala especial o de la normal
@@ -300,6 +303,7 @@ p00 0x58DD sala_a_ram  los 6 x 6 bloques de HL, de 4 x 4 caracteres, en el mapa 
 p00 0x591D bloques_de_77ef  la sala de la ficha IX de p24:77EF con los bloques de p25:9EE4, a 0xE500
 p00 0x5929 sala_especial_a_e500  la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 p00 0x5955 sala_de_zona_a_e500  la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
+p00 0x5972 sala_de_lista_a_e500_b_1_4_5  sala_de_lista_a_e500 y deja los bancos 1, 4 y 5
 p00 0x5978 sala_de_lista_a_e500  la sala de la ficha IX de la lista HL, con los bloques DE, a 0xE500
 p00 0x5998 sala_por_37  HL = 37 x B (las salas son de 37 bytes)
 p00 0x59A7 cambia_de_zona  pasa a la zona A
@@ -316,6 +320,7 @@ p00 0x5B47 musica_de_la_zona_si  ni con 0xC697
 p00 0x5B72 musica_de_la_zona_bancos_9  
 p00 0x5B78 lineas_c3_en_la_otra  p00:5F98 y las lineas de p00:439D en la otra pagina
 p00 0x5B8B carga_esta_sala  la sala 0xCA4B, normal o especial, al mapa
+p00 0x5B9B carga_sala_especial_b_1_2_3  carga_sala_especial y deja los bancos 1, 2 y 3
 p00 0x5BA1 mapas_de_bits_de_la_zona  los mapas de bits de todas las salas de la zona, desde 0x8000 de la RAM
 p00 0x5BBF mapas_de_bits_de_salas  las salas de la zona (p00:5BFE)...
 p00 0x5C12 mapa_de_bits  el mapa de 0xDD00 en bits (uno por caracter, a uno los de 0xCA4E-0xCA4F en adelante) y apretado en 41 bytes en 0xE900
@@ -331,16 +336,44 @@ p00 0x5D4F prepara_d400
 p00 0x5D66 llama_6be6  
 p00 0x5D6E llama_6be6_6000_8502  
 p00 0x5D7C llama_6055  
+p00 0x5D95 a_p07_a4a6  p07:A4A6 con el banco 7 en 0xA000
+p00 0x5DAB a_p12_7ddc  p12:7DDC con el banco 12 en 0x6000
+p00 0x5DB3 a_p12_68e3  p12:68E3 con el banco 12 en 0x6000
+p00 0x5DBB a_p12_6ab3  p12:6AB3 con el banco 12 en 0x6000
+p00 0x5DC3 a_p12_7688  p12:7688 con el banco 12 en 0x6000
+p00 0x5DCB a_p12_76e9  p12:76E9 con el banco 12 en 0x6000
 p00 0x5DFD repinta_la_sala  repinta la sala guardando los juegos de piezas de 0xCA4C-0xCA4D
 p00 0x5E09 repinta_la_sala_si  apaga la pantalla y los sprites, vuelve a cargar la sala y la pinta segun el caso
 p00 0x5ED4 sala_con_cb21  salvo en la zona 0x12, la especial 0x29 o con 0xD433: p12:6E4B, o p12:6E4F con 0xCB21 = 8
 p00 0x5EF0 sala_a_esta_segun  con 0xD8C0: p07:A4A6
+p00 0x5F01 a_p12_67e1  p12:67E1 con el banco 12 en 0x6000
+p00 0x5F0A a_p12_69e0  p12:69E0 con el banco 12 en 0x6000
+p00 0x5F12 a_p12_6ad4  p12:6AD4 con el banco 12 en 0x6000
+p00 0x5F2B a_p12_7688_2  p12:7688 con el banco 12 en 0x6000
+p00 0x5F34 a_p12_76e9_2  p12:76E9 con el banco 12 en 0x6000
 p00 0x5F3C sonido_08  pide el sonido 8
 p00 0x5F3E pide_sonido  pide el sonido A por el puente de 0xC340 (copiado de p03:A14B)
 p00 0x5F41 sonido_fa  pide el sonido 0xFA
 p00 0x5F45 sonido_fb  pide el sonido 0xFB
 p00 0x5F49 sonido_11  pide el sonido 0x11
 p00 0x5F4D sonido_3f  pide el sonido 0x3F
+p00 0x5F51 a_p12_6d78_b_9  a_p12_6d78 y deja el banco 9
+p00 0x5F57 a_p12_6ce0  p12:6CE0 con el banco 12 en 0x6000
+p00 0x5F5F a_p12_6d78  p12:6D78 con el banco 12 en 0x6000
+p00 0x5F68 a_p12_6e3a  p12:6E3A con el banco 12 en 0x6000
+p00 0x5F70 a_p12_6e4b  p12:6E4B con el banco 12 en 0x6000
+p00 0x5F78 a_p12_6e4f  p12:6E4F con el banco 12 en 0x6000
+p00 0x5F80 a_p12_6e6c  p12:6E6C con el banco 12 en 0x6000
+p00 0x5F88 a_p12_6e70  p12:6E70 con el banco 12 en 0x6000
+p00 0x5F90 a_p12_6ec8  p12:6EC8 con el banco 12 en 0x6000
+p00 0x5F98 a_p12_6f41  p12:6F41 con el banco 12 en 0x6000
+p00 0x5FBF a_p12_746b  p12:746B con el banco 12 en 0x6000
+p00 0x5FCA a_p12_7462  p12:7462 con el banco 12 en 0x6000
+p00 0x5FD5 a_p12_6e70_b_4_5  a_p12_6e70 y deja los bancos 4 y 5
+p00 0x5FDA a_p12_6e6c_b_4_5  a_p12_6e6c y deja los bancos 4 y 5
+p00 0x5FE0 a_p12_6e6c_b_7  a_p12_6e6c y deja el banco 7
+p00 0x5FE6 a_p12_6f41_b_7  a_p12_6f41 y deja el banco 7
+p00 0x5FEB a_p12_6f41_b_8  a_p12_6f41 y deja el banco 8
 p00 0x5FF1 slot_del_cartucho  el slot de la pagina 1 (la del cartucho)...
 p01 0x6082 busca_conversacion  la conversacion A de la tabla del banco 48 (p48:8000)
 p01 0x608B recorre_conversacion  busca la primera ficha que se cumple y hace su accion
@@ -352,8 +385,12 @@ p01 0x6142 mensaje_al_azar  [n], n mensajes y n umbrales: elige uno con p01:6172
 p01 0x6172 azar_100  un numero al azar de 0 a 99 (R y 0xCA03)
 p01 0x6182 siguiente_accion  la accion que sigue en la conversacion (0xFE [espera]...) o acaba
 p01 0x61A6 hay_mas_acciones  acarreo si detras de la accion hay 0xFE (otra)
+p01 0x6424 a_p07_bb10  p07:BB10 con el banco 7 en 0xA000
+p01 0x64D4 a_p06_a543  p06:A543 con el banco 6 en 0xA000
 p01 0x6546 empieza_mensaje  pone el mensaje de HL a escribirse letra a letra en DE
 p01 0x654F arranca_mensaje  la velocidad (primer byte < 4), el puntero y la ventana del mensaje
+p01 0x657F mensaje_cada_cuadro_b_9  mensaje_cada_cuadro y deja el banco 9
+p01 0x6585 mensaje_cada_cuadro_b_13_14  mensaje_cada_cuadro y deja los bancos 13 y 14
 p01 0x658B mensaje_cada_cuadro  el paso 0xE221 del mensaje en curso (p01:6597)
 p01 0x66C4 siguiente_letra  la siguiente letra del mensaje y sus ordenes (0xFF, 0xFE, 0xFD, 0xFC, 0xFB, quien habla)
 p01 0x6723 pinta_quien_habla  el nombre de quien habla (p50:8004) en la cabecera de la ventana
@@ -361,20 +398,453 @@ p01 0x6779 cursor_de_espera  el cursor de esperar una tecla y el siguiente paso
 p01 0x68C8 sprites_a_vram  vuelca 0xDC00 (128 bytes) a la tabla de sprites de 0xCA0E, con el desplazamiento de 0xD8A5 en la Y
 p01 0x6D65 lista_de_mosaicos  fichas [VRAM][filas][columnas][puntero] hasta 0xFF
 p01 0x6DA5 deshace_f7  deshace en 0xE500 un mosaico comprimido (0xF7-0xFE repite, 0xFF acaba)
+p01 0x6DE3 dibujos_en_a000_b_1_2_3  dibujos_en_a000 y deja los bancos 1, 2 y 3
 p01 0x6EC9 rachas_y_mapa_de_bits  deshace en 0xD000 las rachas de HL y las copia como p01:6ED6
 p01 0x6ED6 copia_mapa_de_bits  B filas de C bytes de HL a la VRAM de DE, 128 bytes por fila
+p01 0x6F50 rachas_otro_destino_b_1_2_9  rachas_otro_destino y deja los bancos 1, 2 y 9
+p01 0x6F64 rachas_otro_destino_b_1_4_5  rachas_otro_destino y deja los bancos 1, 4 y 5
 p01 0x728E cada_cuadro  el estado de la partida de cada cuadro: cuenta el cuadro (0xCA03) y salta por el estado 0xCA00 (p01:72A2)
+p01 0x770B a_p06_ae89  p06:AE89 con el banco 6 en 0xA000
+p01 0x799B a_p04_96ba  p04:96BA con el banco 4 en 0x8000
+p01 0x79A3 a_p04_924c  p04:924C con el banco 4 en 0x8000
+p01 0x79AB a_p04_9cee  p04:9CEE con el banco 4 en 0x8000
+p01 0x79B4 a_p14_b43d  p14:B43D con el banco 14 en 0xA000
+p01 0x79BC a_p04_9949  p04:9949 con el banco 4 en 0x8000
+p01 0x79D1 a_p02_86c3  angulo_hacia (p02:86C3) con el banco 2
+p01 0x79D9 a_p03_b67d  p03:B67D con el banco 3 en 0xA000
+p01 0x79E1 a_p03_b6c8  p03:B6C8 con el banco 3 en 0xA000
+p01 0x79E9 a_p03_b11f  p03:B11F con el banco 3 en 0xA000
+p01 0x79F1 a_p03_b132  p03:B132 con el banco 3 en 0xA000
+p01 0x79FA a_p03_b19a  p03:B19A con el banco 3 en 0xA000
+p01 0x7A02 a_p03_b68e  p03:B68E con el banco 3 en 0xA000
+p01 0x7A0A a_p03_b1a3  p03:B1A3 con el banco 3 en 0xA000
+p01 0x7A17 a_p03_b1ba  p03:B1BA con el banco 3 en 0xA000
+p01 0x7A1F a_p02_8475  paleta_de_la_sala (p02:8475) con el banco 2
+p01 0x7A33 a_p03_b67d_b_10  a_p03_b67d y deja el banco 10
+p01 0x7A38 a_p03_b6c8_b_10  a_p03_b6c8 y deja el banco 10
+p01 0x7A5F a_p02_8475_2  paleta_de_la_sala (p02:8475) con el banco 2
+p01 0x7A68 a_p03_a8d8  p03:A8D8 con el banco 3 en 0xA000
+p01 0x7A70 a_p03_b108  p03:B108 con el banco 3 en 0xA000
+p01 0x7A78 a_p02_9319  p02:9319 con el banco 2 en 0x8000
+p01 0x7A80 a_p02_9db1  p02:9DB1 con el banco 2 en 0x8000
+p01 0x7A88 rutina_de_fase_b_1_4_5  rutina_de_fase y deja los bancos 1, 4 y 5
+p01 0x7A8D a_p03_bb38  p03:BB38 con el banco 3 en 0xA000
+p01 0x7AA0 a_p03_b814  p03:B814 con el banco 3 en 0xA000
+p01 0x7AA8 a_p03_b8ac  p03:B8AC con el banco 3 en 0xA000
+p01 0x7AB0 a_p03_b866  p03:B866 con el banco 3 en 0xA000
+p01 0x7AB8 a_p02_8507  paleta_b914 (p02:8507) con el banco 2
+p01 0x7AC0 a_p02_905e  p02:905E con el banco 2 en 0x8000
+p01 0x7AC8 a_p04_9ca1  p04:9CA1 con el banco 4 en 0x8000
+p01 0x7AD0 a_p04_924c_2  p04:924C con el banco 4 en 0x8000
+p01 0x7AD8 a_p04_9949_2  p04:9949 con el banco 4 en 0x8000
+p01 0x7AE0 a_p04_82fd  p04:82FD con el banco 4 en 0x8000
+p01 0x7AE8 a_p04_834c  p04:834C con el banco 4 en 0x8000
+p01 0x7AF0 a_p04_8326  p04:8326 con el banco 4 en 0x8000
+p01 0x7AF9 a_p04_8ebe  p04:8EBE con el banco 4 en 0x8000
+p01 0x7B01 a_p04_8c4a  p04:8C4A con el banco 4 en 0x8000
+p01 0x7B09 a_p14_ab01  p14:AB01 con el banco 14 en 0xA000
+p01 0x7B14 a_p13_9371  p13:9371 con el banco 13 en 0x8000
+p01 0x7B1C a_p13_9387  p13:9387 con el banco 13 en 0x8000
+p01 0x7B24 a_p13_93f7  p13:93F7 con el banco 13 en 0x8000
+p01 0x7B2D a_p13_941a  p13:941A con el banco 13 en 0x8000
+p01 0x7B35 a_p04_81c5  p04:81C5 con el banco 4 en 0x8000
+p01 0x7B40 a_p04_8957  p04:8957 con el banco 4 en 0x8000
+p01 0x7B4D a_p03_b814_2  p03:B814 con el banco 3 en 0xA000
+p01 0x7B55 a_p03_b8ac_2  p03:B8AC con el banco 3 en 0xA000
+p01 0x7B5D a_p03_b866_2  p03:B866 con el banco 3 en 0xA000
+p01 0x7B65 a_p08_a187  p08:A187 con el banco 8 en 0xA000
+p01 0x7B6E a_p08_a13b  p08:A13B con el banco 8 en 0xA000
+p01 0x7B7F a_p04_92eb  p04:92EB con el banco 4 en 0x8000
+p01 0x7B8D a_p15_bdb8  p15:BDB8 con el banco 15 en 0xA000
+p01 0x7BA1 a_p04_924c_3  p04:924C con el banco 4 en 0x8000
 p01 0x7CE6 rutina_de_fase  HL = la rutina de la zona en la lista de la fase 0xCA22 (p06:B40C)
 p01 0x7D22 busca_zona  recorre una lista de p06:B40C: [zonas... 0xFE][rutina], 0xFF [la de las demas]
 p01 0x7D3F hasta_fe  avanza HL detras del siguiente 0xFE
+p02 0x8001 segun_cb20  la ficha de 0xCB80 por el despachador de 0xCB20 (14 casos)
+p02 0x8028 segun_a_8  el despachador de 8 casos de p02:802C, A desde 1
+p02 0x803C nada  no hace nada (los casos vacios de los despachadores)
+p02 0x803D llama_b066  p06:B066 con el banco 6
 p02 0x8045 lee_mandos  pone el banco 6 y lee mando y teclas (p06:B0AD)
+p02 0x804E lista_de_zona_a_d900  0xD900-0xD9FF a 0xFF y la lista de p30 de la zona (o de la especial)
+p02 0x8096 sala_de_al_lado  p01:7BAA
+p02 0x8181 cuenta_caad  en la zona 0, filas 3-4: 0xCAAD sube hasta 1 (fila 3) o 2 (fila 4); al llegar a 1, el bit 3 de 0xD7D0
+p02 0x81A7 cambia_ca43_abajo  en las zonas 0x0D-0x10...
+p02 0x81D4 cambia_ca43_derecha  en las zonas 0x0C-0x10...
+p02 0x81F9 sala_de_lista  ternas [zona][sala][...] hasta 0xFF: con la zona B y la sala C, p01:7BF1 y el tercer byte
+p02 0x8220 y_dentro  B = la Y de A dentro de los bordes: entre 0x12 y 0xBF
+p02 0x822E x_dentro  B = la X de A dentro de los bordes: entre 0x09 y 0xB7
+p02 0x823C bits_de_la_zona  0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
+p02 0x8257 sala_de_entrada  por la salida 1: 0xCA50 = 1; por la 2, la pareja de C en p02:827A
+p02 0x8281 llama_ab91  p06:AB91 guardando el banco de 0xA000
+p02 0x8290 llama_abbb  p06:ABBB guardando el banco de 0xA000
+p02 0x829C borra_esta_pantalla  0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
+p02 0x82A2 pantalla_del_marcador  el marcador entero: p01:6DDA, p02:850C, el mosaico de p56:A03C, p01:6DCF, p02:831F y p01:722C
+p02 0x82BA mosaico_a03c  el mosaico de p56:A03C y las piezas de la lista de p56:A0B4 con una pausa entre una y otra
+p02 0x82F2 pausa  una espera de B x B vueltas
+p02 0x82FB copia_pieza_marcador  las piezas de Y = 0x50 en X = 0xE8 o 0xF0 se copian enteras; las demas con el 0 transparente
+p02 0x831F rotulos_del_marcador  los rotulos del marcador (p56:A000, A008, A00A) y las 10 piezas de p56:A014
+p02 0x836C umbrales_de_la_sala  los umbrales de los juegos de piezas de la sala (p56:A727) a 0xCA4E-0xCA4F
+p02 0x838A umbral_del_juego  la zona * 8...
+p02 0x839F mira_caa9  0xCAA9 = 1 en la zona 7, filas 1-3, columnas 5-6, con 0xD430 < 2
+p02 0x83C6 mira_ca67  0xCA67 = 1 en la zona 4, sala 9
+p02 0x83DC piezas_de_83dc  en las zonas 1-6, fila 3, columna 7: dos piezas (p02:8409) en Y = 0x88, X = 0x58 y 0x60
+p02 0x8415 borra_cb80  
+p02 0x8427 pantalla_de_47  una pantalla desde cero: pagina 0, los dibujos de p47:AAE7, la pagina 1 borrada, p01:6D8A con p47:BD48 y la paleta de p56:BC23
+p02 0x846F paleta_de_la_sala_bancos_10  
+p02 0x8475 paleta_de_la_sala  la paleta comun y la de la sala
+p02 0x84EE pon_paleta_con_espera_b_1_2_3  pon_paleta_con_espera y deja los bancos 1, 2 y 3
+p02 0x84F4 paleta_b98a_bancos_8  
+p02 0x84FA paleta_b98a  la paleta de p56:B98A
+p02 0x84FD paleta_de_56  la paleta de HL en el banco 56
+p02 0x8502 paleta_comun  la paleta de p56:B945
+p02 0x8507 paleta_b914  la paleta de p56:B914
+p02 0x850C paleta_bc3c  la paleta de p56:BC3C
+p02 0x8511 paleta_b97d  la paleta de p56:B97D
+p02 0x8516 paleta_de_851e  la paleta A de la lista de p02:851E
+p02 0x8524 paleta_bbf2  la paleta de p56:BBF2 y los bancos 1, 2 y 7
+p02 0x8529 paleta_bc9e  la paleta de p56:BC9E y los bancos 1, 2 y 7
+p02 0x8535 mosaico_ae3b_bancos_9  
+p02 0x8541 mosaico_ae3b_62b1  
+p02 0x8547 mosaico_ae3b_b_bancos_9  
+p02 0x854D mosaico_ae3b_b  
+p02 0x8559 datos_ae3b  HL = p56:AE3B, DE = (0x60, 0x40), BC = 6 x 5
+p02 0x8566 mosaico_ae59  
+p02 0x8578 dibujos_b845  los dibujos de p37:B845 con los colores de p37:B809 en la VRAM de 0x6000
+p02 0x8587 rachas_b34a_bancos_3  
+p02 0x858D rachas_b34a_bancos_9  
+p02 0x8593 rachas_b34a  p37:B34A a la VRAM de 0x1E200 (A = 1)
+p02 0x859E rachas_b007_af4c_bancos_9  
+p02 0x85A4 rachas_b007_af4c_bancos_1_2_9  
+p02 0x85AA rachas_b007_af4c_bancos_10  
+p02 0x85B0 rachas_b007_af4c  p37:B007 y p37:AF4C, cada una con su destino
+p02 0x85B9 rachas_de_37  las rachas de DE en el banco 37, con su destino delante
+p02 0x85C2 rachas_b7a1  
+p02 0x85C7 rachas_b030  
+p02 0x85CA rachas_de_37_bancos_10  las rachas de DE en el banco 37 con su destino, y los bancos 1, 2 y 10
+p02 0x85D3 rachas_b04a  
+p02 0x85D8 rachas_b060  
+p02 0x85DD rachas_b078  p37:B078 a la VRAM de 0x1E000
+p02 0x85E5 rachas_b159  p37:B159 a la VRAM de 0x1E000
+p02 0x85F6 rachas_b1e6  p37:B1E6 a la VRAM de 0x1E000
+p02 0x85FE rachas_b2d5  p37:B2D5 y 4 patrones de sprite en espejo de 0xF800 a 0xF890
+p02 0x8615 sprites_zona_12_bancos_10  
+p02 0x861B sprites_zona_12_si  solo con el bit 6 de 0xD7DA
+p02 0x8621 sprites_zona_12  en la zona 0x12, salas 0-0x0B: p47:BF13, p47:BE56 y las fichas de p47:BF0A
+p02 0x864A rachas_b3a6  
+p02 0x8656 apunta  la velocidad para ir de (H, L) a (D, E) con la rapidez A, con un poco de azar
+p02 0x8658 apunta_con_b  como p02:8656 con 0xCACE = B (distinto de 0: sin azar)
+p02 0x8667 velocidad_hacia  0xCA5E = la rapidez
+p02 0x86C3 angulo_hacia  el angulo de (H, L) a (D, E): 0xCA5C en el octante, 0xCA5D entero, y los signos en 0xCA5A-0xCA5B
+p02 0x8707 por_la_rapidez  DE = la rapidez de 0xCA5E por E / 32
+p02 0x8719 multiplica  HL = H * E (8 x 8 bits)
+p02 0x8725 dos_palabras_por_b  p02:872E con el banco 8
+p02 0x872E dos_palabras_por_b_si  HL = B veces la palabra A de p08:BFBD, DE = B veces la de p08:BFC9 (A de 0 a 0x17, o 0x18 menos)
+p02 0x8754 a_p06_aa49  p06:AA49 con el banco 6 en 0xA000
+p02 0x875D borra_ce00  0xD417 = 0x1E y 0xCE00-0xD3FF a cero
+p02 0x876B fichas_e280_de_sala  la lista de p56 de HL: la ficha de la sala, y sus piezas a 0xE280
+p02 0x8777 fichas_e280_a  las piezas A de p56:A53A a 0xE280
+p02 0x877F busca_la_sala  fichas de 6 bytes [sala][4 a 0xCA6B][1 a 0xCA69]... hasta 0xFF; en una sala especial, la primera
+p02 0x87E9 byte_a67e  A = el byte A de p56:A67E
+p02 0x87F4 palabra_a6af  HL = la palabra A de p56:A6AF (en la especial 0x11, de 0x2D a 0x2F pasa a 0x31)
+p02 0x8813 palabra_a6af_d708  HL = la palabra 0xD708 - 1 de p56:A6AF
+p02 0x881B palabra_a6cb_d708  HL = la palabra 0xD708 - 1 de p56:A6CB (con el bit 0 de 0xCAB6, de 0x20 a 0x22 pasa a 0x24)
+p02 0x883C palabra_bdd2  HL = la palabra A de p06:BDD2 y de ella la de 0xCAB5
+p02 0x8847 palabra_de_cab5  HL = la palabra 0xCAB5 de la tabla de HL (banco 6)
+p02 0x8852 junto_a_snake_beac  la ficha IX junto a Snake, con los desplazamientos de p06:BEAC
+p02 0x8855 junto_a_snake  la ficha IX en la Y y la X de Snake mas el desplazamiento de su direccion en la tabla de HL
+p02 0x887E cuatro_bytes_por_direccion  4 bytes de la tabla de HL (banco 6) segun la direccion de Snake, a donde dice p01:6406
+p02 0x8881 cuatro_bytes_por_a  
+p02 0x8894 llama_aebb  p06:AEBB con el banco 6 en 0xA000
+p02 0x889D sitios_cbe0  con 0xCA65 puesto, mira si sale (p02:8928)
+p02 0x88BD entra_en_sitio  con 0xCB21 = 0x0A no
+p02 0x8928 sale_del_sitio  si ha chocado, nada
+p02 0x8982 borra_df80_y_cb80  0xDFF8 = 0
+p02 0x8998 pausa_200  una espera de 0x200 vueltas, salvo con 0xD8A4
+p02 0x89AA quieto_si  con 0xCA28, 0xD434, 0xCAE7 o 0xCB3C, el dibujo de quieto
+p02 0x89C7 borra_caf1  0xCAF1 = 0xD443 = 0xCAF6 = 0
+p02 0x89D2 musica_otra_vez  0xC690 = 0 y la musica de ahora (p02:8A12)
+p02 0x89D9 musica_de_cada_cuadro  sin 0xCAF6, con 0xD443 y sin 0xC697: p02:89C7
+p02 0x8ABE a_p10_bc27  p10:BC27 con el banco 10 en 0xA000
+p02 0x8AC6 a_p07_a000  p07:A000 con el banco 7 en 0xA000
+p02 0x8ACF a_p07_a009  p07:A009 con el banco 7 en 0xA000
+p02 0x8AD7 a_p07_a985  p07:A985 con el banco 7 en 0xA000
+p02 0x8ADF a_p07_a996  p07:A996 con el banco 7 en 0xA000
+p02 0x8AEF a_p10_a1c1  p10:A1C1 con el banco 10 en 0xA000
+p02 0x8AF7 a_p10_a234  p10:A234 con el banco 10 en 0xA000
+p02 0x8AFF a_p11_a3c4  p11:A3C4 con el banco 11 en 0xA000
+p02 0x8B07 a_p11_a389  p11:A389 con el banco 11 en 0xA000
+p02 0x8B0F a_p09_a000  p09:A000 con el banco 9 en 0xA000
+p02 0x8B17 a_p09_a07b  p09:A07B con el banco 9 en 0xA000
+p02 0x8B1F a_p09_b68e  p09:B68E con el banco 9 en 0xA000
+p02 0x8B27 a_p11_bbfb  p11:BBFB con el banco 11 en 0xA000
+p02 0x8B2F a_p11_af47  p11:AF47 con el banco 11 en 0xA000
+p02 0x8B37 a_p11_b056  p11:B056 con el banco 11 en 0xA000
+p02 0x8B3F a_p11_aee4  p11:AEE4 con el banco 11 en 0xA000
+p02 0x8B47 a_p09_a163  p09:A163 con el banco 9 en 0xA000
+p02 0x8B50 a_p09_a588  p09:A588 con el banco 9 en 0xA000
+p02 0x8B58 a_p09_a1a1  p09:A1A1 con el banco 9 en 0xA000
+p02 0x8B60 a_p11_b23f  p11:B23F con el banco 11 en 0xA000
+p02 0x8B68 a_p11_bd31  p11:BD31 con el banco 11 en 0xA000
+p02 0x8B70 a_p14_b712  p14:B712 con el banco 14 en 0xA000
+p02 0x8B78 a_p10_a65e  p10:A65E con el banco 10 en 0xA000
+p02 0x8B80 a_p11_b494  p11:B494 con el banco 11 en 0xA000
+p02 0x8B88 a_p11_b66e  p11:B66E con el banco 11 en 0xA000
+p02 0x8B90 a_p11_a000  p11:A000 con el banco 11 en 0xA000
+p02 0x8B98 a_p11_a117  p11:A117 con el banco 11 en 0xA000
+p02 0x8BA0 a_p07_ab44  p07:AB44 con el banco 7 en 0xA000
+p02 0x8BA8 a_p11_b9c1  p11:B9C1 con el banco 11 en 0xA000
+p02 0x8BB0 a_p11_ba03  p11:BA03 con el banco 11 en 0xA000
+p02 0x8BB8 a_p10_bfbc  p10:BFBC con el banco 10 en 0xA000
+p02 0x8BC0 a_p07_b5af  p07:B5AF con el banco 7 en 0xA000
+p02 0x8BC8 a_p07_aed1  p07:AED1 con el banco 7 en 0xA000
+p02 0x8BD0 a_p07_af0d  p07:AF0D con el banco 7 en 0xA000
+p02 0x8BD8 a_p07_b6cc  p07:B6CC con el banco 7 en 0xA000
+p02 0x8BE0 a_p07_b5cc  p07:B5CC con el banco 7 en 0xA000
+p02 0x8BE8 a_p11_bdbd  p11:BDBD con el banco 11 en 0xA000
+p02 0x8BFC a_p06_a6f9  p06:A6F9 con el banco 6 en 0xA000
+p02 0x8C04 a_p09_b62f  p09:B62F con el banco 9 en 0xA000
+p02 0x8C0C a_p06_a0ab  p06:A0AB con el banco 6 en 0xA000
+p02 0x8C14 a_p06_a598  p06:A598 con el banco 6 en 0xA000
+p02 0x8C1C a_p10_ba03  p10:BA03 con el banco 10 en 0xA000
+p02 0x8C3D sprites_de_sala_si_b_9  sprites_de_sala_si y deja el banco 9
+p02 0x8C4A a_p03_b563  p03:B563 con el banco 3 en 0xA000
+p02 0x8C52 a_p03_b4e6  p03:B4E6 con el banco 3 en 0xA000
+p02 0x8C5A a_p03_b5b5  p03:B5B5 con el banco 3 en 0xA000
+p02 0x8C62 a_p03_b593  p03:B593 con el banco 3 en 0xA000
+p02 0x8C6A a_p03_b4e0  p03:B4E0 con el banco 3 en 0xA000
+p02 0x8C72 a_p03_b404  p03:B404 con el banco 3 en 0xA000
+p02 0x8C7A a_p03_b0dc  p03:B0DC con el banco 3 en 0xA000
+p02 0x8C82 a_p03_b607  p03:B607 con el banco 3 en 0xA000
+p02 0x8C8A a_p03_b610  p03:B610 con el banco 3 en 0xA000
+p02 0x8C92 a_p03_b603  p03:B603 con el banco 3 en 0xA000
+p02 0x8C9A a_p03_b5ff  p03:B5FF con el banco 3 en 0xA000
+p02 0x8CAA a_p03_b63e  p03:B63E con el banco 3 en 0xA000
+p02 0x8CCB paleta_b914_b_9  paleta_b914 y deja el banco 9
+p02 0x8CD0 a_p03_b67d  p03:B67D con el banco 3 en 0xA000
+p02 0x8CD8 a_p10_a6a4  p10:A6A4 con el banco 10 en 0xA000
+p02 0x8CE0 a_p10_a6c2  p10:A6C2 con el banco 10 en 0xA000
+p02 0x8CE8 a_p03_b65d  p03:B65D con el banco 3 en 0xA000
+p02 0x8CF0 dibujos_de_sala_b_9  dibujos_de_sala y deja el banco 9
+p02 0x8D2A a_p10_bce4  p10:BCE4 con el banco 10 en 0xA000
+p02 0x8D32 entra_en_sala_1_b_1_2_15  entra_en_sala_1 y deja los bancos 1, 2 y 15
+p02 0x8D37 entra_en_sala_b_1_2_15  entra_en_sala y deja los bancos 1, 2 y 15
+p02 0x8D41 entra_en_sala_especial_1_b_1_2_15  entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
+p02 0x8D46 lineas_c3_en_la_otra_b_1_2_15  lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
+p02 0x8D50 mapas_de_bits_especiales_b_1_2_15  mapas_de_bits_especiales y deja los bancos 1, 2 y 15
+p02 0x8D56 rehace_marcador_b_1_2_15  rehace_marcador y deja los bancos 1, 2 y 15
+p02 0x8D5B cambia_de_zona_b_1_2_15  cambia_de_zona y deja los bancos 1, 2 y 15
+p02 0x8D65 a_p11_bdbd_2  p11:BDBD con el banco 11 en 0xA000
+p02 0x8D6D a_p10_b9e5  p10:B9E5 con el banco 10 en 0xA000
+p02 0x8D75 a_p03_b4d1  p03:B4D1 con el banco 3 en 0xA000
+p02 0x8D7D a_p03_b0f6  p03:B0F6 con el banco 3 en 0xA000
+p02 0x8D86 dibujos_de_sala_b_7  dibujos_de_sala y deja el banco 7
+p02 0x8D90 a_p03_bda5  p03:BDA5 con el banco 3 en 0xA000
+p02 0x8D98 cambia_de_zona_b_1_2_7  cambia_de_zona y deja los bancos 1, 2 y 7
+p02 0x8D9D a_p11_aee4_2  p11:AEE4 con el banco 11 en 0xA000
+p02 0x8DA5 a_p03_be51  p03:BE51 con el banco 3 en 0xA000
+p02 0x8DAD a_p10_bfbc_2  p10:BFBC con el banco 10 en 0xA000
+p02 0x8DB5 a_p03_b1be  p03:B1BE con el banco 3 en 0xA000
+p02 0x8DBD a_p03_ac02  p03:AC02 con el banco 3 en 0xA000
+p02 0x8DC6 barras_de_vida_b_1_2_7  barras_de_vida y deja los bancos 1, 2 y 7
+p02 0x8DD3 a_p03_bd82  p03:BD82 con el banco 3 en 0xA000
+p02 0x8DDB a_p11_bdbd_3  p11:BDBD con el banco 11 en 0xA000
+p02 0x8DE3 cambia_de_zona_b_1_2_8  cambia_de_zona y deja los bancos 1, 2 y 8
+p02 0x8DE8 a_p01_6fd5  p01:6FD5 con el banco 1 en 0x6000
+p02 0x8E01 a_p03_b67d_2  p03:B67D con el banco 3 en 0xA000
+p02 0x8E09 a_p03_b6c8  p03:B6C8 con el banco 3 en 0xA000
+p02 0x8E11 cambia_de_zona_b_1_2_9  cambia_de_zona y deja los bancos 1, 2 y 9
+p02 0x8E16 a_p03_b814  p03:B814 con el banco 3 en 0xA000
+p02 0x8E1E a_p03_b8ac  p03:B8AC con el banco 3 en 0xA000
+p02 0x8E26 a_p03_b866  p03:B866 con el banco 3 en 0xA000
+p02 0x8E33 a_p15_a316  p15:A316 con el banco 15 en 0xA000
+p02 0x8E3B a_p01_6fd5_2  p01:6FD5 con el banco 1 en 0x6000
+p02 0x8E43 a_p06_aeff  p06:AEFF con el banco 6 en 0xA000
+p02 0x8E6F a_p03_b3e8  p03:B3E8 con el banco 3 en 0xA000
+p02 0x8E8E a_p11_be0f  p11:BE0F con el banco 11 en 0xA000
+p02 0x8E96 a_p11_be6b  p11:BE6B con el banco 11 en 0xA000
+p02 0x8E9E a_p11_be94  p11:BE94 con el banco 11 en 0xA000
+p02 0x8EA6 a_p11_bea2  p11:BEA2 con el banco 11 en 0xA000
+p02 0x8EAE a_p11_bf0f  p11:BF0F con el banco 11 en 0xA000
+p02 0x8EC0 a_p03_b4e0_2  p03:B4E0 con el banco 3 en 0xA000
+p02 0x8ED8 sprites_a_vram_b_1_2_10  sprites_a_vram y deja los bancos 1, 2 y 10
+p02 0x8EDD a_p03_b1a3  p03:B1A3 con el banco 3 en 0xA000
+p02 0x8EEA a_p03_af05  p03:AF05 con el banco 3 en 0xA000
+p02 0x8F00 sprites_de_sala_si_b_14  sprites_de_sala_si y deja el banco 14
+p02 0x8F16 a_p01_7f37  p01:7F37 con el banco 1 en 0x6000
+p02 0x8F1E a_p03_b1be_2  p03:B1BE con el banco 3 en 0xA000
+p02 0x8F26 a_p03_b1f5  p03:B1F5 con el banco 3 en 0xA000
+p02 0x8F2E a_p03_b3a6  p03:B3A6 con el banco 3 en 0xA000
+p02 0x8F36 a_p03_b289  p03:B289 con el banco 3 en 0xA000
+p02 0x8F3E a_p03_b322  p03:B322 con el banco 3 en 0xA000
+p02 0x8F46 a_p01_7f3d  p01:7F3D con el banco 1 en 0x6000
+p02 0x8F63 dos_palabras_por_b_b_1_2_11  dos_palabras_por_b y deja los bancos 1, 2 y 11
+p02 0x8F68 a_p03_b1ba  p03:B1BA con el banco 3 en 0xA000
+p02 0x8F70 a_p03_af05_2  p03:AF05 con el banco 3 en 0xA000
+p02 0x8F78 a_p12_6e70_b_1_2_11  a_p12_6e70 y deja los bancos 1, 2 y 11
+p02 0x8F7D a_p03_b19a  p03:B19A con el banco 3 en 0xA000
+p02 0x8F85 a_p03_b132  p03:B132 con el banco 3 en 0xA000
+p02 0x8F8D a_p03_b11f  p03:B11F con el banco 3 en 0xA000
+p02 0x8F95 a_p03_be60  p03:BE60 con el banco 3 en 0xA000
+p02 0x8F9D a_p03_b108  p03:B108 con el banco 3 en 0xA000
+p02 0x8FA5 a_p07_bf5c  p07:BF5C con el banco 7 en 0xA000
+p02 0x8FAD a_p07_bb10  p07:BB10 con el banco 7 en 0xA000
+p02 0x8FB6 prepara_d770  la tabla de 0xD770 (16 bytes) a 0xFF, con 0x20, 0x22, 0xA4 y 0x21 en sus sitios, y 0xD780-0xD783 a 0xFF
+p02 0x8FDF cosas_de_la_sala  las cosas de la sala (0xD7C0) de las listas de p06 y las pinta
+p02 0x9009 busca_sala_en_pares  parejas [sala][dato] hasta 0xFF: A = el dato de la sala (acarreo si no esta)
+p02 0x902A cosas_del_sitio  las cosas del sitio de 0xCA65 (p06:B6FD)
+p02 0x9043 cosas_de_la_especial  las cosas de la sala especial (p06:B719)
+p02 0x905E deja_cosa  deja la cosa C en (D, E), en puntos pares
+p02 0x9084 sitio_en_d7c0  mete la cosa C en (D, E) en la primera ficha libre de 0xD7C0 (acarreo si cabe)
+p02 0x90B9 apunta_cosa  en la especial 0x29, a 0xD77A con la fila y la columna (p02:90E4)
+p02 0x90FF dejada_en_especial  la cosa dejada en la especial (0xD77A) a 0xD7C0, si es de esta sala
+p02 0x910C dejadas_en_la_sala  las cosas dejadas en esta sala (0xD770) a la primera ficha libre de 0xD7C0
+p02 0x9128 busca_dejada  la ficha de 0xD770 dejada en esta zona y sala (con acarreo; HL = la ficha)
+p02 0x914E borra_d7c0  las 4 fichas de 0xD7C0 a cero
+p02 0x9157 lista_a_d7c0  las fichas de 3 bytes de HL hasta 0xFF a 0xD7C0, con su numero
+p02 0x9168 ficha_a_d7c0  si ya la tienen (p02:91FB), no
+p02 0x917D lista_de_especial  las fichas de HL hasta 0xFF, las de la fila y columna de esta sala, a 0xD7C0
+p02 0x918E ficha_de_especial  de esta sala?
+p02 0x919A es_de_esta_fila  el nibble alto es la fila, el bajo la columna: sin acarreo si es esta sala
+p02 0x91BD lista_zona_10  las fichas de HL hasta 0xFF de esta sala (0xCA43 y 0xCA4B) a 0xD7C0
+p02 0x91D9 es_de_esta_sala_10  el nibble alto contra 0xCA43, el bajo contra la sala
+p02 0x91FB ya_la_tienen  la ficha de HL: si su bit 7 o el 6 dicen que ya se recogio (p03:B0FE, p03:B103), con acarreo
+p02 0x9248 pinta_cosa  el fondo de la cosa de HL (p02:9270) y la cosa
+p02 0x924D pinta_cosas  las 4 cosas de 0xD7C0 que no tengan el bit 7 del numero
+p02 0x9270 fondo_de_cosa  HL = el sitio de la cosa
+p02 0x927C sitio_de_cosa  la Y y la X de la ficha...
+p02 0x9287 tabla_de_b  HL = DE = la palabra B - 1 de p02:9292
+p02 0x929A borra_cosa  sin acarreo, el sitio de la cosa a la otra pagina; con acarreo, a 0 en esta
+p02 0x92B2 dibuja_cosa  el tipo...
+p02 0x92D2 a_p03_beb7  p03:BEB7 con el banco 3 en 0xA000
+p02 0x92DB a_p03_beb2  p03:BEB2 con el banco 3 en 0xA000
+p02 0x92E3 a_p03_be60_2  p03:BE60 con el banco 3 en 0xA000
+p02 0x92EB a_p03_be42  p03:BE42 con el banco 3 en 0xA000
+p02 0x92F3 repinta_la_sala_b_1_2_10  repinta_la_sala y deja los bancos 1, 2 y 10
+p02 0x92F8 a_p10_aed6  p10:AED6 con el banco 10 en 0xA000
+p02 0x9301 a_p10_af30  p10:AF30 con el banco 10 en 0xA000
+p02 0x9309 a_p10_aff3  p10:AFF3 con el banco 10 en 0xA000
+p02 0x9311 a_p10_b172  p10:B172 con el banco 10 en 0xA000
+p02 0x9319 a_p10_b3e5  p10:B3E5 con el banco 10 en 0xA000
+p02 0x9321 a_p10_b8c4  p10:B8C4 con el banco 10 en 0xA000
+p02 0x9329 a_p10_b957  p10:B957 con el banco 10 en 0xA000
+p02 0x9331 a_p10_b960  p10:B960 con el banco 10 en 0xA000
+p02 0x9339 suma_a_y  la Y de Snake (8.8) + DE
+p02 0x9341 suma_a_x  la X de Snake (8.8) + DE
+p02 0x9349 sin_velocidad  las velocidades en Y y en X a cero
+p02 0x9353 sin_fraccion  las fracciones de la Y y de la X a cero
+p02 0x935B y_x_de_snake  L = la Y, H = la X de Snake
+p02 0x9364 cb28_a_0020  0xCB28 = 0, 0xCB29 = 0x20
+p02 0x9367 pon_cb28  0xCB28 = B, 0xCB29 = C
+p02 0x936E date_la_vuelta  si Snake esta dandose la vuelta, sigue (p02:93E5); si no, mira si se pide
+p02 0x93F9 lee_direccion  p06:A634: la direccion del mando a 0xCB0D
+p02 0x9402 mueve_a_snake  dandose la vuelta no se mueve
+p02 0x9448 mueve_a_snake_b  como p02:9402, primero la salida y despues el choque, y con p02:9892 en vez de p02:9841
+p02 0x9471 bordes_de_la_sala  con el bit 4 de 0xD7D0, hacia abajo no pasa de Y = 0xB4
+p02 0x94AD velocidad_de_snake  la marcha (p02:94D6)...
+p02 0x94D6 marcha_de_snake  con 0xCB3F: p02:9508
+p02 0x9530 mueve_por_la_velocidad  con 0xCB3F >= 2 y 0xCA8F: la direccion contraria a 0xCA8F no se mueve
+p02 0x956B empuje_de_ca8f  con 0xCB3F y 0xCA8F, salvo con 0xCB3C, 0xD4F1 o una salida: por 0xCA8F (p02:9588)
+p02 0x9590 sale_de_la_sala  con 0xCB3C, 0xD4F1 o 0xCA65 no sale
+p02 0x95D9 sale_por_arriba  la Y por debajo de 0x10
+p02 0x9606 entra_por_abajo  Y = 0xBF
+p02 0x9625 cb28_al_salir_arriba  la lista de p56:BF10
+p02 0x9628 cb28_al_salir  en la especial 0x39 sala 1: 0xCB28 = 1, 0xCB29 = 0
+p02 0x9643 busca_cb28  ternas [zona][sala][estado de Snake] hasta 0xFF: si casa, 0xCB28 = 1, 0xCB29 = 0
+p02 0x9669 sale_por_abajo  la Y desde 0xC0
+p02 0x969D cb28_al_salir_abajo  la lista de p56:BF2F
+p02 0x96A2 entra_por_arriba  Y = 0x11
+p02 0x96DF sale_por_la_izquierda  la X por debajo de 9...
+p02 0x96FD sale_por_la_derecha  la X desde 0xB8...
+p02 0x971B choca_con_la_sala  0xCB30 = 0
+p02 0x975C resbala  por la direccion: arriba y abajo prueban de lado, izquierda y derecha arriba y abajo
+p02 0x976B resbala_en_x  hasta 4 puntos a la izquierda...
+p02 0x978B resbala_en_y  hasta 4 puntos arriba...
+p02 0x97AB resbala_4  4 puntos arriba...
+p02 0x97D0 cabe_en  cabe Snake en su sitio + (D, E)? (sin acarreo, si)
+p02 0x97D6 cabe_en_si  E = la Y + E
+p02 0x97F8 pega_a_la_casilla  por la direccion (p02:97FC)
+p02 0x9804 pega_a_la_casilla_si  sin fraccion
+p02 0x980C pega_arriba  la Y a la casilla: & 0xF8 + 7 (+ 5 con el estado 2)
+p02 0x9824 pega_abajo  la Y - 4 a la casilla, + 7
+p02 0x9831 pega_a_la_izquierda  la X + 6 a la casilla
+p02 0x9838 pega_a_la_derecha  la X a la casilla
+p02 0x9841 anda  la espera de quieto otra vez a 4
+p02 0x986A dibujo_del_paso  el dibujo del paso (p02:9888)
+p02 0x9892 anda_b  una direccion recien pulsada: cambia ya
+p02 0x98B8 estado_1  el estado 1, o el 0 sin 0xCB35 (p02:990E)
+p02 0x98BF estado_que_toca  el estado que toca (p02:98F0) a 0xCB00
+p02 0x98C2 estado_de_snake  el estado B de Snake de p02:9915 (3 bytes: estado, dibujo y marcha)
+p02 0x98F0 que_estado  B = el estado: 6 con 0xCB20 = 5...
+p02 0x990E que_estado_b  ...1 con 0xCB35, si no 0
+p02 0x992A pon_cb35  0xCB35 = 1 si 0xCB20 es 1, 2, 5 o 6
+p02 0x9932 cb35_segun_cb20  B = 0 con 0xCB20 = 1, 2, 5 o 6; si no, 1
+p02 0x9942 delante_de_snake  lo que hay delante de Snake: p11:A117 y p01:6A19 o p01:6ACA; si no, p01:6A15
+p02 0x995E punto_delante  L = la Y, H = la X de Snake mas lo de su direccion en p02:9980
+p02 0x9976 mira_delante  hacia arriba p01:7F3D, si no p01:7F88
+p02 0x9988 zonas_de_estado_0b  con 0xCA8D puesto, solo con 0xCB29 = 0x20 (y lo borra)
+p02 0x99AA busca_zona_0b  solo yendo arriba o abajo
+p02 0x99E3 ficha_de_estado_0b  en las especiales, primero la especial
+p02 0x9A5B rectangulo_de_be92  los rectangulos de p30:BE92 [zona][sala][Y][Y][X][X] hasta 0xFF: acarreo si Snake esta en uno
+p02 0x9A96 llama_a14d_a2aa_a139  p06:A14D, p06:A2AA y p06:A139 con el banco 6
+p02 0x9AA5 el_agua  solo en la zona 6: 0xCAAA, 0xCB3F y la barra de la derecha
+p02 0x9AB4 cambia_caaa  con 0xCAAA puesto, cualquier disparo recien pulsado lo quita
+p02 0x9AD3 cb3f_y_barra  el 0xCB3F de antes...
+p02 0x9AF3 que_cb3f  0xCB3F = 0
+p02 0x9B31 barra_si_cambia  B = el 0xCB3F de antes
+p02 0x9B60 gasta_la_barra  con 0xCB3F >= 2, cada 16 cuadros (0xCA98)...
+p02 0x9B80 baja_la_vida  la vida baja dos puntos...
+p02 0x9BA4 empuje  p06:A387
+p02 0x9BDB a_p06_a387  p06:A387 con el banco 6 en 0xA000
+p02 0x9BE4 rastro_de_snake  con 0xCAA0, guarda la Y, la X y la direccion de Snake en 0xE080 (el rastro)
+p02 0x9C02 pisa_algo  en la especial 0x38 sala 1 (p06:BD9B), la zona 0x12 (p06:BD7D) o la 0x13 (p06:BD8E): lo que pisan Snake o 0xCB80
+p02 0x9C5E cb80_a_cero  0xCB80 = 0 y p01:6C6B
+p02 0x9C65 pisa_con_cb21_20  p01:6ACE
+p02 0x9C7C mira_d6b4  con 0xD6B4 puesto...
+p02 0x9C9C apunta_lo_pisado  el nibble bajo de B...
+p02 0x9CB8 bits_de_lo_pisado  A = 0: el bit 0 de 0xD7DE; 1: el 0 de 0xD7E4; 2: el 1 de 0xD7E4
+p02 0x9CCD bits_de_lo_pisado_0  el bit 7 de 0xD7F1 a cero y el 5 de 0xD7D8 a uno
+p02 0x9CDA mosaico_de_lo_pisado  el nibble alto de B: el mosaico de p06:BD1B...
+p02 0x9CF4 lista_de_pisar  fichas de 4 bytes [sala][tipo][Y][X] hasta 0xFF
+p02 0x9D36 lo_pisan  el nibble alto del tipo (menos 3 si pasa de 2)...
+p02 0x9D9A suma_tamano  E + (HL), D + (HL + 1)
+p02 0x9DA8 a_p06_a330  p06:A330 con el banco 6 en 0xA000
+p02 0x9DB1 llama_6e0d_a3c8  p01:6E0D y p06:A3C8
+p02 0x9DBD que_hay_conectado  0xC38B: bit 0 = hay disquetera (0xFFA7 no es un ret), bit 1 = hay Game Master 2
+p02 0x9DD4 busca_gm2  busca en los 4 slots (y sus subslots) un cartucho con "YZ" en 0x4010: el Game Master 2; 0xC38A = su slot o 0xFF
+p02 0x9DF7 busca_gm2_subslots  el bit 7 de expandido con el slot...
+p02 0x9E07 es_gm2  el slot que se mira
+p02 0x9E2B partida_nueva  la partida desde el principio
+p02 0x9E94 empieza_la_partida  sin 0xCA97, las rachas de p37
+p02 0x9EE5 segun_d66c  con 0xD66C: 0xCA7B-0xCA7D = 1, 0x80, 0; o, con el bit 5 de 0xD7D7, 0xCA7B = 3 y p10:A234
+p02 0x9F02 segun_d670  con 0xD670: 0xCA90 = 1 (4 con el bit 3 de 0xD7D7) y 0xCA91-0xCA92 = 0x0100
+p02 0x9F23 segun_d674  con 0xD674: 0xCA89 = 2 y 0xCA8C = 0x10; con el bit 3 de 0xD7D4, 0xCA89 = 0 y 0xCA8A = 0x4000; con el 2, 4 y 0x0200
+p02 0x9F50 segun_d7d5  con el bit 3 (y sin el 2) de 0xD7D5: 0xCB39 = 1 y 0xCB3A = 0x0080
+p02 0x9F65 segun_d7de  los bits de 0xD7FE: el 7 con el 0 de 0xD7DE, el 5 con el 0 de 0xD7E4, el 6 con el 1 de 0xD7E4
+p02 0x9F7D cambia_d4f5  si no sale de la sala, 0xD4F5 = 0xCB3F (2 como mucho) y, si cambia, p01:6CCA
+p02 0x9F94 cuenta_cb3a  con 0xCB39, sin 0xCA5F, chocando y sin 0xCB3C
+p02 0x9FE6 pon_cb3d  salvo en el estado 0x14: 0xCB3D = 1 y 0xCB3E = 16 (si no estaba)
+p02 0x9FF7 cuenta_cb3d  con 0xCB3D, 0xCB3E un cuadro menos
 p03 0xA14B pide_sonido_ram  copiada a 0xC340: pone 16-17-18-19, pide el sonido A y devuelve los bancos
+p04 0x8751 a_p14_af96  p14:AF96 con el banco 14 en 0xA000
+p04 0x8759 a_p14_ae76  p14:AE76 con el banco 14 en 0xA000
+p04 0x8AA3 a_p10_aa78  p10:AA78 con el banco 10 en 0xA000
+p04 0x8AAB a_p15_b8ec  p15:B8EC con el banco 15 en 0xA000
+p04 0x8AB3 a_p14_ab9e  p14:AB9E con el banco 14 en 0xA000
+p04 0x8ABC a_p14_ad0f  p14:AD0F con el banco 14 en 0xA000
+p04 0x8AD0 a_p15_b800  p15:B800 con el banco 15 en 0xA000
+p04 0x8DA8 a_p08_a13b  p08:A13B con el banco 8 en 0xA000
+p04 0x8E25 a_p06_b592_b_4_5  a_p06_b592 y deja los bancos 4 y 5
+p04 0x8E37 a_p06_b592  p06:B592 con el banco 6 en 0xA000
+p04 0x8F0D a_p06_b5e2  p06:B5E2 con el banco 6 en 0xA000
+p04 0x9CD5 a_p12_74bc  p12:74BC con el banco 12 en 0x6000
+p04 0x9CE6 a_p12_758d  p12:758D con el banco 12 en 0x6000
 p06 0xB0AD lee_mando_y_teclas  el mando a 0xCA08/0xCA07 y las teclas de funcion a 0xCA0A/0xCA09
 p06 0xB0BE guarda_mando  (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
 p06 0xB0C8 mando  A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
 p06 0xB109 teclas_de_funcion  A = las filas 6 y 7 de la matriz, en 6 bits
 p06 0xB129 matriz_del_teclado  en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
 p09 0xA4F0 secuencia_de_mensajes  los mensajes de una secuencia del banco 50, uno tras otro con su espera
+p09 0xB4E6 a_p12_7fa0  p12:7FA0 con el banco 12 en 0x6000
 p16 0x4000 entrada_arranque  jp p16:4009
 p16 0x4003 entrada_pide  jp p16:4024
 p16 0x4006 entrada_cuadro  jp p16:428F

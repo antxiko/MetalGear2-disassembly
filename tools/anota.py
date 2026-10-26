@@ -98,8 +98,10 @@ def medidas():
         for ln in open(ruta, encoding="utf-8"):
             m = re.match(r"^0x[0-9A-Fa-f]+\s+#\s+p(\d\d):([0-9A-Fa-f]{4}) (?:call|jp|jr)", ln)
             if m:
-                fuera[(int(m.group(1)), int(m.group(2), 16))] = mm
-    return fuera
+                fuera.setdefault((int(m.group(1)), int(m.group(2), 16)), set()).add(mm)
+    # una llamada que el trazador vio ir a dos bancos (el banco 0 corre con
+    # cualquiera en las ventanas) no se sabe a cual va: fuera
+    return {k: v.pop() for k, v in fuera.items() if len(v) == 1}
 
 
 def a_mano(b):

@@ -191,7 +191,7 @@ L_A11B:
 L_A136:
 	ld a,(hl)			;a136
 	and a			;a137
-	jp z,07a5fh		;a138   ; p01:7A5F
+	jp z,07a5fh		;a138   ; a_p02_8475_2: paleta_de_la_sala (p02:8475) con el banco 2
 L_A13B:
 	ld a,(0ca4ah)		;a13b   ; lee la zona
 	sub 003h		;a13e
@@ -251,7 +251,7 @@ L_A187:
 	ld a,(0ca4ah)		;a1b3   ; lee la zona
 	cp 004h		;a1b6
 	ret nz			;a1b8
-	ld a,(0ca51h)		;a1b9
+	ld a,(0ca51h)		;a1b9   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp 009h		;a1bc
 	ret nz			;a1be
 	ld a,(0ca5fh)		;a1bf
@@ -616,7 +616,7 @@ L_A444:
 L_A448:
 	call 08100h		;a448
 	jr nz,L_A469		;a44b
-	ld a,(0cb05h)		;a44d
+	ld a,(0cb05h)		;a44d   ; lee la X de Snake
 	sub (ix+005h)		;a450
 	jr nc,L_A457		;a453
 	neg		;a455
@@ -626,7 +626,7 @@ L_A457:
 	ld a,010h		;a459
 	add a,b			;a45b
 	ld b,a			;a45c
-	ld a,(0cb03h)		;a45d
+	ld a,(0cb03h)		;a45d   ; lee la Y de Snake
 	sub (ix+003h)		;a460
 	jr nc,L_A467		;a463
 	neg		;a465
@@ -1319,7 +1319,7 @@ L_A984:
 L_A991:
 	call 08100h		;a991
 	jr nz,L_A9AE		;a994
-	ld a,(0cb03h)		;a996
+	ld a,(0cb03h)		;a996   ; lee la Y de Snake
 	sub 020h		;a999
 	cp 070h		;a99b
 	jp c,L_A9FC		;a99d
@@ -1649,14 +1649,14 @@ L_ABAA:
 	ret			;abbc
 L_ABBD:
 	ld bc,00202h		;abbd
-	ld a,(0cb03h)		;abc0
+	ld a,(0cb03h)		;abc0   ; lee la Y de Snake
 	sub (ix+003h)		;abc3
 	jr nc,L_ABCC		;abc6
 	ld b,000h		;abc8
 	neg		;abca
 L_ABCC:
 	ld d,a			;abcc
-	ld a,(0cb05h)		;abcd
+	ld a,(0cb05h)		;abcd   ; lee la X de Snake
 	sub (ix+005h)		;abd0
 	jr nc,L_ABD9		;abd3
 	ld c,000h		;abd5
@@ -2496,19 +2496,19 @@ L_BC76:
 	call 04266h		;bc86   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045d7h		;bc89   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 	call 07072h		;bc8c   ; p01:7072
-	call 084f4h		;bc8f   ; p02:84F4
+	call 084f4h		;bc8f   ; paleta_b98a_bancos_8:
 	ld hl,00000h		;bc92
 	ld d,h			;bc95
 	ld e,l			;bc96
 	ld bc,0c0c0h		;bc97
 	call 0475ah		;bc9a   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 	ld de,060a8h		;bc9d
-	ld hl,0cb03h		;bca0
+	ld hl,0cb03h		;bca0   ; apunta a la Y de Snake
 	ld (hl),e			;bca3
 	inc hl			;bca4
 	inc hl			;bca5
 	ld (hl),d			;bca6
-	call 05febh		;bca7   ; p00:5FEB
+	call 05febh		;bca7   ; a_p12_6f41_b_8: a_p12_6f41 y deja el banco 8
 	call 0439dh		;bcaa   ; lineas_c3: las lineas de las listas de p00:43C8 (verticales) y p00:43E3 (horizontales), de 0x3A de largo en el color 0x0D
 	call 0437eh		;bcad   ; copia_marcador_a_la_otra: copia las lineas 0x16-0x51 de la pagina en la que se dibuja a la otra (YMMM)
 	call 04650h		;bcb0   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
@@ -2652,11 +2652,11 @@ L_BD85:
 	ld (hl),040h		;bd96
 	jp L_BCB6		;bd98
 L_BD9B:
-	ld a,(0cb03h)		;bd9b
+	ld a,(0cb03h)		;bd9b   ; lee la Y de Snake
 	sub 016h		;bd9e
 	cp (hl)			;bda0
 	ret nc			;bda1
-	ld hl,0cb03h		;bda2
+	ld hl,0cb03h		;bda2   ; apunta a la Y de Snake
 	inc (hl)			;bda5
 	ret			;bda6
 L_BDA7:
@@ -2670,29 +2670,29 @@ L_BDA7:
 	ld a,(0ca76h)		;bdb5   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 032h		;bdb8
 	jr z,L_BDD3		;bdba
-	ld hl,0ca50h		;bdbc
+	ld hl,0ca50h		;bdbc   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),001h		;bdbf
 	inc l			;bdc1
 	ld (hl),008h		;bdc2
 	ld a,05fh		;bdc4
-	ld (0cb03h),a		;bdc6
+	ld (0cb03h),a		;bdc6   ; guarda la Y de Snake
 	ld a,080h		;bdc9
-	ld (0cb05h),a		;bdcb
+	ld (0cb05h),a		;bdcb   ; guarda la X de Snake
 	ld a,009h		;bdce
-	jp 08de3h		;bdd0   ; p02:8DE3
+	jp 08de3h		;bdd0   ; cambia_de_zona_b_1_2_8: cambia_de_zona y deja los bancos 1, 2 y 8
 L_BDD3:
 	xor a			;bdd3
 	ld (0ca76h),a		;bdd4   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
-	ld hl,0ca50h		;bdd7
+	ld hl,0ca50h		;bdd7   ; apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 	ld (hl),003h		;bdda
 	inc l			;bddc
 	ld (hl),008h		;bddd
 	ld a,040h		;bddf
-	ld (0cb03h),a		;bde1
+	ld (0cb03h),a		;bde1   ; guarda la Y de Snake
 	ld a,090h		;bde4
-	ld (0cb05h),a		;bde6
+	ld (0cb05h),a		;bde6   ; guarda la X de Snake
 	ld a,00ah		;bde9
-	call 08de3h		;bdeb
+	call 08de3h		;bdeb   ; cambia_de_zona_b_1_2_8: cambia_de_zona y deja los bancos 1, 2 y 8
 	ld hl,00c30h		;bdee
 	ld (0d418h),hl		;bdf1
 	ld a,004h		;bdf4
@@ -2733,28 +2733,28 @@ L_BE2D:
 L_BE35:
 	ld de,0ba97h		;be35
 	ld hl,0db00h		;be38
-	call 08de8h		;be3b   ; p02:8DE8
+	call 08de8h		;be3b   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0baa4h		;be3e
 	ld hl,0db10h		;be41
-	call 08de8h		;be44
+	call 08de8h		;be44   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0bab2h		;be47
 	ld hl,0db20h		;be4a
-	call 08de8h		;be4d
+	call 08de8h		;be4d   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0bab5h		;be50
 	ld hl,0db30h		;be53
-	call 08de8h		;be56
+	call 08de8h		;be56   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0ba97h		;be59
 	ld hl,0db40h		;be5c
-	call 08de8h		;be5f
+	call 08de8h		;be5f   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0baa4h		;be62
 	ld hl,0db50h		;be65
-	call 08de8h		;be68
+	call 08de8h		;be68   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0bab2h		;be6b
 	ld hl,0db60h		;be6e
-	call 08de8h		;be71
+	call 08de8h		;be71   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 	ld de,0bab5h		;be74
 	ld hl,0db70h		;be77
-	jp 08de8h		;be7a
+	jp 08de8h		;be7a   ; a_p01_6fd5: p01:6FD5 con el banco 1 en 0x6000
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_BE7D: lo apuntan con el banco puesto p02:86E7 (0xBE7D), p02:8698

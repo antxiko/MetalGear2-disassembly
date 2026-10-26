@@ -37,6 +37,7 @@ F 0xBC25 16
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 L 0xA14B pide_sonido_ram copiada a 0xC340: pone 16-17-18-19, pide el sonido A y devuelve los bancos
 C 0xA05B lee el paso del estado de la partida
+C 0xA0C7 apunta a la espera hasta poner la musica pendiente
 C 0xA0EF el mapper: pone en 0x4000 el banco de A
 C 0xA0F3 el mapper: pone en 0x6000 el banco de A
 C 0xA0F7 el mapper: pone en 0x8000 el banco de A
@@ -70,85 +71,217 @@ C 0xA1A3 el mapper: pone en 0x4000 el banco de A
 C 0xA1A8 el mapper: pone en 0x6000 el banco de A
 C 0xA1AD el mapper: pone en 0x8000 el banco de A
 C 0xA1B2 el mapper: pone en 0xA000 el banco de A
-C 0xA1F0 p02:8BFC
+C 0xA1C0 guarda la espera hasta el dibujo de quieto (4 cuadros)
+C 0xA1C3 guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
+C 0xA1D0 guarda la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha) y el byte siguiente (16 bits)
+C 0xA1E1 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA1F0 a_p06_a6f9: p06:A6F9 con el banco 6 en 0xA000
 C 0xA1F3 p01:642C
-C 0xA1F6 p02:9AA5
-C 0xA1F9 p02:9F7D
-C 0xA1FC p02:9F94
-C 0xA1FF p02:9FF7
-C 0xA202 p02:9C02
-C 0xA208 p02:9A96
+C 0xA1F6 el_agua: solo en la zona 6: 0xCAAA, 0xCB3F y la barra de la derecha
+C 0xA1F9 cambia_d4f5: si no sale de la sala, 0xD4F5 = 0xCB3F (2 como mucho) y, si cambia, p01:6CCA
+C 0xA1FC cuenta_cb3a: con 0xCB39, sin 0xCA5F, chocando y sin 0xCB3C
+C 0xA1FF cuenta_cb3d: con 0xCB3D, 0xCB3E un cuadro menos
+C 0xA202 pisa_algo: en la especial 0x38 sala 1 (p06:BD9B), la zona 0x12 (p06:BD7D) o la 0x13 (p06:BD8E): lo que pisan Snake o 0xCB80
+C 0xA208 llama_a14d_a2aa_a139: p06:A14D, p06:A2AA y p06:A139 con el banco 6
+C 0xA210 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA213 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA25B apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA281 lee 1 mientras Snake se da la vuelta
 C 0xA288 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA290 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA2A2 lee la sala de la zona
 C 0xA2B0 lee la zona
 C 0xA2B7 lee la sala de la zona
 C 0xA2CA lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA2E0 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xA2F4 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA2FA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xA308 lee 1 mientras Snake se da la vuelta
+C 0xA30E lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
+C 0xA314 lee en la zona 6: lo ponen los dos disparos (el 2 apretado y el 1 recien pulsado), lo quita cualquiera
 C 0xA31A lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA330 guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
+C 0xA333 guarda el paso de la animacion de andar (0-3)
+C 0xA336 dibujo_del_paso: el dibujo del paso (p02:9888)
 C 0xA343 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
-C 0xA351 p02:889D
+C 0xA351 sitios_cbe0: con 0xCA65 puesto, mira si sale (p02:8928)
+C 0xA354 date_la_vuelta: si Snake esta dandose la vuelta, sigue (p02:93E5); si no, mira si se pide
+C 0xA357 mueve_a_snake: dandose la vuelta no se mueve
+C 0xA366 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA378 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
-C 0xA37C p02:9942
-C 0xA382 p02:8BC8
-C 0xA385 p02:8BD0
+C 0xA37C delante_de_snake: lo que hay delante de Snake: p11:A117 y p01:6A19 o p01:6ACA; si no, p01:6A15
+C 0xA382 a_p07_aed1: p07:AED1 con el banco 7 en 0xA000
+C 0xA385 a_p07_af0d: p07:AF0D con el banco 7 en 0xA000
+C 0xA39F guarda la marcha de Snake: el indice de las velocidades de p02:9520
+C 0xA3A8 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA3B1 guarda 1 mientras Snake se da la vuelta
+C 0xA3B4 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA3C4 lee la zona
 C 0xA3D0 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA3DB despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA3F6 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA3FD suma_a_hl: HL = HL + A
 C 0xA400 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
-C 0xA457 p02:986A
-C 0xA477 p02:9988
+C 0xA405 zonas_de_estado_0b: con 0xCA8D puesto, solo con 0xCB29 = 0x20 (y lo borra)
+C 0xA408 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA426 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA44A sin_fraccion: las fracciones de la Y y de la X a cero
+C 0xA44F guarda la espera de la vuelta
+C 0xA454 guarda 1 mientras Snake se da la vuelta
+C 0xA457 dibujo_del_paso: el dibujo del paso (p02:9888)
+C 0xA462 a_p11_ba03: p11:BA03 con el banco 11 en 0xA000
+C 0xA465 date_la_vuelta: si Snake esta dandose la vuelta, sigue (p02:93E5); si no, mira si se pide
+C 0xA468 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA46B apunta a la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA471 mueve_a_snake: dandose la vuelta no se mueve
+C 0xA477 zonas_de_estado_0b: con 0xCA8D puesto, solo con 0xCB29 = 0x20 (y lo borra)
+C 0xA47A lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA47F apunta a 1 si el ultimo choque fue contra la sala (p02:9756)
+C 0xA48C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA49E sin_fraccion: las fracciones de la Y y de la X a cero
+C 0xA4A1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA4A6 suma_a_hl: HL = HL + A
+C 0xA4A9 lee la Y de Snake
+C 0xA4AF guarda la Y de Snake
+C 0xA4B3 lee la X de Snake
+C 0xA4B9 guarda la X de Snake
 C 0xA4DB lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA4E2 lee la sala de la zona
+C 0xA4F5 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA4F9 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xA506 p02:9375
-C 0xA518 p02:9448
-C 0xA55A p01:79B4
+C 0xA509 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA50C apunta a la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA518 mueve_a_snake_b: como p02:9402, primero la salida y despues el choque, y con p02:9892 en vez de p02:9841
+C 0xA524 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA52B lee la Y de Snake
+C 0xA534 guarda la Y de Snake
+C 0xA53A lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xA541 apunta a la Y de Snake
+C 0xA55A a_p14_b43d: p14:B43D con el banco 14 en 0xA000
+C 0xA55D estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xA566 guarda 1 mientras Snake se da la vuelta
+C 0xA569 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xA5BD lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA5C5 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA5D6 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA5DB guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA5E8 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques) y el byte siguiente (16 bits)
+C 0xA5EB guarda 1 mientras Snake se da la vuelta
+C 0xA5F6 guarda 1 mientras Snake se da la vuelta
+C 0xA614 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA617 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA624 lee 1 si Snake ha chocado en este cuadro
 C 0xA64E lee la zona
 C 0xA655 lee la sala de la zona
-C 0xA65B p02:9DA8
+C 0xA65B a_p06_a330: p06:A330 con el banco 6 en 0xA000
+C 0xA65F apunta a la X de Snake: la parte fraccionaria (0xCB04-0xCB05 en 8.8)
+C 0xA668 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA66C lee la zona
 C 0xA68B lee la zona
 C 0xA691 lee la sala de la zona
+C 0xA6AA guarda la marcha de Snake: el indice de las velocidades de p02:9520
+C 0xA6AF guarda 1 mientras Snake se da la vuelta
+C 0xA6B2 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA6C9 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
+C 0xA6CF lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA6DE lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
-C 0xA6FF p02:936E
-C 0xA702 p02:9402
+C 0xA6E5 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA6F2 apunta a la Y de Snake
+C 0xA6FF date_la_vuelta: si Snake esta dandose la vuelta, sigue (p02:93E5); si no, mira si se pide
+C 0xA702 mueve_a_snake: dandose la vuelta no se mueve
+C 0xA716 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA721 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA72A lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA730 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA748 lee la zona
 C 0xA753 lee la sala de la zona
+C 0xA758 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA75D lee la Y de Snake
+C 0xA765 guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA76B guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
 C 0xA772 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA779 lee las Y de arriba y abajo de la zona del estado 0x0B (16 bits)
+C 0xA77C lee la Y de Snake
+C 0xA787 lee las Y de arriba y abajo de la zona del estado 0x0B (16 bits)
+C 0xA78A lee la Y de Snake
+C 0xA795 lee la Y de Snake
+C 0xA7A3 guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
+C 0xA7A9 pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xA7B3 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
 C 0xA7BB lee la zona
 C 0xA7C0 lee la sala de la zona
+C 0xA7CD cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
+C 0xA7D3 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA7D8 apunta a la Y de Snake
+C 0xA7E9 lee las Y de arriba y abajo de la zona del estado 0x0B (16 bits)
+C 0xA7EC lee la Y de Snake
+C 0xA813 lee la Y de Snake
+C 0xA82C pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xA833 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA83F lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA859 p01:7EEE
-C 0xA85D p02:9804
+C 0xA85D pega_a_la_casilla_si: sin fraccion
+C 0xA860 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA867 lee la Y de Snake
+C 0xA86C guarda la Y de Snake
+C 0xA871 guarda 1 si Snake ha chocado en este cuadro
+C 0xA875 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA881 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
 C 0xA88A lee la zona
 C 0xA890 lee la sala de la zona
 C 0xA89D lee la sala de la zona
 C 0xA8A4 lee la zona
+C 0xA8B2 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA8B8 lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xA8BE lee la Y de Snake
+C 0xA8C4 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA8CA lee la zona
+C 0xA8D8 apunta a la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA8EA borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA8ED limpia_sprites_y_d300: 
 C 0xA8F0 dibujos_70f9: 
 C 0xA8F3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA8F6 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
-C 0xA8F9 p02:8511
+C 0xA8F9 paleta_b97d: la paleta de p56:B97D
+C 0xA8FC llama_ab91: p06:AB91 guardando el banco de 0xA000
 C 0xA8FF apunta a los 4 bits altos del byte de la sala (p56:BD28)
 C 0xA90D sala_de_bloques_de: p00:5590 con los bancos 24-26
-C 0xA910 p02:9364
+C 0xA910 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
+C 0xA913 apunta a la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8)
+C 0xA920 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA92E p01:6AE2
+C 0xA933 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA936 apunta a la Y de Snake
+C 0xA952 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA959 lee la zona
+C 0xA962 guarda la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA967 guarda la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA96C cambia_de_zona: pasa a la zona A
 C 0xA96F p01:6A3C
 C 0xA974 cambia_de_zona: pasa a la zona A
+C 0xA97B estado_1: el estado 1, o el 0 sin 0xCB35 (p02:990E)
 C 0xA97E lee la zona
 C 0xA983 lee la sala de la zona
+C 0xA989 lee la Y de Snake
+C 0xA98F lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA997 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA99B guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA99E guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8)
+C 0xA9A1 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
+C 0xA9A6 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xA9A9 lee la Y de Snake
+C 0xA9AE guarda la Y de Snake
+C 0xA9B6 guarda la Y de Snake
+C 0xA9BB guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA9C0 guarda 1 mientras Snake se da la vuelta
+C 0xA9CA guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xA9DB guarda 1 mientras Snake se da la vuelta
+C 0xA9E4 guarda la marcha de Snake: el indice de las velocidades de p02:9520
 C 0xA9FC lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xAA2E p01:7DA9
 C 0xAA33 p01:6C77
+C 0xAA4C guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xAA4F esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xAA52 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0xAA55 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
@@ -161,40 +294,102 @@ C 0xAA79 lee la zona
 C 0xAA85 lee la sala de la zona
 C 0xAAC6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAACC borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xAADD guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xAAE0 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xAAE3 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xAAE6 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-C 0xAAEC vuelve_a_la_sala: p02:7BAA y la sala de 0xCA50
+C 0xAAEC vuelve_a_la_sala: p01:7BAA y la sala de 0xCA50
+C 0xAAFF guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xAB0A espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xAB0D enciende_todo: la pantalla y los sprites encendidos
 C 0xAB10 lee la sala especial (0 = ninguna; indice de p24:64B6)
-C 0xAB1D p02:8587
+C 0xAB1D rachas_b34a_bancos_3: 
+C 0xAB2E lee la Y de Snake
+C 0xAB37 guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
+C 0xAB3A estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xAB4F apunta a la Y de Snake
+C 0xAB54 apunta a la X de Snake
+C 0xAB5D apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAB65 lee la Y de Snake
+C 0xAB7E pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xAB98 pon_cb28: 0xCB28 = B, 0xCB29 = C
 C 0xAB9D lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xABA2 apunta a la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xABBB lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xABC7 apunta a la Y de Snake
+C 0xABD2 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xABED apunta a la Y de Snake
 C 0xABF3 lee la zona
+C 0xAC02 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAC18 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAC1B guarda 1 mientras Snake se da la vuelta
+C 0xAC20 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAC25 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAC3F llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAC50 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAC67 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAC6C guarda 1 mientras Snake se da la vuelta
+C 0xAC76 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xAC87 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAC8B guarda 1 mientras Snake se da la vuelta
+C 0xAC8E lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
+C 0xAC94 apunta a la Y de Snake
+C 0xACA8 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xACB1 lee la Y de Snake
+C 0xACBB guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
+C 0xACC2 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xACC5 copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
-C 0xACDC p01:79A3
+C 0xACC8 lee la Y de Snake
+C 0xACD5 pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xACDC a_p04_924c: p04:924C con el banco 4 en 0x8000
+C 0xACDF apunta a la Y de Snake
+C 0xACE9 lee la Y de Snake
 C 0xACFA guarda el paso del estado de la partida
+C 0xAD05 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
+C 0xAD0A guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAD0D copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
+C 0xAD10 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xAD1A cambia_de_zona: pasa a la zona A
-C 0xAD5D p02:98BF
+C 0xAD20 guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
+C 0xAD25 guarda la X de Snake: la parte fraccionaria (0xCB04-0xCB05 en 8.8) y el byte siguiente (16 bits)
+C 0xAD2D guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
+C 0xAD44 pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xAD52 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xAD55 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xAD5D estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xAD79 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAD7E suma_a_hl: HL = HL + A
-C 0xADC8 p02:8B68
+C 0xAD81 lee la Y de Snake
+C 0xAD89 lee la X de Snake
+C 0xADB0 lee 1 mientras Snake se da la vuelta
+C 0xADB5 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xADBC lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
+C 0xADC8 a_p11_bd31: p11:BD31 con el banco 11 en 0xA000
+C 0xADF0 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xADFD lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAE00 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xAE04 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAE07 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xAE14 lee la zona
 C 0xAE1A lee la sala de la zona
-C 0xAE44 p02:8ABE
+C 0xAE20 lee la Y de Snake
+C 0xAE29 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xAE2E lee la X de Snake
+C 0xAE44 a_p10_bc27: p10:BC27 con el banco 10 en 0xA000
+C 0xAE9B lee 1 mientras Snake se da la vuelta
+C 0xAEB2 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xAEE0 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xAEE9 p01:7FF0
-C 0xAEFF p01:79BC
-C 0xAF21 p02:8B2F
-C 0xAF24 p02:8B60
+C 0xAEFF a_p04_9949: p04:9949 con el banco 4 en 0x8000
+C 0xAF21 a_p11_af47: p11:AF47 con el banco 11 en 0xA000
+C 0xAF24 a_p11_b23f: p11:B23F con el banco 11 en 0xA000
 C 0xAF3E p01:7FF9
-C 0xAF67 p02:8B80
-C 0xAF7E p02:8B88
+C 0xAF67 a_p11_b494: p11:B494 con el banco 11 en 0xA000
+C 0xAF7E a_p11_b66e: p11:B66E con el banco 11 en 0xA000
 C 0xB00B lee la zona
 C 0xB012 lee la sala de la zona
+C 0xB019 lee la Y de Snake
+C 0xB021 lee la X de Snake
 C 0xB05B suma_a_hl: HL = HL + A
 C 0xB108 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB113 p01:6361
@@ -208,25 +403,41 @@ C 0xB196 p01:6C5B
 C 0xB1A3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB1AA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB1B7 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xB1BA lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xB1BE lee la zona
 C 0xB1C9 lee la sala de la zona
+C 0xB1DF lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xB1E5 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xB1EE p01:7F71
 C 0xB1FD lee la sala de la zona
+C 0xB230 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xB23F lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB247 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xB24D p01:6A44
 C 0xB257 p01:6A48
 C 0xB28C copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xB2AE lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xB2B5 lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB2D6 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB326 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB366 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xB369 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB399 suma_a_hl: HL = HL + A
 C 0xB3BB lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB3C4 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xB3E8 apunta a el rastro de Snake: las ultimas 16 posiciones [Y][X][direccion] (con 0xCAA0)
+C 0xB3EB lee la Y de Snake
+C 0xB3F0 lee la X de Snake
+C 0xB3F5 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB43B suma_a_hl: HL = HL + A
+C 0xB450 lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xB474 suma_a_hl: HL = HL + A
 C 0xB47D suma_a_hl: HL = HL + A
 C 0xB480 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB4A0 de_negativo: DE = -DE
 C 0xB4A7 de_negativo: DE = -DE
+C 0xB4AF lee 1 si Snake ha chocado en este cuadro
+C 0xB4B4 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB523 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xB526 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB5B2 copia_en_y: orden YMMM del VDP
@@ -235,6 +446,7 @@ C 0xB5EF pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0
 C 0xB5F2 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB5F9 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB5FC pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xB607 lee la Y de Snake
 C 0xB62D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB630 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xB669 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
@@ -255,46 +467,68 @@ C 0xB995 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB99D borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xBA15 lee el paso del mensaje en curso (p01:6597)
 C 0xBA2D lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xBA42 p01:64D4
+C 0xBA42 a_p06_a543: p06:A543 con el banco 6 en 0xA000
 C 0xBA4C p01:6302
 C 0xBA50 p01:70E4
+C 0xBA5A lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
+C 0xBA61 guarda 1 mientras se ve la barra de la derecha
 C 0xBA64 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBA7F lee la zona
 C 0xBA97 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBAB9 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xBABE borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xBAD3 lee la sala de la zona
 C 0xBAD8 lee la sala especial (0 = ninguna; indice de p24:64B6)
-C 0xBB23 p02:8516
+C 0xBB23 paleta_de_851e: la paleta A de la lista de p02:851E
+C 0xBB28 guarda 1 mientras se ve la barra de la derecha
 C 0xBB38 p01:7059
 C 0xBB46 p00:42B0
 C 0xBB49 barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
+C 0xBB52 guarda 1 mientras se ve la barra de la derecha
+C 0xBB67 guarda 1 mientras se ve la barra de la derecha
 C 0xBB6A borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
+C 0xBB6D paleta_de_la_sala: la paleta comun y la de la sala
+C 0xBB76 lee la vida de Snake (lo largo de la barra)
+C 0xBB7F lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xBB8B paleta_de_la_sala: la paleta comun y la de la sala
 C 0xBB9A borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xBBA8 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBBB4 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBBDD barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
 C 0xBBEE barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
+C 0xBBF1 apunta a la vida de Snake (lo largo de la barra)
+C 0xBBF7 lee la vida de Snake (lo largo de la barra)
+C 0xBBFC a_p10_bfbc: p10:BFBC con el banco 10 en 0xA000
+C 0xBC09 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBC1E byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xBC29 lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xBC6C p02:8BC0
+C 0xBC35 paleta_de_la_sala: la paleta comun y la de la sala
+C 0xBC48 paleta_de_851e: la paleta A de la lista de p02:851E
+C 0xBC51 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xBC5A apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
+C 0xBC6C a_p07_b5af: p07:B5AF con el banco 7 en 0xA000
 C 0xBC7C lee la zona
-C 0xBCB4 p02:8BD8
-C 0xBCB7 p02:8BE0
+C 0xBC83 apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
+C 0xBCB4 a_p07_b6cc: p07:B6CC con el banco 7 en 0xA000
+C 0xBCB7 a_p07_b5cc: p07:B5CC con el banco 7 en 0xA000
 C 0xBCFA p01:6A38
-C 0xBD27 p02:8B78
+C 0xBD27 a_p10_a65e: p10:A65E con el banco 10 en 0xA000
 C 0xBD30 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBD69 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xBD77 p02:8C1C
-C 0xBD7F p02:929A
-C 0xBDB4 p02:87E9
-C 0xBDDF p02:8847
-C 0xBDE4 p02:883C
+C 0xBD77 a_p10_ba03: p10:BA03 con el banco 10 en 0xA000
+C 0xBD7F borra_cosa: sin acarreo, el sitio de la cosa a la otra pagina; con acarreo, a 0 en esta
+C 0xBDB4 byte_a67e: A = el byte A de p56:A67E
+C 0xBDDF palabra_de_cab5: HL = la palabra 0xCAB5 de la tabla de HL (banco 6)
+C 0xBDE4 palabra_bdd2: HL = la palabra A de p06:BDD2 y de ella la de 0xCAB5
 C 0xBE08 suma_a_hl: HL = HL + A
 C 0xBE10 lee el paso del estado de la partida
 C 0xBE22 lee el paso del estado de la partida
-C 0xBE3E p02:9331
-C 0xBE90 p02:9319
+C 0xBE3E a_p10_b960: p10:B960 con el banco 10 en 0xA000
+C 0xBE7F guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xBE82 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xBE90 a_p10_b3e5: p10:B3E5 con el banco 10 en 0xA000
 C 0xBEE2 p01:631A
+C 0xBEEB lee la Y de Snake
 C 0xBEF7 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBEFC copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xBEFF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
