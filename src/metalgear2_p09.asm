@@ -325,7 +325,7 @@ algo_lanzado_b:
 	ld ix,0cb80h		;a241   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld b,006h		;a245
 ficha_lanzada:
-	ld a,(ix+000h)		;a247
+	ld a,(ix+000h)		;a247   ; lee el tipo de lo lanzado por Snake
 	or a			;a24a
 	jr z,siguiente_lanzada		;a24b   ; libre: la siguiente
 	scf			;a24d   ; activa: acarreo
@@ -2765,7 +2765,7 @@ guion_9_paso_5:		; sus sprites; al acabar la espera, 0xCB7B = 0, 0xCB7C = 1 y el
 	ld hl,0e043h		;b56f   ; apunta a la cuenta de cuadros de la escena
 	dec (hl)			;b572
 	ret nz			;b573
-	ld hl,0cb7bh		;b574
+	ld hl,0cb7bh		;b574   ; apunta a el sitio de 0xCB78 en p11:BE3D (hasta 0x17)
 	ld (hl),000h		;b577
 	inc hl			;b579
 	ld (hl),001h		;b57a
@@ -2775,7 +2775,7 @@ guion_9_paso_6:		; sus sprites, p11:BE0F, p11:BE6B y las fichas que se van (p09:
 	call 08e8eh		;b582   ; a_p11_be0f: p11:BE0F con el banco 11 en 0xA000
 	call 08e96h		;b585   ; a_p11_be6b: p11:BE6B con el banco 11 en 0xA000
 	call fichas_se_van		;b588   ; fichas_se_van: con 0xCB7B en 4 la ficha 0xE050, en 0x0A la 0xE058, en 0x11 la 0xE054: a cero y el sonido 0x0F
-	ld a,(0cb78h)		;b58b
+	ld a,(0cb78h)		;b58b   ; lee 1 con el sprite de 0xCB79-0xCB7A en marcha (p11:BE0F)
 	or a			;b58e
 	ret nz			;b58f   ; con 0xCB78, sigue
 	ld hl,0dc10h		;b590   ; el sprite 4 fuera
@@ -2787,7 +2787,7 @@ guion_9_paso_6:		; sus sprites, p11:BE0F, p11:BE6B y las fichas que se van (p09:
 	call e041_siguiente_h		;b59f   ; e041_siguiente_h:
 	jp 06aeeh		;b5a2   ; sonido_91: pide el sonido 0x91 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 fichas_se_van:		; con 0xCB7B en 4 la ficha 0xE050, en 0x0A la 0xE058, en 0x11 la 0xE054: a cero y el sonido 0x0F
-	ld a,(0cb7bh)		;b5a5
+	ld a,(0cb7bh)		;b5a5   ; lee el sitio de 0xCB78 en p11:BE3D (hasta 0x17)
 	ld hl,0e050h		;b5a8   ; en 4, la 0xE050
 	cp 004h		;b5ab
 	jr z,ficha_a_cero		;b5ad

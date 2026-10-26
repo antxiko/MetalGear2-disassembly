@@ -1797,7 +1797,7 @@ siguiente_lanzado_snake:
 	exx			;ae05
 	ret			;ae06
 lanzado_6_con_snake:		; con 0xCACF: lo de tipo 6 lanzado por Snake que toca a Snake se acaba con p07:AE3D
-	ld a,(0cacfh)		;ae07
+	ld a,(0cacfh)		;ae07   ; lee 1 al cambiar de direccion lo lanzado de tipo 6 (p11:AAD6)
 	or a			;ae0a
 	ret z			;ae0b   ; sin 0xCACF, nada
 	call caja_de_snake		;ae0c   ; caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
@@ -2113,7 +2113,7 @@ snake_con_cc80:		; sin 0xE1D0: la caja de Snake contra las fichas de 0xCC80 (p07
 	ret nz			;b03b   ; con 0xE1D0, nada
 	call caja_de_snake_c		;b03c   ; caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 	ret nz			;b03f   ; sin caja, nada
-	ld iy,0cc80h		;b040   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld iy,0cc80h		;b040   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	ld b,030h		;b044   ; 0x30 fichas de 8 bytes
 cc80_contra_snake:
 	exx			;b046
@@ -2151,7 +2151,7 @@ coge_cc80:		; p12:6E6C, la ficha fuera, 0xD61C = 1, 7 mas a la cosa 1 (p03:BDA5)
 	pop bc			;b081
 	jp 06a38h		;b082   ; sonido_10: pide el sonido 0x10
 cc80_con_actores:		; cada ficha de 0xCC80 (p07:B7B6) contra los actores de su sala (p07:B8EC; salvo los tipos 1 y 4, no el actor de su byte 0x1B): salvo los 0x16-0x17, p07:B563
-	ld iy,0cc80h		;b085   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld iy,0cc80h		;b085   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	exx			;b089
 	ld b,030h		;b08a   ; 0x30 fichas
 cc80_b:
@@ -2201,7 +2201,7 @@ siguiente_cc80_b:
 	exx			;b0e3
 	ret			;b0e4
 cc80_con_d800:		; las 16 primeras fichas de 0xCC80 contra las de 0xD800 de su sala (p07:B999): los tipos 1 y 4 con todas salvo el 0x0B, el 2 con ninguna, los demas solo con el 0x0B; p07:B563
-	ld iy,0cc80h		;b0e5   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld iy,0cc80h		;b0e5   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	exx			;b0e9
 	ld b,010h		;b0ea   ; 16 fichas
 cc80_c:
@@ -3326,10 +3326,10 @@ compara_sitio_d760:
 	xor a			;b848
 	ret			;b849
 caja_cb44:		; con 0xCB44 y 0xCB46 desde 4: la caja de p07:B879 segun la direccion de Snake (4 bytes: E, D, dY, dX)
-	ld a,(0cb44h)		;b84a
+	ld a,(0cb44h)		;b84a   ; lee 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
 	or a			;b84d
 	jp z,sin_caja		;b84e   ; sin_caja: NZ: sin caja
-	ld a,(0cb46h)		;b851
+	ld a,(0cb46h)		;b851   ; lee lo largo del arma 0x0C (0-4 sprites, p11:B295)
 	cp 004h		;b854
 	jp c,sin_caja		;b856   ; sin_caja: NZ: sin caja
 	ld a,(0cb0eh)		;b859   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -3391,14 +3391,14 @@ DATA_tabla_B89B:
 
 
 caja_dffd:		; en (Y = 0xDFFD, X = 0x60), 0x60 x 0x10
-	ld a,(0dffdh)		;b8a3
+	ld a,(0dffdh)		;b8a3   ; lee la Y de la caja de 0xDFF8 (se mueve por 0xCA61)
 	ld l,a			;b8a6   ; la Y de 0xDFFD...
 	ld h,060h		;b8a7   ; ...la X 0x60
 	ld de,06010h		;b8a9   ; 0x60 x 0x10
 	xor a			;b8ac
 	ret			;b8ad
 caja_dffe:		; en (Y = 0xC0, X = 0xDFFE + 8), 8 x 0xC0
-	ld a,(0dffeh)		;b8ae
+	ld a,(0dffeh)		;b8ae   ; lee la X de la caja de 0xDFF8
 	add a,008h		;b8b1   ; la X de 0xDFFE + 8...
 	ld h,a			;b8b3
 	ld l,0c0h		;b8b4   ; ...la Y 0xC0
@@ -3710,7 +3710,7 @@ fin_sitio_ocupado:
 	pop ix		;bb52
 	ret			;bb54
 toca_cc00:		; acarreo si toca alguna de las 8 fichas de 0xCC00 de esta sala (p07:BD78)
-	ld ix,0cc00h		;bb55   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
+	ld ix,0cc00h		;bb55   ; apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][columna][cuenta] (p11:B380)
 	ld b,008h		;bb59
 ficha_cc00:
 	exx			;bb5b
@@ -3728,7 +3728,7 @@ siguiente_cc00:
 	or a			;bb6f   ; ninguna: sin acarreo
 	ret			;bb70
 toca_cc80:		; acarreo si toca alguna de las fichas de 0xCC80 de esta sala (p07:BDA1)
-	ld ix,0cc80h		;bb71   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld ix,0cc80h		;bb71   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	ld b,030h		;bb75
 ficha_cc80:
 	exx			;bb77
@@ -4183,11 +4183,11 @@ choques_d800_tipo_2:		; con la ficha 0xD800 de tipo 2 en la sala 8, con 0xD816 y
 	ld b,006h		;be61   ; 6 fichas
 lanzado_en_d800_2:
 	push bc			;be63
-	ld a,(ix+000h)		;be64
+	ld a,(ix+000h)		;be64   ; lee el tipo de lo lanzado por Snake
 	and a			;be67
 	jr z,siguiente_lanzado_d800_2		;be68   ; libre, la siguiente
 	ld b,(ix+005h)		;be6a   ; su X y su Y
-	ld c,(ix+003h)		;be6d
+	ld c,(ix+003h)		;be6d   ; lee la Y de lo lanzado por Snake
 	call tipo_que_entra		;be70   ; tipo_que_entra: los tipos 1, 2 y 6 se miran (p07:BE9F); los demas, no
 	jr nc,siguiente_lanzado_d800_2		;be73   ; fuera, sigue
 	ld (ix+000h),000h		;be75   ; dentro: se acaba

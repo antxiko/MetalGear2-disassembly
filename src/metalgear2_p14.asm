@@ -2425,7 +2425,7 @@ L_B558:
 	ld a,(0ca65h)		;b55d   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	or a			;b560
 	ret nz			;b561
-	ld a,(0dfe8h)		;b562
+	ld a,(0dfe8h)		;b562   ; lee 1 con lo de la zona 6 sala 0x10 (p11:A389; 0xDFE9 paso, 0xDFEA X)
 	or a			;b565
 	ret nz			;b566
 	ld a,(0e230h)		;b567

@@ -1031,7 +1031,7 @@ L_67E1:
 	push af			;67ec
 	jp 041a3h		;67ed
 L_67F0:
-	ld hl,0cc80h		;67f0   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld hl,0cc80h		;67f0   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	ld bc,0017fh		;67f3
 	call 04236h		;67f6   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,(0ca76h)		;67f9   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1987,7 +1987,7 @@ L_6E50:
 	ld a,(0caa9h)		;6e53
 	and a			;6e56
 	ret nz			;6e57
-	ld hl,0cc80h		;6e58   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld hl,0cc80h		;6e58   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	ld b,030h		;6e5b
 L_6E5D:
 	push hl			;6e5d
@@ -3386,7 +3386,7 @@ L_776B:
 	call 05d3dh		;7783   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 	jp 05d3dh		;7786   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 L_7789:
-	ld a,(0d752h)		;7789
+	ld a,(0d752h)		;7789   ; lee 1 al disparar algo (p11:A995)
 	or a			;778c
 	ret z			;778d
 	ld a,(0cb00h)		;778e   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -3943,13 +3943,13 @@ L_7B2D:
 	ld e,a			;7b43
 	call 05d3dh		;7b44   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 	call 05d3dh		;7b47   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
-	ld a,(0cb4ah)		;7b4a
+	ld a,(0cb4ah)		;7b4a   ; lee el sitio de Snake en el paso 3 del estado 0x19 (p11:A090)
 	ld hl,0b1d8h		;7b4d
 	add a,a			;7b50
 	call 0423eh		;7b51   ; suma_a_hl: HL = HL + A
 	jp L_77D7		;7b54
 L_7B57:
-	ld a,(0cb4ah)		;7b57
+	ld a,(0cb4ah)		;7b57   ; lee el sitio de Snake en el paso 3 del estado 0x19 (p11:A090)
 	ld hl,07b60h		;7b5a
 	jp 043f6h		;7b5d   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 

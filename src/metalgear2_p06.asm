@@ -414,7 +414,7 @@ tope_dfea:		; con 0xDFE8 (zona 6 sala 0x10, p11:A389) y Snake fuera del estado 0
 	ld a,(0cb00h)		;a2aa   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 010h		;a2ad   ; ya en el estado 0x10, nada
 	ret z			;a2af
-	ld a,(0dfe8h)		;a2b0
+	ld a,(0dfe8h)		;a2b0   ; lee 1 con lo de la zona 6 sala 0x10 (p11:A389; 0xDFE9 paso, 0xDFEA X)
 	or a			;a2b3
 	ret z			;a2b4   ; sin 0xDFE8, nada
 	call no_cruza_dfea		;a2b5   ; no pasa de 0xDFEA

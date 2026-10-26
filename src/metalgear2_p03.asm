@@ -476,8 +476,8 @@ L_A32E:
 	jp usa_cb20		;a339   ; ...y p03:AE63
 L_A33C:
 	xor a			;a33c   ; 0xD750 = 0xD751 = 0
-	ld (0d750h),a		;a33d
-	ld (0d751h),a		;a340
+	ld (0d750h),a		;a33d   ; guarda la cuenta de 3 cuadros del arma 2
+	ld (0d751h),a		;a340   ; guarda el disparo del arma 2 (0-7, su velocidad en p11:AA40)
 	ld a,(0ca07h)		;a343   ; el disparo 2 recien pulsado: p03:A360
 	and 020h		;a346
 	jr nz,disparo_2		;a348
@@ -853,7 +853,7 @@ estado_6:		; el estado 6: a los 0xCB1E cuadros, el estado 0 y 0xCB60 = 0xCB61 = 
 	ld hl,00000h		;a5e5   ; el estado y el dibujo 0
 	ld (0cb00h),hl		;a5e8   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques) y el byte siguiente (16 bits)
 	ld (0cb16h),a		;a5eb   ; guarda 1 mientras Snake se da la vuelta
-	ld hl,0cb60h		;a5ee
+	ld hl,0cb60h		;a5ee   ; apunta a 1 con una ficha de 0xCC00 puesta (p11:B3A2)
 	ld (hl),a			;a5f1
 	inc hl			;a5f2
 	ld (hl),a			;a5f3
@@ -1902,7 +1902,7 @@ estado_17:		; el estado 0x17: sin 0xCB42, se mueve (p02:9430); con el, lo borra,
 	ld (0cb14h),a		;ad52   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 	jp 098bfh		;ad55   ; estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 estado_18:		; el estado 0x18: cuando 0xCB44 se pone a 0, el estado que toca
-	ld a,(0cb44h)		;ad58
+	ld a,(0cb44h)		;ad58   ; lee 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
 	or a			;ad5b
 	ret nz			;ad5c
 	jp 098bfh		;ad5d   ; estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
@@ -1928,11 +1928,11 @@ L_AD79:
 	call 0423eh		;ad7e   ; suma_a_hl: HL = HL + A
 	ld a,(0cb03h)		;ad81   ; la Y...
 	add a,(hl)			;ad84
-	ld (0cb22h),a		;ad85
+	ld (0cb22h),a		;ad85   ; guarda la Y de la mira (p11:A7E3)
 	inc hl			;ad88
 	ld a,(0cb05h)		;ad89   ; ...y la X
 	add a,(hl)			;ad8c
-	ld (0cb23h),a		;ad8d
+	ld (0cb23h),a		;ad8d   ; guarda la X de la mira
 	ld a,001h		;ad90
 	ld (0cb5ch),a		;ad92
 	ret			;ad95
@@ -2059,7 +2059,7 @@ L_AE5B:
 	ret			;ae62
 usa_cb20:		; el disparo con lo de 0xCB20 (p03:AE9B); si se pudo, 0xCB52 y p03:BE60
 	xor a			;ae63   ; 0xD752 = 0
-	ld (0d752h),a		;ae64
+	ld (0d752h),a		;ae64   ; guarda 1 al disparar algo (p11:A995)
 	call dispara		;ae67   ; dispara: dandose la vuelta, no
 	ld a,(0d752h)		;ae6a   ; se ha podido?
 	or a			;ae6d
@@ -2191,7 +2191,7 @@ ficha_cb80:		; por su tipo (p02:8028), se mueve (p03:AF8A) y choca con la sala (
 	ret z			;af58
 	jp fuera_de_la_sala		;af59   ; fuera_de_la_sala: con la Y o la X desde 0xB8, se acaba (p03:B096)
 fichas_cc00:		; las 8 fichas de 16 bytes de 0xCC00 (p11:B494)
-	ld ix,0cc00h		;af5c   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
+	ld ix,0cc00h		;af5c   ; apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][columna][cuenta] (p11:B380)
 	ld b,008h		;af60
 L_AF62:
 	push bc			;af62
@@ -2204,7 +2204,7 @@ L_AF62:
 	djnz L_AF62		;af70
 	ret			;af72
 fichas_cc80:		; las 16 fichas de 8 bytes de 0xCC80 (p11:B66E)
-	ld ix,0cc80h		;af73   ; apunta a 16 fichas de 8 bytes que mueve p11:B66E
+	ld ix,0cc80h		;af73   ; apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 	ld b,010h		;af77
 L_AF79:
 	push bc			;af79
@@ -2270,7 +2270,7 @@ fuera_de_la_sala:		; con la Y o la X desde 0xB8, se acaba (p03:B096)
 	jp nc,acaba_ficha		;afea   ; acaba_ficha: el tipo 8: el sonido 4 y 0xD44F = 0
 	ret			;afed
 fuera_de_la_sala_b:		; con 0xCB22 desde 0xB8, la Y; si no, la X desde 0xC0
-	ld a,(0cb22h)		;afee
+	ld a,(0cb22h)		;afee   ; lee la Y de la mira (p11:A7E3)
 	cp 0b8h		;aff1
 	jr c,L_AFFE		;aff3
 	ld a,(ix+003h)		;aff5

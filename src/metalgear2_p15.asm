@@ -607,7 +607,7 @@ L_A3E1:
 	jr z,L_A3F8		;a3f4
 	ld b,000h		;a3f6
 L_A3F8:
-	ld a,(0ca89h)		;a3f8
+	ld a,(0ca89h)		;a3f8   ; lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 	cp b			;a3fb
 	ret nz			;a3fc
 	ld a,b			;a3fd

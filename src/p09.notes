@@ -1091,6 +1091,7 @@ C 0xA22B llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA233 sonido_05: pide el sonido 0x05
 C 0xA23B algo_lanzado_b: 
 C 0xA241 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
+C 0xA247 lee el tipo de lo lanzado por Snake
 C 0xA258 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA264 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA269 sala_2a_columna_8: Z en la sala especial 0x2A columna 8
@@ -1793,14 +1794,17 @@ C 0xB549 lee los 5 bits de lo que ya llego en la escena 9 (p09:B3A3)
 C 0xB558 a_p12_7fa0: p12:7FA0 con el banco 12 en 0x6000
 C 0xB56C sprites_e050: los sprites de las fichas de 0xE050, 0xE054 y 0xE058 (p09:AEA6) en 0xDC28, 0xDC38 y 0xDC48 y los colores de los sprites 10-21 de las rachas de p08:BA97, p08:BAA4, p08:BAB2 y p08:BAB5
 C 0xB56F apunta a la cuenta de cuadros de la escena
+C 0xB574 apunta a el sitio de 0xCB78 en p11:BE3D (hasta 0x17)
 C 0xB57C e041_siguiente_h: 
 C 0xB57F sprites_e050: los sprites de las fichas de 0xE050, 0xE054 y 0xE058 (p09:AEA6) en 0xDC28, 0xDC38 y 0xDC48 y los colores de los sprites 10-21 de las rachas de p08:BA97, p08:BAA4, p08:BAB2 y p08:BAB5
 C 0xB582 a_p11_be0f: p11:BE0F con el banco 11 en 0xA000
 C 0xB585 a_p11_be6b: p11:BE6B con el banco 11 en 0xA000
 C 0xB588 fichas_se_van: con 0xCB7B en 4 la ficha 0xE050, en 0x0A la 0xE058, en 0x11 la 0xE054: a cero y el sonido 0x0F
+C 0xB58B lee 1 con el sprite de 0xCB79-0xCB7A en marcha (p11:BE0F)
 C 0xB595 apunta a la cuenta de cuadros de la escena
 C 0xB59F e041_siguiente_h: 
 C 0xB5A2 sonido_91: pide el sonido 0x91 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xB5A5 lee el sitio de 0xCB78 en p11:BE3D (hasta 0x17)
 C 0xB5BE sonido_0f: pide el sonido 0x0F
 C 0xB5C1 apunta a la cuenta de cuadros de la escena
 C 0xB5CB e041_siguiente_h: 

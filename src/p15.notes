@@ -89,6 +89,7 @@ C 0xA3C7 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA3D6 lee la zona
 C 0xA3E7 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA3ED lee la zona
+C 0xA3F8 lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 C 0xA413 copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
 C 0xA416 sonido_46: pide el sonido 0x46
 C 0xA41F despachador: salta a la palabra A de la tabla que va detras del call

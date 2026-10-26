@@ -156,7 +156,7 @@ C 0x6710 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF a
 C 0x6716 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x67E1 lee la copia del banco de 0xA000
 C 0x67E5 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x67F0 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0x67F0 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0x67F6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x67F9 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x67FE lee la zona
@@ -258,7 +258,7 @@ C 0x6DE1 punto: orden PSET del VDP con la operacion logica de E
 C 0x6E1C lee la zona
 C 0x6E28 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x6E2F lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
-C 0x6E58 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0x6E58 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0x6E66 suma_a_hl: HL = HL + A
 C 0x6E86 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x6E90 lee la columna de la sala en la zona (uno mas al salir por la derecha)
@@ -394,6 +394,7 @@ C 0x7777 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x777A lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0x7783 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7786 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x7789 lee 1 al disparar algo (p11:A995)
 C 0x778E lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x7793 lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 C 0x77A1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -482,7 +483,9 @@ C 0x7B3A pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0
 C 0x7B3D pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7B44 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0x7B47 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0x7B4A lee el sitio de Snake en el paso 3 del estado 0x19 (p11:A090)
 C 0x7B51 suma_a_hl: HL = HL + A
+C 0x7B57 lee el sitio de Snake en el paso 3 del estado 0x19 (p11:A090)
 C 0x7B5D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x7B73 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0x7B79 apunta a los caracteres de un dibujo pasados a 4 bits

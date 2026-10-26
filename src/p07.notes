@@ -1965,6 +1965,7 @@ C 0xADCC lee el tipo del actor (0 = libre)
 C 0xADDE lee el tipo del actor (0 = libre)
 C 0xADEC dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
 C 0xADEF cae_el_actor_c: con el byte 0x10 distinto de 0xFF: cae (p04:8326, p04:82FD) guardando los registros
+C 0xAE07 lee 1 al cambiar de direccion lo lanzado de tipo 6 (p11:AAD6)
 C 0xAE0C caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0xAE10 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xAE17 caja_lanzado_snake: la caja de lo lanzado por Snake (IY) segun su tipo (p07:B73A): los 1, 2 y 9 de 1 x 2; el 6 por p07:B75E; los demas, ninguna
@@ -2021,19 +2022,19 @@ C 0xB00B caja_d800_df80: la caja de la ficha de 0xD800 en la sala de IY
 C 0xB021 dano_c_a_d800: el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
 C 0xB037 lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 C 0xB03C caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
-C 0xB040 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xB040 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0xB047 caja_cc80_aqui: la caja de la ficha de 0xCC80 si su tipo es el del sitio de Snake (1 normal, 2 en un sitio de 0xCBE0, 3 con 0xCA77, 4 en una sala especial) y esta en esta sala
 C 0xB052 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB06A p12_6e6c_iy: p12:6E6C con la ficha de IY guardando los registros
 C 0xB082 sonido_10: pide el sonido 0x10
-C 0xB085 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xB085 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0xB08D caja_cc80: la caja de la ficha de 0xCC80 (IY), si esta activa
 C 0xB092 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xB0A8 lee la fila de la sala del actor
 C 0xB0B0 lee la columna de la sala del actor
 C 0xB0C4 lee el tipo del actor (0 = libre)
 C 0xB0CF fin_de_cc80: la ficha de 0xCC80 (IY) se acaba: p12:6E6C, tipo 0 y p03:B1BE con C = 1 en su sitio (Y - 4 y X - 4, pares, hasta 0xB0) y su fila y columna
-C 0xB0E5 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xB0E5 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0xB0ED caja_cc80: la caja de la ficha de 0xCC80 (IY), si esta activa
 C 0xB0F2 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xB0F9 caja_d800_cc80: la caja de la ficha de 0xD800 en la sala de IY (desde el tipo 3; p07:BAD1 el 7, p07:BACE los demas)
@@ -2174,7 +2175,9 @@ C 0xB818 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xB81F lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB82B lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB832 lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB84A lee 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
 C 0xB84E sin_caja: NZ: sin caja
+C 0xB851 lee lo largo del arma 0x0C (0-4 sprites, p11:B295)
 C 0xB856 sin_caja: NZ: sin caja
 C 0xB859 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB862 suma_a_hl: HL = HL + A
@@ -2185,6 +2188,8 @@ C 0xB88D sin_caja: NZ: sin caja
 C 0xB890 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xB894 sin_caja: NZ: sin caja
 C 0xB898 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB8A3 lee la Y de la caja de 0xDFF8 (se mueve por 0xCA61)
+C 0xB8AE lee la X de la caja de 0xDFF8
 C 0xB8BB lee la Y de Snake
 C 0xB8BF lee la X de Snake
 C 0xB8C5 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
@@ -2200,10 +2205,10 @@ C 0xBA4F suma_a_hl: HL = HL + A
 C 0xBA79 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBB44 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBB4F sitio_toca_df80: acarreo si toca alguna de las 8 fichas de 0xDF80 de esta sala (p07:BDEF)
-C 0xBB55 apunta a 8 fichas de 16 bytes que mueve p11:B494
+C 0xBB55 apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][columna][cuenta] (p11:B380)
 C 0xBB5C caja_cc00: la caja de la ficha de 0xCC00 activa y en esta sala: en (Y + 0x0C, X + 4), 8 x 0x10 (acarreo)
 C 0xBB62 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
-C 0xBB71 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xBB71 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0xBB78 caja_cc80_b: la caja de la ficha de 0xCC80 activa y en esta sala: en (Y + 0x0C, X + 4), 8 x 0x10
 C 0xBB7E se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBB8D apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
@@ -2252,6 +2257,8 @@ C 0xBDFD lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xBE40 lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xBE46 lee la sala de la zona
 C 0xBE5D apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
+C 0xBE64 lee el tipo de lo lanzado por Snake
+C 0xBE6D lee la Y de lo lanzado por Snake
 C 0xBE70 tipo_que_entra: los tipos 1, 2 y 6 se miran (p07:BE9F); los demas, no
 C 0xBE8E lee la X de Snake
 C 0xBE94 lee la Y de Snake

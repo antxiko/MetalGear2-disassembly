@@ -529,6 +529,7 @@ C 0xA024 lee el tipo del actor (0 = libre)
 C 0xA02A lee el paso del actor
 C 0xA035 lee la sala de la zona
 C 0xA03B lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xA041 lee el paso de lo de la cosa 0x0F (1-5, p11:BC0C)
 C 0xA04B la espera del actor = 0x10
 C 0xA04F lee el paso del actor
 C 0xA058 el dibujo del actor (bit 0: el paso) = 0x00
@@ -1324,6 +1325,7 @@ C 0xB7DE gira_hacia_snake: la direccion hacia Snake, una espera y su velocidad
 C 0xB7E8 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xB7EB guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB7EE guarda 1 mientras Snake se da la vuelta
+C 0xB7F1 guarda 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
 C 0xB7F8 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xB7FB la espera del actor = 0x0C
 C 0xB7FF el dibujo del actor (bit 0: el paso) = 0x80

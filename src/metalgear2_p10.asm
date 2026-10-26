@@ -171,7 +171,7 @@ cab6_de_la_sala:		; p10:A10F y, sin 0xCAB6, p10:A0DB
 	or a			;a0d9
 	ret nz			;a0da   ; con 0xCAB6, nada mas
 ca8e_de_la_sala:		; 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0xA0, 0x90); y 0xCA8C = 0x40
-	ld hl,0ca8eh		;a0db
+	ld hl,0ca8eh		;a0db   ; apunta a 1-2: hacia donde va 0xCA89 (0 o 4; p10:A0DB)
 	ld (hl),000h		;a0de   ; 0xCA8E = 0
 	ld a,(0ca4ah)		;a0e0   ; lee la zona
 	cp 004h		;a0e3
@@ -196,7 +196,7 @@ ca8e_de_la_sala:		; 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sa
 pon_ca8e:
 	ld (hl),b			;a108   ; 0xCA8E
 	ld a,040h		;a109   ; 0xCA8C = 0x40
-	ld (0ca8ch),a		;a10b
+	ld (0ca8ch),a		;a10b   ; guarda la cuenta de 8/16 cuadros de 0xCA89
 	ret			;a10e
 ca9b_de_la_sala:		; 0xCA9B = 0; en la zona 0x0A: en las salas 0x0B, 0x0C, 0x10 y 0x11, 0xCA9B = 1; en las filas 3 y 6, 0xCB28 = 0 y 0xCB29 = 0x20
 	ld hl,0ca9bh		;a10f
@@ -2430,7 +2430,7 @@ dibujo_0f:
 	call sitio_0f		;b10b   ; sitio_0f: HL = el de p10:B119 por 0xCA90
 	jr copia_16x16		;b10e
 sitio_0f:		; HL = el de p10:B119 por 0xCA90
-	ld a,(0ca90h)		;b110
+	ld a,(0ca90h)		;b110   ; lee el paso de lo de la cosa 0x0F (1-5, p11:BC0C)
 	ld hl,0b119h		;b113   ; de p10:B119
 	jp 043f6h		;b116   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 
@@ -2448,7 +2448,7 @@ DATA_resto_B119:
 
 
 dibujo_10:		; HL = el de p10:B130 por 0xCA89
-	ld a,(0ca89h)		;b125
+	ld a,(0ca89h)		;b125   ; lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 	ld hl,0b130h		;b128   ; de p10:B130
 	call 043f6h		;b12b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jr $-64		;b12e
@@ -3209,15 +3209,15 @@ la_0d:		; la 0x0D: no con 0xCA64 ni donde p10:B6DF lo impide; hasta 10 veces (0x
 	cp 00ah		;b6cc
 	jr nc,no_b6ad		;b6ce
 	inc a			;b6d0   ; una mas
-	ld (0caf5h),a		;b6d1
+	ld (0caf5h),a		;b6d1   ; guarda cuantas veces se uso la cosa 0x0D (hasta 10)
 	xor a			;b6d4
-	ld (0caf2h),a		;b6d5
+	ld (0caf2h),a		;b6d5   ; guarda el paso de lo de 0xCAF1 (p11:BB1E)
 	ld a,001h		;b6d8   ; 0xCAF1 = 1
-	ld (0caf1h),a		;b6da
+	ld (0caf1h),a		;b6da   ; guarda 1 con lo de la cosa 0x0D en marcha (p10:B6BF)
 	and a			;b6dd
 	ret			;b6de
 donde_no_0d:		; acarreo con 0xCAF1, 0xD8A0, las salas especiales 0x29 y 2, las zonas 0x12, 0x13 y 0x0E, la zona 3 sala 6, la 7 salas 0x10-0x13 y la 0x0A salas 0x0B-0x0C y 0x10-0x11
-	ld a,(0caf1h)		;b6df
+	ld a,(0caf1h)		;b6df   ; lee 1 con lo de la cosa 0x0D en marcha (p10:B6BF)
 	or a			;b6e2
 	jr nz,no_b6ad		;b6e3   ; con 0xCAF1, no
 	ld a,(0d8a0h)		;b6e5

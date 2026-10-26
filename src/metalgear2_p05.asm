@@ -63,7 +63,7 @@ cambia_al_ver_e1c0:		; en la sala 0x0E con 0xE1C0, el tipo 7 (salvo en los pasos
 	ld a,(0cb21h)		;a03b   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00fh		;a03e
 	ret nz			;a040
-	ld a,(0ca90h)		;a041
+	ld a,(0ca90h)		;a041   ; lee el paso de lo de la cosa 0x0F (1-5, p11:BC0C)
 	cp 005h		;a044
 	ret nz			;a046
 	xor a			;a047
@@ -3382,7 +3382,7 @@ escena_de_b7e1:		; Snake en el estado 0 quieto, 0xCB3C = 1, 0x0C cuadros, el dib
 	ld (0cb01h),a		;b7e8   ; guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	ld (0cb00h),a		;b7eb   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld (0cb16h),a		;b7ee   ; guarda 1 mientras Snake se da la vuelta
-	ld (0cb44h),a		;b7f1
+	ld (0cb44h),a		;b7f1   ; guarda 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
 	inc a			;b7f4
 	ld (0cb3ch),a		;b7f5
 	ld (0cb14h),a		;b7f8   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)

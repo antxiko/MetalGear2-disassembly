@@ -1397,11 +1397,13 @@ C 0xA0BB apunta a la cuenta del modo de 0xCA61
 C 0xA0CF guarda 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xA0D3 ca9b_de_la_sala: 0xCA9B = 0; en la zona 0x0A: en las salas 0x0B, 0x0C, 0x10 y 0x11, 0xCA9B = 1; en las filas 3 y 6, 0xCB28 = 0 y 0xCB29 = 0x20
 C 0xA0D6 lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
+C 0xA0DB apunta a 1-2: hacia donde va 0xCA89 (0 o 4; p10:A0DB)
 C 0xA0E0 lee la zona
 C 0xA0E8 lee la sala de la zona
 C 0xA0EF lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA0F8 guarda 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 C 0xA103 mosaico_de_d8a4: con 0xCB21 = 0x20-0x22: borra el sitio de 0xD8A4 (p10:B3E5) y copia 0x10 x 0x10 de HL ahi (operacion 0xC8)
+C 0xA10B guarda la cuenta de 8/16 cuadros de 0xCA89
 C 0xA114 lee la zona
 C 0xA11A lee la sala de la zona
 C 0xA14F lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
@@ -1739,7 +1741,9 @@ C 0xB0F1 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 C 0xB0F4 sitio_0e: HL = (0x90, 0xB0), (0x90, 0xC0) o (0x90, 0xD0) segun 0xCA7B
 C 0xB0FC lee 0-3: el paso de la cosa 0x0E (p10:A1D2)
 C 0xB10B sitio_0f: HL = el de p10:B119 por 0xCA90
+C 0xB110 lee el paso de lo de la cosa 0x0F (1-5, p11:BC0C)
 C 0xB116 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB125 lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 C 0xB12B palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xB13A fondo_f2: el fondo al color 0x99
 C 0xB14D marco_b8be: 
@@ -1946,6 +1950,10 @@ C 0xB6A4 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB6AF lee la zona
 C 0xB6B6 lee la sala de la zona
 C 0xB6C5 donde_no_0d: acarreo con 0xCAF1, 0xD8A0, las salas especiales 0x29 y 2, las zonas 0x12, 0x13 y 0x0E, la zona 3 sala 6, la 7 salas 0x10-0x13 y la 0x0A salas 0x0B-0x0C y 0x10-0x11
+C 0xB6D1 guarda cuantas veces se uso la cosa 0x0D (hasta 10)
+C 0xB6D5 guarda el paso de lo de 0xCAF1 (p11:BB1E)
+C 0xB6DA guarda 1 con lo de la cosa 0x0D en marcha (p10:B6BF)
+C 0xB6DF lee 1 con lo de la cosa 0x0D en marcha (p10:B6BF)
 C 0xB6EB lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB6F6 lee la zona
 C 0xB713 lee la sala de la zona

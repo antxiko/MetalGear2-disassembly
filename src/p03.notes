@@ -1228,6 +1228,8 @@ C 0xA314 lee en la zona 6: lo ponen los dos disparos (el 2 apretado y el 1 recie
 C 0xA330 guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
 C 0xA333 guarda el paso de la animacion de andar (0-3)
 C 0xA336 dibujo_del_paso: el dibujo del paso (p02:9888)
+C 0xA33D guarda la cuenta de 3 cuadros del arma 2
+C 0xA340 guarda el disparo del arma 2 (0-7, su velocidad en p11:AA40)
 C 0xA34A lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA354 date_la_vuelta: si Snake esta dandose la vuelta, sigue (p02:93E5); si no, mira si se pide
 C 0xA357 mueve_a_snake: dandose la vuelta no se mueve
@@ -1302,6 +1304,7 @@ C 0xA5D6 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun
 C 0xA5DB guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA5E8 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques) y el byte siguiente (16 bits)
 C 0xA5EB guarda 1 mientras Snake se da la vuelta
+C 0xA5EE apunta a 1 con una ficha de 0xCC00 puesta (p11:B3A2)
 C 0xA5F6 guarda 1 mientras Snake se da la vuelta
 C 0xA5F9 usa_cb20: el disparo con lo de 0xCB20 (p03:AE9B); si se pudo, 0xCB52 y p03:BE60
 C 0xA610 sonido_0e: pide el sonido 0x0E
@@ -1525,11 +1528,14 @@ C 0xAD44 pon_cb28: 0xCB28 = B, 0xCB29 = C
 C 0xAD4C p02:9430
 C 0xAD52 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAD55 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
+C 0xAD58 lee 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
 C 0xAD5D estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xAD60 lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xAD65 lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 C 0xAD79 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAD7E suma_a_hl: HL = HL + A
+C 0xAD85 guarda la Y de la mira (p11:A7E3)
+C 0xAD8D guarda la X de la mira
 C 0xADF0 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xADFD lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAE00 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
@@ -1542,6 +1548,7 @@ C 0xAE29 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 iz
 C 0xAE2E lee la X de Snake
 C 0xAE44 a_p10_bc27: p10:BC27 con el banco 10 en 0xA000
 C 0xAE47 sonido_46: pide el sonido 0x46
+C 0xAE64 guarda 1 al disparar algo (p11:A995)
 C 0xAE67 dispara: dandose la vuelta, no
 C 0xAE6F pon_cb52: 0xCB52 = 0xCB20, salvo 0, 1 y 0x0C
 C 0xAE88 gasta_una: la cosa A una menos; con 1 y 2, nada mas; si se acaba, fuera de las manos y el mensaje de p10:B3E5 con 0xD874
@@ -1570,13 +1577,14 @@ C 0xAF44 choca_ficha: los tipos 3, 5, 7 y 8 no chocan con la sala
 C 0xAF4E fuera_de_la_sala_b: con 0xCB22 desde 0xB8, la Y; si no, la X desde 0xC0
 C 0xAF53 fuera_de_la_sala_b: con 0xCB22 desde 0xB8, la Y; si no, la X desde 0xC0
 C 0xAF59 fuera_de_la_sala: con la Y o la X desde 0xB8, se acaba (p03:B096)
-C 0xAF5C apunta a 8 fichas de 16 bytes que mueve p11:B494
+C 0xAF5C apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][columna][cuenta] (p11:B380)
 C 0xAF67 a_p11_b494: p11:B494 con el banco 11 en 0xA000
-C 0xAF73 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xAF73 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0xAF7E a_p11_b66e: p11:B66E con el banco 11 en 0xA000
 C 0xAF8A se_mueve: acarreo si la ficha se mueve: los tipos 3, 4 y 7 con el byte 1; el 8 sin el byte 0x0D (que se borra)
 C 0xAFE2 acaba_ficha: el tipo 8: el sonido 4 y 0xD44F = 0
 C 0xAFEA acaba_ficha: el tipo 8: el sonido 4 y 0xD44F = 0
+C 0xAFEE lee la Y de la mira (p11:A7E3)
 C 0xAFFA acaba_ficha: el tipo 8: el sonido 4 y 0xD44F = 0
 C 0xB003 acaba_ficha: el tipo 8: el sonido 4 y 0xD44F = 0
 C 0xB007 choca_con_la_sala: sin acarreo los tipos 3, 5, 7 y 8

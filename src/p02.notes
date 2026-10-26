@@ -1189,7 +1189,7 @@ C 0x8181 lee la zona
 C 0x8186 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x81A7 lee la zona
 C 0x81B0 lee la sala de la zona
-C 0x81C6 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0x81C6 apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0x81CC borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x81D4 lee la zona
 C 0x81DD lee la sala de la zona
@@ -1431,6 +1431,7 @@ C 0x8983 guarda con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0x898C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x8995 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x89C3 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0x89C8 guarda 1 con lo de la cosa 0x0D en marcha (p10:B6BF)
 C 0x89E9 borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
 C 0x8A0C a_p10_b3e5: p10:B3E5 con el banco 10 en 0xA000
 C 0x8A12 borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
@@ -1462,9 +1463,9 @@ C 0x8AF2 ca7b_empieza: 0xCA7B = 1, 0xCA7C-0xCA7D = 0x0200 y el bit 7 de 0xD7D7
 C 0x8AF7 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8AFA ficha_e1d8: la ficha 0xE1D8: 1, 0x80, 0x18, 0x18; el bit 5 de 0xD7D7 y fuera el 0 de 0xD7E2
 C 0x8AFF bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B02 p11:A3C4
+C 0x8B02 dfe8_cada_cuadro: con 0xDFE8: su paso (p11:A3E0), p11:A446, p11:A497, p11:A4AE y, con 0xE060, p11:A4F0 y p11:A583
 C 0x8B07 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B0A p11:A389
+C 0x8B0A ficha_dfe8: 0xDFE8 = 0xE060 = 0; en la zona 6 sala 0x10: 0xDFE9 = 0, 0xDFE8 = 1, 0xDFEA = 0xA8, p11:A446, p11:A497 y el caracter 0x9D en dos sitios de 0xDD96, 0xDDAE y 0xDDC6 del mapa
 C 0x8B0F bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B12 cb21_9_sube: con 0xCB21 = 9 en la zona 0x0D sala 5, con 0xE1D5 y 0xCA61 = 1, Snake por encima de Y = 0x28 y arriba pulsado: sin alerta, el sonido 0x8B, a la zona 0x0A (fila 1, columna 6), fuera el bit 2 de 0xD7DD, 0xCB39 = 0, la musica de p01:6B45 al cuadro siguiente, Snake en el estado 4, 0xD4EA = 0, los sprites 0-3 fuera, la ficha 0xE1D0 (p09:A061) y las rachas de p41:BA0F
 C 0x8B17 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1472,13 +1473,13 @@ C 0x8B1A e1d0_cada_cuadro: en la zona 0x0A con 0xE1D0: su paso (p09:A093) y p11:
 C 0x8B1F bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B22 pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 C 0x8B27 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B2A p11:BBFB
+C 0x8B2A ca90_empieza: 0xCA90 = 1, 0xCA91-0xCA92 = 0x0600 y el bit 6 de 0xD7D7
 C 0x8B2F bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B32 p11:AF47
+C 0x8B32 snake_sobre_d760: con la ficha 0xD760 de su sitio a menos de 2 salas (si no, fuera, p11:AFE1) y fuera del estado 0x0B: en el estado 2, en su sala, con Snake a menos de 4 de su X + 8: segun la Y, 0xCB28 = 2 (0xCB29 = 0x20 - lo que entra) o 1 (0xCB29 = lo que pasa), y 0xCA8D igual; si no, 0xCA8D = 0xCB28 = 0 y 0xCB29 = 0x20
 C 0x8B37 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B3A p11:B056
+C 0x8B3A lanzado_5_paso: lo lanzado de tipo 5 por su paso (p11:B05C)
 C 0x8B3F bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B42 p11:AEE4
+C 0x8B42 quita_d760: la ficha 0xD760 fuera: tipo 0, 0xCB52 = 0 y el fondo de vuelta a su sitio en la otra pagina
 C 0x8B47 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B4A dfd8_cada_cuadro: sin 0xE040: p09:A258 y p09:A2EB; sin los bits 5-6 de 0xD7D3: con 0xDFD8 p09:A196, 0xDFD8 = 0 y, si p09:A434 da Z, la ficha 0xDFD8 en (0x60, 0x70) de 2 x 1 (p09:A4CD), las rachas de p01:864A y p03:B5B5
 C 0x8B4D bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1487,27 +1488,27 @@ C 0x8B53 sin_dfd8_ni_e248: sin los bits 5-6 de 0xD7D3, la ficha 0xDFD8 a cero; s
 C 0x8B58 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B5B escenas_que_empiezan: sin escena (0xE040): las que pueden empezar en esta sala (p09:A27C, A2BC, A304, A353, A3B1, A3F2, A440, A47D); con el bit 4 de 0xD7D0 y sin el 5 de 0xD7D1, en la zona 0x11 sala 5, la cuenta de 0xCAD8; a cero, 0xCB75 al menos 1 y p04:92EB; y con 0xCB76 y nada lanzado por Snake, la escena 9 (Snake quieto, la bandera 0x0A, el sonido 5...)
 C 0x8B60 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B63 p11:B23F
+C 0x8B63 cb44_cada_cuadro: con 0xCB44: sin sprites 4-7, sus colores (p11:B35A); con 1, p11:B305; con 2, p11:B256 y los sprites (p11:B29B)
 C 0x8B68 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B6B p11:BD31
+C 0x8B6B parado_sin_lanzar: acarreo si Snake no avanza (0xCB0F) y no hay nada lanzado
 C 0x8B70 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B73 p14:B712
 C 0x8B78 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B7B bandera_por_cosa: segun la cosa A: la 0x17 el bit 6 de 0xD7D6; la 0x2A el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D el 5 de 0xD7D9; la 0x0C el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 fuera el 6 de 0xD7E1
 C 0x8B80 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B83 p11:B494
+C 0x8B83 ficha_cc00_paso: con lo de p06:AA49 (0xD881-0xD883, 0xD678-0xD69C), sin escena ni 0xCB3C: la ficha de 0xCC00 (IX): con el bit 7 (la cuenta del byte 6) o, sin el, con el disparo 2 recien pulsado, del sitio de Snake: el paso siguiente; en el paso 1, p11:B513
 C 0x8B88 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B8B p11:B66E
+C 0x8B8B cc80_paso: fuera del paso 1, salvo con Snake con el dibujo 4, el paso siguiente
 C 0x8B90 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B93 p11:A000
+C 0x8B93 snake_estado_19: el estado 0x19 de Snake (p03:A216; lo pone p06:A0AB): por su paso 0xCB48 (p11:A006, 8 pasos)
 C 0x8B98 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B9B p11:A117
+C 0x8B9B golpe_en_la_sala: acarreo si (D, E) cae en una caja de p11:A26F de esta sala sin su bandera de 0xDFC0
 C 0x8BA0 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BA3 numeros_de_fuera: sin 0xD8C0, en las zonas 1-6, fila 3 columna 7: los numeros de las fichas 0 y 1 de 0xDC80 (p07:AB66)
 C 0x8BA8 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BAB p11:B9C1
+C 0x8BAB especial_2a_sonido: sin el bit 1 de 0xD7D1: sin salir, en la sala especial 0x2A sala 0, una vez (0xCADE) el sonido 0x28; fuera de ella, con 0xCADE, a cero, 0xCABF = 0 y el sonido 5
 C 0x8BB0 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BB3 p11:BA03
+C 0x8BB3 se_puede_por_el_suelo: acarreo si Snake no puede hacer lo suyo por los 3 caracteres de HL: en el estado 2, por p11:BA42 y p11:BAA0; con 0xCB21 = 0x0A, p11:BA42, p11:BAF9 y p11:BAA0; con 0x0B, p11:BAF9 y p11:BAA0; en el 0x0B o en la zona 6 sala 0x10, se puede
 C 0x8BB8 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BBB vida_de_cosa: sin 0xCAB6, con la cosa 0x20-0x22 elegida (desde p07:B3CF, la vida a cero): la vida al maximo, una menos de ella y, acabada, a cero, 0xCB21 = 0 y (sin 0xD8A4) su sitio borrado
 C 0x8BC0 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1521,7 +1522,7 @@ C 0x8BDB caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) baj
 C 0x8BE0 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BE3 caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0x8BE8 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BEB p11:BDBD
+C 0x8BEB quita_de_sitio_c: a cero las fichas de 0xCC00, 0xCC80 y 0xD760 del sitio C (sin el bit 7)
 C 0x8BEE bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BF1 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BF4 fichas_e100_cada_cuadro: sin salir ni 0xCA77 (zona 0x10 solo con 0xCA43 = 2): cada ficha de 0xE100 de esta sala con Snake (p10:BF14)
@@ -1597,7 +1598,7 @@ C 0x8D56 rehace_marcador: el marcador: lineas, marco y barra de vida
 C 0x8D5B cambia_de_zona: pasa a la zona A
 C 0x8D60 musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x8D65 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8D68 p11:BDBD
+C 0x8D68 quita_de_sitio_c: a cero las fichas de 0xCC00, 0xCC80 y 0xD760 del sitio C (sin el bit 7)
 C 0x8D6D bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8D70 marcador_de_lo_elegido: en el marcador: el dibujo de lo de 0xCB20 (p56:A6AF) con su cuenta en (0xE0, 0x88) y el de 0xCB21 (p56:A6CB) con la suya (0x20-0x22) en (0xE0, 0xB8)
 C 0x8D75 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1611,7 +1612,7 @@ C 0x8D90 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x8D93 suma_7: suma 7 a la cosa 1 (B = 1, C = 7)
 C 0x8D98 cambia_de_zona: pasa a la zona A
 C 0x8D9D bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8DA0 p11:AEE4
+C 0x8DA0 quita_d760: la ficha 0xD760 fuera: tipo 0, 0xCB52 = 0 y el fondo de vuelta a su sitio en la otra pagina
 C 0x8DA5 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DA8 suma_una: la cosa A: la tiene y una mas
 C 0x8DAD bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1627,7 +1628,7 @@ C 0x8DCE pon_cb3d: salvo en el estado 0x14: 0xCB3D = 1 y 0xCB3E = 16 (si no esta
 C 0x8DD3 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DD6 lleva_cosa: desde la 0x32, solo el rotulo y 0xCAC7 = 1
 C 0x8DDB bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8DDE p11:BDBD
+C 0x8DDE quita_de_sitio_c: a cero las fichas de 0xCC00, 0xCC80 y 0xD760 del sitio C (sin el bit 7)
 C 0x8DE3 cambia_de_zona: pasa a la zona A
 C 0x8DE8 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DEB rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
@@ -1662,15 +1663,15 @@ C 0x8E81 musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x8E86 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E89 paleta_b98a: la paleta de p56:B98A
 C 0x8E8E bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8E91 p11:BE0F
+C 0x8E91 cb78_cada_2: cada 2 cuadros (0xCB7C), hasta el 0x17 de 0xCB7B: 0xCB78 = 1, su sitio de p11:BE3D a 0xCB79-0xCB7A, 0xCB7B uno mas y el sonido 0x43; al 0x17, 0xCB78 = 0
 C 0x8E96 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8E99 p11:BE6B
+C 0x8E99 sprite_cb78: con 0xCB78, el sprite 4 en 0xCB79-0xCB7A con el patron 0xF0 (0xF4 a medias) y color 7
 C 0x8E9E bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8EA1 p11:BE94
+C 0x8EA1 sin_sprites_4_7_b: los sprites 4-7 fuera
 C 0x8EA6 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8EA9 p11:BEA2
+C 0x8EA9 sprites_de_caac: con los mensajes de los bancos 50-51: sin 0xCAAC, los sprites 4-7 fuera; con el, fuera y los de p11:BECB con color 7
 C 0x8EAE bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8EB1 p11:BF0F
+C 0x8EB1 sprites_e1d0: los 14 sprites de la ficha 0xE1D0 (p11:BF14) y sus colores (p11:BF5D)
 C 0x8EB6 rutina_de_fase: HL = la rutina de la zona en la lista de la fase 0xCA22 (p06:B40C)
 C 0x8EB9 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8EBC guarda la rutina de la musica que suena (16 bits; p00:5B50)
@@ -2094,6 +2095,7 @@ C 0x9ECA a_p09_b62f: p09:B62F con el banco 9 en 0xA000
 C 0x9ED9 a_p12_68e3: p12:68E3 con el banco 12 en 0x6000
 C 0x9EE2 a_p06_a598: p06:A598 con el banco 6 en 0xA000
 C 0x9EFF a_p10_a234: p10:A234 con el banco 10 en 0xA000
+C 0x9F38 apunta a la cuenta de 8/16 cuadros de 0xCA89
 C 0x9F7D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x9F91 sonido_66: pide el sonido 0x66
 C 0x9F99 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna

@@ -3304,7 +3304,7 @@ L_5310:
 	call bancos_1_2_6		;53a8   ; bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ac26h		;53ab   ; fichas_e000: 0xE000-0xE03F a cero; en la zona 7, salas 2, 3, 4 y 8, las 8 fichas de 0xE000 desde p06:AC82, p06:AC9A, p06:ACB2 o p06:ACCA (3 bytes cada una)
 	call bancos_11		;53ae   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a601h		;53b1   ; p11:A601
+	call 0a601h		;53b1   ; cc00_y_aeb2: las fichas de 0xCC00 pintadas (p11:A607) y p11:AEB2
 	call bancos_1_2_3		;53b4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b108h		;53b7   ; llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 	call 08fdfh		;53ba   ; cosas_de_la_sala: las cosas de la sala (0xD7C0) de las listas de p06 y las pinta
@@ -3610,7 +3610,7 @@ L_55DA:
 	call 0a000h		;5629   ; ca61_de_la_sala: 0xE1D5 = 0; en un sitio, 0xCA61 = 1; con 0xD8C0, 2; si no, 0xCAB2 = 0xF0 y 0xCAB0 = el modo de esta sala en p10:A054 ([zona][sala][modo], la sala 0x39 es la especial; 0xFF acaba), 2 si no esta
 	call 0a82fh		;562c   ; banderas_de_la_zona: a cero bits de 0xD7D2, 0xD7D5-0xD7D6, 0xD7D8, 0xD7DB-0xD7DC, 0xD7E0-0xD7E1 y 0xD7E3; el bit 5 o 6 de 0xD7DB segun la zona (p10:A877), lo de cada zona (p10:A8AF) y p10:AA56
 	call bancos_1_2_11		;562f   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a601h		;5632   ; p11:A601
+	call 0a601h		;5632   ; cc00_y_aeb2: las fichas de 0xCC00 pintadas (p11:A607) y p11:AEB2
 	call bancos_1_2_3		;5635   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b108h		;5638   ; llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 	call bancos_14		;563b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4774,7 +4774,7 @@ L_5E6D:
 	call z,08b70h		;5e7b   ; a_p14_b712: p14:B712 con el banco 14 en 0xA000
 	call 0924dh		;5e7e   ; pinta_cosas: las 4 cosas de 0xD7C0 que no tengan el bit 7 del numero
 	call bancos_11		;5e81   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a601h		;5e84   ; p11:A601
+	call 0a601h		;5e84   ; cc00_y_aeb2: las fichas de 0xCC00 pintadas (p11:A607) y p11:AEB2
 	call bancos_1_2_3		;5e87   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jr L_5EB6		;5e8a
 L_5E8C:
