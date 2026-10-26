@@ -898,6 +898,7 @@ C 0xA5F5 suma_a_hl: HL = HL + A
 C 0xA60A guarda el dibujo del actor (bit 0: el paso)
 C 0xA60D da_vueltas: el dibujo (p08:A567; el 0x17 no); cada 4 cuadros (2 en otros pasos) anda (p04:902E) con el sonido (p08:A55A); cada 2, su sitio sobre el circulo de p08:BF7D (Y del byte 0x12 y X del 0x13, con la espera como angulo, 0-0x3F) que gira segun el byte 0x0F; p14:B88F y el centro (p08:A51C)
 C 0xA618 lee el tipo del actor (0 = libre)
+C 0xA62B lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 C 0xA631 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA63A snake_cerca_de_ix: acarreo si en esta sala Snake esta a menos de B en X y de B + 0x10 en Y
 C 0xA63F lee la velocidad del actor en Y (alta)
@@ -936,6 +937,7 @@ C 0xA7EB apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xA7F1 lee el tipo del actor (0 = libre)
 C 0xA7F8 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xA806 lee la sala de la zona
+C 0xA80B lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 C 0xA810 lee 1 en el estado 2 de Snake
 C 0xA815 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA82C apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
@@ -981,6 +983,7 @@ C 0xA987 guarda la velocidad del actor en Y (alta)
 C 0xA98A guarda la velocidad del actor en X (baja)
 C 0xA98D guarda la velocidad del actor en X (alta)
 C 0xA991 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+C 0xA9A0 lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 C 0xA9A6 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA9AE anda_cada_19: cada tantos cuadros como el byte 0x19, anda (p04:902E)
 C 0xA9B7 OR con la velocidad del actor en Y (baja)

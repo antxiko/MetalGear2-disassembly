@@ -3372,7 +3372,7 @@ caja_dff8:		; con 0xDFF8 y 0xCA61: la caja segun 0xCA61 (p07:B89B)
 	ld a,(0dff8h)		;b889   ; lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	or a			;b88c
 	jp z,sin_caja		;b88d   ; sin_caja: NZ: sin caja
-	ld a,(0ca61h)		;b890
+	ld a,(0ca61h)		;b890   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	or a			;b893
 	jp z,sin_caja		;b894   ; sin_caja: NZ: sin caja
 	dec a			;b897
@@ -3800,7 +3800,7 @@ siguiente_cosa:
 	or a			;bbdf   ; ninguna: sin acarreo
 	ret			;bbe0
 toca_e070:		; acarreo si toca alguna de las 2 fichas activas de 0xE070 (p07:BE2D)
-	ld ix,0e070h		;bbe1   ; apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+	ld ix,0e070h		;bbe1   ; apunta a 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 	ld b,002h		;bbe5
 ficha_e070:
 	ld a,(ix+000h)		;bbe7

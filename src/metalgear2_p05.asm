@@ -45,7 +45,7 @@ cambia_al_ver_e1c0:		; en la sala 0x0E con 0xE1C0, el tipo 7 (salvo en los pasos
 	ld a,(0ca4bh)		;a019   ; lee la sala de la zona
 	cp 00eh		;a01c
 	ret nz			;a01e
-	ld a,(0e1c0h)		;a01f
+	ld a,(0e1c0h)		;a01f   ; lee 1-2: el estado de lo de la zona 0x0A sala 0x0E (p10:BC0F)
 	and a			;a022
 	ret z			;a023
 	ld a,(ix+000h)		;a024   ; lee el tipo del actor (0 = libre)
@@ -128,7 +128,7 @@ e1c0_a_2:		; al acabar la espera: 0xE1C0 = 2, la fase al menos 8 (y la musica), 
 	dec (ix+00eh)		;a0bc   ; baja la espera del actor
 	ret nz			;a0bf
 	ld a,002h		;a0c0
-	ld (0e1c0h),a		;a0c2
+	ld (0e1c0h),a		;a0c2   ; guarda 1-2: el estado de lo de la zona 0x0A sala 0x0E (p10:BC0F)
 	ld hl,0ca22h		;a0c5   ; apunta a la fase de la partida (indice de las listas de p06:B40C)
 	ld a,(hl)			;a0c8
 	cp 008h		;a0c9
@@ -4090,7 +4090,7 @@ DATA_resto_BD58:
 
 sala_5_paso_0:		; 0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
 	xor a			;bd84
-	ld (0e070h),a		;bd85   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+	ld (0e070h),a		;bd85   ; guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 	ld (0d500h),a		;bd88   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld (0d510h),a		;bd8b
 	inc a			;bd8e
@@ -4354,7 +4354,7 @@ sala_5_fin:		; al acabar la espera: el sonido 0x93, la musica de la zona, sin sp
 	jp paso_siguiente_h		;bf99   ; paso_siguiente_h:
 sala_5_snake_baja:		; 0xE070 = 0; con el bit 5 de 0xD7D9, el bit 4, Snake hacia abajo en el estado 0x17
 	xor a			;bf9c
-	ld (0e070h),a		;bf9d   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+	ld (0e070h),a		;bf9d   ; guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 	ld a,(0d7d9h)		;bfa0
 	and 020h		;bfa3
 	ret z			;bfa5
@@ -4396,5 +4396,5 @@ sala_5_espera_y_sonido:		; tras la espera, el sonido 5; despues 0xE070 = 1 y su 
 	jp 06b12h		;bff5   ; sonido_05: pide el sonido 0x05
 L_BFF8:
 	ld a,001h		;bff8
-	ld (0e070h),a		;bffa   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+	ld (0e070h),a		;bffa   ; guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 	jp 08c65h		;bffd   ; bandera_y_b14e:

@@ -4510,7 +4510,7 @@ dice_el_arma:		; la cuenta de 0xCB20 (0xD704 fuera del paso 0) en 0xE088 (p10:B9
 	or a			;be13
 	ld a,(0cb20h)		;be14   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	jr z,L_BE1C		;be17
-	ld a,(0d704h)		;be19
+	ld a,(0d704h)		;be19   ; lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 L_BE1C:
 	dec a			;be1c
 	ld de,0e088h		;be1d
@@ -4520,7 +4520,7 @@ dice_el_equipo:		; con 0xCB21 (0xD704 fuera del paso 0) entre 0x20 y 0x22, su cu
 	or a			;be25
 	ld a,(0cb21h)		;be26   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	jr z,L_BE2E		;be29
-	ld a,(0d704h)		;be2b
+	ld a,(0d704h)		;be2b   ; lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 L_BE2E:
 	cp 020h		;be2e   ; de 0x20 a 0x22...
 	ret c			;be30

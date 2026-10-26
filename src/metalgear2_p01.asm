@@ -753,7 +753,7 @@ palabra_8042_d706:		; HL = la palabra 0xD706 de la tabla de p50:8042
 	call 04122h		;64a5   ; bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,08042h		;64a8
 	call 043fch		;64ab   ; lee_palabra: HL = la palabra que hay en HL
-	ld a,(0d706h)		;64ae
+	ld a,(0d706h)		;64ae   ; lee 1 al salir de F2/F3 (p10:B897)
 	call 043f6h		;64b1   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jp 04176h		;64b4   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 letrero_de_50:		; el letrero con sitio de la palabra HL del banco 50
@@ -2381,7 +2381,7 @@ dibujos_8114_en_e000:		; los dibujos de p52:8114 en la VRAM de 0xE000
 	call 04d46h		;6f22   ; dibujos_en_e000: en la VRAM de 0xE000
 	jr L_6F16		;6f25
 rachas_de_ca61:		; con 0xCA61, las rachas A - 1 de la tabla de p41:BC04
-	ld a,(0ca61h)		;6f27
+	ld a,(0ca61h)		;6f27   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	or a			;6f2a
 	ret z			;6f2b
 	call 04162h		;6f2c   ; bancos_40_41: pone el 40 en 0x8000, el 41 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3096,7 +3096,7 @@ tecla_f2_f3:		; si se puede (p06:AA49, acarreo) y sin 0xCA58: 0xD701 = 0 y el pa
 	or a			;7497
 	ret nz			;7498
 	xor a			;7499
-	ld (0d701h),a		;749a
+	ld (0d701h),a		;749a   ; guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
 	ld a,b			;749d
 	jp L_73AC		;749e
 tecla_f4:		; con 0xD8A4 no
@@ -3147,14 +3147,14 @@ paso_1:		; el paso 1: a la sala de al lado y otra vez el paso 0
 paso_2:		; el paso 2 (F2): p10:AED6 hasta 0xD706
 	call 092f8h		;74f7   ; a_p10_aed6: p10:AED6 con el banco 10 en 0xA000
 	call fin_del_paso		;74fa   ; fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
-	ld a,(0d706h)		;74fd
+	ld a,(0d706h)		;74fd   ; lee 1 al salir de F2/F3 (p10:B897)
 	or a			;7500
 	ret z			;7501
 	jp L_73AB		;7502
 paso_3:		; el paso 3 (F3): p10:AF30 hasta 0xD706; con 0xCB21 = 2, el paso 0x0C
 	call 09301h		;7505   ; a_p10_af30: p10:AF30 con el banco 10 en 0xA000
 	call fin_del_paso		;7508   ; fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
-	ld a,(0d706h)		;750b
+	ld a,(0d706h)		;750b   ; lee 1 al salir de F2/F3 (p10:B897)
 	or a			;750e
 	ret z			;750f
 	ld a,(0cb21h)		;7510   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -3551,12 +3551,12 @@ L_77EA:
 	call 041efh		;78a6   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b761h		;78a9   ; p14:B761
 	call 041cdh		;78ac   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a170h		;78af   ; p10:A170
-	call 0a067h		;78b2   ; p10:A067
-	call 0a143h		;78b5   ; p10:A143
-	call 0a4f1h		;78b8   ; p10:A4F1
-	call 0a1d2h		;78bb   ; p10:A1D2
-	call 0a24dh		;78be   ; p10:A24D
+	call 0a170h		;78af   ; cab6_cuenta: en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0xA0, 0x80)
+	call 0a067h		;78b2   ; ca61_cada_cuadro: fuera de los sitios, de 0xD8C0 y sin 0xDFF8: por el modo 0xCAB0 (p10:A07C)
+	call 0a143h		;78b5   ; cb39_cb3f: sin el bit 2 de 0xD7D5 y con el 4, con 0xCB3F y sin 0xCB39: 0xCB39 = 1, el bit 3 de 0xD7D5 y 0xCB3A = 0x1000
+	call 0a4f1h		;78b8   ; fichas_e070_cada_cuadro: las dos fichas de 0xE070 (la segunda espera a que la primera deje el paso 1): paso 0 con Snake cerca (p10:A5EC) guarda el fondo y el sonido 0x45; paso 1 se abre de 2 en 2 (p10:A535); paso 2 en adelante, p10:A5C2
+	call 0a1d2h		;78bb   ; ca7b_cada_cuadro: con 0xCA7B en 1 o 2: la cuenta de 0xCA7C-0xCA7D; al acabar, 0xCA7B uno mas (en el 1, otra cuenta de 0x200) y el mosaico de 0xD8A4 segun 0xCA7B (p10:A204); al acabar el 2, ademas la ficha 0xE1D8 (p10:A234)
+	call 0a24dh		;78be   ; e1d8_cada_cuadro: con 0xE1D8, la cuenta de 0xE1D9 (a 0, 0x80); en 3, 2 y 1, si se tiene la cosa 0x22 (0xD6BC), 0x21 (0xD6B8) o 0x20 (0xD6B4), p03:BEB7 y p03:BEB2; si se acaba, a cero y, con ella en 0xCB21, borra el sitio de 0xD8A4
 	call 041d2h		;78c1   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b8c2h		;78c4   ; p11:B8C2
 	call 0bb49h		;78c7   ; p11:BB49

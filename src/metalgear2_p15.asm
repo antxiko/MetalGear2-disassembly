@@ -1761,7 +1761,7 @@ L_AB4F:
 	ld (0d44ch),a		;ab67
 	ld (0d44dh),a		;ab6a
 	ld (0d44eh),a		;ab6d
-	ld (0e070h),a		;ab70   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+	ld (0e070h),a		;ab70   ; guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 	ld (0e078h),a		;ab73
 	pop bc			;ab76
 	call L_ABB9		;ab77

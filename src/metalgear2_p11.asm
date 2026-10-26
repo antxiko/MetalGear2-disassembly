@@ -3425,7 +3425,7 @@ L_B885:
 	call 06f27h		;b89d   ; rachas_de_ca61: con 0xCA61, las rachas A - 1 de la tabla de p41:BC04
 	jp 06cceh		;b8a0   ; sonido_67: pide el sonido 0x67
 L_B8A3:
-	ld a,(0ca61h)		;b8a3
+	ld a,(0ca61h)		;b8a3   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	dec a			;b8a6
 	add a,a			;b8a7
 	ld hl,0b8bah		;b8a8
@@ -3499,7 +3499,7 @@ L_B901:
 	ld (hl),000h		;b904
 	ret			;b906
 L_B907:
-	ld a,(0ca61h)		;b907
+	ld a,(0ca61h)		;b907   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	or a			;b90a
 	ret z			;b90b
 	dec a			;b90c
@@ -3552,7 +3552,7 @@ L_B938:
 	ret z			;b949
 	call L_B95A		;b94a
 	call L_B974		;b94d
-	ld a,(0ca61h)		;b950
+	ld a,(0ca61h)		;b950   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	or a			;b953
 	ret z			;b954
 	call L_B99E		;b955
@@ -4128,7 +4128,7 @@ L_BCD1:
 	jr z,L_BD1C		;bcf0
 	cp 00bh		;bcf2
 	jr z,L_BD1C		;bcf4
-	ld a,(0ca61h)		;bcf6
+	ld a,(0ca61h)		;bcf6   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	or a			;bcf9
 	ret z			;bcfa
 	ld a,(0cb27h)		;bcfb
@@ -4180,7 +4180,7 @@ L_BD46:
 	jp 04767h		;bd51   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_BD54:
 	ld l,0c4h		;bd54
-	ld a,(0ca61h)		;bd56
+	ld a,(0ca61h)		;bd56   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	cp 003h		;bd59
 	jr c,L_BD5E		;bd5b
 	inc l			;bd5d
@@ -4204,7 +4204,7 @@ L_BD70:
 	add a,a			;bd75
 	add a,a			;bd76
 	ld b,a			;bd77
-	ld a,(0ca61h)		;bd78
+	ld a,(0ca61h)		;bd78   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	dec a			;bd7b
 	add a,a			;bd7c
 	add a,b			;bd7d

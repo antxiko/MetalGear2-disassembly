@@ -2588,9 +2588,9 @@ L_9549:
 	call 04534h		;954f   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
 	jp 04179h		;9552   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9555:
-	ld hl,0d705h		;9555
+	ld hl,0d705h		;9555   ; apunta a cuantas cosas hay en la pantalla de F2/F3
 	inc (hl)			;9558
-	ld a,(0d701h)		;9559
+	ld a,(0d701h)		;9559   ; lee 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
 	call 0424dh		;955c   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
@@ -2654,14 +2654,14 @@ L_95D6:
 	call L_9522		;95f8
 	call 0715eh		;95fb   ; mosaico_bb4a: el mosaico en rachas de p54:BB4A (0x0B x 0x10) en X = 0x40, Y = 0x41
 	call L_9549		;95fe
-	ld hl,0d703h		;9601
+	ld hl,0d703h		;9601   ; apunta a la fila del cursor en F2/F3
 	ld (hl),006h		;9604
-	ld hl,0d70bh		;9606
+	ld hl,0d70bh		;9606   ; apunta a el cursor de F2 guardado (columna, fila)
 	ld (hl),001h		;9609
 	inc l			;960b
 	ld (hl),000h		;960c
 L_960E:
-	ld hl,0d701h		;960e
+	ld hl,0d701h		;960e   ; apunta a 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
 	inc (hl)			;9611
 	ret			;9612
 L_9613:
@@ -2695,30 +2695,30 @@ L_9640:
 	call L_9EC8		;9640
 	call L_9DA7		;9643
 	call L_9D0D		;9646
-	ld hl,0d703h		;9649
+	ld hl,0d703h		;9649   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;964c
 	ret nz			;964d
 	ld (hl),004h		;964e
 	call L_9668		;9650
 	call L_9674		;9653
 	call L_9685		;9656
-	ld hl,0d706h		;9659
+	ld hl,0d706h		;9659   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	inc (hl)			;965c
 	ld a,(hl)			;965d
 	cp 058h		;965e
 	ret c			;9660
-	ld hl,0d703h		;9661
+	ld hl,0d703h		;9661   ; apunta a la fila del cursor en F2/F3
 	ld (hl),000h		;9664
 	jr L_960E		;9666
 L_9668:
 	call 04650h		;9668   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	ld a,(0d706h)		;966b
+	ld a,(0d706h)		;966b   ; lee 1 al salir de F2/F3 (p10:B897)
 	ld b,a			;966e
 	ld c,017h		;966f
 	jp 00047h		;9671   ; BIOS WRTVDP - Writes data in the VDP-register
 L_9674:
 	ld a,040h		;9674
-	ld hl,0d706h		;9676
+	ld hl,0d706h		;9676   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	add a,(hl)			;9679
 	ld e,a			;967a
 	ld hl,04000h		;967b
@@ -2726,7 +2726,7 @@ L_9674:
 	ld a,001h		;9680
 	jp 047abh		;9682   ; copia_en_y: orden YMMM del VDP
 L_9685:
-	ld hl,0d706h		;9685
+	ld hl,0d706h		;9685   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	ld e,(hl)			;9688
 	ld a,e			;9689
 	ld b,e			;968a
@@ -2749,7 +2749,7 @@ L_96A3:
 	call L_9EC8		;96a3
 	call L_9DA7		;96a6
 	call L_9D0D		;96a9
-	ld hl,0d703h		;96ac
+	ld hl,0d703h		;96ac   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;96af
 	ret nz			;96b0
 	ld (hl),002h		;96b1
@@ -2759,38 +2759,38 @@ L_96B9:
 	call L_9EC8		;96b9
 	call L_9DA7		;96bc
 	call L_9D0D		;96bf
-	ld hl,0d703h		;96c2
+	ld hl,0d703h		;96c2   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;96c5
 	ret nz			;96c6
 	ld (hl),002h		;96c7
 	call L_9668		;96c9
 	call L_9674		;96cc
 	call L_9685		;96cf
-	ld hl,0d706h		;96d2
+	ld hl,0d706h		;96d2   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	inc (hl)			;96d5
 	ld a,(hl)			;96d6
 	cp 084h		;96d7
 	jp z,06be8h		;96d9   ; orden_sonido_f6: la orden 0xF6 al sonido
 	cp 0b0h		;96dc
 	ret c			;96de
-	ld hl,0d703h		;96df
+	ld hl,0d703h		;96df   ; apunta a la fila del cursor en F2/F3
 	ld (hl),040h		;96e2
 	jp L_960E		;96e4
 L_96E7:
 	call L_9DA7		;96e7
-	ld hl,0d703h		;96ea
+	ld hl,0d703h		;96ea   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;96ed
 	ret nz			;96ee
 	ld (hl),008h		;96ef
-	ld hl,0d706h		;96f1
+	ld hl,0d706h		;96f1   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	ld (hl),007h		;96f4
 	jp L_960E		;96f6
 L_96F9:
-	ld hl,0d703h		;96f9
+	ld hl,0d703h		;96f9   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;96fc
 	ret nz			;96fd
 	ld (hl),006h		;96fe
-	ld hl,0d706h		;9700
+	ld hl,0d706h		;9700   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	dec (hl)			;9703
 	ld a,(hl)			;9704
 	call z,L_960E		;9705
@@ -2819,12 +2819,12 @@ L_9715:
 	call 06bc0h		;9731   ; sonido_a3: pide el sonido 0xA3 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ld a,0c0h		;9734
 	ld (0d709h),a		;9736
-	ld hl,0d703h		;9739
+	ld hl,0d703h		;9739   ; apunta a la fila del cursor en F2/F3
 	ld (hl),080h		;973c
 	jp L_960E		;973e
 L_9741:
 	call L_9F4C		;9741
-	ld hl,0d703h		;9744
+	ld hl,0d703h		;9744   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9747
 	ret nz			;9748
 	ld (hl),004h		;9749
@@ -2832,7 +2832,7 @@ L_9741:
 L_974E:
 	call L_9EFD		;974e
 	call L_9F4C		;9751
-	ld hl,0d703h		;9754
+	ld hl,0d703h		;9754   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9757
 	ret nz			;9758
 	ld (hl),004h		;9759
@@ -2841,16 +2841,16 @@ L_974E:
 	ld a,(hl)			;975f
 	cp 080h		;9760
 	ret nc			;9762
-	ld hl,0d70ah		;9763
+	ld hl,0d70ah		;9763   ; apunta a 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
 	ld (hl),000h		;9766
 	jp L_960E		;9768
 L_976B:
 	call L_9F29		;976b
 	call L_9F4C		;976e
-	ld hl,0d703h		;9771
+	ld hl,0d703h		;9771   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9774
 	ret nz			;9775
-	ld a,(0d70ah)		;9776
+	ld a,(0d70ah)		;9776   ; lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
 	cp 006h		;9779
 	ld a,012h		;977b
 	jr nc,L_9781		;977d
@@ -2866,12 +2866,12 @@ L_9781:
 L_978E:
 	cp 009h		;978e
 	ret c			;9790
-	ld hl,0d70ah		;9791
+	ld hl,0d70ah		;9791   ; apunta a 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
 	ld (hl),009h		;9794
 	jp L_960E		;9796
 L_9799:
 	call L_97A9		;9799
-	ld hl,0d70ah		;979c
+	ld hl,0d70ah		;979c   ; apunta a 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
 	ld a,c			;979f
 	cp 006h		;97a0
 	jr nc,L_97A6		;97a2
@@ -2903,24 +2903,24 @@ L_97A9:
 	inc c			;97c4
 	ret			;97c5
 L_97C6:
-	ld hl,0d703h		;97c6
+	ld hl,0d703h		;97c6   ; apunta a la fila del cursor en F2/F3
 	ld (hl),080h		;97c9
 	jp L_960E		;97cb
 L_97CE:
 	call L_9F29		;97ce
 	call L_9F4C		;97d1
-	ld hl,0d703h		;97d4
+	ld hl,0d703h		;97d4   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;97d7
 	ret nz			;97d8
 	ld (hl),080h		;97d9
 	jp L_960E		;97db
 L_97DE:
 	call L_9F4C		;97de
-	ld hl,0d703h		;97e1
+	ld hl,0d703h		;97e1   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;97e4
 	ret nz			;97e5
 	call 04266h		;97e6   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	ld hl,0d706h		;97e9
+	ld hl,0d706h		;97e9   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	ld (hl),000h		;97ec
 	ld hl,04038h		;97ee
 	ld de,00000h		;97f1
@@ -2951,9 +2951,9 @@ L_981F:
 	ld a,(hl)			;9823
 	and 00fh		;9824
 	call z,L_9871		;9826
-	ld a,(0d710h)		;9829
+	ld a,(0d710h)		;9829   ; lee la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 	xor 001h		;982c
-	ld (0d710h),a		;982e
+	ld (0d710h),a		;982e   ; guarda la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 	ld hl,03838h		;9831
 	ld bc,09060h		;9834
 	ld d,a			;9837
@@ -2973,7 +2973,7 @@ L_981F:
 	add a,l			;9854
 	ld l,a			;9855
 	ld de,03838h		;9856
-	ld a,(0d710h)		;9859
+	ld a,(0d710h)		;9859   ; lee la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 	rlca			;985c
 	rlca			;985d
 	rlca			;985e
@@ -2982,7 +2982,7 @@ L_981F:
 	ld bc,09060h		;9862
 	call 047edh		;9865   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	call 04650h		;9868   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	ld a,(0d710h)		;986b
+	ld a,(0d710h)		;986b   ; lee la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 	jp 04879h		;986e   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 L_9871:
 	ld (hl),000h		;9871
@@ -3000,12 +3000,12 @@ L_9871:
 	ld hl,(0d711h)		;9890
 	jp 06460h		;9893   ; mosaico_de_57: el mosaico de HL del banco 57-58 en X = 0, Y = 0xF0, 1 fila de 0x12, forma 0x0B
 L_9896:
-	ld hl,0d703h		;9896
+	ld hl,0d703h		;9896   ; apunta a la fila del cursor en F2/F3
 	ld (hl),0ffh		;9899
 	call L_953A		;989b
 	jp L_960E		;989e
 L_98A1:
-	ld hl,0d703h		;98a1
+	ld hl,0d703h		;98a1   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;98a4
 	ret nz			;98a5
 	ld c,001h		;98a6
@@ -3030,12 +3030,12 @@ L_98B4:
 	call 0463fh		;98d4   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call L_98EA		;98d7
 	xor a			;98da
-	ld hl,0d706h		;98db
+	ld hl,0d706h		;98db   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	ld (hl),a			;98de
-	ld hl,0d702h		;98df
+	ld hl,0d702h		;98df   ; apunta a la columna del cursor en F2/F3
 	ld (hl),a			;98e2
 	xor a			;98e3
-	ld (0d703h),a		;98e4
+	ld (0d703h),a		;98e4   ; guarda la fila del cursor en F2/F3
 	jp L_960E		;98e7
 L_98EA:
 	ld hl,05030h		;98ea
@@ -3055,18 +3055,18 @@ L_98EA:
 	ld (0ca42h),a		;990c   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ret			;990f
 L_9910:
-	ld hl,0d703h		;9910
+	ld hl,0d703h		;9910   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9913
 	ret nz			;9914
 	ld (hl),0f0h		;9915
 	jp L_960E		;9917
 L_991A:
-	ld hl,0d703h		;991a
+	ld hl,0d703h		;991a   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;991d
 	ret nz			;991e
 	jp L_960E		;991f
 L_9922:
-	ld a,(0d702h)		;9922
+	ld a,(0d702h)		;9922   ; lee la columna del cursor en F2/F3
 	call 0424dh		;9925   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
@@ -3085,7 +3085,7 @@ L_9930:
 	call 064a5h		;9930   ; palabra_8042_d706: HL = la palabra 0xD706 de la tabla de p50:8042
 	call 064ddh		;9933   ; mensaje_abajo: el mensaje de HL en (0x10, 0x98), 4 lineas
 L_9936:
-	ld hl,0d702h		;9936
+	ld hl,0d702h		;9936   ; apunta a la columna del cursor en F2/F3
 	inc (hl)			;9939
 	ret			;993a
 L_993B:
@@ -3093,17 +3093,17 @@ L_993B:
 	ld a,(0e220h)		;993e   ; lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 	or a			;9941
 	ret nz			;9942
-	ld hl,0d703h		;9943
+	ld hl,0d703h		;9943   ; apunta a la fila del cursor en F2/F3
 	ld (hl),0c0h		;9946
 	jr L_9936		;9948
 L_994A:
-	ld hl,0d703h		;994a
+	ld hl,0d703h		;994a   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;994d
 	ret nz			;994e
-	ld hl,0d706h		;994f
+	ld hl,0d706h		;994f   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	inc (hl)			;9952
 	ld a,(hl)			;9953
-	ld hl,0d702h		;9954
+	ld hl,0d702h		;9954   ; apunta a la columna del cursor en F2/F3
 	ld (hl),000h		;9957
 	cp 006h		;9959
 	push af			;995b
@@ -3124,12 +3124,12 @@ L_994A:
 	ld hl,0a01dh		;997a
 	ld c,001h		;997d
 	call L_9371		;997f
-	ld hl,0d702h		;9982
+	ld hl,0d702h		;9982   ; apunta a la columna del cursor en F2/F3
 	xor a			;9985
 	ld (hl),a			;9986
 	jp L_960E		;9987
 L_998A:
-	ld hl,0d702h		;998a
+	ld hl,0d702h		;998a   ; apunta a la columna del cursor en F2/F3
 	ld (hl),003h		;998d
 	ld hl,0d717h		;998f
 	ld (hl),000h		;9992
@@ -3157,7 +3157,7 @@ L_99BA:
 	ld bc,04808h		;99c0
 	ld a,001h		;99c3
 	call 04767h		;99c5   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-	ld hl,0d702h		;99c8
+	ld hl,0d702h		;99c8   ; apunta a la columna del cursor en F2/F3
 	ld (hl),000h		;99cb
 	ret			;99cd
 L_99CE:
@@ -3167,15 +3167,15 @@ L_99CE:
 	or a			;99d6
 	ret nz			;99d7
 	call L_962A		;99d8
-	ld hl,0d703h		;99db
+	ld hl,0d703h		;99db   ; apunta a la fila del cursor en F2/F3
 	ld (hl),040h		;99de
 	jp L_960E		;99e0
 L_99E3:
-	ld hl,0d703h		;99e3
+	ld hl,0d703h		;99e3   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;99e6
 	ret nz			;99e7
 	ld (hl),006h		;99e8
-	ld hl,0d706h		;99ea
+	ld hl,0d706h		;99ea   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	ld (hl),000h		;99ed
 	ld hl,0bcd3h		;99ef
 	ld de,07055h		;99f2
@@ -3184,11 +3184,11 @@ L_99E3:
 	call L_960E		;99fb
 	jp 06bc4h		;99fe   ; sonido_a4: pide el sonido 0xA4 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_9A01:
-	ld hl,0d703h		;9a01
+	ld hl,0d703h		;9a01   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9a04
 	ret nz			;9a05
 	ld (hl),006h		;9a06
-	ld hl,0d706h		;9a08
+	ld hl,0d706h		;9a08   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	inc (hl)			;9a0b
 	ld a,(hl)			;9a0c
 	cp 007h		;9a0d
@@ -3197,21 +3197,21 @@ L_9A01:
 	pop af			;9a13
 	jp L_9708		;9a14
 L_9A17:
-	ld hl,0d703h		;9a17
+	ld hl,0d703h		;9a17   ; apunta a la fila del cursor en F2/F3
 	ld (hl),080h		;9a1a
 	jp L_960E		;9a1c
 L_9A1F:
-	ld hl,0d703h		;9a1f
+	ld hl,0d703h		;9a1f   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9a22
 	ret nz			;9a23
 	ld (hl),006h		;9a24
 	jp L_960E		;9a26
 L_9A29:
-	ld hl,0d703h		;9a29
+	ld hl,0d703h		;9a29   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9a2c
 	ret nz			;9a2d
 	ld (hl),006h		;9a2e
-	ld hl,0d706h		;9a30
+	ld hl,0d706h		;9a30   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	dec (hl)			;9a33
 	ld a,(hl)			;9a34
 	or a			;9a35
@@ -3219,11 +3219,11 @@ L_9A29:
 	jp L_9708		;9a38
 L_9A3B:
 	call L_9625		;9a3b
-	ld hl,0d703h		;9a3e
+	ld hl,0d703h		;9a3e   ; apunta a la fila del cursor en F2/F3
 	ld (hl),040h		;9a41
 	jp L_960E		;9a43
 L_9A46:
-	ld hl,0d703h		;9a46
+	ld hl,0d703h		;9a46   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9a49
 	ret nz			;9a4a
 	ld de,06706h		;9a4b
@@ -3233,7 +3233,7 @@ L_9A46:
 	ld (hl),000h		;9a56
 	jp L_960E		;9a58
 L_9A5B:
-	ld a,(0d702h)		;9a5b
+	ld a,(0d702h)		;9a5b   ; lee la columna del cursor en F2/F3
 	call 0424dh		;9a5e   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
@@ -3254,7 +3254,7 @@ L_9A73:
 	call L_9936		;9a73
 	ld hl,0a156h		;9a76
 	call 0463fh		;9a79   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-	ld a,(0d706h)		;9a7c
+	ld a,(0d706h)		;9a7c   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 00ah		;9a7f
 	jr z,L_9AAC		;9a81
 	cp 00bh		;9a83
@@ -3274,7 +3274,7 @@ L_9A73:
 	ld b,000h		;9a99
 	call L_9D01		;9a9b
 L_9A9E:
-	ld a,(0d706h)		;9a9e
+	ld a,(0d706h)		;9a9e   ; lee 1 al salir de F2/F3 (p10:B897)
 	ld hl,09cb4h		;9aa1
 	call 043f6h		;9aa4   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld c,001h		;9aa7
@@ -3302,7 +3302,7 @@ L_9ACC:
 	jr L_9A9E		;9ada
 L_9ADC:
 	call 07b55h		;9adc   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
-	ld a,(0d706h)		;9adf
+	ld a,(0d706h)		;9adf   ; lee 1 al salir de F2/F3 (p10:B897)
 	ld de,09cb4h		;9ae2
 	call 04403h		;9ae5   ; palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 	ld c,001h		;9ae8
@@ -3311,21 +3311,21 @@ L_9ADC:
 	or a			;9af0
 	ret nz			;9af1
 	call L_9936		;9af2
-	ld hl,0d703h		;9af5
+	ld hl,0d703h		;9af5   ; apunta a la fila del cursor en F2/F3
 	ld (hl),020h		;9af8
 	ret			;9afa
 L_9AFB:
 	call 07b55h		;9afb   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
-	ld hl,0d703h		;9afe
+	ld hl,0d703h		;9afe   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9b01
 	ret nz			;9b02
 	ld (hl),008h		;9b03
-	ld a,(0d706h)		;9b05
+	ld a,(0d706h)		;9b05   ; lee 1 al salir de F2/F3 (p10:B897)
 	ld hl,09c80h		;9b08
 	call 043f6h		;9b0b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0d718h),hl		;9b0e
 	ld hl,09c9ah		;9b11
-	ld a,(0d706h)		;9b14
+	ld a,(0d706h)		;9b14   ; lee 1 al salir de F2/F3 (p10:B897)
 	add a,a			;9b17
 	ld e,a			;9b18
 	ld d,000h		;9b19
@@ -3340,7 +3340,7 @@ L_9AFB:
 	jp L_9936		;9b25
 L_9B28:
 	call 07b55h		;9b28   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
-	ld hl,0d703h		;9b2b
+	ld hl,0d703h		;9b2b   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9b2e
 	ret nz			;9b2f
 	ld (hl),008h		;9b30
@@ -3363,7 +3363,7 @@ L_9B28:
 	ld (hl),a			;9b52
 	ret			;9b53
 L_9B54:
-	ld a,(0d706h)		;9b54
+	ld a,(0d706h)		;9b54   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 007h		;9b57
 	jr nz,L_9B74		;9b59
 	ld hl,0d71dh		;9b5b
@@ -3380,28 +3380,28 @@ L_9B54:
 	ld (hl),d			;9b72
 	ret			;9b73
 L_9B74:
-	ld hl,0d703h		;9b74
+	ld hl,0d703h		;9b74   ; apunta a la fila del cursor en F2/F3
 	ld (hl),0ffh		;9b77
 	jp L_9936		;9b79
 L_9B7C:
 	call 07b55h		;9b7c   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
-	ld hl,0d703h		;9b7f
+	ld hl,0d703h		;9b7f   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9b82
 	ret nz			;9b83
 	ld (hl),006h		;9b84
-	ld a,(0d706h)		;9b86
+	ld a,(0d706h)		;9b86   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 00ch		;9b89
 	jp nc,L_9C56		;9b8b
 	call L_9936		;9b8e
 	call L_9BA3		;9b91
-	ld a,(0d706h)		;9b94
+	ld a,(0d706h)		;9b94   ; lee 1 al salir de F2/F3 (p10:B897)
 	dec a			;9b97
 	ld hl,09cb4h		;9b98
 	call 043f6h		;9b9b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld c,001h		;9b9e
 	jp L_9371		;9ba0
 L_9BA3:
-	ld hl,0d706h		;9ba3
+	ld hl,0d706h		;9ba3   ; apunta a 1 al salir de F2/F3 (p10:B897)
 	inc (hl)			;9ba6
 	ld a,(hl)			;9ba7
 	cp 00bh		;9ba8
@@ -3427,11 +3427,11 @@ L_9BBB:
 	ld a,001h		;9bd2
 	call 07b5dh		;9bd4   ; a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 	call 04606h		;9bd7   ; enciende_todo: la pantalla y los sprites encendidos
-	ld a,(0d706h)		;9bda
+	ld a,(0d706h)		;9bda   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 00ch		;9bdd
 	jr z,L_9BE6		;9bdf
 	xor a			;9be1
-	ld (0d702h),a		;9be2
+	ld (0d702h),a		;9be2   ; guarda la columna del cursor en F2/F3
 	ret			;9be5
 L_9BE6:
 	ld de,00000h		;9be6
@@ -3445,7 +3445,7 @@ L_9BE6:
 	call 0647ah		;9bfc   ; mosaico_de_54_bc: forma 0x0C en la franja 3
 	jp L_9936		;9bff
 L_9C02:
-	ld hl,0d703h		;9c02
+	ld hl,0d703h		;9c02   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9c05
 	ret nz			;9c06
 	ld (hl),006h		;9c07
@@ -3458,17 +3458,17 @@ L_9C02:
 	pop af			;9c14
 	jp L_9708		;9c15
 L_9C18:
-	ld hl,0d703h		;9c18
+	ld hl,0d703h		;9c18   ; apunta a la fila del cursor en F2/F3
 	ld (hl),080h		;9c1b
 	jp L_9936		;9c1d
 L_9C20:
-	ld hl,0d703h		;9c20
+	ld hl,0d703h		;9c20   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9c23
 	ret nz			;9c24
 	ld (hl),006h		;9c25
 	jp L_9936		;9c27
 L_9C2A:
-	ld hl,0d703h		;9c2a
+	ld hl,0d703h		;9c2a   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9c2d
 	ret nz			;9c2e
 	ld (hl),006h		;9c2f
@@ -3484,7 +3484,7 @@ L_9C3C:
 	call 06ec0h		;9c42   ; mapa_de_bits_9c58_bancos:
 	call 04606h		;9c45   ; enciende_todo: la pantalla y los sprites encendidos
 	call 04650h		;9c48   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	ld hl,0d702h		;9c4b
+	ld hl,0d702h		;9c4b   ; apunta a la columna del cursor en F2/F3
 	ld (hl),000h		;9c4e
 	ld hl,0a06dh		;9c50
 	jp 0463fh		;9c53   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
@@ -3525,18 +3525,18 @@ L_9CDC:
 	ld a,(0cadah)		;9ce1
 	or a			;9ce4
 	ret nz			;9ce5
-	ld hl,0d703h		;9ce6
+	ld hl,0d703h		;9ce6   ; apunta a la fila del cursor en F2/F3
 	ld (hl),0ffh		;9ce9
 	jp L_960E		;9ceb
 L_9CEE:
-	ld hl,0d703h		;9cee
+	ld hl,0d703h		;9cee   ; apunta a la fila del cursor en F2/F3
 	dec (hl)			;9cf1
 	ret nz			;9cf2
 	xor a			;9cf3
 	ld (0ca00h),a		;9cf4   ; guarda el estado de la partida (p01:729F: 8 estados)
 	ld (0ca01h),a		;9cf7   ; guarda el paso del estado de la partida
 	ld (0caafh),a		;9cfa
-	ld (0d700h),a		;9cfd
+	ld (0d700h),a		;9cfd   ; guarda el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
 	ret			;9d00
 L_9D01:
 	push bc			;9d01
@@ -3553,12 +3553,12 @@ L_9D0D:
 	call L_9D5D		;9d13
 	jr L_9D85		;9d16
 L_9D18:
-	ld a,(0d706h)		;9d18
+	ld a,(0d706h)		;9d18   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 010h		;9d1b
 	ret c			;9d1d
 	cp 060h		;9d1e
 	ret nc			;9d20
-	ld a,(0d705h)		;9d21
+	ld a,(0d705h)		;9d21   ; lee cuantas cosas hay en la pantalla de F2/F3
 	rra			;9d24
 	rra			;9d25
 	rra			;9d26
@@ -3567,18 +3567,18 @@ L_9D18:
 	jr nc,L_9D2D		;9d2a
 	inc a			;9d2c
 L_9D2D:
-	ld hl,0d70dh		;9d2d
+	ld hl,0d70dh		;9d2d   ; apunta a el cursor de F3 guardado (columna, fila)
 	ld (hl),a			;9d30
 	ld de,0a0a1h		;9d31
 	ld bc,00101h		;9d34
 	jp 050d6h		;9d37   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9D3A:
-	ld a,(0d706h)		;9d3a
+	ld a,(0d706h)		;9d3a   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 038h		;9d3d
 	ret c			;9d3f
 	cp 088h		;9d40
 	ret nc			;9d42
-	ld a,(0d705h)		;9d43
+	ld a,(0d705h)		;9d43   ; lee cuantas cosas hay en la pantalla de F2/F3
 	rra			;9d46
 	rra			;9d47
 	rra			;9d48
@@ -3587,18 +3587,18 @@ L_9D3A:
 	jr c,L_9D50		;9d4c
 	ld a,05fh		;9d4e
 L_9D50:
-	ld hl,0d70dh		;9d50
+	ld hl,0d70dh		;9d50   ; apunta a el cursor de F3 guardado (columna, fila)
 	ld (hl),a			;9d53
 	ld de,048c9h		;9d54
 	ld bc,00101h		;9d57
 	jp 050d6h		;9d5a   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9D5D:
-	ld a,(0d706h)		;9d5d
+	ld a,(0d706h)		;9d5d   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 038h		;9d60
 	ret c			;9d62
 	cp 088h		;9d63
 	ret nc			;9d65
-	ld a,(0d705h)		;9d66
+	ld a,(0d705h)		;9d66   ; lee cuantas cosas hay en la pantalla de F2/F3
 	rra			;9d69
 	rra			;9d6a
 	rra			;9d6b
@@ -3607,7 +3607,7 @@ L_9D5D:
 	jr c,L_9D75		;9d70
 	ld de,06061h		;9d72
 L_9D75:
-	ld hl,0d70dh		;9d75
+	ld hl,0d70dh		;9d75   ; apunta a el cursor de F3 guardado (columna, fila)
 	ld (hl),d			;9d78
 	inc hl			;9d79
 	ld (hl),e			;9d7a
@@ -3616,12 +3616,12 @@ L_9D75:
 	ld bc,00102h		;9d7f
 	jp 050d6h		;9d82   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9D85:
-	ld a,(0d706h)		;9d85
+	ld a,(0d706h)		;9d85   ; lee 1 al salir de F2/F3 (p10:B897)
 	cp 040h		;9d88
 	ret c			;9d8a
 	cp 090h		;9d8b
 	ret nc			;9d8d
-	ld a,(0d705h)		;9d8e
+	ld a,(0d705h)		;9d8e   ; lee cuantas cosas hay en la pantalla de F2/F3
 	rra			;9d91
 	rra			;9d92
 	rra			;9d93
@@ -3630,7 +3630,7 @@ L_9D85:
 	jr nc,L_9D9A		;9d97
 	inc a			;9d99
 L_9D9A:
-	ld hl,0d70dh		;9d9a
+	ld hl,0d70dh		;9d9a   ; apunta a el cursor de F3 guardado (columna, fila)
 	ld (hl),a			;9d9d
 	ld de,058d1h		;9d9e
 	ld bc,00101h		;9da1
@@ -3701,7 +3701,7 @@ L_9E18:
 	jp 04237h		;9e27   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_9E2A:
 	ld e,(ix+002h)		;9e2a
-	ld a,(0d706h)		;9e2d
+	ld a,(0d706h)		;9e2d   ; lee 1 al salir de F2/F3 (p10:B897)
 	add a,e			;9e30
 	ld e,a			;9e31
 	ld d,(ix+004h)		;9e32
@@ -3732,7 +3732,7 @@ L_9E5D:
 	inc a			;9e64
 	ld (ix+000h),a		;9e65
 	ld (ix+002h),090h		;9e68
-	ld a,(0d705h)		;9e6c
+	ld a,(0d705h)		;9e6c   ; lee cuantas cosas hay en la pantalla de F2/F3
 	rla			;9e6f
 	rla			;9e70
 	rla			;9e71
@@ -3781,7 +3781,7 @@ DATA_resto_9EA0:
 
 L_9EC8:
 	ld hl,0dc00h		;9ec8   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
-	ld (0d707h),hl		;9ecb
+	ld (0d707h),hl		;9ecb   ; guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4) y el byte siguiente (16 bits)
 	ld a,(0ca03h)		;9ece   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;9ed1
 	rra			;9ed2
@@ -3799,9 +3799,9 @@ L_9EDD:
 	inc hl			;9ee2
 	push bc			;9ee3
 	push hl			;9ee4
-	ld hl,(0d707h)		;9ee5
+	ld hl,(0d707h)		;9ee5   ; lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4) y el byte siguiente (16 bits)
 	call 05d41h		;9ee8   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
-	ld (0d707h),hl		;9eeb
+	ld (0d707h),hl		;9eeb   ; guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4) y el byte siguiente (16 bits)
 	pop hl			;9eee
 	pop bc			;9eef
 	djnz L_9EDD		;9ef0
@@ -3868,7 +3868,7 @@ L_9F57:
 	ld bc,0001fh		;9f65
 	jp 04237h		;9f68   ; llena_bloque: pone A en BC + 1 bytes desde HL
 L_9F6B:
-	ld a,(0d70ah)		;9f6b
+	ld a,(0d70ah)		;9f6b   ; lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
 	cp 004h		;9f6e
 	jr nc,L_9F7B		;9f70
 	rla			;9f72

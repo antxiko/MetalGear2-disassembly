@@ -1221,11 +1221,11 @@ L_880A:
 L_8810:
 	jp 040f0h		;8810   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 palabra_a6af_d708:		; HL = la palabra 0xD708 - 1 de p56:A6AF
-	ld a,(0d708h)		;8813
+	ld a,(0d708h)		;8813   ; lee el numero de la cosa que se pinta en F2/F3
 	ld hl,0a6afh		;8816
 	jr L_8832		;8819
 palabra_a6cb_d708:		; HL = la palabra 0xD708 - 1 de p56:A6CB (con el bit 0 de 0xCAB6, de 0x20 a 0x22 pasa a 0x24)
-	ld a,(0d708h)		;881b
+	ld a,(0d708h)		;881b   ; lee el numero de la cosa que se pinta en F2/F3
 	ld hl,0cab6h		;881e   ; 0xCAB6...
 	bit 0,(hl)		;8821   ; ...sin el bit 0, la palabra tal cual
 	ld hl,0a6cbh		;8823
@@ -1355,7 +1355,7 @@ entra_en_sitio:		; con 0xCB21 = 0x0A no
 	call 05dbbh		;8916   ; a_p12_6ab3: p12:6AB3 con el banco 12 en 0x6000
 	pop af			;8919   ; el sitio
 	call 041cdh		;891a   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a0d3h		;891d   ; p10:A0D3
+	call 0a0d3h		;891d   ; cab6_de_la_sala: p10:A10F y, sin 0xCAB6, p10:A0DB
 	call 040f0h		;8920   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call cosas_del_sitio		;8923   ; p02:902A
 	scf			;8926   ; con acarreo: ha entrado
@@ -1578,7 +1578,7 @@ L_8AAF:
 	jr L_8A5B		;8abc
 a_p10_bc27:		; p10:BC27 con el banco 10 en 0xA000
 	call 041cdh		;8abe   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bc27h		;8ac1   ; p10:BC27
+	call 0bc27h		;8ac1   ; e1c0_guarda:
 	jr L_8ACC		;8ac4
 a_p07_a000:		; p07:A000 con el banco 7 en 0xA000
 	call 041b0h		;8ac6   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1603,11 +1603,11 @@ L_8AE7:
 	jr L_8B4D		;8aed
 a_p10_a1c1:		; p10:A1C1 con el banco 10 en 0xA000
 	call 041cdh		;8aef   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a1c1h		;8af2   ; p10:A1C1
+	call 0a1c1h		;8af2   ; ca7b_empieza: 0xCA7B = 1, 0xCA7C-0xCA7D = 0x0200 y el bit 7 de 0xD7D7
 	jr L_8B4D		;8af5
 a_p10_a234:		; p10:A234 con el banco 10 en 0xA000
 	call 041cdh		;8af7   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a234h		;8afa   ; p10:A234
+	call 0a234h		;8afa   ; ficha_e1d8: la ficha 0xE1D8: 1, 0x80, 0x18, 0x18; el bit 5 de 0xD7D7 y fuera el 0 de 0xD7E2
 	jr L_8B4D		;8afd
 a_p11_a3c4:		; p11:A3C4 con el banco 11 en 0xA000
 	call 041d5h		;8aff   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1672,7 +1672,7 @@ a_p14_b712:		; p14:B712 con el banco 14 en 0xA000
 	jr L_8B4D		;8b76
 a_p10_a65e:		; p10:A65E con el banco 10 en 0xA000
 	call 041cdh		;8b78   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a65eh		;8b7b   ; p10:A65E
+	call 0a65eh		;8b7b   ; bandera_por_cosa: segun la cosa A: la 0x17 el bit 6 de 0xD7D6; la 0x2A el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D el 5 de 0xD7D9; la 0x0C el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 fuera el 6 de 0xD7E1
 	jr L_8B4D		;8b7e
 a_p11_b494:		; p11:B494 con el banco 11 en 0xA000
 	call 041d5h		;8b80   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1704,7 +1704,7 @@ a_p11_ba03:		; p11:BA03 con el banco 11 en 0xA000
 	jr L_8B4D		;8bb6
 a_p10_bfbc:		; p10:BFBC con el banco 10 en 0xA000
 	call 041cdh		;8bb8   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bfbch		;8bbb   ; p10:BFBC
+	call 0bfbch		;8bbb   ; vida_de_cosa: sin 0xCAB6, con la cosa 0x20-0x22 elegida (desde p07:B3CF, la vida a cero): la vida al maximo, una menos de ella y, acabada, a cero, 0xCB21 = 0 y (sin 0xD8A4) su sitio borrado
 	jr L_8B4D		;8bbe
 a_p07_b5af:		; p07:B5AF con el banco 7 en 0xA000
 	call 041b0h		;8bc0   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1733,8 +1733,8 @@ L_8BEE:
 	jp 040f0h		;8bee   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8BF1:
 	call 041cdh		;8bf1   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bed4h		;8bf4   ; p10:BED4
-	call 0bc59h		;8bf7   ; p10:BC59
+	call 0bed4h		;8bf4   ; fichas_e100_cada_cuadro: sin salir ni 0xCA77 (zona 0x10 solo con 0xCA43 = 2): cada ficha de 0xE100 de esta sala con Snake (p10:BF14)
+	call 0bc59h		;8bf7   ; e1c0_cada_cuadro: en la zona 0x0A sala 0x0E: con 0xE1C0 = 1, las lineas del color de 0xE1C1 (1-0x0E en vuelta); con 2 o mas, 0xE1C0 = 0, el mapa de vuelta (0xE1C8 a 0xDE70) y el rectangulo de (0, 0) a (0x40, 0x68) de la otra pagina
 	jr L_8BEE		;8bfa
 a_p06_a6f9:		; p06:A6F9 con el banco 6 en 0xA000
 	call 041a0h		;8bfc   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1754,7 +1754,7 @@ a_p06_a598:		; p06:A598 con el banco 6 en 0xA000
 	jr L_8BEE		;8c1a
 a_p10_ba03:		; p10:BA03 con el banco 10 en 0xA000
 	call 041cdh		;8c1c   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ba03h		;8c1f   ; p10:BA03
+	call 0ba03h		;8c1f   ; borra_d8a4_b:
 	jr L_8BEE		;8c22
 L_8C24:
 	call L_8A9A		;8c24
@@ -1766,8 +1766,8 @@ L_8C2F:
 	jp 041c2h		;8c2f   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8C32:
 	call 041cdh		;8c32   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bed4h		;8c35   ; p10:BED4
-	call 0bc59h		;8c38   ; p10:BC59
+	call 0bed4h		;8c35   ; fichas_e100_cada_cuadro: sin salir ni 0xCA77 (zona 0x10 solo con 0xCA43 = 2): cada ficha de 0xE100 de esta sala con Snake (p10:BF14)
+	call 0bc59h		;8c38   ; e1c0_cada_cuadro: en la zona 0x0A sala 0x0E: con 0xE1C0 = 1, las lineas del color de 0xE1C1 (1-0x0E en vuelta); con 2 o mas, 0xE1C0 = 0, el mapa de vuelta (0xE1C8 a 0xDE70) y el rectangulo de (0, 0) a (0x40, 0x68) de la otra pagina
 	jr $+117		;8c3b
 sprites_de_sala_si_b_9:		; sprites_de_sala_si y deja el banco 9
 	call 04e22h		;8c3d   ; sprites_de_sala_si: con 0xE1D0 puesto no se tocan
@@ -1860,11 +1860,11 @@ a_p03_b67d:		; p03:B67D con el banco 3 en 0xA000
 	jr $-38		;8cd6
 a_p10_a6a4:		; p10:A6A4 con el banco 10 en 0xA000
 	call 041cah		;8cd8   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a6a4h		;8cdb   ; p10:A6A4
+	call 0a6a4h		;8cdb   ; ficha_e1f8: la ficha 0xE1F8 en (E, D): [1][0][4][0][E][D][0xE0][0xE0] y su sitio en 0xE25C
 	jr $-46		;8cde
 a_p10_a6c2:		; p10:A6C2 con el banco 10 en 0xA000
 	call 041cah		;8ce0   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a6c2h		;8ce3   ; p10:A6C2
+	call 0a6c2h		;8ce3   ; e1f8_cada_cuadro: su paso (p10:A6C8) y sus sprites (p10:A72E)
 	jr $-54		;8ce6
 a_p03_b65d:		; p03:B65D con el banco 3 en 0xA000
 	call 040f0h		;8ce8   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1895,7 +1895,7 @@ L_8D25:
 	jr $-120		;8d28
 a_p10_bce4:		; p10:BCE4 con el banco 10 en 0xA000
 	call 041cah		;8d2a   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bce4h		;8d2d   ; p10:BCE4
+	call 0bce4h		;8d2d   ; fichas_e100_especial_31: en la zona 0x0A, 0xE100-0xE1BF a cero y, en la sala especial 0x31, la lista 5
 	jr L_8D53		;8d30
 entra_en_sala_1_b_1_2_15:		; entra_en_sala_1 y deja los bancos 1, 2 y 15
 	call 052d2h		;8d32   ; entra_en_sala_1: entra en la sala nueva con 0xD440 = 1
@@ -1934,7 +1934,7 @@ a_p11_bdbd_2:		; p11:BDBD con el banco 11 en 0xA000
 	jr L_8D53		;8d6b
 a_p10_b9e5:		; p10:B9E5 con el banco 10 en 0xA000
 	call 041cdh		;8d6d   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b9e5h		;8d70   ; p10:B9E5
+	call 0b9e5h		;8d70   ; marcador_de_lo_elegido: en el marcador: el dibujo de lo de 0xCB20 (p56:A6AF) con su cuenta en (0xE0, 0x88) y el de 0xCB21 (p56:A6CB) con la suya (0x20-0x22) en (0xE0, 0xB8)
 	jr L_8D53		;8d73
 a_p03_b4d1:		; p03:B4D1 con el banco 3 en 0xA000
 	call 040f0h		;8d75   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1968,7 +1968,7 @@ a_p03_be51:		; p03:BE51 con el banco 3 en 0xA000
 	jr L_8DC3		;8dab
 a_p10_bfbc_2:		; p10:BFBC con el banco 10 en 0xA000
 	call 041cdh		;8dad   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bfbch		;8db0   ; p10:BFBC
+	call 0bfbch		;8db0   ; vida_de_cosa: sin 0xCAB6, con la cosa 0x20-0x22 elegida (desde p07:B3CF, la vida a cero): la vida al maximo, una menos de ella y, acabada, a cero, 0xCB21 = 0 y (sin 0xD8A4) su sitio borrado
 	jr L_8DC3		;8db3
 a_p03_b1be:		; p03:B1BE con el banco 3 en 0xA000
 	call 040f0h		;8db5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2820,36 +2820,36 @@ repinta_la_sala_b_1_2_10:		; repinta_la_sala y deja los bancos 1, 2 y 10
 	jr L_92D8		;92f6
 a_p10_aed6:		; p10:AED6 con el banco 10 en 0xA000
 	call 041cah		;92f8   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aed6h		;92fb   ; p10:AED6
+	call 0aed6h		;92fb   ; pantalla_f2: la pantalla de F2 (p01:74FD): la vida que se va, p10:BBDD; con 0xD701 = 1, cada cuadro (p10:B185); si no, la monta: 0xCB52 = 0xCB5C = 0, con la pantalla apagada sin 0xDF80 ni desplazamiento, R#7 = 0x0F, la paleta de la sala, sin sprites, 0xD700-0xD70F (p10:AFB2), lo de p10:AF88, el cursor (p10:B880) a 0xD704, p10:B3F9 y p10:B8C7; 0xCABD = 1 y todo encendido
 L_92FE:
 	jp 040f0h		;92fe   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p10_af30:		; p10:AF30 con el banco 10 en 0xA000
 	call 041cah		;9301   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0af30h		;9304   ; p10:AF30
+	call 0af30h		;9304   ; pantalla_f3: la pantalla de F3 (p01:750B): como la de F2 con 0xD700 de p10:AFCD, lo de p10:AFA0, p10:B401, p10:B926, p10:B17D, los sprites a la VRAM y 0xCA70 = la fila y la columna de la sala
 	jr L_92FE		;9307
 a_p10_aff3:		; p10:AFF3 con el banco 10 en 0xA000
 	call 041cah		;9309   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aff3h		;930c   ; p10:AFF3
+	call 0aff3h		;930c   ; quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 	jr L_92FE		;930f
 a_p10_b172:		; p10:B172 con el banco 10 en 0xA000
 	call 041cah		;9311   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b172h		;9314   ; p10:B172
+	call 0b172h		;9314   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
 	jr L_92FE		;9317
 a_p10_b3e5:		; p10:B3E5 con el banco 10 en 0xA000
 	call 041cah		;9319   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b3e5h		;931c   ; p10:B3E5
+	call 0b3e5h		;931c   ; borra_sitio_de_hl: 0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
 	jr L_92FE		;931f
 a_p10_b8c4:		; p10:B8C4 con el banco 10 en 0xA000
 	call 041cah		;9321   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b8c4h		;9324   ; p10:B8C4
+	call 0b8c4h		;9324   ; letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 	jr L_92FE		;9327
 a_p10_b957:		; p10:B957 con el banco 10 en 0xA000
 	call 041cah		;9329   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b957h		;932c   ; p10:B957
+	call 0b957h		;932c   ; sin_lanzados_p10: lo lanzado por Snake a cero
 	jr L_92FE		;932f
 a_p10_b960:		; p10:B960 con el banco 10 en 0xA000
 	call 041cah		;9331   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b960h		;9334   ; p10:B960
+	call 0b960h		;9334   ; pinta_cuenta: la cuenta BCD de HL en DE (hasta 3 cifras, sin ceros a la izquierda), 8 a la derecha cada cifra; la de 0xD62C o con 0xD8A4, borrada
 	jr L_92FE		;9337
 suma_a_y:		; la Y de Snake (8.8) + DE
 	ld hl,(0cb02h)		;9339   ; lee la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
@@ -4265,7 +4265,7 @@ L_9C27:
 	ld a,(0cb21h)		;9c43   ; ...con 0xCB21 = 0x20 y sin 0xCAB6: p02:9C65
 	cp 020h		;9c46
 	jr nz,L_9C50		;9c48
-	ld a,(0cab6h)		;9c4a
+	ld a,(0cab6h)		;9c4a   ; lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 	or a			;9c4d
 	jr z,pisa_con_cb21_20		;9c4e
 L_9C50:

@@ -3561,6 +3561,441 @@ p09 0xBF86 cabe_a_cero
 p09 0xBF8B sonido_2_y_musica  el sonido 2; con alerta p02:8C24, si no p02:8EB6
 p09 0xBF98 d79a_de_c58e  0xD79A = el valor de p09:BFA5 por 0xC58E
 p09 0xBFB5 sonido_al_azar  el sonido 2 y otro segun el contador de cuadros (p09:BFC1)
+p10 0xA000 ca61_de_la_sala  0xE1D5 = 0; en un sitio, 0xCA61 = 1; con 0xD8C0, 2; si no, 0xCAB2 = 0xF0 y 0xCAB0 = el modo de esta sala en p10:A054 ([zona][sala][modo], la sala 0x39 es la especial; 0xFF acaba), 2 si no esta
+p10 0xA018 modo_de_a054  
+p10 0xA030 sala_de_a054  
+p10 0xA03A siguiente_a054  
+p10 0xA042 modo_2  
+p10 0xA048 ca61_1  0xCA61 = 1
+p10 0xA04E ca61_2  0xCA61 = 2
+p10 0xA067 ca61_cada_cuadro  fuera de los sitios, de 0xD8C0 y sin 0xDFF8: por el modo 0xCAB0 (p10:A07C)
+p10 0xA082 modo_1  el modo 1: 0xCA61 = 2
+p10 0xA088 modo_0  el modo 0: por su paso 0xCAB1 (p10:A08E)
+p10 0xA094 modo_0_paso_0  0xCA61 = 2, el paso siguiente y 0xCAB2 = 0xFF
+p10 0xA0A1 modo_0_paso_1  al acabar la cuenta, el paso siguiente y 0xCA61 = 1
+p10 0xA0B0 modo_0_paso_2  con 0xCB21 = 1, 0xE1D5 = 1
+p10 0xA0BB modo_2_cada_cuadro  cada 0xF0 cuadros, 0xCA61 = 1-4 al azar (los cuadros / 4 con R)
+p10 0xA0D3 cab6_de_la_sala  p10:A10F y, sin 0xCAB6, p10:A0DB
+p10 0xA0DB ca8e_de_la_sala  0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0xA0, 0x90); y 0xCA8C = 0x40
+p10 0xA108 pon_ca8e  
+p10 0xA10F ca9b_de_la_sala  0xCA9B = 0; en la zona 0x0A: en las salas 0x0B, 0x0C, 0x10 y 0x11, 0xCA9B = 1; en las filas 3 y 6, 0xCB28 = 0 y 0xCB29 = 0x20
+p10 0xA137 cb28_cb29_20  
+p10 0xA140 ca9b_a_1  
+p10 0xA143 cb39_cb3f  sin el bit 2 de 0xD7D5 y con el 4, con 0xCB3F y sin 0xCB39: 0xCB39 = 1, el bit 3 de 0xD7D5 y 0xCB3A = 0x1000
+p10 0xA168 cuenta_cab7  0xCAB7 = 0x1000
+p10 0xA170 cab6_cuenta  en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0xA0, 0x80)
+p10 0xA18A baja_cab7  
+p10 0xA194 cab6_acaba  
+p10 0xA19E mosaico_de_d8a4  con 0xCB21 = 0x20-0x22: borra el sitio de 0xD8A4 (p10:B3E5) y copia 0x10 x 0x10 de HL ahi (operacion 0xC8)
+p10 0xA1C1 ca7b_empieza  0xCA7B = 1, 0xCA7C-0xCA7D = 0x0200 y el bit 7 de 0xD7D7
+p10 0xA1D2 ca7b_cada_cuadro  con 0xCA7B en 1 o 2: la cuenta de 0xCA7C-0xCA7D; al acabar, 0xCA7B uno mas (en el 1, otra cuenta de 0x200) y el mosaico de 0xD8A4 segun 0xCA7B (p10:A204); al acabar el 2, ademas la ficha 0xE1D8 (p10:A234)
+p10 0xA1F0 ca7b_1  la cuenta
+p10 0xA204 mosaico_de_ca7b  con 0xCB21 = 0x0E: borra el sitio de 0xD8A4 y copia ahi el de (0x90, 0xB0) (0xCA7B 0-1), (0x90, 0xC0) (2) o (0x90, 0xD0) (3)
+p10 0xA220 copia_a_d8a4  
+p10 0xA234 ficha_e1d8  la ficha 0xE1D8: 1, 0x80, 0x18, 0x18; el bit 5 de 0xD7D7 y fuera el 0 de 0xD7E2
+p10 0xA24D e1d8_cada_cuadro  con 0xE1D8, la cuenta de 0xE1D9 (a 0, 0x80); en 3, 2 y 1, si se tiene la cosa 0x22 (0xD6BC), 0x21 (0xD6B8) o 0x20 (0xD6B4), p03:BEB7 y p03:BEB2; si se acaba, a cero y, con ella en 0xCB21, borra el sitio de 0xD8A4
+p10 0xA26E cosa_e1d8  
+p10 0xA286 borra_d8a4  borra el sitio de 0xD8A4
+p10 0xA28C cuenta_80  
+p10 0xA28F e1d8_paso  con 0xE1D8: p10:A29D, p10:A376 y p10:A31B
+p10 0xA29D e1dc_cuenta  con 0xE1DC, la cuenta de 0xE1D9; al acabar, 0xE1DC = 0 y el paso de 0xE1D8 (p10:A2B3)
+p10 0xA2AC e1d8_tramo  el tramo 0xE1D8 - 1 (p10:A2B3, 17): mueve 0xE1DA o 0xE1DB de uno en uno hasta un valor y pasa al siguiente; el 17 vuelve al 1
+p10 0xA2D5 e1d8_al_1  0xE1D8 = 1
+p10 0xA2DB e1da_a_78  0xE1DA + 1 hasta 0x78
+p10 0xA2E0 e1da_a_18  0xE1DA - 1 hasta 0x18
+p10 0xA2E3 mueve_e1da  
+p10 0xA2E8 e1db_a_38  0xE1DB + 1 hasta 0x38
+p10 0xA2ED e1db_a_58  0xE1DB + 1 hasta 0x58
+p10 0xA2F2 e1db_a_78  0xE1DB + 1 hasta 0x78
+p10 0xA2F7 e1db_a_98  0xE1DB + 1 hasta 0x98
+p10 0xA2FC e1db_baja_78  0xE1DB - 1 hasta 0x78
+p10 0xA301 e1db_baja_58  0xE1DB - 1 hasta 0x58
+p10 0xA306 e1db_baja_38  0xE1DB - 1 hasta 0x38
+p10 0xA30B e1db_baja_18  0xE1DB - 1 hasta 0x18
+p10 0xA30E mueve_e1db  
+p10 0xA311 mueve_hasta_c  (HL) + B; al llegar a C, el tramo siguiente
+p10 0xA31B e1d8_sprites  con 0xE1D8, sus dos sprites (p10:A325) y sus colores 0x0D y 0x4E (p10:A361)
+p10 0xA325 sprites_de_e1d8  los sprites 0 y 1 en (0xE1DA, 0xE1DB) con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
+p10 0xA33C sitio_de_e1d8  D = la X (0xE1DB), E = la Y (0xE1DA)
+p10 0xA356 tiembla_x  
+p10 0xA358 pon_sprites_e1d8  
+p10 0xA361 colores_e1d8  los 16 colores del sprite 0 al 0x0D y los del 1 al 0x4E
+p10 0xA376 e1d8_toca_cosas  sin 0xE1DC: las cosas 0x20, 0x21 y 0x22 (p10:A401, A45D, A467); con 0xD704 = 0x0E y un disparo, si esta en el sitio de 0xCA84 (p10:A3D4): 0xCA7B = 0xE1D8 = 0, la cosa 0x0E a cero, el bit 4 de 0xD7D7, fuera el 7 de 0xD7DF, el sitio de 0xCA84 borrado, p10:AFF3 con 0x0E, p10:A471, los sprites 0-3 fuera y el sitio de 0xD8A4 borrado
+p10 0xA3D4 e1d8_en_el_sitio  acarreo si 0xE1DB es el segundo byte de HL y 0xE1DA esta entre el primero - 8 y ese + 0x18
+p10 0xA3EF no_en_el_sitio  
+p10 0xA3F1 e1d8_justo_en_el_sitio  acarreo si 0xE1DB y 0xE1DA son los dos bytes de HL
+p10 0xA401 e1d8_con_cosa_20  con la cosa 0x20 (0xD6B4) y la ficha en su sitio de 0xCA7E: 0xE1DC = 1, 0x30 cuadros, p03:BEB7 y p03:BEB2; si se acaba, a cero, el sitio borrado, p10:AFF3 y p10:A471 y, con ella elegida, el sitio de 0xD8A4 borrado
+p10 0xA409 e1d8_con_cosa  
+p10 0xA45D e1d8_con_cosa_21  lo mismo con la cosa 0x21 (0xD6B8) y su sitio de 0xCA80
+p10 0xA467 e1d8_con_cosa_22  lo mismo con la cosa 0x22 (0xD6BC) y su sitio de 0xCA82
+p10 0xA471 b172_y_b8c4  p10:B172 y p10:B8C4
+p10 0xA477 fichas_e070_de_la_sala  0xE070-0xE07F a cero y, de p10:A61B ([zona][sala][Y y X en nibbles], 0xFF acaba; en la zona 0x10 solo con 0xCA43 = 6), las dos fichas de esta sala: [1][0][Y * 16 + 1][X * 16][0x10]
+p10 0xA493 ficha_a61b  
+p10 0xA4A6 otra_a61b  
+p10 0xA4A7 siguiente_a61b  
+p10 0xA4AA pon_ficha_e070  activa...
+p10 0xA4C9 pinta_fichas_e070  las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xA0, 0xE0) de la pagina 3 (o la 1) a su sitio
+p10 0xA4D2 pinta_e070  
+p10 0xA4EE copia_e070  
+p10 0xA4F1 fichas_e070_cada_cuadro  las dos fichas de 0xE070 (la segunda espera a que la primera deje el paso 1): paso 0 con Snake cerca (p10:A5EC) guarda el fondo y el sonido 0x45; paso 1 se abre de 2 en 2 (p10:A535); paso 2 en adelante, p10:A5C2
+p10 0xA4FE ficha_e070_paso  
+p10 0xA509 paso_de_e070  
+p10 0xA52E e070_paso_siguiente  el paso de la ficha (byte 1) uno mas
+p10 0xA535 e070_paso_1  el byte 4 baja 2; a cero, el paso siguiente; si no, la franja guardada en (0x90, 0x20) y las dos mitades separadas (p10:A5AE) con ese hueco; sin la luz (p10:A578), el resultado a la otra pagina
+p10 0xA56C e070_a_la_otra  0x20 x 0x1F de (0x90, 0xE0) a su sitio en la otra pagina
+p10 0xA578 sala_con_luz  acarreo (salvo con 0xCB21 = 3) en la zona 4 sala 5 con 0xCACC o en la zona 3 sala 0x10 con 0xCACA
+p10 0xA589 sin_luz  
+p10 0xA58B zona_4_luz  
+p10 0xA597 con_luz  
+p10 0xA599 zona_3_luz  
+p10 0xA5A7 e070_paso_siguiente_b  
+p10 0xA5AA e070_a_la_otra_b  
+p10 0xA5AE mitad_e070  con B, una mitad de B x 0x20 de (H, 0x90) a (D, 0x90) con la operacion 0x50 (o 0 en la pagina 1)
+p10 0xA5BF copia_logica_e070  
+p10 0xA5C2 e070_abierta  la ficha abierta: con Snake (o lo lanzado de tipo 8) a menos de 0x18 de su sitio + 4: en la zona 0x13, 0xD821 = 0x20; si no, Snake al estado 0x1A con el dibujo 0, 0xCB31 = 0 y la ficha libre
+p10 0xA5E6 e070_zona_13  0xD821 = 0x20
+p10 0xA5EC cerca_de_e070  acarreo con lo lanzado de tipo 8 (D = 1) o con Snake (D = 0) a menos de C del sitio de HL + B, en Y y en X
+p10 0xA5FC cerca_en_y_x  la Y - B - la de la ficha...
+p10 0xA609 lanzado_8_cerca  con lo lanzado de tipo 8, su Y y su X
+p10 0xA65E bandera_por_cosa  segun la cosa A: la 0x17 el bit 6 de 0xD7D6; la 0x2A el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D el 5 de 0xD7D9; la 0x0C el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 fuera el 6 de 0xD7E1
+p10 0xA67B cosa_17  
+p10 0xA681 cosa_2a  
+p10 0xA68C cosa_2d  
+p10 0xA692 cosa_0c  
+p10 0xA697 quita_d7df_4  
+p10 0xA69D cosa_2b  
+p10 0xA6A4 ficha_e1f8  la ficha 0xE1F8 en (E, D): [1][0][4][0][E][D][0xE0][0xE0] y su sitio en 0xE25C
+p10 0xA6C2 e1f8_cada_cuadro  su paso (p10:A6C8) y sus sprites (p10:A72E)
+p10 0xA6C8 e1f8_paso  con 0xE1F8, cada 4 cuadros 0xE1F9 uno mas (0-3); en el 2, el segundo par de sprites; al volver a 0, 0xE1FB uno mas: hasta 6 (alli se acaba) el primer par en el sitio de p10:A71A
+p10 0xA6F3 e1f8_acaba  
+p10 0xA6F8 segundo_par  el segundo par (p10:A724)
+p10 0xA6FE sitio_del_par  en el 5, fuera (0xE0); si no, el desplazamiento de la entrada 0xE1FB mas 0xE25C
+p10 0xA714 par_fuera  
+p10 0xA72E sprites_e1f8  los sprites 10-23 (0xDC28-0xDC5F) fuera y, con 0xE1F8, los dos pares (p10:A747) y sus colores (p10:A793)
+p10 0xA747 pares_de_e1f8  el primer par en 0xDC28 desde 0xE1FC con el dibujo 0xE1F9; el segundo en 0xDC44 desde 0xE1FE con el dibujo 0xE1F9 + 2
+p10 0xA76E dibujo_de_a7b5  los sprites del dibujo A de p10:A7B5: [patron] y [dY][dX] hasta 0xFF, con el patron + 4 cada uno
+p10 0xA776 sprite_de_a7b5  
+p10 0xA793 colores_de_e1f8  los colores del dibujo 0xE1F9 de p10:A7F1: 16 lineas de cada color desde el sprite 10 (0xDAA0) hasta 0xFF
+p10 0xA7A4 color_a7f1  
+p10 0xA82F banderas_de_la_zona  a cero bits de 0xD7D2, 0xD7D5-0xD7D6, 0xD7D8, 0xD7DB-0xD7DC, 0xD7E0-0xD7E1 y 0xD7E3; el bit 5 o 6 de 0xD7DB segun la zona (p10:A877), lo de cada zona (p10:A8AF) y p10:AA56
+p10 0xA83B banderas_a_cero  fuera el bit 4 de 0xD7D2
+p10 0xA877 bit_de_d7db  desde la zona 1: el bit 5 de 0xD7DB en la 6 (fuera de las salas especiales, desde la sala 0x16), la 8 sala 0x0F y las 0x0B-0x0F; el 6 en las demas (salvo 0x0B-0x0F)
+p10 0xA893 d7db_6  
+p10 0xA896 zona_6_d7db  
+p10 0xA8A3 d7db_5  
+p10 0xA8A6 zona_8_d7db  
+p10 0xA8AF lo_de_cada_zona  segun la zona, sus banderas y fichas
+p10 0xA8F1 zona_0_banderas  la zona 0 en las salas 0x0A-0x0C: el bit 2 de 0xD7D0...
+p10 0xA905 zona_1_banderas  la zona 1: fuera el bit 0 de 0xD7D0 y el bit 3 de 0xD7E2
+p10 0xA910 zona_0a_banderas  la zona 0x0A: p10:A931 y, en las salas 9-0x18 salvo 0x0B, 0x0C, 0x10, 0x11 y 0x15, el bit 2 de 0xD7E0
+p10 0xA931 zona_0a_d7e3  en las salas 0x0B, 0x0C, 0x10 y 0x11, el bit 2 de 0xD7E3
+p10 0xA946 d7e3_2  
+p10 0xA949 zona_0b_banderas  la zona 0x0B: el bit 0 de 0xD7D2, fuera el 0 de 0xD7DC y, en la sala 5, el 7 de 0xD7D3
+p10 0xA95F zona_0e_banderas  la zona 0x0E: en las salas 4 y 5, el bit 0 de 0xD7E0
+p10 0xA96C d7e0_0  
+p10 0xA96F zona_0f_banderas  la zona 0x0F: en la sala 0, el bit 2 de 0xD7D3; en las demas, el 6 de 0xD7E3 y el 0 de 0xD7D3
+p10 0xA980 zona_0f_sala_0  
+p10 0xA986 zona_7_banderas  la zona 7: el bit 4 de 0xD7E3, p10:A9B5, p10:A9C4; en las salas 0x0B y 0x0D, el 7 de 0xD7DB; en la 0x0E y 0x0F, el 4 de 0xD7D2; en las cuatro, el 4 de 0xD7E0
+p10 0xA9A6 d7d2_4  
+p10 0xA9AD d7db_7  
+p10 0xA9AF d7e0_4  
+p10 0xA9B5 zona_7_d7e1_7  en las salas 0x10-0x13, el bit 7 de 0xD7E1
+p10 0xA9C4 zona_7_d7e1_5  en las salas 0, 1, 5, 6 y 0x0A, el bit 5 de 0xD7E1
+p10 0xA9D6 d7e1_5  
+p10 0xA9DC zona_0d_banderas  la zona 0x0D: en la sala 5, el bit 3 de 0xD7D6
+p10 0xA9E8 zona_8_banderas  la zona 8: el bit 0 de 0xD7D4
+p10 0xA9EE zona_10_banderas  la zona 0x10: fuera el bit 1 de 0xD8E0
+p10 0xA9F4 zona_11_banderas  la zona 0x11: en la sala 5, el bit 1 de 0xD7DA
+p10 0xAA00 zona_12_banderas  la zona 0x12: p10:AA14 y, en la sala 0x0E, el bit 2 de 0xD7DA; en las demas, el 1 de 0xD7DB
+p10 0xAA11 d7db_1  
+p10 0xAA14 d7d8_7_si  en las salas 5, 7 y 9, el bit 7 de 0xD7D8
+p10 0xAA22 d7d8_7  
+p10 0xAA28 zona_13_banderas  la zona 0x13: el bit 2 de 0xD7E0, p10:AA42, p10:AA4E, el 0 de 0xD7DB y, en las salas 0-3, el 5 de 0xD7DC
+p10 0xAA42 zona_13_sala_5  en la sala 5, el bit 1 de 0xD7D5
+p10 0xAA4E zona_13_sala_4  en la sala 4, el bit 7 de 0xD7D8
+p10 0xAA56 banderas_especiales  en la sala especial 0x39 sala 1, el bit 1 de 0xD7D8; en la 0x29 desde la sala 2, el 1 de 0xD7E1
+p10 0xAA6C especial_39_banderas  
+p10 0xAA78 d800_de_p10  la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
+p10 0xAAA9 r23_de_d8a5  R#23 (el desplazamiento vertical) = 0xD8A5 con la pantalla partida, 0 sin ella
+p10 0xAAB2 pon_r23  
+p10 0xAAB8 d800_p10_paso_0  0xCB39 = 0, sin musica pendiente, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0, 0xCB3C = 1, p03:B67D en (0x60, 0x60), el sonido 0xA1 y el paso siguiente
+p10 0xAADB d800_p10_paso_1  p03:B6C8; al acabar el barrido, el mensaje 0x0D10 del banco 50 y el paso siguiente
+p10 0xAAEB d800_p10_paso_2  al acabar el mensaje: p01:7A3E, 0xD8A4 = 0, 0xCB3C = 0 y el paso siguiente
+p10 0xAAF6 cb3c_y_paso  
+p10 0xAAFC d800_p10_paso_3  en la sala 8: 0xCB3C = 1, la pantalla partida, 0xD8A5 = 0, el dibujo 0, el byte 0x11 = 1, 0x80 cuadros, la Y = 0, la X = 0x60 y el paso siguiente
+p10 0xAB22 paso_siguiente_d800_p10  
+p10 0xAB26 d800_p10_paso_4  la cuenta: la ficha baja uno y 0xD8A5 tambien (la pantalla de arriba sube), una linea de 0x60 de la pagina 2 y cada 5 cuadros el dibujo siguiente (p10:AB58); al acabar, el sonido 0xA1, el mensaje 0x0EC0 y el paso siguiente
+p10 0xAB4D d800_p10_fin_4  
+p10 0xAB58 dibujo_d800_p10  cada B cuadros (byte 0x11) el dibujo + C (0-3); en los impares, el sonido 0x97 (paso 4) o 0x65; y lo pinta (p10:AB7D)
+p10 0xAB79 sonido_65_d800  
+p10 0xAB7C pinta_dibujo_d800  
+p10 0xAB7D dibujo_ab9d  el dibujo A (p10:AB9D): 0x38 lineas de 0x28 de la pagina 2 desde (X, 0x40) a (D, 0xC8)
+p10 0xAB8A linea_de_dibujo  
+p10 0xABA5 d800_p10_paso_5  al acabar el mensaje: p01:7A3E, la pantalla de arriba a su sitio (0xC0 x 0x28), el byte 0x0F = 0xA0, los bytes 0x11 y 0x16 = 1, 0xCB3C = 0, el paso siguiente, el sonido 5 y p04:8685
+p10 0xABD4 d800_p10_paso_6  baja de 2 en 2 (p10:ABE6) hasta la Y del byte 0x0F; alli, 0x31 cuadros, el byte 0x0F y el 0x18 a cero y el paso siguiente
+p10 0xABD8 d800_p10_fin_6  
+p10 0xABE6 baja_2  el dibujo cada 2 cuadros, la Y + 2 y 0xD8A5 - 2; acarreo por encima del byte 0x0F
+p10 0xABFE d800_p10_paso_8  sube (p10:AC04) hasta la Y del byte 0x0F; alli, como el paso 6
+p10 0xAC04 sube_1  el dibujo cada 4 cuadros hacia atras, la Y - 1 y 0xD8A5 + 1; acarreo por encima del byte 0x0F
+p10 0xAC18 d800_p10_paso_7  la cuenta: cada 8 cuadros, salvo con Snake en X 0x50-0x6F a menos de 0x20 por debajo en Y, lanza el tipo 6 con el desplazamiento 0xE0 hacia la X de Snake + el byte 0x0F * 4 - 4; al acabar, p10:AC4B
+p10 0xAC3A lanza_hacia_snake_p10  la X + el byte 0x0F * 4 - 4 (uno mas cada vez)
+p10 0xAC4B d800_p10_otra_vuelta  el byte 0x11 = 1; desde el paso 7: el dibujo hacia atras, el byte 0x0F = 0x60-0x7F al azar y el paso 8; si no, hacia delante, 0xB4 - (0-0x1F) y el paso 6
+p10 0xAC6E d800_p10_al_6  
+p10 0xAC88 d800_p10_paso_9  la cuenta; cada 16 cuadros (dos veces, byte 0x18) una ficha de 0xD4C0 en (Y - 0x58, 0x38) o (Y - 0x48, 0x80) con el tipo 3 o 4 y el sonido 0x1D; al acabar, p10:AC4B
+p10 0xACAB ficha_d4c0_derecha  las pares: (Y - 0x48, 0x80)
+p10 0xACB0 ficha_d4c0_libre  la primera libre de las dos de 0xD4C0
+p10 0xACB6 mira_d4c0  
+p10 0xACC4 pon_ficha_d4c0  a cero...
+p10 0xACE1 tipo_d4c0  
+p10 0xACEA d800_p10_paso_10  0xCB3C = 1, el byte 0x0F = 0x88; en Y = 0x88, el paso 0x20; por encima, el paso siguiente (baja); por debajo, el paso 0x0C (sube)
+p10 0xAD03 d800_p10_paso_11  baja hasta 0x88 y el paso 0x20
+p10 0xAD07 d800_p10_al_20  
+p10 0xAD0C d800_p10_paso_12  sube hasta 0x88 y el paso 0x20
+p10 0xAD12 sprites_ad8e  los sprites de p10:AD21 y, cada 8 cuadros (byte 0x0F), el sonido 0x15
+p10 0xAD21 sprites_de_ad8e  8 sprites desde 0xDC28 con las Y y X de p10:AD8E (segun el byte 0x0F & 0x0C), los patrones de p10:ADAE (+ 4 cada par) y los colores de las rachas de p10:ADB2
+p10 0xAD76 patrones_ad76  
+p10 0xADC3 sprites_ae8c  los sprites del juego (byte 0x0F / 4) de p10:AE8C (p10:ADE0) y, cada 8 cuadros, el sonido 0x14
+p10 0xADE0 sprites_de_ae28  los sprites 10-17 fuera y los del dibujo (byte 0x0F & 3) de p10:AE28: B sprites [dY][dX][patron][color] sumados a DE, con sus 16 colores
+p10 0xAE02 sprite_ae28  
+p10 0xAE9C puntos_que_giran  0x44 puntos de 2 x 2 a negro desde (0x80 + (byte 0x0E / 2 * 11) mod 0x60, 0x30), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
+p10 0xAEA7 mod_60  
+p10 0xAEAE desplaza_mod  
+p10 0xAEB9 punto_negro  
+p10 0xAED2 siguiente_punto  
+p10 0xAED6 pantalla_f2  la pantalla de F2 (p01:74FD): la vida que se va, p10:BBDD; con 0xD701 = 1, cada cuadro (p10:B185); si no, la monta: 0xCB52 = 0xCB5C = 0, con la pantalla apagada sin 0xDF80 ni desplazamiento, R#7 = 0x0F, la paleta de la sala, sin sprites, 0xD700-0xD70F (p10:AFB2), lo de p10:AF88, el cursor (p10:B880) a 0xD704, p10:B3F9 y p10:B8C7; 0xCABD = 1 y todo encendido
+p10 0xAF27 borra_df80_p10  0xDF80-0xDFBF a cero
+p10 0xAF30 pantalla_f3  la pantalla de F3 (p01:750B): como la de F2 con 0xD700 de p10:AFCD, lo de p10:AFA0, p10:B401, p10:B926, p10:B17D, los sprites a la VRAM y 0xCA70 = la fila y la columna de la sala
+p10 0xAF88 lo_de_f2  la pantalla de F2: la pagina a cero, su letrero (p50:8044), p10:B36F, las cosas de 0xD600 (p10:B00E), los recuadros (p10:B13A, B145), p10:B38F y p10:B150
+p10 0xAFA0 lo_de_f3  la pantalla de F3: la pagina a cero, su letrero (p50:804A), p10:B374, las cosas de 0xD638 (p10:B042), el recuadro y p10:B3C1
+p10 0xAFB2 d700_de_f2  0xD700-0xD70A de p10:AFC2 y lo de 0xD70B (p10:AFDB)
+p10 0xAFCD d700_de_f3  0xD700-0xD707 de p10:AFEB y lo de 0xD70D
+p10 0xAFDB d702_y_d710  0xD702-0xD703 = los dos bytes de HL y 0xD710-0xD74F a cero
+p10 0xAFF3 quita_de_d710  la cosa A fuera de la lista 0xD710 (0x23 sitios)
+p10 0xAFF8 busca_en_d710  
+p10 0xAFFF quita_cosa  
+p10 0xB002 letrero_f2  el letrero de p50:8044
+p10 0xB008 letrero_f3  el letrero de p50:804A
+p10 0xB00E cosas_de_d600  las 13 cosas de 0xD600 que se tienen (0xD708 = su numero): su sitio, su dibujo y a la lista (p10:B02E)
+p10 0xB019 cosa_de_d600  
+p10 0xB02E cosa_a_f2  el sitio (p10:B0A7, 7 por fila de 0x38 en 0x18 x 0x18), el dibujo (p10:B0BE), a la lista (p10:B099) y 0xD705 uno mas
+p10 0xB042 cosas_de_d638  las 0x22 cosas de 0xD638 que se tienen, igual (p10:B062)
+p10 0xB04D cosa_de_d638  
+p10 0xB062 cosa_a_f3  el sitio (7 por fila de 0x20), el dibujo (p10:B0DC), a la lista y, las 0x0E, 0x20, 0x21 y 0x22, su sitio a 0xCA84, 0xCA7E, 0xCA80 o 0xCA82
+p10 0xB095 guarda_sitio  
+p10 0xB099 a_la_lista  0xD710 + 0xD705 = 0xD708
+p10 0xB0A7 sitio_de_cosa  E = la columna (0xD705 mod L) * 16 + E y D + H por cada fila
+p10 0xB0AA fila_de_cosa  
+p10 0xB0B4 columna_de_cosa  
+p10 0xB0BE dibujo_f2  el dibujo de la cosa (p56:A6AF) de la pagina 3: 16 x 16 (32 x 16 las dos primeras, 8 a la derecha las de 16)
+p10 0xB0CF ancho_del_dibujo  
+p10 0xB0D8 copia_dibujo  
+p10 0xB0DC dibujo_f3  el dibujo de la cosa: la 0x0E segun 0xCA7B (p10:B0F9), la 0x0F segun 0xCA90, la 0x10 segun 0xCA89, las demas de p56:A6CB; 16 x 16 a la pagina 3
+p10 0xB0EE copia_16x16  
+p10 0xB0F4 dibujo_0e  
+p10 0xB0F9 sitio_0e  HL = (0x90, 0xB0), (0x90, 0xC0) o (0x90, 0xD0) segun 0xCA7B
+p10 0xB10B dibujo_0f  
+p10 0xB110 sitio_0f  HL = el de p10:B119 por 0xCA90
+p10 0xB125 dibujo_10  HL = el de p10:B130 por 0xCA89
+p10 0xB13A recuadro_f2  el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
+p10 0xB145 recuadro_f2_b  el marco de color 7 de 0x20 x 0x30 en (0x6A, 0x88)
+p10 0xB14B marco_7  
+p10 0xB150 cosa_d634  con la cosa 0x0D (0xD634), su dibujo de (0x80, 0xE0) a (0x72, 0x98)
+p10 0xB161 pagina_a_cero_f  0xC2 x 0xC0 desde (0, 0) a cero
+p10 0xB16A fondo_f2  el fondo al color 0x99
+p10 0xB172 fondo_de_mensajes  0xB0 x 0x28 en (0x90, 8) al color 0x99
+p10 0xB178 fondo_99  
+p10 0xB17D e1d8_rachas  con 0xE1D8, las rachas de p37:B2D5
+p10 0xB185 f2_cada_cuadro  p02:8ECD, p10:BA51, p10:B191 y p02:8ED2
+p10 0xB191 f2_paso  con una tecla de funcion, sale (p10:B44D); el cursor con el mando (p10:B2F4); con 0xD707: el fondo, p10:B33B, p10:B359, p10:B36F, p10:B38F, el cursor a 0xD704, p10:B3F9 y p10:B8C7; si no, p10:BB2B y, sobre la cosa 7, con el disparo 1, 0xD70A cambia (p10:B8F8) con el sonido 0x11
+p10 0xB1C2 f2_cosa_7  
+p10 0xB1DF f3_cada_cuadro  p02:8ECD; salvo sobre la cosa 0x0D, con 0xD443 p02:8EE5; p10:BAB3, p10:B204 y, sin 0xD706, p10:A28F
+p10 0xB201 fin_f3_cada_cuadro  
+p10 0xB204 f3_paso  con una tecla de funcion, sale (p10:B57B); el cursor (p10:B2F4, 6 x 4); movido: el fondo, p10:B340, p10:B359, p10:B374, p10:B3C1, el cursor a 0xD704, p10:B401 y p10:B926; si no, p10:BB50 y, con el disparo 1, se usa lo elegido: la 0x0C (p10:B2CB) o las 0x20-0x22 (la vida al maximo)
+p10 0xB235 f3_usa  
+p10 0xB25D usa_20_22  con 0xCAB6, no se puede
+p10 0xB28E no_se_puede  con 0xCB4B, nada; si no, el sonido 0x5C
+p10 0xB293 sonido_no  
+p10 0xB296 cosa_fuera_de_f3  (HL) = 0, su recuadro borrado, sin el sitio de 0xD8A4 (si no se usa), la cosa fuera de la lista, 0xD704 = 0, el fondo de mensajes y p10:B8C4
+p10 0xB2BB quita_elegida  
+p10 0xB2CB usa_0c  la 0x0C, con 0xCB39: una menos y, acabada, fuera (0xD664); 0xCB39 = 0, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0 y el sonido 0x22; sin 0xCB39, el sonido 0x5C
+p10 0xB2F4 cursor_con_el_mando  0xD707 = 0 y, con una direccion recien pulsada que cabe (0xD702 columna hasta E, 0xD703 fila hasta D): 0xD707 = 1 arriba, 2 abajo, 3 izquierda, 4 derecha y el sonido 0x11
+p10 0xB314 cursor_arriba  
+p10 0xB321 cursor_abajo  
+p10 0xB32E cursor_izquierda  
+p10 0xB33B borra_cursor_f2  borra el cursor de su sitio (pasos de 0x38 x 0x10)
+p10 0xB340 borra_cursor_f3  lo mismo con pasos de 0x20 x 0x10
+p10 0xB343 borra_cursor  
+p10 0xB359 mueve_cursor  0xD702 o 0xD703 uno mas o menos segun 0xD707
+p10 0xB36B uno_mas_cursor  
+p10 0xB36D uno_menos_cursor  
+p10 0xB36F cursor_f2  el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
+p10 0xB374 cursor_f3  lo mismo con pasos de 0x20 x 0x10
+p10 0xB377 pinta_cursor  
+p10 0xB37D copia_cursor  
+p10 0xB38F elegida_f2  sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
+p10 0xB3B1 copia_a_la_3  
+p10 0xB3C1 elegida_f3  sin 0xD8A4: el sitio de 0xD8A4 borrado y el dibujo a el
+p10 0xB3E5 borra_sitio_de_hl  0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
+p10 0xB3F4 color_99  
+p10 0xB3F9 cuenta_f2  la cuenta de lo elegido de 0xD600 en (0xE0, 0x88)
+p10 0xB401 cuenta_f3  las 0x20-0x22: la cuenta de 0xD638 en (0xE0, 0xB8); las demas, p10:B9B4
+p10 0xB414 cuenta_de_d704  
+p10 0xB417 cuenta_de_a  la cuenta (bytes 2-3) de la ficha A - 1 de HL pintada (p10:B960) y copiada de la otra pagina, 0x20 x 8
+p10 0xB42C sitio_del_cursor  D + B * la fila (0xD703) y E + C * la columna (0xD702)
+p10 0xB439 por_la_fila  
+p10 0xB43D suma_b  
+p10 0xB443 por_la_columna  
+p10 0xB447 suma_c  
+p10 0xB44D sale_de_f2  al salir de F2: lo elegido a 0xD704; si no se puede cambiar (p10:B4B1, B501, B558), el sonido 0x5C; si no, el cursor a 0xD70B, lo elegido a 0xCB20 (p10:B87B), 0xCB35, p10:B5C8, 0xCB24 = 0xD70A, p10:B48C y p10:B897
+p10 0xB48C segun_cb20_b492  por lo elegido (p10:B492)
+p10 0xB4B0 nada_b4b0  
+p10 0xB4B1 se_puede_cambiar  acarreo si no se puede dejar lo de 0xCB20: con 0xCB4B, en el estado 0x0B, con 0xCA9B, con 0xD8A4, con 0xD8C0, en un sitio, con 0xCB3F o 0xCB37, en la sala especial 0x39 o en la zona 0x13 sala 5 con 0xD821 = 0x0D (segun lo elegido)
+p10 0xB4FF se_puede  sin acarreo: se puede
+p10 0xB501 no_con_cb21_0a  con 0xCB21 = 0x0A u 0x0B, la cosa 5 no se puede (acarreo)
+p10 0xB50E no_la_5  
+p10 0xB517 no_la_9  la 9 no se puede
+p10 0xB520 no_la_0a_ni_5  la 0x0A y la 5 no se pueden
+p10 0xB527 no_la_5_b  la 5 no se puede
+p10 0xB530 solo_7_a_9  solo las 7-9 se pueden
+p10 0xB53C no_3_5_7  la 3, la 5 y desde la 7 no se pueden
+p10 0xB54B si_b54b  
+p10 0xB54D no_b54d  
+p10 0xB54F solo_0_a_3  desde la 4 no se pueden
+p10 0xB558 no_5_tumbado  en el estado 2 (o con 0xCB31), en el 0x0B o con el dibujo 4, la 5 no se puede
+p10 0xB570 si_b570  
+p10 0xB572 no_la_5_c  
+p10 0xB57B sale_de_f3  al salir de F3: lo elegido a 0xD704; si no se puede (p10:B5D1, B649, B737, B75B, B773), el sonido 0x5C; si no, el cursor a 0xD70D, lo elegido a 0xCB21, el estado que toca, p10:B872, las barras (p10:B78D), salvo con 0xCB20 = 0x0C las rachas, y p10:B897
+p10 0xB5C8 estado_si_no_0b  fuera del estado 0x0B, el estado que toca
+p10 0xB5D1 se_puede_en_f3  acarreo si no se puede lo elegido en F3: la 9 fuera de la zona 0x0D sala 5; la 0x0D segun p10:B6BF; en la especial 0x39 (sala 0: la 2; si no, 2, 0x0A, 0x0B); con 0xCB4B (1, 0x0C, 2, 0x0A, 0x0B); en el estado 0x0B o con 0xCA64 (2...); con 0xD8C0 o en un sitio (2); con 0xCA9B (0x0A, 0x0B); con 0xCB3F o 0xCB37 (1, 0x0A, 0x0B); en la zona 0x12 (1, 2); en la 7 sin el bit 4 de 0xD7D1 (2); en la 0x13 sala 5 con 0xD821 = 0x0D (0x0A, 0x0B)
+p10 0xB5EF mira_f3  
+p10 0xB635 zona_13_f3  
+p10 0xB647 si_b647  
+p10 0xB649 no_con_cb20_5  con 0xCB20 = 5, la 2, la 0x0A y la 0x0B no se pueden
+p10 0xB661 no_0d_ni_2  
+p10 0xB668 no_la_2  
+p10 0xB66F no_la_1  
+p10 0xB675 no_0a_0b  
+p10 0xB682 no_1_0c  
+p10 0xB68D no_2_0a_0b  
+p10 0xB69E no_1_2  
+p10 0xB6A4 no_la_2_b  
+p10 0xB6AD no_b6ad  acarreo: no se puede
+p10 0xB6AF la_9_sala_0d_5  la 9 solo en la zona 0x0D sala 5
+p10 0xB6BD si_b6bd  
+p10 0xB6BF la_0d  la 0x0D: no con 0xCA64 ni donde p10:B6DF lo impide; hasta 10 veces (0xCAF5 uno mas), 0xCAF2 = 0 y 0xCAF1 = 1
+p10 0xB6DF donde_no_0d  acarreo con 0xCAF1, 0xD8A0, las salas especiales 0x29 y 2, las zonas 0x12, 0x13 y 0x0E, la zona 3 sala 6, la 7 salas 0x10-0x13 y la 0x0A salas 0x0B-0x0C y 0x10-0x11
+p10 0xB713 zona_3_0d  
+p10 0xB71C zona_7_0d  
+p10 0xB726 zona_0a_0d  
+p10 0xB737 la_2_sin_llegadas  la 2: no en las zonas sin llegadas (p04:96BA) ni en la zona 0x0E sala 4 o la 0x0F sala 1
+p10 0xB756 sala_b  
+p10 0xB75B la_2_sala_18  la 2 no en la sala especial 0x18 salvo en la sala 0
+p10 0xB76F no_b76f  
+p10 0xB771 si_b771  
+p10 0xB773 con_d7d5_4  con el bit 4 de 0xD7D5 y sin el 0 de 0xD7DA, la 2 y la 0x0D no se pueden
+p10 0xB78D barras_de_cb21  las barras de la derecha segun 0xCB21: la 4 (p10:B839), la 7 (p10:B7F3); las demas, las dos a 0x20 de ancho (0xCAC4 y 0xCA54) con su marco
+p10 0xB7B0 tercera_a_20  
+p10 0xB7C8 barra_a_20  el ancho de HL a 0x20 y lo que queda a la mitad (al menos 2)
+p10 0xB7DB pon_barra  
+p10 0xB7DD marco_de_barra  borra la franja, el marco de la zona (p10:B7E8) y p00:42B0 con 0x20
+p10 0xB7E8 marco_segun_zona  en la zona 6, el marco de 0xCAC4; en las demas, el de 0xCA54
+p10 0xB7F3 barras_de_7  la 7: con 0xCB3F desde 2, la barra de 0xCAC4 a 0x40 (p10:B82C) con su marco; si no, las dos a 0x40 (y la tercera con 0xDFF0)
+p10 0xB80C barras_a_40  
+p10 0xB823 tercera_7  
+p10 0xB82C barra_a_40  el ancho de HL a 0x40 y lo que queda al doble
+p10 0xB839 barras_de_4  la 4: con 0xDFF0, la tercera barra a 0x40 con su marco; si no, las dos a 0x40 (y la de 0xCAC4 con 0xCB3F)
+p10 0xB851 barras_4_a_40  
+p10 0xB869 cac4_de_4  
+p10 0xB872 rachas_de_la_1  con 0xCB21 = 1, las rachas de p37:B34A
+p10 0xB87B pon_elegida  (DE) = 0xD704
+p10 0xB880 cosa_del_cursor  A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
+p10 0xB888 por_c  
+p10 0xB88B mas_columna  
+p10 0xB897 sale_del_menu  con algo elegido, el sonido 0x22; la sala repintada, lo lanzado a cero, 0xD700 = 0xD701 = 0xCB16 = 0, 0xD706 = 0xCA69 = 0xE236 = 1 y, con 0xCB21 = 2, los que siguen pintados
+p10 0xB8BE marco_b8be  
+p10 0xB8C4 letrero_f2_0  el letrero 0 de p50:8046 (ninguno)
+p10 0xB8C7 letrero_de_lo_elegido  el letrero de lo elegido de p50:8046 y, para la 7, su recuadro (p10:B8D5)
+p10 0xB8CC letrero_d704  
+p10 0xB8CF letrero_8046  
+p10 0xB8D5 recuadro_de_7  la 7: un marco en (0x94, 0x70) de 0x44 x 0x20, los letreros de p10:B919 y p10:B920 y el cursor de 0xD70A (p10:B8F8)
+p10 0xB8F8 cursor_d70a  borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
+p10 0xB916 pinta_cursor_d70a  
+p10 0xB926 letrero_de_f3  el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+p10 0xB92B letrero_8048  
+p10 0xB934 dibujo_14_1c  
+p10 0xB957 sin_lanzados_p10  lo lanzado por Snake a cero
+p10 0xB960 pinta_cuenta  la cuenta BCD de HL en DE (hasta 3 cifras, sin ceros a la izquierda), 8 a la derecha cada cifra; la de 0xD62C o con 0xD8A4, borrada
+p10 0xB97E cifras_de_cuenta  
+p10 0xB99F decenas_y_unidades  
+p10 0xB9A5 tres_cifras  
+p10 0xB9B4 borra_cuenta  0x18 x 0x10 en DE a 0
+p10 0xB9BB una_cifra_p10  la cifra A en DE y 8 a la derecha
+p10 0xB9C7 cifra_de_96ab  la cifra de p56:96AB (dos mitades de 8 x 8) a la pagina 3
+p10 0xB9D0 dos_mitades  
+p10 0xB9DA mitad_8x8  
+p10 0xB9E5 marcador_de_lo_elegido  en el marcador: el dibujo de lo de 0xCB20 (p56:A6AF) con su cuenta en (0xE0, 0x88) y el de 0xCB21 (p56:A6CB) con la suya (0x20-0x22) en (0xE0, 0xB8)
+p10 0xBA03 borra_d8a4_b  
+p10 0xBA09 marcador_cb21  
+p10 0xBA2A dibujo_a_d8a4  el dibujo de HL a (0xA4, 0xD8), 16 x 16
+p10 0xBA32 dibujo_a_d074  el dibujo de HL a (0x74, 0xD0), 0x20 x 16 (16 x 16 en (0x74, 0xD8) desde la 3)
+p10 0xBA43 copia_dibujo_logica  
+p10 0xBA51 sprites_cb4b_f2  con 0xCB4B: el parpadeo (p10:BAA8), sin sprites y, sobre las dos primeras cosas de la lista, la 9 con sus sprites
+p10 0xBA65 cosa_cb4b  
+p10 0xBA78 sprite_de_la_9  la 9: el sprite 0 (patron 0xF0 o 0xF8 segun 0xCB4D) y sus colores
+p10 0xBA86 sprite_cb4d  dos sprites en (E, D) con el patron 0xF0 (0xF8 con 0xCB4D)
+p10 0xBA90 pon_sprite_cb4d  
+p10 0xBA96 colores_0a_0b  16 colores 0x0A y 16 0x0B
+p10 0xBAA8 parpadeo_cb4b  cada 4 cuadros (0xCB4C), el bit 0 de 0xCB4D cambia
+p10 0xBAB3 sprites_cb4b_f3  con 0xCB4B: el parpadeo, sin sprites y sobre las cosas de la lista (hasta 0x23, 7 por fila) los sprites de p10:BB00
+p10 0xBACF cosa_cb4b_f3  
+p10 0xBAE5 siguiente_sitio  0x10 a la derecha; tras las 7, 0xE, 0x15 y 0x1C, la fila siguiente
+p10 0xBAF9 fila_siguiente  
+p10 0xBB00 sprite_de_cosa_f3  salvo las 2, 3, 5, 8, 0x0B, 0x10 y desde 0x20, el sprite de p10:BA86 y sus colores
+p10 0xBB2B usa_en_f2  con 0xCB4B y el disparo 1, sobre la 9 o la 0x0B: el sonido 0x22 y la usa (p10:BB7D con 0xD621 o 0xD629)
+p10 0xBB48 usa_la_9  
+p10 0xBB50 usa_en_f3  con 0xCB4B y el disparo 1: la cosa elegida de 0xD638 (las 0x20-0x22 solo con la vida al maximo) se usa (p10:BB96)
+p10 0xBB7D gasta_de_d600  una menos de la cosa (p03:BE60, p03:BE42); acabada, fuera: el sitio de 0xD874 y su recuadro
+p10 0xBB96 gasta_de_d638  el sonido 0x22, una menos (p03:BEB7, BEB2); acabada, fuera: el sitio de 0xD8A4 y su recuadro
+p10 0xBBB4 quita_de_la_pantalla  borra su recuadro y su sitio, la cosa de la lista, 0xD704 = 0, el fondo y el letrero 0
+p10 0xBBDD cb4b_sin_cosas  con 0xCB4B y sin ninguna de las 0x31 cosas de 0xD600: el bit 2 de 0xD7D9, fuera el 0 de 0xD7D5, 0xCB4B = 0xE1E8 = 0...
+p10 0xBBEA mira_cosa_d600  
+p10 0xBC0F e1c0_empieza  en la zona 0x0A, 0xE1C0 = 1 y 0xE1C1 = 1
+p10 0xBC1E e1c0_al_entrar  en la zona 0x0A sala 0x0E con 0xE1C0 (p10:BC27): los 8 bytes de 0xDE70 del mapa a 0xE1C8 y ahi 0x80, 0x40 x 0x18 de (0x40, 0x68) de la otra pagina a (0, 0) y las tres lineas de color 0x0E (p10:BC8A)
+p10 0xBC27 e1c0_guarda  
+p10 0xBC4D sala_0a_0e  Z en la zona 0x0A sala 0x0E
+p10 0xBC59 e1c0_cada_cuadro  en la zona 0x0A sala 0x0E: con 0xE1C0 = 1, las lineas del color de 0xE1C1 (1-0x0E en vuelta); con 2 o mas, 0xE1C0 = 0, el mapa de vuelta (0xE1C8 a 0xDE70) y el rectangulo de (0, 0) a (0x40, 0x68) de la otra pagina
+p10 0xBC7F e1c0_lineas  
+p10 0xBC89 pon_e1c1  
+p10 0xBC8A tres_lineas  tres lineas horizontales de 0x40 en X = 0x40, Y = 0x6C, 0x74 y 0x7C, color C
+p10 0xBC96 linea_40  
+p10 0xBCA2 fichas_e100  0xE100-0xE1BF a cero y las fichas de la zona (5, 0x0D, 0x11, 0x10; la 0x0E con 0xD885 distinto de 0xFF) de p10:BCFD: 10 bytes cada una en fichas de 12, 0xFF acaba
+p10 0xBCC9 zona_0e_d885  
+p10 0xBCCE copia_lista_bcfd  
+p10 0xBCD8 ficha_bcfd  
+p10 0xBCE4 fichas_e100_especial_31  en la zona 0x0A, 0xE100-0xE1BF a cero y, en la sala especial 0x31, la lista 5
+p10 0xBE6D pinta_fichas_e100  sin 0xCA77 y fuera del estado 0x1A (en la zona 0x10, solo con 0xCA43 = 2): las 16 fichas de 0xE100 de esta sala pintadas (p10:BE9C)
+p10 0xBE85 fichas_e100_b  
+p10 0xBE8B ficha_e100  
+p10 0xBE9C pinta_ficha_e100  en su sala (bytes 3-4): el fondo de (bytes 8-9) a su sitio (bytes 1-2), de 2 x largo (tipo 1, en vertical) o largo x 2, y una linea de color 7 del largo del byte 5
+p10 0xBEB9 copia_fondo_e100  
+p10 0xBED4 fichas_e100_cada_cuadro  sin salir ni 0xCA77 (zona 0x10 solo con 0xCA43 = 2): cada ficha de 0xE100 de esta sala con Snake (p10:BF14)
+p10 0xBEEB fichas_e100_c  
+p10 0xBEF1 ficha_e100_b  
+p10 0xBF0B siguiente_e100  
+p10 0xBF14 ficha_e100_empuja  el tipo 1 (vertical): con Snake en su largo en Y, a menos de 6 (0x0E en el estado 2) de su X, la aparta 0x0C (0x14); los demas (p10:BF8A) en horizontal; y cuenta (p10:BF47)
+p10 0xBF31 aparta_en_x  
+p10 0xBF40 por_la_derecha_e100  
+p10 0xBF44 pon_x_snake_e100  
+p10 0xBF47 cuenta_de_e100  cada 4 empujones, el sonido 0x34 y, con alerta por debajo de 2, 0xD446 = 2; con la cuenta del byte 6 acabada, el sonido 0x56 y la ficha se va con su fondo de vuelta a la otra pagina
+p10 0xBF5E ficha_e100_cuenta  
+p10 0xBF77 fondo_e100_vuelta  
+p10 0xBF7A sitio_y_fondo_e100  DE = su sitio (bytes 1-2), HL = el fondo (bytes 8-9), C = el largo (byte 5)
+p10 0xBF8A ficha_e100_horizontal  en horizontal: con Snake en su largo en X, a menos de 0x0C (0x1C en el estado 2) de su Y, la aparta en Y
+p10 0xBFA0 aparta_en_y  
+p10 0xBFB1 por_abajo_e100  
+p10 0xBFB7 pon_y_snake_e100  
+p10 0xBFBC vida_de_cosa  sin 0xCAB6, con la cosa 0x20-0x22 elegida (desde p07:B3CF, la vida a cero): la vida al maximo, una menos de ella y, acabada, a cero, 0xCB21 = 0 y (sin 0xD8A4) su sitio borrado
+p10 0xBFD9 vida_al_maximo  la vida al maximo
 p16 0x4000 entrada_arranque  jp p16:4009
 p16 0x4003 entrada_pide  jp p16:4024
 p16 0x4006 entrada_cuadro  jp p16:428F

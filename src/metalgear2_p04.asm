@@ -1381,11 +1381,11 @@ L_8915:
 	call 041cdh		;892c   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0d80dh)		;892f   ; ...y p10:AB7D con 0xD80D y con 0xD80D - 1
 	push af			;8932
-	call 0ab7dh		;8933   ; p10:AB7D
+	call 0ab7dh		;8933   ; dibujo_ab9d: el dibujo A (p10:AB9D): 0x38 lineas de 0x28 de la pagina 2 desde (X, 0x40) a (D, 0xC8)
 	pop af			;8936
 	dec a			;8937
 	and 003h		;8938
-	call 0ab7dh		;893a   ; p10:AB7D
+	call 0ab7dh		;893a   ; dibujo_ab9d: el dibujo A (p10:AB9D): 0x38 lineas de 0x28 de la pagina 2 desde (X, 0x40) a (D, 0xC8)
 	jp 04142h		;893d   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 d800_en_esta_sala:		; IX = 0xD800: Z si esta en esta sala
 	ld ix,0d800h		;8940   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
@@ -1574,7 +1574,7 @@ DATA_tabla_8A75:
 
 a_p10_aa78:		; p10:AA78 con el banco 10 en 0xA000
 	call 041cdh		;8aa3   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa78h		;8aa6   ; p10:AA78
+	call 0aa78h		;8aa6   ; d800_de_p10: la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
 	jr L_8AB9		;8aa9
 a_p15_b8ec:		; p15:B8EC con el banco 15 en 0xA000
 	call 041f7h		;8aab   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1824,7 +1824,7 @@ a_p06_b1da_guarda:		; p06:B1DA guardando el banco de 0xA000
 	jr L_8C72		;8c81
 d800_paso_26:		; el paso 0x26: p10:AD12; al acabar la espera, las rachas de p47:A81B, 0x60 cuadros, 0xD8BA = 1 y el paso siguiente
 	call 041cdh		;8c83   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ad12h		;8c86   ; p10:AD12
+	call 0ad12h		;8c86   ; sprites_ad8e: los sprites de p10:AD21 y, cada 8 cuadros (byte 0x0F), el sonido 0x15
 	call 04142h		;8c89   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	dec (ix+00eh)		;8c8c   ; baja la espera de la ficha de 0xD800
 	ret nz			;8c8f
@@ -1837,8 +1837,8 @@ d800_paso_26:		; el paso 0x26: p10:AD12; al acabar la espera, las rachas de p47:
 	jp paso_siguiente_d800		;8c9f   ; paso_siguiente_d800: el paso siguiente
 d800_paso_27:		; el paso 0x27: p10:ADC3 y p10:AE9C con el borde parpadeando; al acabar, los sonidos y la pantalla apagada
 	call 041cdh		;8ca2   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0adc3h		;8ca5   ; p10:ADC3
-	call 0ae9ch		;8ca8   ; p10:AE9C
+	call 0adc3h		;8ca5   ; sprites_ae8c: los sprites del juego (byte 0x0F / 4) de p10:AE8C (p10:ADE0) y, cada 8 cuadros, el sonido 0x14
+	call 0ae9ch		;8ca8   ; puntos_que_giran: 0x44 puntos de 2 x 2 a negro desde (0x80 + (byte 0x0E / 2 * 11) mod 0x60, 0x30), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
 	call 04142h		;8cab   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	dec (ix+00eh)		;8cae   ; baja la espera de la ficha de 0xD800
 	jp nz,borde_segun_espera		;8cb1   ; borde_segun_espera:

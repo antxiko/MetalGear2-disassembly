@@ -27,7 +27,7 @@ cb21_9_sube:		; con 0xCB21 = 9 en la zona 0x0D sala 5, con 0xE1D5 y 0xCA61 = 1, 
 	ld a,(0e1d5h)		;a012
 	or a			;a015   ; ...con 0xE1D5...
 	ret z			;a016
-	ld a,(0ca61h)		;a017
+	ld a,(0ca61h)		;a017   ; lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 	dec a			;a01a
 	ret nz			;a01b   ; ...y 0xCA61 = 1
 	ld a,(0cb03h)		;a01c   ; lee la Y de Snake
@@ -1477,7 +1477,7 @@ L_AB12:
 	jr e041_siguiente_e		;ab4b
 guion_5_paso_4:		; p10:A6C2; sin 0xE1F8, 0x80 cuadros y el paso siguiente
 	call 08ce0h		;ab4d   ; a_p10_a6c2: p10:A6C2 con el banco 10 en 0xA000
-	ld a,(0e1f8h)		;ab50
+	ld a,(0e1f8h)		;ab50   ; lee 1 con la ficha de p10:A6A4 en marcha (0xE1F9-0xE1FF)
 	or a			;ab53
 	ret nz			;ab54   ; con 0xE1F8, sigue
 	ld hl,0e043h		;ab55   ; apunta a la cuenta de cuadros de la escena

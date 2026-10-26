@@ -1020,8 +1020,8 @@ C 0x8904 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381
 C 0x8912 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x8929 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x892C bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8933 p10:AB7D
-C 0x893A p10:AB7D
+C 0x8933 dibujo_ab9d: el dibujo A (p10:AB9D): 0x38 lineas de 0x28 de la pagina 2 desde (X, 0x40) a (D, 0xC8)
+C 0x893A dibujo_ab9d: el dibujo A (p10:AB9D): 0x38 lineas de 0x28 de la pagina 2 desde (X, 0x40) a (D, 0xC8)
 C 0x893D bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8940 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x8944 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
@@ -1057,7 +1057,7 @@ C 0x8A64 salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0x8A69 lee el paso de la ficha de 0xD800
 C 0x8A72 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x8AA3 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AA6 p10:AA78
+C 0x8AA6 d800_de_p10: la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
 C 0x8AAB bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8AAE p15:B8EC
 C 0x8AB3 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1124,15 +1124,15 @@ C 0x8C77 lee la copia del banco de 0xA000
 C 0x8C7B bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8C7E d860_tipo_4: en la zona 7, con 0xD883 distinto de 0xFF, fuera de la sala especial 0x29, la ficha 0xD860 libre y el bit 1 de 0xD7D1: la ficha 0xD860 de tipo 4
 C 0x8C83 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8C86 p10:AD12
+C 0x8C86 sprites_ad8e: los sprites de p10:AD21 y, cada 8 cuadros (byte 0x0F), el sonido 0x15
 C 0x8C89 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8C8C baja la espera de la ficha de 0xD800
 C 0x8C90 rachas_a81b_bancos_5: 
 C 0x8C93 la espera de la ficha de 0xD800 = 0x60
 C 0x8C9F paso_siguiente_d800: el paso siguiente
 C 0x8CA2 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8CA5 p10:ADC3
-C 0x8CA8 p10:AE9C
+C 0x8CA5 sprites_ae8c: los sprites del juego (byte 0x0F / 4) de p10:AE8C (p10:ADE0) y, cada 8 cuadros, el sonido 0x14
+C 0x8CA8 puntos_que_giran: 0x44 puntos de 2 x 2 a negro desde (0x80 + (byte 0x0E / 2 * 11) mod 0x60, 0x30), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
 C 0x8CAB bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CAE baja la espera de la ficha de 0xD800
 C 0x8CB1 borde_segun_espera: 

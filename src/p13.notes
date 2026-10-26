@@ -257,6 +257,8 @@ C 0x9546 bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0x
 C 0x9549 bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x954F rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
 C 0x9552 bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x9555 apunta a cuantas cosas hay en la pantalla de F2/F3
+C 0x9559 lee 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
 C 0x955C despachador: salta a la palabra A de la tabla que va detras del call
 C 0x95AB orden_sonido_f6: la orden 0xF6 al sonido
 C 0x95C0 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
@@ -270,15 +272,32 @@ C 0x95EF enciende_todo: la pantalla y los sprites encendidos
 C 0x95F2 letras_b093: 0x26 letras de p58:B093 en 4 bits, con el color 5, a la VRAM de 0x0080
 C 0x95F5 dibujos_8114_en_e000: los dibujos de p52:8114 en la VRAM de 0xE000
 C 0x95FB mosaico_bb4a: el mosaico en rachas de p54:BB4A (0x0B x 0x10) en X = 0x40, Y = 0x41
+C 0x9601 apunta a la fila del cursor en F2/F3
+C 0x9606 apunta a el cursor de F2 guardado (columna, fila)
+C 0x960E apunta a 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
 C 0x961C sonido_98: pide el sonido 0x98 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0x9622 borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
 C 0x9627 borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
 C 0x962B borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
 C 0x963D borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0x9649 apunta a la fila del cursor en F2/F3
+C 0x9659 apunta a 1 al salir de F2/F3 (p10:B897)
+C 0x9661 apunta a la fila del cursor en F2/F3
 C 0x9668 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0x966B lee 1 al salir de F2/F3 (p10:B897)
+C 0x9676 apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x9682 copia_en_y: orden YMMM del VDP
+C 0x9685 apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x96A0 copia_en_y: orden YMMM del VDP
+C 0x96AC apunta a la fila del cursor en F2/F3
+C 0x96C2 apunta a la fila del cursor en F2/F3
+C 0x96D2 apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x96D9 orden_sonido_f6: la orden 0xF6 al sonido
+C 0x96DF apunta a la fila del cursor en F2/F3
+C 0x96EA apunta a la fila del cursor en F2/F3
+C 0x96F1 apunta a 1 al salir de F2/F3 (p10:B897)
+C 0x96F9 apunta a la fila del cursor en F2/F3
+C 0x9700 apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x9712 pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 C 0x9715 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0x9722 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
@@ -286,18 +305,36 @@ C 0x9728 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP
 C 0x972B mosaico_bbd5: el mosaico de p54:BBD5 (0x0C x 0x10) en X = 0x40, Y = 0x38
 C 0x972E enciende_todo: la pantalla y los sprites encendidos
 C 0x9731 sonido_a3: pide el sonido 0xA3 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0x9739 apunta a la fila del cursor en F2/F3
+C 0x9744 apunta a la fila del cursor en F2/F3
+C 0x9754 apunta a la fila del cursor en F2/F3
+C 0x9763 apunta a 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+C 0x9771 apunta a la fila del cursor en F2/F3
+C 0x9776 lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+C 0x9791 apunta a 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+C 0x979C apunta a 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+C 0x97C6 apunta a la fila del cursor en F2/F3
+C 0x97D4 apunta a la fila del cursor en F2/F3
+C 0x97E1 apunta a la fila del cursor en F2/F3
 C 0x97E6 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
+C 0x97E9 apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x97F9 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x9805 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x9819 mosaico_de_57: el mosaico de HL del banco 57-58 en X = 0, Y = 0xF0, 1 fila de 0x12, forma 0x0B
+C 0x9829 lee la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0x982E guarda la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 C 0x983A borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x984B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x9859 lee la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 C 0x9865 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0x9868 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0x986B lee la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
 C 0x986E pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 C 0x987E copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x988B byte_de_57: A = (HL) del banco 57-58
 C 0x9893 mosaico_de_57: el mosaico de HL del banco 57-58 en X = 0, Y = 0xF0, 1 fila de 0x12, forma 0x0B
+C 0x9896 apunta a la fila del cursor en F2/F3
+C 0x98A1 apunta a la fila del cursor en F2/F3
 C 0x98AE orden_sonido_f6: la orden 0xF6 al sonido
 C 0x98BE apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0x98C1 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
@@ -305,41 +342,81 @@ C 0x98C8 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x98CB pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 C 0x98CE enciende_todo: la pantalla y los sprites encendidos
 C 0x98D4 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
+C 0x98DB apunta a 1 al salir de F2/F3 (p10:B897)
+C 0x98DF apunta a la columna del cursor en F2/F3
+C 0x98E4 guarda la fila del cursor en F2/F3
 C 0x98F4 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x9900 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x9905 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x9908 mosaico_bc95: el mosaico en rachas de p54:BC95 (5 x 0x0C) en X = 0x50, Y = 0x50
 C 0x990C guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x9910 apunta a la fila del cursor en F2/F3
+C 0x991A apunta a la fila del cursor en F2/F3
+C 0x9922 lee la columna del cursor en F2/F3
 C 0x9925 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x9930 palabra_8042_d706: HL = la palabra 0xD706 de la tabla de p50:8042
 C 0x9933 mensaje_abajo: el mensaje de HL en (0x10, 0x98), 4 lineas
+C 0x9936 apunta a la columna del cursor en F2/F3
 C 0x993B mensaje_cada_cuadro_b_13_14: mensaje_cada_cuadro y deja los bancos 13 y 14
 C 0x993E lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0x9943 apunta a la fila del cursor en F2/F3
+C 0x994A apunta a la fila del cursor en F2/F3
+C 0x994F apunta a 1 al salir de F2/F3 (p10:B897)
+C 0x9954 apunta a la columna del cursor en F2/F3
 C 0x9967 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x9977 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0x9982 apunta a la columna del cursor en F2/F3
+C 0x998A apunta a la columna del cursor en F2/F3
 C 0x999E borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x99A1 sonido_3f: pide el sonido 0x3F
 C 0x99B7 copia_en_y: orden YMMM del VDP
 C 0x99C5 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0x99C8 apunta a la columna del cursor en F2/F3
+C 0x99DB apunta a la fila del cursor en F2/F3
+C 0x99E3 apunta a la fila del cursor en F2/F3
+C 0x99EA apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x99F8 mosaico_de_54_bc: forma 0x0C en la franja 3
 C 0x99FE sonido_a4: pide el sonido 0xA4 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0x9A01 apunta a la fila del cursor en F2/F3
+C 0x9A08 apunta a 1 al salir de F2/F3 (p10:B897)
+C 0x9A17 apunta a la fila del cursor en F2/F3
+C 0x9A1F apunta a la fila del cursor en F2/F3
+C 0x9A29 apunta a la fila del cursor en F2/F3
+C 0x9A30 apunta a 1 al salir de F2/F3 (p10:B897)
+C 0x9A3E apunta a la fila del cursor en F2/F3
+C 0x9A46 apunta a la fila del cursor en F2/F3
 C 0x9A50 pon_color: el color A de la paleta = D (rojo y azul), E (verde)
+C 0x9A5B lee la columna del cursor en F2/F3
 C 0x9A5E despachador: salta a la palabra A de la tabla que va detras del call
 C 0x9A79 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
+C 0x9A7C lee 1 al salir de F2/F3 (p10:B897)
 C 0x9A91 suma_a_hl: HL = HL + A
+C 0x9A9E lee 1 al salir de F2/F3 (p10:B897)
 C 0x9AA4 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x9AB7 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x9AC7 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x9AD7 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x9ADC a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
+C 0x9ADF lee 1 al salir de F2/F3 (p10:B897)
 C 0x9AE5 palabra_de_tabla_de: DE = la palabra A de la tabla de DE
+C 0x9AF5 apunta a la fila del cursor en F2/F3
 C 0x9AFB a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
+C 0x9AFE apunta a la fila del cursor en F2/F3
+C 0x9B05 lee 1 al salir de F2/F3 (p10:B897)
 C 0x9B0B palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x9B14 lee 1 al salir de F2/F3 (p10:B897)
 C 0x9B28 a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
+C 0x9B2B apunta a la fila del cursor en F2/F3
 C 0x9B3B mosaico_de_54: el mosaico de HL del banco 54 (2 filas de 1)
 C 0x9B43 byte_de_54: A = (HL) del banco 54
+C 0x9B54 lee 1 al salir de F2/F3 (p10:B897)
+C 0x9B74 apunta a la fila del cursor en F2/F3
 C 0x9B7C a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
+C 0x9B7F apunta a la fila del cursor en F2/F3
+C 0x9B86 lee 1 al salir de F2/F3 (p10:B897)
+C 0x9B94 lee 1 al salir de F2/F3 (p10:B897)
 C 0x9B9B palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x9BA3 apunta a 1 al salir de F2/F3 (p10:B897)
 C 0x9BAF dibujos_a34b: los bancos 32-34...
 C 0x9BB2 a_p04_8957: p04:8957 con el banco 4 en 0x8000
 C 0x9BB8 mapa_de_bits_8098_en: el mapa de bits de p57:8098 (0xA8 filas de 0x40 bytes) en la VRAM de DE
@@ -348,32 +425,59 @@ C 0x9BC8 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0x9BCF a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 C 0x9BD4 a_p03_b866_2: p03:B866 con el banco 3 en 0xA000
 C 0x9BD7 enciende_todo: la pantalla y los sprites encendidos
+C 0x9BDA lee 1 al salir de F2/F3 (p10:B897)
+C 0x9BE2 guarda la columna del cursor en F2/F3
 C 0x9BEB pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 C 0x9BFC mosaico_de_54_bc: forma 0x0C en la franja 3
+C 0x9C02 apunta a la fila del cursor en F2/F3
+C 0x9C18 apunta a la fila del cursor en F2/F3
+C 0x9C20 apunta a la fila del cursor en F2/F3
+C 0x9C2A apunta a la fila del cursor en F2/F3
 C 0x9C3C apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0x9C42 mapa_de_bits_9c58_bancos: 
 C 0x9C45 enciende_todo: la pantalla y los sprites encendidos
 C 0x9C48 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0x9C4B apunta a la columna del cursor en F2/F3
 C 0x9C53 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x9CD6 orden_sonido_f6: la orden 0xF6 al sonido
+C 0x9CE6 apunta a la fila del cursor en F2/F3
+C 0x9CEE apunta a la fila del cursor en F2/F3
 C 0x9CF4 guarda el estado de la partida (p01:729F: 8 estados)
 C 0x9CF7 guarda el paso del estado de la partida
+C 0x9CFD guarda el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
 C 0x9D04 dibujos_de_93e5_bancos_14: 
 C 0x9D0A a_p03_b814_2: p03:B814 con el banco 3 en 0xA000
+C 0x9D18 lee 1 al salir de F2/F3 (p10:B897)
+C 0x9D21 lee cuantas cosas hay en la pantalla de F2/F3
+C 0x9D2D apunta a el cursor de F3 guardado (columna, fila)
 C 0x9D37 mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
+C 0x9D3A lee 1 al salir de F2/F3 (p10:B897)
+C 0x9D43 lee cuantas cosas hay en la pantalla de F2/F3
+C 0x9D50 apunta a el cursor de F3 guardado (columna, fila)
 C 0x9D5A mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
+C 0x9D5D lee 1 al salir de F2/F3 (p10:B897)
+C 0x9D66 lee cuantas cosas hay en la pantalla de F2/F3
+C 0x9D75 apunta a el cursor de F3 guardado (columna, fila)
 C 0x9D82 mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
+C 0x9D85 lee 1 al salir de F2/F3 (p10:B897)
+C 0x9D8E lee cuantas cosas hay en la pantalla de F2/F3
+C 0x9D9A apunta a el cursor de F3 guardado (columna, fila)
 C 0x9DA4 mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 C 0x9DB1 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x9E01 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x9E04 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x9E27 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x9E2D lee 1 al salir de F2/F3 (p10:B897)
 C 0x9E38 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x9E44 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0x9E6C lee cuantas cosas hay en la pantalla de F2/F3
 C 0x9E84 suma_a_hl: HL = HL + A
 C 0x9EC8 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0x9ECB guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4) y el byte siguiente (16 bits)
 C 0x9ECE lee el contador de cuadros (uno mas en cada interrupcion)
+C 0x9EE5 lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4) y el byte siguiente (16 bits)
 C 0x9EE8 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
+C 0x9EEB guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4) y el byte siguiente (16 bits)
 C 0x9EF2 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x9EFA llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x9F00 lee el contador de cuadros (uno mas en cada interrupcion)
@@ -387,4 +491,5 @@ C 0x9F38 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0
 C 0x9F49 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0x9F4C lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x9F68 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x9F6B lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
 # --- fin de las anotaciones de anota.py ---

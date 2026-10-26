@@ -2001,13 +2001,13 @@ C 0x5387 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381
 C 0x538A alerta_cada_cuadro: con 4 que siguen o desde la zona 0x10, p00:5A0F; en la 0x0C desde la sala 3, tambien
 C 0x538D pantalla_de_d800: segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 C 0x5390 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5393 p10:A0D3
-C 0x5396 p10:A000
-C 0x5399 p10:A477
+C 0x5393 cab6_de_la_sala: p10:A10F y, sin 0xCAB6, p10:A0DB
+C 0x5396 ca61_de_la_sala: 0xE1D5 = 0; en un sitio, 0xCA61 = 1; con 0xD8C0, 2; si no, 0xCAB2 = 0xF0 y 0xCAB0 = el modo de esta sala en p10:A054 ([zona][sala][modo], la sala 0x39 es la especial; 0xFF acaba), 2 si no esta
+C 0x5399 fichas_e070_de_la_sala: 0xE070-0xE07F a cero y, de p10:A61B ([zona][sala][Y y X en nibbles], 0xFF acaba; en la zona 0x10 solo con 0xCA43 = 6), las dos fichas de esta sala: [1][0][Y * 16 + 1][X * 16][0x10]
 C 0x539C bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x539F cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que siguen
 C 0x53A2 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x53A5 p10:A82F
+C 0x53A5 banderas_de_la_zona: a cero bits de 0xD7D2, 0xD7D5-0xD7D6, 0xD7D8, 0xD7DB-0xD7DC, 0xD7E0-0xD7E1 y 0xD7E3; el bit 5 o 6 de 0xD7DB segun la zona (p10:A877), lo de cada zona (p10:A8AF) y p10:AA56
 C 0x53A8 bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53AB fichas_e000: 0xE000-0xE03F a cero; en la zona 7, salas 2, 3, 4 y 8, las 8 fichas de 0xE000 desde p06:AC82, p06:AC9A, p06:ACB2 o p06:ACCA (3 bytes cada una)
 C 0x53AE bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2025,8 +2025,8 @@ C 0x53CF a_p11_a389: p11:A389 con el banco 11 en 0xA000
 C 0x53ED bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53F0 pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 C 0x53F3 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x53F6 p10:BE6D
-C 0x53F9 p10:BC1E
+C 0x53F6 pinta_fichas_e100: sin 0xCA77 y fuera del estado 0x1A (en la zona 0x10, solo con 0xCA43 = 2): las 16 fichas de 0xE100 de esta sala pintadas (p10:BE9C)
+C 0x53F9 e1c0_al_entrar: en la zona 0x0A sala 0x0E con 0xE1C0 (p10:BC27): los 8 bytes de 0xDE70 del mapa a 0xE1C8 y ahi 0x80, 0x40 x 0x18 de (0x40, 0x68) de la otra pagina a (0, 0) y las tres lineas de color 0x0E (p10:BC8A)
 C 0x53FC bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53FF lee la Y de Snake
 C 0x5406 lee la X de Snake
@@ -2105,9 +2105,9 @@ C 0x5617 al_entrar_en_la_sala: 0xE1E8 = 0xDFF0 = 0; fuera del agua, sin la barra
 C 0x561A a_p09_a163: p09:A163 con el banco 9 en 0xA000
 C 0x5620 cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que siguen
 C 0x5623 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5626 p10:A0D3
-C 0x5629 p10:A000
-C 0x562C p10:A82F
+C 0x5626 cab6_de_la_sala: p10:A10F y, sin 0xCAB6, p10:A0DB
+C 0x5629 ca61_de_la_sala: 0xE1D5 = 0; en un sitio, 0xCA61 = 1; con 0xD8C0, 2; si no, 0xCAB2 = 0xF0 y 0xCAB0 = el modo de esta sala en p10:A054 ([zona][sala][modo], la sala 0x39 es la especial; 0xFF acaba), 2 si no esta
+C 0x562C banderas_de_la_zona: a cero bits de 0xD7D2, 0xD7D5-0xD7D6, 0xD7D8, 0xD7DB-0xD7DC, 0xD7E0-0xD7E1 y 0xD7E3; el bit 5 o 6 de 0xD7DB segun la zona (p10:A877), lo de cada zona (p10:A8AF) y p10:AA56
 C 0x562F bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5632 p11:A601
 C 0x5635 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2120,7 +2120,7 @@ C 0x5647 pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; e
 C 0x564A bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x564D d43b_sala_39: en la sala especial 0x39, sala 1: 0xD43B = 1
 C 0x5650 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5653 p10:BE6D
+C 0x5653 pinta_fichas_e100: sin 0xCA77 y fuera del estado 0x1A (en la zona 0x10, solo con 0xCA43 = 2): las 16 fichas de 0xE100 de esta sala pintadas (p10:BE9C)
 C 0x5656 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x565C cosas_de_la_especial: las cosas de la sala especial (p06:B719)
 C 0x565F bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2172,7 +2172,7 @@ C 0x585A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x585D llama_abbb: p06:ABBB guardando el banco de 0xA000
 C 0x5860 piezas_de_83dc: en las zonas 1-6, fila 3, columna 7: dos piezas (p02:8409) en Y = 0x88, X = 0x58 y 0x60
 C 0x5866 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5869 p10:BE6D
+C 0x5869 pinta_fichas_e100: sin 0xCA77 y fuera del estado 0x1A (en la zona 0x10, solo con 0xCA43 = 2): las 16 fichas de 0xE100 de esta sala pintadas (p10:BE9C)
 C 0x586C bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x586F pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 C 0x5872 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2224,8 +2224,8 @@ C 0x5A7B lista_de_zona_a_d900: 0xD900-0xD9FF a 0xFF y la lista de p30 de la zona
 C 0x5AB4 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x5AB7 p12:67E1
 C 0x5ABA bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5ABD p10:BCA2
-C 0x5AC0 p10:BC0F
+C 0x5ABD fichas_e100: 0xE100-0xE1BF a cero y las fichas de la zona (5, 0x0D, 0x11, 0x10; la 0x0E con 0xD885 distinto de 0xFF) de p10:BCFD: 10 bytes cada una en fichas de 12, 0xFF acaba
+C 0x5AC0 e1c0_empieza: en la zona 0x0A, 0xE1C0 = 1 y 0xE1C1 = 1
 C 0x5AC3 bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5AC6 p12:68E3
 C 0x5ACC bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2325,9 +2325,9 @@ C 0x5E3A bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381
 C 0x5E3D bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E40 p14:B377
 C 0x5E43 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5E46 p10:BE6D
-C 0x5E49 p10:BC1E
-C 0x5E4C p10:A4C9
+C 0x5E46 pinta_fichas_e100: sin 0xCA77 y fuera del estado 0x1A (en la zona 0x10, solo con 0xCA43 = 2): las 16 fichas de 0xE100 de esta sala pintadas (p10:BE9C)
+C 0x5E49 e1c0_al_entrar: en la zona 0x0A sala 0x0E con 0xE1C0 (p10:BC27): los 8 bytes de 0xDE70 del mapa a 0xE1C8 y ahi 0x80, 0x40 x 0x18 de (0x40, 0x68) de la otra pagina a (0, 0) y las tres lineas de color 0x0E (p10:BC8A)
+C 0x5E4C pinta_fichas_e070: las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xA0, 0xE0) de la pagina 3 (o la 1) a su sitio
 C 0x5E58 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E5B paleta_en_la_otra: fuera el bit 3 de 0xD7E1 y p08:A0FB en la otra pagina
 C 0x5E5E actores_0a_pintados: en la zona 4, los actores de tipo 0x0A de esta sala pintados con el dibujo 0 (p08:AEE2); en la columna 9, solo con 0xCB21 = 3 o sin 0xCACD
@@ -2341,7 +2341,7 @@ C 0x5E7E pinta_cosas: las 4 cosas de 0xD7C0 que no tengan el bit 7 del numero
 C 0x5E81 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E84 p11:A601
 C 0x5E87 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5E8F p10:AAA9
+C 0x5E8F r23_de_d8a5: R#23 (el desplazamiento vertical) = 0xD8A5 con la pantalla partida, 0 sin ella
 C 0x5E92 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E99 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5EA5 a_p06_b239_guarda: p06:B239 guardando el banco de 0xA000

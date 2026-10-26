@@ -1875,8 +1875,10 @@ C 0xBE08 suma_a_hl: HL = HL + A
 C 0xBE0B dice_el_arma: la cuenta de 0xCB20 (0xD704 fuera del paso 0) en 0xE088 (p10:B960)
 C 0xBE10 lee el paso del estado de la partida
 C 0xBE14 lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
+C 0xBE19 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xBE22 lee el paso del estado de la partida
 C 0xBE26 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xBE2B lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xBE39 ficha_de_cosa: HL = 0xD600 + A * 4: la ficha de lo que lleva Snake
 C 0xBE3E a_p10_b960: p10:B960 con el banco 10 en 0xA000
 C 0xBE42 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1

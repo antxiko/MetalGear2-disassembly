@@ -2182,6 +2182,7 @@ C 0xB86D lee la Y de Snake
 C 0xB872 lee la X de Snake
 C 0xB889 lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0xB88D sin_caja: NZ: sin caja
+C 0xB890 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xB894 sin_caja: NZ: sin caja
 C 0xB898 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB8BB lee la Y de Snake
@@ -2214,7 +2215,7 @@ C 0xBBB6 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y l
 C 0xBBC5 apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
 C 0xBBCC caja_cosa: la caja de la cosa de 0xD7C0 (si hay): en (Y + 0x10, X + 8), 0x0A x 0x12
 C 0xBBD2 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
-C 0xBBE1 apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+C 0xBBE1 apunta a 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 C 0xBBEE caja_e070: la caja de la ficha de 0xE070: en (Y + 0x20, X + 0x10), 0x10 x 0x20
 C 0xBBF4 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBC03 lee la zona

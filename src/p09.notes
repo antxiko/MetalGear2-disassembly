@@ -1024,6 +1024,7 @@ L 0xBFB5 sonido_al_azar el sonido 2 y otro segun el contador de cuadros (p09:BFC
 C 0xA000 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA006 lee la zona
 C 0xA00C lee la sala de la zona
+C 0xA017 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xA01C lee la Y de Snake
 C 0xA022 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA041 cambia_de_zona_b_1_2_9: cambia_de_zona y deja los bancos 1, 2 y 9
@@ -1439,6 +1440,7 @@ C 0xAB07 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xAB3A guarda 0 mientras Snake esta de frente en la escena (p09:A89A)
 C 0xAB3F guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAB4D a_p10_a6c2: p10:A6C2 con el banco 10 en 0xA000
+C 0xAB50 lee 1 con la ficha de p10:A6A4 en marcha (0xE1F9-0xE1FF)
 C 0xAB55 apunta a la cuenta de cuadros de la escena
 C 0xAB5C apunta a la cuenta de cuadros de la escena
 C 0xAB61 sonido_a7: pide el sonido 0xA7 (de los que tienen la partitura en un banco de musica, p16:4CE3)

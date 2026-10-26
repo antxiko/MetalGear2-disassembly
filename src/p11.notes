@@ -431,14 +431,17 @@ C 0xB87D lee la direccion en la VRAM de la tabla de atributos de sprites (16 bit
 C 0xB885 apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0xB89D rachas_de_ca61: con 0xCA61, las rachas A - 1 de la tabla de p41:BC04
 C 0xB8A0 sonido_67: pide el sonido 0x67
+C 0xB8A3 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xB8AB suma_a_hl: HL = HL + A
 C 0xB8C2 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB8C8 apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0xB8CE apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0xB8DC apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0xB901 apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
+C 0xB907 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xB90D despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB945 lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
+C 0xB950 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xB96E pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xB971 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB97B suma_a_hl: HL = HL + A
@@ -479,11 +482,14 @@ C 0xBCD1 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus ch
 C 0xBCD7 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xBCDC lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBCEB lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xBCF6 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xBD1C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBD31 lee 1 si Snake ha chocado en este cuadro
 C 0xBD36 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xBD51 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBD56 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xBD70 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xBD78 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0xBD81 suma_a_hl: HL = HL + A
 C 0xBD84 lee la Y de Snake
 C 0xBD89 lee lo que baja la caja de Snake en los choques (p07:B5FE)

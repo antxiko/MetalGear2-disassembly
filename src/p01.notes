@@ -1281,6 +1281,7 @@ C 0x649F palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x64A2 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x64A5 bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x64AB lee_palabra: HL = la palabra que hay en HL
+C 0x64AE lee 1 al salir de F2/F3 (p10:B897)
 C 0x64B1 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x64B4 bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x64B7 bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1518,6 +1519,7 @@ C 0x6F19 bancos_52_53: pone el 52 en 0x8000, el 53 en 0xA000 (con su copia en 0x
 C 0x6F1C lista_8114: 2 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 C 0x6F1F tabla_colores_8000: 53 punteros a colores de dibujo
 C 0x6F22 dibujos_en_e000: en la VRAM de 0xE000
+C 0x6F27 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
 C 0x6F2C bancos_40_41: pone el 40 en 0x8000, el 41 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6F33 palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 C 0x6F36 rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
@@ -1712,6 +1714,7 @@ C 0x747A guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x747F guarda el estado de la partida (p01:729F: 8 estados)
 C 0x748A dibujos_8114_en_a000: los dibujos de p52:8114 en la VRAM de 0xA000
 C 0x7490 a_p06_aa49: p06:AA49 con el banco 6 en 0xA000
+C 0x749A guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
 C 0x74B0 lee el numero de la llamada
 C 0x74BF pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 C 0x74C2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1721,8 +1724,10 @@ C 0x74ED sala_de_al_lado: p01:7BAA
 C 0x74F1 guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x74F7 a_p10_aed6: p10:AED6 con el banco 10 en 0xA000
 C 0x74FA fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
+C 0x74FD lee 1 al salir de F2/F3 (p10:B897)
 C 0x7505 a_p10_af30: p10:AF30 con el banco 10 en 0xA000
 C 0x7508 fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
+C 0x750B lee 1 al salir de F2/F3 (p10:B897)
 C 0x7510 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x751A guarda el paso del estado de la partida
 C 0x751E bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1899,12 +1904,12 @@ C 0x78A3 tercera_barra_cada_cuadro: sin 0xDFF0: p03:BB91
 C 0x78A6 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x78A9 p14:B761
 C 0x78AC bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x78AF p10:A170
-C 0x78B2 p10:A067
-C 0x78B5 p10:A143
-C 0x78B8 p10:A4F1
-C 0x78BB p10:A1D2
-C 0x78BE p10:A24D
+C 0x78AF cab6_cuenta: en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0xA0, 0x80)
+C 0x78B2 ca61_cada_cuadro: fuera de los sitios, de 0xD8C0 y sin 0xDFF8: por el modo 0xCAB0 (p10:A07C)
+C 0x78B5 cb39_cb3f: sin el bit 2 de 0xD7D5 y con el 4, con 0xCB3F y sin 0xCB39: 0xCB39 = 1, el bit 3 de 0xD7D5 y 0xCB3A = 0x1000
+C 0x78B8 fichas_e070_cada_cuadro: las dos fichas de 0xE070 (la segunda espera a que la primera deje el paso 1): paso 0 con Snake cerca (p10:A5EC) guarda el fondo y el sonido 0x45; paso 1 se abre de 2 en 2 (p10:A535); paso 2 en adelante, p10:A5C2
+C 0x78BB ca7b_cada_cuadro: con 0xCA7B en 1 o 2: la cuenta de 0xCA7C-0xCA7D; al acabar, 0xCA7B uno mas (en el 1, otra cuenta de 0x200) y el mosaico de 0xD8A4 segun 0xCA7B (p10:A204); al acabar el 2, ademas la ficha 0xE1D8 (p10:A234)
+C 0x78BE e1d8_cada_cuadro: con 0xE1D8, la cuenta de 0xE1D9 (a 0, 0x80); en 3, 2 y 1, si se tiene la cosa 0x22 (0xD6BC), 0x21 (0xD6B8) o 0x20 (0xD6B4), p03:BEB7 y p03:BEB2; si se acaba, a cero y, con ella en 0xCB21, borra el sitio de 0xD8A4
 C 0x78C1 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x78C4 p11:B8C2
 C 0x78C7 p11:BB49

@@ -885,7 +885,7 @@ tipo_16_paso_3:		; el 0x16 andando: con 0xD43F, al acabar la cuenta, o con Snake
 	jr nz,se_juntan		;a624   ; con 0xD43F, se juntan
 	dec (ix+023h)		;a626
 	jr z,se_juntan		;a629   ; al acabar la cuenta, tambien
-	ld a,(0cab6h)		;a62b
+	ld a,(0cab6h)		;a62b   ; lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 	and a			;a62e
 	jr nz,cerca_20		;a62f   ; con 0xCAB6, mira si esta cerca
 	ld a,(0cb21h)		;a631   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -1114,7 +1114,7 @@ los_12_al_paso_4:		; en la sala 0, sin 0xCAB6, fuera del estado 2, con 0xCB21 = 
 	ld a,(0ca4bh)		;a806   ; lee la sala de la zona
 	and a			;a809
 	ret nz			;a80a   ; fuera de la sala 0, nada
-	ld a,(0cab6h)		;a80b
+	ld a,(0cab6h)		;a80b   ; lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 	and a			;a80e
 	ret nz			;a80f   ; con 0xCAB6, nada
 	ld a,(0cb31h)		;a810   ; lee 1 en el estado 2 de Snake
@@ -1323,7 +1323,7 @@ tipo_12_paso_1:		; en esta sala con Snake en Y 0x20-0x8F, o con 0xCB21 = 0x22 (s
 	sub 020h		;a999
 	cp 070h		;a99b
 	jp c,tipo_12_ve		;a99d   ; ...p08:A9FC
-	ld a,(0cab6h)		;a9a0
+	ld a,(0cab6h)		;a9a0   ; lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 	and a			;a9a3
 	jr nz,anda_12		;a9a4   ; con 0xCAB6, a andar
 	ld a,(0cb21h)		;a9a6   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
