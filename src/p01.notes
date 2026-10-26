@@ -1755,6 +1755,7 @@ C 0x7578 a_p12_7ddc: p12:7DDC con el banco 12 en 0x6000
 C 0x757B sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
 C 0x757E lee 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 C 0x7586 llama_6055: 
+C 0x7589 lee el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
 C 0x7595 borra_marcador_abajo: en la pagina de dibujar
 C 0x7598 barras_llenas: 0x20 en las tres barras: la de vida, la de la derecha y la de 0xCA54
 C 0x759B snake_al_empezar: Snake al empezar: 0xCA58 = 0, las esperas a 1, el estado 0, mirando a la izquierda
@@ -1820,6 +1821,7 @@ C 0x76C2 pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 C 0x76D2 p00:5D85
 C 0x76D5 p00:5D8D
 C 0x76E0 llama_6055: 
+C 0x76E3 lee el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
 C 0x76EE guarda el estado de la partida (p01:729F: 8 estados) y el byte siguiente (16 bits)
 C 0x76F6 guarda el paso del estado de la partida
 C 0x7705 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
@@ -2107,6 +2109,7 @@ C 0x7BAA apunta a los 22 sprites que se reparten los actores (1 = ocupado)
 C 0x7BB0 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x7BBD borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x7BC4 suma_a_hl: HL = HL + A
+C 0x7BDC guarda la cuenta del actor de 0xD340
 C 0x7BE5 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x7BEE borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x7BF1 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)

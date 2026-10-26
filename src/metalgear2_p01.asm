@@ -3210,7 +3210,7 @@ paso_7:		; el paso 7: p08:AB7D y p12:7DDC hasta que 0xD434 se pone a 0
 	jp L_73AB		;7583
 paso_8:		; el paso 8 (F5): p12:6055 hasta 0xC3A2; con 0xC3A2 = 0xFF, la partida otra vez desde lo guardado
 	call 05d7ch		;7586   ; llama_6055:
-	ld a,(0c3a2h)		;7589
+	ld a,(0c3a2h)		;7589   ; lee el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
 	and a			;758c
 	jp z,L_73AB		;758d
 	inc a			;7590
@@ -3370,7 +3370,7 @@ L_76DA:
 	jp L_7348		;76dd
 estado_6_paso_3:		; p12:6055 hasta 0xC3A2: 0 vuelve al paso 2; 0xFF sigue la partida
 	call 05d7ch		;76e0   ; llama_6055:
-	ld a,(0c3a2h)		;76e3
+	ld a,(0c3a2h)		;76e3   ; lee el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
 	and a			;76e6
 	jr z,L_76F4		;76e7
 	inc a			;76e9
@@ -3971,7 +3971,7 @@ L_7BB8:
 L_7BD8:
 	ld a,b			;7bd8
 	ld (0d417h),a		;7bd9
-	ld (0d420h),a		;7bdc
+	ld (0d420h),a		;7bdc   ; guarda la cuenta del actor de 0xD340
 	ld hl,0d460h		;7bdf   ; 0xD460-0xD4BF a cero
 	ld bc,0005fh		;7be2
 	call 04236h		;7be5   ; borra_bloque: pone a cero BC + 1 bytes desde HL

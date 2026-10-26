@@ -4337,11 +4337,11 @@ toca_e230_b:
 	call cajas_7f25		;bf77   ; las de p12:7F25
 	jp 041adh		;bf7a   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 cajas_7f25:		; 0xCB74 = 0 y las cajas de p12:7F25 una tras otra hasta 0xCB74 = 0xFF; acarreo con la que toca
-	ld hl,0cb74h		;bf7d
+	ld hl,0cb74h		;bf7d   ; apunta a el numero de la lista de la sala (0xFF: se acabo; p12:7F3B)
 	ld (hl),000h		;bf80
 caja_7f25:
-	call 07f25h		;bf82   ; p12:7F25
-	ld a,(0cb74h)		;bf85
+	call 07f25h		;bf82   ; cb74_siguiente: con el banco 56: el de 0xCB74 en la sala (p12:7F3B: DE y HL de p56:A62E) y 0xCB74 uno mas (salvo en 0xFF); luego el banco 7
+	ld a,(0cb74h)		;bf85   ; lee el numero de la lista de la sala (0xFF: se acabo; p12:7F3B)
 	cp 0ffh		;bf88   ; 0xFF: se acabaron
 	jr nz,toca_7f25		;bf8a
 sin_acarreo_bf8c:

@@ -2992,7 +2992,7 @@ L_94CB:
 	ret			;94d1
 ca7a_5:		; 0xCA7A = 5 y p04:983E
 	ld a,005h		;94d2
-	ld (0ca7ah),a		;94d4
+	ld (0ca7ah),a		;94d4   ; guarda las veces que pasa la raya del recuadro
 	jp sin_ventana_de_alerta		;94d7   ; sin_ventana_de_alerta: 0xE202 = 0, 0xE20B = 0x1C y las lineas de p00:439D
 tipos_como_antes:		; los actores sin el bit 7 del tipo; los de tipo menor de 0x10, con el dibujo (0x17) y el eje (0x16) de antes
 	ld ix,0ce00h		;94da   ; apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
@@ -3019,7 +3019,7 @@ L_94FD:
 	ld (0d44ah),a		;9509
 	call quita_los_de_d300		;950c   ; quita_los_de_d300: los 4 actores de 0xD300 (los que llegan con la alerta) de tipo menor de 0x10, fuera
 	call 04188h		;950f   ; bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0685fh		;9512   ; p12:685F
+	call 0685fh		;9512   ; rellena_actores: salvo en el estado 0x11 de Snake o en las zonas 8 y 0x0F: de las 0xD424 primeras fichas de 0xCE00, las libres se rellenan con su fila de p56:B086 (p12:688C) si su sala esta lejos
 	jp 0413fh		;9515   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 quita_los_de_d300:		; los 4 actores de 0xD300 (los que llegan con la alerta) de tipo menor de 0x10, fuera
 	ld hl,0d300h		;9518   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
@@ -3471,24 +3471,24 @@ marcador_de_alerta_bancos_14:
 	jp 041efh		;9817   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 marcador_de_alerta:		; 0xE208 = 0x0800, p12:6F49 con el color 0xFF y la ventana de alerta
 	ld hl,00800h		;981a
-	ld (0e208h),hl		;981d
+	ld (0e208h),hl		;981d   ; guarda el paso del parpadeo del recuadro con la alerta (0-3) y el byte siguiente (16 bits)
 	ld a,(0ca42h)		;9820   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;9823
 	ld a,0ffh		;9824
 	call 041ddh		;9826   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call 06f49h		;9829   ; p12:6F49
+	call 06f49h		;9829   ; pon_radar: el recuadro (0x17, 0xC4), 0x38 x 0x38 en el color A de la pagina D
 	call 0413fh		;982c   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 ventana_de_alerta:		; los rotulos (p04:984C), la imagen (p04:98FB) y p12:6FFE
 	call rotulos_de_alerta		;982f   ; rotulos_de_alerta: los rotulos de p04:98E0 y, segun la alerta, los de p04:98E9 o p04:98F2...
 	call imagen_de_alerta		;9832   ; imagen_de_alerta: la imagen de la alerta (p56:A242 con la 1, p56:A2A6 con la 2) con p12:6FC4 y dos franjas a la VRAM
 	call 041ddh		;9835   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call 06ffeh		;9838   ; p12:6FFE
+	call 06ffeh		;9838   ; rectangulos_de_alerta: los rectangulos de p12:704A y p12:7052 en 0xFF, 0xCC (alerta 1) o 0xAA
 	jp 0413fh		;983b   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 sin_ventana_de_alerta:		; 0xE202 = 0, 0xE20B = 0x1C y las lineas de p00:439D
 	ld hl,00000h		;983e
-	ld (0e202h),hl		;9841
+	ld (0e202h),hl		;9841   ; guarda la direccion de la raya del recuadro (0 a la derecha, 1 a la izquierda) y el byte siguiente (16 bits)
 	ld a,01ch		;9844
-	ld (0e20bh),a		;9846
+	ld (0e20bh),a		;9846   ; guarda la cuenta de cuadros sin pintar lo de dentro del recuadro
 	jp 0439dh		;9849   ; lineas_c3: las lineas de las listas de p00:43C8 (verticales) y p00:43E3 (horizontales), de 0x3A de largo en el color 0x0D
 rotulos_de_alerta:		; los rotulos de p04:98E0 y, segun la alerta, los de p04:98E9 o p04:98F2...
 	ld hl,098e0h		;984c
@@ -3597,7 +3597,7 @@ imagen_de_alerta:		; la imagen de la alerta (p56:A242 con la 1, p56:A2A6 con la 
 	ld hl,0a2a6h		;990b
 L_990E:
 	ld bc,06407h		;990e
-	call 06fc4h		;9911   ; p12:6FC4
+	call 06fc4h		;9911   ; bits_a_puntos: B bytes de HL a 0xEA00: cada bit, un punto de 4 bits del color C (1) o 0x0F (0)
 	ld de,0ea00h		;9914
 	ld hl,00fe6h		;9917
 	call franja_a_vram		;991a   ; franja_a_vram: 20 lineas de 10 bytes de DE a la VRAM de HL (+ 0x8000 en la pagina 1)
@@ -4112,7 +4112,7 @@ dentro_del_recuadro:		; el 5: fuera de Y 0x18-0xB7 o X 8-0xB7, se acaba
 	ret			;9cd4
 a_p12_74bc:		; p12:74BC con el banco 12 en 0x6000
 	call 041ddh		;9cd5   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call 074bch		;9cd8   ; p12:74BC
+	call 074bch		;9cd8   ; aviso_d458: el aviso de 0xD458 ([que y bits][cuenta][Y][X][fila][columna]): la primera vez, guarda lo de debajo y lo pinta (p12:74F4); despues cuenta y al acabar, 0xCA28 = 0, la ficha libre y, en la sala del aviso, lo de debajo de vuelta (p12:74CB)
 	jr $+8		;9cdb
 
 ; ----------------------------------------------------------------------
@@ -4129,7 +4129,7 @@ vuelve_al_1:		; el banco 1 en 0x6000
 	jp 041eah		;9ce3   ; bancos_1: pone el 1 en 0x6000 (con su copia en 0xC381-0xC383)
 a_p12_758d:		; p12:758D con el banco 12 en 0x6000
 	call 041ddh		;9ce6   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call 0758dh		;9ce9   ; p12:758D
+	call 0758dh		;9ce9   ; aviso_1: el aviso 1 (quitando el de antes) sobre el actor IX: 0xCA28 = 1, la cuenta 0x10, la Y - 0x28 (o 0) y la X + 4 (o - 0x14 desde 0x80), con la sala de Snake
 	jr vuelve_al_1		;9cec
 aviso_08_20:		; el aviso B = 8, C = 0x20
 	ld bc,00820h		;9cee
@@ -4137,7 +4137,7 @@ aviso_de_actor:		; 0xCA28 = 1 (el juego espera) y p12:75C3 con B y C
 	ld a,001h		;9cf1
 	ld (0ca28h),a		;9cf3
 	call 041ddh		;9cf6   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call 075c3h		;9cf9   ; p12:75C3
+	call 075c3h		;9cf9   ; aviso_b: sin otro, el aviso B con la cuenta C sobre el actor IX (el 8 en (E, D)): la Y - 0x30 (o 0) y la X par - 0x2C (bit 7) o 0x1C, entre 0 y 0x68; con la sala de Snake
 	jr vuelve_al_1		;9cfc
 aviso_83_18:
 	ld bc,08318h		;9cfe

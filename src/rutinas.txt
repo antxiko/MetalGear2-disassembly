@@ -4427,6 +4427,410 @@ p11 0xBFD1 e1d0_franja_90
 p11 0xBFD6 lineas_que_salen  
 p11 0xBFE4 columna_que_sale  
 p11 0xBFE6 linea_a_0  
+p12 0x6000 menu_de_guardar  la pantalla del menu de guardar y cargar: 0xC3A0, 0xC38D, 0xC39F y 0xC3A1 a cero, el paso 1 en 0xC3A2, la pagina borrada, dos recuadros (p12:603C), el letrero de p12:BF74 y la marca de 0xC39F (p12:60D3)
+p12 0x603C pon_recuadro  un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+p12 0x6055 menu_cada_cuadro  el paso del menu (0xC3A2, desde 1) por la tabla de p12:605C
+p12 0x606E menu_paso_1  guardar o cargar: con F1-F5, fuera (p12:63FC); arriba o abajo cambian 0xC39F (sonido 0x11); izquierda o derecha, a la opcion
+p12 0x6080 cambia_c39f  
+p12 0x608D a_las_opciones  el recuadro de las opciones (su alto por 0xC38B: 0x10, 0x1C o 0x28), el letrero de p12:BF95, el de p12:BFA0 con la disquetera y el de p12:6050 con el Game Master 2 (fila 0x34 con los dos); la marca de 0xC38D y el paso siguiente
+p12 0x60CB marca_y_siguiente  
+p12 0x60CE menu_paso_siguiente  
+p12 0x60D3 marca_c39f  borra la columna de marcas y pone la marca en la fila 0x1C (guardar) o 0x28 (cargar)
+p12 0x60E0 marca_c3a0  la marca en la fila 0x54 + 0x10 por la ranura 0xC3A0, tras borrar la columna (p12:6132)
+p12 0x60EF marca_c38d  la marca en la fila 0x1C + 0x0C por la opcion 0xC38D, tras borrar la columna (p12:6112)
+p12 0x60FF borra_marcas_c39f  
+p12 0x6112 borra_marcas_c38d  la columna de marcas de las opciones, su alto por 0xC38B (0x14 o 0x20; sin nada, no se borra)
+p12 0x612F pon_marca  
+p12 0x6132 borra_marcas_c3a0  
+p12 0x6143 dibuja_marca  copia el dibujo de 8 x 8 de (0x38, 0x50) a DE con la operacion 0xC8, de la pagina de 0xCA42
+p12 0x6155 menu_paso_2  la opcion 0xC38D: arriba o abajo la cambian (2 o 3 opciones por 0xC38B; sin nada, directa); con izquierda o derecha, al guardar la partida a 0xC706 (p12:61F3); con la opcion 0, el paso 8 y p14:BA98 (guardar) o p14:BBA7 (cargar); con las otras, el letrero de p12:BFA7, la marca de la ranura y el paso siguiente
+p12 0x6175 opcion_elegida  guardando, la partida a 0xC706
+p12 0x6187 opcion_0  el paso 8 con 0xC3A1 = 0, el recuadro grande y, guardando, p14:BA98; cargando, 0xE900, 0xC7C0 y 0xC900 a cero / 0xFF y p14:BBA7
+p12 0x61A8 opcion_0_cargar  
+p12 0x61CE c38d_menos  
+p12 0x61D7 c38d_mas  
+p12 0x61DD pon_c38d  
+p12 0x61E4 letrero_de_ranuras  el recuadro de (0x50, 0x58), 0x30 x 0x58 y el letrero de p12:BFA7
+p12 0x61F3 guarda_si_c39f_0  al guardar (0xC39F = 0), p12:61F8
+p12 0x61F8 partida_a_c706  p14:BF36 y lo de la partida a 0xC706: la fase, 0xCAA0, el nivel, 0xD430, los bits de 0xD880 y 0xD888 (p12:62A4), 0x15 bytes de banderas de 0xD7D0, 5 de 0xD7F0 y de las 48 fichas de 0xD600: si se tienen (6 bytes de bits), su cuenta (48) y la parte alta de 24 parejas; en la zona 4 sin el bit 0 de 0xD7D4, antes fuera el bit 1 de 0xD7D4, el 4 de 0xD7DE y 0xCAA0 = 0
+p12 0x621A copia_la_partida  0xC706: la fase
+p12 0x62A4 bits_de_ocho  C = un bit por cada uno de los 8 bytes de HL: 1 si vale 0xFF
+p12 0x62B4 menu_paso_3  la ranura 0xC3A0 (0-2): arriba o abajo la cambian; con izquierda o derecha, sonido 0xFA y el paso 4 (disco) o el 6 (la opcion 2, o sin disquetera)
+p12 0x62D9 al_paso_6  
+p12 0x62DF c3a0_mas  
+p12 0x62E8 c3a0_menos  
+p12 0x62F0 pon_c3a0  
+p12 0x62F7 menu_paso_4  el disco (p12:6480) y el sonido 0xFB; con error (0xC3A1 = 2), 0xC3A3 = 0x40, el sonido 0x3F y el paso 5; sin el, guardando, el letrero de p12:BFC2 y el paso 5; cargando, la partida de vuelta (p12:6327) y 0xC3A2 = 0xFF
+p12 0x630F disco_sin_error  
+p12 0x631E partida_cargada  
+p12 0x6327 partida_de_c700  lo de 0xCA20-0xF0FE a cero (salvo 0xCA42) y la partida de vuelta desde 0xC700: zona, sala especial, Y y X de Snake, fila y columna, fase, 0xCAA0, nivel, 0xD430, 0xD880 y 0xD888 (p12:63DE), las banderas de 0xD7D0 y 0xD7F0 y las 48 fichas de 0xD600 (al reves que p12:61F8)
+p12 0x63C6 dos_nibbles  
+p12 0x63DE ocho_de_bits  los 8 bytes de HL a 0xFF o 0 por los bits de A (el 7 primero) y 0xCA40 = 1
+p12 0x63E9 pon_ocho  
+p12 0x63F3 menu_espera  los pasos 5 y 7: espera 0xC3A3 cuadros y luego a lo de las teclas de funcion
+p12 0x63FC menu_fuera_con_f  con F1-F5 recien pulsada: 0xC3A2 = 0 y NZ (en el estado 5 de la partida, antes p00:5DE2); sin ella, Z
+p12 0x640C menu_acaba  
+p12 0x6413 menu_paso_6  el Game Master 2 (p12:6628) y el sonido 0xFB; con error, 0xC3A3 = 0x40, el sonido 0x3F y el paso 7; sin el, cargando, la partida de vuelta; guardando, el letrero de p12:BFC2 y el paso 7
+p12 0x642A gm2_sin_error  
+p12 0x643A menu_paso_8  la opcion 0: guardando, espera las teclas de funcion; cargando, p14:BBEC y por 0xC3A1: 0 espera, 1 la partida de vuelta, otro el paso 9
+p12 0x6458 menu_paso_9  con algo pulsado: 0xC7C4 y 0xC3A1 a cero, el paso 8, el recuadro grande, p14:BC7F y p14:BBA7; sin nada, las teclas de funcion
+p12 0x6480 por_el_disco  guarda o carga la partida en el disco: sin la interrupcion de linea (R#0 = 6), H.KEYI a ret, la pila en 0xC392; la RAM de 0x9600 cambiada con 0xDD00 (p12:6595), el FCB de la ranura (p12:651F), abrir o crear (p12:64C9), registro de 1 byte (p12:6502), 0x73 bytes desde 0xC700 (p12:64BB), cerrar (p12:64EF); la RAM de vuelta (p12:65C1), H.KEYI y R#0 = 0x16
+p12 0x64BB lee_o_escribe_c700  la DTA en 0xC700 (BDOS 0x1A) y 0x73 registros de 1 byte (p12:6577)
+p12 0x64C9 abre_o_crea  cargando, abre el fichero (BDOS 0x0F; error 1); guardando, lo crea (BDOS 0x16; error 5)
+p12 0x64DF crea_fichero  
+p12 0x64EF cierra_fichero  cierra el fichero (BDOS 0x10; error 2)
+p12 0x6502 registro_de_1  en el FCB: el bloque (+0x0C) a 0, el tamano de registro (+0x0E) a 1 y el registro (+0x21) a 0
+p12 0x651F fcb_de_la_ranura  el FCB en 0xC3B0 (en 0xC390): la unidad 0, el nombre de la ranura de p12:6546 (SNAKE1-3.MG2) y 0x19 ceros
+p12 0x6567 escribe_bloque  BDOS 0x26 (escribir HL registros); error 4
+p12 0x6577 lee_o_escribe  guardando, p12:6567; cargando, BDOS 0x27 (leer HL registros; error 0)
+p12 0x658D ram_en_8000  la RAM de 0xC386 en la pagina 2 (ENASLT)
+p12 0x6595 cambia_9600_dd00  con la RAM en la pagina 2, cambia 0x1680 bytes de 0x9600 con los de 0xDD00; 0xF1C0 = 0, DISKVE (0xF323) = 0xAD5A y los slots primarios del arranque (0xC388)
+p12 0x65C1 ram_de_vuelta  deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
+p12 0x65C6 htimi_256  256 veces el H.TIMI que habia al arrancar (copiado en 0xC39A)
+p12 0x6628 por_el_gm2  guarda o carga la partida en la SRAM del Game Master 2: sin la interrupcion de linea, H.KEYI a ret, la pila en 0xC392, la ficha de la ranura (p12:6666) y las funciones (p12:6692); H.KEYI de vuelta y R#0 = 0x16
+p12 0x6666 ficha_gm2  la ficha en 0xC3B0 (en 0xC390): el nombre de la ranura de p12:6657 (SNAK1-3), 8 ceros, y en 0xC3C1 el slot del cartucho
+p12 0x6692 funciones_gm2  guardando, la funcion 0; luego la 2, la direccion y el largo de p12:6653 (0xC700, 0x73 bytes) en 0xC3BD, la 9 (guardar) o la 8 (cargar) y la 1; 0xC3A1 = 0
+p12 0x66A1 gm2_funcion_2  
+p12 0x66BF gm2_funcion_8_9  
+p12 0x66D4 llama_al_gm2  la funcion C del Game Master 2: su slot en la pagina 2, 0x8000 = 4, call 0x8000 con DE = la ficha; luego el cartucho otra vez en la pagina 2
+p12 0x66F5 gm2_o_error  la funcion C; si devuelve A, la 6 y el mensaje: 1 FILE ALREADY EXIST (p12:674B), 0xF6-0xFF de p12:672A, debajo SRAM ERROR (p12:673E); H.KEYI de vuelta, 0xC3A1 = 2 y vuelta a la pila de 0xC392
+p12 0x6710 mensaje_gm2  
+p12 0x67E1 fichas_cd00_56  con el banco 56 en 0xA000: p12:67F0 y el banco de antes
+p12 0x67F0 fichas_cd00  0xCC80-0xCDFF a cero; fuera de las salas especiales, las fichas de la zona de las listas del banco 56 (p12:683D): la 7 p56:BE9D (3, 7) y p56:BEBC (4, 7); la 0x12 sin 0xD888 = 0xFF, p56:BEE7 (2, 8); la 0x0A p56:BEC5 (1, 6) y p56:BEDA (1, 7) en 0xCD50
+p12 0x6826 fichas_zona_0a  la zona 0x0A
+p12 0x683D fichas_desde_cd00  desde 0xCD00: por cada pareja de HL (hasta 0xFF), una ficha de 8 bytes [1][-][los dos][B][C][-][-][-]
+p12 0x6840 ficha_cd00  
+p12 0x685A vuelven_los_actores  sin la alerta: p12:685F
+p12 0x685F rellena_actores  salvo en el estado 0x11 de Snake o en las zonas 8 y 0x0F: de las 0xD424 primeras fichas de 0xCE00, las libres se rellenan con su fila de p56:B086 (p12:688C) si su sala esta lejos
+p12 0x687A rellena_actor  
+p12 0x688C rellena_libre  la ficha a cero; la fila C (5 bytes) de la lista de la zona de p56:B086: con su sala lejos de la de Snake (p12:68B4), el actor (p12:6948)
+p12 0x68B4 sala_cerca  Z si la sala B (nibbles fila, columna) esta a uno o menos de la de Snake en fila y columna; en la zona 0x0C o en una especial, solo si es la misma
+p12 0x68C9 misma_sala  
+p12 0x68CF sala_vecina  
+p12 0x68DF sala_lejos  NZ: lejos
+p12 0x68E3 actores_de_la_zona  en la zona 8 con 2 o mas siguiendo a Snake, nada; si no, los 24 actores a cero y uno por fila de la lista de la zona de p56:B086 (hasta 0xFF), 0xD424 = cuantos, con el bit 7 del tipo si hay alerta; luego p12:69BD y, con 0xD430 = 1, la ficha 0xD300 de p12:69B8
+p12 0x68F0 todos_los_actores  
+p12 0x690A actor_de_la_lista  
+p12 0x6929 siguiente_actor_lista  
+p12 0x6930 tipo_8_fuera  un actor de tipo 8 se quita (tipo 0) salvo con el bit 4 de 0xD7D4 y sin el 0 de 0xD7DA
+p12 0x6943 actor_fuera  
+p12 0x6948 actor_de_fila  el actor de IX desde la fila de HL: los bytes 1 y 0x1F a 0, el tipo (byte 0; el 8 por p12:6930; con 0x0C, el dibujo 6 o 2 en la zona 0x12), la Y, la X, su sala (0: la de Snake), los bits 0-5 del byte 4 a 0x11 y los 6-7 a 0x19, y el byte 0x10 por el tipo: 3 hasta 0x0F, 1 hasta 0x12, 0xFF desde 0x13
+p12 0x696A fila_del_actor  
+p12 0x69A2 pon_byte_10  
+p12 0x69A6 actores_acabados  
+p12 0x69BD empiezan_15_b8  p08:AD58 con el banco 8 en 0xA000 y el banco de antes
+p12 0x69CC actores_especiales  fuera de las salas especiales: 0xD4F8-0xD4FF a cero, p12:6B42 y los de la zona 4 (p12:6A28)
+p12 0x69E0 actores_de_la_especial  la lista de la sala especial en p56:B326 ([sala][lista], hasta 0xFF): un actor por fila desde 0xD300 (en la 0x39, desde 0xCE00 y solo con el bit 6 de 0xD7D9) con el byte 0x1B = 1; luego p12:69BD
+p12 0x69E6 busca_especial  
+p12 0x69F1 especial_hallada  
+p12 0x6A0A actor_de_especial  
+p12 0x6A28 actores_de_la_zona_4  en la zona 4: en la sala 1, una ficha en 0xD300 con la de p56:B6E1 (al azar 0-3) y los sitios de p56:B701 (B = 1, fila 1); en la sala 6, 0xD42D al azar (0-3), 3 fichas de p56:B6E9 y los sitios de p56:B709 (fila 2)
+p12 0x6A4B zona_4_sala_6  
+p12 0x6A5C fichas_d300  las 4 fichas de 0xD300 a cero y B desde la de HL: tipo 0x0C (1 con alerta 2), fila C, columna 6, byte 0x10 = 3, la Y y la X del sitio [HL] de DE y el dibujo
+p12 0x6A6B ficha_d300  
+p12 0x6AA6 fila_d42d  HL = p56:B6E9 + 0xD42D * 6
+p12 0x6AA9 fila_b6e9  
+p12 0x6AB3 actores_del_sitio_0d  con Snake en el sitio 0x0D de 0xCBE0: un actor por fila de p56:B0AE desde 0xD300 con el byte 0x1B = 2 y luego p04:818B
+p12 0x6AC0 actor_del_sitio  
+p12 0x6AD4 actor_d340  sin 0xC697: sin 0xD454 y sin alerta, con 0xCA67 y la ficha 0xD340 libre, cuenta 0xD420; al acabar, 0xD509 = 1, 0xD454 = 4 y la ficha a cero; con 0xD454, cuenta y al acabar el actor 0x0B en (0x20, 0xA0)
+p12 0x6B06 d454_cuenta  
+p12 0x6B42 actores_d200  en la zona 6 fuera de las especiales: 0xD200-0xD3FF a cero y, por cada fila de p56:B431 ([sala][Y][X], hasta 0xFF) de la sala de Snake, un actor desde 0xD200 con su sitio y sala, de tipo 0x13 si su byte de 0xD4F8 es 0 (si no, libre)
+p12 0x6B6B fila_b431  
+p12 0x6B95 pon_tipo_d200  
+p12 0x6BA1 otra_fila_b431  
+p12 0x6BA5 fichas_d800_de_la_zona  guarda las de 0xD800 (p12:6BE6), 0xD8A6 = 0, las 4 fichas a cero y las de la zona por la tabla de p12:6BBE (las zonas 3, 7, 0x0A, 0x0E y 0x12)
+p12 0x6BE6 guarda_d800  por cada ficha de 0xD800 de tipo T (salvo 0 y 0x0B) con el byte 1 distinto de 0: si es 0x20 o mas, o no es menor que el de p12:6C21 de su tipo, se guarda en 0xD87F + T (salvo que este a 0xFF)
+p12 0x6C18 siguiente_d800  
+p12 0x6C2C fichas_de_a19b  la ficha de p56:A19B y el byte 0x0D = 0x12
+p12 0x6C38 fichas_de_a1a1  la ficha de p56:A1A1 y la de p56:A1D1 en 0xD860 (con su byte en 0xD872); sin el bit 1 de 0xD7D1, la de 0xD860 libre
+p12 0x6C4F fichas_de_a1ad  la de p56:A1AD
+p12 0x6C54 fichas_de_a1b3  las de p56:A1B3, p56:A1BF en 0xD820 y p56:A1C5 en 0xD840; luego 0xD820 y 0xD840 libres
+p12 0x6C74 fichas_de_a1b9  las de p56:A1B9 y p56:A1CB en 0xD820; salvo con 0xD884 = 0xFF, la de 0xD820 libre
+p12 0x6C8D fichas_de_a1a7  la de p56:A1A7
+p12 0x6C90 ficha_en_d800  
+p12 0x6C95 ficha_en_d860  un byte a 0xD872 y la ficha en 0xD860
+p12 0x6C9D ficha_d800_de_fila  la ficha DE desde la fila de HL [T][Y][X][fila][columna][byte 0x10], con su byte 1 de 0xD87F + T; con 0xFF ahi, nada; con T = 8 y 0xD88B = 0xFF, el byte 1 = 0x11, la Y 0x80, la X 0x78 y el byte 0x16 a 0
+p12 0x6CDF sin_fichas_d800  
+p12 0x6CE0 radar_cada_cuadro  el bit 4 de 0xD7E1 con 0xCA64 o 0xCAA9; salvo con 0xCB21 = 2, la pantalla partida o una escena: 0xE206 = 0 y, sin 0xE1D0, 0xCABA, 0xCA64, el estado 0x11, 0xCA77 ni 0xCAA9, lo del recuadro (p12:705A, p12:70A0, p12:71D7, p12:7272 sin 0xE20B) y la raya de 0xCA7A (p12:6D63); con la alerta, p12:6FEA
+p12 0x6CF0 quita_d7e1_4  
+p12 0x6CF2 radar_si_se_ve  
+p12 0x6D03 radar_con_e206  
+p12 0x6D3F raya_de_ca7a  sin 0xE206 y con 0xCA7A de 2 o mas: con 0xE203 = 1, 0xCA7A uno menos y el sonido 8 (si sigue en 2 o mas); la raya vertical de color 0x0C en la columna de 0xE203
+p12 0x6D63 raya_e203  
+p12 0x6D6E sitio_de_raya  HL = (0xC3 + C * 2, 0x17) y B = 0x38 de alto
+p12 0x6D78 radar_entre_cuadros  salvo con 0xCB21 = 2, la pantalla partida o la alerta: la raya que se mueve (p12:6D9C) y la cuenta 0xE20B; al acabar, p12:6D03 con 0xE206 = 1
+p12 0x6D94 radar_e206_1  
+p12 0x6D99 ca7a_a_cero  
+p12 0x6D9C raya_que_va_y_viene  sin 0xCABA y con 0xCA7A (a 1 pasa a 0): 0xE203 va de 1 a 0x1B y vuelve (0xE202 la direccion), y la columna de la raya se copia de la otra pagina (p12:6DCD)
+p12 0x6DBF raya_a_la_izquierda  
+p12 0x6DC7 copia_la_raya  
+p12 0x6DCD copia_de_la_otra  copia de la pagina 1 (o 4) a la misma posicion de la de 0xCA42
+p12 0x6DD9 copia_columna  
+p12 0x6DDC punto_7  un punto de color 7 en la pagina A
+p12 0x6DDF punto_c  
+p12 0x6DE4 sitio_en_el_radar  HL = el punto del recuadro de (E, D): cada uno por p12:6DEF
+p12 0x6DEF a_radar  B = (A / 0x20) * 3 + 0, 1 o 2 por A & 0x1F (menos de 8, de 0x18, o mas)
+p12 0x6E17 radar_de_cc80  acarreo si se pintan los puntos de 0xCC80: sin 0xCAA9, en la zona 0x12, o con 0xD654 en la especial 0x29 o con 0xCB21 = 8
+p12 0x6E38 si_cc80  
+p12 0x6E3A puntos_cc80_ya  con p12:6E17, los puntos de 0xCC80 (p12:6E4F) con 0xD4E5 = 1 mientras
+p12 0x6E4B borra_puntos_cc80  con 0xE206 = 1, los borra
+p12 0x6E4F puntos_cc80  con 0xE206 = 0: sin 0xCAA9, los puntos de las 0x30 fichas de 0xCC80 (p12:6E78)
+p12 0x6E5D punto_cc80  
+p12 0x6E6C borra_un_punto  
+p12 0x6E70 un_punto  
+p12 0x6E71 un_punto_con_e206  0xE206 = A y, con p12:6E17, p12:6E78
+p12 0x6E78 punto_de_ficha  la ficha HL de tipo 1 o 4 en una sala a uno o menos de la de Snake: su punto en las dos paginas, de color 7 (0 si se borra; sin 0xD4E5 ni alerta, tambien en la de dibujo)
+p12 0x6E7F punto_de_cc80  
+p12 0x6EC3 punto_e  
+p12 0x6EC8 fondo_del_radar  el recuadro en 0xEE (p12:6F41) y las 3 x 3 salas alrededor de la de Snake desde el mapa de 0xD900: sin 0xCA64, 0xCA77 ni 0xCAA9, las de menos de 0x0A (zona 0), 3 (zona 9) o 0x80 con su dibujo (p12:6F61) desde 0xCA9E (0x8000 + lo de la zona 0x0B-0x10 de p12:6F3B * 0x13)
+p12 0x6EE5 radar_desde  los dibujos en 0xCA9E
+p12 0x6EFE fila_del_radar  
+p12 0x6F01 sala_del_radar  
+p12 0x6F26 dibuja_si_menor  
+p12 0x6F2B siguiente_del_radar  
+p12 0x6F41 borra_radar  el recuadro de la otra pagina en 0xEE
+p12 0x6F49 pon_radar  el recuadro (0x17, 0xC4), 0x38 x 0x38 en el color A de la pagina D
+p12 0x6F52 por_0x13  HL = A * 0x13
+p12 0x6F61 dibujo_de_sala  el dibujo A de la sala (A * 0x13 + 0xCA9E, o 0x8C00 en una especial) pasado a 0x7000 de la VRAM (p12:6F93) y copiado a su casilla E de p12:6E05 con la operacion 0 (la pagina 2 o 0)
+p12 0x6F93 dibujo_a_7000  con la RAM de 0x8000: los 0x2C x 0x0E bits de HL a puntos (p12:6FC4) en 0xEA00, y de ahi 0x12 lineas de 9 bytes a 0x7000 de la VRAM, de 0x80 en 0x80
+p12 0x6FC4 bits_a_puntos  B bytes de HL a 0xEA00: cada bit, un punto de 4 bits del color C (1) o 0x0F (0)
+p12 0x6FC7 byte_a_puntos  
+p12 0x6FCE dos_puntos  
+p12 0x6FEA radar_en_alerta  cada 0xE209 cuadros, 0xE208 uno mas (0-3) y la cuenta de 8 (pares) o 4 (impares); los dos rectangulos de p12:704A (0xFF en 0xE208 = 0; si no, 0xCC con alerta 1 o 0xAA) y los dos de p12:7052 (lo mismo con 0xE208 = 2)
+p12 0x6FFC pon_e209  
+p12 0x6FFE rectangulos_de_alerta  los rectangulos de p12:704A y p12:7052 en 0xFF, 0xCC (alerta 1) o 0xAA
+p12 0x7013 rectangulos_7052  
+p12 0x702C dos_rectangulos  2 rectangulos de HL [X][Y][alto][ancho] en el color A
+p12 0x702F rectangulo_de_alerta  
+p12 0x705A punto_de_snake  salvo en el estado 0x11: el punto de Snake (su sitio, o el de antes de entrar en 0xCBE0) en la casilla del centro del recuadro: de color 0x0A cada 4 cuadros sin salir de la sala; con 0xE206, copiado de la otra pagina
+p12 0x7072 punto_de_e204  
+p12 0x709A copia_un_punto  1 x 2 de la otra pagina
+p12 0x70A0 puntos_de_actores  los actores de 0xCE00 (0x18, o 0x14 dentro de un sitio) que no son 0, 0x13, 0x17, 0x18 ni el 8 con 0xD441, en una sala a uno o menos de la de Snake: su punto (p12:710F); en una especial, solo los del byte 0x1B = 1 (el 9, solo en la especial 0x18)
+p12 0x70CB actor_en_el_radar  
+p12 0x70E6 actor_cerca  
+p12 0x7102 siguiente_del_radar_ce00  el siguiente (0x40 bytes)
+p12 0x710F punto_de_actor  el punto del actor IX en su casilla: los de 0xD800 en adelante (C = 1) solo con el byte 1 por debajo de 0x20 (el tipo 1 desde el 3, 0x20 mas arriba y a la izquierda; recortados a la casilla); de color 0x0A el 3 y el 6 con el byte 1 por debajo de 3 (el 6 desde 9, nada), el 0x15 cada 4 cuadros, los otros del color de la pagina
+p12 0x7144 punto_en_casilla  
+p12 0x715D punto_de_la_sala  
+p12 0x718A punto_0a  
+p12 0x7195 punto_normal  
+p12 0x71A2 punto_de_pagina  
+p12 0x71A6 casilla_del_actor  HL += la casilla del recuadro de la sala del actor IX (p12:71AC)
+p12 0x71AC casilla_de_sala  HL = DE + la esquina de la casilla de p12:6E05 de la sala (B fila, C columna) respecto a la de Snake
+p12 0x71C8 suma_casilla  
+p12 0x71D7 puntos_de_d800  las marcas de las 3 fichas de 0xD800 (en una especial, solo la de 0xD860)
+p12 0x71E9 punto_d800  
+p12 0x71F6 marca_de_d800  la ficha IX en una sala a uno o menos (el 5 solo con 0xCA3C; el 7 sin su byte 0x14): el 2 y el 1 por debajo de 4, una marca de 3 x 5 (el 2 en su sitio - (0x30, 0x10); el 1 en (0, 0x50)); los otros, su punto (p12:710F)
+p12 0x7207 marca_d800_7  
+p12 0x7213 marca_d800_cerca  
+p12 0x7240 marca_del_2  su X - 0x10...
+p12 0x724C pon_marca_d800  
+p12 0x725C raya_de_marca  
+p12 0x726C copia_la_marca  5 x 4 de la otra pagina
+p12 0x7272 puntos_de_la_columna_7  en la columna 7: en la especial 0x2A sin el bit 7 de 0xD7D5, un punto en (0x34, 0xEC); en la 0x26 sin los bits 5 y 6 de 0xD7D3, en (0x34, 0xF3)
+p12 0x7290 punto_de_pagina_b  
+p12 0x7296 punto_de_2a  
+p12 0x72A1 dibujos_del_radar  fuera de las especiales y sin 0xCA77: en la zona 1 (filas 8-9, columnas 1-4) o la 4 (filas 5-7, columnas 1-3), los 3 x 3 bytes de p56:B68A-B6B2 de la sala: cada uno distinto de 0, su dibujo (p12:731B)
+p12 0x72DD dibujos_zona_4  columnas 1-3...
+p12 0x72FA dibujos_3_x_3  + la fila
+p12 0x7302 fila_de_dibujos  3 columnas
+p12 0x7304 dibujo_de_casilla  
+p12 0x7311 siguiente_casilla  
+p12 0x731B dibujo_de_byte  por el byte y la zona: en la 1, el 1 p56:B60C y otro p56:B58E; en la 4, el 1 p56:B492, el 2 p56:B510 y otro el de las fichas (p12:7389); pasado a la VRAM (p12:7372) y copiado a la casilla D + 3 en las dos paginas (en la de dibujo, sin 0xD455), salvo con 0xCB21 = 2
+p12 0x7330 dibujo_zona_1  
+p12 0x733A dibujo_a_casilla  
+p12 0x735D copia_dibujo_de_casilla  salvo con 0xCB21 = 2: de (0, 0xE0) de la pagina 2 (o 0), 0x0E x 0x12
+p12 0x7372 dibujo_a_vram  0x0E lineas de 9 bytes de HL a 0x7000 de la VRAM, de 0x80 en 0x80
+p12 0x7377 linea_a_vram  
+p12 0x7389 fichas_al_radar  en la casilla D: los 16 sitios de p56:B709 salvo los 3 de la fila de p56:B6E9 de 0xD42D (en la sala 6; fuera de ella todos): su punto en las dos paginas, y en la sala 6 la pieza de 2 x 4 (p12:7403) y su mapa (p12:7445)
+p12 0x73A2 sitios_b709  los de p56:B709
+p12 0x73A7 sitio_b709  
+p12 0x73F0 siguiente_b709  
+p12 0x73F8 punto_sin_cb21_2  el punto de la pagina A salvo con 0xCB21 = 2
+p12 0x7403 pieza_2_x_4  en la sala 6: 0xCA4C-0xCA4D = 0x0200 y una pieza de 2 x 4 caracteres en (E, D): la de p56:B6C1 o p56:B6C9 al azar
+p12 0x741B pieza_b_x_c  B x C caracteres de HL en (E, D), de 8 en 8
+p12 0x741E fila_de_pieza  
+p12 0x7420 caracter_de_pieza  
+p12 0x7445 mapa_de_la_pieza  salvo con 0xCB21 = 2, en la sala 6: p12:7451
+p12 0x7451 mapa_2_x_3  en el mapa, 2 x 3 casillas a 0x80 desde el sitio HL
+p12 0x7457 fila_de_mapa  
+p12 0x7462 piezas_de_la_sala  en la zona 4, sala 6: las fichas de la casilla 4 (p12:7389); en la zona 1 (p12:746B)
+p12 0x746B piezas_zona_1  en la zona 1 fuera de las especiales: 0xCA4C-0xCA4D = 0x0706; en la sala 8, 4 piezas de los sitios de p56:B733 (la primera de p56:B6D9, las otras p56:B6D1); en la 0x0D, 1 de p56:B729; cada una con su mapa
+p12 0x748D piezas_sala_8  los de p56:B733...
+p12 0x7493 pieza_de_sitio  su sitio
+p12 0x74B1 fichas_zona_4_sala_6  
+p12 0x74BC aviso_d458  el aviso de 0xD458 ([que y bits][cuenta][Y][X][fila][columna]): la primera vez, guarda lo de debajo y lo pinta (p12:74F4); despues cuenta y al acabar, 0xCA28 = 0, la ficha libre y, en la sala del aviso, lo de debajo de vuelta (p12:74CB)
+p12 0x74CB quita_aviso  0xCA28 = 0, 0xD458 libre y, en la misma sala, lo de debajo de vuelta: el 1, 0x10 x 0x10 desde (0x80, 0xC0); los otros por p12:7579
+p12 0x74F4 pinta_aviso  con el bit 6 ya pintado: el 1 guarda 0x10 x 0x10 de su sitio en (0x80, 0xC0) y pone encima el dibujo de (0xB0, 8); los otros guardan 0x5A (con el bit 7) o 0x3A x 0x10 en (0xE0, 0) y pintan un recuadro de 0x0C de alto con marco y el letrero de p12:7601
+p12 0x751F aviso_con_letrero  
+p12 0x7538 recuadro_de_aviso  0x0C de alto
+p12 0x756C letra_de_aviso  
+p12 0x7579 quita_letrero  lo de (0xE0, 0), 0x5A (o 0x3A) x 0x0C de vuelta a su sitio
+p12 0x7580 letrero_de_vuelta  
+p12 0x758D aviso_1  el aviso 1 (quitando el de antes) sobre el actor IX: 0xCA28 = 1, la cuenta 0x10, la Y - 0x28 (o 0) y la X + 4 (o - 0x14 desde 0x80), con la sala de Snake
+p12 0x75C3 aviso_b  sin otro, el aviso B con la cuenta C sobre el actor IX (el 8 en (E, D)): la Y - 0x30 (o 0) y la X par - 0x2C (bit 7) o 0x1C, entre 0 y 0x68; con la sala de Snake
+p12 0x75D8 aviso_sitio  la Y - 0x30...
+p12 0x75E9 aviso_x  
+p12 0x75F7 pon_aviso_x  
+p12 0x7688 dibuja_snake  salvo en el paso 4 de la partida o el estado 4 de Snake: p12:7BB0; sobre lo de 0xCB3F por debajo de 2, 0xCB43 = 0 y con el banco 63 en 0xA000 su dibujo (p12:76C5) y lo de p12:7DA0, 7B73, 7D51, 7C5E, 7C25, 7D7B, 7C6E, 7C81 y 7C8A; luego los bancos 12, 2 y 3
+p12 0x76C5 dibujo_de_snake  por el dibujo de 0xCB01 (p12:76CB, 15)
+p12 0x76E9 dibuja_snake_b  salvo en el estado 4: p12:7B85; sobre lo de 0xCB3F por debajo de 2, con el banco 63, p12:7704 y p12:7BFA; luego los bancos 12, 2 y 3
+p12 0x7704 dibujo_de_snake_b  por el dibujo de 0xCB01 (p12:770A, 15)
+p12 0x7728 dibujo_0  los sprites (p12:775D) y los patrones de p63:B1CC (p12:77B8)
+p12 0x772E colores_0  los colores desde 0xD0 + la direccion * 3 + el paso (p12:774E) a la tabla de colores (p12:7733)
+p12 0x7733 colores_de_snake  la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+p12 0x7743 colores_de_snake_b  
+p12 0x774E por_direccion_y_paso  L += (la direccion - 1) * 3 + el paso
+p12 0x775D sprites_de_snake  los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+p12 0x7763 sprites_de_snake_x  
+p12 0x776B sprites_de_snake_y  
+p12 0x7789 retroceso  al disparar (0xD752) en el estado 1 con lo de 0xCB20 por debajo de 3, el 5 o el 6: un punto contra la direccion de Snake (p12:77A8)
+p12 0x77A1 retroceso_por_direccion  
+p12 0x77B0 retroceso_abajo  
+p12 0x77B2 retroceso_arriba  
+p12 0x77B4 retroceso_derecha  
+p12 0x77B6 retroceso_izquierda  
+p12 0x77B8 patrones_de_b1cc  la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los patrones (p12:77E2)
+p12 0x77C1 patrones_por_direccion  
+p12 0x77C4 patrones_por_a  
+p12 0x77CA por_direccion_6  HL += A * 6 + el paso * 2
+p12 0x77D7 patrones_de_b620  como p12:77E2 con los dos de p63:B620
+p12 0x77E2 patrones_de_b282  el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+p12 0x77EB patrones_a_e900  
+p12 0x7805 lineas_1  la linea 0xDC + direccion y paso a la fila 0xF0
+p12 0x780D dibujo_2  dandose la vuelta, como el 4; si no, los sprites (p12:7829) y los patrones de p63:B1CC
+p12 0x781A lineas_2  dandose la vuelta, como el 4; si no, la linea 0xE8 + direccion y paso
+p12 0x7829 sprites_2  los sprites: arriba o abajo, los normales (p12:775D); a los lados, 0x10 mas abajo y 8 a la izquierda (p12:7851); dandose la vuelta, 0x18 por encima (con 0xCB17 desde 3, tambien 8 a la izquierda)
+p12 0x7839 sprites_2_vuelta  
+p12 0x7849 sprites_2_vuelta_b  
+p12 0x7851 sprites_2_lado  la Y - 0x10
+p12 0x7857 sprites_anchos  los sprites 0-1 en (Y, X - 0x10) y 2-3 0x10 a la derecha, patrones desde 0 de 4 en 4; desde X = 0xF0, los de la izquierda fuera
+p12 0x787B dibujo_3  los sprites y los patrones de p63:B26A por 0xCB17 (p12:789A)
+p12 0x7881 lineas_3  la linea de 0xCB17 (p12:7887)
+p12 0x7887 linea_de_cb17  L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
+p12 0x7894 linea_de_cb17_b  
+p12 0x789A patrones_3  
+p12 0x78A3 fila_b26a  HL = p63:B26A + (A - 9) * 2
+p12 0x78AC dibujo_4  los sprites y los patrones de p63:B25A por 0xCB17 (p12:78B8)
+p12 0x78B2 lineas_4  
+p12 0x78B8 patrones_4  p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
+p12 0x78C6 patrones_4_b  
+p12 0x78CF dibujo_5  los sprites y los patrones de la tabla de p63:B1D2 del estado, por 0xCB17 (p12:78EB)
+p12 0x78D5 lineas_5  la linea de p12:78E7 por 0xCB17
+p12 0x78DE linea_de_tabla  L = el byte 0xCB17 - 1 de HL
+p12 0x78EB patrones_5  
+p12 0x78F7 fila_del_estado  HL = la tabla del estado de Snake de HL + (A - 1) * 2
+p12 0x7904 lineas_6  la linea de p12:790D por 0xCB17
+p12 0x7911 dibujo_7  los sprites y los patrones de p63:B25A por 0xCB17
+p12 0x7917 lineas_7  
+p12 0x791D linea_ef  L = 0xEF + 0xCB17
+p12 0x7924 patrones_7  
+p12 0x792D fila_b25a  HL = p63:B25A + (A - 1) * 2
+p12 0x7935 dibujo_8  con la direccion en 0xD8E0, los sprites y los patrones de p63:B272 (0xCB17 = 1) o p63:B26A (p12:798E)
+p12 0x7940 lineas_8  la linea de p12:7949 a la fila 0xF0 y la 0xF7 + direccion a la 0x1F0 (p12:797E)
+p12 0x7949 linea_8  con 0xCB17 = 1: L = 0xFC (0xFD a los lados), H = 0 (direcciones impares) u 0x80; si no, H = 0 y L = 0xF7 + direccion
+p12 0x795F linea_8_h  
+p12 0x7969 linea_8_b  
+p12 0x7973 linea_a_f0  la linea HL de la pagina 7 a (0, 0xF0), 0x80 x 1
+p12 0x7976 linea_a_de  
+p12 0x797E linea_8_c  la linea (0x80, 0xF7 + direccion) a 0x1F0 con YMMM
+p12 0x798E patrones_8  
+p12 0x799A patrones_8_b  
+p12 0x79A0 por_direccion_d8e0  HL += (0xD8E0 - 1) * 2
+p12 0x79A8 dibujo_9  los sprites y los patrones de p63:B27A por la direccion (p12:79D2)
+p12 0x79AD lineas_9  la linea de p12:79C1 a la fila 0xF0 y la (0x80, 0xD0) + direccion y paso a la 0x1F0
+p12 0x79C1 linea_9  L = 0xFE (0xFF a los lados), H = 0 (direcciones impares) u 0x80
+p12 0x79CB linea_9_h  
+p12 0x79D2 patrones_9  
+p12 0x79DB fila_b27a  HL = p63:B27A + (A - 1) * 2
+p12 0x79E3 lineas_0a  la linea de p12:7A45 y, sin chocar, la de p12:7AA4 por direccion y paso
+p12 0x79EE dibujo_0a  los patrones de p63:B242 (p12:7A79); chocando, los sprites de p12:7A25; si no, 0-1 en (Y - 0x20 + 2 o 3 por el paso, X - 7) y 2-3 0x10 mas abajo y uno a la izquierda
+p12 0x7A12 sprites_0a  
+p12 0x7A25 sprites_0a_choque  los sprites 0-1 en (Y - 0x10, X - 8) y el 2 y el 3 fuera (Y = 0xE0)
+p12 0x7A45 linea_0a  la linea (0x80 en el paso 1, si no 0; 0xC8) a la fila 0xF0
+p12 0x7A51 linea_a_f0_b  
+p12 0x7A54 linea_de_80  0x80 x 1 de HL a DE en la pagina 7
+p12 0x7A5C linea_por_direccion  
+p12 0x7A5F linea_7aa4  la linea de p12:7AA4 por (A - 1) * 6 + el paso * 2 a (0x80, 0xF0)
+p12 0x7A79 patrones_0a  los patrones de p63:B242 y a cero las lineas 0-1 (y 2 fuera del paso 1) de 0xE920 y 0xE930
+p12 0x7A88 lineas_a_cero  
+p12 0x7ABC dibujo_0b  los sprites 0x18 por encima y los colores 0x0B, 0x4C, 3 y 0x4C de los sprites 0-3 (p12:7AE5)
+p12 0x7AC7 lineas_0b  la linea (0, 0xC9) a la 0x1F0
+p12 0x7AD2 sprite_4_de_snake  el sprite 4 en (Y - 0x10, X + 8) con el patron 0x10
+p12 0x7AE5 colores_0b  los 16 colores de los sprites 0-3 a 0x0B, 0x4C, 3 y 0x4C
+p12 0x7AFC colores_de_un_sprite  el byte de HL a los 15 siguientes
+p12 0x7B04 lineas_0c  la linea de p12:7A45 y la de p12:7AA4 por 0xCB17
+p12 0x7B0D dibujo_0c  los sprites y los patrones de p63:B242 por 0xCB17
+p12 0x7B19 dibujo_0d  los sprites 0-3 fuera (0x10 bytes a 0xE0)
+p12 0x7B24 lineas_0e  la linea de p12:7B60 por 0xCB4A, y (0x80, 0xC7) a (0x80, 0xF0)
+p12 0x7B2D dibujo_0e  los sprites 0-1 en el sitio de Snake y 2-3 0x10 mas abajo, con los patrones de p63:B1D8 por 0xCB4A (p12:77D7)
+p12 0x7B57 linea_de_cb4a  HL = la palabra 0xCB4A de p12:7B60
+p12 0x7B6A linea_c7  
+p12 0x7B73 colores_e900  salvo en el dibujo 0x0B, los 0x40 bytes de 0xE900 a 0xDA00 (los colores de los sprites 0-3)
+p12 0x7B85 linea_de_cb3f  con 0xCB21 = 2 y 0xCB62, nada; con 0xCB3F = 2 o mas, la linea (0x80, 0xCA) o (0, 0xCB) cada 4 cuadros a la fila 0xF0
+p12 0x7B91 linea_de_cb3f_b  
+p12 0x7BA5 linea_a_f0_c  
+p12 0x7BB0 sprites_de_cb3f  con 0xCB21 = 2 y 0xCB62, nada; con 0xCB3F = 2 o mas, los sprites 0-1 (p12:7BDA) con los colores 7 y 0x0F
+p12 0x7BBC sprites_de_cb3f_b  
+p12 0x7BDA sprites_0_1  los sprites 0-1 en (Y - 0x10, X - 8) con los patrones 0 y 4, y el 2 y el 3 fuera
+p12 0x7BFA linea_de_cb3f_1  con 0xCB3F = 1: la fila (0xF0, 0xC0) a 0 y la linea (0 o 0x40 cada 4 cuadros, 0xCA), 0x40 x 1, a (0x80, 0xF0)
+p12 0x7C1A linea_40  
+p12 0x7C25 sprite_de_cb3f_1  con 0xCB3F = 1: 0xCB43 = 0x0B, el sprite 2 0x10 por debajo del 0 con el patron 8, el 3 fuera y los colores del sprite 2 a 7
+p12 0x7C5E baja_por_cb29  con 0xCB37, 0xCB43 = 0x20 - 0xCB29
+p12 0x7C6E baja_los_sprites  la Y de los sprites 0-3 + 0xCB43
+p12 0x7C72 baja_c  la Y de los sprites 0-3 + C
+p12 0x7C7A baja_un_sprite  
+p12 0x7C81 sube_por_cb54  con 0xCB54, la Y de los sprites 0-3 - 8
+p12 0x7C8A recorta_por_cb28  con 0xCB28: en el dibujo 2 a los lados sin darse la vuelta, sin colores; si no, por lo que falta de 0xCB29 hasta 0x20, las lineas de colores de los sprites a 0 desde arriba (0xCB28 = 1, p12:7CC9) o desde abajo (p12:7D0D)
+p12 0x7CA4 recorta_lineas  
+p12 0x7CB8 recorta_por_arriba_o_abajo  
+p12 0x7CBE recorta_desde_abajo  
+p12 0x7CC0 sin_colores_0_3  los colores de los sprites 0-3 a 0
+p12 0x7CC9 recorta_arriba  las C primeras lineas de colores de los sprites 0 y 1 a 0 y, con B, las B primeras del 2 y el 3
+p12 0x7CD9 recorta_arriba_1  
+p12 0x7CEA recorta_arriba_2  
+p12 0x7CFF recorta_arriba_3  
+p12 0x7D0D recorta_abajo  las C ultimas lineas de colores de los sprites 2 y 3 a 0 y, con B, las B ultimas del 0 y el 1
+p12 0x7D1D recorta_abajo_3  
+p12 0x7D2E recorta_abajo_0  
+p12 0x7D43 recorta_abajo_1  
+p12 0x7D51 parpadeo_de_snake  sin escena ni rotulo: con 0xCB4B, en los cuadros impares, sin colores; sin el, con 0xCB3D, por el bit 0 de 0xCB3E
+p12 0x7D68 parpadeo_cb3d  
+p12 0x7D72 snake_sin_colores  los colores de los sprites 0-3 a 0
+p12 0x7D7B snake_con_ca9b  con 0xCA9B: 0xCB43 = 0x10 y 0xCB28-0xCB29 = 2 y 0x10 (en el dibujo 2 sin darse la vuelta, 2 y 0)
+p12 0x7D99 pon_cb28  
+p12 0x7DA0 sprites_del_puesto  con 0xCB4B: los sprites 30-31 en (Y - 0x28, X - 8) con el patron 0xF0 (0xF8 con 0xCB4D) y los colores 0x0A y 0x0B
+p12 0x7DB0 sprites_30_31  el sprite 30
+p12 0x7DDC sprites_de_actores  los 24 actores (no libres; el 8 sin 0xD441) que se ven (p04:806F) en esta sala: su lista de sprites desde la tabla del tipo de p56:A808 [ancho][filas...] por su dibujo (en la especial 2 con 0xD443, el 0) y los sprites desde 0xDC28 (p12:7E4B)
+p12 0x7DF4 actor_visible  
+p12 0x7E1F por_el_dibujo  
+p12 0x7E20 suma_ancho  
+p12 0x7E23 fila_de_sprites  
+p12 0x7E2C siguiente_de_sprites  el siguiente (0x40 bytes)
+p12 0x7E35 se_ve_guardando_bc  
+p12 0x7E3B se_ve_banco_4  p04:806F con el banco 4 en 0x8000 y el de antes
+p12 0x7E4B sprites_de_lista  el byte 0x1F uno menos (si no es 0) y, por cada numero de la lista DE (hasta 0 o 18), su sprite (p12:7E64)
+p12 0x7E56 sprite_de_lista  
+p12 0x7E64 sprite_de_actor  el sprite N - 1 de 0xDC28: la Y del actor + el desplazamiento de p56:A7EE (de 0xB4 a 0xEF, fuera; temblando por p12:7EB0), la X + el suyo (desde 0xB1, fuera) y el patron; el 4 del tipo 0x0B, aparte (p12:7ED4)
+p12 0x7E7A sprite_de_actor_b  
+p12 0x7E91 pon_y_de_sprite  
+p12 0x7EA9 pon_x_de_sprite  
+p12 0x7EB0 temblor  con el byte 0x1F y un tipo por debajo de 0x10, A + el de p12:7ED0 por el byte 0x1F; 0xE0 se queda
+p12 0x7ECE sin_temblor  
+p12 0x7ED4 sprite_4_de_0b  el sprite del 0x0B que se mueve en circulo: la Y + p12:7EFF de 0xD422 / 2 - 0x1C (fuera con el dibujo desde 4), la X + p12:7EFF de 0xD422 - 0x0C, el patron 0x90
+p12 0x7EEA pon_y_de_0b  
+p12 0x7EFF onda_7f15  el byte de p12:7F15 por A & 0x1F (de 0x10 a 0x1F, de vuelta)
+p12 0x7F0A byte_de_onda  
+p12 0x7F25 cb74_siguiente  con el banco 56: el de 0xCB74 en la sala (p12:7F3B: DE y HL de p56:A62E) y 0xCB74 uno mas (salvo en 0xFF); luego el banco 7
+p12 0x7F37 cb74_banco_7  
+p12 0x7F3B fila_de_cb74  DE y HL de la fila (* 4) de p56:A62E del numero 0xCB74 de la lista de la sala: en la zona 3, las salas de p56:A5EA con las listas de p56:A5ED; la especial 0x0D p56:A623; la 0x31 en la columna 6 p56:A60D, en la 8 p56:A618; sin lista o con 0xFF, 0xCB74 = 0xFF
+p12 0x7F4A busca_sala_a5ea  
+p12 0x7F58 lista_de_a5ed  
+p12 0x7F5F numero_de_cb74  
+p12 0x7F7B lista_de_especial  p56:A623...
+p12 0x7F9A cb74_ff  
+p12 0x7FA0 mueve_ix_0_1  cada 2 cuadros el bit 0 del byte 2 cambia (p12:7FC6); los bytes 0 y 1 de IX + el par de p12:7FBE por el byte 3 (1-4)
+p12 0x7FC6 alterna_byte_2  en los cuadros pares, el bit 0 del byte 2 de IX cambia
 p16 0x4000 entrada_arranque  jp p16:4009
 p16 0x4003 entrada_pide  jp p16:4024
 p16 0x4006 entrada_cuadro  jp p16:428F

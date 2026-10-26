@@ -1736,7 +1736,7 @@ L_B07C:
 	ld a,(0d881h)		;b07f
 	inc a			;b082
 	ret nz			;b083
-	ld a,(0d888h)		;b084
+	ld a,(0d888h)		;b084   ; lee 8 bytes que se guardan como bits (0xFF = 1)
 	inc a			;b087
 	jr nz,L_B0BA		;b088
 	ld a,(0d889h)		;b08a
@@ -3604,17 +3604,17 @@ L_BCEF:
 	call L_BDB7		;bd0b
 	jr nz,L_BD1E		;bd0e
 	ld a,001h		;bd10
-	ld (0c3a1h),a		;bd12
+	ld (0c3a1h),a		;bd12   ; guarda el resultado del disco o del Game Master 2 (2 = error)
 	ld de,0c804h		;bd15
 	ld hl,0c700h		;bd18   ; apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 	jp 051e0h		;bd1b   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 L_BD1E:
 	call 05f4dh		;bd1e   ; sonido_3f: pide el sonido 0x3F
 	ld a,002h		;bd21
-	ld (0c3a1h),a		;bd23
+	ld (0c3a1h),a		;bd23   ; guarda el resultado del disco o del Game Master 2 (2 = error)
 	ld hl,03074h		;bd26
 	ld bc,06010h		;bd29
-	call 0603ch		;bd2c   ; p12:603C
+	call 0603ch		;bd2c   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
 	ld hl,0bd35h		;bd2f
 	jp 04918h		;bd32   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 

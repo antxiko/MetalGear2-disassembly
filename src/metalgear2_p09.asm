@@ -2697,7 +2697,7 @@ e050_sube:
 	ret			;b4e5
 a_p12_7fa0:		; p12:7FA0 con el banco 12 en 0x6000
 	call 041ddh		;b4e6   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call 07fa0h		;b4e9   ; p12:7FA0
+	call 07fa0h		;b4e9   ; mueve_ix_0_1: cada 2 cuadros el bit 0 del byte 2 cambia (p12:7FC6); los bytes 0 y 1 de IX + el par de p12:7FBE por el byte 3 (1-4)
 	jp 041c2h		;b4ec   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 ficha_e054_b:		; sin el bit 3 de 0xCB7E y con la ficha 0xE054: p12:7FA0; hasta Y = 0x70 en X = 0x50 (alli hacia la derecha y la ficha 0xE058 a 0xBF), hasta X = 0x88 (hacia arriba), hasta Y = 0x58 (hacia la izquierda y el bit 3)
 	ld a,(0cb7eh)		;b4ef   ; lee los 5 bits de lo que ya llego en la escena 9 (p09:B3A3)

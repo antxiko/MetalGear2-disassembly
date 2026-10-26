@@ -1785,7 +1785,7 @@ C 0xB46A dfd8_hacia_x_60:
 C 0xB48F lee los 5 bits de lo que ya llego en la escena 9 (p09:B3A3)
 C 0xB499 a_p12_7fa0: p12:7FA0 con el banco 12 en 0x6000
 C 0xB4E6 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-C 0xB4E9 p12:7FA0
+C 0xB4E9 mueve_ix_0_1: cada 2 cuadros el bit 0 del byte 2 cambia (p12:7FC6); los bytes 0 y 1 de IX + el par de p12:7FBE por el byte 3 (1-4)
 C 0xB4EC bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xB4EF lee los 5 bits de lo que ya llego en la escena 9 (p09:B3A3)
 C 0xB4FE a_p12_7fa0: p12:7FA0 con el banco 12 en 0x6000

@@ -2034,7 +2034,7 @@ error_del_disco:		; el gancho de DISKVE: el cartucho en 0x4000, p12:65C1, 0xC396
 	ld a,(0c399h)		;ad5d   ; el slot del cartucho...
 	ld h,040h		;ad60   ; ...en 0x4000
 	call 00024h		;ad62   ; BIOS ENASLT - Switches to specified slot and page definitively
-	call 065c1h		;ad65   ; p12:65C1
+	call 065c1h		;ad65   ; ram_de_vuelta: deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
 	ld a,001h		;ad68   ; 0xC396 = 1
 	ld (0c396h),a		;ad6a
 	ld a,(0c399h)		;ad6d   ; el cartucho otra vez en 0x4000
@@ -2076,7 +2076,7 @@ DATA_resto_AD5A_AD92:
 
 error_de_disco:		; p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	push bc			;ad94
-	call 065c1h		;ad95   ; p12:65C1
+	call 065c1h		;ad95   ; ram_de_vuelta: deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
 	pop bc			;ad98
 mensaje_de_error:		; el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
 	ld a,c			;ad99
@@ -2085,11 +2085,11 @@ mensaje_de_error:		; el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, D
 	call 04918h		;ada0   ; el mensaje
 	ld hl,0ade5h		;ada3   ; DISK ERROR
 	call 04918h		;ada6   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
-	call 065c6h		;ada9   ; p12:65C6
+	call 065c6h		;ada9   ; htimi_256: 256 veces el H.TIMI que habia al arrancar (copiado en 0xC39A)
 	ld a,(0c394h)		;adac   ; 0xFD9A = 0xC394
 	ld (0fd9ah),a		;adaf
 	ld a,002h		;adb2   ; 0xC3A1 = 2
-	ld (0c3a1h),a		;adb4
+	ld (0c3a1h),a		;adb4   ; guarda el resultado del disco o del Game Master 2 (2 = error)
 	ld sp,(0c392h)		;adb7   ; la pila guardada al empezar con el disco
 	ret			;adbb   ; vuelve a quien guardo la pila
 

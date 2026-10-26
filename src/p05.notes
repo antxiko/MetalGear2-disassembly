@@ -1536,12 +1536,12 @@ C 0xBCF5 lee la zona
 C 0xBCFB lee la sala de la zona
 C 0xBD01 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBD07 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
-C 0xBD10 p12:741B
+C 0xBD10 pieza_b_x_c: B x C caracteres de HL en (E, D), de 8 en 8
 C 0xBD1E mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
 C 0xBD23 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xBD26 lee la X de la ficha de 0xD800
 C 0xBD2C lee la Y de la ficha de 0xD800
-C 0xBD38 p12:741E
+C 0xBD38 fila_de_pieza: 
 C 0xBD3B lee el paso del actor
 C 0xBD40 esconde_sprites_10_13: los sprites 10-13 fuera
 C 0xBD43 sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores

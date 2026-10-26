@@ -1889,6 +1889,7 @@ C 0x95C2 cb28_a_0020: 0xCB28 = 0, 0xCB29 = 0x20
 C 0x95CE despachador: salta a la palabra A de la tabla que va detras del call
 C 0x95D9 lee la Y de Snake
 C 0x95E6 lee la sala de la zona
+C 0x95ED lee 8 bytes que se guardan como bits (0xFF = 1)
 C 0x95F6 guarda 1 si Snake ha chocado en este cuadro
 C 0x9602 guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x9609 guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
@@ -2080,6 +2081,8 @@ C 0x9E5E guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con
 C 0x9E62 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x9E65 guarda la zona
 C 0x9E6B guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0x9E74 guarda la cuenta de cuadros sin pintar lo de dentro del recuadro
+C 0x9E79 guarda las veces que pasa la raya del recuadro
 C 0x9E7F a_p06_a0ab: p06:A0AB con el banco 6 en 0xA000
 C 0x9E82 banderas_al_empezar: las banderas de 0xD7D0 (21 bytes) de p03:B0B9
 C 0x9E91 marco_c4: p00:5F90 y las lineas de p00:439D, salvo en la zona 0x12 sala 8 con 0xD8A4

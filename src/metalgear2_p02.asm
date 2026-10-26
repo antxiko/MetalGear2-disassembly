@@ -3266,7 +3266,7 @@ sale_por_arriba:		; la Y por debajo de 0x10
 	ld a,(0ca4bh)		;95e6   ; lee la sala de la zona
 	cp 012h		;95e9
 	jr nz,L_95FA		;95eb
-	ld a,(0d880h)		;95ed
+	ld a,(0d880h)		;95ed   ; lee 8 bytes que se guardan como bits (0xFF = 1)
 	cp 0ffh		;95f0
 	jr z,L_95FA		;95f2
 	ld a,001h		;95f4
@@ -4591,9 +4591,9 @@ partida_nueva:		; la partida desde el principio
 	inc a			;9e6e   ; 0xCABA = 1
 	ld (0cabah),a		;9e6f
 	ld a,01ch		;9e72   ; 0xE20B = 0x1C
-	ld (0e20bh),a		;9e74
+	ld (0e20bh),a		;9e74   ; guarda la cuenta de cuadros sin pintar lo de dentro del recuadro
 	ld a,005h		;9e77   ; 0xCA7A = 5
-	ld (0ca7ah),a		;9e79
+	ld (0ca7ah),a		;9e79   ; guarda las veces que pasa la raya del recuadro
 	call 06f78h		;9e7c   ; p01:6F78
 	call a_p06_a0ab		;9e7f   ; a_p06_a0ab: p06:A0AB con el banco 6 en 0xA000
 	call 0b0adh		;9e82   ; banderas_al_empezar: las banderas de 0xD7D0 (21 bytes) de p03:B0B9

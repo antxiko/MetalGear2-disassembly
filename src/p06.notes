@@ -1464,12 +1464,13 @@ C 0xAC5C pon_ficha_e000: la ficha de IX: activa (1), paso 0, la cuenta y su valo
 C 0xACE2 lee la zona
 C 0xAD3F lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAD4B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xAD65 p12:65C1
+C 0xAD65 ram_de_vuelta: deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
 C 0xAD8F mensaje_de_error: el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
-C 0xAD95 p12:65C1
+C 0xAD95 ram_de_vuelta: deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
 C 0xAD9D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xADA6 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
-C 0xADA9 p12:65C6
+C 0xADA9 htimi_256: 256 veces el H.TIMI que habia al arrancar (copiado en 0xC39A)
+C 0xADB4 guarda el resultado del disco o del Game Master 2 (2 = error)
 C 0xAE65 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xAE86 sonido_11: pide el sonido 0x11
 C 0xAE98 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)

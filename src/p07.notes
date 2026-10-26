@@ -2272,7 +2272,9 @@ C 0xBF11 sonido_48: pide el sonido 0x48
 C 0xBF5E toca_e230_b: 
 C 0xBF74 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBF7A bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0xBF82 p12:7F25
+C 0xBF7D apunta a el numero de la lista de la sala (0xFF: se acabo; p12:7F3B)
+C 0xBF82 cb74_siguiente: con el banco 56: el de 0xCB74 en la sala (p12:7F3B: DE y HL de p56:A62E) y 0xCB74 uno mas (salvo en 0xFF); luego el banco 7
+C 0xBF85 lee el numero de la lista de la sala (0xFF: se acabo; p12:7F3B)
 C 0xBF8E se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBFAA lee la zona
 C 0xBFB1 lee la sala de la zona

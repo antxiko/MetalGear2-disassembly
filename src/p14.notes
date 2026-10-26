@@ -187,6 +187,7 @@ C 0xB041 lee la sala de la zona
 C 0xB06B lee la zona
 C 0xB074 guarda copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 C 0xB077 guarda la zona
+C 0xB084 lee 8 bytes que se guardan como bits (0xFF = 1)
 C 0xB090 apunta a las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)
 C 0xB09E guarda cuantos siguen a Snake por su rastro (1-4)
 C 0xB0A1 guarda lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
@@ -365,10 +366,12 @@ C 0xBCDB apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBCF4 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBCFC apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBD02 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBD12 guarda el resultado del disco o del Game Master 2 (2 = error)
 C 0xBD18 apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 C 0xBD1B rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 C 0xBD1E sonido_3f: pide el sonido 0x3F
-C 0xBD2C p12:603C
+C 0xBD23 guarda el resultado del disco o del Game Master 2 (2 = error)
+C 0xBD2C pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
 C 0xBD32 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0xBD57 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBD70 apunta a los caracteres de un dibujo pasados a 4 bits

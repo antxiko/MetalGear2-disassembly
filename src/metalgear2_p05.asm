@@ -4041,7 +4041,7 @@ mosaico_de_13_5:		; en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p1
 	ld (0ca4ch),hl		;bd07   ; guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 	ld hl,07435h		;bd0a
 	ld de,08418h		;bd0d
-	call 0741bh		;bd10   ; p12:741B
+	call 0741bh		;bd10   ; pieza_b_x_c: B x C caracteres de HL en (E, D), de 8 en 8
 	ld a,(0d821h)		;bd13
 	cp 00fh		;bd16
 	push ix		;bd18
@@ -4058,7 +4058,7 @@ mosaico_de_la_ficha:		; el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 d
 	ld e,a			;bd31
 	ld hl,0743dh		;bd32
 	ld bc,00402h		;bd35
-	jp 0741eh		;bd38   ; p12:741E
+	jp 0741eh		;bd38   ; fila_de_pieza:
 sprites_hasta_paso_0f:		; hasta el paso 0x0F, sus sprites; desde el, fuera
 	ld a,(ix+001h)		;bd3b   ; lee el paso del actor
 	cp 00fh		;bd3e
