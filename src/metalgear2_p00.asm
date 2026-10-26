@@ -4409,7 +4409,7 @@ DATA_resto_5BFE:
 
 mapa_de_bits:		; el mapa de 0xDD00 en bits (uno por caracter, a uno los de 0xCA4E-0xCA4F en adelante) y apretado en 41 bytes en 0xE900
 	exx			;5c12
-	ld hl,0e900h		;5c13   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;5c13   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,(0ca4eh)		;5c16   ; los dos umbrales
 	exx			;5c1a
 	ld de,0dd00h		;5c1b   ; desde el mapa
@@ -4466,7 +4466,7 @@ L_5C4B:
 	pop bc			;5c63
 	djnz L_5C42		;5c64
 	exx			;5c66   ; y de 0xE980 otra vez a 0xE900
-	ld hl,0e900h		;5c67   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;5c67   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,0e980h		;5c6a
 	exx			;5c6d
 	xor a			;5c6e   ; la cuenta de bits a cero

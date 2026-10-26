@@ -1266,7 +1266,7 @@ L_A807:
 	ld e,(ix+002h)		;a81d
 	ld a,0cah		;a820
 L_A822:
-	ld (0d8e0h),hl		;a822   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+	ld (0d8e0h),hl		;a822   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
 	ld (0d8e2h),a		;a825   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	ld d,(ix+003h)		;a828
 	push de			;a82b
@@ -1281,12 +1281,12 @@ L_A822:
 	jr nc,L_A83A		;a837
 	inc h			;a839
 L_A83A:
-	ld a,(0d8e1h)		;a83a
+	ld a,(0d8e1h)		;a83a   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 	ld l,a			;a83d
 	call L_A84C		;a83e
 	pop bc			;a841
 	pop de			;a842
-	ld a,(0d8e1h)		;a843
+	ld a,(0d8e1h)		;a843   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 	ld l,a			;a846
 	ld a,(0d8e2h)		;a847   ; lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	add a,b			;a84a
@@ -1295,7 +1295,7 @@ L_A84C:
 	ld a,c			;a84c
 	sub b			;a84d
 	ld b,a			;a84e
-	ld a,(0d8e0h)		;a84f   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;a84f   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	ld c,a			;a852
 L_A853:
 	ld a,(0ca42h)		;a853   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)

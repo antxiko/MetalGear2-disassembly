@@ -1168,6 +1168,7 @@ C 0x6125 mira_condicion: la condicion A (p03:B0F6), con los bancos 48-49 a la vu
 C 0x6136 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6139 mira_bandera: NZ si la bandera A de 0xD7D0 esta puesta
 C 0x613C bancos_48_49: pone el 48 en 0x8000, el 49 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x6161 lee de paso (p14:BF31): donde acaba la partida en rachas
 C 0x616C suma_a_hl: HL = HL + A
 C 0x6182 lee por donde va la conversacion (16 bits)
 C 0x6185 bancos_48_49: pone el 48 en 0x8000, el 49 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1210,7 +1211,9 @@ C 0x6275 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con 
 C 0x6278 apunta a el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 C 0x6289 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x628E borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0x6299 apunta a de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 C 0x62A0 guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+C 0x62A5 apunta a de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 C 0x62AC guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 C 0x62B2 guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 C 0x62E4 suma_a_de: DE = DE + A
@@ -1597,6 +1600,7 @@ C 0x7097 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80
 C 0x709A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x70A2 guarda los bits de los juegos de piezas de la zona (p56:A713; p00:4A58)
 C 0x70A5 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
+C 0x70AE apunta a de paso (p14:BE66): el final de lo que se pasa a rachas
 C 0x70B4 bancos_44_45: pone el 44 en 0x8000, el 45 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x70B7 tabla_mosaicos_93FD: 12 punteros a mosaicos de 6 x 4 caracteres
 C 0x70BA palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -1606,8 +1610,10 @@ C 0x70CD bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x70D0 tabla_95D1: 4 destinos del despachador p00
 C 0x70DE mosaico_segun_d8e3: 0xD8E3 = 0: la forma 2 de la franja 3; si no, la 5
 C 0x70E1 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x70E6 guarda de paso (p14:BE66): el final de lo que se pasa a rachas
 C 0x70EA bancos_44_45: pone el 44 en 0x8000, el 45 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x70ED palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x70F2 lee de paso (p14:BE66): el final de lo que se pasa a rachas
 C 0x70F6 mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 C 0x70F9 mosaico_f5_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 3 (p00:512C)
 C 0x70FC bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1629,15 +1635,15 @@ C 0x714F bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7158 mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 C 0x715B bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x715E bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7164 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x7164 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x7167 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
-C 0x716A apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x716A apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x7173 mosaico_f7_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 2 (p00:512C)
 C 0x7176 bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7179 bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x717F apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x717F apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x7182 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
-C 0x7185 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x7185 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x7190 bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7193 mosaico_BBD5: un mosaico de 12 x 16 caracteres, un byte cada uno
 C 0x719C mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)

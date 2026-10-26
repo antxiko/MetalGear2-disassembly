@@ -50,7 +50,7 @@ DATA_tabla_800D:
 pres_paso_1:		; el sonido 0x99, la paleta a negro, el letrero de p13:92B8 y el paso siguiente sin cuenta
 	call 06ba4h		;808f   ; sonido_99: pide el sonido 0x99 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	call paleta_negra		;8092   ; la paleta a negro
-	ld hl,0e900h		;8095   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;8095   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 0463fh		;8098   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld hl,092b8h		;809b   ; el letrero de p13:92B8
 	call 04918h		;809e   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
@@ -72,7 +72,7 @@ pres_paso_4:		; la paleta a negro; al acabar, la pantalla limpia, la paleta a ne
 	ret nz			;80c1   ; aun no
 	call 045fdh		;80c2   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call paleta_negra		;80c5   ; paleta_negra: en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
-	ld hl,0e900h		;80c8   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;80c8   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 0463fh		;80cb   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	ld hl,08068h		;80ce   ; de (0x80, 0x68)...
 	ld de,0a040h		;80d1   ; ...a (0xA0, 0x40)...
@@ -580,7 +580,7 @@ pres_paso_42:		; un sprite de p13:8C46 de color 7; al acabar la cuenta, 0xCA30 y
 	ret nz			;851b
 	xor a			;851c
 	ld (0ca30h),a		;851d   ; guarda la cuenta de cuadros de la figura o el dibujo de la presentacion
-	ld (0e900h),a		;8520   ; guarda los caracteres de un dibujo pasados a 4 bits
+	ld (0e900h),a		;8520   ; guarda los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	dec a			;8523
 	ld (0ca32h),a		;8524   ; guarda la espera del texto de la presentacion
 	jp pres_siguiente		;8527   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
@@ -838,7 +838,7 @@ pres_paso_58:		; la paleta a negro (p13:90F7)
 pres_paso_59:		; la pantalla limpia, la paleta a negro y p13:8A2D
 	call 045fdh		;8742   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call paleta_negra		;8745   ; paleta_negra: en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
-	ld hl,0e900h		;8748   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;8748   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 0463fh		;874b   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call dibujo_grande		;874e   ; dibujo_grande: el dibujo de (0, 0) de la pagina 1, 0x80 x 0xA8, en (0x40, 0x10)
 	jp pres_siguiente		;8751   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
@@ -1072,7 +1072,7 @@ sin_copia:		; salta los 6 bytes
 	inc a			;88fc
 	ret			;88fd
 e900_mas_1:
-	ld hl,0e900h		;88fe   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;88fe   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	inc (hl)			;8901
 	ret			;8902
 
@@ -1217,7 +1217,7 @@ dibujo_grande:		; el dibujo de (0, 0) de la pagina 1, 0x80 x 0xA8, en (0x40, 0x1
 	jp 04767h		;8a38   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 barras_empiezan:		; las 20 barras [direccion][largo] de p13:8B00 a 0xE900
 	ld de,08b00h		;8a3b
-	ld hl,0e900h		;8a3e   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;8a3e   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,014h		;8a41   ; 20
 barra_empieza:
 	ld a,(de)			;8a43   ; la direccion...
@@ -1231,7 +1231,7 @@ barra_empieza:
 	djnz barra_empieza		;8a4b   ; 20
 	ret			;8a4d
 barras_cada_cuadro:		; las 20 barras de 0xE900 suben o bajan (las 10 primeras entre 1 y 0x0F; las otras entre 1 y 0x16, cambiando de direccion en los topes) y se pintan como rayas de 2 de alto, una cada 2 lineas desde Y = 0x64: las 10 primeras desde X = 0x40 (su largo del color 0xCC y hasta 0x10 a 0), las otras acabando en X = 0x3E (de 0x18)
-	ld hl,0e900h		;8a4e   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;8a4e   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	push hl			;8a51
 	ld b,00ah		;8a52   ; 10
 barra_1:
@@ -2009,14 +2009,14 @@ color_uno_menos:		; el color B de la VRAM de HL uno menos (p13:911C, p13:912D) y
 	pop bc			;9150
 	ret			;9151
 paleta_negra:		; en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
-	ld hl,0e900h		;9152   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;9152   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,0e901h		;9155   ; 0x31 bytes
 	ld bc,00030h		;9158
 	ld (hl),000h		;915b
 	ldir		;915d
 	xor a			;915f
 	ld b,010h		;9160
-	ld hl,0e900h		;9162   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;9162   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 color_negro:
 	ld (hl),a			;9165   ; el numero del color
 	inc hl			;9166   ; los dos de color a 0
@@ -2119,19 +2119,19 @@ compara_paleta:		; igual?
 	djnz compara_paleta		;91e5   ; 16
 pon_paleta_e900:
 	push af			;91e7
-	ld hl,0e900h		;91e8   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;91e8   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 0463fh		;91eb   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop af			;91ee
 	ret			;91ef
 paleta_9258:		; en 0xE900, la paleta de p13:9258 ([n][rojo-azul][verde]) y 0xFF
-	ld hl,0e900h		;91f0   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;91f0   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,0e901h		;91f3
 	ld bc,00030h		;91f6
 	ld (hl),000h		;91f9
 	ldir		;91fb
 	xor a			;91fd
 	ld b,010h		;91fe
-	ld hl,0e900h		;9200   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;9200   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,09258h		;9203
 L_9206:
 	ld (hl),a			;9206   ; el numero
@@ -2282,7 +2282,7 @@ fundido_1:		; con el fundido 1, cada C cuadros cada color uno menos en las tres 
 	dec (hl)			;938f   ; aun no
 	ret nz			;9390
 	ld (hl),c			;9391   ; la cuenta de nuevo
-	ld hl,0e900h		;9392   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;9392   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,010h		;9395   ; 16 colores
 color_menos:
 	ld a,(hl)			;9397
@@ -2336,7 +2336,7 @@ verde_un_menos:
 	inc hl			;93da
 	jr azul_un_menos		;93db
 todo_negro:		; con todos los colores de 0xE900 a 0, 0xCADA = 0
-	ld hl,0e900h		;93dd   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;93dd   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,011h		;93e0   ; hasta 0x11
 color_negro_b:
 	ld a,(hl)			;93e2
@@ -2363,12 +2363,12 @@ fundido_2_empieza:		; el fundido 2 (desde negro): 0xCADA = 2, la velocidad C, la
 	ld (0cadbh),a		;93fd   ; guarda la cuenta de cuadros del fundido de la paleta
 	xor a			;9400
 	ld (0cadch),a		;9401   ; guarda 0-2 con cada paso del fundido de la paleta
-	ld de,0e900h		;9404   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld de,0e900h		;9404   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld bc,00031h		;9407
 	ldir		;940a
 	ld b,010h		;940c   ; 16 colores...
 	xor a			;940e   ; ...a negro
-	ld hl,0e900h		;940f   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;940f   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 color_a_0:
 	inc hl			;9412
 	ld (hl),a			;9413   ; rojo y azul a 0
@@ -2386,7 +2386,7 @@ fundido_2:		; con el fundido 2, cada C cuadros cada color de 0xE900 un paso haci
 	ret nz			;9424
 	ld (hl),c			;9425
 	push de			;9426
-	ld hl,0e900h		;9427   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;9427   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,010h		;942a   ; 16 colores
 color_hacia:
 	ld a,(hl)			;942c
@@ -2465,7 +2465,7 @@ verde_hacia:
 	inc de			;948b
 	jr azul_hacia		;948c
 paleta_igual:		; con 0xE900 igual a DE (hasta 0xFF), 0xCADA = 0
-	ld hl,0e900h		;948e   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;948e   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,031h		;9491
 compara_color:
 	ld a,(de)			;9493
@@ -2485,7 +2485,7 @@ fundido_3_empieza:		; el fundido 3 (a blanco): 0xCADA = 3, la velocidad C y la p
 	ld (0cadah),a		;94a5   ; guarda el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 	ld a,c			;94a8
 	ld (0cadbh),a		;94a9   ; guarda la cuenta de cuadros del fundido de la paleta
-	ld de,0e900h		;94ac   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld de,0e900h		;94ac   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld bc,00031h		;94af
 	ldir		;94b2
 	ret			;94b4
@@ -2497,7 +2497,7 @@ fundido_3:		; con el fundido 3, cada C cuadros cada color uno mas hasta 7 y la p
 	dec (hl)			;94be
 	ret nz			;94bf
 	ld (hl),c			;94c0
-	ld hl,0e900h		;94c1   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;94c1   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,010h		;94c4
 color_mas:
 	ld a,(hl)			;94c6
@@ -2507,7 +2507,7 @@ color_mas:
 	push hl			;94cc
 	push bc			;94cd
 	call color_un_paso_mas		;94ce   ; color_un_paso_mas: el rojo, el azul y el verde uno mas hasta 7
-	ld hl,0e900h		;94d1   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;94d1   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 0463fh		;94d4   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop bc			;94d7
 	pop hl			;94d8
@@ -2547,7 +2547,7 @@ verde_un_mas:
 	inc hl			;9503
 	jr azul_un_mas		;9504
 todo_blanco:		; con todos los colores a 7, 0xCADA = 0
-	ld hl,0e900h		;9506   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;9506   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld b,011h		;9509
 L_950B:
 	ld a,(hl)			;950b

@@ -1128,7 +1128,7 @@ pon_sprites_de_dibujo:		; dos filas de sprites del dibujo de HL (p56) en DE, con
 	push de			;8768
 	push bc			;8769
 	ld a,(hl)			;876a   ; los dos patrones...
-	ld de,0d8e0h		;876b   ; apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld de,0d8e0h		;876b   ; apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	push de			;876e
 	ldi		;876f   ; ...a 0xD8E0, con el siguiente (+ 4)
 	add a,004h		;8771   ; el patron siguiente
@@ -1339,9 +1339,9 @@ pantalla_de_d800:		; segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pa
 	ld hl,00302h		;88da   ; ...los juegos de piezas 2 y 3...
 	ld (0ca4ch),hl		;88dd   ; guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 	ld de,0aa35h		;88e0   ; ...el mosaico en rachas de p56:AA35...
-	ld hl,0e900h		;88e3   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;88e3   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 051e0h		;88e6   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
-	ld hl,0e900h		;88e9   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;88e9   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,00000h		;88ec
 L_88EF:
 	ld a,(hl)			;88ef   ; ...caracter a caracter hasta 0xFF, 32 por fila...
@@ -3990,7 +3990,7 @@ L_9B8F:
 L_9BD9:
 	ld a,b			;9bd9   ; la rapidez
 	call 07987h		;9bda   ; ...la velocidad
-	ld (0d8e0h),hl		;9bdd   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+	ld (0d8e0h),hl		;9bdd   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
 	ld (0d8e2h),de		;9be0   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter) y el byte siguiente (16 bits)
 	call apunta_bien		;9be4   ; el 4 solo si apunta en la direccion del actor (p04:9C6C)
 	pop bc			;9be7   ; si apunta
@@ -4007,7 +4007,7 @@ L_9BD9:
 	ld bc,(0d8e2h)		;9c02   ; ...las velocidades
 	ld (iy+007h),b		;9c06   ; la velocidad en Y...
 	ld (iy+006h),c		;9c09
-	ld bc,(0d8e0h)		;9c0c   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+	ld bc,(0d8e0h)		;9c0c   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
 	ld (iy+009h),b		;9c10   ; ...y en X
 	ld (iy+008h),c		;9c13
 	ex af,af'			;9c16   ; los colores del sprite: 0x0F el 5, 7 los demas

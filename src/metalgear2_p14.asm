@@ -94,12 +94,12 @@ cafb_1_acaba:		; 0x10 cuadros
 	ld (0cafch),a		;a1d5
 	jr cafb_siguiente		;a1d8
 cafb_2:		; espera 0xCAFC; luego 0x0D y el siguiente
-	ld hl,0cafch		;a1da
-	dec (hl)			;a1dd
+	ld hl,0cafch		;a1da   ; la espera
+	dec (hl)			;a1dd   ; uno menos
 	ret nz			;a1de
-	ld a,00dh		;a1df
+	ld a,00dh		;a1df   ; luego 0x0D...
 	ld (0cafch),a		;a1e1
-	jr cafb_siguiente		;a1e4
+	jr cafb_siguiente		;a1e4   ; ...y el paso siguiente
 cafb_3:		; cada 6 cuadros, la franja de (0xBC, 0) de 0x18 x 0x0D en (0xD0, 0x40); bajo 0, 0xCAFC = 0x1C
 	ld hl,0cafdh		;a1e6
 	dec (hl)			;a1e9
@@ -599,15 +599,15 @@ paleta_desde_negro:		; 0xCA38 = 0x81 y la paleta de 0xE900 a negro (15 colores y
 	ldir		;a5d5
 	xor a			;a5d7
 	ld b,00fh		;a5d8   ; 15 colores
-	ld hl,0e900h		;a5da   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;a5da   ; la paleta en 0xE900: (color, 0, 0) x 15
 color_negro_b:
-	ld (hl),a			;a5dd
-	inc hl			;a5de
+	ld (hl),a			;a5dd   ; el numero de color
+	inc hl			;a5de   ; el rojo y el azul, el verde: a 0
 	inc hl			;a5df
 	inc hl			;a5e0
-	inc a			;a5e1
-	djnz color_negro_b		;a5e2
-	ld (hl),0ffh		;a5e4
+	inc a			;a5e1   ; el color siguiente
+	djnz color_negro_b		;a5e2   ; 15
+	ld (hl),0ffh		;a5e4   ; el final
 	ret			;a5e6
 paleta_hacia_de:		; con 0xCA38: uno menos y cada 16, la paleta de 0xE900 un paso hacia la de DE (15 colores) y puesta; NZ mientras no sean iguales
 	ld hl,0ca38h		;a5e7
@@ -665,21 +665,21 @@ pon_verde_c:
 	ld hl,0e901h		;a628   ; compara
 	ld b,00fh		;a62b
 compara_de:
-	ld a,(de)			;a62d
+	ld a,(de)			;a62d   ; el rojo y el azul...
 	cp (hl)			;a62e
-	jr nz,pon_paleta_de		;a62f
+	jr nz,pon_paleta_de		;a62f   ; distinto: sale con NZ
 	inc de			;a631
 	inc hl			;a632
-	ld a,(de)			;a633
+	ld a,(de)			;a633   ; ...y el verde
 	cp (hl)			;a634
 	jr nz,pon_paleta_de		;a635
-	inc hl			;a637
+	inc hl			;a637   ; el color siguiente
 	inc hl			;a638
 	inc de			;a639
-	djnz compara_de		;a63a
+	djnz compara_de		;a63a   ; 15 colores
 pon_paleta_de:
-	push af			;a63c
-	ld hl,0e900h		;a63d   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	push af			;a63c   ; Z si ya es la de DE
+	ld hl,0e900h		;a63d   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 0463fh		;a640   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	pop af			;a643
 	ret			;a644
@@ -2386,19 +2386,19 @@ e230_empieza:		; el recuadro de 0xE230 en DE (p14:B527), lo de alrededor de la o
 	call e230_marco		;b521   ; e230_marco: el marco de 2 * r de color 0x0A alrededor del centro
 	jp 06af6h		;b524   ; sonido_38: pide el sonido 0x38
 e230_ficha:		; 0xE231 = 0 (el paso), 0xE232 = 2 (la cuenta), 0xE233-0xE234 = DE (el centro), 0xE235 = 4 (el radio) y 0xE236 = 0
-	ld hl,0e231h		;b527
+	ld hl,0e231h		;b527   ; el paso 0
 	xor a			;b52a
 	ld (hl),a			;b52b
 	inc hl			;b52c
-	ld (hl),002h		;b52d
+	ld (hl),002h		;b52d   ; la cuenta 2
 	inc hl			;b52f
-	ld (hl),e			;b530
+	ld (hl),e			;b530   ; el centro: Y...
 	inc hl			;b531
-	ld (hl),d			;b532
+	ld (hl),d			;b532   ; ...y X
 	inc hl			;b533
-	ld (hl),004h		;b534
+	ld (hl),004h		;b534   ; el radio 4
 	inc hl			;b536
-	ld (hl),a			;b537
+	ld (hl),a			;b537   ; 0xE236 = 0
 	ret			;b538
 e230_fondo:		; el cuadrado de 0x62 x 0x62 alrededor del centro (0x30 menos; en la zona 0x0C, 0xC4 de alto desde Y = 0x18) copiado de la otra pagina a esta
 	ld a,(0e233h)		;b539
@@ -2535,12 +2535,12 @@ e230_marco:		; el marco de 2 * r de color 0x0A alrededor del centro
 	ld a,(0ca42h)		;b626   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jp 046bch		;b629   ; marco: cuatro lineas: un marco de D x E desde HL
 e230_esquina:		; HL = el centro - el radio; B = el radio
-	ld a,(0e235h)		;b62c
+	ld a,(0e235h)		;b62c   ; el radio
 	ld b,a			;b62f
-	ld a,(0e233h)		;b630
+	ld a,(0e233h)		;b630   ; Y - el radio
 	sub b			;b633
 	ld l,a			;b634
-	ld a,(0e234h)		;b635
+	ld a,(0e234h)		;b635   ; X - el radio
 	sub b			;b638
 	ld h,a			;b639
 	ret			;b63a
@@ -2623,11 +2623,11 @@ L_B6B4:
 	ret nc			;b6b5
 	jr e230_tocado		;b6b6
 radio_de_e230:		; A = el radio (0x30 en el paso 1)
-	ld a,(0e231h)		;b6b8
+	ld a,(0e231h)		;b6b8   ; el paso 1...
 	dec a			;b6bb
-	ld a,030h		;b6bc
+	ld a,030h		;b6bc   ; ...0x30
 	ret z			;b6be
-	ld a,(0e235h)		;b6bf
+	ld a,(0e235h)		;b6bf   ; si no, el radio de ahora
 	ret			;b6c2
 rayas_de_la_sala:		; 0xCA68 = 0, fuera el bit 1 de 0xD7E2, las rayas de 0xE280 a cero y, sin alerta: en la zona 3 la lista de p56:A512; en la especial 0x0D p56:A533; en la 0x31 (salvo la columna 7) p56:A525 (columna 6) o p56:A52C; con ellas, el bit 1 de 0xD7E2 y se pintan (p14:B712)
 	xor a			;b6c3
@@ -2699,14 +2699,14 @@ pinta_una_raya:		; lo de su sitio copiado de la otra pagina y la raya de color 0
 	ld b,(ix+006h)		;b749   ; si no, horizontal
 	jp 0467ch		;b74c   ; linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 rectangulo_de_raya:		; HL = DE = su sitio, C = el byte 5 + 1, B = el byte 6 + 2
-	ld l,(ix+003h)		;b74f
+	ld l,(ix+003h)		;b74f   ; su sitio (byte 3, Y; byte 4, X)
 	ld h,(ix+004h)		;b752
-	ld c,(ix+005h)		;b755
+	ld c,(ix+005h)		;b755   ; el byte 5 + 1
 	inc c			;b758
-	ld b,(ix+006h)		;b759
+	ld b,(ix+006h)		;b759   ; el byte 6 + 2
 	inc b			;b75c
 	inc b			;b75d
-	ld e,l			;b75e
+	ld e,l			;b75e   ; DE = el mismo sitio
 	ld d,h			;b75f
 	ret			;b760
 rayas_cada_cuadro:		; con 0xCA68: con la alerta, fuera (p14:B795); si no, si tocan (p14:B7C5) y cada 0x20 cuadros (0xCA69) se borran y salen las siguientes: 0xCA6A de 0 a 3 y las piezas del byte 0xCA6B + eso (p56:A53A) a 0xE280, pintadas
@@ -3190,7 +3190,7 @@ caf7_a_cero:		; Z con 0xCAF7-0xCAF8 a 0
 	or c			;ba96
 	ret			;ba97
 letras_de_la_partida:		; la opcion 0, guardando: 0xE900 y 0xC7C0 a cero, la clave 0xC7C1 de los cuadros, la partida de 0xC700 en rachas en 0xC804 (p14:BE57), su largo + 1 en 0xC7C0, la suma (p14:BB33) en 0xC7C2, la cabecera [clave][suma][largo] en 0xC800, todo cifrado (p14:BB1D), pasado a bits en 0xE900 y de 6 en 6 a 0xC900 (0xFF al final), y pintado (p14:BC7F)
-	ld hl,0e900h		;ba98   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;ba98   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld bc,004ffh		;ba9b   ; 0x500 bytes
 	call 04236h		;ba9e   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0c7c0h		;baa1
@@ -3290,22 +3290,22 @@ suma_c804:		; HL = dos sumas de los 0xC7C0 bytes de 0xC804: H (todos y los de 2 
 	ld b,a			;bb40
 	push hl			;bb41
 	push bc			;bb42
-	xor a			;bb43   ; todos
+	xor a			;bb43   ; suma de todos
 suma_todos:
-	add a,(hl)			;bb44
+	add a,(hl)			;bb44   ; + el byte
 	inc hl			;bb45
-	djnz suma_todos		;bb46
-	pop bc			;bb48
+	djnz suma_todos		;bb46   ; los 0xC7C0
+	pop bc			;bb48   ; otra vez desde el principio
 	pop hl			;bb49
 	push hl			;bb4a
 	push bc			;bb4b
 suma_de_2:		; + los de 2 en 2
-	add a,(hl)			;bb4c
+	add a,(hl)			;bb4c   ; + el byte
 	inc hl			;bb4d
-	dec b			;bb4e
+	dec b			;bb4e   ; se acaban?
 	jr z,suma_alta		;bb4f
-	inc hl			;bb51
-	djnz suma_de_2		;bb52
+	inc hl			;bb51   ; se salta uno
+	djnz suma_de_2		;bb52   ; de 2 en 2
 suma_alta:		; la alta
 	ld d,a			;bb54
 	pop bc			;bb55
@@ -3315,33 +3315,33 @@ suma_alta:		; la alta
 	push bc			;bb59
 	xor a			;bb5a
 suma_de_3:		; los de 3 en 3
-	add a,(hl)			;bb5b
+	add a,(hl)			;bb5b   ; + el byte
 	inc hl			;bb5c
-	dec b			;bb5d
+	dec b			;bb5d   ; se acaban?
 	jr z,suma_de_4_desde		;bb5e
-	inc hl			;bb60
+	inc hl			;bb60   ; se saltan dos
 	dec b			;bb61
 	jr z,suma_de_4_desde		;bb62
 	inc hl			;bb64
-	djnz suma_de_3		;bb65
+	djnz suma_de_3		;bb65   ; de 3 en 3
 suma_de_4_desde:
-	pop bc			;bb67
+	pop bc			;bb67   ; otra vez desde el segundo
 	pop hl			;bb68
 suma_de_4:		; + los de 4 en 4
-	add a,(hl)			;bb69
+	add a,(hl)			;bb69   ; + el byte
 	inc hl			;bb6a
-	dec b			;bb6b
+	dec b			;bb6b   ; se acaban?
 	jr z,suma_baja		;bb6c
-	inc hl			;bb6e
+	inc hl			;bb6e   ; se saltan tres
 	dec b			;bb6f
 	jr z,suma_baja		;bb70
 	inc hl			;bb72
 	dec b			;bb73
 	jr z,suma_baja		;bb74
 	inc hl			;bb76
-	djnz suma_de_4		;bb77
+	djnz suma_de_4		;bb77   ; de 4 en 4
 suma_baja:		; la baja
-	ld e,a			;bb79
+	ld e,a			;bb79   ; H = la alta, L = la baja
 	ex de,hl			;bb7a
 	ret			;bb7b
 cursor_arriba:		; el cursor 0x10 menos (de 0 pasa a 0xA0 y siguientes)
@@ -3351,31 +3351,31 @@ cursor_arriba:		; el cursor 0x10 menos (de 0 pasa a 0xA0 y siguientes)
 	add a,0b0h		;bb81
 	jr pon_cursor		;bb83
 cursor_abajo:		; el cursor 0x10 mas (desde 0xB0, vuelve arriba)
-	ld a,(hl)			;bb85
-	add a,010h		;bb86
-	cp 0b0h		;bb88
+	ld a,(hl)			;bb85   ; el cursor...
+	add a,010h		;bb86   ; ...una fila mas
+	cp 0b0h		;bb88   ; hasta 0xB0...
 	jr c,pon_cursor		;bb8a
-	sub 0b0h		;bb8c
+	sub 0b0h		;bb8c   ; ...y luego arriba
 	jr pon_cursor		;bb8e
 cursor_izquierda:		; el cursor uno menos en su fila de 16
-	ld a,(hl)			;bb90
+	ld a,(hl)			;bb90   ; el cursor...
 	ld c,a			;bb91
-	and 0f0h		;bb92
+	and 0f0h		;bb92   ; ...su fila...
 	ld b,a			;bb94
 	ld a,c			;bb95
-	dec a			;bb96
+	dec a			;bb96   ; ...y la columna uno menos (de 0 a 15)
 	and 00fh		;bb97
-	or b			;bb99
+	or b			;bb99   ; con la fila
 	jr pon_cursor		;bb9a
 cursor_derecha:		; el cursor uno mas en su fila de 16
-	ld a,(hl)			;bb9c
+	ld a,(hl)			;bb9c   ; el cursor...
 	ld c,a			;bb9d
-	and 0f0h		;bb9e
+	and 0f0h		;bb9e   ; ...su fila...
 	ld b,a			;bba0
 	ld a,c			;bba1
-	inc a			;bba2
+	inc a			;bba2   ; ...y la columna uno mas (de 15 a 0)
 	and 00fh		;bba3
-	or b			;bba5
+	or b			;bba5   ; con la fila
 pon_cursor:
 	ld (hl),a			;bba6
 rejilla_de_letras:		; 11 rayas de 0x9C de color 9 desde (0x12, 0x44), cada 0x0C mas abajo, y la de 8 de color 0x0A bajo la letra del cursor 0xC7C4 (p14:BBCE)
@@ -3596,7 +3596,7 @@ letras_validas:
 	ld hl,0e900h		;bcf4   ; ...de vuelta a 0xC900
 	ld de,0c900h		;bcf7
 	ldir		;bcfa
-	ld hl,0e900h		;bcfc   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;bcfc   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld bc,004ffh		;bcff   ; 0x500 bytes a 0
 	call 04236h		;bd02   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call letras_a_bytes		;bd05   ; a 0xC800
@@ -3635,11 +3635,11 @@ cuenta_letras:		; C = cuantas letras hay en 0xC900 (hasta 0xFF); acarreo con men
 	ld hl,0c900h		;bd43
 	ld c,000h		;bd46
 cuenta_letra:
-	ld a,(hl)			;bd48
-	inc a			;bd49
+	ld a,(hl)			;bd48   ; la letra...
+	inc a			;bd49   ; ...0xFF: se acaba
 	jr z,cuantas_letras		;bd4a
 	inc hl			;bd4c
-	inc c			;bd4d
+	inc c			;bd4d   ; una mas
 	jr cuenta_letra		;bd4e
 cuantas_letras:
 	ld a,c			;bd50
@@ -3647,7 +3647,7 @@ cuantas_letras:
 	ret			;bd53
 letras_a_bytes:		; las letras de 0xC900 de 6 bits a bits en 0xE900 (0xFF al final) y de 8 en 8 a 0xC800
 	ld de,0c900h		;bd54
-	ld hl,0e900h		;bd57   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;bd57   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld c,000h		;bd5a
 letra_a_bits:
 	ld a,(de)			;bd5c
@@ -3658,11 +3658,11 @@ letra_a_bits:
 	rla			;bd62
 	ld b,006h		;bd63   ; 6 bits
 bit_de_letra:
-	rla			;bd65
-	rl (hl)		;bd66
-	inc hl			;bd68
-	djnz bit_de_letra		;bd69
-	inc de			;bd6b
+	rla			;bd65   ; el bit de arriba...
+	rl (hl)		;bd66   ; ...a un byte de 0xE900
+	inc hl			;bd68   ; un byte por bit
+	djnz bit_de_letra		;bd69   ; 6
+	inc de			;bd6b   ; la letra siguiente
 	jr letra_a_bits		;bd6c
 bits_a_bytes:		; el final
 	ld (hl),0ffh		;bd6e
@@ -3782,16 +3782,16 @@ DATA_resto_BDF7:
 
 
 rachas_de_c700:		; la partida de 0xC700-0xC772 en rachas desde 0xC804 (0xD8E0 el contador de la racha, 0xD8E1 su cabecera, 0xD8E3 el final, 0xD8E5 donde acaba): n >= 0x81 repite, n < 0x80 copia; el final en 0xD8E5
-	ld hl,0d8e0h		;be57   ; apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld hl,0d8e0h		;be57   ; apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	ld bc,00006h		;be5a   ; 7 bytes a cero
 	call 04236h		;be5d   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0c700h		;be60   ; apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 	ld de,0c773h		;be63   ; el final
-	ld (0d8e3h),de		;be66
+	ld (0d8e3h),de		;be66   ; guarda de paso (p14:BE66): el final de lo que se pasa a rachas y el byte siguiente (16 bits)
 	ld de,0c804h		;be6a   ; a 0xC804
 racha_nueva:		; la racha empieza: 0x81
 	ld a,081h		;be6d
-	ld (0d8e0h),a		;be6f   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;be6f   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	ld c,(hl)			;be72   ; el byte
 	ld (0d8e1h),de		;be73   ; la cabecera aqui
 	inc de			;be77   ; el byte despues
@@ -3805,7 +3805,7 @@ racha_nueva:		; la racha empieza: 0x81
 	cp (hl)			;be83
 	jr z,racha_repite		;be84
 	ld a,001h		;be86   ; distintos: 1
-	ld (0d8e0h),a		;be88   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;be88   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 racha_copia:		; el byte...
 	ld c,(hl)			;be8b
 	inc hl			;be8c
@@ -3826,23 +3826,23 @@ racha_corta:		; la cabecera de la copia...
 	dec hl			;bea3
 	dec de			;bea4
 	push hl			;bea5
-	ld hl,(0d8e1h)		;bea6
-	ld a,(0d8e0h)		;bea9   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld hl,(0d8e1h)		;bea6   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
+	ld a,(0d8e0h)		;bea9   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	set 7,a		;beac   ; ...con el bit 7
 	ld (hl),a			;beae
 	pop hl			;beaf
-	ld (0d8e1h),de		;beb0
+	ld (0d8e1h),de		;beb0   ; guarda de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
 	jr racha_nueva		;beb4
 racha_copia_mas:
-	ld a,(0d8e0h)		;beb6   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;beb6   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	cp 07fh		;beb9   ; hasta 0x7F
 	jr z,racha_corta		;bebb
 	inc a			;bebd   ; uno mas
-	ld (0d8e0h),a		;bebe   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;bebe   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	jr racha_copia		;bec1
 racha_repite:		; 2 iguales
 	ld a,002h		;bec3
-	ld (0d8e0h),a		;bec5   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;bec5   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 racha_repite_mas:
 	inc hl			;bec8
 	call es_el_final		;bec9   ; el final?
@@ -3851,27 +3851,27 @@ racha_repite_mas:
 	cp (hl)			;becf   ; igual?
 	jr z,racha_repite_sigue		;bed0
 racha_repite_acaba:		; la cabecera...
-	ld de,(0d8e1h)		;bed2
+	ld de,(0d8e1h)		;bed2   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
 	ld a,(0d8e0h)		;bed6   ; ...con la cuenta
 	ld (de),a			;bed9
 	inc de			;beda
 	inc de			;bedb
-	ld (0d8e1h),de		;bedc
+	ld (0d8e1h),de		;bedc   ; guarda de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
 	jp racha_nueva		;bee0   ; racha_nueva: la racha empieza: 0x81
 racha_repite_sigue:
-	ld a,(0d8e0h)		;bee3   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;bee3   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	cp 07fh		;bee6   ; hasta 0x7F
 	jr z,racha_repite_acaba		;bee8
 	inc a			;beea
-	ld (0d8e0h),a		;beeb   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;beeb   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	jr racha_repite_mas		;beee
 es_el_final:		; Z con HL en el final (0xD8E3)
-	push hl			;bef0
+	push hl			;bef0   ; HL - el final
 	push de			;bef1
-	ld de,(0d8e3h)		;bef2
+	ld de,(0d8e3h)		;bef2   ; lee de paso (p14:BE66): el final de lo que se pasa a rachas y el byte siguiente (16 bits)
 	and a			;bef6
 	sbc hl,de		;bef7
-	pop de			;bef9
+	pop de			;bef9   ; Z si son iguales
 	pop hl			;befa
 	ret			;befb
 racha_ultimo:
@@ -3879,38 +3879,38 @@ racha_ultimo:
 	ld a,(hl)			;befd
 	ld (de),a			;befe
 	inc de			;beff
-	ld a,(0d8e0h)		;bf00   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;bf00   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	inc a			;bf03
-	ld (0d8e0h),a		;bf04   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;bf04   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 rachas_acaban:
-	ld a,(0d8e0h)		;bf07   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;bf07   ; la cuenta + 1 con el bit 7: si pasa de 0x7F (0x80)...
 	inc a			;bf0a
 	set 7,a		;bf0b
 	cp 080h		;bf0d
 	jr nz,pon_cuenta_racha		;bf0f
-	ld hl,(0d8e1h)		;bf11
+	ld hl,(0d8e1h)		;bf11   ; ...la copia se queda en 0x7F (cabecera 0xFF)...
 	ld (hl),0ffh		;bf14
 	ex de,hl			;bf16
-	dec hl			;bf17
+	dec hl			;bf17   ; ...y el ultimo byte pasa a racha de 1 (0x81, byte)
 	ld a,(hl)			;bf18
 	ld (hl),081h		;bf19
 	inc hl			;bf1b
 	ld (hl),a			;bf1c
 	inc hl			;bf1d
-	ld (hl),000h		;bf1e
+	ld (hl),000h		;bf1e   ; el 0 del final
 	ex de,hl			;bf20
-	ld a,081h		;bf21
+	ld a,081h		;bf21   ; la cuenta 0x81
 	jr rachas_final		;bf23
 pon_cuenta_racha:
-	ld (0d8e0h),a		;bf25   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;bf25   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 rachas_fin:		; el 0 del final
 	xor a			;bf28
 	ld (de),a			;bf29
-	ld a,(0d8e0h)		;bf2a   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-	ld hl,(0d8e1h)		;bf2d
+	ld a,(0d8e0h)		;bf2a   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+	ld hl,(0d8e1h)		;bf2d   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
 	ld (hl),a			;bf30
 rachas_final:		; donde acaba, en 0xD8E5
-	ld (0d8e5h),de		;bf31
+	ld (0d8e5h),de		;bf31   ; guarda de paso (p14:BF31): donde acaba la partida en rachas y el byte siguiente (16 bits)
 	ret			;bf35
 cosas_por_d880:		; antes de guardar, por debajo de la zona 0x12: las cosas que se dan una vez por 0xD883 (bit 6 de 0xD7F4, 0xD68C), 0xD886 (bit 5, 0xD6A0), 0xD88A en la zona 0x0B (0xD69C) y 0xD882 (bit 7, 0xD688), a 0xFF: la cosa con 1 y cuenta 1
 	ld a,(0ca4ah)		;bf36   ; lee la zona

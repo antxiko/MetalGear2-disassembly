@@ -2255,8 +2255,8 @@ C 0x5BC5 suma_a_hl: HL = HL + A
 C 0x5BD2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5BD7 guarda la sala de la zona
 C 0x5BDA umbrales_de_la_sala: los umbrales de los juegos de piezas de la sala (p56:A727) a 0xCA4E-0xCA4F
-C 0x5C13 apunta a los caracteres de un dibujo pasados a 4 bits
-C 0x5C67 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x5C13 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
+C 0x5C67 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x5CAE salas_de_la_especial: B = cuantas salas tiene la especial 0xCA76 (p00:5D03; 1 si no esta)
 C 0x5CBB guarda la sala de la zona
 C 0x5CC3 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)

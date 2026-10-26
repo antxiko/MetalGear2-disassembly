@@ -1004,7 +1004,7 @@ L 0x9F7B patron_d70a_b - 4...
 C 0x8000 apunta a el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
 C 0x800A despachador: salta a la palabra A de la tabla que va detras del call
 C 0x808F sonido_99: pide el sonido 0x99 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-C 0x8095 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x8095 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x8098 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x809E letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x80A4 pres_cuenta_y_siguiente: la cuenta 0xCA2E-0xCA2F = DE y el paso siguiente
@@ -1016,7 +1016,7 @@ C 0x80BB pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 C 0x80BE a_negro_cada_4: cada 4 cuadros de la cuenta, p13:90FD
 C 0x80C2 pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 C 0x80C5 paleta_negra: en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
-C 0x80C8 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x80C8 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x80CB pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x80D7 copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
 C 0x80DB guarda la cuenta de cuadros de la figura o el dibujo de la presentacion
@@ -1216,7 +1216,7 @@ C 0x8508 sprites_de_tabla: B sprites de HL [Y][X][patron] a DE (de 4 en 4)
 C 0x850B apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x8518 pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 C 0x851D guarda la cuenta de cuadros de la figura o el dibujo de la presentacion
-C 0x8520 guarda los caracteres de un dibujo pasados a 4 bits
+C 0x8520 guarda los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x8524 guarda la espera del texto de la presentacion
 C 0x8527 pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 C 0x852A apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
@@ -1303,7 +1303,7 @@ C 0x873B a_negro_cada_4: cada 4 cuadros de la cuenta, p13:90FD
 C 0x873F pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 C 0x8742 pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 C 0x8745 paleta_negra: en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
-C 0x8748 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x8748 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x874B pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x874E dibujo_grande: el dibujo de (0, 0) de la pagina 1, 0x80 x 0xA8, en (0x40, 0x10)
 C 0x8751 pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
@@ -1356,7 +1356,7 @@ C 0x88CA e900_mas_1:
 C 0x88D5 suma_a_hl: HL = HL + A
 C 0x88EE copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x88F8 suma_a_hl: HL = HL + A
-C 0x88FE apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x88FE apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x8984 lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 C 0x898A palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x8995 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
@@ -1371,8 +1371,8 @@ C 0x8A11 copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
 C 0x8A14 apunta a lo que falta del dibujo que se abre en la presentacion
 C 0x8A2A copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
 C 0x8A38 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0x8A3E apunta a los caracteres de un dibujo pasados a 4 bits
-C 0x8A4E apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x8A3E apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
+C 0x8A4E apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x8AAC borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x8AC0 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x8ADF borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -1460,13 +1460,13 @@ C 0x90F7 lee la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0x9107 color_uno_menos: el color B de la VRAM de HL uno menos (p13:911C, p13:912D) y puesto en la paleta
 C 0x9141 rojo_azul_menos: D = E con el rojo (nibble alto) y el azul (bajo) uno menos
 C 0x9145 verde_menos: E = el verde uno menos
-C 0x9152 apunta a los caracteres de un dibujo pasados a 4 bits
-C 0x9162 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x9152 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
+C 0x9162 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x916F lee la cuenta de cuadros del paso de la presentacion (16 bits)
-C 0x91E8 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x91E8 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x91EB pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-C 0x91F0 apunta a los caracteres de un dibujo pasados a 4 bits
-C 0x9200 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x91F0 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
+C 0x9200 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x92D1 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0x92D4 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x92DA pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
@@ -1485,41 +1485,41 @@ C 0x9377 guarda la cuenta de cuadros del fundido de la paleta
 C 0x937B guarda 0-2 con cada paso del fundido de la paleta
 C 0x9387 lee el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x938C apunta a la cuenta de cuadros del fundido de la paleta
-C 0x9392 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x9392 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x93A5 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x93AE todo_negro: con todos los colores de 0xE900 a 0, 0xCADA = 0
 C 0x93B1 apunta a 0-2 con cada paso del fundido de la paleta
 C 0x93BC rojo_un_menos: el nibble alto uno menos
 C 0x93BF azul_un_menos: el nibble bajo uno menos
-C 0x93DD apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x93DD apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x93F3 guarda el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x93F9 guarda el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x93FD guarda la cuenta de cuadros del fundido de la paleta
 C 0x9401 guarda 0-2 con cada paso del fundido de la paleta
-C 0x9404 apunta a los caracteres de un dibujo pasados a 4 bits
-C 0x940F apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x9404 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
+C 0x940F apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x941A lee el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x9420 apunta a la cuenta de cuadros del fundido de la paleta
-C 0x9427 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x9427 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x943C pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x944C apunta a 0-2 con cada paso del fundido de la paleta
 C 0x9457 rojo_hacia: el nibble alto uno mas hasta el de DE
 C 0x945A azul_hacia: el nibble bajo uno mas hasta el de DE
-C 0x948E apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x948E apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x949F guarda el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x94A5 guarda el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x94A9 guarda la cuenta de cuadros del fundido de la paleta
-C 0x94AC apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x94AC apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x94B5 lee el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x94BB apunta a la cuenta de cuadros del fundido de la paleta
-C 0x94C1 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x94C1 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x94CE color_un_paso_mas: el rojo, el azul y el verde uno mas hasta 7
-C 0x94D1 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x94D1 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x94D4 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0x94DD todo_blanco: con todos los colores a 7, 0xCADA = 0
 C 0x94E1 rojo_un_mas: 
 C 0x94E4 azul_un_mas: 
-C 0x9506 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x9506 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x951E guarda el fundido de la paleta en curso (0 ninguno, 1 a negro, 2 desde negro, 3 a blanco; p13:9371)
 C 0x9522 bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9525 tabla_colores_BEA0: 24 punteros a colores de dibujo

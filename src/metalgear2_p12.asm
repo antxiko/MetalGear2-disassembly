@@ -260,7 +260,7 @@ opcion_0:		; el paso 8 con 0xC3A1 = 0, el recuadro grande y, guardando, p14:BA98
 	call 0ba98h		;61a2   ; letras_de_la_partida: la opcion 0, guardando: 0xE900 y 0xC7C0 a cero, la clave 0xC7C1 de los cuadros, la partida de 0xC700 en rachas en 0xC804 (p14:BE57), su largo + 1 en 0xC7C0, la suma (p14:BB33) en 0xC7C2, la cabecera [clave][suma][largo] en 0xC800, todo cifrado (p14:BB1D), pasado a bits en 0xE900 y de 6 en 6 a 0xC900 (0xFF al final), y pintado (p14:BC7F)
 	jp 041a0h		;61a5   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 opcion_0_cargar:
-	ld hl,0e900h		;61a8   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;61a8   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld bc,004ffh		;61ab   ; 0x500 bytes
 	call 04236h		;61ae   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0c7c0h		;61b1   ; 0xC7C0...
@@ -3449,14 +3449,14 @@ por_direccion_6:		; HL += A * 6 + el paso * 2
 	add a,b			;77d3
 	jp 0423eh		;77d4   ; suma_a_hl: HL = HL + A
 patrones_de_b620:		; como p12:77E2 con los dos de p63:B620
-	ld de,0e900h		;77d7   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld de,0e900h		;77d7   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	push hl			;77da
 	push de			;77db
 	ld a,(hl)			;77dc
 	ld hl,0b620h		;77dd
 	jr patrones_a_e900		;77e0
 patrones_de_b282:		; el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
-	ld de,0e900h		;77e2   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld de,0e900h		;77e2   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	push hl			;77e5
 	push de			;77e6
 	ld a,(hl)			;77e7
@@ -3663,7 +3663,7 @@ fila_b25a:		; HL = p63:B25A + (A - 1) * 2
 	jp 0423eh		;7932   ; suma_a_hl: HL = HL + A
 dibujo_8:		; con la direccion en 0xD8E0, los sprites y los patrones de p63:B272 (0xCB17 = 1) o p63:B26A (p12:798E)
 	ld a,(0cb0eh)		;7935   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	ld (0d8e0h),a		;7938   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;7938   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	call sprites_de_snake		;793b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jr patrones_8		;793e
 lineas_8:		; la linea de p12:7949 a la fila 0xF0 y la 0xF7 + direccion a la 0x1F0 (p12:797E)
@@ -3672,25 +3672,25 @@ lineas_8:		; la linea de p12:7949 a la fila 0xF0 y la 0xF7 + direccion a la 0x1F
 	jp linea_8_c		;7946   ; linea_8_c: la linea (0x80, 0xF7 + direccion) a 0x1F0 con YMMM
 linea_8:		; con 0xCB17 = 1: L = 0xFC (0xFD a los lados), H = 0 (direcciones impares) u 0x80; si no, H = 0 y L = 0xF7 + direccion
 	ld a,(0cb0eh)		;7949   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	ld (0d8e0h),a		;794c   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld (0d8e0h),a		;794c   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	ld a,(0cb17h)		;794f
 	dec a			;7952
 	jr nz,linea_8_b		;7953
 	ld l,0fch		;7955
-	ld a,(0d8e0h)		;7957   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;7957   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	cp 003h		;795a   ; a los lados...
 	jr c,linea_8_h		;795c
 	inc l			;795e   ; ...0xFD
 linea_8_h:
 	ld h,080h		;795f
-	ld a,(0d8e0h)		;7961   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;7961   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	rra			;7964
 	ret nc			;7965
 	ld h,000h		;7966
 	ret			;7968
 linea_8_b:
 	ld h,000h		;7969
-	ld a,(0d8e0h)		;796b   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;796b   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	dec a			;796e
 	add a,0f8h		;796f
 	ld l,a			;7971
@@ -3702,7 +3702,7 @@ linea_a_de:
 	ld a,007h		;7979
 	jp 04767h		;797b   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 linea_8_c:		; la linea (0x80, 0xF7 + direccion) a 0x1F0 con YMMM
-	ld a,(0d8e0h)		;797e   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;797e   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	add a,0f7h		;7981
 	ld l,a			;7983
 	ld h,080h		;7984
@@ -3719,7 +3719,7 @@ patrones_8_b:
 	call por_direccion_d8e0		;799a   ; por_direccion_d8e0: HL += (0xD8E0 - 1) * 2
 	jp patrones_de_b282		;799d   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
 por_direccion_d8e0:		; HL += (0xD8E0 - 1) * 2
-	ld a,(0d8e0h)		;79a0   ; lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld a,(0d8e0h)		;79a0   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	dec a			;79a3
 	add a,a			;79a4
 	jp 0423eh		;79a5   ; suma_a_hl: HL = HL + A
@@ -3974,7 +3974,7 @@ colores_e900:		; salvo en el dibujo 0x0B, los 0x40 bytes de 0xE900 a 0xDA00 (los
 	ld a,(0cb01h)		;7b73   ; lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	cp 00bh		;7b76
 	ret z			;7b78   ; el 0x0B, nada
-	ld hl,0e900h		;7b79   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;7b79   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,0da00h		;7b7c   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 	ld bc,00040h		;7b7f
 	ldir		;7b82

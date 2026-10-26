@@ -732,7 +732,6 @@ C 0xBB0A el siguiente
 C 0xBB25 su numero * 8...
 C 0xBB29 ...+ la clave...
 C 0xBB2D ...+ el byte
-C 0xBB43 todos
 C 0xBB57 desde el segundo
 C 0xBBA9 desde (0x12, 0x44)
 C 0xBBAC 0x9C de largo, color 9
@@ -862,6 +861,83 @@ C 0xBF75 ...el bit 5...
 C 0xBF7D ...la de 0xD6A0
 C 0xBF88 ...en la zona 0x0B...
 C 0xBF8E ...la de 0xD69C
+C 0xA1DA la espera
+C 0xA1DD uno menos
+C 0xA1DF luego 0x0D...
+C 0xA1E4 ...y el paso siguiente
+C 0xA5DA la paleta en 0xE900: (color, 0, 0) x 15
+C 0xA5DD el numero de color
+C 0xA5DE el rojo y el azul, el verde: a 0
+C 0xA5E1 el color siguiente
+C 0xA5E2 15
+C 0xA5E4 el final
+C 0xA62D el rojo y el azul...
+C 0xA62F distinto: sale con NZ
+C 0xA633 ...y el verde
+C 0xA637 el color siguiente
+C 0xA63A 15 colores
+C 0xA63C Z si ya es la de DE
+C 0xB527 el paso 0
+C 0xB52D la cuenta 2
+C 0xB530 el centro: Y...
+C 0xB532 ...y X
+C 0xB534 el radio 4
+C 0xB537 0xE236 = 0
+C 0xB62C el radio
+C 0xB630 Y - el radio
+C 0xB635 X - el radio
+C 0xB6B8 el paso 1...
+C 0xB6BC ...0x30
+C 0xB6BF si no, el radio de ahora
+C 0xB74F su sitio (byte 3, Y; byte 4, X)
+C 0xB755 el byte 5 + 1
+C 0xB759 el byte 6 + 2
+C 0xB75E DE = el mismo sitio
+C 0xBB43 suma de todos
+C 0xBB44 + el byte
+C 0xBB46 los 0xC7C0
+C 0xBB48 otra vez desde el principio
+C 0xBB4C + el byte
+C 0xBB4E se acaban?
+C 0xBB51 se salta uno
+C 0xBB52 de 2 en 2
+C 0xBB5B + el byte
+C 0xBB5D se acaban?
+C 0xBB60 se saltan dos
+C 0xBB65 de 3 en 3
+C 0xBB67 otra vez desde el segundo
+C 0xBB69 + el byte
+C 0xBB6B se acaban?
+C 0xBB6E se saltan tres
+C 0xBB77 de 4 en 4
+C 0xBB79 H = la alta, L = la baja
+C 0xBB85 el cursor...
+C 0xBB86 ...una fila mas
+C 0xBB88 hasta 0xB0...
+C 0xBB8C ...y luego arriba
+C 0xBB90 el cursor...
+C 0xBB92 ...su fila...
+C 0xBB96 ...y la columna uno menos (de 0 a 15)
+C 0xBB99 con la fila
+C 0xBB9C el cursor...
+C 0xBB9E ...su fila...
+C 0xBBA2 ...y la columna uno mas (de 15 a 0)
+C 0xBBA5 con la fila
+C 0xBD48 la letra...
+C 0xBD49 ...0xFF: se acaba
+C 0xBD4D una mas
+C 0xBD65 el bit de arriba...
+C 0xBD66 ...a un byte de 0xE900
+C 0xBD68 un byte por bit
+C 0xBD69 6
+C 0xBD6B la letra siguiente
+C 0xBEF0 HL - el final
+C 0xBEF9 Z si son iguales
+C 0xBF07 la cuenta + 1 con el bit 7: si pasa de 0x7F (0x80)...
+C 0xBF11 ...la copia se queda en 0x7F (cabecera 0xFF)...
+C 0xBF17 ...y el ultimo byte pasa a racha de 1 (0x81, byte)
+C 0xBF1E el 0 del final
+C 0xBF21 la cuenta 0x81
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA19C 0xA1A6 tabla_A19C  5 destinos del despachador p00:424D (call en p14:A199, el indice en A): A1A6, A1B8, A1DA, A1E6, A208; lo leen p14:A199 (10 bytes)
@@ -1423,8 +1499,7 @@ C 0xA5A0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xA5AE guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
 C 0xA5B5 lee el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 C 0xA5BD guarda el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
-C 0xA5DA apunta a los caracteres de un dibujo pasados a 4 bits
-C 0xA63D apunta a los caracteres de un dibujo pasados a 4 bits
+C 0xA63D apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0xA640 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 C 0xA66D color_uno_menos: el color B de la VRAM de HL uno menos (p13:911C, p13:912D) y puesto en la paleta
 C 0xA67D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
@@ -1748,7 +1823,7 @@ C 0xBA81 orden_sonido_f4: la orden 0xF4 al sonido
 C 0xBA84 caf7_a_cero: Z con 0xCAF7-0xCAF8 a 0
 C 0xBA8E sonido_82: pide el sonido 0x82 (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 C 0xBA91 lee otra espera de 16 bits que baja en la interrupcion
-C 0xBA98 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0xBA98 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0xBA9E borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBAA7 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBB1A pinta_letras: las letras de 0xC900 (hasta 0xFF) desde (0x12, 0x3C): de 4 en 4 con 9 (0x0D entre grupos), 16 por fila, 0x0C mas abajo
@@ -1769,7 +1844,7 @@ C 0xBCB8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBCC2 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xBCD0 letra_transparente: la letra A de la pagina 3, con el 0 transparente, a la pagina en la que se dibuja
 C 0xBCD3 cuenta_letras: C = cuantas letras hay en 0xC900 (hasta 0xFF); acarreo con menos de 4
-C 0xBCFC apunta a los caracteres de un dibujo pasados a 4 bits
+C 0xBCFC apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0xBD02 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBD12 guarda el resultado del disco o del Game Master 2 (2 = error)
 C 0xBD1B rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
@@ -1777,31 +1852,38 @@ C 0xBD1E sonido_3f: pide el sonido 0x3F
 C 0xBD23 guarda el resultado del disco o del Game Master 2 (2 = error)
 C 0xBD2C pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 C 0xBD32 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
-C 0xBD57 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0xBD57 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0xBDB7 suma_c804: HL = dos sumas de los 0xC7C0 bytes de 0xC804: H (todos y los de 2 en 2) y L (los de 3 en 3 y de 4 en 4)
 C 0xBDC1 apunta a lo recien pulsado de esas 6 filas
 C 0xBDE2 suma_a_hl: HL = HL + A
 C 0xBDF2 suma_a_hl: HL = HL + A
-C 0xBE57 apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xBE57 apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0xBE5D borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBE60 apunta a copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
-C 0xBE6F guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xBE66 guarda de paso (p14:BE66): el final de lo que se pasa a rachas y el byte siguiente (16 bits)
+C 0xBE6F guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0xBE7F rachas_fin: el 0 del final
-C 0xBE88 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xBE88 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0xBE93 rachas_acaban: 
 C 0xBE9A es_el_final: Z con HL en el final (0xD8E3)
-C 0xBEA9 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBEB6 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBEBE guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBEC5 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xBEA6 lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
+C 0xBEA9 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBEB0 guarda de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
+C 0xBEB6 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBEBE guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBEC5 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBED2 lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
+C 0xBEDC guarda de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
 C 0xBEE0 racha_nueva: la racha empieza: 0x81
-C 0xBEE3 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBEEB guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBF00 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBF04 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBF07 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBF25 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0xBF2A lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xBEE3 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBEEB guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBEF2 lee de paso (p14:BE66): el final de lo que se pasa a rachas y el byte siguiente (16 bits)
+C 0xBF00 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBF04 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBF25 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBF2A lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xBF2D lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha y el byte siguiente (16 bits)
+C 0xBF31 guarda de paso (p14:BF31): donde acaba la partida en rachas y el byte siguiente (16 bits)
 C 0xBF36 lee la zona
 C 0xBF3C cosa_por_d883: 0xD883...
 C 0xBF3F cosa_por_d886: 0xD886...

@@ -1477,11 +1477,15 @@ C 0xA3F2 lee la X de la ficha 0xE1D8
 C 0xA3F9 lee la Y de la ficha 0xE1D8
 C 0xA41B guarda 1 mientras la ficha 0xE1D8 tiembla (p10:A419)
 C 0xA420 guarda la cuenta de la ficha 0xE1D8
+C 0xA424 lee de paso (p14:BF31): donde acaba la partida en rachas
 C 0xA427 a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
+C 0xA42C lee de paso (p14:BF31): donde acaba la partida en rachas
 C 0xA42F a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
 C 0xA440 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA448 lee de paso (p14:BF31): donde acaba la partida en rachas
 C 0xA44B quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 C 0xA44E b172_y_b8c4: p10:B172 y p10:B8C4
+C 0xA451 lee de paso (p14:BF31): donde acaba la partida en rachas
 C 0xA471 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0xA474 letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 C 0xA477 apunta a 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
@@ -1560,7 +1564,7 @@ C 0xA994 lee la sala de la zona
 C 0xA9B8 lee la sala de la zona
 C 0xA9C4 lee la sala de la zona
 C 0xA9DC lee la sala de la zona
-C 0xA9EE apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xA9EE apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0xA9F4 lee la sala de la zona
 C 0xAA00 d7d8_7_si: en las salas 5, 7 y 9, el bit 7 de 0xD7D8
 C 0xAA06 lee la sala de la zona

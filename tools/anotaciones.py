@@ -384,8 +384,11 @@ RAM = {
     0xD8D1: ("el paso de las lineas de p57:8050 (0-5, p07:AC0C)", "p07:AB97, p07:AC28"),
     0xD8D2: ("el numero de la entrada a la que va (p07:A918)", "p07:A92D"),
     0xD8D8: ("las banderas de la sala (se borran al cambiar de sala, p00:59DD)", "p03:B0CE, p03:B103"),
-    0xD8E0: ("de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)", "p00:4D5A, p04:9BDD"),
+    0xD8E0: ("de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha", "p00:4D5A, p04:9BDD, p14:BE6D"),
+    0xD8E1: ("de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha", "p14:BE73"),
     0xD8E2: ("de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)", "p01:62A0, p04:9BE0"),
+    0xD8E3: ("de paso (p14:BE66): el final de lo que se pasa a rachas", "p14:BE66"),
+    0xD8E5: ("de paso (p14:BF31): donde acaba la partida en rachas", "p14:BF31"),
     0xDA00: ("la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)", "p00:4F97"),
     0xDC00: ("la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]", "p01:68D2, p00:4266"),
     0xDC80: ("10 fichas de 8 bytes de p57:8000 (p07:A985): [tipo][..][cuenta][ultima entrada][entrada][numero][llamada][..]", "p07:A988, p07:A996"),
@@ -470,7 +473,7 @@ RAM = {
     0xE740: ("el numero de paleta de cada sala de la zona (p56:B747 deshecha; p02:8488)", "p00:51D7, p02:8488"),
     0xE780: ("las salas de 0xCA76 deshechas (36 bloques cada una)", "p00:56C4"),
     0xE800: ("los colores de la lista de dibujos en curso (p00:4DB3)", "p00:4DB0"),
-    0xE900: ("los caracteres de un dibujo pasados a 4 bits", "p00:4B06"),
+    0xE900: ("los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)", "p00:4B06, p14:A5C5, p14:BD54"),
     0xFDA2: ("una copia de cuadros para el sonido (p16:4298)", "p16:42C8"),
 }
 

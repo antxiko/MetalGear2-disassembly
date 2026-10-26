@@ -1539,7 +1539,7 @@ C 0x6199 lee en el menu de guardar: 0 guardar, 1 cargar
 C 0x619F bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x61A2 letras_de_la_partida: la opcion 0, guardando: 0xE900 y 0xC7C0 a cero, la clave 0xC7C1 de los cuadros, la partida de 0xC700 en rachas en 0xC804 (p14:BE57), su largo + 1 en 0xC7C0, la suma (p14:BB33) en 0xC7C2, la cabecera [clave][suma][largo] en 0xC800, todo cifrado (p14:BB1D), pasado a bits en 0xE900 y de 6 en 6 a 0xC900 (0xFF al final), y pintado (p14:BC7F)
 C 0x61A5 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x61A8 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x61A8 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x61AE borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x61B7 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x61C2 llena_bloque: pone A en BC + 1 bytes desde HL
@@ -2002,8 +2002,8 @@ C 0x77C1 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 iz
 C 0x77C5 por_direccion_6: HL += A * 6 + el paso * 2
 C 0x77CF lee el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0x77D4 suma_a_hl: HL = HL + A
-C 0x77D7 apunta a los caracteres de un dibujo pasados a 4 bits
-C 0x77E2 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x77D7 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
+C 0x77E2 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x77EB palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x77F9 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x77FE suma_a_de: DE = DE + A
@@ -2062,22 +2062,22 @@ C 0x7927 fila_b25a: HL = p63:B25A + (A - 1) * 2
 C 0x792A patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
 C 0x7932 suma_a_hl: HL = HL + A
 C 0x7935 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0x7938 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x7938 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0x793B sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 C 0x7940 linea_8: con 0xCB17 = 1: L = 0xFC (0xFD a los lados), H = 0 (direcciones impares) u 0x80; si no, H = 0 y L = 0xF7 + direccion
 C 0x7943 linea_a_f0: la linea HL de la pagina 7 a (0, 0xF0), 0x80 x 1
 C 0x7946 linea_8_c: la linea (0x80, 0xF7 + direccion) a 0x1F0 con YMMM
 C 0x7949 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0x794C guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0x7957 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0x7961 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-C 0x796B lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x794C guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0x7957 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0x7961 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0x796B lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0x797B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0x797E lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x797E lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0x798B copia_en_y: orden YMMM del VDP
 C 0x799A por_direccion_d8e0: HL += (0xD8E0 - 1) * 2
 C 0x799D patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
-C 0x79A0 lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x79A0 lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0x79A5 suma_a_hl: HL = HL + A
 C 0x79A8 sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 C 0x79AD linea_9: L = 0xFE (0xFF a los lados), H = 0 (direcciones impares) u 0x80
@@ -2144,7 +2144,7 @@ C 0x7B57 lee el sitio de Snake en el paso 3 del estado 0x19 (p11:A090)
 C 0x7B5D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x7B70 linea_a_de: 
 C 0x7B73 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
-C 0x7B79 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x7B79 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x7B7C apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7B85 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x7B91 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)

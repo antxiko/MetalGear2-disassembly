@@ -140,11 +140,13 @@ C 0xA76C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xA7BF lee la Y de Snake
 C 0xA7C8 lee la X de Snake
 C 0xA7D7 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA822 guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+C 0xA822 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
 C 0xA825 guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 C 0xA831 lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+C 0xA83A lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
+C 0xA843 lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 C 0xA847 lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
-C 0xA84F lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0xA84F lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0xA853 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA85C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xA894 punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna

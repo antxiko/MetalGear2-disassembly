@@ -979,7 +979,7 @@ C 0x8754 cuenta_d800: C = cuantas fichas de 0xD800 estan activas (de 4)
 C 0x8759 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x875C d800_16_vuelve: la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
 C 0x8764 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x876B apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+C 0x876B apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0x87BE bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x87C1 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x87C5 lee el tipo de la ficha de 0xD800
@@ -1012,9 +1012,9 @@ C 0x88C0 d800_en_esta_sala: IX = 0xD800: Z si esta en esta sala
 C 0x88D4 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x88D7 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x88DD guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
-C 0x88E3 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x88E3 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x88E6 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
-C 0x88E9 apunta a los caracteres de un dibujo pasados a 4 bits
+C 0x88E9 apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 C 0x88F4 pieza_de_sala_a_la_otra: el caracter A de la sala (p00:4A36) de la pagina 2 a la otra
 C 0x8904 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8912 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
@@ -1614,9 +1614,9 @@ C 0x9BA6 a_p06_a924_guarda: p06:A924 guardando el banco de 0xA000
 C 0x9BAB lanza_cerca: los tipos 1-3: el sprite, la ficha del actor (bytes 0x0A-0x0B) y el byte 0x0C = 2
 C 0x9BB3 lee la X del actor
 C 0x9BB8 lee la Y del actor
-C 0x9BDD guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+C 0x9BDD guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
 C 0x9BE0 guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter) y el byte siguiente (16 bits)
-C 0x9C0C lee de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7) y el byte siguiente (16 bits)
+C 0x9C0C lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
 C 0x9C23 color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
 C 0x9C2B sonido_4c: pide el sonido 0x4C
 C 0x9C30 sonido_1d: pide el sonido 0x1D

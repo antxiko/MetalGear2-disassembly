@@ -273,7 +273,7 @@ L_6157:
 	ld (0d8e5h),a		;615c   ; ...si no, el siguiente
 	ld a,b			;615f
 	or a			;6160
-	ld a,(0d8e5h)		;6161
+	ld a,(0d8e5h)		;6161   ; lee de paso (p14:BF31): donde acaba la partida en rachas
 	jr nz,L_6157		;6164
 L_6166:
 	ld a,c			;6166   ; el numero del mensaje...
@@ -438,13 +438,13 @@ sube_de_nivel:		; 0xCAB5 uno mas y la barra de vida 8 puntos mas larga
 	call 042bch		;6294   ; ...y su marco
 	jr L_6275		;6297
 copia_al_mapa_70:		; p01:62B5 sumando 0x70 a cada caracter
-	ld hl,0d8e1h		;6299
+	ld hl,0d8e1h		;6299   ; apunta a de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 	ld (hl),070h		;629c
 	ld a,001h		;629e
 	ld (0d8e2h),a		;62a0   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
 	jr copia_al_mapa		;62a3
 copia_al_mapa_0:		; p01:62B5 caracter a caracter, sin sumar
-	ld hl,0d8e1h		;62a5
+	ld hl,0d8e1h		;62a5   ; apunta a de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
 	ld (hl),000h		;62a8
 	ld a,001h		;62aa
 	ld (0d8e2h),a		;62ac   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
@@ -2565,7 +2565,7 @@ mapa_96bf:		; el mapa de p46:96BF deshecho en 0xDD00, con los juegos de piezas 6
 	call 04d1ch		;70a8   ; los dibujos de p32:7118
 	jp 057aeh		;70ab   ; y el mapa
 mosaico_de_93fd:		; el mosaico A de p44:93FD (6 x 4) en DE; 0xD8E3 = B elige la forma
-	ld hl,0d8e3h		;70ae
+	ld hl,0d8e3h		;70ae   ; apunta a de paso (p14:BE66): el final de lo que se pasa a rachas
 	ld (hl),b			;70b1
 	push af			;70b2
 	push de			;70b3
@@ -2595,13 +2595,13 @@ L_70DE:
 mosaico_de_tabla_44:		; el mosaico A de la tabla de HL del banco 44 con la forma de 0xD8E3 = 0
 	push af			;70e4
 	xor a			;70e5
-	ld (0d8e3h),a		;70e6
+	ld (0d8e3h),a		;70e6   ; guarda de paso (p14:BE66): el final de lo que se pasa a rachas
 	pop af			;70e9
 	call 0416ch		;70ea   ; bancos_44_45: pone el 44 en 0x8000, el 45 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 043f6h		;70ed   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jr L_70DE		;70f0
 mosaico_segun_d8e3:		; 0xD8E3 = 0: la forma 2 de la franja 3; si no, la 5
-	ld a,(0d8e3h)		;70f2
+	ld a,(0d8e3h)		;70f2   ; lee de paso (p14:BE66): el final de lo que se pasa a rachas
 	or a			;70f5
 	jp z,050e8h		;70f6   ; mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 	jp 050fah		;70f9   ; mosaico_f5_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 3 (p00:512C)
@@ -2654,9 +2654,9 @@ mosaico_de_56_10x2:		; el mosaico de HL del banco 56 en X = 0x10, Y = 0x68, 10 x
 mosaico_bb4a:		; el mosaico en rachas de p54:BB4A (0x0B x 0x10) en X = 0x40, Y = 0x41
 	call 04183h		;715e   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0bb4ah		;7161
-	ld hl,0e900h		;7164   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;7164   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 051e0h		;7167   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
-	ld hl,0e900h		;716a   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;716a   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,04041h		;716d
 	ld bc,00b10h		;7170
 	call 050e2h		;7173   ; mosaico_f7_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 2 (p00:512C)
@@ -2664,9 +2664,9 @@ mosaico_bb4a:		; el mosaico en rachas de p54:BB4A (0x0B x 0x10) en X = 0x40, Y =
 mosaico_bc95:		; el mosaico en rachas de p54:BC95 (5 x 0x0C) en X = 0x50, Y = 0x50
 	call 04183h		;7179   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0bc95h		;717c
-	ld hl,0e900h		;717f   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;717f   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	call 051e0h		;7182   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
-	ld hl,0e900h		;7185   ; apunta a los caracteres de un dibujo pasados a 4 bits
+	ld hl,0e900h		;7185   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	ld de,05050h		;7188
 	ld bc,0050ch		;718b
 	jr L_719C		;718e

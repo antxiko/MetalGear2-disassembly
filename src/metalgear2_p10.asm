@@ -650,11 +650,11 @@ e1d8_con_cosa:
 	ld a,030h		;a41e   ; 0x30 cuadros
 	ld (0e1d9h),a		;a420   ; guarda la cuenta de la ficha 0xE1D8
 	push hl			;a423
-	ld a,(0d8e5h)		;a424
+	ld a,(0d8e5h)		;a424   ; lee de paso (p14:BF31): donde acaba la partida en rachas
 	call 092d2h		;a427   ; a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
 	pop hl			;a42a
 	push hl			;a42b
-	ld a,(0d8e5h)		;a42c
+	ld a,(0d8e5h)		;a42c   ; lee de paso (p14:BF31): donde acaba la partida en rachas
 	call 092dbh		;a42f   ; a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
 	pop hl			;a432
 	ret nc			;a433   ; sin acarreo, nada mas
@@ -670,10 +670,10 @@ e1d8_con_cosa:
 	ld d,a			;a443
 	xor a			;a444   ; al color 0
 	call 046ffh		;a445   ; ...borrado
-	ld a,(0d8e5h)		;a448
+	ld a,(0d8e5h)		;a448   ; lee de paso (p14:BF31): donde acaba la partida en rachas
 	call quita_de_d710		;a44b   ; quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 	call b172_y_b8c4		;a44e   ; b172_y_b8c4: p10:B172 y p10:B8C4
-	ld a,(0d8e5h)		;a451
+	ld a,(0d8e5h)		;a451   ; lee de paso (p14:BF31): donde acaba la partida en rachas
 	ld b,a			;a454
 	ld a,(0d704h)		;a455   ; elegida...
 	cp b			;a458   ; elegida?
@@ -1475,7 +1475,7 @@ zona_8_banderas:		; la zona 8: el bit 0 de 0xD7D4
 	set 0,(hl)		;a9eb   ; el bit 0
 	ret			;a9ed
 zona_10_banderas:		; la zona 0x10: fuera el bit 1 de 0xD8E0
-	ld hl,0d8e0h		;a9ee   ; apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
+	ld hl,0d8e0h		;a9ee   ; apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	res 1,(hl)		;a9f1   ; fuera el bit 1
 	ret			;a9f3
 zona_11_banderas:		; la zona 0x11: en la sala 5, el bit 1 de 0xD7DA
