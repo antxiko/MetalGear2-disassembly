@@ -10,14 +10,6 @@
 
 
 ; ----------------------------------------------------------------------
-; Etiquetas que no caen en ninguna posicion emitida del listado
-; (destinos fuera del binario o dentro de una instruccion).
-; ----------------------------------------------------------------------
-L_7BAA:	equ 0x07baa
-L_7C52:	equ 0x07c52
-L_7C77:	equ 0x07c77
-
-; ----------------------------------------------------------------------
 ; Direcciones que solo aparecen como VALOR -en un `ld`, no en
 ; un salto-: son punteros que el codigo se pasa o numeros que
 ; casualmente coinciden con una direccion. No hay nada que
@@ -726,7 +718,7 @@ L_64EF:
 	call 0f37dh		;64f5
 	ld c,002h		;64f8
 	inc a			;64fa
-	jp z,0ad94h		;64fb   ; p06:AD94
+	jp z,0ad94h		;64fb   ; error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	ret			;64fe
 
 ; ----------------------------------------------------------------------
@@ -973,7 +965,7 @@ L_66D4:
 	ld (08000h),a		;66df
 	pop bc			;66e2
 	ld de,(0c390h)		;66e3
-	call 08000h		;66e7   ; p02:8000
+	call 08000h		;66e7
 	push af			;66ea
 	ld a,(0c399h)		;66eb   ; lee el slot del cartucho para ENASLT
 	ld h,080h		;66ee
@@ -1591,14 +1583,16 @@ DATA_tabla_6BBE:
 	defw 06cdfh,06cdfh,06c4fh,06cdfh,06cdfh,06cdfh,06c8dh,06cdfh	; 6bce
 	defw 06cdfh,06cdfh,06c54h	; 6bde  -> L_6CDF L_6CDF L_6C54
 
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x6be4..0x6be6  (2 bytes)
+DATA_6BE4:
+	defb 074h,06ch	; 6be4
+
 ; ======================================================================
-; CODIGO 0x6be4..0x6c21  (61 bytes)
+; CODIGO 0x6be6..0x6c21  (59 bytes)
 ; ======================================================================
 
 
-L_6BE4:
-	ld (hl),h			;6be4
-	ld l,h			;6be5
 L_6BE6:
 	ld hl,0d800h		;6be6   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld b,004h		;6be9
@@ -3968,7 +3962,7 @@ DATA_resto_7B60:
 	defb 0c5h,000h,0c5h,080h,0c6h,000h,0c6h,080h,0c7h,000h	; 7b60  ..........
 
 ; ======================================================================
-; CODIGO 0x7b6a..0x7ed0  (870 bytes)
+; CODIGO 0x7b6a..0x7c53  (233 bytes)
 ; ======================================================================
 
 
@@ -4043,7 +4037,6 @@ L_7BDA:
 	ld c,000h		;7be9
 	call 05d41h		;7beb   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 	call 05d3dh		;7bee   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
-L_7BF1:
 	ld a,0e0h		;7bf1
 	ld (hl),a			;7bf3
 	inc l			;7bf4
@@ -4098,10 +4091,17 @@ L_7C25:
 	ld bc,0000fh		;7c4b
 	ld a,007h		;7c4e
 	jp 04237h		;7c50   ; llena_bloque: pone A en BC + 1 bytes desde HL
-	ld hl,0dc00h		;7c53   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
-	ld a,0e0h		;7c56
-	ld bc,0000fh		;7c58
-	jp 04237h		;7c5b   ; llena_bloque: pone A en BC + 1 bytes desde HL
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x7c53..0x7c5e  (11 bytes)
+DATA_7C53:
+	defb 021h,000h,0dch,03eh,0e0h,001h,00fh,000h,0c3h,037h,042h	; 7c53  !..>.....7B
+
+; ======================================================================
+; CODIGO 0x7c5e..0x7ed0  (626 bytes)
+; ======================================================================
+
+
 L_7C5E:
 	ld a,(0cb37h)		;7c5e
 	or a			;7c61

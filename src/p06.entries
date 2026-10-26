@@ -40,22 +40,16 @@
 0xA942   # p04:9AD7 call
 0xA95A   # p04:9AEF call
 0xA979   # p04:9AE3 call
-0xA97D   # p02:8009 entrada 0 de la tabla de 0x800C (call 0x424D en 0x8009)
-0xA9C2   # p02:8009 entrada 1 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xAA18   # p04:9CB1 call
 0xAA49   # p02:8757 call
-0xAA80   # p02:8009 entrada 5 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xAAC8   # p01:7E1C call
-0xAADA   # p02:8009 entrada 10 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xAB21   # p01:7E1F jp
 0xAB91   # p02:8288 call
 0xABBB   # p02:8297 call
 0xAC26   # p00:53AB call
-0xAC58   # p02:8009 entrada 2 de la tabla de 0x800C (call 0x424D en 0x8009)
-0xAC8B   # p02:8009 entrada 9 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xACE2   # p01:78E2 call
+0xAD5C   # el gancho de errores del disco: DISKVE (0xF323) = 0xAD5A (p01:602D, p12:65B5), que guarda 0xAD5C; los errores llegan desde las llamadas al disco de p12
 0xAD94   # p12:64FB jp cc
-0xADC0   # p02:8009 entrada 8 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xAE62   # p01:76A8 call
 0xAE89   # p01:770E call
 0xAEBB   # p02:8897 call
@@ -80,7 +74,6 @@
 0xAFEC   # p06:AEFF entrada 15 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0xAFFC   # p06:AEFF entrada 16 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0xB002   # p06:AEFF entrada 17 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
-0xB004   # p02:8009 entrada 4 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB008   # p06:AEFF entrada 18 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0xB00E   # p06:AEFF entrada 19 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
 0xB014   # p06:AEFF entrada 20 de la tabla de 0xAF02 (call 0x424D en 0xAEFF)
@@ -111,16 +104,13 @@
 0xB1CA   # p06:B152 entrada 10 de la tabla de 0xB155 (call 0x424D en 0xB152)
 0xB1DA   # p04:8C7E call
 0xB1FD   # p04:89BB call
-0xB211   # p02:8009 entrada 11 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB239   # p04:89AF call
 0xB256   # p04:9A78 call
 0xB2D6   # p04:8D65 call
 0xB31D   # p04:8D71 call
-0xB380   # p02:8009 entrada 6 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB3C9   # p01:75C7 call
 0xB532   # p04:9273 call
 0xB55A   # p04:92A1 call
-0xB574   # p02:8009 entrada 7 de la tabla de 0x800C (call 0x424D en 0x8009)
 0xB592   # p04:8E3A call
 0xB5E2   # p04:8F10 call
 0xB5FB   # p04:8EC5 call

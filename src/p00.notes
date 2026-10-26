@@ -2008,7 +2008,7 @@ C 0x539F cuenta_caa0: con 0xCAA0 = 3 pasa a 2; con cualquiera, empiezan los que 
 C 0x53A2 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53A5 p10:A82F
 C 0x53A8 bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x53AB p06:AC26
+C 0x53AB fichas_e000: 0xE000-0xE03F a cero; en la zona 7, salas 2, 3, 4 y 8, las 8 fichas de 0xE000 desde p06:AC82, p06:AC9A, p06:ACB2 o p06:ACCA (3 bytes cada una)
 C 0x53AE bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53B1 p11:A601
 C 0x53B4 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2077,7 +2077,7 @@ C 0x5515 imagen_de_alerta: la imagen de la alerta (p56:A242 con la 1, p56:A2A6 c
 C 0x5518 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x554E guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x5553 guarda la espera hasta poner la musica pendiente
-C 0x5556 p12:6BE4
+C 0x5556 orden_sonido_f4: la orden 0xF4 al sonido
 C 0x556D musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x5571 guarda las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0x557E borra_bloque: pone a cero BC + 1 bytes desde HL

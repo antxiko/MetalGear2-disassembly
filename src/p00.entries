@@ -115,7 +115,7 @@
 0x47ED   # p15:B97C jp
 0x4840   # p12:6EC5 jp
 0x489C   # p01:7240 jp
-0x4918   # p01:7705 call
+0x4918   # p06:ADA0 call
 0x4934   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4934
 0x4938   # codigo huerfano: 24 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4938
 0x4950   # p01:64CF call
@@ -176,7 +176,7 @@
 0x5106   # p01:7124 call
 0x51E0   # p04:8893 call
 0x51FD   # p09:BDE2 jp cc
-0x52CF   # p02:817E jp
+0x52CF   # p02:8D37 call
 0x52D2   # p02:8D32 call
 0x5470   # p07:A4B5 call
 0x5476   # p04:8D29 call

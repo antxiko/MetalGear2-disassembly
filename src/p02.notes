@@ -1160,7 +1160,7 @@ C 0x8001 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8
 C 0x8009 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x8029 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x803D bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8040 p06:B066
+C 0x8040 pantalla_5_limpia: 0xC000, el sonido 1, SCREEN 5, las 4 paginas a 0, los 8 registros del VDP de p06:B09D y los sprites apagados
 C 0x8045 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8048 lee_mando_y_teclas: el mando a 0xCA08/0xCA07 y las teclas de funcion a 0xCA0A/0xCA09
 C 0x804B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1174,7 +1174,7 @@ C 0x808E suma_a_hl: HL = HL + A
 C 0x8096 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0x80B1 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x80D0 lee la fila de la sala en la zona (uno mas al salir por arriba)
-C 0x8113 p12:7C77
+C 0x8113 musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x8122 lee la zona
 C 0x8131 lee la fase de la partida (indice de las listas de p06:B40C)
 C 0x8147 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
@@ -1203,10 +1203,10 @@ C 0x8257 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 
 C 0x8263 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x8281 lee la copia del banco de 0xA000
 C 0x8285 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8288 p06:AB91
+C 0x8288 franjas_de_la_otra: 0x58 x 0x10 de (0x80, 0xC0) de la otra pagina a esta y dos copias en Y (YMMM): (0xC0, 0x60) a (0x74, 0x60) y (0, 0xC0) a (0x10, 0xC0)
 C 0x8290 lee la copia del banco de 0xA000
 C 0x8294 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8297 p06:ABBB
+C 0x8297 piezas_zona_10: en la zona 0x10 desde la sala 2: 0xCA4C = 0x0100 y 2 x 2 caracteres de p06:ABFE (segun 0xCA43; 4 mas en la sala 2) de la pagina 2 a la otra, en (0x48, 0x40) en la sala 2 o en (0x68, 0x40)
 C 0x829C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x829F borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0x82A2 dibujos_b58b: los dibujos de p58:B58B en la VRAM de 0xA000
@@ -1365,7 +1365,7 @@ C 0x872B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x8738 palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 C 0x8748 palabra_de_tabla_de: DE = la palabra A de la tabla de DE
 C 0x8754 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8757 p06:AA49
+C 0x8757 teclas_f_permitidas: acarreo si se pueden las teclas F2-F5: no con ciertas cosas de 0xD881-0xD883 sin lo de 0xD678-0xD69C, 0xD8C1 = 0x13, 0xD8C2 = 5 con 0xCB5F, ni en los estados 0x10, 0x11 o 0x13 en adelante salvo 0x18-0x19; nada (NC sin tocar) con el rotulo, 0xE1D0, 0xE1F0, mirando la sala de al lado o en pausa; con 0xCB37, solo con 0xCB28 < 2
 C 0x875A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8762 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0x8768 borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -1400,7 +1400,7 @@ C 0x887E lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 iz
 C 0x8881 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8887 suma_a_hl: HL = HL + A
 C 0x8894 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8897 p06:AEBB
+C 0x8897 sitios_de_la_sala: 0xCBE0 a cero y los sitios de esta sala de la lista de la zona (p06:BB13; fichas [sala][numero][Y][X], 0xFF acaba) en los huecos de 0xCBE0
 C 0x889A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x889D lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0x88A1 sale_del_sitio: si ha chocado, nada
@@ -1518,13 +1518,13 @@ C 0x8BEB p11:BDBD
 C 0x8BEE bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BF1 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BFC bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BFF p06:A6F9
+C 0x8BFF cuentas_de_snake: el suelo de la zona 7 (p06:A710), la cuenta de 0xCB54 y, con 0xCB4B, cada 4 cuadros el bit 0 de 0xCB4D
 C 0x8C04 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8C07 p09:B62F
 C 0x8C0C bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8C0F p06:A0AB
+C 0x8C0F snake_de_nuevo: 0xCB00-0xCB3F y 0xCB40-0xCB4F a cero; el primero de 0xD638 a 1, Snake en el estado 0x19 con el dibujo 0x0D, la direccion 3, en (0x6E, 0xA5), 0xCA97 = 1 y 0xCADF = 1
 C 0x8C14 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8C17 p06:A598
+C 0x8C17 siguen_a_snake_aqui: los 1-4 que siguen a Snake (0xCAA0) puestos donde esta Snake (p06:A5A1)
 C 0x8C1C bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8C1F p10:BA03
 C 0x8C29 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1636,7 +1636,7 @@ C 0x8E36 p15:A316
 C 0x8E3B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E3E rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 C 0x8E43 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8E46 p06:AEFF
+C 0x8E46 tras_la_conversacion: lo que deja hecho la conversacion A (p06:AF02; desde p09:BE53): banderas de 0xD7D0-0xD7E3, sonidos...
 C 0x8E63 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E66 a_p12_6d78: p12:6D78 con el banco 12 en 0x6000
 C 0x8E69 a_p12_6ce0: p12:6CE0 con el banco 12 en 0x6000
@@ -1826,7 +1826,7 @@ C 0x93C5 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus ch
 C 0x93D8 guarda la espera de la vuelta
 C 0x93F5 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0x93F9 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x93FC p06:A634
+C 0x93FC direccion_del_mando: la direccion pedida con el mando (p06:A639) y la de marcha (p06:A6B8)
 C 0x93FF bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9402 lee 1 mientras Snake se da la vuelta
 C 0x9410 lee 1 si Snake ha chocado en este cuadro
@@ -1971,9 +1971,9 @@ C 0x9A4A guarda 1 mientras Snake se da la vuelta
 C 0x9A52 guarda la X de Snake: la parte fraccionaria (0xCB04-0xCB05 en 8.8)
 C 0x9A57 guarda la X de Snake
 C 0x9A96 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x9A99 p06:A14D
-C 0x9A9C p06:A2AA
-C 0x9A9F p06:A139
+C 0x9A99 suelo_bajo_snake: el bit 2 de 0xD7E1 si Snake pisa un caracter de los de la zona (p06:A1AC; sin 0xD8C0 ni 0xCA65), con 0xCB33 = su numero; y el sonido del paso
+C 0x9A9C tope_dfea: con 0xDFE8 (zona 6 sala 0x10, p11:A389) y Snake fuera del estado 0x10: no pasa de la X de 0xDFEA; con la X en 0x20-0x3F, el estado 0x10
+C 0x9A9F suelo_5_o_6: con 0xCA9B, 0xCB33 = 6; si no, con 0xCB37, 5; y el sonido del paso (p06:A16B)
 C 0x9AA2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9AA5 lee la zona
 C 0x9AAB cambia_caaa: con 0xCAAA puesto, cualquier disparo recien pulsado lo quita
@@ -2003,7 +2003,7 @@ C 0x9BA7 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3
 C 0x9BAF lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x9BC4 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x9BDB bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x9BDE p06:A387
+C 0x9BDE empuje_de_la_sala: con Snake dentro (Y y X por debajo de 0xC0): 0xCA8F = 0 y, en p06:BB76 (fichas de 6 bytes ordenadas por sala), las de esta sala (p06:A3B2) hasta que una empuja
 C 0x9BE1 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9BE4 lee cuantos siguen a Snake por su rastro (1-4)
 C 0x9BFD lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -2036,11 +2036,11 @@ C 0x9D1A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x9D20 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9D47 suma_a_hl: HL = HL + A
 C 0x9DA8 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x9DAB p06:A330
+C 0x9DAB caja_de_bda4: busca en p06:BDA4 (fichas de 9 bytes: zona, sala, Y de-hasta, X de-hasta y 3 bytes; zona 0x32 = la sala especial 0x32) la caja en la que esta Snake: copia sus 3 bytes a 0xCAA5, A = la X final - 0x10 (en multiplos de 8) y acarreo
 C 0x9DAE bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9DB1 rachas_bba0: las rachas de p41:BBA0 con su destino
 C 0x9DB4 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x9DB7 p06:A3C8
+C 0x9DB7 sin_equipo: 0xCB4B-0xCB4E = 1, 4, 0, 0x10; 0xCAB6 = 0, 0xCB3C = 1, el bit 7 de 0xD8D9 y los bits 2-7 de 0xD8D8; a cero partes de lo que lleva (0xD600-0xD61F, 0xD624-0xD627, 0xD62C-0xD637, 0xD650-0xD653, 0xD66C-0xD673, 0xD6A8-0xD6AF y 0xD6C0-0xD6C3)
 C 0x9DBA bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9DD0 guarda bit 0: hay disquetera; bit 1: hay Game Master 2
 C 0x9DE2 es_gm2: el slot que se mira

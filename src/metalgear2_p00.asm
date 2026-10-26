@@ -3302,7 +3302,7 @@ L_5310:
 	call bancos_10		;53a2   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a82fh		;53a5   ; p10:A82F
 	call bancos_1_2_6		;53a8   ; bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ac26h		;53ab   ; p06:AC26
+	call 0ac26h		;53ab   ; fichas_e000: 0xE000-0xE03F a cero; en la zona 7, salas 2, 3, 4 y 8, las 8 fichas de 0xE000 desde p06:AC82, p06:AC9A, p06:ACB2 o p06:ACCA (3 bytes cada una)
 	call bancos_11		;53ae   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a601h		;53b1   ; p11:A601
 	call bancos_1_2_3		;53b4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3513,7 +3513,7 @@ sala_de_la_zona_7:		; con 0xD433 puesto, p00:55B6
 	ld (0ca19h),hl		;554e   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	ld a,0b4h		;5551   ; ...dentro de 0xB4 cuadros (0xCA18)
 	ld (0ca18h),a		;5553   ; guarda la espera hasta poner la musica pendiente
-	call 06be4h		;5556   ; p12:6BE4
+	call 06be4h		;5556   ; orden_sonido_f4: la orden 0xF4 al sonido
 	pop hl			;5559
 L_555A:
 	dec hl			;555a   ; 0xD431 = 0

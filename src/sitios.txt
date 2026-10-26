@@ -1,0 +1,10 @@
+# Repartos forzados y llamadas que salen del cartucho (tools/bancos.py, carga_sitios).
+#
+# 'pNN 0xPC b6000 b8000 bA000  # por que'   el reparto de verdad en esa instruccion
+# 'entrada pNN 0xCALL k b6000 b8000 bA000'  la entrada k de esa tabla del despachador
+# 'otro_slot pNN 0xPC  # por que'           esa llamada va a otro slot: no se sigue
+
+# p12:66D4 pone en 0x8000 el slot del Game Master 2 (0xC38A, ENASLT en p12:66DA) y
+# llama a su 0x8000; sin esto el trazador entraba en p02:8000 con el banco 6 en
+# 0xA000 y repartia la tabla de p02:800C (que es del banco 11) en el banco 6.
+otro_slot p12 0x66E7  # call 0x8000 del Game Master 2

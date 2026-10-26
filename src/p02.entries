@@ -11,17 +11,14 @@
 # encuentra tools/z80trace.py solo, siguiendo el flujo.
 #
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
-0x8000   # p12:66E7 call
 0x8001   # p01:7FF3 call
 0x8028   # p01:7FFC call
 0x803C   # p02:8009 entrada 3 de la tabla de 0x800C (call 0x424D en 0x8009)
 0x803D   # p00:40CB call
 0x8045   # p64:C286 call
 0x804E   # p00:5A7B call
-0x806F   # p06:B56F call
 0x8096   # p01:74ED call
 0x80BC   # p02:80B1 entrada 0 de la tabla de 0x80B4 (call 0x424D en 0x80B1)
-0x8100   # p06:B581 call
 0x811E   # p02:80B1 entrada 1 de la tabla de 0x80B4 (call 0x424D en 0x80B1)
 0x8169   # p02:80B1 entrada 2 de la tabla de 0x80B4 (call 0x424D en 0x80B1)
 0x8171   # p02:80B1 entrada 3 de la tabla de 0x80B4 (call 0x424D en 0x80B1)
@@ -271,7 +268,6 @@
 0x9BD5   # p02:9BC4 entrada 2 de la tabla de 0x9BC7 (call 0x424D en 0x9BC4)
 0x9BD8   # p02:9BC4 entrada 3 de la tabla de 0x9BC7 (call 0x424D en 0x9BC4)
 0x9C02   # p03:A202 call
-0x9CB7   # p06:A984 call
 0x9DA8   # p03:A65B call
 0x9DB1   # p01:7A83 call
 0x9DBD   # p12:6003 call

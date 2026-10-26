@@ -2174,11 +2174,291 @@ p05 0xBFB8 sala_5_snake_llega  con Snake desde Y = 0x80: 0xCB3C = 0xCB42 = 1, Sn
 p05 0xBFD4 mensaje_1718  
 p05 0xBFDA sala_5_tras_mensaje  al acabar el mensaje, la orden 0xF6 y 0x20 cuadros
 p05 0xBFEB sala_5_espera_y_sonido  tras la espera, el sonido 5; despues 0xE070 = 1 y su bandera de 0xD87F con p06:B14E
+p06 0xA000 golpe_a_d800  con la ficha 0xD800 de tipo 1 (filas 7-8 de la zona, paso 3 o mas, 0xD816) y lo lanzado por Snake de tipo 5 en el paso 3: si su casilla 0xCAEB cae en la sala de la ficha a menos de 0x40, lo quita, 0xCAEA = 1 y 8 menos a 0xD810 (a 0, el paso 0x20; si no, 0xD8B7 = 8 y el sonido 0x48)
+p06 0xA07E columna_de_casilla  A (0-15) en columnas de 5, 6 y 5: B = -1, 0 o +1 y A = la X (A * 32 - 16)
+p06 0xA090 primera_columna  
+p06 0xA093 fila_de_casilla  A (0-15) en filas de 5, 6 y 5: B = +1, 0 o -1 y A = la Y (A * 32 - 16)
+p06 0xA0A3 por_32_menos_16  A = A * 32 - 16
+p06 0xA0AB snake_de_nuevo  0xCB00-0xCB3F y 0xCB40-0xCB4F a cero; el primero de 0xD638 a 1, Snake en el estado 0x19 con el dibujo 0x0D, la direccion 3, en (0x6E, 0xA5), 0xCA97 = 1 y 0xCADF = 1
+p06 0xA0F9 mosaico_a_dd4d  el mosaico de 0xE2C0 (0x14 filas de 0x0E) a 0xDD4D en filas de 0x18; 0xDEF8-0xDF3F al 0x45 y dos 0x45 en 0xDEAB, 0xDEC3, 0xDEDB y 0xDEF3
+p06 0xA102 fila_a_dd4d  
+p06 0xA104 copia_fila  
+p06 0xA133 dos_45  dos 0x45 en HL
+p06 0xA139 suelo_5_o_6  con 0xCA9B, 0xCB33 = 6; si no, con 0xCB37, 5; y el sonido del paso (p06:A16B)
+p06 0xA147 pon_cb33  
+p06 0xA14D suelo_bajo_snake  el bit 2 de 0xD7E1 si Snake pisa un caracter de los de la zona (p06:A1AC; sin 0xD8C0 ni 0xCA65), con 0xCB33 = su numero; y el sonido del paso
+p06 0xA16B sonido_del_paso  sin choque ni el estado 2: en los dibujos 0 y 2 de andar, una vez (0xCB34), el sonido de 0xCB33 (p06:A19C) y, salvo con el 6, p03:AF05
+p06 0xA196 sonido_de_cb33  el sonido de 0xCB33 en p06:A19C: 0x0C, 0x3C, 0x3D, 0x3E, 0x20, 0x1F, 0x1E o 0x63
+p06 0xA1AC caracter_especial  B = el caracter bajo Snake; acarreo si en esta zona y sala es de los de C (con D <= B < E, o fijo)
+p06 0xA1F8 no_especial  
+p06 0xA1FA zona_1  zona 1: C = 0, los caracteres 0x89-0x80 (0x0D-0x01 en la sala 0x0B)
+p06 0xA20B zona_3  zona 3: C = 1, en la sala 0x17 los 0x10-0x07; en las 0x0D y 0x12, todos
+p06 0xA223 zona_6  zona 6: C = 4 en las salas 0x0E y 0x0F
+p06 0xA22F rango_89_81  C = 0 con los caracteres 0x81-0x88
+p06 0xA234 entre_d_y_e  acarreo con D <= B < E
+p06 0xA23A zona_0b  zona 0x0B: en las salas 0-3, C = 0 (con el acarreo de la comparacion)
+p06 0xA243 zona_9  zona 9: en las filas 4 o mas y columnas 8 o mas, C = 4 con los caracteres 0x19-0x10 o 0x03-0x00
+p06 0xA261 zona_2  zona 2: C = 0 con los caracteres 0x50-0x00
+p06 0xA268 zona_11  zona 0x11: C = 0 con los caracteres 0x8D-0x80
+p06 0xA26F zona_12  zona 0x12: en las salas 0-3, C = 1, 3, 7 o 2 segun la sala
+p06 0xA286 si_especial  
+p06 0xA288 zona_0c  zona 0x0C: en las salas 0 y 5 o mas, C = 0
+p06 0xA292 c_0_si  
+p06 0xA296 zona_0d  zona 0x0D: en las salas 0-3, C = 0
+p06 0xA29F zona_0e  zona 0x0E: en la sala 0, C = 0
+p06 0xA2A8 todos  
+p06 0xA2AA tope_dfea  con 0xDFE8 (zona 6 sala 0x10, p11:A389) y Snake fuera del estado 0x10: no pasa de la X de 0xDFEA; con la X en 0x20-0x3F, el estado 0x10
+p06 0xA2CC no_cruza_dfea  Snake no se acerca a la X de 0xDFEA: por la izquierda (salvo 0xDFE9 = 1) a 0x18 (0x20 parado de lado) y por la derecha (salvo 0xDFE9 = 2) a 6 (0x0E)
+p06 0xA2F4 aparta_a_la_izquierda  
+p06 0xA304 por_la_derecha  
+p06 0xA322 aparta_a_la_derecha  
+p06 0xA330 caja_de_bda4  busca en p06:BDA4 (fichas de 9 bytes: zona, sala, Y de-hasta, X de-hasta y 3 bytes; zona 0x32 = la sala especial 0x32) la caja en la que esta Snake: copia sus 3 bytes a 0xCAA5, A = la X final - 0x10 (en multiplos de 8) y acarreo
+p06 0xA333 caja_siguiente_bda4  
+p06 0xA347 caja_de_la_zona  
+p06 0xA354 snake_en_la_caja  
+p06 0xA37E otra_caja  
+p06 0xA385 en_ninguna  
+p06 0xA387 empuje_de_la_sala  con Snake dentro (Y y X por debajo de 0xC0): 0xCA8F = 0 y, en p06:BB76 (fichas de 6 bytes ordenadas por sala), las de esta sala (p06:A3B2) hasta que una empuja
+p06 0xA39B ficha_bb76  
+p06 0xA3B2 empuje_si_dentro  con Snake entre la Y de-hasta y la X de-hasta de la ficha de HL, su sexto byte a (DE)
+p06 0xA3C8 sin_equipo  0xCB4B-0xCB4E = 1, 4, 0, 0x10; 0xCAB6 = 0, 0xCB3C = 1, el bit 7 de 0xD8D9 y los bits 2-7 de 0xD8D8; a cero partes de lo que lleva (0xD600-0xD61F, 0xD624-0xD627, 0xD62C-0xD637, 0xD650-0xD653, 0xD66C-0xD673, 0xD6A8-0xD6AF y 0xD6C0-0xD6C3)
+p06 0xA428 mosaicos_que_cambian  sin 0xCA65 ni alerta (en la zona 9 sin el bit 1 de 0xD7DC; en la 0x0B con el bit 2 de 0xD7D6): las fichas de p06:A4BA de esta sala (9 bytes: zona, sala, D, E, B y C en nibbles, dos mosaicos) con el sonido 0x27; cada 8 cuadros, uno u otro mosaico
+p06 0xA445 zona_9_d7dc  
+p06 0xA44B fichas_a4ba  
+p06 0xA44E ficha_a4ba  
+p06 0xA461 ficha_de_la_zona  
+p06 0xA46E pinta_la_ficha  
+p06 0xA497 ficha_siguiente_a4ba  
+p06 0xA49E pinta_b_veces  
+p06 0xA4AB fin_de_ficha  
+p06 0xA4AD mosaico_forma_a  el mosaico de HL en (D, E) con la forma A (0, 1 o 2) de la franja 2
+p06 0xA4E8 sonido_5e_de_fondo  sin 0xD8C0 ni sala especial, en la zona 6 (salvo las salas 7 y 0x10) y en la 8 (salas 0x0A-0x0F): cada 16 cuadros, en los tiempos 0, 1, 4, 9, 0x0A y 0x0B de 16, el sonido 0x5E
+p06 0xA51C suena_5e  
+p06 0xA51F sin_sonido_5e  acarreo (sin el sonido) salvo en la zona 6 (no en las salas 7 y 0x10) y en la 8 salas 0x0A-0x0F
+p06 0xA52A acarreo_a51f  
+p06 0xA52C zona_8_a51f  
+p06 0xA536 zona_6_a51f  
+p06 0xA543 dos_bits_de_beec  A = el valor de 2 bits del elemento 0xCAB9 de la fila A de p06:BEEC (fila 0 en 0, fila A en (A + 2) * 16); para el 9 con 0xE040 = 5, el elemento 0xCB5B de p06:BF30, y con 0xD4EC, 0xD4EC - 1
+p06 0xA565 fila_de_beec  
+p06 0xA56B elemento_2_bits  
+p06 0xA57A gira_2_bits  
+p06 0xA598 siguen_a_snake_aqui  los 1-4 que siguen a Snake (0xCAA0) puestos donde esta Snake (p06:A5A1)
+p06 0xA5A9 sigue_e240  la ficha 0xE240 donde Snake
+p06 0xA5AE sigue_e240_e248  las fichas 0xE240 y 0xE248 donde Snake
+p06 0xA5B6 sigue_dfd8  la ficha 0xDFD8 donde Snake
+p06 0xA5B9 ficha_donde_snake  la ficha de HL: 3, 1, la Y y la X de Snake (8.8) y su direccion
+p06 0xA5D6 letras_de_a61c  los caracteres de p06:A61C: tras cada sitio (D, E), los numeros de caracter (0xFE otro sitio, 0xFF acaba), cada uno de 8 x 8 copiado dos veces (A = 0xC0 y 0xD0) desde (X = (n & 0x1F) * 8, Y = 0x40 + (n & 0xE0) / 4), 9 a la derecha cada vez
+p06 0xA5D9 sitio_a61c  
+p06 0xA5DD caracter_a61c  
+p06 0xA60C otro_sitio_a61c  
+p06 0xA60F copia_8x8  el rectangulo de 8 x 8 de (H, L) a (D, E) con la operacion A
+p06 0xA634 direccion_del_mando  la direccion pedida con el mando (p06:A639) y la de marcha (p06:A6B8)
+p06 0xA639 direccion_pedida  0xCB0C = la direccion del mando (p06:A6A8: 1 arriba, 2 abajo, 3 izquierda, 4 derecha); manda la recien pulsada y, al soltarla, la de antes (0xCB11); con 0xCB28 o el estado 0x0B, solo arriba y abajo (salvo con 0xCA9B, 0xCB37 o 0xCB3F)
+p06 0xA65A solo_arriba_abajo  
+p06 0xA65C mira_el_mando  recien pulsada: manda esa
+p06 0xA67E manda_la_nueva  la que mandaba pasa a ser la de antes
+p06 0xA69A pon_cb10  
+p06 0xA69D numero_de_direccion  el bit a numero (p06:A6A8)
+p06 0xA6B8 direccion_de_marcha  0xCB0D = la direccion de antes; sin direccion pulsada (las mismas de p06:A639), 0xCB0F = 1; con ella, 0xCB0F = 0 y la de marcha = 0xCB0C
+p06 0xA6DF solo_arriba_abajo_b  
+p06 0xA6E1 hay_direccion  
+p06 0xA6EC con_direccion  
+p06 0xA6F9 cuentas_de_snake  el suelo de la zona 7 (p06:A710), la cuenta de 0xCB54 y, con 0xCB4B, cada 4 cuadros el bit 0 de 0xCB4D
+p06 0xA710 suelo_zona_7  con 0xD8E2 a 0 (zona 7, p06:A798) y sin salir: 0xCB37 = 1 y la cuenta de 0xCB29 segun el caracter bajo Snake; con los caracteres 4-5, 0x10-0x16 o 0x2B en adelante, 0xCB28 = 0 y 0xCB29 = 0x20
+p06 0xA748 cuenta_cb29  0xCB37 = 1, 0xCB28 = 2 y, cada 8 cuadros (0xCB38), uno menos a 0xCB29 con el sonido 0x53; a 0, Snake en el estado 0x1B y el sonido 0x8D; por encima de 0x10, a 0x10
+p06 0xA773 cb29_a_10  
+p06 0xA780 caracter_0_zona_7  el caracter 0: 0xCB37 = 1, 0xCB28 = 2, 0xCB29 = 0x1A y 0xCB38 = 1
+p06 0xA792 cb28_a_cero  
+p06 0xA798 d8e2_zona_7  0xD8E2 = 1 salvo en la zona 7 (sin sala especial): salas 2, 3 y 8 enteras, la 4 con Y >= 0x8F y X >= 0x4E y la 9 con Y < 0xA0 y X >= 0x20
+p06 0xA7C7 d8e2_a_1  
+p06 0xA7CA sala_4_zona_7  
+p06 0xA7D9 cuenta_cb54  con 0xCB54, la cuenta de 0xCB56; a 0, 0xCB54 = 0
+p06 0xA7E9 lanzado_por_tipo  lo lanzado de IX segun su tipo (p06:A7F0): el 1 p06:A800, el 3 p06:A885, el 7 p06:A8E1; los demas, nada
+p06 0xA800 lanzado_1  el tipo 1 va con su actor (bytes 0x0A-0x0B): se acaba si el actor se va o deja ciertos pasos (segun su tipo y la alerta); si no, cada 2 cuadros el dibujo siguiente y, al 4, el sonido 0x0B y, sin alerta, el aviso 0x84 del actor
+p06 0xA82A lanzado_1_pasos  en los pasos 8-9, sin sprite
+p06 0xA840 actor_tipo_3  el tipo 3 en los pasos 4-5 sigue
+p06 0xA847 lanzado_1_dibujo  cada 2 cuadros el dibujo siguiente...
+p06 0xA86F nada_lanzado  
+p06 0xA870 actor_tipo_0a  el tipo 0x0A, en el paso 0 se acaba
+p06 0xA877 actor_del_lanzado  DE = su actor (bytes 0x0A-0x0B); con el actor libre, se acaba (Z)
+p06 0xA885 lanzado_3  el tipo 3: en el paso 0 sube y cae (0xC0 mas a la velocidad en Y) hasta 0x10 de la Y del byte 0x0D; despues, el paso 1 parado con el sonido 0x14 y 0x10 cuadros parpadeando; al acabar, fuera
+p06 0xA8A9 lanzado_3_llega  el paso 1, 0x10 cuadros, el byte 0x0F = 2, parado y el sonido 0x14
+p06 0xA8C4 lanzado_3_paso_1  al acabar la cuenta, fuera
+p06 0xA8CB cuenta_y_parpadeo  un cuadro menos al byte 0x0C (Z al acabar); cada 2, el bit 0 del byte 0x0F cambia (NZ)
+p06 0xA8E1 lanzado_7  el tipo 7: al acabar la cuenta, fuera
+p06 0xA8E8 lanza_el_3  lo lanzado de tipo 3 (IY) desde el actor IX: el sonido 0x0E, dos sprites (C y C + 1, colores 7 y 0x48), la Y final la de Snake - 0x10, velocidades 0xFE00 en Y y 0x30 en X, en la Y y la X del actor - 0x10
+p06 0xA924 lanza_el_7  lo lanzado de tipo 7 (IY): el sonido 0x43, el sprite C (color 7), 6 cuadros, en (H, L) de 0xD8E6
+p06 0xA942 desplazamiento_de_4  0xD43C = el desplazamiento de p06:A952 segun el dibujo del actor ((byte 0x0D / 2) & 3)
+p06 0xA95A desplazamiento_de_8  0xD43C = el desplazamiento de p06:A969 segun el dibujo del actor (byte 0x0D & 7)
+p06 0xA979 sprite_del_lanzado  el sprite de lo lanzado en su sitio: el 1 por p06:A9DA, el 3 dos (p06:A9C3 por el byte 0x0F), el 5 con el patron 0xB8, el 7 con 0xF0/0xF4 (segun la cuenta) 2 arriba y 8 a la izquierda; los demas, 0x18
+p06 0xA9AA sprite_de_3  el patron de p06:A9C3; dos sprites, patron y patron + 4
+p06 0xA9B9 dos_sprites  
+p06 0xA9C2 fin_sprite_lanzado  
+p06 0xA9C7 sprite_en_su_sitio  el sprite de HL: la Y + D, la X + E y el patron C
+p06 0xA9CA sprite_desplazado  
+p06 0xA9DA sprite_de_1  el tipo 1, patron 0xE0, sobre su actor: segun el dibujo (byte 0x0D & 3), Y - 0x20 y X - 0x10, Y - 0x20 y X + 8, o Y - 0x28 y X - 4; fuera de la pantalla, Y = 0xE0
+p06 0xA9EC sobre_el_actor  
+p06 0xAA06 pon_y_sprite  
+p06 0xAA12 pon_x_sprite  
+p06 0xAA18 fin_del_lanzado  lo lanzado se acaba: tipo 0, el sprite fuera y libre su sitio de 0xD400 (dos para el 3)
+p06 0xAA33 lanzado_sin_sprite  Y = 0xE0 en la ficha y el sprite (los dos para el 3); B = el sprite
+p06 0xAA49 teclas_f_permitidas  acarreo si se pueden las teclas F2-F5: no con ciertas cosas de 0xD881-0xD883 sin lo de 0xD678-0xD69C, 0xD8C1 = 0x13, 0xD8C2 = 5 con 0xCB5F, ni en los estados 0x10, 0x11 o 0x13 en adelante salvo 0x18-0x19; nada (NC sin tocar) con el rotulo, 0xE1D0, 0xE1F0, mirando la sala de al lado o en pausa; con 0xCB37, solo con 0xCB28 < 2
+p06 0xAA61 mira_d883  
+p06 0xAA73 mira_d8c1  
+p06 0xAA87 mira_rotulos  
+p06 0xAAC4 si_se_puede  
+p06 0xAAC6 no_se_puede  
+p06 0xAAC8 mosaico_de_d7e2  sin 0xD8C0, con el bit 5 de 0xD7E2 y 0xD8C2 distinto de 5: en la zona 6 sala 0x23 el mosaico de p06:AB1D (forma 3); en la 0x0B sala 7 y la 0x0D sala 3, el de p06:AB19 (forma 1); los dos de 2 x 2 en (0x28, 0x88)
+p06 0xAAE9 sala_del_mosaico  Z en la zona 0x0B sala 7 y en la 0x0D sala 3; en la 6 sala 0x23 pinta p06:AB1D y NZ
+p06 0xAB0D zona_0d_sala_3  
+p06 0xAB13 zona_0b_sala_7  
+p06 0xAB21 sala_1_zona_0a  con el bit 0 de 0xD7DA, fuera de sitios y salas especiales, en la zona 0x0A sala 1: el mosaico de p06:AB53 y 4 x 4 bytes a 1 desde 0xDE88 en el mapa de la sala (filas de 0x18)
+p06 0xAB48 fila_a_1  
+p06 0xAB53 mosaico_ab7d  el mosaico de p06:AB7D (5 x 4) en (0x40, 0x80) y dos trozos de 8 x 8 en la pagina: (0x40, 0xA0) a (0x60, 0xA0) y (0x50, 0xA0) a (0x40, 0xA0)
+p06 0xAB6E copia_8x8_pagina  el rectangulo de 8 x 8 de (H, L) a (D, E) de la pagina 2 a la de dibujo
+p06 0xAB91 franjas_de_la_otra  0x58 x 0x10 de (0x80, 0xC0) de la otra pagina a esta y dos copias en Y (YMMM): (0xC0, 0x60) a (0x74, 0x60) y (0, 0xC0) a (0x10, 0xC0)
+p06 0xABA3 copia_y_pagina  la copia en Y con A = 1 en la pagina 1 o 4 en la 0
+p06 0xABB0 franja_de_la_otra  
+p06 0xABBB piezas_zona_10  en la zona 0x10 desde la sala 2: 0xCA4C = 0x0100 y 2 x 2 caracteres de p06:ABFE (segun 0xCA43; 4 mas en la sala 2) de la pagina 2 a la otra, en (0x48, 0x40) en la sala 2 o en (0x68, 0x40)
+p06 0xABD2 piezas_abfe  
+p06 0xABE7 fila_de_piezas  
+p06 0xABE9 pieza_abfe  
+p06 0xAC26 fichas_e000  0xE000-0xE03F a cero; en la zona 7, salas 2, 3, 4 y 8, las 8 fichas de 0xE000 desde p06:AC82, p06:AC9A, p06:ACB2 o p06:ACCA (3 bytes cada una)
+p06 0xAC53 ocho_fichas_e000  
+p06 0xAC5C ficha_e000  
+p06 0xAC64 pon_ficha_e000  la ficha de IX: activa (1), paso 0, la cuenta y su valor inicial (bytes 2-3) y el sitio (bytes 5-6) de HL
+p06 0xACE2 fichas_e000_cada_cuadro  en la zona 7, las fichas activas de 0xE000 (p06:AD01)
+p06 0xACEE ficha_e000_activa  
+p06 0xACF9 siguiente_e000  
+p06 0xAD01 anima_ficha_e000  en el paso 0, cada 2 cuadros el dibujo siguiente (byte 4) hasta el 5; al llegar, el dibujo 0, el paso 1 y la cuenta inicial; en el paso 1, al acabar la cuenta, otra vez el 0; cada dibujo 8 x 8 en la pagina desde (8, 0) o (0xD0 + dibujo * 8, 0x18)
+p06 0xAD24 espera_2  
+p06 0xAD28 dibujo_e000  
+p06 0xAD34 x_del_dibujo  
+p06 0xAD3F copia_dibujo_e000  
+p06 0xAD4E ficha_e000_paso_1  al acabar la cuenta, cada 2 cuadros, el paso 0
+p06 0xAD5C error_del_disco  el gancho de DISKVE: el cartucho en 0x4000, p12:65C1, 0xC396 = 1 y, del codigo de error (C), el mensaje 0 (codigos 2-5 de C / 2), 3 o 4; y p06:AD99
+p06 0xAD84 error_0_1  
+p06 0xAD89 error_3  
+p06 0xAD8D error_0  
+p06 0xAD8F al_mensaje_de_error  
+p06 0xAD94 error_de_disco  p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
+p06 0xAD99 mensaje_de_error  el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
+p06 0xAE62 cursor_de_3  0xCA29 (0-2) con arriba y abajo (da la vuelta), el sonido 0x11 y el cursor; con un disparo, acarreo
+p06 0xAE7A pon_ca29  
+p06 0xAE7D uno_menos_ca29  arriba: uno menos
+p06 0xAE86 suena_y_cursor  
+p06 0xAE89 cursor_en_las_dos  el cursor en las dos paginas
+p06 0xAE8F cursor_en_pagina  en la pagina A: borra 8 x 0x28 en (0x38, 0x60) y copia el cursor (8 x 8 de (0x50, 0x38)) a (0x38, 0x60 + 0xCA29 * 16)
+p06 0xAEBB sitios_de_la_sala  0xCBE0 a cero y los sitios de esta sala de la lista de la zona (p06:BB13; fichas [sala][numero][Y][X], 0xFF acaba) en los huecos de 0xCBE0
+p06 0xAED1 sitio_de_bb13  
+p06 0xAEE3 pon_sitio  C, D y E en el primer hueco de 0xCBE0
+p06 0xAEED hueco_cbe0  
+p06 0xAEF9 en_el_hueco  
+p06 0xAEFF tras_la_conversacion  lo que deja hecho la conversacion A (p06:AF02; desde p09:BE53): banderas de 0xD7D0-0xD7E3, sonidos...
+p06 0xAF4A conversacion_0  el bit 6 de 0xD7D0 y fuera el 1 de 0xD7DD
+p06 0xAF54 nada_conversacion  
+p06 0xAF55 conversacion_1  el bit 1 de 0xD7D0 y fuera el 5 de 0xD7DD
+p06 0xAF60 conversacion_2  el bit 1 de 0xD7D1, 0xCADE = 0, 0xCB7D = 1 y los sonidos 5 y 0x9C
+p06 0xAF75 conversacion_3  fuera el bit 5 de 0xD7D2 y el 0 de 0xD7E3
+p06 0xAF80 conversacion_4  fuera el bit 6 de 0xD7D3, el 5 de 0xD7E3, 0xCB7D = 1 y el sonido 0x81
+p06 0xAF92 conversacion_5  el bit 5 de 0xD7D4 y fuera el 6 de 0xD7DE
+p06 0xAF9D conversacion_6  el bit 4 de 0xD7D4, la fase 4 y 0xD4E3 = 0
+p06 0xAFAC conversacion_7  el bit 0 de 0xD7D8 y fuera el 2 de 0xD7DE
+p06 0xAFB7 conversacion_8  el bit 7 de 0xD7D9
+p06 0xAFBD conversacion_9  fuera el bit 4 de 0xD7DB
+p06 0xAFC3 conversacion_10  fuera el bit 2 de 0xD7DB
+p06 0xAFC9 conversacion_11  fuera el bit 7 de 0xD7DC
+p06 0xAFCF conversacion_33  fuera el bit 6 de 0xD7DC
+p06 0xAFD5 conversacion_12  fuera el bit 4 de 0xD7DC y el 6 de 0xD7E2
+p06 0xAFE0 conversacion_13  fuera el bit 3 de 0xD7DC
+p06 0xAFE6 conversacion_14  fuera el bit 2 de 0xD7DC
+p06 0xAFEC conversacion_15  fuera el bit 1 de 0xD7DC, el bit 3 de 0xD7E4 y 0xD7A0 = 0x66
+p06 0xAFFC conversacion_16  fuera el bit 7 de 0xD7DD
+p06 0xB002 conversacion_17  fuera el bit 6 de 0xD7DD
+p06 0xB008 conversacion_18  fuera el bit 4 de 0xD7DD
+p06 0xB00E conversacion_19  fuera el bit 7 de 0xD7DE
+p06 0xB014 conversacion_20  fuera el bit 5 de 0xD7DE
+p06 0xB01A conversacion_21  fuera el bit 1 de 0xD7DE
+p06 0xB020 conversacion_22  el bit 2 de 0xD7DF y fuera el 1
+p06 0xB028 conversacion_23  fuera el bit 0 de 0xD7DF y el bit 7 de 0xD7E0
+p06 0xB031 conversacion_24  fuera el bit 0 de 0xD7E1
+p06 0xB037 conversacion_25  fuera el bit 7 de 0xD7E2
+p06 0xB03D conversacion_26  el bit 3 de 0xD7E3
+p06 0xB043 conversacion_27  0xCAAC = 1 y 0xCABA = 0
+p06 0xB04E conversacion_29  el bit 7 de 0xD7D4
+p06 0xB054 conversacion_30  el bit 5 de 0xD7E4 y 0xD7A1 = 0x99
+p06 0xB05F conversacion_31  
+p06 0xB060 conversacion_32  0xCAAC = 0
+p06 0xB066 pantalla_5_limpia  0xC000, el sonido 1, SCREEN 5, las 4 paginas a 0, los 8 registros del VDP de p06:B09D y los sprites apagados
+p06 0xB08D registro_b09d  
 p06 0xB0AD lee_mando_y_teclas  el mando a 0xCA08/0xCA07 y las teclas de funcion a 0xCA0A/0xCA09
 p06 0xB0BE guarda_mando  (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
 p06 0xB0C8 mando  A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
 p06 0xB109 teclas_de_funcion  A = las filas 6 y 7 de la matriz, en 6 bits
 p06 0xB129 matriz_del_teclado  en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
+p06 0xB14E fin_de_ficha_d800  lo que deja hecho la ficha de 0xD800 (IX) al acabar, segun su tipo (p06:B155; tras p04:8C59): banderas de la partida y la fase
+p06 0xB16B fin_d800_tipo_1  el bit 6 de 0xD7F1, fuera el 2 de 0xD7D2, el bit 7 de 0xD7E4 y la fase 3
+p06 0xB180 fin_d800_tipo_2  el bit 3 de 0xD7D9
+p06 0xB186 fin_d800_tipo_3  fuera el bit 6 de 0xD7D1 y la fase 1
+p06 0xB191 fin_d800_tipo_4  fuera el bit 7 de 0xD7D2 y la fase 2
+p06 0xB19C fin_d800_tipo_5  fuera el bit 0 de 0xD7D7
+p06 0xB1A2 fin_d800_tipo_6  fuera el bit 3 de 0xD7D3
+p06 0xB1A8 fin_d800_tipo_7  fuera el bit 0 de 0xD7D6
+p06 0xB1AE fin_d800_tipo_8  el bit 2 de 0xD7D8 y la fase 9
+p06 0xB1B9 fin_d800_tipo_9  fuera el bit 0 de 0xD7D9
+p06 0xB1BF fin_d800_tipo_0a  el bit 4 de 0xD7DA y fuera el 5 de 0xD7DF
+p06 0xB1CA fin_d800_tipo_0b  fuera el bit 4 de 0xD7D6, el bit 5 de 0xD7E2 y la fase 6
+p06 0xB1DA d860_tipo_4  en la zona 7, con 0xD883 distinto de 0xFF, fuera de la sala especial 0x29, la ficha 0xD860 libre y el bit 1 de 0xD7D1: la ficha 0xD860 de tipo 4
+p06 0xB1FD pagina_0_a_la_1  la pagina 0 entera (256 x 0xC0) a la 1, borra 0x40 x 0x14 en (0xC0, 0xC0) de la 1 y, con 0xD501 < 2, 6 caracteres de 8 x 8 de (0xE8, 0x38) de la pagina 2 a (0x48, 0xB8) de la 1
+p06 0xB224 caracter_de_e838  
+p06 0xB239 bordes_b3_c8  la pagina 0 a cero y dos columnas de 0x20 caracteres de la sala: el 0xB3 en X = 0 y el 0xC8 en X = 0xB8
+p06 0xB249 columna_de_caracteres  0x20 veces el caracter C, de 8 en 8 hacia abajo
+p06 0xB24B caracter_de_columna  
+p06 0xB256 avanza_hasta_choque_en  p06:B267 con la Y (L) entre 8 y 0xB7
+p06 0xB264 y_minima  
+p06 0xB267 avanza_hasta_choque  (H, L) avanza de 2 en 2 en la direccion A (p06:B2CE: X - 2, X + 2, Y - 2, Y + 2) mientras no choca (p04:90CE), no sale de X 0x20-0xB7 ni Y 8-0xB6 y no pasa del sitio de 0xD41C
+p06 0xB272 paso_de_2  en X...
+p06 0xB282 choque_en_x  
+p06 0xB294 hacia_la_izquierda  
+p06 0xB296 suma_x  
+p06 0xB29B paso_en_y  en Y, igual con los bits 8 y 4, Y 8-0xB6 y la Y de 0xD41C
+p06 0xB2A7 choque_en_y  
+p06 0xB2B9 hacia_arriba  
+p06 0xB2BB suma_y  
+p06 0xB2C0 choques_de_hl  A = los choques en (H, L) (p04:90CE con H y L cambiados), sin tocar los registros
+p06 0xB2D6 seis_lanzados_1  0xD460-0xD4BF a cero, 0xD445 = 1, las 6 fichas de tipo 1 con los bytes 2-4 de p06:B30B y los colores de 0xDAA0 de las rachas de p06:B3B0
+p06 0xB2EC ficha_lanzado_1  
+p06 0xB31D seis_lanzados_1_cada_cuadro  con alguna de las 6 fichas de 0xD460 activa, sus cuentas y sprites (p06:B33B) y acarreo; si no, 0xD445 = 0 y NC
+p06 0xB324 acarreo_b324  
+p06 0xB326 alguna_d460  acarreo si alguna ficha de 0xD460 esta activa; si no, 0xD445 = 0
+p06 0xB32B mira_ficha_d460  
+p06 0xB33B lanzados_1_activos  cada ficha activa de 0xD460 (C = su numero): su cuenta (p06:B357) y sus dos sprites (p06:B37E)
+p06 0xB342 ficha_d460  
+p06 0xB34E siguiente_d460  
+p06 0xB357 cuenta_de_lanzado_1  un cuadro menos al byte 4 (a 0, se acaba) y el byte 3 sumado al 1; la primera ficha, con la cuenta en 4, el sonido 0x54
+p06 0xB36A baja_la_cuenta  
+p06 0xB379 se_acaba_d460  
+p06 0xB37E sprites_de_lanzado_1  los sprites 2C y 2C + 1 desde el 10 (0xDC28 + C * 8): en (byte 1, byte 2) con el patron de p06:B3AA y ese + 4
+p06 0xB3C9 datos_sala_2a  en la sala especial 0x2A columna 8: 0x18 bytes de p06:B3EC a 0xD8C0 y 8 de p06:B404 a 0xDCB8
+p06 0xB532 alerta_en_b552  Z con alerta en las zonas y salas de p06:B552 (4 parejas); NZ en las demas o sin alerta
+p06 0xB53D pareja_b552  
+p06 0xB54B otra_pareja  
+p06 0xB54F nz_b532  
+p06 0xB55A alguien_ve_a_snake  acarreo si alguno de los 24 actores de tipo 1-0x0F se ve (p04:806F) y esta en esta sala (el 0x0A no en el paso 0)
+p06 0xB562 actor_b55a  
+p06 0xB587 siguiente_b55a  
+p06 0xB58F fin_b55a  
+p06 0xB592 velocidad_del_tramo  las velocidades del actor para la direccion A: con alerta 1 de p06:B68B, 2-3 de p06:B69B; sin ella, de p06:B65B segun el byte 0x19 (16 bytes cada uno); con el byte 0x19 >= 3 (salvo el tipo 3), parado y la direccion 1 (3 en la zona 0x0C); el dibujo, la direccion * 2
+p06 0xB5CE tipo_3_b592  
+p06 0xB5CF tabla_b65b  
+p06 0xB5D9 pon_velocidad  
+p06 0xB5DC dibujo_de_direccion  
+p06 0xB5E2 dibujo_siguiente_b6bb  el dibujo siguiente: su orden en p06:B6BB, uno mas (de 0 a 0x0B, en vuelta) y el dibujo de p06:B6CB
+p06 0xB5F1 dibujo_b6cb  
+p06 0xB5FB actor_al_paso_8  salvo en los pasos 8-9: el paso al byte 0x20 y el paso 8, 0x3C cuadros (byte 0x1C), el byte 0x0C al 0x22 y a 0, y el dibujo & 7 (tambien al byte 0x15)
+p06 0xB626 paso_8_cuenta  la cuenta del byte 0x1C: el dibujo segun la cuenta (+0, +1 u +8 sobre el byte 0x15 & 6; no en el tipo 0x0B) y NZ; al acabar, con alerta 2 o mas p04:8EF2, si no, 0x48 cuadros y el paso siguiente
+p06 0xB63F pon_dibujo_b626  
+p06 0xB64B fin_cuenta_b626  
 p09 0xA4F0 secuencia_de_mensajes  los mensajes de una secuencia del banco 50, uno tras otro con su espera
 p09 0xB4E6 a_p12_7fa0  p12:7FA0 con el banco 12 en 0x6000
 p16 0x4000 entrada_arranque  jp p16:4009

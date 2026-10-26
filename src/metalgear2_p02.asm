@@ -10,18 +10,15 @@
 
 
 ; ----------------------------------------------------------------------
-; Etiquetas que no caen en ninguna posicion emitida del listado
-; (destinos fuera del binario o dentro de una instruccion).
-; ----------------------------------------------------------------------
-L_806F:	equ 0x0806f
+; DATOS sin identificar  0x8000..0x8001  (1 bytes)
+DATA_8000:
+	defb 0f5h	; 8000
 
 ; ======================================================================
-; CODIGO 0x8000..0x800c  (12 bytes)
+; CODIGO 0x8001..0x800c  (11 bytes)
 ; ======================================================================
 
 
-L_8000:
-	push af			;8000
 segun_cb20:		; la ficha de 0xCB80 por el despachador de 0xCB20 (14 casos)
 	ld ix,0cb80h		;8001   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 	ld a,(0cb20h)		;8005   ; 0xCB20 desde 1
@@ -63,7 +60,7 @@ nada:		; no hace nada (los casos vacios de los despachadores)
 	ret			;803c
 llama_b066:		; p06:B066 con el banco 6
 	call 041a0h		;803d   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b066h		;8040   ; p06:B066
+	call 0b066h		;8040   ; pantalla_5_limpia: 0xC000, el sonido 1, SCREEN 5, las 4 paginas a 0, los 8 registros del VDP de p06:B09D y los sprites apagados
 	jr L_804B		;8043
 lee_mandos:		; pone el banco 6 y lee mando y teclas (p06:B0AD)
 	call 041a0h		;8045   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -176,7 +173,6 @@ L_80F8:
 	cp 002h		;80fb
 	jr nz,L_8117		;80fd
 	ld a,b			;80ff
-L_8100:
 	cp 007h		;8100   ; ...en la zona 7 sala 0x0C
 	jr nz,L_8117		;8102
 	ld a,c			;8104
@@ -188,7 +184,7 @@ L_8109:
 	push de			;810e
 	ld a,(0ca5fh)		;810f   ; ...y, sin 0xCA5F, p01:7C77
 	and a			;8112
-	call z,07c77h		;8113   ; p12:7C77
+	call z,07c77h		;8113   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	pop de			;8116
 L_8117:
 	ex de,hl			;8117   ; la fila uno mas
@@ -443,7 +439,7 @@ llama_ab91:		; p06:AB91 guardando el banco de 0xA000
 	ld a,(0c383h)		;8281   ; lee la copia del banco de 0xA000
 	push af			;8284
 	call 041a0h		;8285   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ab91h		;8288   ; p06:AB91
+	call 0ab91h		;8288   ; franjas_de_la_otra: 0x58 x 0x10 de (0x80, 0xC0) de la otra pagina a esta y dos copias en Y (YMMM): (0xC0, 0x60) a (0x74, 0x60) y (0, 0xC0) a (0x10, 0xC0)
 L_828B:
 	pop af			;828b
 	push af			;828c
@@ -452,7 +448,7 @@ llama_abbb:		; p06:ABBB guardando el banco de 0xA000
 	ld a,(0c383h)		;8290   ; lee la copia del banco de 0xA000
 	push af			;8293
 	call 041a0h		;8294   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0abbbh		;8297   ; p06:ABBB
+	call 0abbbh		;8297   ; piezas_zona_10: en la zona 0x10 desde la sala 2: 0xCA4C = 0x0100 y 2 x 2 caracteres de p06:ABFE (segun 0xCA43; 4 mas en la sala 2) de la pagina 2 a la otra, en (0x48, 0x40) en la sala 2 o en (0x68, 0x40)
 	jr L_828B		;829a
 borra_esta_pantalla:		; 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
 	ld a,(0ca42h)		;829c   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -1124,7 +1120,7 @@ L_874E:
 	ret			;8753
 a_p06_aa49:		; p06:AA49 con el banco 6 en 0xA000
 	call 041a0h		;8754   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa49h		;8757   ; p06:AA49
+	call 0aa49h		;8757   ; teclas_f_permitidas: acarreo si se pueden las teclas F2-F5: no con ciertas cosas de 0xD881-0xD883 sin lo de 0xD678-0xD69C, 0xD8C1 = 0x13, 0xD8C2 = 5 con 0xCB5F, ni en los estados 0x10, 0x11 o 0x13 en adelante salvo 0x18-0x19; nada (NC sin tocar) con el rotulo, 0xE1D0, 0xE1F0, mirando la sala de al lado o en pausa; con 0xCB37, solo con 0xCB28 < 2
 	jp 040f0h		;875a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 borra_ce00:		; 0xD417 = 0x1E y 0xCE00-0xD3FF a cero
 	ld a,01eh		;875d
@@ -1292,7 +1288,7 @@ cuatro_bytes_por_a:
 	jr L_887B		;8892
 llama_aebb:		; p06:AEBB con el banco 6 en 0xA000
 	call 041a0h		;8894   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aebbh		;8897   ; p06:AEBB
+	call 0aebbh		;8897   ; sitios_de_la_sala: 0xCBE0 a cero y los sitios de esta sala de la lista de la zona (p06:BB13; fichas [sala][numero][Y][X], 0xFF acaba) en los huecos de 0xCBE0
 	jp 040f0h		;889a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 sitios_cbe0:		; con 0xCA65 puesto, mira si sale (p02:8928)
 	ld a,(0ca65h)		;889d   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
@@ -1742,7 +1738,7 @@ L_8BF1:
 	jr L_8BEE		;8bfa
 a_p06_a6f9:		; p06:A6F9 con el banco 6 en 0xA000
 	call 041a0h		;8bfc   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a6f9h		;8bff   ; p06:A6F9
+	call 0a6f9h		;8bff   ; cuentas_de_snake: el suelo de la zona 7 (p06:A710), la cuenta de 0xCB54 y, con 0xCB4B, cada 4 cuadros el bit 0 de 0xCB4D
 	jr L_8BEE		;8c02
 a_p09_b62f:		; p09:B62F con el banco 9 en 0xA000
 	call 041c5h		;8c04   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1750,11 +1746,11 @@ a_p09_b62f:		; p09:B62F con el banco 9 en 0xA000
 	jr L_8BEE		;8c0a
 a_p06_a0ab:		; p06:A0AB con el banco 6 en 0xA000
 	call 041a0h		;8c0c   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a0abh		;8c0f   ; p06:A0AB
+	call 0a0abh		;8c0f   ; snake_de_nuevo: 0xCB00-0xCB3F y 0xCB40-0xCB4F a cero; el primero de 0xD638 a 1, Snake en el estado 0x19 con el dibujo 0x0D, la direccion 3, en (0x6E, 0xA5), 0xCA97 = 1 y 0xCADF = 1
 	jr L_8BEE		;8c12
 a_p06_a598:		; p06:A598 con el banco 6 en 0xA000
 	call 041a0h		;8c14   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a598h		;8c17   ; p06:A598
+	call 0a598h		;8c17   ; siguen_a_snake_aqui: los 1-4 que siguen a Snake (0xCAA0) puestos donde esta Snake (p06:A5A1)
 	jr L_8BEE		;8c1a
 a_p10_ba03:		; p10:BA03 con el banco 10 en 0xA000
 	call 041cdh		;8c1c   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2054,7 +2050,7 @@ a_p01_6fd5_2:		; p01:6FD5 con el banco 1 en 0x6000
 	jr $+43		;8e41
 a_p06_aeff:		; p06:AEFF con el banco 6 en 0xA000
 	call 041a0h		;8e43   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aeffh		;8e46   ; p06:AEFF
+	call 0aeffh		;8e46   ; tras_la_conversacion: lo que deja hecho la conversacion A (p06:AF02; desde p09:BE53): banderas de 0xD7D0-0xD7E3, sonidos...
 	jr $+35		;8e49
 
 ; ----------------------------------------------------------------------
@@ -2971,7 +2967,7 @@ L_93E5:
 	ret			;93f8
 lee_direccion:		; p06:A634: la direccion del mando a 0xCB0D
 	call 041a0h		;93f9   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a634h		;93fc   ; p06:A634
+	call 0a634h		;93fc   ; direccion_del_mando: la direccion pedida con el mando (p06:A639) y la de marcha (p06:A6B8)
 	jp 040f0h		;93ff   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 mueve_a_snake:		; dandose la vuelta no se mueve
 	ld a,(0cb16h)		;9402   ; lee 1 mientras Snake se da la vuelta
@@ -4015,9 +4011,9 @@ L_9A94:
 	ret			;9a95
 llama_a14d_a2aa_a139:		; p06:A14D, p06:A2AA y p06:A139 con el banco 6
 	call 041a0h		;9a96   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a14dh		;9a99   ; p06:A14D
-	call 0a2aah		;9a9c   ; p06:A2AA
-	call 0a139h		;9a9f   ; p06:A139
+	call 0a14dh		;9a99   ; suelo_bajo_snake: el bit 2 de 0xD7E1 si Snake pisa un caracter de los de la zona (p06:A1AC; sin 0xD8C0 ni 0xCA65), con 0xCB33 = su numero; y el sonido del paso
+	call 0a2aah		;9a9c   ; tope_dfea: con 0xDFE8 (zona 6 sala 0x10, p11:A389) y Snake fuera del estado 0x10: no pasa de la X de 0xDFEA; con la X en 0x20-0x3F, el estado 0x10
+	call 0a139h		;9a9f   ; suelo_5_o_6: con 0xCA9B, 0xCB33 = 6; si no, con 0xCB37, 5; y el sonido del paso (p06:A16B)
 	jp 040f0h		;9aa2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 el_agua:		; solo en la zona 6: 0xCAAA, 0xCB3F y la barra de la derecha
 	ld a,(0ca4ah)		;9aa5   ; lee la zona
@@ -4212,7 +4208,7 @@ L_9BD8:
 	jp suma_a_x		;9bd8   ; la X + DE
 a_p06_a387:		; p06:A387 con el banco 6 en 0xA000
 	call 041a0h		;9bdb   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a387h		;9bde   ; p06:A387
+	call 0a387h		;9bde   ; empuje_de_la_sala: con Snake dentro (Y y X por debajo de 0xC0): 0xCA8F = 0 y, en p06:BB76 (fichas de 6 bytes ordenadas por sala), las de esta sala (p06:A3B2) hasta que una empuja
 	jp 040f0h		;9be1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 rastro_de_snake:		; con 0xCAA0, guarda la Y, la X y la direccion de Snake en 0xE080 (el rastro)
 	ld a,(0caa0h)		;9be4   ; lee cuantos siguen a Snake por su rastro (1-4)
@@ -4326,7 +4322,6 @@ apunta_lo_pisado:		; el nibble bajo de B...
 	call 041a0h		;9cb2   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop de			;9cb5
 	pop bc			;9cb6
-L_9CB7:
 	ret			;9cb7
 bits_de_lo_pisado:		; A = 0: el bit 0 de 0xD7DE; 1: el 0 de 0xD7E4; 2: el 1 de 0xD7E4
 	cp 003h		;9cb8
@@ -4492,12 +4487,12 @@ DATA_resto_9DA2:
 
 a_p06_a330:		; p06:A330 con el banco 6 en 0xA000
 	call 041a0h		;9da8   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a330h		;9dab   ; p06:A330
+	call 0a330h		;9dab   ; caja_de_bda4: busca en p06:BDA4 (fichas de 9 bytes: zona, sala, Y de-hasta, X de-hasta y 3 bytes; zona 0x32 = la sala especial 0x32) la caja en la que esta Snake: copia sus 3 bytes a 0xCAA5, A = la X final - 0x10 (en multiplos de 8) y acarreo
 	jp 040f0h		;9dae   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 llama_6e0d_a3c8:		; p01:6E0D y p06:A3C8
 	call 06e0dh		;9db1   ; rachas_bba0: las rachas de p41:BBA0 con su destino
 	call 041a0h		;9db4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a3c8h		;9db7   ; p06:A3C8
+	call 0a3c8h		;9db7   ; sin_equipo: 0xCB4B-0xCB4E = 1, 4, 0, 0x10; 0xCAB6 = 0, 0xCB3C = 1, el bit 7 de 0xD8D9 y los bits 2-7 de 0xD8D8; a cero partes de lo que lleva (0xD600-0xD61F, 0xD624-0xD627, 0xD62C-0xD637, 0xD650-0xD653, 0xD66C-0xD673, 0xD6A8-0xD6AF y 0xD6C0-0xD6C3)
 	jp 040f0h		;9dba   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 que_hay_conectado:		; 0xC38B: bit 0 = hay disquetera (0xFFA7 no es un ret), bit 1 = hay Game Master 2
 	ld b,000h		;9dbd

@@ -1451,13 +1451,13 @@ a_p06_b239_guarda:		; p06:B239 guardando el banco de 0xA000
 	ld a,(0c383h)		;89a8   ; lee la copia del banco de 0xA000
 	push af			;89ab
 	call 041a0h		;89ac   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b239h		;89af   ; p06:B239
+	call 0b239h		;89af   ; bordes_b3_c8: la pagina 0 a cero y dos columnas de 0x20 caracteres de la sala: el 0xB3 en X = 0 y el 0xC8 en X = 0xB8
 	jr L_89BE		;89b2
 a_p06_b1fd_guarda:		; p06:B1FD guardando el banco de 0xA000
 	ld a,(0c383h)		;89b4   ; lee la copia del banco de 0xA000
 	push af			;89b7
 	call 041a0h		;89b8   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b1fdh		;89bb   ; p06:B1FD
+	call 0b1fdh		;89bb   ; pagina_0_a_la_1: la pagina 0 entera (256 x 0xC0) a la 1, borra 0x40 x 0x14 en (0xC0, 0xC0) de la 1 y, con 0xD501 < 2, 6 caracteres de 8 x 8 de (0xE8, 0x38) de la pagina 2 a (0x48, 0xB8) de la 1
 L_89BE:
 	pop af			;89be
 	push af			;89bf
@@ -1811,7 +1811,7 @@ a_p06_b14e_guarda:		; p06:B14E guardando el banco de 0xA000
 	ld a,(0c383h)		;8c68   ; lee la copia del banco de 0xA000
 	push af			;8c6b
 	call 041a0h		;8c6c   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b14eh		;8c6f   ; p06:B14E
+	call 0b14eh		;8c6f   ; fin_de_ficha_d800: lo que deja hecho la ficha de 0xD800 (IX) al acabar, segun su tipo (p06:B155; tras p04:8C59): banderas de la partida y la fase
 L_8C72:
 	pop af			;8c72
 	push af			;8c73
@@ -1820,7 +1820,7 @@ a_p06_b1da_guarda:		; p06:B1DA guardando el banco de 0xA000
 	ld a,(0c383h)		;8c77   ; lee la copia del banco de 0xA000
 	push af			;8c7a
 	call 041a0h		;8c7b   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b1dah		;8c7e   ; p06:B1DA
+	call 0b1dah		;8c7e   ; d860_tipo_4: en la zona 7, con 0xD883 distinto de 0xFF, fuera de la sala especial 0x29, la ficha 0xD860 libre y el bit 1 de 0xD7D1: la ficha 0xD860 de tipo 4
 	jr L_8C72		;8c81
 d800_paso_26:		; el paso 0x26: p10:AD12; al acabar la espera, las rachas de p47:A81B, 0x60 cuadros, 0xD8BA = 1 y el paso siguiente
 	call 041cdh		;8c83   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1915,12 +1915,12 @@ d800_paso_2b:		; el paso 0x2B: las rachas de p41:BD99, p06:B2D6 y 0x18 cuadros
 	ld (0d8aeh),a		;8d5c
 	call 06fbeh		;8d5f   ; rachas_bd99: las rachas de p41:BD99 a la VRAM de 0xFA00
 	call 041a0h		;8d62   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b2d6h		;8d65   ; p06:B2D6
+	call 0b2d6h		;8d65   ; seis_lanzados_1: 0xD460-0xD4BF a cero, 0xD445 = 1, las 6 fichas de tipo 1 con los bytes 2-4 de p06:B30B y los colores de 0xDAA0 de las rachas de p06:B3B0
 	call 04142h		;8d68   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp espera_18_y_paso		;8d6b   ; espera_18_y_paso: 0x18 cuadros y el paso siguiente
 d800_paso_2d:		; el paso 0x2D: p06:B31D; sin acarreo, fuera
 	call 041a0h		;8d6e   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b31dh		;8d71   ; p06:B31D
+	call 0b31dh		;8d71   ; seis_lanzados_1_cada_cuadro: con alguna de las 6 fichas de 0xD460 activa, sus cuentas y sprites (p06:B33B) y acarreo; si no, 0xD445 = 0 y NC
 	call 04142h		;8d74   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	ret c			;8d77
 quita_d800_b14e:		; p06:B14E y fuera
@@ -2019,7 +2019,7 @@ direccion_del_tramo:		; la direccion del tramo (bits 0-1) y su velocidad (p06:B5
 	inc hl			;8e36
 a_p06_b592:		; p06:B592 con el banco 6 en 0xA000
 	call 041a0h		;8e37   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b592h		;8e3a   ; p06:B592
+	call 0b592h		;8e3a   ; velocidad_del_tramo: las velocidades del actor para la direccion A: con alerta 1 de p06:B68B, 2-3 de p06:B69B; sin ella, de p06:B65B segun el byte 0x19 (16 bytes cada uno); con el byte 0x19 >= 3 (salvo el tipo 3), parado y la direccion 1 (3 en la zona 0x0C); el dibujo, la direccion * 2
 	jp 041bdh		;8e3d   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 velocidad_de_tabla:		; las dos velocidades del actor de la tabla DE (4 bytes por direccion C) y el byte 0x0C (1 vertical, 2 horizontal)
 	ld a,c			;8e40
@@ -2103,7 +2103,7 @@ a_p06_b5fb_guarda:		; p06:B5FB guardando el banco de 0xA000
 	ld a,(0c383h)		;8ebe   ; lee la copia del banco de 0xA000
 	push af			;8ec1
 	call 041a0h		;8ec2   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b5fbh		;8ec5   ; p06:B5FB
+	call 0b5fbh		;8ec5   ; actor_al_paso_8: salvo en los pasos 8-9: el paso al byte 0x20 y el paso 8, 0x3C cuadros (byte 0x1C), el byte 0x0C al 0x22 y a 0, y el dibujo & 7 (tambien al byte 0x15)
 L_8EC8:
 	pop af			;8ec8
 	push af			;8ec9
@@ -2112,7 +2112,7 @@ a_p06_b626_guarda:		; p06:B626 guardando el banco de 0xA000
 	ld a,(0c383h)		;8ecd   ; lee la copia del banco de 0xA000
 	push af			;8ed0
 	call 041a0h		;8ed1   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b626h		;8ed4   ; p06:B626
+	call 0b626h		;8ed4   ; paso_8_cuenta: la cuenta del byte 0x1C: el dibujo segun la cuenta (+0, +1 u +8 sobre el byte 0x15 & 6; no en el tipo 0x0B) y NZ; al acabar, con alerta 2 o mas p04:8EF2, si no, 0x48 cuadros y el paso siguiente
 	jr L_8EC8		;8ed7
 actor_paso_9:		; el paso 9: los tipos 0x0B y 0x0C, o al acabar la espera, vuelven a lo de antes (bytes 0x20, 0x22, 0x15)
 	ld a,(ix+000h)		;8ed9   ; lee el tipo del actor (0 = libre)
@@ -2139,7 +2139,7 @@ L_8EF2:
 	ret			;8f0c
 a_p06_b5e2:		; p06:B5E2 con el banco 6 en 0xA000
 	call 041a0h		;8f0d   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b5e2h		;8f10   ; p06:B5E2
+	call 0b5e2h		;8f10   ; dibujo_siguiente_b6bb: el dibujo siguiente: su orden en p06:B6BB, uno mas (de 0 a 0x0B, en vuelta) y el dibujo de p06:B6CB
 	jp 04142h		;8f13   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 actor_por_paso:		; si no se ve, nada; el paso 8 p06:B626, el 9 p04:8ED9, los demas por p04:8F2A
 	call se_ve_el_actor_si		;8f16   ; se_ve_el_actor_si: p14:B9DC guardando HL, DE y BC
@@ -2656,7 +2656,7 @@ a_p06_b532_guarda:		; p06:B532 guardando el banco de 0xA000
 	ld a,(0c383h)		;926c   ; lee la copia del banco de 0xA000
 	push af			;926f
 	call 041a0h		;9270   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b532h		;9273   ; p06:B532
+	call 0b532h		;9273   ; alerta_en_b552: Z con alerta en las zonas y salas de p06:B552 (4 parejas); NZ en las demas o sin alerta
 	jr L_92A4		;9276
 mira_b_de_bdb8:		; por lo que da p15:BDB8: 1 se acaba la alerta, 2 p04:94A2, 3 p04:9488; Z si se acabo
 	call a_p15_bdb8_guarda		;9278   ; a_p15_bdb8_guarda: p15:BDB8 guardando el banco de 0xA000
@@ -2683,7 +2683,7 @@ a_p06_b55a_guarda:		; p06:B55A guardando el banco de 0xA000 (y su acarreo)
 	ld a,(0c383h)		;929a   ; lee la copia del banco de 0xA000
 	push af			;929d
 	call 041a0h		;929e   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b55ah		;92a1   ; p06:B55A
+	call 0b55ah		;92a1   ; alguien_ve_a_snake: acarreo si alguno de los 24 actores de tipo 1-0x0F se ve (p04:806F) y esta en esta sala (el 0x0A no en el paso 0)
 L_92A4:
 	pop bc			;92a4
 	ld a,b			;92a5
@@ -3788,7 +3788,7 @@ esquina_hacia:		; la esquina siguiente hacia 0xD41C por el eje mas largo (p06:B2
 	ld bc,(0c382h)		;9a70   ; lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 	push bc			;9a74
 	call 041a0h		;9a75   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b256h		;9a78   ; p06:B256
+	call 0b256h		;9a78   ; avanza_hasta_choque_en: p06:B267 con la Y (L) entre 8 y 0xB7
 	pop af			;9a7b
 	push af			;9a7c
 	jp 041a3h		;9a7d
@@ -3818,13 +3818,13 @@ a_p06_a8e8_guarda:		; p06:A8E8 guardando el banco de 0xA000
 	ld a,(0c383h)		;9aa9   ; lee la copia del banco de 0xA000
 	push af			;9aac
 	call 041a0h		;9aad   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a8e8h		;9ab0   ; p06:A8E8
+	call 0a8e8h		;9ab0   ; lanza_el_3: lo lanzado de tipo 3 (IY) desde el actor IX: el sonido 0x0E, dos sprites (C y C + 1, colores 7 y 0x48), la Y final la de Snake - 0x10, velocidades 0xFE00 en Y y 0x30 en X, en la Y y la X del actor - 0x10
 	jr L_9ABF		;9ab3
 a_p06_a924_guarda:		; p06:A924 guardando el banco de 0xA000
 	ld a,(0c383h)		;9ab5   ; lee la copia del banco de 0xA000
 	push af			;9ab8
 	call 041a0h		;9ab9   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a924h		;9abc   ; p06:A924
+	call 0a924h		;9abc   ; lanza_el_7: lo lanzado de tipo 7 (IY): el sonido 0x43, el sprite C (color 7), 6 cuadros, en (H, L) de 0xD8E6
 L_9ABF:
 	pop af			;9abf
 	push af			;9ac0
@@ -3833,25 +3833,25 @@ a_p06_a7e9_guarda:		; p06:A7E9 guardando el banco de 0xA000
 	ld a,(0c383h)		;9ac4   ; lee la copia del banco de 0xA000
 	push af			;9ac7
 	call 041a0h		;9ac8   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a7e9h		;9acb   ; p06:A7E9
+	call 0a7e9h		;9acb   ; lanzado_por_tipo: lo lanzado de IX segun su tipo (p06:A7F0): el 1 p06:A800, el 3 p06:A885, el 7 p06:A8E1; los demas, nada
 	jr L_9ABF		;9ace
 a_p06_a942_guarda:		; p06:A942 guardando el banco de 0xA000
 	ld a,(0c383h)		;9ad0   ; lee la copia del banco de 0xA000
 	push af			;9ad3
 	call 041a0h		;9ad4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a942h		;9ad7   ; p06:A942
+	call 0a942h		;9ad7   ; desplazamiento_de_4: 0xD43C = el desplazamiento de p06:A952 segun el dibujo del actor ((byte 0x0D / 2) & 3)
 	jr L_9ABF		;9ada
 a_p06_a979_guarda:		; p06:A979 guardando el banco de 0xA000
 	ld a,(0c383h)		;9adc   ; lee la copia del banco de 0xA000
 	push af			;9adf
 	call 041a0h		;9ae0   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a979h		;9ae3   ; p06:A979
+	call 0a979h		;9ae3   ; sprite_del_lanzado: el sprite de lo lanzado en su sitio: el 1 por p06:A9DA, el 3 dos (p06:A9C3 por el byte 0x0F), el 5 con el patron 0xB8, el 7 con 0xF0/0xF4 (segun la cuenta) 2 arriba y 8 a la izquierda; los demas, 0x18
 	jr L_9ABF		;9ae6
 a_p06_a95a_guarda:		; p06:A95A guardando el banco de 0xA000
 	ld a,(0c383h)		;9ae8   ; lee la copia del banco de 0xA000
 	push af			;9aeb
 	call 041a0h		;9aec   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a95ah		;9aef   ; p06:A95A
+	call 0a95ah		;9aef   ; desplazamiento_de_8: 0xD43C = el desplazamiento de p06:A969 segun el dibujo del actor (byte 0x0D & 7)
 	jr L_9ABF		;9af2
 lanza_7:		; lo lanzado de tipo 7
 	ld b,007h		;9af4
@@ -4092,7 +4092,7 @@ a_p06_aa18_guarda:		; p06:AA18 guardando el banco de 0xA000
 	ld a,(0c383h)		;9caa   ; lee la copia del banco de 0xA000
 	push af			;9cad
 	call 041a0h		;9cae   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa18h		;9cb1   ; p06:AA18
+	call 0aa18h		;9cb1   ; fin_del_lanzado: lo lanzado se acaba: tipo 0, el sprite fuera y libre su sitio de 0xD400 (dos para el 3)
 	jp L_9ABF		;9cb4
 sprite_de_lanzado:		; HL = el sprite (byte 0x0E) desde el 10 (0xDC28)
 	ld a,(ix+00eh)		;9cb7   ; lee el sprite de lo lanzado

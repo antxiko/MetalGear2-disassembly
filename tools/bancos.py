@@ -249,7 +249,11 @@ def carga_sitios(ruta):
         return fuera
     for ln in open(ruta, encoding="utf-8"):
         crudo = ln.partition("#")[0].split()
-        if len(crudo) >= 7 and crudo[0] == "entrada":
+        if len(crudo) >= 3 and crudo[0] == "otro_slot":
+            # 'otro_slot pNN 0xPC': esa llamada sale del cartucho (un ENASLT
+            # justo antes pone otro slot en la ranura): no se sigue
+            fuera[("otro_slot", int(crudo[1][1:], 10), int(crudo[2], 0))] = None
+        elif len(crudo) >= 7 and crudo[0] == "entrada":
             # 'entrada pNN 0xCALL k b6000 b8000 bA000': la entrada k de la
             # tabla del despachador de ese call se sigue con ese reparto
             fuera[("entrada", int(crudo[1][1:], 10), int(crudo[2], 0), int(crudo[3], 0))] = (
@@ -807,6 +811,9 @@ class TrazadorDeBancos:
         que le pasan)."""
         if destino is None:
             return
+        if ("otro_slot", b, pc) in self.sitios:
+            self.externos[destino].add((b, pc))   # src/sitios.txt: otro slot
+            return
         d = self.c.banco(destino, s)
         if (d, destino) in self.sitios:
             # reparto forzado en el destino: la entrada es del banco que dice
@@ -1012,7 +1019,7 @@ def escribe_ficheros(t, src):
 
     for p in range(N_PAGINAS):
         ruta = os.path.join(src, nombre(p) + ".entries")
-        with open(ruta, "w", encoding="utf-8") as f:
+        with open(ruta, "w", encoding="utf-8", newline=chr(10)) as f:
             f.write(CAB_ENTRIES % (p, ORG[p]))
             if not propias[p]:
                 f.write("#\n# Este banco no lleva ni un byte de codigo al que\n"
@@ -1043,7 +1050,7 @@ def escribe_ficheros(t, src):
             por_pagina[otro].append((frontera, fin, pc, n))
     for p in range(N_PAGINAS):
         ruta = os.path.join(src, nombre(p) + ".nocode")
-        with open(ruta, "w", encoding="utf-8") as f:
+        with open(ruta, "w", encoding="utf-8", newline=chr(10)) as f:
             f.write(CAB_NOCODE)
             if p in t.bancos_datos:
                 f.write("#\n# BANCO DE DATOS entero, declarado en"
