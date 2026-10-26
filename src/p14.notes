@@ -51,35 +51,61 @@ C 0xA242 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xA282 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA296 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA29C despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA2A7 p13:91F0
+C 0xA2A7 paleta_9258: en 0xE900, la paleta de p13:9258 ([n][rojo-azul][verde]) y 0xFF
 C 0xA2AD lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xA2B6 p13:9175
+C 0xA2B6 paleta_hacia: la paleta de 0xE900 un paso hacia la de DE (con A = 1, hacia el otro lado) y puesta; NZ mientras no sea igual
+C 0xA2CF lee el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
 C 0xA2D4 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA333 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xA336 sonido_9a: pide el sonido 0x9A (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xA346 guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0xA364 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA378 lee el sitio de la primera linea del texto de la presentacion
+C 0xA387 guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0xA3AB espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA3B9 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xA3C7 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA3EA apunta a el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
+C 0xA3FB guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0xA41F espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA42D borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xA43B espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA45B espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA473 guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0xA495 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA4B6 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA4C4 lee el sitio de la primera linea del texto de la presentacion
+C 0xA4D6 guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0xA4F8 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA507 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xA518 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA525 orden_sonido_f6: la orden 0xF6 al sonido
+C 0xA52C guarda el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
+C 0xA530 lee la cuenta de cuadros del paso de la presentacion (16 bits)
+C 0xA535 guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 C 0xA543 pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 C 0xA54E pon_color: el color A de la paleta = D (rojo y azul), E (verde)
+C 0xA551 guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
+C 0xA554 guarda el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
+C 0xA55C guarda el sitio de la segunda linea
+C 0xA560 guarda las letras de la primera linea (banco 53)
+C 0xA564 apunta a las letras de la primera linea (banco 53)
+C 0xA570 lee lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
+C 0xA575 guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
+C 0xA58E lee el sitio de la segunda linea
+C 0xA595 lee el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 C 0xA5A0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xA5A3 apunta a el sitio de la segunda linea
+C 0xA5AE guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
+C 0xA5B2 guarda el sitio de la segunda linea
+C 0xA5B5 lee el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
+C 0xA5BD guarda el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 C 0xA5CA apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xA5DA apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xA63D apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xA640 pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-C 0xA657 p13:90FD
-C 0xA66D p13:9135
+C 0xA657 paleta_a_negro: los 16 colores de la paleta de la VRAM (0xF680) uno menos en cada parte; NZ mientras quede alguno
+C 0xA66D color_uno_menos: el color B de la VRAM de HL uno menos (p13:911C, p13:912D) y puesto en la paleta
 C 0xA67D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xA68B borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xA696 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)

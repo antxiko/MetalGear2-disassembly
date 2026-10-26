@@ -226,14 +226,14 @@ DATA_tabla_A29F:
 
 
 L_A2A7:
-	call 091f0h		;a2a7   ; p13:91F0
+	call 091f0h		;a2a7   ; paleta_9258: en 0xE900, la paleta de p13:9258 ([n][rojo-azul][verde]) y 0xFF
 	jp L_A1B3		;a2aa
 L_A2AD:
 	ld a,(0ca03h)		;a2ad   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 001h		;a2b0
 	ret nz			;a2b2
 	ld de,09278h		;a2b3
-	call 09175h		;a2b6   ; p13:9175
+	call 09175h		;a2b6   ; paleta_hacia: la paleta de 0xE900 un paso hacia la de DE (con A = 1, hacia el otro lado) y puesta; NZ mientras no sea igual
 	ret nz			;a2b9
 	ld a,020h		;a2ba
 	ld (0cafch),a		;a2bc
@@ -248,7 +248,7 @@ L_A2CA:
 	ld (0cafah),a		;a2cb
 	ret			;a2ce
 L_A2CF:
-	ld a,(0ca2ch)		;a2cf
+	ld a,(0ca2ch)		;a2cf   ; lee el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
 	sub 080h		;a2d2
 	call 0424dh		;a2d4   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -286,7 +286,7 @@ L_A33C:
 	ret c			;a33f
 	call L_A645		;a340
 	ld hl,000c0h		;a343
-	ld (0ca2eh),hl		;a346
+	ld (0ca2eh),hl		;a346   ; guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 	jp L_A3EA		;a349
 L_A34C:
 	call L_A65C		;a34c
@@ -308,14 +308,14 @@ L_A36D:
 L_A373:
 	call L_A564		;a373
 	jr nc,L_A384		;a376
-	ld a,(0ca33h)		;a378
+	ld a,(0ca33h)		;a378   ; lee el sitio de la primera linea del texto de la presentacion
 	cp 038h		;a37b
 	ret c			;a37d
 	ld de,0a766h		;a37e
 	jp L_A5E7		;a381
 L_A384:
 	ld hl,00080h		;a384
-	ld (0ca2eh),hl		;a387
+	ld (0ca2eh),hl		;a387   ; guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 	call L_A645		;a38a
 	jr L_A3EA		;a38d
 L_A38F:
@@ -358,7 +358,7 @@ L_A3CF:
 	call L_A5C5		;a3e4
 	call L_A549		;a3e7
 L_A3EA:
-	ld hl,0ca2ch		;a3ea
+	ld hl,0ca2ch		;a3ea   ; apunta a el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
 	inc (hl)			;a3ed
 	ret			;a3ee
 L_A3EF:
@@ -366,7 +366,7 @@ L_A3EF:
 	ld de,0a784h		;a3f2
 	jp c,L_A5E7		;a3f5
 	ld hl,00080h		;a3f8
-	ld (0ca2eh),hl		;a3fb
+	ld (0ca2eh),hl		;a3fb   ; guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 	call L_A645		;a3fe
 	jr L_A3EA		;a401
 L_A403:
@@ -416,7 +416,7 @@ L_A464:
 	jp c,L_A5E7		;a46a
 	call L_A645		;a46d
 	ld hl,00080h		;a470
-	ld (0ca2eh),hl		;a473
+	ld (0ca2eh),hl		;a473   ; guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 	jp L_A3EA		;a476
 L_A479:
 	call L_A65C		;a479
@@ -450,7 +450,7 @@ L_A49E:
 L_A4BF:
 	call L_A564		;a4bf
 	jr nc,L_A4D0		;a4c2
-	ld a,(0ca33h)		;a4c4
+	ld a,(0ca33h)		;a4c4   ; lee el sitio de la primera linea del texto de la presentacion
 	cp 038h		;a4c7
 	ret c			;a4c9
 	ld de,0a7c0h		;a4ca
@@ -458,7 +458,7 @@ L_A4BF:
 L_A4D0:
 	call L_A645		;a4d0
 	ld hl,00080h		;a4d3
-	ld (0ca2eh),hl		;a4d6
+	ld (0ca2eh),hl		;a4d6   ; guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 	jp L_A3EA		;a4d9
 L_A4DC:
 	call L_A65C		;a4dc
@@ -496,12 +496,12 @@ L_A521:
 	jp L_A3EA		;a528
 L_A52B:
 	xor a			;a52b
-	ld (0ca2ch),a		;a52c
+	ld (0ca2ch),a		;a52c   ; guarda el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF)
 	ret			;a52f
 L_A530:
-	ld bc,(0ca2eh)		;a530
+	ld bc,(0ca2eh)		;a530   ; lee la cuenta de cuadros del paso de la presentacion (16 bits)
 	dec bc			;a534
-	ld (0ca2eh),bc		;a535
+	ld (0ca2eh),bc		;a535   ; guarda la cuenta de cuadros del paso de la presentacion (16 bits)
 	ld a,b			;a539
 	or c			;a53a
 	ret			;a53b
@@ -518,16 +518,16 @@ L_A549:
 	ld de,07707h		;a54b
 	jp 04614h		;a54e   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 L_A551:
-	ld (0ca31h),hl		;a551
-	ld (0ca33h),de		;a554
+	ld (0ca31h),hl		;a551   ; guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
+	ld (0ca33h),de		;a554   ; guarda el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 	ld (0ca36h),a		;a558
 	xor a			;a55b
-	ld (0ca37h),a		;a55c
+	ld (0ca37h),a		;a55c   ; guarda el sitio de la segunda linea
 	inc a			;a55f
-	ld (0ca35h),a		;a560
+	ld (0ca35h),a		;a560   ; guarda las letras de la primera linea (banco 53)
 	ret			;a563
 L_A564:
-	ld hl,0ca35h		;a564
+	ld hl,0ca35h		;a564   ; apunta a las letras de la primera linea (banco 53)
 	dec (hl)			;a567
 	ld a,(hl)			;a568
 	and a			;a569
@@ -535,10 +535,10 @@ L_A564:
 	ret nz			;a56b
 	ld a,(0ca36h)		;a56c
 	ld (hl),a			;a56f
-	ld hl,(0ca31h)		;a570
+	ld hl,(0ca31h)		;a570   ; lee lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
 	ld a,(hl)			;a573
 	inc hl			;a574
-	ld (0ca31h),hl		;a575
+	ld (0ca31h),hl		;a575   ; guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
 	ld c,a			;a578
 	inc a			;a579
 	jr z,L_A5C3		;a57a
@@ -556,18 +556,18 @@ L_A564:
 	rrca			;a58a
 	and 0f0h		;a58b
 	ld h,a			;a58d
-	ld a,(0ca37h)		;a58e
+	ld a,(0ca37h)		;a58e   ; lee el sitio de la segunda linea
 	add a,a			;a591
 	add a,a			;a592
 	add a,a			;a593
 	add a,a			;a594
-	ld de,(0ca33h)		;a595
+	ld de,(0ca33h)		;a595   ; lee el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 	add a,d			;a599
 	ld d,a			;a59a
 	ld bc,01010h		;a59b
 	ld a,0c8h		;a59e
 	call 047edh		;a5a0   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-	ld hl,0ca37h		;a5a3
+	ld hl,0ca37h		;a5a3   ; apunta a el sitio de la segunda linea
 	inc (hl)			;a5a6
 	scf			;a5a7
 	ret			;a5a8
@@ -575,15 +575,15 @@ L_A5A9:
 	ld a,(hl)			;a5a9
 	ld (0ca34h),a		;a5aa
 	inc hl			;a5ad
-	ld (0ca31h),hl		;a5ae
+	ld (0ca31h),hl		;a5ae   ; guarda lo que falta del dibujo que se abre en la presentacion y el byte siguiente (16 bits)
 L_A5B1:
 	xor a			;a5b1
-	ld (0ca37h),a		;a5b2
-	ld de,(0ca33h)		;a5b5
+	ld (0ca37h),a		;a5b2   ; guarda el sitio de la segunda linea
+	ld de,(0ca33h)		;a5b5   ; lee el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 	ld a,e			;a5b9
 	add a,018h		;a5ba
 	ld e,a			;a5bc
-	ld (0ca33h),de		;a5bd
+	ld (0ca33h),de		;a5bd   ; guarda el sitio de la primera linea del texto de la presentacion y el byte siguiente (16 bits)
 	scf			;a5c1
 	ret			;a5c2
 L_A5C3:
@@ -697,7 +697,7 @@ L_A64B:
 	and 007h		;a653
 	scf			;a655
 	ret nz			;a656
-	call 090fdh		;a657   ; p13:90FD
+	call 090fdh		;a657   ; paleta_a_negro: los 16 colores de la paleta de la VRAM (0xF680) uno menos en cada parte; NZ mientras quede alguno
 	scf			;a65a
 	ret			;a65b
 L_A65C:
@@ -712,7 +712,7 @@ L_A65C:
 	ret nz			;a667
 	ld b,00fh		;a668
 	ld hl,0f69eh		;a66a
-	call 09135h		;a66d   ; p13:9135
+	call 09135h		;a66d   ; color_uno_menos: el color B de la VRAM de HL uno menos (p13:911C, p13:912D) y puesto en la paleta
 	scf			;a670
 	ret			;a671
 L_A672:

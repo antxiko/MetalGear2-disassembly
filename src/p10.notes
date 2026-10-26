@@ -1705,11 +1705,11 @@ C 0xAFAF elegida_f3: sin 0xD8A4: el sitio de 0xD8A4 borrado y el dibujo a el
 C 0xAFB2 apunta a el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
 C 0xAFBD apunta a el cursor de F2 guardado (columna, fila)
 C 0xAFCD apunta a el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
-C 0xAFD8 apunta a el cursor de F3 guardado (columna, fila)
-C 0xAFDB apunta a la columna del cursor en F2/F3
-C 0xAFE2 apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0xAFD8 apunta a el cursor de F3 guardado (columna, fila); en el estado 7, la pieza 0x55 o 0x56 (p13:9D18)
+C 0xAFDB apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
+C 0xAFE2 apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 C 0xAFE8 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xAFF3 apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0xAFF3 apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 C 0xB005 letrero_de_50: el letrero con sitio de la palabra HL del banco 50
 C 0xB00B letrero_de_50: el letrero con sitio de la palabra HL del banco 50
 C 0xB00E apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
@@ -1717,7 +1717,7 @@ C 0xB016 guarda el numero de la cosa que se pinta en F2/F3
 C 0xB034 sitio_de_cosa: E = la columna (0xD705 mod L) * 16 + E y D + H por cada fila
 C 0xB037 dibujo_f2: el dibujo de la cosa (p56:A6AF) de la pagina 3: 16 x 16 (32 x 16 las dos primeras, 8 a la derecha las de 16)
 C 0xB03A a_la_lista: 0xD710 + 0xD705 = 0xD708
-C 0xB03D apunta a cuantas cosas hay en la pantalla de F2/F3
+C 0xB03D apunta a cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
 C 0xB042 apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 C 0xB04A guarda el numero de la cosa que se pinta en F2/F3
 C 0xB052 cosa_a_f3: el sitio (7 por fila de 0x20), el dibujo (p10:B0DC), a la lista y, las 0x0E, 0x20, 0x21 y 0x22, su sitio a 0xCA84, 0xCA7E, 0xCA80 o 0xCA82
@@ -1725,13 +1725,13 @@ C 0xB05A apunta a el numero de la cosa que se pinta en F2/F3
 C 0xB068 sitio_de_cosa: E = la columna (0xD705 mod L) * 16 + E y D + H por cada fila
 C 0xB06C dibujo_f3: el dibujo de la cosa: la 0x0E segun 0xCA7B (p10:B0F9), la 0x0F segun 0xCA90, la 0x10 segun 0xCA89, las demas de p56:A6CB; 16 x 16 a la pagina 3
 C 0xB06F a_la_lista: 0xD710 + 0xD705 = 0xD708
-C 0xB072 apunta a cuantas cosas hay en la pantalla de F2/F3
+C 0xB072 apunta a cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
 C 0xB07A lee el numero de la cosa que se pinta en F2/F3
-C 0xB099 lee cuantas cosas hay en la pantalla de F2/F3
-C 0xB09C apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0xB099 lee cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
+C 0xB09C apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 C 0xB09F suma_a_hl: HL = HL + A
 C 0xB0A2 lee el numero de la cosa que se pinta en F2/F3
-C 0xB0A7 lee cuantas cosas hay en la pantalla de F2/F3
+C 0xB0A7 lee cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
 C 0xB0BE palabra_a6af_d708: HL = la palabra 0xD708 - 1 de p56:A6AF
 C 0xB0C2 lee el numero de la cosa que se pinta en F2/F3
 C 0xB0D9 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
@@ -1771,7 +1771,7 @@ C 0xB1BF letrero_de_lo_elegido: el letrero de lo elegido de p50:8046 y, para la 
 C 0xB1C2 usa_en_f2: con 0xCB4B y el disparo 1, sobre la 9 o la 0x0B: el sonido 0x22 y la usa (p10:BB7D con 0xD621 o 0xD629)
 C 0xB1C5 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB1CB lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
-C 0xB1D6 guarda 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+C 0xB1D6 guarda 0-1: la opcion de la cosa 7 en F2 (p10:B8F8); en el estado 7, de 0 a 9 por 0xD709 (p13:9799)
 C 0xB1D9 cursor_d70a: borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
 C 0xB1DC sonido_11: pide el sonido 0x11
 C 0xB1DF p02:8ECD
@@ -1779,7 +1779,7 @@ C 0xB1E2 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB1EF p02:8EE5
 C 0xB1F2 sprites_cb4b_f3: con 0xCB4B: el parpadeo, sin sprites y sobre las cosas de la lista (hasta 0x23, 7 por fila) los sprites de p10:BB00
 C 0xB1F5 f3_paso: con una tecla de funcion, sale (p10:B57B); el cursor (p10:B2F4, 6 x 4); movido: el fondo, p10:B340, p10:B359, p10:B374, p10:B3C1, el cursor a 0xD704, p10:B401 y p10:B926; si no, p10:BB50 y, con el disparo 1, se usa lo elegido: la 0x0C (p10:B2CB) o las 0x20-0x22 (la vida al maximo)
-C 0xB1F8 lee 1 al salir de F2/F3 (p10:B897)
+C 0xB1F8 lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 C 0xB1FE e1d8_paso: con 0xE1D8: p10:A29D, p10:A376 y p10:A31B
 C 0xB201 p02:8ED2
 C 0xB204 lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
@@ -1825,21 +1825,21 @@ C 0xB2F5 guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 
 C 0xB2F8 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB30E guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 C 0xB311 sonido_11: pide el sonido 0x11
-C 0xB314 lee la columna del cursor en F2/F3
+C 0xB314 lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 C 0xB31B guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 C 0xB31E sonido_11: pide el sonido 0x11
-C 0xB321 lee la columna del cursor en F2/F3
+C 0xB321 lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 C 0xB328 guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 C 0xB32B sonido_11: pide el sonido 0x11
-C 0xB32E lee la fila del cursor en F2/F3
+C 0xB32E lee la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 C 0xB335 guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 C 0xB338 sonido_11: pide el sonido 0x11
 C 0xB346 sitio_del_cursor: D + B * la fila (0xD703) y E + C * la columna (0xD702)
 C 0xB34C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB356 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xB359 apunta a la columna del cursor en F2/F3
+C 0xB359 apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 C 0xB35C lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
-C 0xB365 apunta a la fila del cursor en F2/F3
+C 0xB365 apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 C 0xB37A sitio_del_cursor: D + B * la fila (0xD703) y E + C * la columna (0xD702)
 C 0xB37D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB38C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
@@ -1860,8 +1860,8 @@ C 0xB414 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB41A suma_a_hl: HL = HL + A
 C 0xB420 pinta_cuenta: la cuenta BCD de HL en DE (hasta 3 cifras, sin ceros a la izquierda), 8 a la derecha cada cifra; la de 0xD62C o con 0xD8A4, borrada
 C 0xB429 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
-C 0xB42C lee la columna del cursor en F2/F3
-C 0xB430 lee la fila del cursor en F2/F3
+C 0xB42C lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
+C 0xB430 lee la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 C 0xB434 por_la_fila: 
 C 0xB44F cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 C 0xB452 guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
@@ -1870,7 +1870,7 @@ C 0xB45B no_con_cb21_0a: con 0xCB21 = 0x0A u 0x0B, la cosa 5 no se puede (acarre
 C 0xB45E sonido_5c: pide el sonido 0x5C
 C 0xB461 no_5_tumbado: en el estado 2 (o con 0xCB31), en el 0x0B o con el dibujo 4, la 5 no se puede
 C 0xB464 sonido_5c: pide el sonido 0x5C
-C 0xB46A apunta a la columna del cursor en F2/F3
+C 0xB46A apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 C 0xB474 pon_elegida: (DE) = 0xD704
 C 0xB47A estado_si_no_0b: fuera del estado 0x0B, el estado que toca
 C 0xB483 segun_cb20_b492: por lo elegido (p10:B492)
@@ -1911,7 +1911,7 @@ C 0xB595 la_2_sala_18: la 2 no en la sala especial 0x18 salvo en la sala 0
 C 0xB598 sonido_5c: pide el sonido 0x5C
 C 0xB59B con_d7d5_4: con el bit 4 de 0xD7D5 y sin el 0 de 0xD7DA, la 2 y la 0x0D no se pueden
 C 0xB59E sonido_5c: pide el sonido 0x5C
-C 0xB5A4 apunta a la columna del cursor en F2/F3
+C 0xB5A4 apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 C 0xB5AE pon_elegida: (DE) = 0xD704
 C 0xB5B1 estado_si_no_0b: fuera del estado 0x0B, el estado que toca
 C 0xB5BA lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
@@ -2017,13 +2017,13 @@ C 0xB86F barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto
 C 0xB872 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB877 rachas_b34a: p37:B34A a la VRAM de 0x1E200 (A = 1)
 C 0xB87B lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
-C 0xB880 lee la fila del cursor en F2/F3
-C 0xB88B apunta a la columna del cursor en F2/F3
-C 0xB88F apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0xB880 lee la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
+C 0xB88B apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
+C 0xB88F apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 C 0xB892 suma_a_hl: HL = HL + A
 C 0xB898 sonido_22: pide el sonido 0x22
 C 0xB8A2 guarda el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
-C 0xB8A5 guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
+C 0xB8A5 guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6); en el estado 7, su paso (p13:9555)
 C 0xB8A8 guarda 1 mientras Snake se da la vuelta
 C 0xB8AF guarda el quinto byte de la ficha de la sala (p02:877F)
 C 0xB8B5 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -2039,7 +2039,7 @@ C 0xB8EC letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
 C 0xB8F5 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
 C 0xB8F8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB908 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xB90B lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+C 0xB90B lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8); en el estado 7, de 0 a 9 por 0xD709 (p13:9799)
 C 0xB916 copia_cursor: 
 C 0xB926 letrero_8048: 
 C 0xB92B lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
@@ -2077,7 +2077,7 @@ C 0xBA4E copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xBA51 apunta a con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBA57 parpadeo_cb4b: cada 4 cuadros (0xCB4C), el bit 0 de 0xCB4D cambia
 C 0xBA5A esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-C 0xBA62 apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0xBA62 apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 C 0xBA6A sprite_de_la_9: la 9: el sprite 0 (patron 0xF0 o 0xF8 segun 0xCB4D) y sus colores
 C 0xBA7B apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xBA7E sprite_cb4d: dos sprites en (E, D) con el patron 0xF0 (0xF8 con 0xCB4D)
@@ -2091,7 +2091,7 @@ C 0xBAB9 parpadeo_cb4b: cada 4 cuadros (0xCB4C), el bit 0 de 0xCB4D cambia
 C 0xBABC esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBAC0 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xBAC3 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
-C 0xBACC apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+C 0xBACC apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 C 0xBAD4 sprite_de_cosa_f3: salvo las 2, 3, 5, 8, 0x0B, 0x10 y desde 0x20, el sprite de p10:BA86 y sus colores
 C 0xBADC siguiente_sitio: 0x10 a la derecha; tras las 7, 0xE, 0x15 y 0x1C, la fila siguiente
 C 0xBB19 sprite_cb4d: dos sprites en (E, D) con el patron 0xF0 (0xF8 con 0xCB4D)

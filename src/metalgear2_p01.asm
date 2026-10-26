@@ -753,7 +753,7 @@ palabra_8042_d706:		; HL = la palabra 0xD706 de la tabla de p50:8042
 	call 04122h		;64a5   ; bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,08042h		;64a8
 	call 043fch		;64ab   ; lee_palabra: HL = la palabra que hay en HL
-	ld a,(0d706h)		;64ae   ; lee 1 al salir de F2/F3 (p10:B897)
+	ld a,(0d706h)		;64ae   ; lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	call 043f6h		;64b1   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jp 04176h		;64b4   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 letrero_de_50:		; el letrero con sitio de la palabra HL del banco 50
@@ -2840,12 +2840,12 @@ estado_0:		; el estado 0: el paso 0 limpia y p13:92D1, el 1 p13:932F hasta 0xCA1
 	jr nc,L_72DC		;72b7
 	call 045fdh		;72b9   ; paso 0: la pantalla limpia...
 	call 04179h		;72bc   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 092d1h		;72bf   ; p13:92D1
+	call 092d1h		;72bf   ; pantalla_de_56: con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0x48 x 0xA8 a 0 en (0x40, 0x28) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
 	call 040f0h		;72c2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp L_7348		;72c5   ; ...y el paso siguiente
 L_72C8:
 	call 04179h		;72c8   ; paso 1
-	call 0932fh		;72cb   ; p13:932F
+	call 0932fh		;72cb   ; pantalla_de_56_baja: cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x40, 0x28) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
 	call 040f0h		;72ce   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca14h)		;72d1   ; hasta que 0xCA14 se pone
 	or a			;72d4
@@ -2871,7 +2871,7 @@ L_72DC:
 	jr z,L_7305		;7300
 	ld hl,00080h		;7302
 L_7305:
-	ld (0ca2ch),hl		;7305
+	ld (0ca2ch),hl		;7305   ; guarda el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF) y el byte siguiente (16 bits)
 	ld hl,0ca2ah		;7308   ; ...0xCA2A cambia...
 	ld a,(hl)			;730b
 	xor 001h		;730c
@@ -2891,7 +2891,7 @@ estado_1:		; el estado 1: el paso 0 corre p13:8000 hasta que 0xCA2C llega a 0; e
 	cp 080h		;7326
 	call c,cambia_tablas_de_sprites		;7328   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 	call 04179h		;732b   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08000h		;732e   ; p13:8000
+	call 08000h		;732e   ; presentacion: el estado 1 de la partida: el paso 0xCA2C de la presentacion (1-0x41) por la tabla de p13:800D; desde 0x80, p14:A2CF
 	call 040f0h		;7331   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca2ch)		;7334   ; con 0xCA2C < 0x80, los sprites a la VRAM
 	cp 080h		;7337
@@ -3096,7 +3096,7 @@ tecla_f2_f3:		; si se puede (p06:AA49, acarreo) y sin 0xCA58: 0xD701 = 0 y el pa
 	or a			;7497
 	ret nz			;7498
 	xor a			;7499
-	ld (0d701h),a		;749a   ; guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
+	ld (0d701h),a		;749a   ; guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6); en el estado 7, su paso (p13:9555)
 	ld a,b			;749d
 	jp L_73AC		;749e
 tecla_f4:		; con 0xD8A4 no
@@ -3147,14 +3147,14 @@ paso_1:		; el paso 1: a la sala de al lado y otra vez el paso 0
 paso_2:		; el paso 2 (F2): p10:AED6 hasta 0xD706
 	call 092f8h		;74f7   ; a_p10_aed6: p10:AED6 con el banco 10 en 0xA000
 	call fin_del_paso		;74fa   ; fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
-	ld a,(0d706h)		;74fd   ; lee 1 al salir de F2/F3 (p10:B897)
+	ld a,(0d706h)		;74fd   ; lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	or a			;7500
 	ret z			;7501
 	jp L_73AB		;7502
 paso_3:		; el paso 3 (F3): p10:AF30 hasta 0xD706; con 0xCB21 = 2, el paso 0x0C
 	call 09301h		;7505   ; a_p10_af30: p10:AF30 con el banco 10 en 0xA000
 	call fin_del_paso		;7508   ; fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
-	ld a,(0d706h)		;750b   ; lee 1 al salir de F2/F3 (p10:B897)
+	ld a,(0d706h)		;750b   ; lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	or a			;750e
 	ret z			;750f
 	ld a,(0cb21h)		;7510   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -3402,7 +3402,7 @@ ventana_a5d6:		; la pagina de dibujar borrada, p06:A5D6 y las letras de p44:BADB
 estado_7:		; el estado 7: p13:9555 con los sprites hasta que 0xCAAF se pone a 0; luego el sonido 1 y el estado 0
 	call 04179h		;7726   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call cambia_tablas_de_sprites		;7729   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
-	call 09555h		;772c   ; p13:9555
+	call 09555h		;772c   ; estado_7_cada_cuadro: el estado 7: 0xD705 uno mas y el paso 0xD701 por la tabla de p13:955F (31)
 	call 04f97h		;772f   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	call 040f0h		;7732   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0caafh)		;7735
@@ -3863,20 +3863,20 @@ a_p14_ab01:		; p14:AB01 con el banco 14 en 0xA000
 	jr L_7AF6		;7b12
 a_p13_9371:		; p13:9371 con el banco 13 en 0x8000
 	call 04176h		;7b14   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09371h		;7b17   ; p13:9371
+	call 09371h		;7b17   ; fundido_1_empieza: el fundido 1 (a negro): 0xCADA = 1, la velocidad C en 0xCADB, 0xCADC = 0 y la paleta de HL (0x31 bytes) a 0xE900
 	jr L_7B2A		;7b1a
 a_p13_9387:		; p13:9387 con el banco 13 en 0x8000
 	call 04176h		;7b1c   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09387h		;7b1f   ; p13:9387
+	call 09387h		;7b1f   ; fundido_1: con el fundido 1, cada C cuadros cada color uno menos en las tres partes y la paleta puesta; al quedar todo a 0, 0xCADA = 0; 0xCADC de 0 a 2
 	jr L_7B2A		;7b22
 a_p13_93f7:		; p13:93F7 con el banco 13 en 0x8000
 	call 04176h		;7b24   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 093f7h		;7b27   ; p13:93F7
+	call 093f7h		;7b27   ; fundido_2_empieza: el fundido 2 (desde negro): 0xCADA = 2, la velocidad C, la paleta de HL a 0xE900 con los colores a 0
 L_7B2A:
 	jp 041d2h		;7b2a   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p13_941a:		; p13:941A con el banco 13 en 0x8000
 	call 04176h		;7b2d   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0941ah		;7b30   ; p13:941A
+	call 0941ah		;7b30   ; fundido_2: con el fundido 2, cada C cuadros cada color de 0xE900 un paso hacia el de DE y la paleta puesta; al ser iguales, 0xCADA = 0
 	jr L_7B2A		;7b33
 a_p04_81c5:		; p04:81C5 con el banco 4 en 0x8000
 	call 04142h		;7b35   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)

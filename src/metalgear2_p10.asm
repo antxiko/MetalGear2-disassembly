@@ -2240,12 +2240,12 @@ d700_de_f3:		; 0xD700-0xD707 de p10:AFEB y lo de 0xD70D
 	ld hl,0afebh		;afd0
 	ld bc,00008h		;afd3   ; 8 bytes
 	ldir		;afd6
-	ld hl,0d70dh		;afd8   ; apunta a el cursor de F3 guardado (columna, fila)
+	ld hl,0d70dh		;afd8   ; apunta a el cursor de F3 guardado (columna, fila); en el estado 7, la pieza 0x55 o 0x56 (p13:9D18)
 d702_y_d710:		; 0xD702-0xD703 = los dos bytes de HL y 0xD710-0xD74F a cero
-	ld de,0d702h		;afdb   ; apunta a la columna del cursor en F2/F3
+	ld de,0d702h		;afdb   ; apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	ldi		;afde   ; la columna...
 	ldi		;afe0   ; ...y la fila
-	ld hl,0d710h		;afe2   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+	ld hl,0d710h		;afe2   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 	ld bc,0003fh		;afe5   ; 0x40 bytes
 	jp 04236h		;afe8   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 
@@ -2263,7 +2263,7 @@ DATA_resto_AFEB:
 
 
 quita_de_d710:		; la cosa A fuera de la lista 0xD710 (0x23 sitios)
-	ld hl,0d710h		;aff3   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+	ld hl,0d710h		;aff3   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 	ld b,023h		;aff6   ; 0x23 sitios
 busca_en_d710:
 	cp (hl)			;aff8
@@ -2303,7 +2303,7 @@ cosa_a_f2:		; el sitio (p10:B0A7, 7 por fila de 0x38 en 0x18 x 0x18), el dibujo 
 	call sitio_de_cosa		;b034   ; sitio_de_cosa: E = la columna (0xD705 mod L) * 16 + E y D + H por cada fila
 	call dibujo_f2		;b037   ; dibujo_f2: el dibujo de la cosa (p56:A6AF) de la pagina 3: 16 x 16 (32 x 16 las dos primeras, 8 a la derecha las de 16)
 	call a_la_lista		;b03a   ; a_la_lista: 0xD710 + 0xD705 = 0xD708
-	ld hl,0d705h		;b03d   ; apunta a cuantas cosas hay en la pantalla de F2/F3
+	ld hl,0d705h		;b03d   ; apunta a cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
 	inc (hl)			;b040   ; una mas
 	ret			;b041
 cosas_de_d638:		; las 0x22 cosas de 0xD638 que se tienen, igual (p10:B062)
@@ -2330,7 +2330,7 @@ cosa_a_f3:		; el sitio (7 por fila de 0x20), el dibujo (p10:B0DC), a la lista y,
 	push de			;b06b
 	call dibujo_f3		;b06c   ; dibujo_f3: el dibujo de la cosa: la 0x0E segun 0xCA7B (p10:B0F9), la 0x0F segun 0xCA90, la 0x10 segun 0xCA89, las demas de p56:A6CB; 16 x 16 a la pagina 3
 	call a_la_lista		;b06f   ; a_la_lista: 0xD710 + 0xD705 = 0xD708
-	ld hl,0d705h		;b072   ; apunta a cuantas cosas hay en la pantalla de F2/F3
+	ld hl,0d705h		;b072   ; apunta a cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
 	inc (hl)			;b075
 	pop de			;b076
 	ld hl,0ca84h		;b077   ; la 0x0E: 0xCA84
@@ -2352,14 +2352,14 @@ guarda_sitio:
 	ld (hl),d			;b097
 	ret			;b098
 a_la_lista:		; 0xD710 + 0xD705 = 0xD708
-	ld a,(0d705h)		;b099   ; lee cuantas cosas hay en la pantalla de F2/F3
-	ld hl,0d710h		;b09c   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+	ld a,(0d705h)		;b099   ; lee cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
+	ld hl,0d710h		;b09c   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 	call 0423eh		;b09f   ; suma_a_hl: HL = HL + A
 	ld a,(0d708h)		;b0a2   ; lee el numero de la cosa que se pinta en F2/F3
 	ld (hl),a			;b0a5
 	ret			;b0a6
 sitio_de_cosa:		; E = la columna (0xD705 mod L) * 16 + E y D + H por cada fila
-	ld a,(0d705h)		;b0a7   ; lee cuantas cosas hay en la pantalla de F2/F3
+	ld a,(0d705h)		;b0a7   ; lee cuantas cosas hay en la pantalla de F2/F3; en el estado 7, los cuadros
 fila_de_cosa:
 	sub l			;b0aa   ; una fila mas...
 	jr c,columna_de_cosa		;b0ab
@@ -2538,7 +2538,7 @@ f2_cosa_7:
 	ret z			;b1d0   ; sin el disparo 1, nada
 	ld a,(0d70ah)		;b1d1   ; 0xD70A cambia
 	xor 001h		;b1d4   ; 0 o 1
-	ld (0d70ah),a		;b1d6   ; guarda 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+	ld (0d70ah),a		;b1d6   ; guarda 0-1: la opcion de la cosa 7 en F2 (p10:B8F8); en el estado 7, de 0 a 9 por 0xD709 (p13:9799)
 	call cursor_d70a		;b1d9   ; cursor_d70a: borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
 	jp 05f49h		;b1dc   ; sonido_11: pide el sonido 0x11
 f3_cada_cuadro:		; p02:8ECD; salvo sobre la cosa 0x0D, con 0xD443 p02:8EE5; p10:BAB3, p10:B204 y, sin 0xD706, p10:A28F
@@ -2553,7 +2553,7 @@ f3_cada_cuadro:		; p02:8ECD; salvo sobre la cosa 0x0D, con 0xD443 p02:8EE5; p10:
 L_B1F2:
 	call sprites_cb4b_f3		;b1f2   ; sprites_cb4b_f3: con 0xCB4B: el parpadeo, sin sprites y sobre las cosas de la lista (hasta 0x23, 7 por fila) los sprites de p10:BB00
 	call f3_paso		;b1f5   ; f3_paso: con una tecla de funcion, sale (p10:B57B); el cursor (p10:B2F4, 6 x 4); movido: el fondo, p10:B340, p10:B359, p10:B374, p10:B3C1, el cursor a 0xD704, p10:B401 y p10:B926; si no, p10:BB50 y, con el disparo 1, se usa lo elegido: la 0x0C (p10:B2CB) o las 0x20-0x22 (la vida al maximo)
-	ld a,(0d706h)		;b1f8   ; lee 1 al salir de F2/F3 (p10:B897)
+	ld a,(0d706h)		;b1f8   ; lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	or a			;b1fb
 	jr nz,fin_f3_cada_cuadro		;b1fc   ; con 0xD706, nada mas
 	call e1d8_paso		;b1fe   ; e1d8_paso: con 0xE1D8: p10:A29D, p10:A376 y p10:A31B
@@ -2689,21 +2689,21 @@ cursor_con_el_mando:		; 0xD707 = 0 y, con una direccion recien pulsada que cabe 
 	ld (0d707h),a		;b30e   ; guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 	jp 05f49h		;b311   ; sonido_11: pide el sonido 0x11
 cursor_arriba:
-	ld a,(0d702h)		;b314   ; lee la columna del cursor en F2/F3
+	ld a,(0d702h)		;b314   ; lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	or a			;b317   ; en la columna 0, nada
 	ret z			;b318
 	ld a,001h		;b319   ; 1
 	ld (0d707h),a		;b31b   ; guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 	jp 05f49h		;b31e   ; sonido_11: pide el sonido 0x11
 cursor_abajo:
-	ld a,(0d702h)		;b321   ; lee la columna del cursor en F2/F3
+	ld a,(0d702h)		;b321   ; lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	cp e			;b324   ; en la ultima columna, nada
 	ret nc			;b325
 	ld a,002h		;b326   ; 2
 	ld (0d707h),a		;b328   ; guarda hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 	jp 05f49h		;b32b   ; sonido_11: pide el sonido 0x11
 cursor_izquierda:
-	ld a,(0d703h)		;b32e   ; lee la fila del cursor en F2/F3
+	ld a,(0d703h)		;b32e   ; lee la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	or a			;b331   ; en la fila 0, nada
 	ret z			;b332
 	ld a,003h		;b333   ; 3
@@ -2726,13 +2726,13 @@ borra_cursor:
 	ld bc,00808h		;b353   ; ...8 x 8
 	jp 04767h		;b356   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 mueve_cursor:		; 0xD702 o 0xD703 uno mas o menos segun 0xD707
-	ld hl,0d702h		;b359   ; apunta a la columna del cursor en F2/F3
+	ld hl,0d702h		;b359   ; apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	ld a,(0d707h)		;b35c   ; lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 	dec a			;b35f   ; 1: la columna - 1
 	jr z,uno_menos_cursor		;b360
 	dec a			;b362   ; 2: + 1
 	jr z,uno_mas_cursor		;b363
-	ld hl,0d703h		;b365   ; apunta a la fila del cursor en F2/F3
+	ld hl,0d703h		;b365   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec a			;b368   ; 3: la fila - 1; 4: + 1
 	jr z,uno_menos_cursor		;b369
 uno_mas_cursor:
@@ -2847,9 +2847,9 @@ cuenta_de_a:		; la cuenta (bytes 2-3) de la ficha A - 1 de HL pintada (p10:B960)
 	ld bc,02008h		;b426   ; ...0x20 x 8
 	jp 0474dh		;b429   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 sitio_del_cursor:		; D + B * la fila (0xD703) y E + C * la columna (0xD702)
-	ld a,(0d702h)		;b42c   ; lee la columna del cursor en F2/F3
+	ld a,(0d702h)		;b42c   ; lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	ld l,a			;b42f   ; L = la columna
-	ld a,(0d703h)		;b430   ; lee la fila del cursor en F2/F3
+	ld a,(0d703h)		;b430   ; lee la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	ld h,a			;b433   ; H = la fila
 	call por_la_fila		;b434   ; por_la_fila:
 	jr por_la_columna		;b437
@@ -2886,7 +2886,7 @@ sale_de_f2:		; al salir de F2: lo elegido a 0xD704; si no se puede cambiar (p10:
 	call no_5_tumbado		;b461   ; no_5_tumbado: en el estado 2 (o con 0xCB31), en el 0x0B o con el dibujo 4, la 5 no se puede
 	jp c,06c77h		;b464   ; sonido_5c: pide el sonido 0x5C
 	ld de,0d70bh		;b467   ; el cursor a 0xD70B
-	ld hl,0d702h		;b46a   ; apunta a la columna del cursor en F2/F3
+	ld hl,0d702h		;b46a   ; apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	ldi		;b46d
 	ldi		;b46f
 	ld de,0cb20h		;b471   ; lo elegido a 0xCB20
@@ -3051,7 +3051,7 @@ sale_de_f3:		; al salir de F3: lo elegido a 0xD704; si no se puede (p10:B5D1, B6
 	call con_d7d5_4		;b59b   ; con_d7d5_4: con el bit 4 de 0xD7D5 y sin el 0 de 0xD7DA, la 2 y la 0x0D no se pueden
 	jp c,06c77h		;b59e   ; sonido_5c: pide el sonido 0x5C
 	ld de,0d70dh		;b5a1   ; el cursor a 0xD70D
-	ld hl,0d702h		;b5a4   ; apunta a la columna del cursor en F2/F3
+	ld hl,0d702h		;b5a4   ; apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	ldi		;b5a7
 	ldi		;b5a9
 	ld de,0cb21h		;b5ab   ; lo elegido a 0xCB21
@@ -3448,7 +3448,7 @@ pon_elegida:		; (DE) = 0xD704
 	ld (de),a			;b87e
 	ret			;b87f
 cosa_del_cursor:		; A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
-	ld a,(0d703h)		;b880   ; lee la fila del cursor en F2/F3
+	ld a,(0d703h)		;b880   ; lee la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	or a			;b883
 	jr z,mas_columna		;b884   ; en la fila 0, la columna
 	ld b,a			;b886
@@ -3457,9 +3457,9 @@ por_c:
 	add a,c			;b888
 	djnz por_c		;b889
 mas_columna:
-	ld hl,0d702h		;b88b   ; apunta a la columna del cursor en F2/F3
+	ld hl,0d702h		;b88b   ; apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	add a,(hl)			;b88e
-	ld hl,0d710h		;b88f   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+	ld hl,0d710h		;b88f   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 	call 0423eh		;b892   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;b895
 	ret			;b896
@@ -3470,7 +3470,7 @@ sale_del_menu:		; con algo elegido, el sonido 0x22; la sala repintada, lo lanzad
 	call sin_lanzados_p10		;b89e   ; lo lanzado a cero
 	xor a			;b8a1
 	ld (0d700h),a		;b8a2   ; guarda el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
-	ld (0d701h),a		;b8a5   ; guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
+	ld (0d701h),a		;b8a5   ; guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6); en el estado 7, su paso (p13:9555)
 	ld (0cb16h),a		;b8a8   ; guarda 1 mientras Snake se da la vuelta
 	inc a			;b8ab
 	ld (0d706h),a		;b8ac   ; 0xD706 = 1
@@ -3518,7 +3518,7 @@ cursor_d70a:		; borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0x
 	ld de,0749ah		;b902
 	ld bc,00818h		;b905
 	call 04767h		;b908   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-	ld a,(0d70ah)		;b90b   ; lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8)
+	ld a,(0d70ah)		;b90b   ; lee 0-1: la opcion de la cosa 7 en F2 (p10:B8F8); en el estado 7, de 0 a 9 por 0xD709 (p13:9799)
 	ld de,0749ah		;b90e
 	or a			;b911
 	jr z,pinta_cursor_d70a		;b912
@@ -3730,7 +3730,7 @@ sprites_cb4b_f2:		; con 0xCB4B: el parpadeo (p10:BAA8), sin sprites y, sobre las
 	call 04266h		;ba5a   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld b,002h		;ba5d
 	ld de,02410h		;ba5f
-	ld hl,0d710h		;ba62   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+	ld hl,0d710h		;ba62   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 cosa_cb4b:
 	push bc			;ba65
 	push de			;ba66
@@ -3795,7 +3795,7 @@ sprites_cb4b_f3:		; con 0xCB4B: el parpadeo, sin sprites y sobre las cosas de la
 	exx			;bac6
 	ld b,000h		;bac7
 	ld de,01c10h		;bac9
-	ld hl,0d710h		;bacc   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099)
+	ld hl,0d710h		;bacc   ; apunta a la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 cosa_cb4b_f3:
 	ld a,(hl)			;bacf
 	or a			;bad0

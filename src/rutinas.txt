@@ -4831,6 +4831,370 @@ p12 0x7F7B lista_de_especial  p56:A623...
 p12 0x7F9A cb74_ff  
 p12 0x7FA0 mueve_ix_0_1  cada 2 cuadros el bit 0 del byte 2 cambia (p12:7FC6); los bytes 0 y 1 de IX + el par de p12:7FBE por el byte 3 (1-4)
 p12 0x7FC6 alterna_byte_2  en los cuadros pares, el bit 0 del byte 2 de IX cambia
+p13 0x8000 presentacion  el estado 1 de la partida: el paso 0xCA2C de la presentacion (1-0x41) por la tabla de p13:800D; desde 0x80, p14:A2CF
+p13 0x808F pres_paso_1  el sonido 0x99, la paleta a negro, el letrero de p13:92B8 y el paso siguiente sin cuenta
+p13 0x80A7 pres_paso_2  la paleta hacia la de p13:9218; al llegar, la cuenta 0x100 y el paso siguiente
+p13 0x80B7 pres_paso_3  espera la cuenta
+p13 0x80BE pres_paso_4  la paleta a negro; al acabar, la pantalla limpia, la paleta a negro, el dibujo de (0x68, 0x80) de 0x40 x 0x30 en (0x40, 0xA0) y 0xCA30-0xCA31 a cero
+p13 0x80E4 pres_paso_5  los sprites de p13:8B28 y la paleta hacia la de p13:9218; al llegar, la cuenta 0x40
+p13 0x80FB pres_paso_6  los sprites de p13:8B28 hasta acabar la cuenta
+p13 0x8109 pres_paso_7  los sprites de p13:8B28, el dibujo de 0xCA31 (p13:8801), cada 8 cuadros 0xCA31 + 4 (de 0 a 0x14) y el texto 0 (p13:8E2F)
+p13 0x8125 pon_ca31  
+p13 0x8126 texto_0  el texto 0
+p13 0x812A pres_paso_8  sin sprites, la pantalla limpia, 0xCA31 = 0x38, un marco de 0x44 x 0x6C en (0x3E, 0x0E) y la cuenta 0x100
+p13 0x8144 pres_cuenta_y_siguiente  la cuenta 0xCA2E-0xCA2F = DE y el paso siguiente
+p13 0x8148 pres_siguiente  0xCA2C uno mas y 0xCA2D = 0
+p13 0x8150 pres_paso_9  el dibujo que crece (p13:899E); al acabar 0xCA31, 5 sprites de p13:8B9E con color 7 y 0xCA30 = 0
+p13 0x8177 pres_paso_10  los 5 sprites parpadean (cada 8 cuadros, p13:8B9E o p13:8BAD) y el texto 1
+p13 0x818F sprites_de_hl  
+p13 0x8194 sprites_fuera  
+p13 0x8197 texto_1  
+p13 0x819C pres_paso_11  sin sprites, la pantalla limpia, el dibujo de (0x38, 0x80) de 0x30 x 0x38 en (0x50, 0x20), 0xCA30 = 0 y p13:8A3B
+p13 0x81B8 pres_paso_12  p13:8A4E y el texto 2
+p13 0x81C4 pres_paso_13  la pantalla limpia, un marco de 0x44 x 0x6C en (0x46, 0x86) y 0xCA31 = 0x28
+p13 0x81DB pres_paso_14  el dibujo de p13:89D8; al acabar 0xCA31, 5 sprites de p13:8BBC con color 7 y 0xCA30 = 0
+p13 0x8202 pres_paso_15  el dibujo de p13:8814, los 5 sprites parpadean (p13:8BBC o p13:8BCB) y el texto 3
+p13 0x8220 sprites_de_hl_15  
+p13 0x8225 sprites_fuera_15  
+p13 0x8228 texto_3  
+p13 0x822D pres_paso_16  sin sprites, la pantalla limpia, un marco de 0x44 x 0x64 en (0x3E, 0x0E) y 0xCA31 = 0x20
+p13 0x8247 pres_paso_17  el dibujo de p13:89C5; al acabar 0xCA31, 5 sprites de p13:8BDA con color 7
+p13 0x826E pres_paso_18  el dibujo de p13:884A, los 5 sprites parpadean (p13:8BDA o p13:8BE9) y el texto 4
+p13 0x828C sprites_de_hl_18  
+p13 0x8291 sprites_fuera_18  
+p13 0x8294 texto_4  
+p13 0x8299 pres_paso_19  sin sprites, la figura 0 (p13:8CE0) y la cuenta 0x20
+p13 0x82A6 pres_paso_20  espera la cuenta
+p13 0x82AD pres_paso_21  la figura 0 (p13:8DAA) hasta que 0xCA30 llega a 0; la cuenta 0x20
+p13 0x82BC pres_paso_22  al acabar la cuenta: pantalla y sprites apagados, la pagina 0 borrada, el color 0x0E = 0x40, 2 sprites de p13:8C40 de color 7, el marco de p13:900C, el dibujo de (0xD0, 0x90) de 0x30 x 0x30 en (0x50, 0x30) con la operacion 0xC8, todo encendido y la cuenta 0x80
+p13 0x830A pres_paso_23  los 2 sprites parpadean; al acabar la cuenta, sin sprites, la figura 1 y la cuenta 0x20
+p13 0x8322 sprites_fuera_23  
+p13 0x8325 cuenta_23  
+p13 0x8337 pres_paso_24  espera la cuenta
+p13 0x833E pres_paso_25  la figura 1 (p13:8DAA) hasta que 0xCA30 llega a 0; la cuenta 0x20
+p13 0x834E pres_paso_26  al acabar la cuenta: sin sprites, p13:887E de (0xC0, 0xC0), 2 sprites de p13:8C61 de color 7 y 0xCA30 = 0
+p13 0x837A pres_paso_27  0xCA30 de 0 a 0x5F, el dibujo de p13:8871, los 2 sprites parpadean y el texto 5
+p13 0x8385 dibujo_8871  
+p13 0x839C sprites_fuera_27  
+p13 0x839F texto_5  
+p13 0x83A4 pres_paso_28  la figura 2 y la cuenta 0x20
+p13 0x83AF pres_paso_29  espera la cuenta
+p13 0x83B6 pres_paso_30  la figura 2 hasta que 0xCA30 llega a 0; la cuenta 0x20
+p13 0x83C6 pres_paso_31  al acabar la cuenta: todo apagado, la pagina 0 borrada, la paleta de p13:8F5E, el dibujo de (0, 0x80) de 0x38 x 0x58 en (0x50, 0x10), las barras 0 (en Y 0x18) y 4 (en 0x40) de p13:9D01, una raya de 0x48 en (0x50, 0x18), 6 sprites de p13:8CC8 de color 5, todo encendido y la cuenta 0x20
+p13 0x842A pres_paso_32  p13:90AE hasta acabar la cuenta
+p13 0x8434 pres_paso_33  la cuenta, p13:90AE, p03:B8AC y el texto 6
+p13 0x8442 pres_paso_34  sin sprites, la pantalla limpia, p03:B866 con 0 y con 1, la paleta de p13:8F83, un marco de 0x44 x 0x6C en (0x46, 0x86) y 0xCA31 = 0x28
+p13 0x846B pres_paso_35  el dibujo de p13:89F6; al acabar 0xCA31, 2 sprites de p13:8C55 de color 7
+p13 0x8492 pres_paso_36  los 2 sprites parpadean (p13:8C55 o p13:8C5B) y el texto 7
+p13 0x84AA sprites_de_hl_36  
+p13 0x84AF sprites_fuera_36  
+p13 0x84B2 texto_7  
+p13 0x84B7 pres_paso_37  la figura 3 y la cuenta 0x20
+p13 0x84C2 pres_paso_38  espera la cuenta
+p13 0x84C9 pres_paso_39  la figura 3 hasta que 0xCA30 llega a 0; la cuenta 0x20
+p13 0x84D9 pres_paso_40  espera la cuenta
+p13 0x84E0 pres_paso_41  sin sprites, la pantalla limpia, el marco de p13:900C en (0x46, 0x86), el dibujo de (0xA8, 0) de 0x40 x 0x50 en (0x48, 0x98) y la cuenta 0x20
+p13 0x8500 pres_paso_42  un sprite de p13:8C46 de color 7; al acabar la cuenta, 0xCA30 y 0xE900 a cero y 0xCA32 = 0xFF
+p13 0x852A pres_paso_43  el sprite parpadea con el dibujo de 0xE900 (p13:8C46, 8C49 o 8C4C) y p13:88A9; al acabar, 2 sprites de p13:8C67 de color 7
+p13 0x8548 sprite_de_hl_43  
+p13 0x854D sprite_fuera_43  
+p13 0x8550 pres_43_88a9  
+p13 0x8577 pres_paso_44  los 2 sprites parpadean, 0xCA30 uno menos y el texto 8
+p13 0x858B sprites_fuera_44  
+p13 0x858E texto_8  
+p13 0x8597 pres_paso_45  sin sprites, la pantalla limpia, un marco de 0x44 x 0x64 en (0x3E, 0x0E) y 0xCA31 = 0x28
+p13 0x85B1 pres_paso_46  el dibujo de p13:8A14; al acabar 0xCA31, 2 sprites de p13:8BF8 de color 7
+p13 0x85D8 pres_paso_47  los 2 sprites parpadean (p13:8BF8 o p13:8BFE) y el texto 9
+p13 0x85F0 sprites_de_hl_47  
+p13 0x85F5 sprites_fuera_47  
+p13 0x85F8 texto_9  
+p13 0x85FD pres_paso_48  sin sprites, la figura 4 y la cuenta 0x20
+p13 0x860B pres_paso_49  espera la cuenta
+p13 0x8612 pres_paso_50  la figura 4 hasta que 0xCA30 llega a 0; la cuenta 0x20
+p13 0x8622 pres_paso_51  al acabar: sin sprites, la pantalla limpia, el marco de p13:900C, el dibujo de (0xA8, 0x50) de 0x28 x 0x48 en (0x48, 0x28) y la cuenta 0x20
+p13 0x8646 pres_paso_52  al acabar la cuenta: los sprites 2-6 de p13:8C04 con sus colores de p13:8CB5, 2 sprites de p13:8C4F de color 7 y la cuenta 0 (0x10000)
+p13 0x8680 pres_paso_53  la cuenta; cada 4 cuadros (8 hasta 0xFF00) 0xCA30 de 0 a 2 y p13:8984; desde 0xFF00, los sprites 2-6 de p13:8C04, 8C18 o 8C2C por 0xCA30 (colores de p13:8CB5, 8CBE, 8CC3); antes, fuera; los 2 de p13:8C4F parpadean por la cuenta; el texto 0x0A
+p13 0x868E pres_53_cada  
+p13 0x869F pres_53_8984  
+p13 0x86A2 pres_53_sprites  
+p13 0x86C4 sprites_2_6  
+p13 0x86D6 sprites_2_6_fuera  
+p13 0x86DE pres_53_parpadeo  
+p13 0x86F2 sprites_fuera_53  
+p13 0x86F5 texto_0a  
+p13 0x86FA pres_paso_54  sin sprites, la pantalla limpia y la cuenta 0x40
+p13 0x8706 pres_paso_55  al acabar la cuenta, 0xCA30 = 0 y la cuenta 0 (0x10000)
+p13 0x8714 pres_paso_56  la cuenta; cada 16 cuadros, p13:9046 y p13:906F con 0xCA30 uno mas; al llegar a 9, la cuenta 0x80 y el paso siguiente
+p13 0x8734 pres_paso_57  espera la cuenta
+p13 0x873B pres_paso_58  la paleta a negro (p13:90F7)
+p13 0x8742 pres_paso_59  la pantalla limpia, la paleta a negro y p13:8A2D
+p13 0x8754 pres_paso_60  la paleta hacia la de p13:9238; al llegar, 12 sprites de p13:8C6D de color 7 y la cuenta 0xFF
+p13 0x8780 pres_paso_61  los 12 sprites, fuera mientras la cuenta pasa de 0x40, luego parpadean (p13:8C6D o p13:8C91); al acabar la cuenta, la paleta de p13:9258 (p13:91F0)
+p13 0x879F sprites_de_hl_61  
+p13 0x87A4 sprites_fuera_61  
+p13 0x87A7 cuenta_61  
+p13 0x87B1 pres_paso_62  cada 2 cuadros la paleta hacia la de p13:9278; al llegar, sin sprites y el mapa de bits de p57:8098
+p13 0x87C7 pres_paso_63  cada 8 cuadros la paleta se aleja de la de p13:9298 (p13:9177 con 1); al llegar, la cuenta 0x100
+p13 0x87DC pres_paso_64  al acabar la cuenta, la orden 0xF6 al sonido
+p13 0x87E6 pres_paso_65  cada 4 cuadros la paleta a negro; al acabar, 0xCA2C = 0: la presentacion se acaba
+p13 0x87F5 pres_cuenta  0xCA2E-0xCA2F uno menos; Z al llegar a 0
+p13 0x8801 dibujo_de_ca31  el dibujo de (0x38 + 0xCA31, 0xB8) de 0x10 x 0x10 en (0x70, 0xC8)
+p13 0x880F copia_de_pagina_1  copia HL a DE, C x B, de la pagina 1
+p13 0x8814 dibujo_de_ca30  el dibujo (0xCA30 / 8 & 0x0F) de p13:882A de 0x28 x 0x20 en (0x5F, 0xC8)
+p13 0x884A dibujo_8861  el dibujo (0xCA30 / 0x10 & 7) de p13:8861 de 0x20 x 0x20 en (0x50, 0x28), por p13:8811 con la A que deja p00:43F6
+p13 0x8871 dibujo_8889  el dibujo (0xCA30 / 4 & 0x0F) de p13:8889 (p13:887E)
+p13 0x887E dibujo_en_5010  el dibujo de HL de 0x20 x 0x20 en (0x50, 0x10) con la operacion 0xC8
+p13 0x88A9 dibujos_8903  cada 8 cuadros, 0xCA32 uno mas y su numero de p13:8903 (0xFF: Z, se acaba): los 5, 6 y 8 suman uno a 0xE900; su fila de 12 bytes de p13:8918, dos copias de la pagina 3 [ancho][alto][destino][origen] (0: nada); NZ
+p13 0x88DB copia_8918  ...y la segunda
+p13 0x88F6 sin_copia  salta los 6 bytes
+p13 0x88FE e900_mas_1  
+p13 0x8984 dibujo_8998  el dibujo 0xCA30 de p13:8998 de 0x18 x 0x30 en (0x50, 0x28) de la pagina 3
+p13 0x899E abre_8068  con 0xCA31 (uno menos cada vez): el dibujo de (0x68, 0x40 - lo que va) de la pagina 1 en (0x40, 0x10), de 0x40 de ancho y 0x40 + lo que va de alto (hasta 0x68)
+p13 0x89B0 abre_8068_b  
+p13 0x89BF abre_8068_c  
+p13 0x89C5 baja_1000  con 0xCA31 (uno menos cada vez): el dibujo de (0x10, 0xCA31) de 0x40 x 0x60 en (0x40, 0x10)
+p13 0x89D8 abre_1800  con 0xCA31: el dibujo de (0x40 - lo que va, 0x18) de 0x40 x 0x68 en (0x48, 0x88)
+p13 0x89EA abre_1800_b  
+p13 0x89F6 abre_0000  con 0xCA31: el dibujo de (0x20 - lo que va, 0) de 0x40 x 0x40 en (0x48, 0xB0)
+p13 0x8A08 abre_0000_b  
+p13 0x8A14 abre_1030  con 0xCA31: el dibujo de (0x30 + lo que va, 0x10) de 0x40 x 0x60 en (0x40, 0x10)
+p13 0x8A2D dibujo_grande  el dibujo de (0, 0) de la pagina 1, 0xA8 x 0x80, en (0x10, 0x40)
+p13 0x8A3B barras_empiezan  las 20 barras [direccion][alto] de p13:8B00 a 0xE900
+p13 0x8A43 barra_empieza  
+p13 0x8A4E barras_cada_cuadro  las 20 barras de 0xE900 suben o bajan (las 10 primeras entre 1 y 0x0F; las otras entre 1 y 0x16, cambiando de direccion en los topes) y se pintan: las de arriba en (0x64, 0x40) de color 0xCC sobre 0x10, las de abajo en (0x64, 0x26) desde 0x18
+p13 0x8A54 barra_arriba  
+p13 0x8A67 barra_arriba_sube  sube
+p13 0x8A73 barra_arriba_siguiente  
+p13 0x8A78 barra_abajo  
+p13 0x8A8B barra_abajo_sube  
+p13 0x8A97 barra_abajo_siguiente  
+p13 0x8AA1 pinta_barra_arriba  
+p13 0x8AD1 pinta_barra_abajo  
+p13 0x8B28 sprites_8b53  los 5 sprites de la fila (0xCA30 / 8 & 3) * 12 de p13:8B53 a 0xDC00 y sus colores de p13:8B83 (rachas)
+p13 0x8B41 sprite_8b53  Y, X, patron
+p13 0x8B88 sprites_b_fuera  B sprites desde DE fuera (Y = 0xE0)
+p13 0x8B8A sprite_b_fuera  
+p13 0x8B92 sprites_de_tabla  B sprites de HL [Y][X][patron] a DE (de 4 en 4)
+p13 0x8CE0 figura_empieza  la figura A de p13:8D05: 0xCA31 = 0, 0xCA30 = su primer byte y sus 10 sprites de color 7
+p13 0x8DAA figura_se_mueve  la figura C: 0xCA31 uno menos, sus colores a 7 o 0 por el bit 2 (parpadeo); cada 0x20 cuadros, 0xCA30 uno menos y, desde 4, los 10 sprites movidos por los pares de la tabla de p13:8DED
+p13 0x8DB7 colores_de_figura  
+p13 0x8DDD mueve_sprite_figura  la Y + el primero
+p13 0x8E2F texto_de_ca3b  el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
+p13 0x8E44 texto_paso_0  los punteros del texto y 0x40 de espera
+p13 0x8E4B texto_espera  espera 0xCA32
+p13 0x8E51 texto_ca32  
+p13 0x8E54 texto_siguiente  0xCA2D uno mas
+p13 0x8E59 texto_linea_1  cada 4 cuadros una letra de la primera linea (p13:8EB9); al acabar, el paso siguiente
+p13 0x8E69 texto_linea_2  cada 8 cuadros una letra de la segunda linea (p13:8ED6)
+p13 0x8E79 texto_espera_256  256 cuadros (desde 0)
+p13 0x8E81 texto_acaba  el paso siguiente de la presentacion
+p13 0x8E88 punteros_del_texto  por 0xCA3B: el sitio de la primera linea de p13:8FB4 a 0xCA33, sus letras de p13:8FE0 a 0xCA35, el de la segunda de p13:8FCA a 0xCA37 y sus letras de p13:8FF6 a 0xCA39
+p13 0x8EB9 letra_linea_1  con el banco 53: la letra de 0xCA35 en el sitio 0xCA33 (p13:8EF4); con 0xFF, Z; si no, los dos avanzan y NZ
+p13 0x8ED6 letra_linea_2  con el banco 53: la letra de 0xCA39 (dos mitades, p13:8F22) en 0xCA37; con 0xFF, Z
+p13 0x8EF2 sin_carry  
+p13 0x8EF4 copia_letra  la letra HL (p13:8F0A) de la pagina 2, 8 x 8, a DE; D + su ancho (el byte siguiente)
+p13 0x8F0A sitio_de_letra  HL = el sitio de la letra (bits 5-7 * 8 en Y, 0x40 menos en el paso 0x21; bits 0-4 * 8 en X)
+p13 0x8F1A sitio_de_letra_x  
+p13 0x8F22 copia_letra_doble  la letra de HL y la de debajo, 8 x 8 cada una, de la pagina 2 a DE y DE + 8 en Y
+p13 0x8F5B suma_ancho_letra  
+p13 0x900C marco_con_rejilla  en HL, un marco de 0x48 x 0x68 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
+p13 0x901C raya_horizontal  
+p13 0x9032 raya_vertical  
+p13 0x9046 marco_de_ca30  un marco de 0x34 x 0x44 de color 6 en el sitio 0xCA30 de p13:905D
+p13 0x906F dibujo_de_ca30_b  el dibujo 0xCA30 de p13:908A [destino][origen], 0x30 x 0x40 de la pagina 1
+p13 0x90AE mueve_sprites_2_5  los sprites 2-5 movidos por el par (cuenta / 0x20 & 7) de p13:90E7 y los sprites 0-1 de p13:8CC8 o p13:8CDA por el bit 2 de la cuenta
+p13 0x90C3 mueve_sprite_2_5  la Y + el primero
+p13 0x90F7 a_negro_cada_4  cada 4 cuadros de la cuenta, p13:90FD
+p13 0x90FD paleta_a_negro  los 16 colores de la paleta de la VRAM (0xF680) uno menos en cada parte; NZ mientras quede alguno
+p13 0x9104 color_a_negro  
+p13 0x911C rojo_azul_menos  D = E con el rojo (nibble alto) y el azul (bajo) uno menos
+p13 0x9123 rojo_menos  
+p13 0x912A azul_menos  
+p13 0x912D verde_menos  E = el verde uno menos
+p13 0x9133 pon_verde  
+p13 0x9135 color_uno_menos  el color B de la VRAM de HL uno menos (p13:911C, p13:912D) y puesto en la paleta
+p13 0x9152 paleta_negra  en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
+p13 0x9165 color_negro  
+p13 0x916F paleta_hacia_cada_8  cada 8 cuadros de la cuenta, p13:9175
+p13 0x9175 paleta_hacia  la paleta de 0xE900 un paso hacia la de DE (con A = 1, hacia el otro lado) y puesta; NZ mientras no sea igual
+p13 0x9177 paleta_un_paso  
+p13 0x9180 paso_de_color  el rojo
+p13 0x9196 suma_rojo  
+p13 0x9198 color_azul  
+p13 0x91AE suma_azul  
+p13 0x91B0 pon_rojo_azul  
+p13 0x91C9 suma_verde  
+p13 0x91CB pon_verde_b  
+p13 0x91D8 compara_paleta  igual?
+p13 0x91E7 pon_paleta_e900  
+p13 0x91F0 paleta_9258  en 0xE900, la paleta de p13:9258 ([n][rojo-azul][verde]) y 0xFF
+p13 0x92D1 pantalla_de_56  con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0x48 x 0xA8 a 0 en (0x40, 0x28) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
+p13 0x932F pantalla_de_56_baja  cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x40, 0x28) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
+p13 0x9341 pantalla_56_rect  0x31 - 0xCA13 de alto
+p13 0x9351 piezas_de_lista  las piezas de la lista HL en DE: cada byte una pieza (p00:49FB) y el caracter siguiente; 0xFE [x]: otra fila 8 mas abajo y X + x; 0xFF se acaba
+p13 0x9352 pieza_de_lista  
+p13 0x9366 pon_pieza_lista  
+p13 0x936F fin_de_piezas  
+p13 0x9371 fundido_1_empieza  el fundido 1 (a negro): 0xCADA = 1, la velocidad C en 0xCADB, 0xCADC = 0 y la paleta de HL (0x31 bytes) a 0xE900
+p13 0x9387 fundido_1  con el fundido 1, cada C cuadros cada color uno menos en las tres partes y la paleta puesta; al quedar todo a 0, 0xCADA = 0; 0xCADC de 0 a 2
+p13 0x9397 color_menos  
+p13 0x93AE fundido_1_acaba  todo a 0?
+p13 0x93BC color_un_paso_menos  el rojo, el azul y el verde uno menos (si no estan a 0)
+p13 0x93C4 rojo_un_menos  el nibble alto uno menos
+p13 0x93D2 azul_un_menos  el nibble bajo uno menos
+p13 0x93DA verde_un_menos  
+p13 0x93DD todo_negro  con todos los colores de 0xE900 a 0, 0xCADA = 0
+p13 0x93E2 color_negro_b  
+p13 0x93F2 fundido_acaba  
+p13 0x93F7 fundido_2_empieza  el fundido 2 (desde negro): 0xCADA = 2, la velocidad C, la paleta de HL a 0xE900 con los colores a 0
+p13 0x9412 color_a_0  
+p13 0x941A fundido_2  con el fundido 2, cada C cuadros cada color de 0xE900 un paso hacia el de DE y la paleta puesta; al ser iguales, 0xCADA = 0
+p13 0x942C color_hacia  
+p13 0x9448 fundido_2_acaba  
+p13 0x9457 color_un_paso_hacia  el rojo, el azul y el verde un paso hacia los de DE
+p13 0x945F rojo_hacia  el nibble alto uno mas hasta el de DE
+p13 0x946E pon_rojo_hacia  
+p13 0x9475 azul_hacia  el nibble bajo uno mas hasta el de DE
+p13 0x9483 pon_azul_hacia  
+p13 0x948A verde_hacia  
+p13 0x948E paleta_igual  con 0xE900 igual a DE (hasta 0xFF), 0xCADA = 0
+p13 0x9493 compara_color  
+p13 0x949E paleta_igual_acaba  
+p13 0x94A3 fundido_3_empieza  el fundido 3 (a blanco): 0xCADA = 3, la velocidad C y la paleta de HL a 0xE900
+p13 0x94B5 fundido_3  con el fundido 3, cada C cuadros cada color uno mas hasta 7 y la paleta puesta; con todo a 7, 0xCADA = 0
+p13 0x94C6 color_mas  
+p13 0x94DD fundido_3_acaba  
+p13 0x94E1 color_un_paso_mas  el rojo, el azul y el verde uno mas hasta 7
+p13 0x94E9 rojo_un_mas  
+p13 0x94F9 azul_un_mas  
+p13 0x9503 verde_un_mas  
+p13 0x9506 todo_blanco  con todos los colores a 7, 0xCADA = 0
+p13 0x951B siguiente_blanco  
+p13 0x951D blanco_acaba  
+p13 0x9522 dibujos_de_54  con el banco 54: los dibujos de p54:BF21 en 0x4000 y los de p54:BF8B en 0x6000 (colores de p54:BEA0)
+p13 0x953A dibujos_de_54_b  con el banco 54: los dibujos de p54:BFCD en 0x6000
+p13 0x9549 rachas_de_54  con el banco 54: las rachas de p54:A188 (p00:4534)
+p13 0x9555 estado_7_cada_cuadro  el estado 7: 0xD705 uno mas y el paso 0xD701 por la tabla de p13:955F (31)
+p13 0x959D est7_paso_0  R#0 = 6, el fundido 1 de la paleta de p13:9FC1 (cada cuadro), la orden 0xF6 al sonido y el paso siguiente
+p13 0x95B0 est7_paso_1  el fundido 1; al acabar, la cuenta 0xD713 = 0x1A4, todo apagado, la pagina 0 a la vista, las paginas 0-2 borradas, sin sprites y el paso siguiente
+p13 0x95D6 est7_paso_2  la cuenta 0xD713 (a 0xB4, el sonido 0x98); al acabar: todo apagado, los rectangulos de 0x77 (p13:962E), la paleta de p13:9FF2, todo encendido, las letras de p58:B093, los dibujos de p52:8114, los de p54 (p13:9522), el mosaico de p54:BB4A, las rachas de p54:A188, 0xD703 = 6, 0xD70B = 1, 0xD70C = 0 y el paso siguiente
+p13 0x960E est7_siguiente  0xD701 uno mas
+p13 0x9613 sonido_a_b4  con la cuenta 0xD713 en 0xB4, el sonido 0x98
+p13 0x9620 borra_paginas_0_2  las paginas 2, 1 y 0 a 0
+p13 0x9625 borra_paginas_0_1  
+p13 0x962A borra_pagina_0_b  
+p13 0x962E rectangulos_77  en las paginas 0 y 1, un rectangulo de 0x58 x 0x80 del color 0x77 en (0x40, 0x40)
+p13 0x9632 rectangulo_77_1  
+p13 0x9634 rectangulo_77_a  en (0x40, 0x40)...
+p13 0x9640 est7_paso_3  p13:9EC8, p13:9DA7 y p13:9D0D; cada 4 cuadros (0xD703): R#23 = 0xD706, las dos lineas de p13:9674 y p13:9685 y 0xD706 uno mas; a 0x58, el paso siguiente
+p13 0x9668 r23_de_d706  R#23 (el desplazamiento vertical) = 0xD706, tras esperar al VDP
+p13 0x9674 linea_de_d706  la linea 0x40 + 0xD706 de la pagina 1 (desde (0, 0x40)) con YMMM
+p13 0x9685 linea_de_d706_b  la linea 0x40 + (0xD706, o 0xD706 - 0x58) a la 0x98 + 0xD706 de la pagina 1 con YMMM
+p13 0x9692 linea_de_d706_c  
+p13 0x96A3 est7_paso_4  p13:9EC8, p13:9DA7 y p13:9D0D; a los 2 cuadros, el rectangulo de 0x77 en la pagina 1 y el paso siguiente
+p13 0x96B9 est7_paso_5  lo mismo que el 3 cada 2 cuadros; en 0x84 la orden 0xF6 al sonido; a 0xB0, 0xD703 = 0x40 y el paso siguiente
+p13 0x96E7 est7_paso_6  p13:9DA7; a los 0x40 cuadros, 0xD703 = 8, 0xD706 = 7 y el paso siguiente
+p13 0x96F9 est7_paso_7  cada 6 cuadros 0xD706 uno menos y el color 7 = (n, n, n) (p13:9708); a 0, el paso siguiente
+p13 0x9708 color_7_gris  el color 7 de la paleta con rojo, azul y verde = A
+p13 0x9715 est7_paso_8  todo apagado, la pagina 0 borrada, R#23 = 0, sin sprites, la paleta de p13:A01D, el mosaico de p54:BBD5, todo encendido, el sonido 0xA3, 0xD709 = 0xC0, 0x80 cuadros
+p13 0x9741 est7_paso_9  p13:9F4C; a los 0x80 cuadros, 4 y el paso siguiente
+p13 0x974E est7_paso_10  p13:9EFD y p13:9F4C; cada 4 cuadros 0xD709 uno menos; por debajo de 0x80, 0xD70A = 0 y el paso siguiente
+p13 0x976B est7_paso_11  p13:9F29 y p13:9F4C; cada 6 cuadros (0x12 desde el 6 de 0xD70A), 0xD70A por p13:9799 y, por debajo de 6, 0xD709 uno menos; desde 9, 0xD70A = 9 y el paso siguiente
+p13 0x9781 est7_11_d70a  
+p13 0x978E est7_11_hasta_9  hasta 9
+p13 0x9799 d70a_de_d709  C = el escalon de 0xD709 (p13:97A9); por debajo de 6, 0xD70A = C; desde 6, 0xD70A uno mas
+p13 0x97A6 d70a_mas  
+p13 0x97A9 escalon_de_d709  C = 0 desde 0x7C, 1 desde 0x78, 2 desde 0x74, 3 desde 0x70, 4 desde 0x6E, 5 desde 0x6C, 6 por debajo
+p13 0x97C6 est7_paso_12  0x80 cuadros y el paso siguiente
+p13 0x97CE est7_paso_13  p13:9F29 y p13:9F4C durante 0x80 cuadros
+p13 0x97DE est7_paso_14  p13:9F4C; a los 0x80 cuadros: sin sprites, 0xD706 = 0, (0x38, 0x40) de 0x60 x 0x80 copiado a (0, 0) de la pagina 2, (0x60, 0) de 0xA0 x 0x90 a 0 en la pagina 2, 0xD70F-0xD710 = 0, el mosaico de p57:AA98 (y en 0xD711)
+p13 0x981F est7_paso_15  cada 16 cuadros el mosaico siguiente (p13:9871); cada cuadro, la otra pagina: (0x38, 0x38) de 0x60 x 0x90 a 0, el dibujo de (0, 0) de la pagina 2 encima, el de (0x90 + 0xD70F, 0) con la operacion 0x88 y esa pagina a la vista
+p13 0x9871 mosaico_que_sube  la cuenta a 0, (0xA0, 0) de 0x60 x 0x90 a (0x90, 0) de la pagina 2 y el mosaico 0x12 mas alla de p57; con su byte a 0, 0xD703 = 0xFF, los dibujos de p54:BFCD y el paso siguiente
+p13 0x9896 mosaicos_acaban  
+p13 0x98A1 est7_paso_16  a los 0xFF cuadros, el fundido 1 de p13:A01D y la orden 0xF6 al sonido
+p13 0x98B4 est7_paso_17  el fundido 1; al acabar: todo apagado, sin sprites, las paginas 0 y 1 borradas, la pagina 0 a la vista, la paleta de p13:A01D, los recuadros de p13:98EA, 0xD706, 0xD702 y 0xD703 a cero
+p13 0x98EA recuadros_bb  en la pagina 1: (0x30, 0x50) de 0x40 x 0x70 del color 0xBB, (0x30, 0xC0) de 0x40 x 0x40 a 0 y el mosaico de p54:BC95
+p13 0x9910 est7_paso_18  a los 256 cuadros, 0xF0 y el paso siguiente
+p13 0x991A est7_paso_19  espera la cuenta
+p13 0x9922 est7_paso_20  los mensajes del estado 7 por 0xD702 (p13:9928): el mensaje 0xD706 de p50:8042 abajo, hasta que acaba, 0xC0 cuadros, el siguiente; al 6, la raya de p13:99A4; al 0x13, (0xC0, 0) de 0x40 a 0 en la pagina 2, el fundido 1 de p13:A01D y el paso siguiente
+p13 0x9930 mensaje_d706  el mensaje 0xD706 de p50:8042...
+p13 0x9936 est7_dentro_siguiente  0xD702 uno mas
+p13 0x993B mensaje_hasta_acabar  
+p13 0x994A mensaje_siguiente  a los 0xC0 cuadros, el mensaje siguiente; en el 6, p13:998A; abajo a 0 (0x28 x 0xE8 en (0x98, 8)); en el 0x13, se acaba
+p13 0x998A raya_empieza  el paso 3 de dentro (la raya), 0xD717 = 0, (0x30, 0x40) de 0x60 x 0x80 del color 0xBB en la pagina 0 y el sonido 0x3F
+p13 0x99A4 raya_baja  0xD717 uno mas: hasta 0x20, la linea (0x30, 0x50 + 0xD717) de la pagina 1 a (0x48, 0x20) con YMMM; luego (0x70, 0x60) de 8 x 0x48 a (0x68, 0x60) y el paso de dentro 0
+p13 0x99BA raya_acaba  de (0x70, 0x60)...
+p13 0x99CE est7_paso_21  el fundido 1; al acabar, la pagina 0 borrada y 0x40 cuadros
+p13 0x99E3 est7_paso_22  a los 0x40 cuadros: 6, 0xD706 = 0, la forma de p54:BCD3 en (0x55, 0x70) y el sonido 0xA4
+p13 0x9A01 est7_paso_23  cada 6 cuadros 0xD706 uno mas y el color 7 gris; a 7, 0x80 cuadros y el paso siguiente
+p13 0x9A17 gris_a_7  
+p13 0x9A1F est7_paso_24  espera la cuenta y 6
+p13 0x9A29 est7_paso_25  cada 6 cuadros 0xD706 uno menos y el color 7 gris; a 0, las paginas 0 y 1 borradas y 0x40 cuadros
+p13 0x9A3B gris_a_0  
+p13 0x9A46 est7_paso_26  a los 0x40 cuadros, el color 7 = (6, 7, 6), 0xD71D = 0 y el paso siguiente
+p13 0x9A5B est7_paso_27  los dibujos del estado 7 por 0xD702 (p13:9A61): el dibujo 0xD706 (de p13:9C59, o las copias de 0x0A-0x0C), su fundido 2 (p13:9CB4), su mosaico de p54 por piezas (p13:9C80, p13:9C9A), el fundido 1 y el siguiente; desde 0x0C, el paso siguiente
+p13 0x9A73 dibujo_d706  la paleta de p13:A156; el dibujo 0xD706 (0x0A, 0x0B y 0x0C copias de la pagina 1 o 2; los otros p13:9D01 con los 3 bytes de p13:9C59) y el fundido 2 hacia su paleta de p13:9CB4
+p13 0x9A9E fundido_de_d706  
+p13 0x9AAC dibujo_0a  (0, 0x20) de 0x58 x 0x40 a (0x40, 0x88) de la pagina 1
+p13 0x9ABC dibujo_0b  (0, 0) de 0xA8 x 0x80 a (0x10, 0x10) de la pagina 1
+p13 0x9ACC dibujo_0c  (0, 0xA0) de 0x70 x 0x58 a (0x30, 0x20) de la pagina 2
+p13 0x9ADC dibujo_fundido  p03:B8AC y el fundido 2 hacia la paleta de p13:9CB4; al acabar, el siguiente y 0x20 cuadros
+p13 0x9AFB dibujo_mosaico  p03:B8AC; a los 0x20 cuadros, 8, el mosaico de p13:9C80 a 0xD718 y su sitio de p13:9C9A a 0xD71B
+p13 0x9B28 mosaico_por_piezas  p03:B8AC; cada 8 cuadros, el mosaico de 0xD718 en 0xD71B y la X + el byte siguiente; con 0xFF, en el dibujo 7 dos veces el de p54:BE19 en (0x40, 0x38); si no, 0xFF cuadros y el siguiente
+p13 0x9B54 mosaico_acaba  
+p13 0x9B74 mosaico_espera  
+p13 0x9B7C dibujo_siguiente  p03:B8AC; a los 0xFF cuadros, 6: desde 0x0C, el paso siguiente; si no, el siguiente de dentro, 0xD706 uno mas (p13:9BA3) y el fundido 1 de su paleta
+p13 0x9BA3 d706_mas  0xD706 uno mas: en el 0x0A, los dibujos de p00:4CA6 y p04:8957; en el 0x0B, el mapa de bits de p57:8098 en 0x8000
+p13 0x9BB5 mapa_de_8098  
+p13 0x9BBB dibujo_apaga  p03:B8AC y el fundido 1; al acabar: todo apagado, la pagina 0 borrada, p03:B866 con 0 y 1, todo encendido; salvo en el 0x0C, el paso de dentro 0; en el 0x0C, el color 7 a negro, 0xD717 = 0 y la forma de p54:BCDB en (0x58, 0x74)
+p13 0x9BE6 dibujo_0c_final  
+p13 0x9C02 gris_sube  cada 6 cuadros 0xD717 uno mas y el color 7 gris; a 7, 0x80 cuadros y el siguiente
+p13 0x9C18 gris_sube_acaba  
+p13 0x9C20 gris_espera  
+p13 0x9C2A gris_baja  cada 6 cuadros 0xD717 uno menos y el color 7 gris; a 0: todo apagado, las paginas 0 y 1 borradas, el mapa de bits de p00:6EC0, todo encendido, el paso de dentro 0 y la paleta de p13:A06D
+p13 0x9C3C gris_baja_acaba  
+p13 0x9C56 est7_27_acaba  
+p13 0x9CCE est7_paso_28  el fundido 3 (a blanco) de p13:A06D cada 2 cuadros y la orden 0xF6 al sonido
+p13 0x9CDC est7_paso_29  el fundido 3; al acabar, 0xFF cuadros
+p13 0x9CEE est7_paso_30  a los 0xFF cuadros, el estado 0 de la partida (paso 0), 0xCAAF = 0 y 0xD700 = 0
+p13 0x9D01 barra_de_9d01  p00:7B48 y p03:B814 (A, DE, B)
+p13 0x9D0D piezas_que_cambian  las piezas que cambian cada 16 cuadros segun 0xD706 (p13:9D18, 9D3A, 9D5D, 9D85)
+p13 0x9D18 pieza_a1a0  con 0xD706 entre 0x10 y 0x5F: la pieza 0x55 o 0x56 (cada 16 cuadros) en (0xA0, 0xA1)
+p13 0x9D2D pon_pieza_a1a0  
+p13 0x9D3A pieza_c948  con 0xD706 entre 0x38 y 0x87: la pieza 0x5C o 0x5F en (0x48, 0xC9)
+p13 0x9D50 pon_pieza_c948  
+p13 0x9D5D piezas_c9a8  con 0xD706 entre 0x38 y 0x87: las piezas 0x5D-0x5E o 0x60-0x61 en (0xA8, 0xC9)
+p13 0x9D75 pon_piezas_c9a8  
+p13 0x9D85 pieza_d158  con 0xD706 entre 0x40 y 0x8F: la pieza 0x57 o 0x58 en (0x58, 0xD1)
+p13 0x9D9A pon_pieza_d158  
+p13 0x9DA7 particulas  las 22 fichas de 0x10 bytes de 0xCB00 (usadas aqui para otra cosa): una nueva (p13:9E3B), se mueven (p13:9DB1) y sus sprites (p13:9DFB)
+p13 0x9DB1 mueve_particulas  22 fichas de 0x10 bytes desde 0xCB00
+p13 0x9DB7 mueve_particula  
+p13 0x9DC0 siguiente_particula  la siguiente (0x10 bytes)
+p13 0x9DC8 mueve_una  la ficha IX: la Y (16 bits en +1) + su velocidad (+5) y la X (+3) + la suya (+7); fuera de 0x40-0xBF en X, libre
+p13 0x9DF6 particula_fuera  ...libre
+p13 0x9DFB sprites_de_particulas  los sprites desde el 10 a 0 y uno por ficha (p13:9E2A); los colores desde el sprite 10 a 0x0F
+p13 0x9E0D sprite_de_particula  
+p13 0x9E18 siguiente_sprite_particula  
+p13 0x9E2A sprite_particula  el sprite en (la Y + 0xD706, la X) con el patron del byte 9
+p13 0x9E3B particula_nueva  0xD70C de 0 a 7; en la primera ficha libre de 0xCB00, una nueva (p13:9E5D) con la velocidad y el patron de la fila 0xD70C de p13:9EA0
+p13 0x9E4A busca_libre  
+p13 0x9E58 pon_particula  
+p13 0x9E5D particula_empieza  activa, la Y 0x90 y la X 0x30 + (cuadros * 8 & 0x78)
+p13 0x9E7A particula_velocidad  la fila 0xD70C (5 bytes) de p13:9EA0: las velocidades en Y y X y el patron
+p13 0x9EC8 sprites_9f85  10 sprites de p13:9F85 o p13:9FA3 (cada 4 cuadros) desde el 0 (el puntero en 0xD707) y sus colores a 0x0F
+p13 0x9EDB diez_sprites  10
+p13 0x9EDD sprite_9f85  Y...
+p13 0x9EFD sprites_de_d709  los sprites 0-1 de color 0x0F en (0x68, 0xD709) y 0x10 a la derecha, el patron 0x50 o 0x58 cada 4 cuadros
+p13 0x9F0B sprites_d709  la X de 0xD709
+p13 0x9F14 dos_sprites_juntos  el sprite en (E, D) y el de patron + 4 0x10 a la derecha
+p13 0x9F1E colores_0_1  los colores de los sprites 0-1 a 0x0F
+p13 0x9F29 sprites_de_d70a  los sprites 0-1 de color 0x0F en (0x68, 0xD709) con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
+p13 0x9F45 segundo_sprite_d70a  
+p13 0x9F4C sprites_8770  los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+p13 0x9F57 sprites_8770_b  desde el sprite 2
+p13 0x9F6B patron_de_d70a  C = el patron por 0xD70A: hasta 3, 0x60 + n * 8; desde 4, 0x80 + (n - 4) * 4
+p13 0x9F7B patron_d70a_b  - 4...
 p16 0x4000 entrada_arranque  jp p16:4009
 p16 0x4003 entrada_pide  jp p16:4024
 p16 0x4006 entrada_cuadro  jp p16:428F

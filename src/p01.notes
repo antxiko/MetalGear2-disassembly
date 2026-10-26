@@ -1281,7 +1281,7 @@ C 0x649F palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x64A2 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x64A5 bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x64AB lee_palabra: HL = la palabra que hay en HL
-C 0x64AE lee 1 al salir de F2/F3 (p10:B897)
+C 0x64AE lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 C 0x64B1 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x64B4 bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x64B7 bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1678,20 +1678,21 @@ C 0x728E apunta a el contador de cuadros (uno mas en cada interrupcion)
 C 0x7292 lee el estado de la partida (p01:729F: 8 estados) y el byte siguiente (16 bits)
 C 0x729F despachador: salta a la palabra A de la tabla que va detras del call
 C 0x72BC bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x72BF p13:92D1
+C 0x72BF pantalla_de_56: con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0x48 x 0xA8 a 0 en (0x40, 0x28) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
 C 0x72C2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x72CB p13:932F
+C 0x72CB pantalla_de_56_baja: cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x40, 0x28) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
 C 0x72CE bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x72EA apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 C 0x72F0 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0x72F3 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0x72F6 enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
+C 0x7305 guarda el paso de la presentacion (1-0x41; 0 se acaba, desde 0x80 p14:A2CF) y el byte siguiente (16 bits)
 C 0x7316 pantalla_de_62: una pantalla de los bancos 60-63: mapas de bits, rachas y 4 juegos de letras
 C 0x7319 paleta_a1d8: la paleta de p56:A1D8
 C 0x731C pantalla_de_52: una pantalla de los bancos 52-53: dibujos, mosaicos, una rejilla de lineas y sprites
 C 0x7328 cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 C 0x732B bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x732E p13:8000
+C 0x732E presentacion: el estado 1 de la partida: el paso 0xCA2C de la presentacion (1-0x41) por la tabla de p13:800D; desde 0x80, p14:A2CF
 C 0x7331 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7339 sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 C 0x7350 p14:A196
@@ -1714,7 +1715,7 @@ C 0x747A guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x747F guarda el estado de la partida (p01:729F: 8 estados)
 C 0x748A dibujos_8114_en_a000: los dibujos de p52:8114 en la VRAM de 0xA000
 C 0x7490 a_p06_aa49: p06:AA49 con el banco 6 en 0xA000
-C 0x749A guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6)
+C 0x749A guarda 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6); en el estado 7, su paso (p13:9555)
 C 0x74B0 lee el numero de la llamada
 C 0x74BF pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 C 0x74C2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1724,10 +1725,10 @@ C 0x74ED sala_de_al_lado: p01:7BAA
 C 0x74F1 guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x74F7 a_p10_aed6: p10:AED6 con el banco 10 en 0xA000
 C 0x74FA fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
-C 0x74FD lee 1 al salir de F2/F3 (p10:B897)
+C 0x74FD lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 C 0x7505 a_p10_af30: p10:AF30 con el banco 10 en 0xA000
 C 0x7508 fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 y el estado siguiente
-C 0x750B lee 1 al salir de F2/F3 (p10:B897)
+C 0x750B lee 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 C 0x7510 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x751A guarda el paso del estado de la partida
 C 0x751E bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1836,7 +1837,7 @@ C 0x7720 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x7723 letras_de_44: 0x80 letras de p44:BADB en la fila 0x40
 C 0x7726 bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7729 cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
-C 0x772C p13:9555
+C 0x772C estado_7_cada_cuadro: el estado 7: 0xD705 uno mas y el paso 0xD701 por la tabla de p13:955F (31)
 C 0x772F sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 C 0x7732 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x773A sonido_01: pide el sonido 0x01
@@ -2065,14 +2066,14 @@ C 0x7B09 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con 
 C 0x7B0C bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B0F p14:AB01
 C 0x7B14 bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7B17 p13:9371
+C 0x7B17 fundido_1_empieza: el fundido 1 (a negro): 0xCADA = 1, la velocidad C en 0xCADB, 0xCADC = 0 y la paleta de HL (0x31 bytes) a 0xE900
 C 0x7B1C bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7B1F p13:9387
+C 0x7B1F fundido_1: con el fundido 1, cada C cuadros cada color uno menos en las tres partes y la paleta puesta; al quedar todo a 0, 0xCADA = 0; 0xCADC de 0 a 2
 C 0x7B24 bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7B27 p13:93F7
+C 0x7B27 fundido_2_empieza: el fundido 2 (desde negro): 0xCADA = 2, la velocidad C, la paleta de HL a 0xE900 con los colores a 0
 C 0x7B2A bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B2D bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7B30 p13:941A
+C 0x7B30 fundido_2: con el fundido 2, cada C cuadros cada color de 0xE900 un paso hacia el de DE y la paleta puesta; al ser iguales, 0xCADA = 0
 C 0x7B35 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B38 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B3B sprites_del_actor: sus sprites libres (p04:820A) y sus colores de p08:B9FB (p08:BA2F para el 1 con 0xD437)
