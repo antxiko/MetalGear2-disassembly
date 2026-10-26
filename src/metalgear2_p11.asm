@@ -2915,7 +2915,7 @@ L_B4AB:
 	or a			;b4ba
 	ret z			;b4bb
 L_B4BC:
-	ld a,(0e040h)		;b4bc
+	ld a,(0e040h)		;b4bc   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	or a			;b4bf
 	ret nz			;b4c0
 	ld a,(0cb3ch)		;b4c1
@@ -3176,7 +3176,7 @@ DATA_tabla_B684:
 
 L_B68C:
 	ld b,000h		;b68c
-	ld hl,0e243h		;b68e
+	ld hl,0e243h		;b68e   ; apunta a la Y del que sigue a Snake de 0xE240
 	ld a,(0cb03h)		;b691   ; lee la Y de Snake
 	cp (hl)			;b694
 	jr nc,L_B699		;b695
@@ -3198,7 +3198,7 @@ L_B6A8:
 	jp L_B807		;b6ad
 L_B6B0:
 	ld a,(0cb03h)		;b6b0   ; lee la Y de Snake
-	ld hl,0e243h		;b6b3
+	ld hl,0e243h		;b6b3   ; apunta a la Y del que sigue a Snake de 0xE240
 	cp (hl)			;b6b6
 	jr nc,L_B6C8		;b6b7
 	ld a,(0e248h)		;b6b9   ; lee la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
@@ -3209,10 +3209,10 @@ L_B6B0:
 	jr nc,L_B6FD		;b6c3
 	jp L_B79B		;b6c5
 L_B6C8:
-	ld hl,0e24bh		;b6c8
+	ld hl,0e24bh		;b6c8   ; apunta a la Y del que sigue a Snake de 0xE248
 	cp (hl)			;b6cb
 	jp c,L_B747		;b6cc
-	ld a,(0e243h)		;b6cf
+	ld a,(0e243h)		;b6cf   ; lee la Y del que sigue a Snake de 0xE240
 	cp (hl)			;b6d2
 	jp c,04f97h		;b6d3   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	jr L_B715		;b6d6
@@ -4428,7 +4428,7 @@ L_BF14:
 	ld b,007h		;bf1e
 L_BF20:
 	push bc			;bf20
-	ld a,(0e1d2h)		;bf21
+	ld a,(0e1d2h)		;bf21   ; lee la X de la ficha 0xE1D0
 	ld b,a			;bf24
 	ld a,(de)			;bf25
 	add a,b			;bf26
@@ -4436,7 +4436,7 @@ L_BF20:
 	inc de			;bf28
 	ld (hl),c			;bf29
 	inc hl			;bf2a
-	ld a,(0e1d3h)		;bf2b
+	ld a,(0e1d3h)		;bf2b   ; lee la Y de la ficha 0xE1D0
 	ld b,a			;bf2e
 	ld a,(de)			;bf2f
 	add a,b			;bf30
@@ -4482,7 +4482,7 @@ DATA_resto_BF4F:
 
 
 L_BF5D:
-	ld a,(0e1d2h)		;bf5d
+	ld a,(0e1d2h)		;bf5d   ; lee la X de la ficha 0xE1D0
 	cp 0c0h		;bf60
 	jr c,L_BF73		;bf62
 	cp 0d0h		;bf64
@@ -4518,7 +4518,7 @@ L_BF8B:
 	djnz L_BF8B		;bf9d
 	ret			;bf9f
 L_BFA0:
-	ld a,(0e1d2h)		;bfa0
+	ld a,(0e1d2h)		;bfa0   ; lee la X de la ficha 0xE1D0
 	cp 090h		;bfa3
 	ret c			;bfa5
 	cp 0a0h		;bfa6
@@ -4544,7 +4544,7 @@ L_BFD1:
 	ld hl,0db00h		;bfd1
 	ld c,002h		;bfd4
 L_BFD6:
-	ld a,(0e1d2h)		;bfd6
+	ld a,(0e1d2h)		;bfd6   ; lee la X de la ficha 0xE1D0
 	and 00fh		;bfd9
 	or a			;bfdb
 	ret z			;bfdc

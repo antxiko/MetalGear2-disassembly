@@ -1603,6 +1603,7 @@ C 0xB11C empieza_llamada: la llamada A: 0xE1E8 = 1, 0xE1E9 = A, 0xE1EA = 0, 0xE1
 C 0xB124 apunta a 1 mientras hay una llamada
 C 0xB132 apunta a 1 mientras hay una llamada
 C 0xB140 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB14B apunta a 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 C 0xB152 lee los avisos que le quedan a la llamada
 C 0xB16A mosaico_96a3: el mosaico de p46:96A3 en X = 0xD0, Y = 4 (2 x 4)
 C 0xB178 lee los avisos que le quedan a la llamada
@@ -1678,6 +1679,8 @@ C 0xB4A0 de_negativo: DE = -DE
 C 0xB4A7 de_negativo: DE = -DE
 C 0xB4AF lee 1 si Snake ha chocado en este cuadro
 C 0xB4B4 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB4BA guarda la direccion del que sigue a Snake de 0xE248
+C 0xB4BD guarda la direccion del que sigue a Snake de 0xE240
 C 0xB4C0 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xB4C6 anda_el_que_sigue: la Y o la X (16 bits) segun su direccion, mas o menos DE
 C 0xB4C9 apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
@@ -1687,12 +1690,19 @@ C 0xB4DD empiezan_los_que_siguen: el rastro con la posicion de Snake y, segun 0x
 C 0xB4E0 dibuja_el_de_e240: sin 0xE240, nada
 C 0xB4E3 dibuja_el_de_e248: lo mismo para el de 0xE248: sprites 24-27 (0xDC60) desde el patron 0x28, colores de p08:BB1A y p08:BB2C
 C 0xB4E6 lee la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
+C 0xB4EE lee 0 mientras Snake esta de frente en la escena (p09:A89A)
 C 0xB4F2 colores_del_de_e240: los colores de los sprites 28-31: p08:BB47 (p08:BB64 con 0xE040 = 5) y p08:BB5F
+C 0xB4F6 lee 0 mientras Snake esta de frente en la escena (p09:A89A)
+C 0xB4FC apunta a la Y del que sigue a Snake de 0xE240
 C 0xB523 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xB526 pon_sprite_mas_4: p00:5D41 con el patron C + 4
+C 0xB53F lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0xB54C rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 C 0xB555 rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 C 0xB563 lee la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
+C 0xB56B lee la Y baja del que sigue a Snake de 0xE248
+C 0xB573 lee la Y baja del que sigue a Snake de 0xE248
+C 0xB579 apunta a la Y del que sigue a Snake de 0xE248
 C 0xB57E sprites_del_que_sigue: sin el, o por debajo de Y = 0xC0, fuera
 C 0xB587 rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 C 0xB590 rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
@@ -1746,6 +1756,7 @@ C 0xB7FC lado_menos_2: A = (HL) - 2
 C 0xB811 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB823 apunta a dos fichas de 8 bytes de los mosaicos de quien habla
 C 0xB826 suma_a_hl: HL = HL + A
+C 0xB82C lee 1-2: el mosaico de la derecha puesto (p09:BA47)
 C 0xB863 mosaico_de_93fd: el mosaico A de p44:93FD (6 x 4) en DE; 0xD8E3 = B elige la forma
 C 0xB869 apunta a dos fichas de 8 bytes de los mosaicos de quien habla
 C 0xB86C suma_a_hl: HL = HL + A
@@ -1756,8 +1767,10 @@ C 0xB8AC lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB8C0 mosaico_de_quien_habla: por su byte 1: 1 se abre (p03:B8E8), 2 se cierra (p03:B94C), los demas se pinta
 C 0xB8D2 se_cierra: cada 1 o 2 cuadros, dos lineas a 0, 12 veces
 C 0xB8F7 dos_lineas_de_la_otra: las lineas E y A de 0x20 de ancho en X = D, de la otra pagina a esta
+C 0xB90E apunta a 1-2: el mosaico de la derecha puesto (p09:BA47)
 C 0xB949 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB95B dos_lineas_a_0: las lineas de 0x20 de ancho a 0 en la pagina de dibujar
+C 0xB97B apunta a 1-2: el mosaico de la derecha puesto (p09:BA47)
 C 0xB982 quita_mosaico_de_quien_habla: la ficha A de 0xE260 libre y su sitio (0x20 x 0x30) a 0
 C 0xB995 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB99D borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)

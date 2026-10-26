@@ -1876,6 +1876,7 @@ C 0x4E0E bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con 
 C 0x4E11 bancos_35_36_37: pone el 35 en 0x6000, el 36 en 0x8000, el 37 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x4E1C sprites_de_sala_si: con 0xE1D0 puesto no se tocan
 C 0x4E1F bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x4E22 lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 C 0x4E32 lee la zona
 C 0x4E44 bancos_35_36_37: pone el 35 en 0x6000, el 36 en 0x8000, el 37 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x4E47 lee la zona

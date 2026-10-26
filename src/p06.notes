@@ -1350,6 +1350,8 @@ C 0xA51C sonido_5e: pide el sonido 0x5E
 C 0xA51F lee la zona
 C 0xA52C lee la sala de la zona
 C 0xA536 lee la sala de la zona
+C 0xA556 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
+C 0xA586 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0xA598 lee cuantos siguen a Snake por su rastro (1-4)
 C 0xA59E despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA5A9 apunta a la ficha del que sigue a Snake 4 posiciones por detras (del rastro de 0xE08C)
@@ -1420,6 +1422,7 @@ C 0xAA33 sprite_de_lanzado: HL = el sprite (byte 0x0E) desde el 10 (0xDC28)
 C 0xAA73 lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
 C 0xAA7A lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xAA87 lee 1 mientras se ve el rotulo de la cosa cogida
+C 0xAA8C lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 C 0xAA96 lee la direccion en la que se mira la sala de al lado (estado 0x0E)
 C 0xAA9B lee 1 en pausa (F1)
 C 0xAAA0 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)

@@ -415,7 +415,7 @@ L_625F:
 	call 043fch		;6262   ; la lista...
 	call conversacion_de_hl		;6265   ; ...su accion
 	ld a,001h		;6268   ; 0xD7BB = 1
-	ld (0d7bbh),a		;626a
+	ld (0d7bbh),a		;626a   ; guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 	call 08b1fh		;626d   ; p09:B68E
 	ld a,004h		;6270   ; el paso 4 del estado de la partida
 	ld (0ca01h),a		;6272   ; guarda el paso del estado de la partida
@@ -670,8 +670,8 @@ conversacion_8008_b:		; la conversacion de p48:8008, 0xD7BB = 1, p09:B68E y el p
 	call 041c2h		;640e   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 	call conversacion_8008		;6411   ; conversacion_8008:
 	ld a,001h		;6414
-	ld (0d7bbh),a		;6416
-	call 0b68eh		;6419   ; p09:B68E
+	ld (0d7bbh),a		;6416   ; guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
+	call 0b68eh		;6419   ; pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 	ld a,004h		;641c
 	ld (0ca01h),a		;641e   ; guarda el paso del estado de la partida
 L_6421:
@@ -1216,7 +1216,7 @@ espera_tecla_paso_4:		; el cursor, el paso 4 y 0xCADD = 1
 	call cursor_de_espera		;67c2   ; cursor_de_espera: el cursor de esperar una tecla y el siguiente paso
 	ld (hl),004h		;67c5
 	ld a,001h		;67c7
-	ld (0caddh),a		;67c9
+	ld (0caddh),a		;67c9   ; guarda 2-3: el mensaje se salta (p09:BA9B)
 	ret			;67cc
 cambia_tablas_de_sprites:		; alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 	ld hl,(0ca0ch)		;67cd   ; lee la direccion en la VRAM de la tabla de colores de sprites (16 bits)
@@ -1240,7 +1240,7 @@ sprites_a_vram_turnos:		; los sprites a la VRAM, cambiando el orden cada cuadro 
 	ld a,(0caa0h)		;67f8   ; con 0xCAA0, salvo con 0xE040 = 9, p11:B67D
 	or a			;67fb
 	jr z,L_680E		;67fc
-	ld a,(0e040h)		;67fe
+	ld a,(0e040h)		;67fe   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	cp 009h		;6801
 	jr z,L_680E		;6803
 	call 041d5h		;6805   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3116,7 +3116,7 @@ L_74B6:
 	cp 004h		;74b9
 	ret z			;74bb
 	call 041c5h		;74bc   ; ...p09:B68E...
-	call 0b68eh		;74bf   ; p09:B68E
+	call 0b68eh		;74bf   ; pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 	call 040f0h		;74c2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,004h		;74c5   ; ...y el paso 4
 	jp L_73AC		;74c7
@@ -3165,21 +3165,21 @@ paso_3:		; el paso 3 (F3): p10:AF30 hasta 0xD706; con 0xCB21 = 2, el paso 0x0C
 	ret			;751d
 paso_4:		; el paso 4 (F4): p09:B76D hasta 0xD7B4; con 0xE040, el paso 5
 	call 041c5h		;751e   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b76dh		;7521   ; p09:B76D
+	call 0b76dh		;7521   ; conversacion_cada_cuadro: la pantalla de la conversacion en cada cuadro (p09:B782); con los mensajes de los bancos 50-51, ademas p02:8E77, sin sprites, p11:BEA2 y p02:8E7C
 	call 040f0h		;7524   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0d7b4h)		;7527
 	or a			;752a
 	ret z			;752b
-	ld a,(0e040h)		;752c
+	ld a,(0e040h)		;752c   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	or a			;752f
 	jp z,L_73AB		;7530
 	ld a,005h		;7533
 	jp L_73AC		;7535
 paso_5:		; el paso 5: p09:A5A9 hasta que 0xE040 se pone a 0
 	call 041c5h		;7538   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a5a9h		;753b   ; p09:A5A9
+	call 0a5a9h		;753b   ; escena_cada_cuadro: en una escena: las tablas de sprites alternadas, p12:76E9, la franja de 0xDFD8, el paso de la escena (p09:A5C1), el de 0xDFD8 pintado y los sprites a la VRAM
 	call 040f0h		;753e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	ld a,(0e040h)		;7541
+	ld a,(0e040h)		;7541   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	or a			;7544
 	ret nz			;7545
 	jp L_73AB		;7546

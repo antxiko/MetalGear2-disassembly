@@ -1468,6 +1468,7 @@ C 0xBB8E lee la velocidad del actor en Y (alta)
 C 0xBB92 lee la Y del actor
 C 0xBB9B lee la X del actor
 C 0xBBA6 guarda 1 mientras hay una llamada
+C 0xBBA9 guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 C 0xBBB0 el dibujo del actor (bit 0: el paso) = 0x0C
 C 0xBBB4 la espera del actor = 0x20
 C 0xBBB8 a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000

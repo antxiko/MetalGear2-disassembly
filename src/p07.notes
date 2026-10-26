@@ -2019,6 +2019,7 @@ C 0xAFFF caja_df80: la caja de la ficha de 0xDF80 (IY), si esta activa
 C 0xB004 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xB00B caja_d800_df80: la caja de la ficha de 0xD800 en la sala de IY
 C 0xB021 dano_c_a_d800: el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
+C 0xB037 lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 C 0xB03C caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 C 0xB040 apunta a 16 fichas de 8 bytes que mueve p11:B66E
 C 0xB047 caja_cc80_aqui: la caja de la ficha de 0xCC80 si su tipo es el del sitio de Snake (1 normal, 2 en un sitio de 0xCBE0, 3 con 0xCA77, 4 en una sala especial) y esta en esta sala

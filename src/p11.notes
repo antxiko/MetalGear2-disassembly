@@ -348,6 +348,7 @@ C 0xB451 lee la Y de Snake
 C 0xB45F lee la X de Snake
 C 0xB475 lee la zona
 C 0xB47C lee la sala de la zona
+C 0xB4BC lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0xB4E5 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB4F5 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xB4FC lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
@@ -380,10 +381,14 @@ C 0xB65E lee la X de Snake
 C 0xB673 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xB67D lee cuantos siguen a Snake por su rastro (1-4)
 C 0xB681 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB68E apunta a la Y del que sigue a Snake de 0xE240
 C 0xB691 lee la Y de Snake
 C 0xB6B0 lee la Y de Snake
+C 0xB6B3 apunta a la Y del que sigue a Snake de 0xE240
 C 0xB6B9 lee la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xB6BF apunta a la Y de Snake
+C 0xB6C8 apunta a la Y del que sigue a Snake de 0xE248
+C 0xB6CF lee la Y del que sigue a Snake de 0xE240
 C 0xB6D3 sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 C 0xB6DB lee la Y de Snake
 C 0xB6E2 sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
@@ -498,8 +503,13 @@ C 0xBEF1 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xBEFC pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xBF01 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xBF0C llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBF21 lee la X de la ficha 0xE1D0
+C 0xBF2B lee la Y de la ficha 0xE1D0
+C 0xBF5D lee la X de la ficha 0xE1D0
 C 0xBF70 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBFA0 lee la X de la ficha 0xE1D0
 C 0xBFB7 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBFC7 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBFD6 lee la X de la ficha 0xE1D0
 C 0xBFE1 suma_a_hl: HL = HL + A
 # --- fin de las anotaciones de anota.py ---

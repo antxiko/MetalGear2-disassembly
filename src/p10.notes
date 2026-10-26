@@ -426,6 +426,7 @@ C 0xBBDD lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBBE2 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 C 0xBBFB guarda con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBBFE guarda 1 mientras hay una llamada
+C 0xBC01 guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 C 0xBC09 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBC0C a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 C 0xBC0F lee la zona

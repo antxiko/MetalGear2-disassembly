@@ -1204,6 +1204,7 @@ C 0x6244 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con 
 C 0x6247 mensaje_cada_cuadro: el paso 0xE221 del mensaje en curso (p01:6597)
 C 0x624A lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 C 0x625F bancos_48_49: pone el 48 en 0x8000, el 49 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x626A guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 C 0x6272 guarda el paso del estado de la partida
 C 0x6275 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6278 apunta a el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
@@ -1257,7 +1258,8 @@ C 0x6403 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x640B suma_a_de: DE = DE + A
 C 0x640E bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6411 conversacion_8008: 
-C 0x6419 p09:B68E
+C 0x6416 guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
+C 0x6419 pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 C 0x641E guarda el paso del estado de la partida
 C 0x6421 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6424 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1372,12 +1374,14 @@ C 0x67B6 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00
 C 0x67BA borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x67BD cursor_de_espera: el cursor de esperar una tecla y el siguiente paso
 C 0x67C2 cursor_de_espera: el cursor de esperar una tecla y el siguiente paso
+C 0x67C9 guarda 2-3: el mensaje se salta (p09:BA9B)
 C 0x67CD lee la direccion en la VRAM de la tabla de colores de sprites (16 bits)
 C 0x67E5 guarda la direccion en la VRAM de la tabla de atributos de sprites (16 bits)
 C 0x67E8 guarda la direccion en la VRAM de la tabla de colores de sprites (16 bits)
 C 0x67EF sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
 C 0x67F2 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x67F5 sin_color_los_escondidos: en la zona 0x12 con 0xD881: los colores de los sprites escondidos (Y = 0xE0) a cero
+C 0x67FE lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0x6805 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6808 p11:B67D
 C 0x680B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1709,7 +1713,7 @@ C 0x747F guarda el estado de la partida (p01:729F: 8 estados)
 C 0x748A dibujos_8114_en_a000: los dibujos de p52:8114 en la VRAM de 0xA000
 C 0x7490 a_p06_aa49: p06:AA49 con el banco 6 en 0xA000
 C 0x74B0 lee el numero de la llamada
-C 0x74BF p09:B68E
+C 0x74BF pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 C 0x74C2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x74CA a_p06_aa49: p06:AA49 con el banco 6 en 0xA000
 C 0x74D9 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
@@ -1722,11 +1726,13 @@ C 0x7508 fin_del_paso: sin 0xCA40, los dibujos de p52:8114 en la VRAM de 0xA000 
 C 0x7510 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x751A guarda el paso del estado de la partida
 C 0x751E bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7521 p09:B76D
+C 0x7521 conversacion_cada_cuadro: la pantalla de la conversacion en cada cuadro (p09:B782); con los mensajes de los bancos 50-51, ademas p02:8E77, sin sprites, p11:BEA2 y p02:8E7C
 C 0x7524 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x752C lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0x7538 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x753B p09:A5A9
+C 0x753B escena_cada_cuadro: en una escena: las tablas de sprites alternadas, p12:76E9, la franja de 0xDFD8, el paso de la escena (p09:A5C1), el de 0xDFD8 pintado y los sprites a la VRAM
 C 0x753E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x7541 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0x7549 cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 C 0x754C bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x754F escena_e1f0: la escena de 0xE1F0 por su paso 0xE1F1 (p08:BC64, 9 pasos) y, mientras dura, sus sprites (p08:BE09)

@@ -2108,7 +2108,7 @@ siguiente_df80_c:
 	exx			;b035
 	ret			;b036
 snake_con_cc80:		; sin 0xE1D0: la caja de Snake contra las fichas de 0xCC80 (p07:B7BF): en el estado 2 o el 0x0B, se coge (p07:B06A); si no, p07:B563
-	ld a,(0e1d0h)		;b037
+	ld a,(0e1d0h)		;b037   ; lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 	or a			;b03a
 	ret nz			;b03b   ; con 0xE1D0, nada
 	call caja_de_snake_c		;b03c   ; caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43

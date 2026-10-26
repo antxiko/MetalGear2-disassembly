@@ -810,7 +810,7 @@ dos_bits_de_beec:		; A = el valor de 2 bits del elemento 0xCAB9 de la fila A de 
 	ld a,c			;a551
 	cp 009h		;a552
 	jr nz,fila_de_beec		;a554   ; la fila 9...
-	ld a,(0e040h)		;a556
+	ld a,(0e040h)		;a556   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	cp 005h		;a559
 	jr nz,fila_de_beec		;a55b   ; ...con 0xE040 = 5...
 	ld a,(0cb5bh)		;a55d   ; ...el elemento 0xCB5B de p06:BF30
@@ -841,7 +841,7 @@ gira_2_bits:
 	cp 009h		;a582   ; fuera de la fila 9...
 	ld a,b			;a584
 	ret nz			;a585   ; ...ese valor
-	ld a,(0e040h)		;a586
+	ld a,(0e040h)		;a586   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	cp 005h		;a589   ; sin 0xE040 = 5, ese
 	ld a,b			;a58b
 	ret nz			;a58c
@@ -1612,7 +1612,7 @@ mira_rotulos:
 	ld a,(0caa8h)		;aa87   ; lee 1 mientras se ve el rotulo de la cosa cogida
 	or a			;aa8a
 	ret nz			;aa8b   ; con el rotulo, nada
-	ld a,(0e1d0h)		;aa8c
+	ld a,(0e1d0h)		;aa8c   ; lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 	or a			;aa8f
 	ret nz			;aa90   ; con 0xE1D0, nada
 	ld a,(0e1f0h)		;aa91

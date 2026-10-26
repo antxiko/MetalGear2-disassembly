@@ -3974,7 +3974,7 @@ L_BBEA:
 	xor a			;bbfa
 	ld (0cb4bh),a		;bbfb   ; guarda con el puesto, la vida baja un punto cada 16 cuadros
 	ld (0e1e8h),a		;bbfe   ; guarda 1 mientras hay una llamada
-	ld (0d7bbh),a		;bc01
+	ld (0d7bbh),a		;bc01   ; guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 	ld hl,0d88ch		;bc04
 	ld (hl),0ffh		;bc07
 	call 04266h		;bc09   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0

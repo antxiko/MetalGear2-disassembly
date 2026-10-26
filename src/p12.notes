@@ -242,6 +242,8 @@ C 0x6CA2 suma_a_hl: HL = HL + A
 C 0x6CDA suma_a_hl: HL = HL + A
 C 0x6CF2 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x6CF8 lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
+C 0x6CFD lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
+C 0x6D06 lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 C 0x6D10 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x6D1C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x6D60 sonido_08: pide el sonido 8
@@ -516,6 +518,7 @@ C 0x7C9D lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 iz
 C 0x7CC0 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
 C 0x7CC6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x7CCC apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
+C 0x7D51 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0x7D56 lee 1 mientras se ve el rotulo de la cosa cogida
 C 0x7D5B lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0x7D61 lee el contador de cuadros (uno mas en cada interrupcion)

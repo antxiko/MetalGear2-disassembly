@@ -3888,7 +3888,7 @@ d8aa_paso_d:		; sin llamada, 0xCB3C = 1, el dibujo 0x0C, 0x20 cuadros, p03:B1A3 
 	xor a			;bba2
 	ld (ix+00ch),a		;bba3
 	ld (0e1e8h),a		;bba6   ; guarda 1 mientras hay una llamada
-	ld (0d7bbh),a		;bba9
+	ld (0d7bbh),a		;bba9   ; guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 	inc a			;bbac
 	ld (0cb3ch),a		;bbad
 	ld (ix+00dh),00ch		;bbb0   ; el dibujo del actor (bit 0: el paso) = 0x0C

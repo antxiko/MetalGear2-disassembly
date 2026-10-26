@@ -1619,15 +1619,15 @@ a_p11_a389:		; p11:A389 con el banco 11 en 0xA000
 	jr L_8B4D		;8b0d
 a_p09_a000:		; p09:A000 con el banco 9 en 0xA000
 	call 041c5h		;8b0f   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a000h		;8b12   ; p09:A000
+	call 0a000h		;8b12   ; cb21_9_sube: con 0xCB21 = 9 en la zona 0x0D sala 5, con 0xE1D5 y 0xCA61 = 1, Snake por encima de Y = 0x28 y arriba pulsado: sin alerta, el sonido 0x8B, a la zona 0x0A (fila 1, columna 6), fuera el bit 2 de 0xD7DD, 0xCB39 = 0, la musica de p01:6B45 al cuadro siguiente, Snake en el estado 4, 0xD4EA = 0, los sprites 0-3 fuera, la ficha 0xE1D0 (p09:A061) y las rachas de p41:BA0F
 	jr L_8B4D		;8b15
 a_p09_a07b:		; p09:A07B con el banco 9 en 0xA000
 	call 041c5h		;8b17   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a07bh		;8b1a   ; p09:A07B
+	call 0a07bh		;8b1a   ; e1d0_cada_cuadro: en la zona 0x0A con 0xE1D0: su paso (p09:A093) y p11:BF0F
 	jr L_8B4D		;8b1d
 a_p09_b68e:		; p09:B68E con el banco 9 en 0xA000
 	call 041c5h		;8b1f   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b68eh		;8b22   ; p09:B68E
+	call 0b68eh		;8b22   ; pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 	jr L_8B4D		;8b25
 a_p11_bbfb:		; p11:BBFB con el banco 11 en 0xA000
 	call 041d5h		;8b27   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1647,16 +1647,16 @@ a_p11_aee4:		; p11:AEE4 con el banco 11 en 0xA000
 	jr L_8B4D		;8b45
 a_p09_a163:		; p09:A163 con el banco 9 en 0xA000
 	call 041c5h		;8b47   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a163h		;8b4a   ; p09:A163
+	call 0a163h		;8b4a   ; dfd8_cada_cuadro: sin 0xE040: p09:A258 y p09:A2EB; sin los bits 5-6 de 0xD7D3: con 0xDFD8 p09:A196, 0xDFD8 = 0 y, si p09:A434 da Z, la ficha 0xDFD8 en (0x60, 0x70) de 2 x 1 (p09:A4CD), las rachas de p01:864A y p03:B5B5
 L_8B4D:
 	jp 040f0h		;8b4d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p09_a588:		; p09:A588 con el banco 9 en 0xA000
 	call 041c5h		;8b50   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a588h		;8b53   ; p09:A588
+	call 0a588h		;8b53   ; sin_dfd8_ni_e248: sin los bits 5-6 de 0xD7D3, la ficha 0xDFD8 a cero; sin el bit 7 de 0xD7D5, la 0xE248 a cero
 	jr L_8B4D		;8b56
 a_p09_a1a1:		; p09:A1A1 con el banco 9 en 0xA000
 	call 041c5h		;8b58   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a1a1h		;8b5b   ; p09:A1A1
+	call 0a1a1h		;8b5b   ; escenas_que_empiezan: sin escena (0xE040): las que pueden empezar en esta sala (p09:A27C, A2BC, A304, A353, A3B1, A3F2, A440, A47D); con el bit 4 de 0xD7D0 y sin el 5 de 0xD7D1, en la zona 0x11 sala 5, la cuenta de 0xCAD8; a cero, 0xCB75 al menos 1 y p04:92EB; y con 0xCB76 y nada lanzado por Snake, la escena 9 (Snake quieto, la bandera 0x0A, el sonido 5...)
 	jr L_8B4D		;8b5e
 a_p11_b23f:		; p11:B23F con el banco 11 en 0xA000
 	call 041d5h		;8b60   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1742,7 +1742,7 @@ a_p06_a6f9:		; p06:A6F9 con el banco 6 en 0xA000
 	jr L_8BEE		;8c02
 a_p09_b62f:		; p09:B62F con el banco 9 en 0xA000
 	call 041c5h		;8c04   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b62fh		;8c07   ; p09:B62F
+	call 0b62fh		;8c07   ; d790_al_empezar: 0xD790-0xD792 = 0, 0x40, 1; 0xD7A0-0xD7AF de p09:B67E y 0xD79C-0xD79F a cero; segun los bits 3-6 de 0xD7E4, 0xD7A0 = 0x66 o 0x24, 0xD7A1 = 0x98 y 0xD7A3 = 0x76
 	jr L_8BEE		;8c0a
 a_p06_a0ab:		; p06:A0AB con el banco 6 en 0xA000
 	call 041a0h		;8c0c   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)

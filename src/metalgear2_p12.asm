@@ -1763,13 +1763,13 @@ L_6CF2:
 	ld a,(0ca1ch)		;6cf8   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;6cfb
 	ret nz			;6cfc
-	ld a,(0e040h)		;6cfd
+	ld a,(0e040h)		;6cfd   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	and a			;6d00
 	ret nz			;6d01
 	xor a			;6d02
 L_6D03:
 	ld (0e206h),a		;6d03
-	ld a,(0e1d0h)		;6d06
+	ld a,(0e1d0h)		;6d06   ; lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 	and a			;6d09
 	ret nz			;6d0a
 	ld a,(0cabah)		;6d0b
@@ -4255,7 +4255,7 @@ L_7D43:
 	lddr		;7d4e
 	ret			;7d50
 L_7D51:
-	ld a,(0e040h)		;7d51
+	ld a,(0e040h)		;7d51   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	or a			;7d54
 	ret nz			;7d55
 	ld a,(0caa8h)		;7d56   ; lee 1 mientras se ve el rotulo de la cosa cogida

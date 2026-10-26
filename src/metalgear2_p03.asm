@@ -2490,7 +2490,7 @@ llamada_cada_cuadro:		; sin llamada (0xE1E8 = 0), nada
 	ld a,(0ca09h)		;b145   ; F4 recien pulsada: 0xD7BB = 1 y se acaba la llamada
 	and 008h		;b148
 	ret z			;b14a
-	ld hl,0d7bbh		;b14b
+	ld hl,0d7bbh		;b14b   ; apunta a 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 	ld (hl),001h		;b14e
 	jr acaba_llamada		;b150
 aviso_de_llamada:		; mientras quedan avisos (0xE1EB), el mosaico de p46:96A3 en el marcador parpadea y suena el 0x1C
@@ -3024,8 +3024,8 @@ los_que_siguen_3:		; con 0xCAA0 = 3, los dos andan arriba o abajo como Snake si 
 	ld a,(0cb0eh)		;b4b4   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	cp 003h		;b4b7
 	ret nc			;b4b9
-	ld (0e24eh),a		;b4ba
-	ld (0e246h),a		;b4bd
+	ld (0e24eh),a		;b4ba   ; guarda la direccion del que sigue a Snake de 0xE248
+	ld (0e246h),a		;b4bd   ; guarda la direccion del que sigue a Snake de 0xE240
 	ld hl,0e248h		;b4c0   ; apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 	ld de,00080h		;b4c3
 	call anda_el_que_sigue		;b4c6   ; anda_el_que_sigue: la Y o la X (16 bits) segun su direccion, mas o menos DE
@@ -3049,14 +3049,14 @@ dibuja_el_de_e240:		; sin 0xE240, nada
 	or a			;b4e9
 	ret z			;b4ea
 	call sprites_del_de_e240		;b4eb   ; sus sprites y, si se ve, sus colores
-	ld a,(0e241h)		;b4ee
+	ld a,(0e241h)		;b4ee   ; lee 0 mientras Snake esta de frente en la escena (p09:A89A)
 	or a			;b4f1
 	call nz,colores_del_de_e240		;b4f2   ; colores_del_de_e240: los colores de los sprites 28-31: p08:BB47 (p08:BB64 con 0xE040 = 5) y p08:BB5F
 	ret			;b4f5
 sprites_del_de_e240:		; los sprites 28-31 (0xDC70) del que sigue de 0xE240, con los patrones desde 0x88
-	ld a,(0e241h)		;b4f6
+	ld a,(0e241h)		;b4f6   ; lee 0 mientras Snake esta de frente en la escena (p09:A89A)
 	ld de,0dc70h		;b4f9
-	ld hl,0e243h		;b4fc
+	ld hl,0e243h		;b4fc   ; apunta a la Y del que sigue a Snake de 0xE240
 	ld c,088h		;b4ff
 sprites_del_que_sigue:		; sin el, o por debajo de Y = 0xC0, fuera
 	or a			;b501   ; sin el, fuera
@@ -3102,7 +3102,7 @@ L_B537:
 	ret			;b53b
 colores_del_de_e240:		; los colores de los sprites 28-31: p08:BB47 (p08:BB64 con 0xE040 = 5) y p08:BB5F
 	ld de,0bb47h		;b53c
-	ld a,(0e040h)		;b53f
+	ld a,(0e040h)		;b53f   ; lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 	cp 005h		;b542
 	jr nz,L_B549		;b544
 	ld de,0bb64h		;b546
@@ -3125,14 +3125,14 @@ dibuja_el_de_e248:		; lo mismo para el de 0xE248: sprites 24-27 (0xDC60) desde e
 	or a			;b566
 	ret z			;b567
 	call L_B573		;b568
-	ld a,(0e249h)		;b56b
+	ld a,(0e249h)		;b56b   ; lee la Y baja del que sigue a Snake de 0xE248
 	or a			;b56e
 	call nz,L_B581		;b56f
 	ret			;b572
 L_B573:
-	ld a,(0e249h)		;b573
+	ld a,(0e249h)		;b573   ; lee la Y baja del que sigue a Snake de 0xE248
 	ld de,0dc60h		;b576
-	ld hl,0e24bh		;b579
+	ld hl,0e24bh		;b579   ; apunta a la Y del que sigue a Snake de 0xE248
 	ld c,028h		;b57c
 	jp sprites_del_que_sigue		;b57e   ; sprites_del_que_sigue: sin el, o por debajo de Y = 0xC0, fuera
 L_B581:
@@ -3543,7 +3543,7 @@ L_B81D:
 	call 0423eh		;b826   ; suma_a_hl: HL = HL + A
 	ld (hl),c			;b829
 	ld b,000h		;b82a   ; ...con 0xCAD0 y D desde 0x60, B = 1 (se abre poco a poco)...
-	ld a,(0cad0h)		;b82c
+	ld a,(0cad0h)		;b82c   ; lee 1-2: el mosaico de la derecha puesto (p09:BA47)
 	or a			;b82f
 	jr z,L_B838		;b830
 	ld a,d			;b832
@@ -3702,7 +3702,7 @@ L_B906:
 	or a			;b90a   ; 0xCAD6 = 0: otra vez
 	jr z,L_B924		;b90b
 	xor a			;b90d   ; abierto del todo: 0xCAD0 = 0, la ficha libre...
-	ld hl,0cad0h		;b90e
+	ld hl,0cad0h		;b90e   ; apunta a 1-2: el mosaico de la derecha puesto (p09:BA47)
 	ld (hl),a			;b911
 	ld (de),a			;b912   ; la ficha libre
 	inc l			;b913
@@ -3784,7 +3784,7 @@ L_B973:
 	or a			;b977
 	jr z,L_B924		;b978
 	xor a			;b97a
-	ld hl,0cad0h		;b97b
+	ld hl,0cad0h		;b97b   ; apunta a 1-2: el mosaico de la derecha puesto (p09:BA47)
 	ld (hl),a			;b97e
 	ld (de),a			;b97f
 	ld a,001h		;b980

@@ -2527,7 +2527,7 @@ sprites_de_sala_bancos_9:
 	call sprites_de_sala_si		;4e1c   ; sprites_de_sala_si: con 0xE1D0 puesto no se tocan
 	jp bancos_1_2_9		;4e1f   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 sprites_de_sala_si:		; con 0xE1D0 puesto no se tocan
-	ld a,(0e1d0h)		;4e22
+	ld a,(0e1d0h)		;4e22   ; lee 1 con la ficha de p09:A061 en marcha (zona 0x0A; 0xE1D1 paso, 0xE1D2-0xE1D3 su sitio)
 	or a			;4e25
 	ret nz			;4e26
 	ld a,(0cb4bh)		;4e27   ; ni con 0xCB4B
