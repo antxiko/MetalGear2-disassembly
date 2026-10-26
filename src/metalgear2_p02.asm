@@ -10,8 +10,10 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8000..0x8001  (1 bytes)
-DATA_8000:
+; DATOS partida_8000: los 1 ultimos bytes de la instruccion de p01:7FFF (18
+;   F5), que empieza en el banco 1; lo leen p01:7FFF (1 bytes)
+;   0x8000..0x8001  (1 bytes)
+DATA_partida_8000:
 	defb 0f5h	; 8000
 
 ; ======================================================================
@@ -1455,7 +1457,7 @@ borra_caf1:		; 0xCAF1 = 0xD443 = 0xCAF6 = 0
 	ld (0caf6h),a		;89ce
 	ret			;89d1
 musica_otra_vez:		; 0xC690 = 0 y la musica de ahora (p02:8A12)
-	ld hl,0c690h		;89d2
+	ld hl,0c690h		;89d2   ; apunta a 1 al acabar las musicas 0x82 u 0x88
 	ld (hl),000h		;89d5
 	jr L_8A12		;89d7
 musica_de_cada_cuadro:		; sin 0xCAF6, con 0xD443 y sin 0xC697: p02:89C7
@@ -1465,7 +1467,7 @@ musica_de_cada_cuadro:		; sin 0xCAF6, con 0xD443 y sin 0xC697: p02:89C7
 	ld a,(0d443h)		;89df
 	and a			;89e2
 	jr z,L_89EC		;89e3
-	ld a,(0c697h)		;89e5
+	ld a,(0c697h)		;89e5   ; lee 1 mientras suenan las musicas 0x82 u 0x88
 	and a			;89e8
 	call z,borra_caf1		;89e9   ; borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
 L_89EC:
@@ -4609,7 +4611,7 @@ empieza_la_partida:		; sin 0xCA97, las rachas de p37
 	ld hl,0ffffh		;9e9b   ; ninguna musica sonando
 	ld (0ca20h),hl		;9e9e   ; guarda la rutina de la musica que suena (16 bits; p00:5B50)
 	xor a			;9ea1   ; 0xC68E = 0
-	ld (0c68eh),a		;9ea2
+	ld (0c68eh),a		;9ea2   ; guarda 1 al acabar los sonidos 0x8C o 0x8E del canal 0x40
 	dec a			;9ea5   ; 0xD44A = 0xFF
 	ld (0d44ah),a		;9ea6   ; guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 	ld hl,0d8d8h		;9ea9   ; 0xD8D8-0xD8DF a cero

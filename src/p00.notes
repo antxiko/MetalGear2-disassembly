@@ -2238,6 +2238,7 @@ C 0x5AEF guarda la X de Snake
 C 0x5AF5 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0x5AF8 sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 C 0x5AFE lee la zona
+C 0x5B47 lee 1 mientras suenan las musicas 0x82 u 0x88
 C 0x5B6F orden_sonido_f4: la orden 0xF4 al sonido
 C 0x5B72 musica_de_la_zona_si: ni con 0xC697
 C 0x5B75 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)

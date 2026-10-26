@@ -161,7 +161,7 @@ estado_19_paso_6:		; la cuenta: a 0x22 la llamada 0; por debajo, p03:B132 hasta 
 	call cb48_siguiente		;a0e7   ; a 0, el paso siguiente...
 	jp 08f7dh		;a0ea   ; ...y p03:B19A
 estado_19_paso_7:		; sin 0xE257: la conversacion de p48:8008, 0xCB15 = 2 y Snake en el estado 0 con el dibujo 0; con el, 0xCABA = 0, el estado 0 y el sonido 0x6A
-	ld a,(0e257h)		;a0ed
+	ld a,(0e257h)		;a0ed   ; lee 1 con el punto del teclado numerico en el monitor de p63
 	or a			;a0f0
 	jr nz,estado_19_fin		;a0f1   ; con 0xE257, aparte
 	call 0640eh		;a0f3   ; la conversacion

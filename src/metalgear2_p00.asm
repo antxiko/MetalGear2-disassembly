@@ -4291,7 +4291,7 @@ musica_de_la_zona:		; 0xD4E2 = 0xD4E3 = 0xD4E4 = 0
 	and a			;5b45
 	ret nz			;5b46
 musica_de_la_zona_si:		; ni con 0xC697
-	ld a,(0c697h)		;5b47
+	ld a,(0c697h)		;5b47   ; lee 1 mientras suenan las musicas 0x82 u 0x88
 	and a			;5b4a
 	ret nz			;5b4b
 	call 07ce6h		;5b4c   ; la rutina de la zona en la fase...

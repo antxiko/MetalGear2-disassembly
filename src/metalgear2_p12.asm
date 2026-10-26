@@ -1573,20 +1573,15 @@ fichas_d800_de_la_zona:		; guarda las de 0xD800 (p12:6BE6), 0xD8A6 = 0, las 4 fi
 	call 0424dh		;6bbb   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
-; DATOS tabla_6BBE: 19 destinos del despachador p00:424D (call en p12:6BBB, el
+; DATOS tabla_6BBE: 20 destinos del despachador p00:424D (call en p12:6BBB, el
 ;   indice en A): 6CDF, 6CDF, 6CDF, 6C2C, 6CDF, 6CDF, 6CDF, 6C38, 6CDF, 6CDF,
-;   6C4F, 6CDF, 6CDF, 6CDF, 6C8D, 6CDF, 6CDF, 6CDF, 6C54; lo leen p12:6BBB (38
-;   bytes)
-;   0x6bbe..0x6be4  (38 bytes)
+;   6C4F, 6CDF, 6CDF, 6CDF, 6C8D, 6CDF, 6CDF, 6CDF, 6C54, 6C74; lo leen
+;   p12:6BBB (40 bytes)
+;   0x6bbe..0x6be6  (40 bytes)
 DATA_tabla_6BBE:
 	defw 06cdfh,06cdfh,06cdfh,06c2ch,06cdfh,06cdfh,06cdfh,06c38h	; 6bbe
 	defw 06cdfh,06cdfh,06c4fh,06cdfh,06cdfh,06cdfh,06c8dh,06cdfh	; 6bce
-	defw 06cdfh,06cdfh,06c54h	; 6bde  -> sin_fichas_d800 sin_fichas_d800 fichas_de_a1b3
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6be4..0x6be6  (2 bytes)
-DATA_6BE4:
-	defb 074h,06ch	; 6be4
+	defw 06cdfh,06cdfh,06c54h,06c74h	; 6bde  -> sin_fichas_d800 sin_fichas_d800 fichas_de_a1b3 fichas_de_a1b9
 
 ; ======================================================================
 ; CODIGO 0x6be6..0x6c21  (59 bytes)

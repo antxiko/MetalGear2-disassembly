@@ -171,7 +171,7 @@ e1d0_paso_2:		; 0xE1D2 sube 3 y 0xE1D3 baja 2; desde 0xC0, el paso siguiente y e
 	call e1d1_siguiente		;a10a   ; e1d1_siguiente: el paso siguiente de 0xE1D1
 	jp 06b5dh		;a10d   ; sonido_5b: pide el sonido 0x5B
 e1d0_paso_3:		; con 0xC696: a cero, 0xD658-0xD65A y 0xE1D0 a cero, Snake en Y = 0xFF en el estado 0x15 hacia arriba, los bits 2 de 0xD7D5 y 0xD7D6, fuera el 3 de 0xD7DB y el 6 de 0xD7E0, el 2 de 0xD7DD, los sprites de la sala, las rachas, p02:8C42 con 0xD8A4, la fase 7 y el sonido 0x7D
-	ld hl,0c696h		;a110
+	ld hl,0c696h		;a110   ; apunta a 1 al acabar la musica 0x73
 	ld a,(hl)			;a113
 	or a			;a114
 	ret z			;a115   ; sin 0xC696, nada
@@ -1707,7 +1707,7 @@ fila_de_la_otra:		; la fila 0xE044 (0xC0 x 1) de la otra pagina a esta
 	ld bc,0c001h		;ad14
 	jp 04767h		;ad17   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 guion_5_paso_21:		; con 0xC692: a cero, el sonido 0x84 y el paso siguiente
-	ld hl,0c692h		;ad1a
+	ld hl,0c692h		;ad1a   ; apunta a 1 al acabar la musica 0xA1
 	ld a,(hl)			;ad1d
 	or a			;ad1e
 	ret z			;ad1f   ; sin 0xC692, nada
@@ -2298,7 +2298,7 @@ guion_7_paso_9:		; quita los mosaicos, p03:B65D, la conversacion de p01:63D8, 0x
 	ld (0d7bbh),a		;b1f5   ; guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 	call pantalla_de_conversacion		;b1f8   ; pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
 	xor a			;b1fb   ; 0xC68E...
-	ld (0c68eh),a		;b1fc
+	ld (0c68eh),a		;b1fc   ; guarda 1 al acabar los sonidos 0x8C o 0x8E del canal 0x40
 	ld (0d501h),a		;b1ff   ; ...0xD501...
 	ld (0d595h),a		;b202   ; ...y 0xD595 a cero
 	ld a,004h		;b205
@@ -3065,7 +3065,7 @@ sale_de_la_conversacion:		; a cero los mosaicos de quien habla, la ventana norma
 	ld (0d8a8h),a		;b7f9   ; guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 	ld (0cad0h),a		;b7fc   ; guarda 1-2: el mosaico de la derecha puesto (p09:BA47)
 	ld (0e25ah),a		;b7ff
-	ld (0c696h),a		;b802
+	ld (0c696h),a		;b802   ; guarda 1 al acabar la musica 0x73
 	inc a			;b805
 	ld (0d7b4h),a		;b806
 	ld (0cabbh),a		;b809

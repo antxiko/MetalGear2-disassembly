@@ -753,6 +753,8 @@ C 0x905E la X...
 C 0x9062 la Y...
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x8001 partida_8000  los 1 ultimos bytes de la instruccion de p01:7FFF (18 F5), que empieza en el banco 1; lo leen p01:7FFF (1 bytes)
+F 0x8000 1
 D 0x800C 0x8028 tabla_800C  14 destinos del despachador p00:424D (call en p02:8009, el indice en A): A97D, A9C2, AC58, 803C, B004, AA80, B380, B574, ADC0, AC8B, AADA, B211, 803C, 803C; lo leen p02:8009 (28 bytes)
 F 0x800C w8
 D 0x802C 0x803C tabla_802C  8 destinos del despachador p00:424D (call en p02:8029, el indice en A): A9BF, AA60, AD09, 803C, B056, AAB6, AD09, AB37; lo leen p02:8029 (16 bytes)
@@ -1433,6 +1435,8 @@ C 0x898C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x8995 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x89C3 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0x89C8 guarda 1 con lo de la cosa 0x0D en marcha (p10:B6BF)
+C 0x89D2 apunta a 1 al acabar las musicas 0x82 u 0x88
+C 0x89E5 lee 1 mientras suenan las musicas 0x82 u 0x88
 C 0x89E9 borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
 C 0x8A0C a_p10_b3e5: p10:B3E5 con el banco 10 en 0xA000
 C 0x8A12 borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
@@ -2090,6 +2094,7 @@ C 0x9E91 marco_c4: p00:5F90 y las lineas de p00:439D, salvo en la zona 0x12 sala
 C 0x9E94 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0x9E98 rachas_b007_af4c: p37:B007 y p37:AF4C, cada una con su destino
 C 0x9E9E guarda la rutina de la musica que suena (16 bits; p00:5B50)
+C 0x9EA2 guarda 1 al acabar los sonidos 0x8C o 0x8E del canal 0x40
 C 0x9EA6 guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 C 0x9EAF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x9EB5 a_p07_a000: p07:A000 con el banco 7 en 0xA000

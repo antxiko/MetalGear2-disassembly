@@ -1907,45 +1907,18 @@ pon_ficha_e000:		; la ficha de IX: activa (1), paso 0, la cuenta y su valor inic
 	ret			;ac81
 
 ; ----------------------------------------------------------------------
-; DATOS resto_AC82: lo apuntan con el banco puesto p06:AC35 (0xAC82); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p06:AC35 (9 bytes)
-;   0xac82..0xac8b  (9 bytes)
+; DATOS resto_AC82: lo apuntan con el banco puesto p06:AC35 (0xAC82), p06:AC3F
+;   (0xAC9A), p06:AC46 (0xACB2), p06:AC4D (0xACCA); el tamano es lo que hay
+;   hasta lo siguiente, no sale de recorrerlo; lo leen p06:AC35, p06:AC3F,
+;   p06:AC46, p06:AC4D (96 bytes)
+;   0xac82..0xace2  (96 bytes)
 DATA_resto_AC82:
-	defb 006h,05ah,084h,002h,0a8h,08ch,001h,09ch,042h	; ac82  .Z......B
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xac8b..0xac95  (10 bytes)
-DATA_AC8B:
-	defb 009h,048h,030h,010h,030h,0b2h,004h,064h,018h,008h	; ac8b  .H0.0..d..
-
-; ----------------------------------------------------------------------
-; DATOS resto_AC95: lo apuntan con el banco puesto p06:AC3F (0xAC9A); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p06:AC3F (8 bytes)
-;   0xac95..0xac9d  (8 bytes)
-DATA_resto_AC95:
-	defb 09ch,020h,00ch,070h,094h,006h,09ah,064h	; ac95  . .p...d
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xac9d..0xacca  (45 bytes)
-DATA_AC9D:
-	defb 002h,020h,088h,001h,068h,094h,009h,042h,062h,010h,0a4h,02ch,004h,096h,006h,008h	; ac9d  . ..h..Bb..,....
-	defb 062h,02ah,00ch,04ch,06eh,006h,028h,052h,002h,030h,060h,001h,048h,090h,009h,030h	; acad  b*.Ln.(R.0`.H..0
-	defb 076h,010h,088h,030h,004h,06ch,00ch,008h,0a0h,020h,00ch,018h,02ch	; acbd  v..0.l... ..,
-
-; ----------------------------------------------------------------------
-; DATOS resto_ACCA: lo apuntan con el banco puesto p06:AC4D (0xACCA); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p06:AC4D (10 bytes)
-;   0xacca..0xacd4  (10 bytes)
-DATA_resto_ACCA:
-	defb 004h,038h,06ch,002h,048h,094h,006h,09ah,086h,007h	; acca  .8l.H.....
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xacd4..0xace2  (14 bytes)
-DATA_ACD4:
-	defb 098h,038h,003h,028h,050h,010h,028h,0b4h,008h,058h,032h,00ch,08ah,0b2h	; acd4  .8.(P.(..X2...
+	defb 006h,05ah,084h,002h,0a8h,08ch,001h,09ch,042h,009h,048h,030h,010h,030h,0b2h,004h	; ac82  .Z......B.H0.0..
+	defb 064h,018h,008h,09ch,020h,00ch,070h,094h,006h,09ah,064h,002h,020h,088h,001h,068h	; ac92  d... .p...d. ..h
+	defb 094h,009h,042h,062h,010h,0a4h,02ch,004h,096h,006h,008h,062h,02ah,00ch,04ch,06eh	; aca2  ..Bb..,....b*.Ln
+	defb 006h,028h,052h,002h,030h,060h,001h,048h,090h,009h,030h,076h,010h,088h,030h,004h	; acb2  .(R.0`.H..0v..0.
+	defb 06ch,00ch,008h,0a0h,020h,00ch,018h,02ch,004h,038h,06ch,002h,048h,094h,006h,09ah	; acc2  l... ..,.8l.H...
+	defb 086h,007h,098h,038h,003h,028h,050h,010h,028h,0b4h,008h,058h,032h,00ch,08ah,0b2h	; acd2  ...8.(P.(..X2...
 
 ; ======================================================================
 ; CODIGO 0xace2..0xad5a  (120 bytes)
@@ -2017,10 +1990,10 @@ ficha_e000_paso_1:		; al acabar la cuenta, cada 2 cuadros, el paso 0
 	ret			;ad59
 
 ; ----------------------------------------------------------------------
-; DATOS resto_AD5A (tramo): lo apuntan con el banco puesto p12:65B5 (0xAD5A);
-;   el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p12:65B5 (58 bytes)
-;   0xad5a..0xad5c  (2 bytes)  de 0xad5a..0xad94 (58 bytes)
+; DATOS resto_AD5A: lo apuntan con el banco puesto p12:65B5 (0xAD5A); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p12:65B5 (2 bytes)
+;   0xad5a..0xad5c  (2 bytes)
 DATA_resto_AD5A:
 	defb 05ch,0adh	; ad5a
 
@@ -2062,11 +2035,8 @@ al_mensaje_de_error:
 	jp mensaje_de_error		;ad8f   ; mensaje_de_error: el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
 
 ; ----------------------------------------------------------------------
-; DATOS resto_AD5A (tramo): lo apuntan con el banco puesto p12:65B5 (0xAD5A);
-;   el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p12:65B5 (58 bytes)
-;   0xad92..0xad94  (2 bytes)  de 0xad5a..0xad94 (58 bytes)
-DATA_resto_AD5A_AD92:
+; DATOS sin identificar  0xad92..0xad94  (2 bytes)
+DATA_AD92:
 	defb 00eh,006h	; ad92
 
 ; ======================================================================
@@ -2094,26 +2064,22 @@ mensaje_de_error:		; el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, D
 	ret			;adbb   ; vuelve a quien guardo la pila
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xadbc..0xadd7  (27 bytes)
-DATA_ADBC:
-	defb 0beh,0adh,0cdh,0c1h,065h,03ah,099h,0c3h,026h,040h,0cdh,024h,000h,0cdh,0c6h,065h	; adbc  ....e:..&@.$...e	0xADBE y, detras, el codigo de p06:ADA9-ADBB tras p12:65C1 (sin llamada vista)
-	defb 03ah,094h,0c3h,032h,09ah,0fdh,0edh,07bh,092h,0c3h,0c9h	; adcc  :..2...{...
-
-; ----------------------------------------------------------------------
-; DATOS resto_ADD7: lo apuntan con el banco puesto p06:AD9A (0xADD7), p06:ADA3
+; DATOS resto_ADBC: lo apuntan con el banco puesto p06:AD9A (0xADD7), p06:ADA3
 ;   (0xADE5); el tamano es lo que hay hasta lo siguiente, no sale de
-;   recorrerlo; lo leen p06:AD9A, p06:ADA3 (139 bytes)
-;   0xadd7..0xae62  (139 bytes)
-DATA_resto_ADD7:
-	defb 0f2h,0adh,002h,0aeh,013h,0aeh,01fh,0aeh,030h,0aeh,040h,0aeh,052h,0aeh,040h,08ch	; add7  ........0.@.R.@.
-	defb 00eh,013h,01dh,015h,000h,00fh,01ch,01ch,019h,01ch,0ffh,038h,09ch,00eh,013h,01dh	; ade7  ...........8....
-	defb 015h,000h,013h,019h,000h,00fh,01ch,01ch,019h,01ch,0ffh,038h,09ch,010h,013h,016h	; adf7  ...........8....
-	defb 00fh,000h,018h,019h,01eh,000h,010h,019h,01fh,018h,00eh,0ffh,048h,09ch,00eh,013h	; ae07  ............H...
-	defb 01dh,015h,000h,010h,01fh,016h,016h,0ffh,030h,09ch,00eh,013h,01dh,015h,000h,018h	; ae17  ........0.......
-	defb 019h,01eh,000h,01ch,00fh,00bh,00eh,023h,0ffh,038h,09ch,021h,01ch,013h,01eh,00fh	; ae27  .......#.8.!....
-	defb 000h,01ah,01ch,019h,01eh,00fh,00dh,01eh,0ffh,038h,09ch,01eh,019h,019h,000h,017h	; ae37  .........8......
-	defb 00bh,018h,018h,023h,000h,010h,013h,016h,00fh,01dh,0ffh,038h,09ch,00eh,00bh,01eh	; ae47  ...#.......8....
-	defb 00bh,01eh,023h,01ah,00fh,00fh,01ch,01ch,019h,01ch,0ffh	; ae57  ..#........
+;   recorrerlo; lo leen p06:AD9A, p06:ADA3 (166 bytes)
+;   0xadbc..0xae62  (166 bytes)
+DATA_resto_ADBC:
+	defb 0beh,0adh,0cdh,0c1h,065h,03ah,099h,0c3h,026h,040h,0cdh,024h,000h,0cdh,0c6h,065h	; adbc  ....e:..&@.$...e	0xADBE y, detras, el codigo de p06:ADA9-ADBB tras p12:65C1 (sin llamada vista)
+	defb 03ah,094h,0c3h,032h,09ah,0fdh,0edh,07bh,092h,0c3h,0c9h,0f2h,0adh,002h,0aeh,013h	; adcc  :..2...{........
+	defb 0aeh,01fh,0aeh,030h,0aeh,040h,0aeh,052h,0aeh,040h,08ch,00eh,013h,01dh,015h,000h	; addc  ...0.@.R.@......
+	defb 00fh,01ch,01ch,019h,01ch,0ffh,038h,09ch,00eh,013h,01dh,015h,000h,013h,019h,000h	; adec  ......8.........
+	defb 00fh,01ch,01ch,019h,01ch,0ffh,038h,09ch,010h,013h,016h,00fh,000h,018h,019h,01eh	; adfc  ......8.........
+	defb 000h,010h,019h,01fh,018h,00eh,0ffh,048h,09ch,00eh,013h,01dh,015h,000h,010h,01fh	; ae0c  .......H........
+	defb 016h,016h,0ffh,030h,09ch,00eh,013h,01dh,015h,000h,018h,019h,01eh,000h,01ch,00fh	; ae1c  ...0............
+	defb 00bh,00eh,023h,0ffh,038h,09ch,021h,01ch,013h,01eh,00fh,000h,01ah,01ch,019h,01eh	; ae2c  ..#.8.!.........
+	defb 00fh,00dh,01eh,0ffh,038h,09ch,01eh,019h,019h,000h,017h,00bh,018h,018h,023h,000h	; ae3c  ....8.........#.
+	defb 010h,013h,016h,00fh,01dh,0ffh,038h,09ch,00eh,00bh,01eh,00bh,01eh,023h,01ah,00fh	; ae4c  ......8......#..
+	defb 00fh,01ch,01ch,019h,01ch,0ffh	; ae5c
 
 ; ======================================================================
 ; CODIGO 0xae62..0xaf02  (160 bytes)

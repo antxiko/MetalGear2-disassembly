@@ -2988,7 +2988,7 @@ L_73CD:
 	ld (hl),a			;73ce
 	jp sonido_89		;73cf   ; sonido_89: pide el sonido 0x89 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 estado_5:		; el estado 5, la partida: con 0xC694 (y sin 0xCA77), la rutina de la zona; despues el paso de 0xCA01
-	ld hl,0c694h		;73d2
+	ld hl,0c694h		;73d2   ; apunta a 1 al acabar la musica 0x86
 	ld a,(hl)			;73d5
 	and a			;73d6
 	jr z,L_73E4		;73d7

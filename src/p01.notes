@@ -1713,6 +1713,7 @@ C 0x739B partida_nueva: la partida desde el principio
 C 0x73B0 lee la zona
 C 0x73B7 lee la sala de la zona
 C 0x73CF sonido_89: pide el sonido 0x89 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0x73D2 apunta a 1 al acabar la musica 0x86
 C 0x73E0 rutina_de_la_zona: la rutina de la zona en la fase (salvo en la zona 0x12 sala 2); con 0xD8BA, 0xD8AA = 1 y p01:6CA6
 C 0x73FD despachador: salta a la palabra A de la tabla que va detras del call
 C 0x741A bucle_del_juego: lo de cada cuadro jugando: la pausa, Snake, los enemigos, las cosas de la sala, los sprites

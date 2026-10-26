@@ -1,5 +1,6 @@
 # Semillas a mano: 'pNN 0xADDR b6000 b8000 bA000  # por que'.
 p06 0xAD5C 12 2 6  # el gancho de errores del disco: DISKVE (0xF323) = 0xAD5A (p01:602D, p12:65B5), que guarda 0xAD5C; los errores llegan desde las llamadas al disco de p12
+p63 0xB802 1 2 63  # codigo tras el 'or a / ret' de p63:B800 (la interrupcion lo llama cada cuadro, p03:A12F): nunca corre; se desensambla para leerlo
 
 # --- TABLAS EN HL (seccion que reescribe tools/tablas_hl.py; no editar a mano) ---
 p00 0x40F0 1 2 8  # entrada 1 de la tabla 0x65AA en HL (p01:65A8, p00:424E)

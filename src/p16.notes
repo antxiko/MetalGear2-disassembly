@@ -1,4 +1,504 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+C 0x4009 0xC64B = 0xFFFF (todos los registros del SCC a escribir)...
+C 0x400F ...0xC64D-0xC65C a 1...
+C 0x401C ...escritos en el SCC...
+C 0x401F ...y el mezclador del PSG a 0xBF (todo callado)
+C 0x4024 C = el sonido
+C 0x4028 el banco de su musica
+C 0x402C por debajo de 0xF0, un sonido
+C 0x4031 0xF3: fuera el fundido
+C 0x4036 0xF4: fundido de todo menos los canales 4 y 8
+C 0x403B 0xF6: fundido de todo
+C 0x4040 0xF7: fundido de 2, 0x10, 0x20 y 0x80
+C 0x4045 0xF8: fundido de 1, 2, 0x10, 0x40 y 0x80
+C 0x404A 0xF9: fundido de 4 y 8
+C 0x404F 0xFB: fuera la pausa
+C 0x4054 0xFA: la pausa
+C 0x4059 0xF1: el canal 8 de vuelta
+C 0x405E 0xF2: el canal 8 guardado
+C 0x4066 + 2 * A
+C 0x406A con acarreo, 0x100 mas
+C 0x4070 la cabecera
+C 0x4074 B = los canales
+C 0x4077 C = la prioridad
+C 0x4079 DE = los punteros
+C 0x407A 0x10: el canal 8
+C 0x407F 0x30: los canales 4 y 8
+C 0x4084 el sonido 0x40...
+C 0x408C ...con el 0x40 en el canal 4, nada
+C 0x4098 el canal 4...
+C 0x409B ...y el 8
+C 0x40A7 las musicas 0x82 y 0x88...
+C 0x40C3 0xCF: todos menos 4 y 8
+C 0x40C9 canal 1
+C 0x40CF canal 2
+C 0x40D5 canal 0x10
+C 0x40DB canal 0x20
+C 0x40E1 canal 0x40
+C 0x40E7 canal 0x80
+C 0x411A la prioridad (byte 1)...
+C 0x411B ...el sonido (byte 0)...
+C 0x4122 ...el puntero de su partitura (bytes 2-3)...
+C 0x4129 ...la nota acaba ya (byte 4 = 1)...
+C 0x412D ...y el resto (0x3B bytes) a 0
+C 0x4184 con el bit 2...
+C 0x4189 ...el fundido sigue
+C 0x4198 su onda a cargar
+C 0x419D los volumenes guardados
+C 0x41AF todo el SCC a escribir
+C 0x41BD con el fundido en marcha...
+C 0x41C2 ...se para y queda el bit 2
+C 0x41D1 los volumenes de 1, 2 y 4 guardados...
+C 0x41E3 ...y a 0
+C 0x41ED sin envolvente
+C 0x4205 los registros del SCC
+C 0x420A los volumenes del SCC 2-5 a 0
+C 0x4213 el banco 0x12 en 0x8000
+C 0x4218 el sonido 6
+C 0x4224 los volumenes guardados...
+C 0x4236 ...y a 0
+C 0x4240 sin envolvente
+C 0x4258 los registros del SCC
+C 0x425D el volumen del SCC 1 a 0...
+C 0x4261 ...y los de 2-5
+C 0x426A el banco 0x12 en 0x8000
+C 0x4274 los volumenes guardados
+C 0x4286 todo el SCC a escribir
+C 0x428F el mezclador de nuevo
+C 0x4295 el banco de la musica en 0xA000
+C 0x4298 si 0xFDA2 ya no es el de antes...
+C 0x42A2 ...las ondas de los canales 8-0x40 a cargar...
+C 0x42C2 ...y se toma el nuevo
+C 0x42CB en pausa, solo la salida
+C 0x42D2 con el canal 8 guardado, solo el canal 8
+C 0x42DA el fundido
+C 0x42DF canal 1 (PSG A)
+C 0x42EB canal 2 (PSG B)
+C 0x42F7 canal 4 (PSG C)
+C 0x4303 canal 8 (SCC 1)
+C 0x430F canal 0x10 (SCC 2)
+C 0x431B canal 0x20 (SCC 3)
+C 0x4327 canal 0x40 (SCC 4)
+C 0x4333 con la alerta 1...
+C 0x433B ...las cuatro ondas del canal 0x40: 9, 0x1C, 9, 9
+C 0x4357 y la salida al PSG y al SCC
+C 0x436D callado, nada
+C 0x4374 0xFF: el byte alto uno menos
+C 0x437A a 0, mira el alto
+C 0x437D si no, lo de cada cuadro
+C 0x4393 0xFF: se acaba
+C 0x4398 0xD0-0xFE: una orden...
+C 0x439D ...con DE en ella
+C 0x43A2 la siguiente
+C 0x43A9 nota de bateria
+C 0x43AE la bateria
+C 0x43B3 B = la duracion
+C 0x43B7 el tempo
+C 0x43C2 con acarreo, el byte alto
+C 0x43C5 B veces
+C 0x43CA C = la duracion
+C 0x43CC 4 bits
+C 0x43D0 CB = 0
+C 0x43D5 D = lo que suena de la nota
+C 0x43DD ...+ la duracion desplazada
+C 0x43EB 4
+C 0x43F1 / 16
+C 0x4404 la duracion de vuelta
+C 0x4408 la nota (nibble alto)
+C 0x440F el byte siguiente
+C 0x4416 con el bit 7 del modo, nada mas
+C 0x441B 0x0C-0x0F: silencio
+C 0x4420 su periodo de la tabla p16:45BE (12 notas)
+C 0x442A por la octava...
+C 0x4443 el bit 3 lo salta una vez
+C 0x4450 mayor: bit 7
+C 0x447B con el desafinado...
+C 0x4485 ...hacia abajo (bit 7)...
+C 0x448A ...si no, + el desafinado
+C 0x44AD el periodo que suena = el de la nota
+C 0x44B9 con el deslizamiento (bit 5)...
+C 0x44C0 ...fuera el bit 6...
+C 0x44C4 ...y empieza paso * cuenta por encima del periodo (con el bit 7, por debajo)
+C 0x44ED con el vibrato: su espera + 1, el indice y el bucle a 0 y, sin espera, el primer paso (p16:4799)
+C 0x451C ...con el bit 6, solo una vez (bit 7)...
+C 0x4532 ...la espera...
+C 0x4538 ...el paso...
+C 0x453E ...la onda a cargar...
+C 0x4542 ...y la primera onda copiada a 0xC663
+C 0x4596 el volumen del canal...
+C 0x4599 ...menos el fundido
+C 0x45A1 a la nota y al que suena
+C 0x45A7 con el bit 5...
+C 0x45AC ...el bit 1...
+C 0x45B0 ...y el volumen del byte 0x2E
+C 0x45CB 0: sin nada
+C 0x45D3 1: el volumen
+C 0x45D8 el volumen (nibble alto)...
+C 0x45DC ...y el periodo alto (nibble bajo)...
+C 0x45DF ...y el bajo
+C 0x45FB ...con envolvente...
+C 0x4602 ...0x10
+C 0x4606 menos el fundido
+C 0x4618 el byte siguiente
+C 0x461F la duracion de bateria
+C 0x4626 sin avanzar
+C 0x462A la duracion
+C 0x462D B = la nota
+C 0x462E el sonido 0x74 en el canal 0x40...
+C 0x4636 ...con la alerta 1...
+C 0x463E ...la primera
+C 0x4662 su duracion
+C 0x4668 donde sigue
+C 0x466F en marcha
+C 0x46AF leyendo una nota de bateria, nada
+C 0x46B4 la bateria
+C 0x46BB el deslizamiento
+C 0x46C2 el barrido
+C 0x46C9 el vibrato
+C 0x46D0 la envolvente de volumen
+C 0x46DE si no, el volumen simple
+C 0x46EB ...con la mezcla en marcha
+C 0x46F4 uno menos
+C 0x46F8 donde sigue
+C 0x46FF 0xFF: se acaba
+C 0x4704 sin avanzar la principal...
+C 0x4708 ...la siguiente
+C 0x4710 ...el volumen a 0...
+C 0x4714 ...y sin ruido ni tono
+C 0x471D con el bit 6, ya acabo
+C 0x4722 con el bit 7, sumando
+C 0x4729 el periodo - el paso
+C 0x474C la cuenta
+C 0x4750 acabado: el bit 6...
+C 0x4754 ...el periodo de la nota...
+C 0x4760 ...y la cuenta de nuevo
+C 0x476E el periodo - el paso
+C 0x4796 se queda en 1
+C 0x479A su tabla...
+C 0x47AD ...en su indice
+C 0x47B3 el byte
+C 0x47B9 desde 0xF5, una orden
+C 0x47BE los cuadros
+C 0x47C9 el indice siguiente
+C 0x47CC el desvio...
+C 0x47D1 ...desde 8, hacia abajo
+C 0x47D6 * la amplitud
+C 0x47D9 + el periodo
+C 0x47DC al que suena
+C 0x47E7 el periodo -
+C 0x4812 con el barrido, no
+C 0x4815 con el deslizamiento...
+C 0x481A ...solo acabado
+C 0x4829 desde 0xFC: se para
+C 0x482C 0xF5-0xFA: el bucle empieza en el siguiente
+C 0x4839 sube el byte 0x24 (el de la envolvente) y compara con el 0x35, que aqui nadie sube: parece copiado de p16:49C4
+C 0x483D ...hasta n
+C 0x4843 acabadas: a 0...
+C 0x484B ...y sigue tras el [n]
+C 0x486E E = el que suena
+C 0x4871 un cuadro mas
+C 0x4877 con el corte...
+C 0x487E ...llegado: p16:49F2
+C 0x488E subiendo (bit 1)
+C 0x4895 la espera de la subida
+C 0x4899 de nuevo, del byte 0x2E
+C 0x48A5 uno mas...
+C 0x48A7 ...hasta el de la nota
+C 0x48AB llegado: se acaba la subida
+C 0x48BB pasada la espera del byte 0x2C...
+C 0x48C0 ...empieza a bajar (bit 3)
+C 0x48D1 sin paso, se acaba
+C 0x48D8 con las cuatro ondas, la segunda una vez (bit 5)
+C 0x48F7 cada byte 0x22 cuadros...
+C 0x48FC ...uno menos
+C 0x4904 una vez mas...
+C 0x4907 ...hasta el byte 0x23
+C 0x4926 por debajo...
+C 0x4948 con el corte...
+C 0x494B ...llegado: p16:49EE
+C 0x4959 la cuenta
+C 0x4962 su tabla...
+C 0x4975 ...en su indice
+C 0x497B el byte
+C 0x4981 desde 0xF5, una orden
+C 0x4986 los cuadros
+C 0x4991 el indice siguiente
+C 0x4994 el volumen...
+C 0x499A ...menos el byte 0x16
+C 0x49A0 por debajo del minimo, el minimo
+C 0x49B5 desde 0xFC: se para
+C 0x49B8 0xF5-0xFA: el bucle empieza en el siguiente
+C 0x49C9 ...hasta n
+C 0x49CF acabadas: a 0...
+C 0x49D7 ...y sigue tras el [n]
+C 0x49F9 el barrido
+C 0x49FD con las cuatro ondas...
+C 0x4A0B ...la cuarta una vez
+C 0x4A1D ...el volumen del bajo
+C 0x4A2A de nuevo, del nibble alto
+C 0x4A36 el volumen - el nibble bajo
+C 0x4A46 acabada, nada
+C 0x4A49 la espera
+C 0x4A51 de nuevo
+C 0x4A57 la onda a cargar
+C 0x4A5B 0: la primera, acabada
+C 0x4A62 0x0F: la segunda, acabada
+C 0x4A67 un paso mas...
+C 0x4A6E ...a los 16, p16:4A8C
+C 0x4A73 de vuelta (bits 2 y 5)...
+C 0x4A80 ...hacia la primera
+C 0x4A94 los pasos de nuevo
+C 0x4A9A el sentido
+C 0x4AA2 la primera entera...
+C 0x4AA5 ...y hacia la segunda
+C 0x4AB3 ...y hacia la primera
+C 0x4ABD IX = 0xC663 (no es un canal)
+C 0x4AC1 DE = la onda destino
+C 0x4AC7 32 muestras
+C 0x4ACD ...y la del destino
+C 0x4AD1 iguales: nada
+C 0x4AD4 la muestra de 0xC663 (+ 0x80)
+C 0x4AD7 el destino es menor
+C 0x4ADA la diferencia / 16
+C 0x4AE5 * 2 por 0xC688
+C 0x4AE9 + la muestra de 0xC663
+C 0x4AEF a 0xC663 (- 0x80)
+C 0x4AF9 / 16
+C 0x4B03 * 2 por 0xC688
+C 0x4B08 la muestra de 0xC663 - eso
+C 0x4B0F a 0xC663
+C 0x4B16 32
+C 0x4B56 un cuadro mas...
+C 0x4B5B ...cada 0x25
+C 0x4B60 baja uno mas...
+C 0x4B63 ...hasta 0x0F
+C 0x4B66 bit 7
+C 0x4B6E bit 6
+C 0x4B73 bit 3
+C 0x4B78 bit 4
+C 0x4B7D los ocho: 4 y 8...
+C 0x4BB5 fuera el fundido
+C 0x4BD8 bit 5: todos
+C 0x4BDD el canal
+C 0x4BEF todos menos 4 y 8
+C 0x4C0B el volumen - lo bajado
+C 0x4C13 negativo, 0
+C 0x4C19 en el canal 1...
+C 0x4C21 ...las musicas 0x82 y 0x88...
+C 0x4CC1 solo el PSG
+C 0x4CC7 canal 4...
+C 0x4CCF ...fuera sus bits 0-1...
+C 0x4CD3 ...y con los bits 2 y 3, el ruido de los otros se escribe otra vez (fuera el 3)
+C 0x4CE3 por debajo de 0x6A...
+C 0x4CE6 ...o desde 0xF0, nada
+C 0x4CEB su byte de la tabla
+C 0x4DB0 el nibble bajo
+C 0x4DB7 el bit 5
+C 0x4DBC el paso
+C 0x4DC1 la cuenta...
+C 0x4DC5 ...y la inicial
+C 0x4DD6 0xD7?
+C 0x4DDC si no, 0x38
+C 0x4DEA el bit 1
+C 0x4DEF 0xD6?
+C 0x4DF5 si no, el bit 7
+C 0x4E0B el bit 2 de 0xD7D1
+C 0x4E13 la envolvente
+C 0x4E18 el volumen del canal
+C 0x4E29 ...y el byte 0x28...
+C 0x4E2D ...con su nibble alto en el 0x27
+C 0x4E40 los bits 0-1
+C 0x4E48 la duracion
+C 0x4E4C con 0xE0...
+C 0x4E4F ...sin ese byte
+C 0x4E51 el canal 4...
+C 0x4E5C ...el bit 0
+C 0x4E71 5 bits
+C 0x4E75 el canal 4...
+C 0x4E7E ...0xC645
+C 0x4E9B fuera el bit 3
+C 0x4E9F la forma (R#13)
+C 0x4EAB el alto (R#12)
+C 0x4EB7 el bajo (R#11)
+C 0x4EC2 con envolvente
+C 0x4ED6 el tempo
+C 0x4EDA el byte alto de la nota a 0
+C 0x4EE8 sin envolvente
+C 0x4EEC el volumen simple (bit 0; queda el 7)
+C 0x4EF6 la espera (nibble alto)...
+C 0x4EFD ...desde 8...
+C 0x4F02 ...primero sube
+C 0x4F0F el paso (nibble bajo)...
+C 0x4F12 ...desde 8...
+C 0x4F17 ...de golpe
+C 0x4F20 las veces (nibble alto)
+C 0x4F2B y el corte
+C 0x4F38 el byte 0x2E...
+C 0x4F3C ...y su nibble alto en el 0x2D
+C 0x4F56 el vibrato
+C 0x4F5B 0: sin vibrato
+C 0x4F5C en marcha
+C 0x4F61 la espera (nibble alto)
+C 0x4F6B 0
+C 0x4F6F 1: el tempo
+C 0x4F73 n: el byte 0x0E...
+C 0x4F80 la amplitud (nibble bajo)
+C 0x4F8D fuera las cuatro ondas
+C 0x4F91 en marcha
+C 0x4F97 con el bit 7...
+C 0x4FA0 ...ida y vuelta (bit 2)
+C 0x4FB4 la segunda
+C 0x4FC1 lo que se mueve en cada paso
+C 0x4FC8 la espera
+C 0x5000 en marcha
+C 0x5005 al empezar la nota
+C 0x500A al bajar el volumen
+C 0x500F al acabar la bajada
+C 0x5014 al cortar la nota
+C 0x5033 la onda
+C 0x5035 a cargar
+C 0x5039 su entrada
+C 0x5043 el puntero
+C 0x505F una vuelta mas...
+C 0x5064 ...llegado a n, sigue
+C 0x5068 si no, a la marca
+C 0x5078 una vuelta mas...
+C 0x507D ...llegado a n, sigue
+C 0x508F la cuenta a 0
+C 0x5098 B = el de antes
+C 0x509F el nuevo es 1?
+C 0x50A5 dejando el 1...
+C 0x50A8 ...se guardan...
+C 0x50B4 ...y a 0
+C 0x50BF vuelven
+C 0x50CC canales 1 y 4 con ruido
+C 0x50CF el PSG: periodos y volumenes
+C 0x50D2 el periodo del ruido
+C 0x50D5 la envolvente
+C 0x50D8 el mezclador
+C 0x50DB lo cambiado del SCC
+C 0x50DE sus canales encendidos
+C 0x50E1 sus registros
+C 0x50E4 sus ondas
+C 0x50E7 el canal 1 con ruido...
+C 0x50ED ...y el 4 tambien...
+C 0x50F3 ...el 1 sin nada
+C 0x50FB desde R#0...
+C 0x50FD ...y R#8
+C 0x50FF canal 1
+C 0x5105 canal 2
+C 0x510B canal 4
+C 0x5115 ...y el alto
+C 0x511B el volumen
+C 0x5120 escrito ya con la envolvente: nada
+C 0x5126 con la envolvente...
+C 0x5129 ...ya escrito
+C 0x512F el del canal 4...
+C 0x5138 ...0xC645
+C 0x5144 el de los otros...
+C 0x514B ...0xC646
+C 0x515C R#11
+C 0x516A R#12
+C 0x5178 R#13
+C 0x5181 canal 1
+C 0x518C canal 2
+C 0x5197 canal 4
+C 0x51A1 los tres juntos
+C 0x51C0 los bits
+C 0x51C4 la copia de los volumenes
+C 0x51C7 la de los periodos
+C 0x51CA canal 8
+C 0x51CD el periodo bajo...
+C 0x51D3 ...igual?
+C 0x51D6 cambiado
+C 0x51DE el alto
+C 0x51F3 el volumen
+C 0x51FF canal 0x10
+C 0x5234 canal 0x20
+C 0x5269 canal 0x40
+C 0x529E canal 0x80
+C 0x52D6 canal 8
+C 0x52E3 canal 0x10
+C 0x52F0 canal 0x20
+C 0x52FD canal 0x40
+C 0x530A canal 0x80
+C 0x5317 distinto del de antes?
+C 0x5320 a escribir
+C 0x5336 los periodos (0x9880-0x9889)...
+C 0x5390 ...los volumenes (0x988A-0x988E)...
+C 0x53BD ...y los encendidos (0x988F)
+C 0x53CF canal 8
+C 0x53F2 canal 0x10
+C 0x5401 con la mezcla...
+C 0x5406 ...el bit 4 y 0xC663
+C 0x5425 ...y la mezcla cargada este cuadro...
+C 0x542A ...0xC663
+C 0x545E a 0x9860
+C 0x5466 apagados
+C 0x546A 32 muestras
+C 0x5472 encendidos de nuevo
+C 0x4649 la nota * 2
+C 0x464D + la tabla
+C 0x464E la partitura...
+C 0x4651 ...a HL
+C 0x4652 su primer byte
+C 0x4B1B la diferencia...
+C 0x4B1D ...entre 16
+C 0x4B21 0?
+C 0x4B23 al menos 1
+C 0x4FCD la tabla de ondas
+C 0x4FD0 + 2 * A
+C 0x4FD3 sin acarreo, ya
+C 0x4FD4 con acarreo, el alto
+C 0x5084 dir: el bajo...
+C 0x5087 ...y el alto
+C 0x508A DE = dir, HL = donde estaba
+C 0x508B menos uno: lee_partitura suma uno
+C 0x5213 el periodo alto de la copia...
+C 0x5214 ...sin cambio
+C 0x5218 igual que el del canal 0x10?
+C 0x521C cambiado
+C 0x5220 a la copia
+C 0x5248 el periodo alto de la copia...
+C 0x5249 ...sin cambio
+C 0x524D igual que el del canal 0x20?
+C 0x5251 cambiado
+C 0x5255 a la copia
+C 0x527D el periodo alto de la copia...
+C 0x527E ...sin cambio
+C 0x5282 igual que el del canal 0x40?
+C 0x5286 cambiado
+C 0x528A a la copia
+C 0x52B2 el periodo alto de la copia...
+C 0x52B3 ...sin cambio
+C 0x52B7 igual que el del canal 0x80?
+C 0x52BB cambiado
+C 0x52BF a la copia
+C 0x5224 sin cambio...
+C 0x5228 ...el volumen de la copia
+C 0x5229 igual que el del canal 0x10?
+C 0x522D cambiado
+C 0x5231 a la copia
+C 0x5259 sin cambio...
+C 0x525D ...el volumen de la copia
+C 0x525E igual que el del canal 0x20?
+C 0x5262 cambiado
+C 0x5266 a la copia
+C 0x528E sin cambio...
+C 0x5292 ...el volumen de la copia
+C 0x5293 igual que el del canal 0x40?
+C 0x5297 cambiado
+C 0x529B a la copia
+C 0x52C3 sin cambio...
+C 0x52C7 ...el volumen de la copia
+C 0x52C8 igual que el del canal 0x80?
+C 0x52CC cambiado
+C 0x52D0 a la copia
+C 0x547E el registro
+C 0x5481 el dato E
+C 0x5482 al PSG
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x45BE 0x45CA sonido_45BE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72 y 43 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12 bytes)
 F 0x45BE 16
@@ -106,25 +606,282 @@ L 0x4003 entrada_pide jp p16:4024
 L 0x4006 entrada_cuadro jp p16:428F
 L 0x4009 calla_todo arranque del sonido: todo callado
 L 0x4024 pide_sonido pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+L 0x4063 cabecera_de_sonido la cabecera del sonido A (tabla p17:65A9, 2 bytes por sonido): [canales][prioridad] y un puntero de partitura por canal; 0x10 solo el canal 8, 0x30 los canales 4 y 8 (el 0x40 no pisa al 0x40), 0xCF todos menos 4 y 8 y si no los ocho; cada canal solo si su prioridad no es mayor
+L 0x4092 canales_4_y_8 con su prioridad por debajo de la del canal 4, nada
+L 0x40A1 sonido_de_todos con su prioridad por debajo de la del canal 1, nada
+L 0x40B4 musica_82_88 ...0xC697 = 1
+L 0x40BC otra_musica 0xC697 = 0
+L 0x40C0 arranca_musica fuera el fundido
+L 0x40ED los_ocho_canales los ocho, del 1 al 0x80
 L 0x411A arranca_canal pone en marcha un canal con el puntero de partitura de DE
+L 0x413D canal_8 con su prioridad por debajo de la del canal 8, nada
+L 0x4146 sin_fundido fuera el fundido (solo quedan los bits 1-2 de 0xC640) y su cuenta a 0
+L 0x4151 fundido_f4 el bit 4 de 0xC640 y en marcha
+L 0x4159 fundido_f6 el bit 5 y en marcha
+L 0x4161 fundido_f7 el bit 6 y en marcha
+L 0x4169 fundido_f8 el bit 3 y en marcha
+L 0x4171 fundido_f9 el bit 7 y en marcha
+L 0x4176 fundido_en_marcha en marcha
+L 0x4178 cuenta_fundido_0 la cuenta y lo bajado a 0
+L 0x417F canal_8_de_vuelta el pedido 0xF1: fuera el bit 1 de 0xC640 (con el 2, el fundido otra vez); el canal 8 de 0xC600, su onda a cargar, los volumenes de los canales 1, 2 y 4 de vuelta y todo el SCC a escribir
+L 0x418D canal_8_de_c600 el canal 8 de vuelta
+L 0x41B8 canal_8_guardado el pedido 0xF2: el bit 1 de 0xC640 (con el fundido en marcha, al bit 2), el canal 8 a 0xC600, los volumenes de 1, 2 y 4 guardados y a 0 sin envolvente, los volumenes del SCC 2-5 a 0 y el sonido 6 (C = 6)
+L 0x41C6 guarda_canal_8 el canal 8 a 0xC600
+L 0x421F pausa el pedido 0xFA: 0xC698 = 1, los volumenes de 1, 2 y 4 guardados y a 0 sin envolvente, y el SCC callado (sus 5 volumenes a 0)
+L 0x4270 fuera_pausa el pedido 0xFB: 0xC698 = 0, los volumenes de vuelta y todo el SCC a escribir
 L 0x428F sonido_cada_cuadro el sonido de un cuadro: los ocho canales
+L 0x42C6 sonido_cuadro_a uno mas, tambien en 0xFDA2
+L 0x434B canal_80 canal 0x80 (SCC 5)
+L 0x435A solo_canal_8 el canal 8 y la salida
 L 0x4369 canal_cada_cuadro un cuadro de un canal: cuenta la nota y lee la siguiente
+L 0x4380 nota_byte_alto el byte alto uno menos
+L 0x4386 nota_acabada con el alto a 0, la nota se acaba
 L 0x4392 lee_partitura la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+L 0x43A6 es_nota una nota: [nota (nibble alto, 0x0C silencio)][duracion (nibble bajo)]; con el bit 1 del modo, de bateria; con los bits 2-4, la bateria
+L 0x43B3 duracion_de_nota la duracion (nibble bajo) * el tempo, en los bytes 4 y 0x1F; lo que suena (byte 0x29) = duracion * byte 0x26 / 16
+L 0x43BE por_tempo + el tempo
+L 0x43C7 pon_duracion 
+L 0x43D8 por_dieciseisavos cada bit de D...
+L 0x43E5 dieciseisavo_siguiente la duracion * 2
+L 0x4432 octava_mas ...el periodo * 2
+L 0x4435 mira_deslizamiento con el bit 4 de las marcas del deslizamiento: el bit 7 segun la nota nueva sea mas grave (periodo mayor) o no que la de antes (el bit 3 lo salta una vez)
+L 0x444A compara_periodo el periodo de antes
+L 0x4458 mas_grave el bit 7
+L 0x445F compara_bajo 
+L 0x446A igual_periodo igual: el bit 7 solo con el bit 2
+L 0x4471 mas_agudo sin el bit 7
+L 0x4475 pon_periodo el periodo de la nota
+L 0x4499 desafina_abajo - el desafinado
+L 0x44A9 suena_tono con tono
+L 0x44D9 desliza_sumando + el paso, cuenta veces
+L 0x44DF desliza_restando - el paso, cuenta veces
+L 0x44E3 pon_periodo_desde 
+L 0x44E9 vibrato_al_empezar fuera el bit 0 del deslizamiento
+L 0x450C mezcla_al_empezar el canal 0x10 con la mezcla de ondas en marcha...
+L 0x452B mezcla_desde_el_principio ...vuelve a empezar: fuera los bits 1 y 5...
+L 0x4551 ondas_al_empezar con el bit 4 de las cuatro ondas: fuera los bits 5-7 y, sin envolvente, la primera onda
+L 0x456B volumen_al_empezar con la envolvente de volumen: su paso, su bucle y su cuenta a 0, el primer paso (p16:4961) y en marcha
+L 0x4586 volumen_sin_envolvente sin envolvente: fuera los bits 2 y 3, la cuenta a 0, el volumen del canal (menos el fundido) a la nota y al que suena; con el bit 5, el bit 1 y el volumen del nibble bajo del byte 0x2E
+L 0x45B9 silencio sin tono
+L 0x45CB nota_de_bateria una nota de bateria por lo que suena: 0 nada; 1 el volumen del nibble bajo; 2 y 3 el volumen del nibble alto y el periodo de 12 bits (nibble bajo y el byte siguiente); el volumen + 2 (en el PSG con envolvente, 0x10 + 2) menos el fundido; la duracion la del byte 0x14
+L 0x45EF volumen_de_bateria el volumen
+L 0x45F3 volumen_de_bateria_a en el PSG...
+L 0x4604 pon_volumen_bateria + 2
+L 0x4613 nota_de_bateria_fin con el bit 7 del modo, nada mas
+L 0x4626 bateria la bateria: la duracion (p16:43B3) y la nota elige una partitura de bateria de la tabla del modo (p16:4674); en el canal 0x40 con el sonido 0x74 y la alerta 1, siempre la primera de p16:5486; se lee su primera nota y queda en marcha (bit 0 del byte 0x10)
+L 0x4645 bateria_por_nota la tabla
+L 0x4649 partitura_de_bateria la palabra de la nota
+L 0x4653 primera_de_bateria lee su nota como de bateria
+L 0x4674 tabla_de_bateria HL = la tabla de bateria del modo: bit 3 p16:54B6, bit 4 p16:54CE; si no, p16:5486 (p16:549E con octava)
+L 0x468D bateria_con_octava 
+L 0x4691 bateria_bit_3 
+L 0x46A0 bateria_bit_4 
+L 0x46AF canal_sigue_nota lo de cada cuadro de una nota: con la bateria, su nota (p16:46F4); si no, el deslizamiento (p16:471D), el barrido (p16:4767), el vibrato (p16:4792), la envolvente de volumen (p16:4944) o el volumen simple (p16:4862) y, en el canal 0x10, la mezcla de ondas (p16:4A43)
+L 0x46E5 mezcla_cada_cuadro el canal 0x10...
+L 0x46F4 bateria_cada_cuadro la nota de bateria uno menos; acabada, la siguiente de su partitura (sin avanzar la principal) o, con 0xFF, fuera la bateria, el volumen a 0 y sin ruido ni tono
+L 0x470C bateria_acaba fuera la bateria...
+L 0x471D desliza el deslizamiento de cada cuadro (hasta el bit 6): el periodo que suena - el paso (+ con el bit 7); acabada la cuenta, el bit 6, el periodo de la nota y la cuenta de nuevo
+L 0x473A desliza_mas el periodo + el paso
+L 0x4746 pon_deslizado 
+L 0x4767 barrido el barrido de cada cuadro, sin fin: el periodo que suena - el paso (+ con el bit 7)
+L 0x477F barrido_mas el periodo + el paso
+L 0x478B pon_barrido 
+L 0x4792 vibrato la cuenta del vibrato; a 0, su paso siguiente (p16:4799)
+L 0x4799 paso_de_vibrato el paso del vibrato de la tabla p17:6475 (por el byte 0x31) en el indice 0x2F: [cuadros (nibble alto)][desvio (nibble bajo; desde 8, hacia abajo)] * amplitud sobre el periodo de la nota; 0xF5-0xFA otra vez desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+L 0x47E0 vibrato_abajo 16 - el desvio
+L 0x47EE por_amplitud C = A * la amplitud (byte 0x33); D = el periodo alto
+L 0x47F2 suma_amplitud 
+L 0x47FA pon_por_amplitud 
+L 0x47FF periodo_mas_c DE = el periodo de la nota + C
+L 0x4807 periodo_menos_c DE = el periodo de la nota - C
+L 0x480F pon_vibrato DE al periodo que suena, salvo con el barrido o con el deslizamiento sin acabar
+L 0x481D periodo_que_suena 
+L 0x4824 orden_de_vibrato 0xFB: repite
+L 0x4838 repite_vibrato [n]: las vueltas...
+L 0x4854 otra_vuelta_vibrato al principio del bucle
+L 0x485D para_vibrato la cuenta 0xFF: parado
+L 0x4862 volumen_simple sin la envolvente del PSG, el volumen de cada cuadro (p16:486E)
+L 0x486E volumen_de_cuadro el volumen de cada cuadro: al cortar la nota (byte 0x29), p16:49F2; si no, la subida (bit 1, cada byte 0x2D cuadros hasta el de la nota) o, pasada la espera del byte 0x2C, la bajada (bit 3: el byte 0x22 cada vez, el 0x23 veces) hasta el minimo
+L 0x4887 sube_o_baja bajando (bit 3)
+L 0x48B7 espera_bajada uno menos, no del minimo
+L 0x48CA baja_volumen acabada (bit 2): p16:492F
+L 0x48F0 baja_cada con el bit 4, de golpe
+L 0x48FD bajada_cuenta no del minimo
+L 0x490E bajada_acaba acabada (bit 2)
+L 0x4913 baja_de_golpe el volumen - el byte 0x22
+L 0x491C nota_cortada al cortar la nota
+L 0x4923 no_del_minimo E no por debajo del minimo (byte 0x21; negativo, el minimo)
+L 0x492B al_minimo ...el minimo
+L 0x492F tercera_onda con las cuatro ondas, la tercera una vez (bit 6)
+L 0x4944 envolvente la envolvente de volumen de cada cuadro: al cortar la nota, p16:49EE; parada (bit 7), nada; si no, su cuenta y el paso siguiente
+L 0x4954 envolvente_sigue parada, nada
+L 0x4961 paso_de_envolvente el paso de la envolvente de la tabla p17:6430 (por el byte 0x2A) en el indice 0x22: [cuadros (nibble alto)][volumen (nibble bajo)] - lo que baja el canal (byte 0x16), no por debajo del minimo; 0xF5-0xFA bucle desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+L 0x499D pon_volumen_minimo negativo, 0
+L 0x49AB volumen_0 
+L 0x49AC pon_volumen 
+L 0x49B0 orden_de_envolvente 0xFB: repite
+L 0x49C4 repite_envolvente [n]: las vueltas...
+L 0x49E0 otra_vuelta_envolvente 
+L 0x49E9 para_envolvente parada (bit 7)
+L 0x49EE corta_envolvente en marcha otra vez
+L 0x49F2 corta_nota al cortar la nota: con el bit 1 del deslizamiento, el barrido (bit 0); con las cuatro ondas, la cuarta una vez (bit 7); el volumen del byte 0x28 (nibble bajo) o, con su nibble alto, uno que baja ese tanto cada tantos cuadros
+L 0x4A15 volumen_al_cortar sin nibble alto...
+L 0x4A26 baja_al_cortar la espera (byte 0x27)
+L 0x4A43 mezcla_de_ondas la mezcla de ondas de cada cuadro (sin acabar): cada 0xC68A cuadros, la onda a cargar y un paso de 0xC663 hacia la segunda (o la primera, con ida y vuelta); con 0xC688 = 0 la primera de golpe y con 0x0F la segunda; a los 16 pasos se acaba (o da la vuelta)
+L 0x4A86 hacia_la_segunda 
+L 0x4A8C mezcla_16_pasos sin ida y vuelta, acabada con la segunda
+L 0x4AB0 vuelta_a_la_primera la segunda entera...
+L 0x4ABB paso_de_mezcla las 32 muestras de 0xC663 hacia la onda de HL: cada una se acerca (la diferencia / 16, al menos 1) * 2^0xC688
+L 0x4AC9 muestra_de_mezcla la muestra (con signo, + 0x80)...
+L 0x4AF5 muestra_baja la diferencia, en positivo
+L 0x4B12 muestra_siguiente 
+L 0x4B1B diferencia_16 A = A / 16, al menos 1
+L 0x4B26 primera_acabada acabada (bit 1)
+L 0x4B2E copia_primera_onda la primera onda entera a 0xC663
+L 0x4B3E segunda_acabada acabada (bit 1)
+L 0x4B46 copia_segunda_onda la segunda onda entera a 0xC663
+L 0x4B56 fundido el fundido de cada cuadro: cada 0x25 cuadros el volumen baja uno mas (0xC642); a 0x0F acaban los canales de su pedido (bit 7: 4 y 8; 6: 0x20, 2, 0x10 y 0x80; 3: 0x40 y esos; 4: todos menos 4 y 8; si no, los ocho) y se quita
+L 0x4B8B acaba_1_y_40 1 y 0x40...
+L 0x4B99 acaba_20 0x20...
+L 0x4BA0 acaba_2_10_80 2, 0x10 y 0x80
+L 0x4BB9 acaba_4_y_8 4 y 8
+L 0x4BCB acaba_40 0x40 y los de p16:4BA0
+L 0x4BD5 menos_fundido E = el volumen E menos lo que baja el fundido (0xC642) si el canal es de los suyos (bit 5 todos; 7 4 y 8; 6 2, 0x10, 0x20 y 0x80; 3 1, 2, 0x10, 0x40 y 0x80; si no, todos menos 4 y 8); con la envolvente del PSG, 0
+L 0x4BF5 fundido_4_y_8 
+L 0x4BFB fundido_de_f7 
+L 0x4C01 fundido_de_f8 
+L 0x4C04 baja_por_fundido con la envolvente, 0
+L 0x4C16 volumen_a_0 
 L 0x4C19 fin_de_partitura la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+L 0x4C2E acaba_82_88 ...0xC690 = 1 y 0xC697 = 0
+L 0x4C3A acaba_a6 0xA6: 0xC693
+L 0x4C47 acaba_a1 0xA1: 0xC692
+L 0x4C54 acaba_86 0x86: 0xC694
+L 0x4C61 acaba_94 0x94: 0xC695
+L 0x4C6E acaba_73 0x73: 0xC696
+L 0x4C7B acaba_8d 0x8D: 0xCB58
+L 0x4C88 acaba_en_40 en el canal 0x40, los sonidos 0x8C y 0x8E: 0xC68E = 1
+L 0x4C9D acaba_8c_8e 
+L 0x4CA2 canal_callado el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+L 0x4CDE ruido_fuera los otros: fuera los bits 2-3
 L 0x4CE3 banco_de_musica el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
 L 0x4D3A pon_banco_de_musica pone en 0xA000 el banco de 0xC68F
 L 0x4D41 orden_de_partitura salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
+L 0x4DB0 orden_octava las ordenes 0xD0-0xD5: la octava (el nibble bajo de la orden)
+L 0x4DB7 orden_d6 0xD6 [paso][cuenta]: el deslizamiento desde un periodo mayor (bit 5)
+L 0x4DBB paso_y_cuenta [paso][cuenta] del deslizamiento
+L 0x4DC9 orden_d7 0xD7 [paso][cuenta]: el deslizamiento desde un periodo menor (bits 5 y 7)
+L 0x4DD0 orden_d8 0xD8: sin deslizamiento
+L 0x4DD5 orden_d9 0xD9 [0xD6 o 0xD7][paso][cuenta]: el deslizamiento segun la nota (bit 4; 0x38, o 0xBC con 0xD7)
+L 0x4DE3 orden_d9_d7 0xBC
+L 0x4DEA orden_da 0xDA [0xD6 o no][paso]: el barrido al cortar la nota (bit 1; con 0xD6 el periodo baja, si no sube)
+L 0x4DF9 paso_de_barrido el paso
+L 0x4DFF orden_db 0xDB [v]: el volumen minimo
+L 0x4E05 orden_dc 0xDC: sin volumen minimo
+L 0x4E0A orden_dd 0xDD: el bit 2 de 0xD7D1 (la musica avisa al juego)
+L 0x4E12 orden_de 0xDE [envolvente][volumen y corte][byte 0x28]: la envolvente de volumen, el volumen del canal (nibble alto), lo que suena (nibble bajo) y el volumen al cortar (byte 0x28: nibble alto la espera, bajo lo que baja)
+L 0x4E22 corte_y_28 lo que suena (nibble bajo)...
+L 0x4E37 orden_df 0xDF: fuera el bit 7 del byte 0x10
+L 0x4E3C orden_e0 0xE0 y 0xE2 (y 0xE1 y 0xE3 por p16:4E51): lo que suena = los bits 0-1 de la orden (0 nada, 1 ruido, 2 tono, 3 los dos) y, salvo con 0xE0, [duracion de las notas de bateria]
+L 0x4E51 orden_e1 0xE1 y 0xE3: con ruido; su periodo a escribir (bit 0 en el canal 4, bit 2 en los otros) y p16:4E3C
+L 0x4E66 ruido_otros los otros: el bit 2
+L 0x4E70 orden_e4 0xE4 [periodo]: el periodo del ruido (5 bits) a 0xC645 (canal 4) o 0xC646 (los otros), a escribir
+L 0x4E8C ruido_e4_otros los otros: 0xC646
+L 0x4E9A orden_e5 0xE5 [forma][alto][bajo]: la envolvente del PSG entera (R#13, R#12, R#11), a escribir, con el bit 2 de lo que suena
+L 0x4EAA orden_e6 0xE6 [alto][bajo]: el periodo de la envolvente (R#12 y R#11)
+L 0x4EB6 orden_e7 0xE7 [bajo]: el periodo bajo de la envolvente (R#11)
+L 0x4EC7 orden_e8 0xE8: nada que escribir del ruido ni de la envolvente y fuera los bits 2-3 de lo que suena
+L 0x4ED5 orden_e9 0xE9 [t]: el tempo
+L 0x4EDF orden_ea 0xEA [v]: el volumen del canal (nibble bajo)
+L 0x4EE7 orden_eb 0xEB [subida y bajada][veces y corte][byte 0x28]: el volumen simple: espera de bajada (nibble alto; desde 8 primero sube, bits 1 y 5), paso de bajada (nibble bajo; desde 8 de golpe, bit 4), las veces (nibble alto) y lo de p16:4E22
+L 0x4F0C espera_de_bajada 
+L 0x4F1D paso_de_bajada 
+L 0x4F2E orden_ec 0xEC: sin volumen simple (quedan los bits 6-7)
+L 0x4F37 orden_ed 0xED [subida]: la espera de la subida (nibble alto) y el volumen de partida (nibble bajo)
+L 0x4F46 orden_ee 0xEE [d]: el desafinado y en marcha
+L 0x4F50 orden_ef 0xEF: sin desafinado
+L 0x4F55 orden_f0 0xF0 [vibrato][espera y amplitud]: el vibrato (0 nada) y, con el, la espera (nibble alto: 0 nada, 1 el tempo, n el byte 0x0E (el volumen) + el tempo * (n - 1)) y la amplitud (nibble bajo)
+L 0x4F76 espera_de_vibrato ...+ el tempo, n - 1 veces
+L 0x4F7D pon_espera_vibrato 
+L 0x4F87 espera_un_tempo 
+L 0x4F8D orden_f1 0xF1 [onda 1 (bit 7: ida y vuelta)][onda 2][paso][espera]: la mezcla de ondas del canal 0x10, en marcha
+L 0x4FA6 ondas_de_mezcla la primera onda (p16:583E)
+L 0x4FCD onda_de_tabla HL = la entrada A de la tabla de ondas p16:583E
+L 0x4FD6 orden_f2 0xF2 [0 o no]: la mezcla tambien en el canal 0x20 (bit 3)
+L 0x4FE5 f2_no sin el bit 3
+L 0x4FEB orden_f3 0xF3 [0 o no]: con el bit 6, la mezcla solo vuelve a empezar en la primera nota
+L 0x4FFA f3_no sin el bit 6
+L 0x5000 orden_f4 0xF4 [a][b][c][d]: las cuatro ondas del canal (al empezar la nota, al bajar, al acabar la bajada y al cortar)
+L 0x5019 orden_f5 0xF5: la vuelta de 0xFB aqui
+L 0x5020 orden_f6 0xF6: sin mezcla de ondas
+L 0x5025 orden_f7 0xF7 [b]: el bit 7 del byte 0x10 y el byte 0x20
+L 0x502F orden_f8 0xF8 [onda]: la forma de onda del canal (sin las cuatro ondas)
+L 0x5035 pon_onda la onda A de la tabla p16:583E al canal, a cargar
+L 0x504D orden_f9 0xF9 [dir]: llamada: sigue en dir y la vuelta en los bytes 9-0x0A
+L 0x5057 orden_fa 0xFA: vuelve de la llamada
+L 0x505E orden_fb 0xFB [n]: vuelve a la marca 0xF5 hasta n veces
+L 0x5072 fb_acaba la cuenta a 0
+L 0x5077 orden_fc 0xFC [n][dir]: salta a dir hasta n veces
+L 0x5084 salta_a_dir DE = [dir] - 1 (HL = el byte alto)
+L 0x508D fc_acaba se salta dir
+L 0x5094 orden_fd 0xFD [dir]: salta a dir
+L 0x5097 orden_fe 0xFE [modo]: el modo del canal; al dejar el 1 se guardan y borran los bytes 0x10 y 0x2B, al volver al 1 vuelven
+L 0x50BC vuelve_al_1 ya era 1: nada
+L 0x50CC salida_de_sonido la salida del cuadro: el ruido de los canales 1 y 4, los periodos y volumenes del PSG, su ruido y su envolvente, el mezclador, lo cambiado del SCC, sus canales encendidos, sus registros y sus ondas
+L 0x50E7 ruido_1_y_4 con ruido en los canales 1 y 4 a la vez, el canal 1 se queda sin nada (fuera los bits 0-1)
+L 0x50FB psg_periodos los canales 1, 2 y 4: periodo (R#0-R#5) y volumen (R#8-R#10); con la envolvente, el volumen solo una vez
+L 0x510E psg_canal el periodo bajo...
+L 0x512C psg_ruido el periodo del ruido (R#6) pendiente: el del canal 4 (bit 0, queda el 1) o el de los otros (bit 2, queda el 3)
+L 0x5141 ruido_de_otros con el del 4 escrito, nada
+L 0x5151 escribe_ruido 
+L 0x5154 psg_envolvente la envolvente pendiente: R#11 (bit 7), R#12 (bit 6) y R#13 (bit 5)
+L 0x5181 psg_mezclador el mezclador (R#7) de lo que suena en los canales 1, 2 y 4 (tablas p16:51B4, p16:51B8, p16:51BC)
+L 0x51A4 pon_mezclador R#7 = A (y en 0xC643)
+L 0x51AD byte_por_lo_que_suena HL + los bits 0-1
+L 0x51C0 scc_cambiado el periodo (2 bytes) y el volumen de los canales 8, 0x10, 0x20, 0x40 y 0x80 contra su copia (0xC64D, 0xC657): los distintos se copian y su bit en 0xC64B-0xC64C
+L 0x52D4 scc_encendidos los canales del SCC con algo que suena (byte 0x0F): bit a bit; si cambia, a 0xC65C y el bit 7 de 0xC64C
+L 0x5326 encendidos_igual 
+L 0x532C scc_registros los 16 registros del SCC (0x9880-0x988F) con su bit en 0xC64B-0xC64C, desde sus copias
+L 0x53C2 escribe_scc (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+L 0x53CF scc_ondas las ondas a cargar (bit 7 del byte 0x2B): canal 8 a 0x9800, 0x10 a 0x9820 (la mezcla de 0xC663 si esta en marcha), 0x20 a 0x9840 (la mezcla con el bit 3 de 0xC68B) y 0x40 a 0x9860 (el 0x80 la comparte)
+L 0x53EA onda_canal_10 fuera el bit 4
+L 0x5411 onda_propia 
+L 0x5417 carga_onda_10 a 0x9820
+L 0x541D onda_canal_20 con el bit 3...
+L 0x5430 onda_propia_20 canal 0x20
+L 0x5445 carga_onda_20 a 0x9840
+L 0x544B onda_canal_40 canal 0x40
+L 0x5461 carga_onda las 32 muestras de HL a DE con los canales del SCC apagados mientras, y el banco 0x12 de vuelta
 L 0x547E escribe_psg escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x4000 calla_todo: arranque del sonido: todo callado
 C 0x4003 pide_sonido: pide el sonido A por el puente de 0xC340 (copiado de p03:A14B)
 C 0x4006 sonido_cada_cuadro: el sonido de un cuadro: los ocho canales
+C 0x400C guarda los registros del SCC que cambiaron este cuadro (16 bits, uno por registro)
+C 0x4021 pon_mezclador: R#7 = A (y en 0xC643)
 C 0x4025 guarda el ultimo sonido pedido
-C 0x4028 banco_de_musica: el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
+C 0x402E cabecera_de_sonido: la cabecera del sonido A (tabla p17:65A9, 2 bytes por sonido): [canales][prioridad] y un puntero de partitura por canal; 0x10 solo el canal 8, 0x30 los canales 4 y 8 (el 0x40 no pisa al 0x40), 0xCF todos menos 4 y 8 y si no los ocho; cada canal solo si su prioridad no es mayor
+C 0x4033 sin_fundido: fuera el fundido (solo quedan los bits 1-2 de 0xC640) y su cuenta a 0
+C 0x4038 fundido_f4: el bit 4 de 0xC640 y en marcha
+C 0x403D fundido_f6: el bit 5 y en marcha
+C 0x4042 fundido_f7: el bit 6 y en marcha
+C 0x4047 fundido_f8: el bit 3 y en marcha
+C 0x404C fundido_f9: el bit 7 y en marcha
+C 0x4051 fuera_pausa: el pedido 0xFB: 0xC698 = 0, los volumenes de vuelta y todo el SCC a escribir
+C 0x4056 pausa: el pedido 0xFA: 0xC698 = 1, los volumenes de 1, 2 y 4 guardados y a 0 sin envolvente, y el SCC callado (sus 5 volumenes a 0)
+C 0x405B canal_8_de_vuelta: el pedido 0xF1: fuera el bit 1 de 0xC640 (con el 2, el fundido otra vez); el canal 8 de 0xC600, su onda a cargar, los volumenes de los canales 1, 2 y 4 de vuelta y todo el SCC a escribir
+C 0x4060 canal_8_guardado: el pedido 0xF2: el bit 1 de 0xC640 (con el fundido en marcha, al bit 2), el canal 8 a 0xC600, los volumenes de 1, 2 y 4 guardados y a 0 sin envolvente, los volumenes del SCC 2-5 a 0 y el sonido 6 (C = 6)
 C 0x4063 sonidos: 171 palabras
-C 0x4084 lee el ultimo sonido pedido
-C 0x4098 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x407C canal_8: con su prioridad por debajo de la del canal 8, nada
+C 0x4081 sonido_de_todos: con su prioridad por debajo de la del canal 1, nada
+C 0x4089 canales_4_y_8: con su prioridad por debajo de la del canal 4, nada
 C 0x409E arranca_canal: pone en marcha un canal con el puntero de partitura de DE
-C 0x40A7 lee el ultimo sonido pedido
+C 0x40AC musica_82_88: ...0xC697 = 1
+C 0x40B1 otra_musica: 0xC697 = 0
+C 0x40B6 guarda 1 mientras suenan las musicas 0x82 u 0x88
+C 0x40B9 arranca_musica: fuera el fundido
+C 0x40BD guarda 1 mientras suenan las musicas 0x82 u 0x88
+C 0x40C0 sin_fundido: fuera el fundido (solo quedan los bits 1-2 de 0xC640) y su cuenta a 0
+C 0x40C6 los_ocho_canales: los ocho, del 1 al 0x80
 C 0x40CC arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 C 0x40D2 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 C 0x40D8 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
@@ -140,15 +897,57 @@ C 0x410E arranca_canal: pone en marcha un canal con el puntero de partitura de D
 C 0x4114 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
 C 0x411C lee el ultimo sonido pedido
 C 0x4143 arranca_canal: pone en marcha un canal con el puntero de partitura de DE
+C 0x4146 lee el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x414B guarda el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x414E cuenta_fundido_0: la cuenta y lo bajado a 0
+C 0x4151 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x4156 fundido_en_marcha: en marcha
+C 0x4159 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x415E fundido_en_marcha: en marcha
+C 0x4161 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x4166 fundido_en_marcha: en marcha
+C 0x4169 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x416E fundido_en_marcha: en marcha
+C 0x4171 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x417B guarda la cuenta de cuadros del fundido (0x25 por paso) y el byte siguiente (16 bits)
+C 0x417F apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x4186 canal_8_de_c600: el canal 8 de vuelta
+C 0x418D apunta a la copia del canal 8 (0x40 bytes) en la pausa (el pedido 0xF2)
+C 0x41A3 lee el volumen del canal 2 guardado en la pausa
+C 0x41A9 lee el volumen del canal 4 guardado en la pausa
+C 0x41B2 guarda los registros del SCC que cambiaron este cuadro (16 bits, uno por registro)
+C 0x41B5 scc_registros: los 16 registros del SCC (0x9880-0x988F) con su bit en 0xC64B-0xC64C, desde sus copias
+C 0x41B8 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x41BF guarda_canal_8: el canal 8 a 0xC600
+C 0x41C9 apunta a la copia del canal 8 (0x40 bytes) en la pausa (el pedido 0xF2)
+C 0x41D4 guarda el volumen del canal 1 guardado en la pausa
+C 0x41DA guarda el volumen del canal 2 guardado en la pausa
+C 0x41E0 guarda el volumen del canal 4 guardado en la pausa
 C 0x4207 0x3F en 0x9000: los registros del SCC en 0x9800
 C 0x4215 el mapper: pone en 0x8000 el banco de A
 C 0x421A guarda el ultimo sonido pedido
+C 0x4221 guarda 1 con el sonido en pausa (el pedido 0xFA; el 0xFB la quita)
+C 0x4227 guarda el volumen del canal 1 guardado en la pausa
+C 0x422D guarda el volumen del canal 2 guardado en la pausa
+C 0x4233 guarda el volumen del canal 4 guardado en la pausa
 C 0x425A 0x3F en 0x9000: los registros del SCC en 0x9800
 C 0x426C el mapper: pone en 0x8000 el banco de A
-C 0x4295 pon_banco_de_musica: pone en 0xA000 el banco de 0xC68F
-C 0x4298 lee una copia de cuadros para el sonido (p16:4298)
-C 0x42C2 lee una copia de cuadros para el sonido (p16:4298)
+C 0x4271 guarda 1 con el sonido en pausa (el pedido 0xFA; el 0xFB la quita)
+C 0x427A lee el volumen del canal 2 guardado en la pausa
+C 0x4280 lee el volumen del canal 4 guardado en la pausa
+C 0x4289 guarda los registros del SCC que cambiaron este cuadro (16 bits, uno por registro)
+C 0x428C scc_registros: los 16 registros del SCC (0x9880-0x988F) con su bit en 0xC64B-0xC64C, desde sus copias
+C 0x4292 pon_mezclador: R#7 = A (y en 0xC643)
+C 0x429B apunta a el contador de 0xFDA2 del cuadro anterior
+C 0x429F sonido_cuadro_a: uno mas, tambien en 0xFDA2
+C 0x42A6 pone a uno el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x42AE pone a uno el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x42B6 pone a uno el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x42BE pone a uno el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
 C 0x42C8 guarda una copia de cuadros para el sonido (p16:4298)
+C 0x42CF salida_de_sonido: la salida del cuadro: el ruido de los canales 1 y 4, los periodos y volumenes del PSG, su ruido y su envolvente, el mezclador, lo cambiado del SCC, sus canales encendidos, sus registros y sus ondas
+C 0x42D7 solo_canal_8: el canal 8 y la salida
+C 0x42DC fundido: el fundido de cada cuadro: cada 0x25 cuadros el volumen baja uno mas (0xC642); a 0x0F acaban los canales de su pedido (bit 7: 4 y 8; 6: 0x20, 2, 0x10 y 0x80; 3: 0x40 y esos; 4: todos menos 4 y 8; si no, los ocho) y se quita
 C 0x42E1 guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x42E8 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 C 0x42ED guarda el canal de sonido que se esta tocando (1, 2, 4...)
@@ -163,42 +962,310 @@ C 0x431D guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4324 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 C 0x4329 guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4330 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
-C 0x4333 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0x4338 canal_80: canal 0x80 (SCC 5)
 C 0x434D guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4354 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
 C 0x435C guarda el canal de sonido que se esta tocando (1, 2, 4...)
 C 0x4363 canal_cada_cuadro: un cuadro de un canal: cuenta la nota y lee la siguiente
+C 0x4366 salida_de_sonido: la salida del cuadro: el ruido de los canales 1 y 4, los periodos y volumenes del PSG, su ruido y su envolvente, el mezclador, lo cambiado del SCC, sus canales encendidos, sus registros y sus ondas
 C 0x4369 lee el sonido del canal (0 = callado)
 C 0x436E baja lo que le queda a la nota
 C 0x4371 lee lo que le queda a la nota
+C 0x4376 nota_byte_alto: el byte alto uno menos
+C 0x4380 baja lo que le queda a la nota (alto)
+C 0x4383 canal_sigue_nota: lo de cada cuadro de una nota: con la bateria, su nota (p16:46F4); si no, el deslizamiento (p16:471D), el barrido (p16:4767), el vibrato (p16:4792), la envolvente de volumen (p16:4944) o el volumen simple (p16:4862) y, en el canal 0x10, la mezcla de ondas (p16:4A43)
+C 0x4386 OR con lo que le queda a la nota (alto)
+C 0x4389 canal_sigue_nota: lo de cada cuadro de una nota: con la bateria, su nota (p16:46F4); si no, el deslizamiento (p16:471D), el barrido (p16:4767), el vibrato (p16:4792), la envolvente de volumen (p16:4944) o el volumen simple (p16:4862) y, en el canal 0x10, la mezcla de ondas (p16:4A43)
 C 0x438C lee el puntero de la partitura (bajo)
 C 0x438F lee el puntero de la partitura (alto)
 C 0x4395 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x439A es_nota: una nota: [nota (nibble alto, 0x0C silencio)][duracion (nibble bajo)]; con el bit 1 del modo, de bateria; con los bits 2-4, la bateria
 C 0x439E orden_de_partitura: salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
 C 0x43A3 lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+C 0x43A6 lee el modo del canal (orden 0xFE; bits 2-4 bateria)
+C 0x43AB nota_de_bateria: una nota de bateria por lo que suena: 0 nada; 1 el volumen del nibble bajo; 2 y 3 el volumen del nibble alto y el periodo de 12 bits (nibble bajo y el byte siguiente); el volumen + 2 (en el PSG con envolvente, 0x10 + 2) menos el fundido; la duracion la del byte 0x14
+C 0x43B0 bateria: la bateria: la duracion (p16:43B3) y la nota elige una partitura de bateria de la tabla del modo (p16:4674); en el canal 0x40 con el sonido 0x74 y la alerta 1, siempre la primera de p16:5486; se lee su primera nota y queda en marcha (bit 0 del byte 0x10)
+C 0x43BA pon_duracion: 
 C 0x43C7 guarda lo que le queda a la nota
-C 0x43DD lee lo que le queda a la nota
+C 0x43DA dieciseisavo_siguiente: la duracion * 2
+C 0x43EE por_dieciseisavos: cada bit de D...
+C 0x4401 guarda lo que queda de nota cuando se corta
 C 0x4405 guarda lo que le queda a la nota
 C 0x4410 guarda el puntero de la partitura (bajo)
 C 0x4413 guarda el puntero de la partitura (alto)
-C 0x4420 sonido_45BE: datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D,
+C 0x441D silencio: sin tono
+C 0x442E mira_deslizamiento: con el bit 4 de las marcas del deslizamiento: el bit 7 segun la nota nueva sea mas grave (periodo mayor) o no que la de antes (el bit 3 lo salta una vez)
+C 0x4435 mira el bit 4 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x4439 pon_periodo: el periodo de la nota
+C 0x443C mira el bit 3 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x4440 compara_periodo: el periodo de antes
+C 0x4447 pon_periodo: el periodo de la nota
+C 0x444A lee el periodo de la nota (bajo)
+C 0x444D lee el periodo de la nota (alto)
+C 0x4452 mas_agudo: sin el bit 7
+C 0x4455 compara_bajo: 
+C 0x4458 pone a uno el bit 7 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x445C pon_periodo: el periodo de la nota
+C 0x4461 mas_agudo: sin el bit 7
+C 0x4464 igual_periodo: igual: el bit 7 solo con el bit 2
+C 0x4467 mas_grave: el bit 7
+C 0x446A mira el bit 2 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x446E mas_grave: el bit 7
+C 0x4471 pone a cero el bit 7 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x4475 guarda el periodo de la nota (bajo)
+C 0x4478 guarda el periodo de la nota (alto)
+C 0x447F suena_tono: con tono
+C 0x4482 lee el desafinado (orden 0xEE; bit 7 hacia abajo)
+C 0x4487 desafina_abajo: - el desafinado
+C 0x448D guarda el periodo de la nota (bajo)
+C 0x4490 suena_tono: con tono
+C 0x4493 sube el periodo de la nota (alto)
+C 0x4496 suena_tono: con tono
+C 0x449C lee el periodo de la nota (bajo)
+C 0x44A0 guarda el periodo de la nota (bajo)
+C 0x44A3 suena_tono: con tono
+C 0x44A6 baja el periodo de la nota (alto)
+C 0x44A9 pone a uno el bit 1 de lo que suena (bits 0-1: 1 ruido, 2 tono, 3 los dos; bit 2 envolvente del PSG)
+C 0x44B0 lee el periodo de la nota (alto)
+C 0x44B3 guarda el periodo que suena (bajo)
+C 0x44B6 guarda el periodo que suena (alto)
+C 0x44BD vibrato_al_empezar: fuera el bit 0 del deslizamiento
+C 0x44C7 lee el periodo de la nota (alto)
+C 0x44CA lee la cuenta del deslizamiento
+C 0x44CF lee el paso del deslizamiento
+C 0x44D2 mira el bit 7 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x44D6 desliza_restando: - el paso, cuenta veces
+C 0x44DC pon_periodo_desde: 
+C 0x44E3 guarda el periodo que suena (bajo)
+C 0x44E6 guarda el periodo que suena (alto)
+C 0x44E9 pone a cero el bit 0 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x44F1 mezcla_al_empezar: el canal 0x10 con la mezcla de ondas en marcha...
+C 0x44F4 lee la espera del vibrato
+C 0x4505 lee la espera del vibrato
+C 0x4509 paso_de_vibrato: el paso del vibrato de la tabla p17:6475 (por el byte 0x31) en el indice 0x2F: [cuadros (nibble alto)][desvio (nibble bajo; desde 8, hacia abajo)] * amplitud sobre el periodo de la nota; 0xF5-0xFA otra vez desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
 C 0x450C lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4511 ondas_al_empezar: con el bit 4 de las cuatro ondas: fuera los bits 5-7 y, sin envolvente, la primera onda
+C 0x4514 lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4519 ondas_al_empezar: con el bit 4 de las cuatro ondas: fuera los bits 5-7 y, sin envolvente, la primera onda
+C 0x4521 mezcla_desde_el_principio: ...vuelve a empezar: fuera los bits 1 y 5...
+C 0x4526 ondas_al_empezar: con el bit 4 de las cuatro ondas: fuera los bits 5-7 y, sin envolvente, la primera onda
+C 0x452F guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4535 guarda la espera de la mezcla
+C 0x453B guarda el paso de la mezcla (0-0x0F)
+C 0x4549 apunta a la onda del SCC que se mezcla (32 bytes; orden 0xF1)
+C 0x4551 lee las marcas de las cuatro ondas (orden 0xF4)
+C 0x4556 volumen_al_empezar: con la envolvente de volumen: su paso, su bucle y su cuenta a 0, el primer paso (p16:4961) y en marcha
+C 0x455B guarda las marcas de las cuatro ondas (orden 0xF4)
+C 0x455E lee la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x4562 volumen_al_empezar: con la envolvente de volumen: su paso, su bucle y su cuenta a 0, el primer paso (p16:4961) y en marcha
+C 0x4565 lee la primera de las cuatro ondas (orden 0xF4)
+C 0x4568 pon_onda: la onda A de la tabla p16:583E al canal, a cargar
+C 0x456B lee la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x456F volumen_sin_envolvente: sin envolvente: fuera los bits 2 y 3, la cuenta a 0, el volumen del canal (menos el fundido) a la nota y al que suena; con el bit 5, el bit 1 y el volumen del nibble bajo del byte 0x2E
+C 0x457E paso_de_envolvente: el paso de la envolvente de la tabla p17:6430 (por el byte 0x2A) en el indice 0x22: [cuadros (nibble alto)][volumen (nibble bajo)] - lo que baja el canal (byte 0x16), no por debajo del minimo; 0xF5-0xFA bucle desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x4581 pone a cero el bit 7 de la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x4586 pone a cero el bit 2 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x458A pone a cero el bit 3 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x459E menos_fundido: E = el volumen E menos lo que baja el fundido (0xC642) si el canal es de los suyos (bit 5 todos; 7 4 y 8; 6 2, 0x10, 0x20 y 0x80; 3 1, 2, 0x10, 0x40 y 0x80; si no, todos menos 4 y 8); con la envolvente del PSG, 0
+C 0x45A4 guarda el volumen que suena
+C 0x45B5 guarda el volumen que suena
+C 0x45B9 pone a cero el bit 1 de lo que suena (bits 0-1: 1 ruido, 2 tono, 3 los dos; bit 2 envolvente del PSG)
+C 0x45D0 nota_de_bateria_fin: con el bit 7 del modo, nada mas
+C 0x45D5 volumen_de_bateria: el volumen
+C 0x45E0 guarda el periodo que suena (bajo)
+C 0x45E3 guarda el periodo que suena (alto)
+C 0x45EC volumen_de_bateria_a: en el PSG...
 C 0x45F3 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x45F8 pon_volumen_bateria: + 2
+C 0x45FF pon_volumen_bateria: + 2
+C 0x460C menos_fundido: E = el volumen E menos lo que baja el fundido (0xC642) si el canal es de los suyos (bit 5 todos; 7 4 y 8; 6 2, 0x10, 0x20 y 0x80; 3 1, 2, 0x10, 0x40 y 0x80; si no, todos menos 4 y 8); con la envolvente del PSG, 0
+C 0x4610 guarda el volumen que suena
+C 0x4613 mira el bit 7 de el modo del canal (orden 0xFE; bits 2-4 bateria)
 C 0x4619 guarda el puntero de la partitura (bajo)
 C 0x461C guarda el puntero de la partitura (alto)
 C 0x4622 guarda lo que le queda a la nota
-C 0x4636 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0x4633 bateria_por_nota: la tabla
+C 0x463B bateria_por_nota: la tabla
 C 0x463F sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
+C 0x4642 partitura_de_bateria: la palabra de la nota
+C 0x4645 tabla_de_bateria: HL = la tabla de bateria del modo: bit 3 p16:54B6, bit 4 p16:54CE; si no, p16:5486 (p16:549E con octava)
+C 0x4653 pone a uno el bit 1 de el modo del canal (orden 0xFE; bits 2-4 bateria)
 C 0x4657 lee_partitura: la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+C 0x465A pone a cero el bit 1 de el modo del canal (orden 0xFE; bits 2-4 bateria)
+C 0x465E pone a cero el bit 7 de el modo del canal (orden 0xFE; bits 2-4 bateria)
+C 0x4665 guarda lo que le queda a la nota de bateria
+C 0x4669 guarda el puntero de la bateria (bajo)
+C 0x466C guarda el puntero de la bateria (alto)
+C 0x4674 mira el bit 3 de el modo del canal (orden 0xFE; bits 2-4 bateria)
+C 0x4678 bateria_bit_3: 
+C 0x467B mira el bit 4 de el modo del canal (orden 0xFE; bits 2-4 bateria)
+C 0x467F bateria_bit_4: 
+C 0x4682 lee la octava (ordenes 0xD0-0xD5: cada una dobla el periodo)
+C 0x4686 bateria_con_octava: 
 C 0x4689 sonido_5486: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6D, 0x6E, 0x6F,
+C 0x4691 lee la octava (ordenes 0xD0-0xD5: cada una dobla el periodo)
+C 0x46A0 lee la octava (ordenes 0xD0-0xD5: cada una dobla el periodo)
+C 0x46B8 bateria_cada_cuadro: la nota de bateria uno menos; acabada, la siguiente de su partitura (sin avanzar la principal) o, con 0xFF, fuera la bateria, el volumen a 0 y sin ruido ni tono
+C 0x46BF desliza: el deslizamiento de cada cuadro (hasta el bit 6): el periodo que suena - el paso (+ con el bit 7); acabada la cuenta, el bit 6, el periodo de la nota y la cuenta de nuevo
+C 0x46C6 barrido: el barrido de cada cuadro, sin fin: el periodo que suena - el paso (+ con el bit 7)
+C 0x46CD vibrato: la cuenta del vibrato; a 0, su paso siguiente (p16:4799)
+C 0x46D4 envolvente: la envolvente de volumen de cada cuadro: al cortar la nota, p16:49EE; parada (bit 7), nada; si no, su cuenta y el paso siguiente
+C 0x46D7 lee la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x46DB mezcla_cada_cuadro: el canal 0x10...
+C 0x46E2 volumen_simple: sin la envolvente del PSG, el volumen de cada cuadro (p16:486E)
 C 0x46E5 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x46F0 mezcla_de_ondas: la mezcla de ondas de cada cuadro (sin acabar): cada 0xC68A cuadros, la onda a cargar y un paso de 0xC663 hacia la segunda (o la primera, con ida y vuelta); con 0xC688 = 0 la primera de golpe y con 0x0F la segunda; a los 16 pasos se acaba (o da la vuelta)
+C 0x46FB lee el puntero de la bateria (alto)
+C 0x4701 bateria_acaba: fuera la bateria...
+C 0x470C pone a cero el bit 0 de las marcas de la nota (bit 0 bateria, bit 1 desafinado, bit 7 orden 0xF7)
+C 0x4711 guarda el volumen que suena
+C 0x4719 guarda lo que suena (bits 0-1: 1 ruido, 2 tono, 3 los dos; bit 2 envolvente del PSG)
+C 0x4726 desliza_mas: el periodo + el paso
+C 0x472C lee el periodo que suena (alto)
+C 0x472F le resta el paso del deslizamiento
+C 0x4733 pon_deslizado: 
+C 0x4737 pon_deslizado: 
+C 0x473A lee el periodo que suena (bajo)
+C 0x473D lee el periodo que suena (alto)
+C 0x4742 lee el paso del deslizamiento
+C 0x4746 guarda el periodo que suena (bajo)
+C 0x4749 guarda el periodo que suena (alto)
+C 0x4757 lee el periodo de la nota (alto)
+C 0x475A guarda el periodo que suena (bajo)
+C 0x475D guarda el periodo que suena (alto)
+C 0x4763 guarda la cuenta del deslizamiento
+C 0x4767 mira el bit 7 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x476B barrido_mas: el periodo + el paso
+C 0x4771 lee el periodo que suena (alto)
+C 0x4774 le resta el paso del deslizamiento
+C 0x4778 pon_barrido: 
+C 0x477C pon_barrido: 
+C 0x477F lee el periodo que suena (bajo)
+C 0x4782 lee el periodo que suena (alto)
+C 0x4787 lee el paso del deslizamiento
+C 0x478B guarda el periodo que suena (bajo)
+C 0x478E guarda el periodo que suena (alto)
+C 0x47B4 guarda el byte que se lee de una envolvente o un vibrato
+C 0x47BB orden_de_vibrato: 0xFB: repite
+C 0x47D3 vibrato_abajo: 16 - el desvio
+C 0x47E4 por_amplitud: C = A * la amplitud (byte 0x33); D = el periodo alto
+C 0x47EA pon_vibrato: DE al periodo que suena, salvo con el barrido o con el deslizamiento sin acabar
+C 0x47EE lee la amplitud del vibrato
+C 0x47F3 pon_por_amplitud: 
+C 0x47F7 suma_amplitud: 
+C 0x47FB lee el periodo de la nota (alto)
+C 0x4800 le suma el periodo de la nota (bajo)
+C 0x4807 lee el periodo de la nota (bajo)
+C 0x480F lee las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x4817 periodo_que_suena: 
+C 0x481D guarda el periodo que suena (bajo)
+C 0x4820 guarda el periodo que suena (alto)
+C 0x4826 repite_vibrato: [n]: las vueltas...
+C 0x4835 paso_de_vibrato: el paso del vibrato de la tabla p17:6475 (por el byte 0x31) en el indice 0x2F: [cuadros (nibble alto)][desvio (nibble bajo; desde 8, hacia abajo)] * amplitud sobre el periodo de la nota; 0xF5-0xFA otra vez desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x4840 otra_vuelta_vibrato: al principio del bucle
+C 0x4851 paso_de_vibrato: el paso del vibrato de la tabla p17:6475 (por el byte 0x31) en el indice 0x2F: [cuadros (nibble alto)][desvio (nibble bajo; desde 8, hacia abajo)] * amplitud sobre el periodo de la nota; 0xF5-0xFA otra vez desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x485A paso_de_vibrato: el paso del vibrato de la tabla p17:6475 (por el byte 0x31) en el indice 0x2F: [cuadros (nibble alto)][desvio (nibble bajo; desde 8, hacia abajo)] * amplitud sobre el periodo de la nota; 0xF5-0xFA otra vez desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x4862 mira el bit 2 de lo que suena (bits 0-1: 1 ruido, 2 tono, 3 los dos; bit 2 envolvente del PSG)
+C 0x4867 volumen_de_cuadro: el volumen de cada cuadro: al cortar la nota (byte 0x29), p16:49F2; si no, la subida (bit 1, cada byte 0x2D cuadros hasta el de la nota) o, pasada la espera del byte 0x2C, la bajada (bit 3: el byte 0x22 cada vez, el 0x23 veces) hasta el minimo
+C 0x486A guarda el volumen que suena
+C 0x487B sube_o_baja: bajando (bit 3)
 C 0x4881 compara con lo que le queda a la nota
+C 0x4884 nota_cortada: al cortar la nota
+C 0x4887 mira el bit 3 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x488B baja_volumen: acabada (bit 2): p16:492F
+C 0x4892 espera_bajada: uno menos, no del minimo
+C 0x48AF lee el volumen de la nota
+C 0x48B8 no_del_minimo: E no por debajo del minimo (byte 0x21; negativo, el minimo)
+C 0x48C6 pone a uno el bit 3 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x48CA mira el bit 2 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x48CE tercera_onda: con las cuatro ondas, la tercera una vez (bit 6)
+C 0x48D5 bajada_acaba: acabada (bit 2)
+C 0x48DC baja_cada: con el bit 4, de golpe
+C 0x48DF mira el bit 5 de las marcas de las cuatro ondas (orden 0xF4)
+C 0x48E3 baja_cada: con el bit 4, de golpe
+C 0x48E6 pone a uno el bit 5 de las marcas de las cuatro ondas (orden 0xF4)
+C 0x48EA lee la segunda de las cuatro ondas
+C 0x48ED pon_onda: la onda A de la tabla p16:583E al canal, a cargar
+C 0x48F0 mira el bit 4 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x48F4 baja_de_golpe: el volumen - el byte 0x22
+C 0x48FD no_del_minimo: E no por debajo del minimo (byte 0x21; negativo, el minimo)
+C 0x490E pone a uno el bit 2 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x4919 bajada_cuenta: no del minimo
+C 0x491C corta_nota: al cortar la nota: con el bit 1 del deslizamiento, el barrido (bit 0); con las cuatro ondas, la cuarta una vez (bit 7); el volumen del byte 0x28 (nibble bajo) o, con su nibble alto, uno que baja ese tanto cada tantos cuadros
+C 0x491F lee el volumen que suena
+C 0x4923 al_minimo: ...el minimo
+C 0x4927 compara con el volumen minimo (orden 0xDB)
+C 0x492B lee el volumen minimo (orden 0xDB)
+C 0x492F mira el bit 4 de las marcas de las cuatro ondas (orden 0xF4)
+C 0x4934 mira el bit 6 de las marcas de las cuatro ondas (orden 0xF4)
+C 0x4939 pone a uno el bit 6 de las marcas de las cuatro ondas (orden 0xF4)
+C 0x493D lee la tercera de las cuatro ondas
+C 0x4940 pon_onda: la onda A de la tabla p16:583E al canal, a cargar
+C 0x4944 lee lo que suena de la nota, en dieciseisavos
 C 0x494E compara con lo que le queda a la nota
-C 0x4AD4 guarda el sonido del canal (0 = callado)
-C 0x4AE9 le suma el sonido del canal (0 = callado)
-C 0x4AEF guarda el sonido del canal (0 = callado)
-C 0x4B08 lee el sonido del canal (0 = callado)
-C 0x4B0F guarda el sonido del canal (0 = callado)
+C 0x4951 corta_envolvente: en marcha otra vez
+C 0x4954 mira el bit 7 de la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x495D pone a cero el bit 7 de la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x497C guarda el byte que se lee de una envolvente o un vibrato
+C 0x4983 orden_de_envolvente: 0xFB: repite
+C 0x499D volumen_0: 
+C 0x49A4 pon_volumen: 
+C 0x49A7 guarda el volumen que suena
+C 0x49AC guarda el volumen que suena
+C 0x49B2 repite_envolvente: [n]: las vueltas...
+C 0x49C1 paso_de_envolvente: el paso de la envolvente de la tabla p17:6430 (por el byte 0x2A) en el indice 0x22: [cuadros (nibble alto)][volumen (nibble bajo)] - lo que baja el canal (byte 0x16), no por debajo del minimo; 0xF5-0xFA bucle desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x49CC otra_vuelta_envolvente: 
+C 0x49DD paso_de_envolvente: el paso de la envolvente de la tabla p17:6430 (por el byte 0x2A) en el indice 0x22: [cuadros (nibble alto)][volumen (nibble bajo)] - lo que baja el canal (byte 0x16), no por debajo del minimo; 0xF5-0xFA bucle desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x49E6 paso_de_envolvente: el paso de la envolvente de la tabla p17:6430 (por el byte 0x2A) en el indice 0x22: [cuadros (nibble alto)][volumen (nibble bajo)] - lo que baja el canal (byte 0x16), no por debajo del minimo; 0xF5-0xFA bucle desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+C 0x49E9 pone a uno el bit 7 de la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x49EE pone a cero el bit 7 de la envolvente de volumen (tabla p17:6430; bit 7 parada)
+C 0x49F2 mira el bit 1 de las marcas del deslizamiento (ordenes 0xD6-0xDA)
+C 0x4A01 volumen_al_cortar: sin nibble alto...
+C 0x4A04 mira el bit 7 de las marcas de las cuatro ondas (orden 0xF4)
+C 0x4A08 volumen_al_cortar: sin nibble alto...
+C 0x4A0F lee la cuarta de las cuatro ondas
+C 0x4A12 pon_onda: la onda A de la tabla p16:583E al canal, a cargar
+C 0x4A1A baja_al_cortar: la espera (byte 0x27)
+C 0x4A22 guarda el volumen que suena
+C 0x4A3C lee el volumen que suena
+C 0x4A40 pon_volumen_minimo: negativo, 0
+C 0x4A43 lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4A4D guarda la espera de la mezcla
+C 0x4A54 guarda la espera de la mezcla
+C 0x4A5F primera_acabada: acabada (bit 1)
+C 0x4A64 segunda_acabada: acabada (bit 1)
+C 0x4A6B guarda el paso de la mezcla (0-0x0F)
+C 0x4A70 mezcla_16_pasos: sin ida y vuelta, acabada con la segunda
+C 0x4A78 hacia_la_segunda: 
+C 0x4A7D hacia_la_segunda: 
+C 0x4A83 paso_de_mezcla: las 32 muestras de 0xC663 hacia la onda de HL: cada una se acerca (la diferencia / 16, al menos 1) * 2^0xC688
+C 0x4A86 apunta a la segunda onda de la mezcla (puntero; orden 0xF1)
+C 0x4A89 paso_de_mezcla: las 32 muestras de 0xC663 hacia la onda de HL: cada una se acerca (la diferencia / 16, al menos 1) * 2^0xC688
+C 0x4A8C lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4A91 segunda_acabada: acabada (bit 1)
+C 0x4A97 guarda el paso de la mezcla (0-0x0F)
+C 0x4A9F vuelta_a_la_primera: la segunda entera...
+C 0x4AAA guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4AAD paso_de_mezcla: las 32 muestras de 0xC663 hacia la onda de HL: cada una se acerca (la diferencia / 16, al menos 1) * 2^0xC688
+C 0x4AB0 copia_segunda_onda: la segunda onda entera a 0xC663
+C 0x4AB8 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4AC4 apunta a la onda del SCC que se mezcla (32 bytes; orden 0xF1)
+C 0x4ADB diferencia_16: A = A / 16, al menos 1
+C 0x4AE0 lee lo que se mueve la mezcla en cada paso (0: la primera onda, 0x0F: la segunda)
+C 0x4AF2 muestra_siguiente: 
+C 0x4AFE lee lo que se mueve la mezcla en cada paso (0: la primera onda, 0x0F: la segunda)
+C 0x4B26 lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4B2B guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4B2E apunta a la primera onda de la mezcla (puntero; orden 0xF1)
+C 0x4B35 apunta a la onda del SCC que se mezcla (32 bytes; orden 0xF1)
+C 0x4B3E lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4B43 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4B46 apunta a la segunda onda de la mezcla (puntero; orden 0xF1)
+C 0x4B4D apunta a la onda del SCC que se mezcla (32 bytes; orden 0xF1)
+C 0x4B6B acaba_4_y_8: 4 y 8
+C 0x4B70 acaba_20: 0x20...
+C 0x4B75 acaba_40: 0x40 y los de p16:4BA0
+C 0x4B7A acaba_1_y_40: 1 y 0x40...
 C 0x4B81 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 C 0x4B88 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 C 0x4B8F fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
@@ -209,30 +1276,167 @@ C 0x4BAB fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas mus
 C 0x4BB2 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 C 0x4BBD fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
 C 0x4BC4 fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+C 0x4BC7 sin_fundido: fuera el fundido (solo quedan los bits 1-2 de 0xC640) y su cuenta a 0
 C 0x4BCF fin_de_partitura: la orden 0xFF: acaba el canal (y avisa de algunas musicas)
-C 0x4BDD lee el canal de sonido que se esta tocando (1, 2, 4...)
-C 0x4C19 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4BD2 acaba_2_10_80: 2, 0x10 y 0x80
+C 0x4BD5 apunta a el fundido: bit 0 en marcha, bits 3-7 que canales (los pedidos 0xF4-0xF9); bits 1-2 la pausa del canal 8 (0xF2)
+C 0x4BDA baja_por_fundido: con la envolvente, 0
+C 0x4BE2 fundido_4_y_8: 
+C 0x4BE7 fundido_de_f7: 
+C 0x4BEC fundido_de_f8: 
+C 0x4BF2 baja_por_fundido: con la envolvente, 0
+C 0x4BF8 baja_por_fundido: con la envolvente, 0
+C 0x4BFE baja_por_fundido: con la envolvente, 0
+C 0x4C04 mira el bit 2 de lo que suena (bits 0-1: 1 ruido, 2 tono, 3 los dos; bit 2 envolvente del PSG)
+C 0x4C08 volumen_a_0: 
+C 0x4C1E acaba_en_40: en el canal 0x40, los sonidos 0x8C y 0x8E: 0xC68E = 1
+C 0x4C26 acaba_82_88: ...0xC690 = 1 y 0xC697 = 0
+C 0x4C2B acaba_a6: 0xA6: 0xC693
+C 0x4C30 guarda 1 al acabar las musicas 0x82 u 0x88
+C 0x4C34 guarda 1 mientras suenan las musicas 0x82 u 0x88
+C 0x4C37 canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C3C acaba_a1: 0xA1: 0xC692
+C 0x4C41 guarda 1 al acabar la musica 0xA6
+C 0x4C44 canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C49 acaba_86: 0x86: 0xC694
+C 0x4C4E guarda 1 al acabar la musica 0xA1
+C 0x4C51 canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C56 acaba_94: 0x94: 0xC695
+C 0x4C5B guarda 1 al acabar la musica 0x86
+C 0x4C5E canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C63 acaba_73: 0x73: 0xC696
+C 0x4C68 guarda 1 al acabar la musica 0x94
+C 0x4C6B canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C70 acaba_8d: 0x8D: 0xCB58
+C 0x4C75 guarda 1 al acabar la musica 0x73
+C 0x4C78 canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C7D canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C82 guarda 1 al acabar la musica 0x8D
+C 0x4C85 canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
 C 0x4C88 lee el canal de sonido que se esta tocando (1, 2, 4...)
-C 0x4CC1 lee el canal de sonido que se esta tocando (1, 2, 4...)
-C 0x4CEB sonido_4CF9: datos de sonido que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B, 0x6C, 0x6D, 0x6E,
+C 0x4C8D canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C95 acaba_8c_8e: 
+C 0x4C9A canal_callado: el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+C 0x4C9F guarda 1 al acabar los sonidos 0x8C o 0x8E del canal 0x40
+C 0x4CC9 apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4CCC ruido_fuera: los otros: fuera los bits 2-3
 C 0x4CF5 guarda el banco de 0xA000 de la musica que suena
 C 0x4D3A lee el banco de 0xA000 de la musica que suena
 C 0x4D3D el mapper: pone en 0xA000 el banco de A
 C 0x4D43 sonido_4D52: datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x28, 0x6A, 0x6B, 0x6C,
-C 0x4E51 lee el canal de sonido que se esta tocando (1, 2, 4...)
-C 0x4E75 lee el canal de sonido que se esta tocando (1, 2, 4...)
+C 0x4DCD paso_y_cuenta: [paso][cuenta] del deslizamiento
+C 0x4DD9 orden_d9_d7: 0xBC
+C 0x4DE0 paso_y_cuenta: [paso][cuenta] del deslizamiento
+C 0x4DE7 paso_y_cuenta: [paso][cuenta] del deslizamiento
+C 0x4DF2 paso_de_barrido: el paso
+C 0x4E56 lee lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4E59 ruido_otros: los otros: el bit 2
+C 0x4E60 guarda lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4E63 orden_e0: 0xE0 y 0xE2 (y 0xE1 y 0xE3 por p16:4E51): lo que suena = los bits 0-1 de la orden (0 nada, 1 ruido, 2 tono, 3 los dos) y, salvo con 0xE0, [duracion de las notas de bateria]
+C 0x4E6A guarda lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4E6D orden_e0: 0xE0 y 0xE2 (y 0xE1 y 0xE3 por p16:4E51): lo que suena = los bits 0-1 de la orden (0 nada, 1 ruido, 2 tono, 3 los dos) y, salvo con 0xE0, [duracion de las notas de bateria]
+C 0x4E7B ruido_e4_otros: los otros: 0xC646
+C 0x4E81 lee lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4E88 guarda lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4E8C guarda el periodo del ruido de los canales 1 y 2 (orden 0xE4)
+C 0x4E8F lee lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4E96 guarda lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4EA0 guarda la forma de la envolvente del PSG (R#13; orden 0xE5)
+C 0x4EA3 apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4EAC guarda el periodo de la envolvente del PSG (alto, R#12; orden 0xE6)
+C 0x4EAF apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4EB8 guarda el periodo de la envolvente del PSG (bajo, R#11; orden 0xE7)
+C 0x4EBB apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4EC7 apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x4EFF espera_de_bajada: 
+C 0x4F14 paso_de_bajada: 
+C 0x4F7A espera_de_vibrato: ...+ el tempo, n - 1 veces
+C 0x4F8A pon_espera_vibrato: 
+C 0x4F93 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4F9A ondas_de_mezcla: la primera onda (p16:583E)
+C 0x4FA2 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4FA6 onda_de_tabla: HL = la entrada A de la tabla de ondas p16:583E
+C 0x4FAA guarda la primera onda de la mezcla (puntero; orden 0xF1)
+C 0x4FB8 guarda la segunda onda de la mezcla (puntero; orden 0xF1)
+C 0x4FC4 guarda lo que se mueve la mezcla en cada paso (0: la primera onda, 0x0F: la segunda)
+C 0x4FC9 guarda la espera inicial de la mezcla
+C 0x4FD9 lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4FDC f2_no: sin el bit 3
+C 0x4FE1 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4FE7 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4FEE lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4FF1 f3_no: sin el bit 6
+C 0x4FF6 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x4FFC guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x5021 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x504D salta_a_dir: DE = [dir] - 1 (HL = el byte alto)
+C 0x5065 fb_acaba: la cuenta a 0
+C 0x507E fc_acaba: se salta dir
+C 0x5094 salta_a_dir: DE = [dir] - 1 (HL = el byte alto)
+C 0x50A2 vuelve_al_1: ya era 1: nada
+C 0x5102 psg_canal: el periodo bajo...
+C 0x5108 psg_canal: el periodo bajo...
 C 0x5110 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x5117 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x5123 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x512C apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
+C 0x5131 ruido_de_otros: con el del 4 escrito, nada
+C 0x513E escribe_ruido: 
 C 0x5151 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x5154 apunta a lo que falta escribir del PSG: bits 0-3 el ruido (canal 4 o los otros), 5-7 la envolvente
 C 0x5162 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x5170 escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x517E escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x5185 sonido_51B4: datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05,
+C 0x5188 byte_por_lo_que_suena: HL + los bits 0-1
+C 0x5193 byte_por_lo_que_suena: HL + los bits 0-1
 C 0x519B sonido_51BC: datos de sonido que lee el motor de p16 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05,
+C 0x519E byte_por_lo_que_suena: HL + los bits 0-1
+C 0x51A5 guarda el mezclador del PSG (R#7) que se escribe
 C 0x51AA escribe_psg: escribe A en el registro del PSG (PR2 p13:73A6)
+C 0x531C encendidos_igual: 
+C 0x532C apunta a los registros del SCC que cambiaron este cuadro (16 bits, uno por registro)
+C 0x5330 apunta a la copia de los periodos del SCC (5 x 2, 0x9880-0x9889)
+C 0x533A escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5343 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x534C escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5355 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x535E escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5367 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5370 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5379 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5382 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x538B escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x5394 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x539D escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x53A6 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x53AF escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+C 0x53B8 escribe_scc: (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
 C 0x53C4 0x3F en 0x9000: los registros del SCC en 0x9800
 C 0x53CB el mapper: pone en 0x8000 el banco de A
+C 0x53D3 mira el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x53D7 onda_canal_10: fuera el bit 4
+C 0x53E7 carga_onda: las 32 muestras de HL a DE con los canales del SCC apagados mientras, y el banco 0x12 de vuelta
+C 0x53EA lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x53EF guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x53F6 mira el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x53FA onda_canal_20: con el bit 3...
+C 0x5403 onda_propia: 
+C 0x5408 guarda las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x540B apunta a la onda del SCC que se mezcla (32 bytes; orden 0xF1)
+C 0x540E carga_onda_10: a 0x9820
+C 0x541A carga_onda: las 32 muestras de HL a DE con los canales del SCC apagados mientras, y el banco 0x12 de vuelta
+C 0x541D lee las marcas de la mezcla (bit 0 en marcha, 1 acabada, 2 ida y vuelta, 3 tambien el canal 0x20, 5 sentido)
+C 0x5422 onda_propia_20: canal 0x20
+C 0x5427 onda_canal_40: canal 0x40
+C 0x542D carga_onda_20: a 0x9840
+C 0x5434 mira el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x5438 onda_canal_40: canal 0x40
+C 0x5448 carga_onda: las 32 muestras de HL a DE con los canales del SCC apagados mientras, y el banco 0x12 de vuelta
+C 0x544F mira el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x5454 pone a cero el bit 7 de las marcas del volumen (bit 7: la onda a cargar)
+C 0x5458 lee la forma de onda del SCC (puntero bajo)
+C 0x545B lee la forma de onda del SCC (puntero alto)
 C 0x5463 0x3F en 0x9000: los registros del SCC en 0x9800
 C 0x547A el mapper: pone en 0x8000 el banco de A
 # --- fin de las anotaciones de anota.py ---

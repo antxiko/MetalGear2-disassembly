@@ -1192,6 +1192,7 @@ C 0xA42C snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; s
 C 0xA443 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA448 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xA45E sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA483 lee 1 mientras suenan las musicas 0x82 u 0x88
 C 0xA490 casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
 C 0xA4C0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xA4EB apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
@@ -1336,6 +1337,7 @@ C 0xAC9A a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
 C 0xAC9F a_p11_bdbd_2: p11:BDBD con el banco 11 en 0xA000
 C 0xACB6 musica_de_la_zona_bancos_15: 
 C 0xACBE orden_sonido_f3: la orden 0xF3 al sonido
+C 0xACC4 guarda 1 al acabar las musicas 0x82 u 0x88
 C 0xACCA p02:8D60
 C 0xACCD fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
 C 0xACD1 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF

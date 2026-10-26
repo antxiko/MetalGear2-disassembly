@@ -1419,6 +1419,7 @@ C 0xA0BE apunta a la X de Snake
 C 0xA0C7 apunta a la cuenta del estado 0x19 de Snake
 C 0xA0D4 a_p03_b11f: p03:B11F con el banco 3 en 0xA000
 C 0xA0D7 apunta a la cuenta del estado 0x19 de Snake
+C 0xA0ED lee 1 con el punto del teclado numerico en el monitor de p63
 C 0xA0F8 guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
 C 0xA102 guarda 1 mientras Snake se da la vuelta
 C 0xA10B apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)

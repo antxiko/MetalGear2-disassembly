@@ -364,7 +364,7 @@ estado_1c:		; el estado 0x1C: al acabar la espera, 0xCB58 = 0xCA40 = 0 y el soni
 	or l			;a269
 	ret nz			;a26a   ; ...sigue
 	xor a			;a26b
-	ld hl,0cb58h		;a26c
+	ld hl,0cb58h		;a26c   ; apunta a 1 al acabar la musica 0x8D
 	ld (hl),a			;a26f
 	ld (0ca40h),a		;a270
 	jp 06a0dh		;a273   ; sonido_01: pide el sonido 0x01

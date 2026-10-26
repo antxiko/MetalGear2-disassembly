@@ -1059,6 +1059,7 @@ C 0xA101 e1d3_menos_2: 0xE1D3 - 2
 C 0xA104 lee la X de la ficha 0xE1D0
 C 0xA10A e1d1_siguiente: el paso siguiente de 0xE1D1
 C 0xA10D sonido_5b: pide el sonido 0x5B
+C 0xA110 apunta a 1 al acabar la musica 0x73
 C 0xA160 sonido_7d: pide el sonido 0x7D (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA163 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
 C 0xA168 e248_con_cb21_2: con 0xCB21 = 2 y sin el bit 7 de 0xD7D5: la ficha 0xE248 libre y, en la sala especial 0x2A columna 8, en (0x10, 0x60) de 3 x 1 con su dibujo
@@ -1516,6 +1517,7 @@ C 0xACFE e041_siguiente_e:
 C 0xAD01 lee el mensaje de la secuencia en curso (p09:A4FE)
 C 0xAD09 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAD17 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xAD1A apunta a 1 al acabar la musica 0xA1
 C 0xAD22 sonido_84: pide el sonido 0x84 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAD25 e041_siguiente_e: 
 C 0xAD2B secuencia_y_paso: la secuencia de mensajes; con 0xE042 desde 4, 0xE042 = 0 y 0xE041 uno mas
@@ -1699,6 +1701,7 @@ C 0xB1ED a_p03_b65d: p03:B65D con el banco 3 en 0xA000
 C 0xB1F0 conversacion_800a: 
 C 0xB1F5 guarda 1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)
 C 0xB1F8 pantalla_de_conversacion: la pantalla de la conversacion: los dibujos de p46:9EB2, los mosaicos de quien habla (p09:B75F), R#7 = 0x0F, 0xDF80 a cero, a cero 0xD793, 0xDFEC, 0xD79A-0xD79B, 0xD7B4-0xD7B5, 0xCABE, 0xCADD, 0xCA86, 0xCB71, 0xCB77 y 0xCB52; 0xCABD = 0xE255 = 1, la ventana estrecha, la fase a 0xCB7F, 0xCB5D (1 con la escena 9 y 0xCB5E = 0xC0), 0xD795 = 0xD7B6 = 3, 0xD796-0xD799 a cero, con 0xD7BB p09:BEB5; sin sprites, la pantalla en negro, el mosaico de p47:A719 y lo demas de p09:BD91, BA1E y BA35
+C 0xB1FC guarda 1 al acabar los sonidos 0x8C o 0x8E del canal 0x40
 C 0xB207 guarda el paso del estado de la partida
 C 0xB20A e041_siguiente_g: 
 C 0xB20D orden_sonido_f6: la orden 0xF6 al sonido
@@ -1901,6 +1904,7 @@ C 0xB7E7 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB7F3 guarda dos fichas de 8 bytes de los mosaicos de quien habla
 C 0xB7F9 guarda 1: la ventana del mensaje es estrecha (0xB8 x 0x28)
 C 0xB7FC guarda 1-2: el mosaico de la derecha puesto (p09:BA47)
+C 0xB802 guarda 1 al acabar la musica 0x73
 C 0xB80C guarda el quinto byte de la ficha de la sala (p02:877F)
 C 0xB815 p00:5F23
 C 0xB818 sonido_7_ca64: con 0xCA64, el sonido 7

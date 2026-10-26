@@ -5862,12 +5862,335 @@ p16 0x4003 entrada_pide  jp p16:4024
 p16 0x4006 entrada_cuadro  jp p16:428F
 p16 0x4009 calla_todo  arranque del sonido: todo callado
 p16 0x4024 pide_sonido  pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+p16 0x4063 cabecera_de_sonido  la cabecera del sonido A (tabla p17:65A9, 2 bytes por sonido): [canales][prioridad] y un puntero de partitura por canal; 0x10 solo el canal 8, 0x30 los canales 4 y 8 (el 0x40 no pisa al 0x40), 0xCF todos menos 4 y 8 y si no los ocho; cada canal solo si su prioridad no es mayor
+p16 0x4092 canales_4_y_8  con su prioridad por debajo de la del canal 4, nada
+p16 0x40A1 sonido_de_todos  con su prioridad por debajo de la del canal 1, nada
+p16 0x40B4 musica_82_88  ...0xC697 = 1
+p16 0x40BC otra_musica  0xC697 = 0
+p16 0x40C0 arranca_musica  fuera el fundido
+p16 0x40ED los_ocho_canales  los ocho, del 1 al 0x80
 p16 0x411A arranca_canal  pone en marcha un canal con el puntero de partitura de DE
+p16 0x413D canal_8  con su prioridad por debajo de la del canal 8, nada
+p16 0x4146 sin_fundido  fuera el fundido (solo quedan los bits 1-2 de 0xC640) y su cuenta a 0
+p16 0x4151 fundido_f4  el bit 4 de 0xC640 y en marcha
+p16 0x4159 fundido_f6  el bit 5 y en marcha
+p16 0x4161 fundido_f7  el bit 6 y en marcha
+p16 0x4169 fundido_f8  el bit 3 y en marcha
+p16 0x4171 fundido_f9  el bit 7 y en marcha
+p16 0x4176 fundido_en_marcha  en marcha
+p16 0x4178 cuenta_fundido_0  la cuenta y lo bajado a 0
+p16 0x417F canal_8_de_vuelta  el pedido 0xF1: fuera el bit 1 de 0xC640 (con el 2, el fundido otra vez); el canal 8 de 0xC600, su onda a cargar, los volumenes de los canales 1, 2 y 4 de vuelta y todo el SCC a escribir
+p16 0x418D canal_8_de_c600  el canal 8 de vuelta
+p16 0x41B8 canal_8_guardado  el pedido 0xF2: el bit 1 de 0xC640 (con el fundido en marcha, al bit 2), el canal 8 a 0xC600, los volumenes de 1, 2 y 4 guardados y a 0 sin envolvente, los volumenes del SCC 2-5 a 0 y el sonido 6 (C = 6)
+p16 0x41C6 guarda_canal_8  el canal 8 a 0xC600
+p16 0x421F pausa  el pedido 0xFA: 0xC698 = 1, los volumenes de 1, 2 y 4 guardados y a 0 sin envolvente, y el SCC callado (sus 5 volumenes a 0)
+p16 0x4270 fuera_pausa  el pedido 0xFB: 0xC698 = 0, los volumenes de vuelta y todo el SCC a escribir
 p16 0x428F sonido_cada_cuadro  el sonido de un cuadro: los ocho canales
+p16 0x42C6 sonido_cuadro_a  uno mas, tambien en 0xFDA2
+p16 0x434B canal_80  canal 0x80 (SCC 5)
+p16 0x435A solo_canal_8  el canal 8 y la salida
 p16 0x4369 canal_cada_cuadro  un cuadro de un canal: cuenta la nota y lee la siguiente
+p16 0x4380 nota_byte_alto  el byte alto uno menos
+p16 0x4386 nota_acabada  con el alto a 0, la nota se acaba
 p16 0x4392 lee_partitura  la siguiente nota u orden de la partitura (0xFF acaba, 0xD0-0xFE ordenes)
+p16 0x43A6 es_nota  una nota: [nota (nibble alto, 0x0C silencio)][duracion (nibble bajo)]; con el bit 1 del modo, de bateria; con los bits 2-4, la bateria
+p16 0x43B3 duracion_de_nota  la duracion (nibble bajo) * el tempo, en los bytes 4 y 0x1F; lo que suena (byte 0x29) = duracion * byte 0x26 / 16
+p16 0x43BE por_tempo  + el tempo
+p16 0x43C7 pon_duracion  
+p16 0x43D8 por_dieciseisavos  cada bit de D...
+p16 0x43E5 dieciseisavo_siguiente  la duracion * 2
+p16 0x4432 octava_mas  ...el periodo * 2
+p16 0x4435 mira_deslizamiento  con el bit 4 de las marcas del deslizamiento: el bit 7 segun la nota nueva sea mas grave (periodo mayor) o no que la de antes (el bit 3 lo salta una vez)
+p16 0x444A compara_periodo  el periodo de antes
+p16 0x4458 mas_grave  el bit 7
+p16 0x445F compara_bajo  
+p16 0x446A igual_periodo  igual: el bit 7 solo con el bit 2
+p16 0x4471 mas_agudo  sin el bit 7
+p16 0x4475 pon_periodo  el periodo de la nota
+p16 0x4499 desafina_abajo  - el desafinado
+p16 0x44A9 suena_tono  con tono
+p16 0x44D9 desliza_sumando  + el paso, cuenta veces
+p16 0x44DF desliza_restando  - el paso, cuenta veces
+p16 0x44E3 pon_periodo_desde  
+p16 0x44E9 vibrato_al_empezar  fuera el bit 0 del deslizamiento
+p16 0x450C mezcla_al_empezar  el canal 0x10 con la mezcla de ondas en marcha...
+p16 0x452B mezcla_desde_el_principio  ...vuelve a empezar: fuera los bits 1 y 5...
+p16 0x4551 ondas_al_empezar  con el bit 4 de las cuatro ondas: fuera los bits 5-7 y, sin envolvente, la primera onda
+p16 0x456B volumen_al_empezar  con la envolvente de volumen: su paso, su bucle y su cuenta a 0, el primer paso (p16:4961) y en marcha
+p16 0x4586 volumen_sin_envolvente  sin envolvente: fuera los bits 2 y 3, la cuenta a 0, el volumen del canal (menos el fundido) a la nota y al que suena; con el bit 5, el bit 1 y el volumen del nibble bajo del byte 0x2E
+p16 0x45B9 silencio  sin tono
+p16 0x45CB nota_de_bateria  una nota de bateria por lo que suena: 0 nada; 1 el volumen del nibble bajo; 2 y 3 el volumen del nibble alto y el periodo de 12 bits (nibble bajo y el byte siguiente); el volumen + 2 (en el PSG con envolvente, 0x10 + 2) menos el fundido; la duracion la del byte 0x14
+p16 0x45EF volumen_de_bateria  el volumen
+p16 0x45F3 volumen_de_bateria_a  en el PSG...
+p16 0x4604 pon_volumen_bateria  + 2
+p16 0x4613 nota_de_bateria_fin  con el bit 7 del modo, nada mas
+p16 0x4626 bateria  la bateria: la duracion (p16:43B3) y la nota elige una partitura de bateria de la tabla del modo (p16:4674); en el canal 0x40 con el sonido 0x74 y la alerta 1, siempre la primera de p16:5486; se lee su primera nota y queda en marcha (bit 0 del byte 0x10)
+p16 0x4645 bateria_por_nota  la tabla
+p16 0x4649 partitura_de_bateria  la palabra de la nota
+p16 0x4653 primera_de_bateria  lee su nota como de bateria
+p16 0x4674 tabla_de_bateria  HL = la tabla de bateria del modo: bit 3 p16:54B6, bit 4 p16:54CE; si no, p16:5486 (p16:549E con octava)
+p16 0x468D bateria_con_octava  
+p16 0x4691 bateria_bit_3  
+p16 0x46A0 bateria_bit_4  
+p16 0x46AF canal_sigue_nota  lo de cada cuadro de una nota: con la bateria, su nota (p16:46F4); si no, el deslizamiento (p16:471D), el barrido (p16:4767), el vibrato (p16:4792), la envolvente de volumen (p16:4944) o el volumen simple (p16:4862) y, en el canal 0x10, la mezcla de ondas (p16:4A43)
+p16 0x46E5 mezcla_cada_cuadro  el canal 0x10...
+p16 0x46F4 bateria_cada_cuadro  la nota de bateria uno menos; acabada, la siguiente de su partitura (sin avanzar la principal) o, con 0xFF, fuera la bateria, el volumen a 0 y sin ruido ni tono
+p16 0x470C bateria_acaba  fuera la bateria...
+p16 0x471D desliza  el deslizamiento de cada cuadro (hasta el bit 6): el periodo que suena - el paso (+ con el bit 7); acabada la cuenta, el bit 6, el periodo de la nota y la cuenta de nuevo
+p16 0x473A desliza_mas  el periodo + el paso
+p16 0x4746 pon_deslizado  
+p16 0x4767 barrido  el barrido de cada cuadro, sin fin: el periodo que suena - el paso (+ con el bit 7)
+p16 0x477F barrido_mas  el periodo + el paso
+p16 0x478B pon_barrido  
+p16 0x4792 vibrato  la cuenta del vibrato; a 0, su paso siguiente (p16:4799)
+p16 0x4799 paso_de_vibrato  el paso del vibrato de la tabla p17:6475 (por el byte 0x31) en el indice 0x2F: [cuadros (nibble alto)][desvio (nibble bajo; desde 8, hacia abajo)] * amplitud sobre el periodo de la nota; 0xF5-0xFA otra vez desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+p16 0x47E0 vibrato_abajo  16 - el desvio
+p16 0x47EE por_amplitud  C = A * la amplitud (byte 0x33); D = el periodo alto
+p16 0x47F2 suma_amplitud  
+p16 0x47FA pon_por_amplitud  
+p16 0x47FF periodo_mas_c  DE = el periodo de la nota + C
+p16 0x4807 periodo_menos_c  DE = el periodo de la nota - C
+p16 0x480F pon_vibrato  DE al periodo que suena, salvo con el barrido o con el deslizamiento sin acabar
+p16 0x481D periodo_que_suena  
+p16 0x4824 orden_de_vibrato  0xFB: repite
+p16 0x4838 repite_vibrato  [n]: las vueltas...
+p16 0x4854 otra_vuelta_vibrato  al principio del bucle
+p16 0x485D para_vibrato  la cuenta 0xFF: parado
+p16 0x4862 volumen_simple  sin la envolvente del PSG, el volumen de cada cuadro (p16:486E)
+p16 0x486E volumen_de_cuadro  el volumen de cada cuadro: al cortar la nota (byte 0x29), p16:49F2; si no, la subida (bit 1, cada byte 0x2D cuadros hasta el de la nota) o, pasada la espera del byte 0x2C, la bajada (bit 3: el byte 0x22 cada vez, el 0x23 veces) hasta el minimo
+p16 0x4887 sube_o_baja  bajando (bit 3)
+p16 0x48B7 espera_bajada  uno menos, no del minimo
+p16 0x48CA baja_volumen  acabada (bit 2): p16:492F
+p16 0x48F0 baja_cada  con el bit 4, de golpe
+p16 0x48FD bajada_cuenta  no del minimo
+p16 0x490E bajada_acaba  acabada (bit 2)
+p16 0x4913 baja_de_golpe  el volumen - el byte 0x22
+p16 0x491C nota_cortada  al cortar la nota
+p16 0x4923 no_del_minimo  E no por debajo del minimo (byte 0x21; negativo, el minimo)
+p16 0x492B al_minimo  ...el minimo
+p16 0x492F tercera_onda  con las cuatro ondas, la tercera una vez (bit 6)
+p16 0x4944 envolvente  la envolvente de volumen de cada cuadro: al cortar la nota, p16:49EE; parada (bit 7), nada; si no, su cuenta y el paso siguiente
+p16 0x4954 envolvente_sigue  parada, nada
+p16 0x4961 paso_de_envolvente  el paso de la envolvente de la tabla p17:6430 (por el byte 0x2A) en el indice 0x22: [cuadros (nibble alto)][volumen (nibble bajo)] - lo que baja el canal (byte 0x16), no por debajo del minimo; 0xF5-0xFA bucle desde el siguiente, 0xFB [n] repite n veces, desde 0xFC se para
+p16 0x499D pon_volumen_minimo  negativo, 0
+p16 0x49AB volumen_0  
+p16 0x49AC pon_volumen  
+p16 0x49B0 orden_de_envolvente  0xFB: repite
+p16 0x49C4 repite_envolvente  [n]: las vueltas...
+p16 0x49E0 otra_vuelta_envolvente  
+p16 0x49E9 para_envolvente  parada (bit 7)
+p16 0x49EE corta_envolvente  en marcha otra vez
+p16 0x49F2 corta_nota  al cortar la nota: con el bit 1 del deslizamiento, el barrido (bit 0); con las cuatro ondas, la cuarta una vez (bit 7); el volumen del byte 0x28 (nibble bajo) o, con su nibble alto, uno que baja ese tanto cada tantos cuadros
+p16 0x4A15 volumen_al_cortar  sin nibble alto...
+p16 0x4A26 baja_al_cortar  la espera (byte 0x27)
+p16 0x4A43 mezcla_de_ondas  la mezcla de ondas de cada cuadro (sin acabar): cada 0xC68A cuadros, la onda a cargar y un paso de 0xC663 hacia la segunda (o la primera, con ida y vuelta); con 0xC688 = 0 la primera de golpe y con 0x0F la segunda; a los 16 pasos se acaba (o da la vuelta)
+p16 0x4A86 hacia_la_segunda  
+p16 0x4A8C mezcla_16_pasos  sin ida y vuelta, acabada con la segunda
+p16 0x4AB0 vuelta_a_la_primera  la segunda entera...
+p16 0x4ABB paso_de_mezcla  las 32 muestras de 0xC663 hacia la onda de HL: cada una se acerca (la diferencia / 16, al menos 1) * 2^0xC688
+p16 0x4AC9 muestra_de_mezcla  la muestra (con signo, + 0x80)...
+p16 0x4AF5 muestra_baja  la diferencia, en positivo
+p16 0x4B12 muestra_siguiente  
+p16 0x4B1B diferencia_16  A = A / 16, al menos 1
+p16 0x4B26 primera_acabada  acabada (bit 1)
+p16 0x4B2E copia_primera_onda  la primera onda entera a 0xC663
+p16 0x4B3E segunda_acabada  acabada (bit 1)
+p16 0x4B46 copia_segunda_onda  la segunda onda entera a 0xC663
+p16 0x4B56 fundido  el fundido de cada cuadro: cada 0x25 cuadros el volumen baja uno mas (0xC642); a 0x0F acaban los canales de su pedido (bit 7: 4 y 8; 6: 0x20, 2, 0x10 y 0x80; 3: 0x40 y esos; 4: todos menos 4 y 8; si no, los ocho) y se quita
+p16 0x4B8B acaba_1_y_40  1 y 0x40...
+p16 0x4B99 acaba_20  0x20...
+p16 0x4BA0 acaba_2_10_80  2, 0x10 y 0x80
+p16 0x4BB9 acaba_4_y_8  4 y 8
+p16 0x4BCB acaba_40  0x40 y los de p16:4BA0
+p16 0x4BD5 menos_fundido  E = el volumen E menos lo que baja el fundido (0xC642) si el canal es de los suyos (bit 5 todos; 7 4 y 8; 6 2, 0x10, 0x20 y 0x80; 3 1, 2, 0x10, 0x40 y 0x80; si no, todos menos 4 y 8); con la envolvente del PSG, 0
+p16 0x4BF5 fundido_4_y_8  
+p16 0x4BFB fundido_de_f7  
+p16 0x4C01 fundido_de_f8  
+p16 0x4C04 baja_por_fundido  con la envolvente, 0
+p16 0x4C16 volumen_a_0  
 p16 0x4C19 fin_de_partitura  la orden 0xFF: acaba el canal (y avisa de algunas musicas)
+p16 0x4C2E acaba_82_88  ...0xC690 = 1 y 0xC697 = 0
+p16 0x4C3A acaba_a6  0xA6: 0xC693
+p16 0x4C47 acaba_a1  0xA1: 0xC692
+p16 0x4C54 acaba_86  0x86: 0xC694
+p16 0x4C61 acaba_94  0x94: 0xC695
+p16 0x4C6E acaba_73  0x73: 0xC696
+p16 0x4C7B acaba_8d  0x8D: 0xCB58
+p16 0x4C88 acaba_en_40  en el canal 0x40, los sonidos 0x8C y 0x8E: 0xC68E = 1
+p16 0x4C9D acaba_8c_8e  
+p16 0x4CA2 canal_callado  el canal a 0: sonido, prioridad, bucles, periodo, volumen, lo que suena y las marcas; en el PSG, fuera su ruido de 0xC647 (en el canal 4, el de los otros vuelve a escribirse)
+p16 0x4CDE ruido_fuera  los otros: fuera los bits 2-3
 p16 0x4CE3 banco_de_musica  el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F
 p16 0x4D3A pon_banco_de_musica  pone en 0xA000 el banco de 0xC68F
 p16 0x4D41 orden_de_partitura  salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
+p16 0x4DB0 orden_octava  las ordenes 0xD0-0xD5: la octava (el nibble bajo de la orden)
+p16 0x4DB7 orden_d6  0xD6 [paso][cuenta]: el deslizamiento desde un periodo mayor (bit 5)
+p16 0x4DBB paso_y_cuenta  [paso][cuenta] del deslizamiento
+p16 0x4DC9 orden_d7  0xD7 [paso][cuenta]: el deslizamiento desde un periodo menor (bits 5 y 7)
+p16 0x4DD0 orden_d8  0xD8: sin deslizamiento
+p16 0x4DD5 orden_d9  0xD9 [0xD6 o 0xD7][paso][cuenta]: el deslizamiento segun la nota (bit 4; 0x38, o 0xBC con 0xD7)
+p16 0x4DE3 orden_d9_d7  0xBC
+p16 0x4DEA orden_da  0xDA [0xD6 o no][paso]: el barrido al cortar la nota (bit 1; con 0xD6 el periodo baja, si no sube)
+p16 0x4DF9 paso_de_barrido  el paso
+p16 0x4DFF orden_db  0xDB [v]: el volumen minimo
+p16 0x4E05 orden_dc  0xDC: sin volumen minimo
+p16 0x4E0A orden_dd  0xDD: el bit 2 de 0xD7D1 (la musica avisa al juego)
+p16 0x4E12 orden_de  0xDE [envolvente][volumen y corte][byte 0x28]: la envolvente de volumen, el volumen del canal (nibble alto), lo que suena (nibble bajo) y el volumen al cortar (byte 0x28: nibble alto la espera, bajo lo que baja)
+p16 0x4E22 corte_y_28  lo que suena (nibble bajo)...
+p16 0x4E37 orden_df  0xDF: fuera el bit 7 del byte 0x10
+p16 0x4E3C orden_e0  0xE0 y 0xE2 (y 0xE1 y 0xE3 por p16:4E51): lo que suena = los bits 0-1 de la orden (0 nada, 1 ruido, 2 tono, 3 los dos) y, salvo con 0xE0, [duracion de las notas de bateria]
+p16 0x4E51 orden_e1  0xE1 y 0xE3: con ruido; su periodo a escribir (bit 0 en el canal 4, bit 2 en los otros) y p16:4E3C
+p16 0x4E66 ruido_otros  los otros: el bit 2
+p16 0x4E70 orden_e4  0xE4 [periodo]: el periodo del ruido (5 bits) a 0xC645 (canal 4) o 0xC646 (los otros), a escribir
+p16 0x4E8C ruido_e4_otros  los otros: 0xC646
+p16 0x4E9A orden_e5  0xE5 [forma][alto][bajo]: la envolvente del PSG entera (R#13, R#12, R#11), a escribir, con el bit 2 de lo que suena
+p16 0x4EAA orden_e6  0xE6 [alto][bajo]: el periodo de la envolvente (R#12 y R#11)
+p16 0x4EB6 orden_e7  0xE7 [bajo]: el periodo bajo de la envolvente (R#11)
+p16 0x4EC7 orden_e8  0xE8: nada que escribir del ruido ni de la envolvente y fuera los bits 2-3 de lo que suena
+p16 0x4ED5 orden_e9  0xE9 [t]: el tempo
+p16 0x4EDF orden_ea  0xEA [v]: el volumen del canal (nibble bajo)
+p16 0x4EE7 orden_eb  0xEB [subida y bajada][veces y corte][byte 0x28]: el volumen simple: espera de bajada (nibble alto; desde 8 primero sube, bits 1 y 5), paso de bajada (nibble bajo; desde 8 de golpe, bit 4), las veces (nibble alto) y lo de p16:4E22
+p16 0x4F0C espera_de_bajada  
+p16 0x4F1D paso_de_bajada  
+p16 0x4F2E orden_ec  0xEC: sin volumen simple (quedan los bits 6-7)
+p16 0x4F37 orden_ed  0xED [subida]: la espera de la subida (nibble alto) y el volumen de partida (nibble bajo)
+p16 0x4F46 orden_ee  0xEE [d]: el desafinado y en marcha
+p16 0x4F50 orden_ef  0xEF: sin desafinado
+p16 0x4F55 orden_f0  0xF0 [vibrato][espera y amplitud]: el vibrato (0 nada) y, con el, la espera (nibble alto: 0 nada, 1 el tempo, n el byte 0x0E (el volumen) + el tempo * (n - 1)) y la amplitud (nibble bajo)
+p16 0x4F76 espera_de_vibrato  ...+ el tempo, n - 1 veces
+p16 0x4F7D pon_espera_vibrato  
+p16 0x4F87 espera_un_tempo  
+p16 0x4F8D orden_f1  0xF1 [onda 1 (bit 7: ida y vuelta)][onda 2][paso][espera]: la mezcla de ondas del canal 0x10, en marcha
+p16 0x4FA6 ondas_de_mezcla  la primera onda (p16:583E)
+p16 0x4FCD onda_de_tabla  HL = la entrada A de la tabla de ondas p16:583E
+p16 0x4FD6 orden_f2  0xF2 [0 o no]: la mezcla tambien en el canal 0x20 (bit 3)
+p16 0x4FE5 f2_no  sin el bit 3
+p16 0x4FEB orden_f3  0xF3 [0 o no]: con el bit 6, la mezcla solo vuelve a empezar en la primera nota
+p16 0x4FFA f3_no  sin el bit 6
+p16 0x5000 orden_f4  0xF4 [a][b][c][d]: las cuatro ondas del canal (al empezar la nota, al bajar, al acabar la bajada y al cortar)
+p16 0x5019 orden_f5  0xF5: la vuelta de 0xFB aqui
+p16 0x5020 orden_f6  0xF6: sin mezcla de ondas
+p16 0x5025 orden_f7  0xF7 [b]: el bit 7 del byte 0x10 y el byte 0x20
+p16 0x502F orden_f8  0xF8 [onda]: la forma de onda del canal (sin las cuatro ondas)
+p16 0x5035 pon_onda  la onda A de la tabla p16:583E al canal, a cargar
+p16 0x504D orden_f9  0xF9 [dir]: llamada: sigue en dir y la vuelta en los bytes 9-0x0A
+p16 0x5057 orden_fa  0xFA: vuelve de la llamada
+p16 0x505E orden_fb  0xFB [n]: vuelve a la marca 0xF5 hasta n veces
+p16 0x5072 fb_acaba  la cuenta a 0
+p16 0x5077 orden_fc  0xFC [n][dir]: salta a dir hasta n veces
+p16 0x5084 salta_a_dir  DE = [dir] - 1 (HL = el byte alto)
+p16 0x508D fc_acaba  se salta dir
+p16 0x5094 orden_fd  0xFD [dir]: salta a dir
+p16 0x5097 orden_fe  0xFE [modo]: el modo del canal; al dejar el 1 se guardan y borran los bytes 0x10 y 0x2B, al volver al 1 vuelven
+p16 0x50BC vuelve_al_1  ya era 1: nada
+p16 0x50CC salida_de_sonido  la salida del cuadro: el ruido de los canales 1 y 4, los periodos y volumenes del PSG, su ruido y su envolvente, el mezclador, lo cambiado del SCC, sus canales encendidos, sus registros y sus ondas
+p16 0x50E7 ruido_1_y_4  con ruido en los canales 1 y 4 a la vez, el canal 1 se queda sin nada (fuera los bits 0-1)
+p16 0x50FB psg_periodos  los canales 1, 2 y 4: periodo (R#0-R#5) y volumen (R#8-R#10); con la envolvente, el volumen solo una vez
+p16 0x510E psg_canal  el periodo bajo...
+p16 0x512C psg_ruido  el periodo del ruido (R#6) pendiente: el del canal 4 (bit 0, queda el 1) o el de los otros (bit 2, queda el 3)
+p16 0x5141 ruido_de_otros  con el del 4 escrito, nada
+p16 0x5151 escribe_ruido  
+p16 0x5154 psg_envolvente  la envolvente pendiente: R#11 (bit 7), R#12 (bit 6) y R#13 (bit 5)
+p16 0x5181 psg_mezclador  el mezclador (R#7) de lo que suena en los canales 1, 2 y 4 (tablas p16:51B4, p16:51B8, p16:51BC)
+p16 0x51A4 pon_mezclador  R#7 = A (y en 0xC643)
+p16 0x51AD byte_por_lo_que_suena  HL + los bits 0-1
+p16 0x51C0 scc_cambiado  el periodo (2 bytes) y el volumen de los canales 8, 0x10, 0x20, 0x40 y 0x80 contra su copia (0xC64D, 0xC657): los distintos se copian y su bit en 0xC64B-0xC64C
+p16 0x52D4 scc_encendidos  los canales del SCC con algo que suena (byte 0x0F): bit a bit; si cambia, a 0xC65C y el bit 7 de 0xC64C
+p16 0x5326 encendidos_igual  
+p16 0x532C scc_registros  los 16 registros del SCC (0x9880-0x988F) con su bit en 0xC64B-0xC64C, desde sus copias
+p16 0x53C2 escribe_scc  (HL) al registro DE del SCC (0x3F en 0x9000) y el banco 0x12 de vuelta
+p16 0x53CF scc_ondas  las ondas a cargar (bit 7 del byte 0x2B): canal 8 a 0x9800, 0x10 a 0x9820 (la mezcla de 0xC663 si esta en marcha), 0x20 a 0x9840 (la mezcla con el bit 3 de 0xC68B) y 0x40 a 0x9860 (el 0x80 la comparte)
+p16 0x53EA onda_canal_10  fuera el bit 4
+p16 0x5411 onda_propia  
+p16 0x5417 carga_onda_10  a 0x9820
+p16 0x541D onda_canal_20  con el bit 3...
+p16 0x5430 onda_propia_20  canal 0x20
+p16 0x5445 carga_onda_20  a 0x9840
+p16 0x544B onda_canal_40  canal 0x40
+p16 0x5461 carga_onda  las 32 muestras de HL a DE con los canales del SCC apagados mientras, y el banco 0x12 de vuelta
 p16 0x547E escribe_psg  escribe A en el registro del PSG (PR2 p13:73A6)
+p63 0xB800 depuracion_apagada  lo que la interrupcion llama cada cuadro (p03:A12F): vuelve sin acarreo (el juego corre) y lo de detras, un monitor de depuracion, no llega a correr nunca
+p63 0xB802 monitor  NUNCA CORRE (p63:B800 vuelve antes). El monitor de depuracion de cada cuadro: las teclas de trampa (Z, X, R, INS/DEL, BS, T, ^, P y el punto del teclado numerico); en la pausa (0xCA3E), sus teclas (p63:B95B); con STOP, la pausa (acarreo: el juego no corre); si no, el cambio de sala o de zona (p63:B837)
+p63 0xB837 cambia_de_sala  sin pausa: las teclas 0-9 y A-J ponen esa zona encima de la sala en el mapa de 0xD900 y sale por arriba (p63:B8F9); ; y ] suben y bajan la fase (0xCA22, 0-8); 8, 2, 4 y 6 del teclado numerico salen por arriba, abajo, izquierda o derecha si hay sala alli
+p63 0xB8B0 sala_de_abajo  la fila de debajo
+p63 0xB8B9 sala_de_la_izquierda  la columna de la izquierda
+p63 0xB8C2 sala_de_la_derecha  la columna de la derecha
+p63 0xB8CB fase_mas  la fase uno mas, hasta 8
+p63 0xB8D4 fase_menos  la fase uno menos, desde 0
+p63 0xB8DC llegada_a_zona  la sala de llegada a la zona puesta (fila, columna): la 7 (1, 5), la 6 (2, 7), la 0x0F (2, 6), las demas (1, 7)
+p63 0xB8F9 tecla_de_zona  la tecla pulsada de la fila (el primer bit a 0 desde el 0): su numero en C
+p63 0xB8FE bit_de_tecla  el bit siguiente
+p63 0xB904 numero_de_tecla  A = el numero
+p63 0xB906 pon_zona  la casilla de encima en el mapa (fila + 1) * 16 + columna...
+p63 0xB91B teclas_8_9  8 o 9
+p63 0xB922 pon_zona_a  
+p63 0xB924 teclas_a_b  B (0x0B) o A (0x0A)
+p63 0xB92B pon_zona_b  
+p63 0xB92D teclas_c_j  C-J: 0x0C-0x13
+p63 0xB93C casilla_del_mapa  DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+p63 0xB948 de_mas_a  DE = DE + A
+p63 0xB94D tecla_punto  con el punto del teclado numerico (fila 10, bit 7), 0xE257 = 1
+p63 0xB95B teclas_de_pausa  en la pausa: ESC sale (p63:B9C4); en el modo 2 (TAB), el visor de sprites; en el 3 (HOME), el cursor; TAB y HOME los ponen; 0-3 enseñan esa pagina de la VRAM; arriba y abajo mueven la pantalla (R#23); acarreo: el juego sigue parado
+p63 0xB9AF pagina_3  
+p63 0xB9B4 pagina_0  
+p63 0xB9B8 pagina_1  
+p63 0xB9BD pagina_2  
+p63 0xB9BF ensena_pagina  esa pagina en pantalla
+p63 0xB9C4 sale_de_la_pausa  R#23 = 0; desde el modo 2, R#1 = 0x62, los colores y atributos de los sprites 0-1 de vuelta y el cuadro de (0xC0, 0x60) copiado de la otra pagina; 0xCA3E = 0 y la pagina de dibujar en pantalla
+p63 0xB9FA fuera_pausa  sin pausa
+p63 0xBA06 sube_pantalla  uno menos
+p63 0xBA09 baja_pantalla  uno mas
+p63 0xBA0A pon_r23  R#23 = 0xCA3F
+p63 0xBA12 visor_de_sprites  TAB, el modo 2: R#1 = 0x63 (sprites de 16 x 16 al doble), los colores y atributos de los sprites 0-1 guardados en 0xE800 y 0xE820, sus colores a 7, los dos sprites de p63:BA77 en (0xC8, 0x68) y (0xC8, 0x90), el cuadro de (0xC0, 0x60) de 0x40 x 0x60 a 0xFF con dos marcos de 0x20 x 0x20 y sus patrones escritos
+p63 0xBA6B marco_de_sprite  un marco de 0x20 x 0x20 de color 0x0D en HL
+p63 0xBA80 cursor_de_depuracion  HOME, el modo 3: el sprite 4 en (0x60, 0x60) con el color 0
+p63 0xBA92 visor_cada_cuadro  el modo 2 de cada cuadro: las tablas de sprites cambiadas, el teclado como mando; arriba los patrones de los dos sprites 8 mas, abajo 8 menos, y escritos en (0xEC, 0x74) y (0xEC, 0x9C); los sprites a la VRAM
+p63 0xBAB1 patrones_mas  8 mas
+p63 0xBAB9 escribe_dos  (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+p63 0xBACB sprites_a_vram  los sprites a la VRAM
+p63 0xBAD0 tecla_p  con 0xE25F (lo pone la P), cada cuadro la Y y la X de Snake en hexadecimal en (0xEC, 0x74) y (0xEC, 0x9C)
+p63 0xBAE2 mira_tecla_p  la fila 4, bit 5: P
+p63 0xBAF0 cursor_cada_cuadro  el modo 3 de cada cuadro: el patron 0x18, las flechas lo mueven, su color cambia de 0 a 15 y su Y + 1 y su X escritas
+p63 0xBB0D color_del_cursor  el color del sprite 4 uno mas (0-15) en sus 16 lineas
+p63 0xBB23 flechas_del_cursor  la fila 8: las flechas mueven la Y o la X
+p63 0xBB33 flecha_pulsada  HL y B por la flecha: arriba Y - 1, abajo Y + 1, izquierda X - 1, derecha X + 1
+p63 0xBB4B pagina_en_pantalla  la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+p63 0xBB6E escribe_registro  R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+p63 0xBB80 espera_al_vdp  espera a que el VDP acabe su orden (S#2, bit 0)
+p63 0xBB81 mira_s2  S#2
+p63 0xBB8C copia_de_la_otra  B x C de (H, L) de la otra pagina a (D, E) de la de dibujar
+p63 0xBB99 copia_hmmm  orden HMMM del VDP: B x C de (H, L) a (D, E); A: pagina de origen (bits 0-1) y de destino (2-3)
+p63 0xBBDD rellena_hmmv  orden HMMV del VDP: B x C desde (H, L) de la pagina D con el byte A (B o C = 0: 256)
+p63 0xBC19 linea_horizontal_63  orden LINE del VDP: B puntos en horizontal desde (H, L) de la pagina A con el color C
+p63 0xBC51 linea_vertical_63  la misma en vertical (ARG = 1)
+p63 0xBC8A marco_63  un marco de D x E de color C desde (H, L) en la pagina A: dos lineas verticales de E y dos horizontales de D
+p63 0xBCA6 vertical_guarda  p63:BC51 guardando todo
+p63 0xBCB2 horizontal_guarda  p63:BC19 guardando todo
+p63 0xBCBE tablas_de_sprites_63  alterna las tablas de sprites: 0xF400/0xF600 o 0xF000/0xF200 en 0xCA0C-0xCA0F y R#5
+p63 0xBCD6 pon_tablas_63  
+p63 0xBCE0 sprites_a_vram_63  la copia de 0xDA00 (colores y atributos, 0x280 bytes) a la VRAM de 0xCA0C
+p63 0xBCEE escribe_hexa  B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+p63 0xBCF0 byte_hexa  en el ultimo byte...
+p63 0xBD06 cifra_hexa  la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+p63 0xBD0C pon_cifra  el caracter A + 1...
+p63 0xBD16 caracter_63  el caracter A (8 x 8) de la pagina 3 a (D, E) de la pagina de dibujar
+p63 0xBD30 sitio_de_caracter  HL = el sitio del caracter A en la pagina 3: X = (A & 0x1F) * 8, Y = (A & 0xE0) / 4
+p63 0xBD41 teclado_como_mando  el teclado como mando: 0xCA07-0xCA08 (flechas y espacio, p63:BD59) y 0xCA09-0xCA0A (p63:BD80) con lo recien pulsado
+p63 0xBD4F mando_de_teclado  
+p63 0xBD52 recien_pulsado  (HL) = A y en (HL - 1) los bits que no estaban
+p63 0xBD59 flechas_de_teclado  A = las flechas (bits 0-3: arriba, abajo, izquierda, derecha) y el espacio (bit 4) de la fila 8, y la M (bit 5) de la fila 4
+p63 0xBD80 teclas_de_funcion_63  A = las teclas F1-F3 (fila 6) y F4-F5 y RETURN (fila 7), como 0xCA0A
+p63 0xBDA0 escribe_vram_63  BC bytes de HL a la VRAM de DE con otir
+p63 0xBDB0 escribe_bloque  B bytes, A veces
+p63 0xBDB6 direccion_vram_63  la direccion HL de la VRAM para escribir: R#14 y el puerto
+p63 0xBDD7 vueltas_de_otir  B = C, A = B (+1 con C distinto de 0)
+p63 0xBDDF lee_estado  A = el registro de estado A del VDP (R#15) y de vuelta al 0
+p63 0xBDFF tecla_z  Z (fila 5, bit 7): todo el equipo (p63:BE1D a 0xD600) y 0xCA61 = 1
+p63 0xBE11 todo_el_equipo  los 0xC4 bytes de p63:BE1D a 0xD600: fichas [la tiene][cuenta en BCD] con 999 en las que cuentan
+p63 0xBEE1 tecla_x  X (fila 5, bit 5): 0xD678-0xD6A7 a 1
+p63 0xBEF8 teclas_ins_del  la fila 8: INS, 0xCA3C = 1; DEL, 0xCA3C = 0
+p63 0xBF09 pon_ca3c  
+p63 0xBF0E tecla_bs  BS (fila 7, bit 5): 0xD430 = 2 y el bit 4 de 0xD7D1
+p63 0xBF21 tecla_t  T (fila 5, bit 1): 0xCA8E = 1
+p63 0xBF2F tecla_r  R (fila 4, bit 7): 0xD6B4, 0xD6B8 y 0xD6BC a 1 con 0x20, 0x40 y 0x60 detras
+p63 0xBF50 tecla_circunflejo  ^ (fila 1, bit 3): 0xD700-0xD71F a 0 y 0xCAAF = 1

@@ -1213,6 +1213,7 @@ C 0xA202 pisa_algo: en la especial 0x38 sala 1 (p06:BD9B), la zona 0x12 (p06:BD7
 C 0xA208 llama_a14d_a2aa_a139: p06:A14D, p06:A2AA y p06:A139 con el banco 6
 C 0xA213 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA258 guarda una espera de 16 bits que baja en la interrupcion
+C 0xA26C apunta a 1 al acabar la musica 0x8D
 C 0xA273 sonido_01: pide el sonido 0x01
 C 0xA285 anda_y_sitios: con 0xCB80 = 6, solo p03:ADA6
 C 0xA28D disparo_1: el disparo 1: con 0xE040 o 0xCB3C, nada

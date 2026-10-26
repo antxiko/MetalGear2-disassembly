@@ -961,16 +961,12 @@ D 0xA9C3 0xA9C7 resto_A9C3  lo apuntan con el banco puesto p06:A9AD (0xA9C3); el
 F 0xA9C3 16
 D 0xABFE 0xAC26 resto_ABFE  lo apuntan con el banco puesto p06:ABDE (0xABFE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:ABDE (40 bytes)
 F 0xABFE 16
-D 0xAC82 0xAC8B resto_AC82  lo apuntan con el banco puesto p06:AC35 (0xAC82); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AC35 (9 bytes)
+D 0xAC82 0xACE2 resto_AC82  lo apuntan con el banco puesto p06:AC35 (0xAC82), p06:AC3F (0xAC9A), p06:AC46 (0xACB2), p06:AC4D (0xACCA); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AC35, p06:AC3F, p06:AC46, p06:AC4D (96 bytes)
 F 0xAC82 16
-D 0xAC95 0xAC9D resto_AC95  lo apuntan con el banco puesto p06:AC3F (0xAC9A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AC3F (8 bytes)
-F 0xAC95 16
-D 0xACCA 0xACD4 resto_ACCA  lo apuntan con el banco puesto p06:AC4D (0xACCA); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AC4D (10 bytes)
-F 0xACCA 16
-D 0xAD5A 0xAD94 resto_AD5A  lo apuntan con el banco puesto p12:65B5 (0xAD5A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:65B5 (58 bytes)
+D 0xAD5A 0xAD5C resto_AD5A  lo apuntan con el banco puesto p12:65B5 (0xAD5A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:65B5 (2 bytes)
 F 0xAD5A 16
-D 0xADD7 0xAE62 resto_ADD7  lo apuntan con el banco puesto p06:AD9A (0xADD7), p06:ADA3 (0xADE5); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AD9A, p06:ADA3 (139 bytes)
-F 0xADD7 16
+D 0xADBC 0xAE62 resto_ADBC  lo apuntan con el banco puesto p06:AD9A (0xADD7), p06:ADA3 (0xADE5); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:AD9A, p06:ADA3 (166 bytes)
+F 0xADBC 16
 D 0xB09D 0xB0AD resto_B09D  lo apuntan con el banco puesto p06:B08A (0xB09D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:B08A (16 bytes)
 F 0xB09D 16
 D 0xB2CE 0xB2D6 resto_B2CE  lo apuntan con el banco puesto p06:B267 (0xB2CE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p06:B267 (8 bytes)

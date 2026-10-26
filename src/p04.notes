@@ -958,6 +958,8 @@ C 0x86BE bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x86C4 guarda 1 mientras suena la musica de un actor
 C 0x86CA guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x86CD sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0x86D0 apunta a 1 al acabar la musica 0xA1
+C 0x86D5 apunta a 1 al acabar la musica 0xA6
 C 0x86ED lee el tipo de la ficha de 0xD800
 C 0x86FC patrones_del_dibujo: HL = los patrones del dibujo del tipo (p56:AB35, o p56:AB9C con el bit 7), 4 bytes de p56:AB9F por dibujo
 C 0x8703 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
@@ -1363,6 +1365,7 @@ C 0x9357 guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con
 C 0x935A a_p15_be48_guarda: p15:BE48 guardando el banco de 0xA000
 C 0x935D guarda_d428: 0xD428-0xD429 = la fila y la columna de ahora
 C 0x9360 ventana_de_alerta: los rotulos (p04:984C), la imagen (p04:98FB) y p12:6FFE
+C 0x9363 lee 1 mientras suenan las musicas 0x82 u 0x88
 C 0x9368 orden_sonido_f7: la orden 0xF7 al sonido
 C 0x936B lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x9372 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
@@ -1405,6 +1408,7 @@ C 0x94A2 fuera_de_otras_salas: los actores (por debajo de 0x10) de otras salas f
 C 0x94A6 guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x94AB tipos_como_antes: los actores sin el bit 7 del tipo; los de tipo menor de 0x10, con el dibujo (0x17) y el eje (0x16) de antes
 C 0x94B4 tipos_como_antes: los actores sin el bit 7 del tipo; los de tipo menor de 0x10, con el dibujo (0x17) y el eje (0x16) de antes
+C 0x94B7 lee 1 mientras suenan las musicas 0x82 u 0x88
 C 0x94BD rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
 C 0x94C0 guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x94C5 guarda la espera hasta poner la musica pendiente

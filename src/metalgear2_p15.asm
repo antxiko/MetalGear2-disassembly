@@ -679,7 +679,7 @@ L_A46C:
 	cp b			;a481
 	ret			;a482
 cerrando_tipo_1:		; sin 0xC697, el paso (p15:A488)
-	ld a,(0c697h)		;a483
+	ld a,(0c697h)		;a483   ; lee 1 mientras suenan las musicas 0x82 u 0x88
 	and a			;a486   ; con 0xC697, espera
 	ret nz			;a487
 desliza_tipo_1:		; un paso mas (byte 6, de 2 en 2 hasta el ancho; luego p15:A85F): lo guardado en (0xC6, 0xD8) se pinta con la operacion 0 corrido 2 * paso (0x18 - eso cerrando, estado 4), del ancho que queda
@@ -1920,7 +1920,7 @@ sale_de_la_2:		; 0xCAF6 = 2: la orden 0xF3
 	dec a			;acc1   ; 0xCAF6 = 3: 0xC690 = 0xD443 = 0 y p02:8D60
 	ret nz			;acc2
 	xor a			;acc3
-	ld (0c690h),a		;acc4
+	ld (0c690h),a		;acc4   ; guarda 1 al acabar las musicas 0x82 u 0x88
 	ld (0d443h),a		;acc7
 	jp 08d60h		;acca   ; p02:8D60
 otra_sala_misma:		; la sala de la fila y la columna sin cambiar de zona: fuera lo de la sala, Snake en la llegada y la sala (p02:8D41)

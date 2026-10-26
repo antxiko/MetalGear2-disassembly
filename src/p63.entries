@@ -12,3 +12,4 @@
 #
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
 0xB800   # p64:C279 call
+0xB802   # codigo tras el 'or a / ret' de p63:B800 (la interrupcion lo llama cada cuadro, p03:A12F): nunca corre; se desensambla para leerlo

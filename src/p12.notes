@@ -1041,7 +1041,7 @@ C 0x6CE7 el bit 4 de 0xD7E1
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x605C 0x606E tabla_605C  9 destinos del despachador p00:424D (call en p12:6059, el indice en A): 606E, 6155, 62B4, 62F7, 63F3, 6413, 63F3, 643A, 6458; lo leen p12:6059 (18 bytes)
 F 0x605C w8
-D 0x6BBE 0x6BE4 tabla_6BBE  19 destinos del despachador p00:424D (call en p12:6BBB, el indice en A): 6CDF, 6CDF, 6CDF, 6C2C, 6CDF, 6CDF, 6CDF, 6C38, 6CDF, 6CDF, 6C4F, 6CDF, 6CDF, 6CDF, 6C8D, 6CDF, 6CDF, 6CDF, 6C54; lo leen p12:6BBB (38 bytes)
+D 0x6BBE 0x6BE6 tabla_6BBE  20 destinos del despachador p00:424D (call en p12:6BBB, el indice en A): 6CDF, 6CDF, 6CDF, 6C2C, 6CDF, 6CDF, 6CDF, 6C38, 6CDF, 6CDF, 6C4F, 6CDF, 6CDF, 6CDF, 6C8D, 6CDF, 6CDF, 6CDF, 6C54, 6C74; lo leen p12:6BBB (40 bytes)
 F 0x6BBE w8
 D 0x76CB 0x76E9 tabla_76CB  15 destinos del despachador p00:424D (call en p12:76C8, el indice en A): 7728, 7728, 780D, 787B, 78AC, 78CF, 78CF, 7911, 7935, 79A8, 79EE, 7ABC, 7B0D, 7B19, 7B2D; lo leen p12:76C8 (30 bytes)
 F 0x76CB w8

@@ -418,136 +418,1094 @@ DATA_resto_B1CC:
 	defb 0ffh,0ffh,0ffh,0ffh	; b7fc
 
 ; ======================================================================
-; CODIGO 0xb800..0xb802  (2 bytes)
+; CODIGO 0xb800..0xba77  (631 bytes)
 ; ======================================================================
 
 
-L_B800:
-	or a			;b800
-	ret			;b801
+depuracion_apagada:		; lo que la interrupcion llama cada cuadro (p03:A12F): vuelve sin acarreo (el juego corre) y lo de detras, un monitor de depuracion, no llega a correr nunca
+	or a			;b800   ; sin acarreo...
+	ret			;b801   ; ...y vuelve: lo de 0xB802 no corre
+monitor:		; NUNCA CORRE (p63:B800 vuelve antes). El monitor de depuracion de cada cuadro: las teclas de trampa (Z, X, R, INS/DEL, BS, T, ^, P y el punto del teclado numerico); en la pausa (0xCA3E), sus teclas (p63:B95B); con STOP, la pausa (acarreo: el juego no corre); si no, el cambio de sala o de zona (p63:B837)
+	call tecla_z		;b802   ; Z: todo el equipo
+	call tecla_x		;b805   ; X: 0xD678-0xD6A7 a 1
+	call tecla_r		;b808   ; R: 0xD6B4-0xD6BD
+	call teclas_ins_del		;b80b   ; INS/DEL: 0xCA3C
+	call tecla_bs		;b80e   ; BS: 0xD430 y 0xD7D1
+	call tecla_t		;b811   ; T: 0xCA8E
+	call tecla_circunflejo		;b814   ; ^: 0xD700 a 0 y 0xCAAF
+	call tecla_p		;b817   ; P: la Y y la X de Snake
+	call tecla_punto		;b81a   ; el punto: 0xE257
+	ld a,(0ca3eh)		;b81d   ; en la pausa, sus teclas
+	and a			;b820
+	jp nz,teclas_de_pausa		;b821   ; teclas_de_pausa: en la pausa: ESC sale (p63:B9C4); en el modo 2 (TAB), el visor de sprites; en el 3 (HOME), el cursor; TAB y HOME los ponen; 0-3 enseñan esa pagina de la VRAM; arriba y abajo mueven la pantalla (R#23); acarreo: el juego sigue parado
+	ld a,007h		;b824   ; la fila 7 del teclado...
+	call 00141h		;b826   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;b829
+	and 010h		;b82a   ; ...STOP (bit 4)?
+	jp z,cambia_de_sala		;b82c   ; cambia_de_sala: sin pausa: las teclas 0-9 y A-J ponen esa zona encima de la sala en el mapa de 0xD900 y sale por arriba (p63:B8F9); ; y ] suben y bajan la fase (0xCA22, 0-8); 8, 2, 4 y 6 del teclado numerico salen por arriba, abajo, izquierda o derecha si hay sala alli
+	ld hl,00001h		;b82f   ; la pausa: 0xCA3E = 1 (y 0xCA3F = 0)...
+	ld (0ca3eh),hl		;b832   ; guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor y el byte siguiente (16 bits)
+	scf			;b835   ; ...con acarreo: el juego no corre
+	ret			;b836
+cambia_de_sala:		; sin pausa: las teclas 0-9 y A-J ponen esa zona encima de la sala en el mapa de 0xD900 y sale por arriba (p63:B8F9); ; y ] suben y bajan la fase (0xCA22, 0-8); 8, 2, 4 y 6 del teclado numerico salen por arriba, abajo, izquierda o derecha si hay sala alli
+	ld hl,0ca41h		;b837   ; la salida de la sala...
+	ld de,0d900h		;b83a   ; ...el mapa de salas...
+	ld bc,(0ca50h)		;b83d   ; ...C = la fila, B = la columna
+	ld a,000h		;b841   ; la fila 0: 0-7
+	push bc			;b843
+	call 00141h		;b844   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b847
+	cpl			;b848   ; pulsadas a 1
+	and a			;b849   ; alguna?
+	jp nz,tecla_de_zona		;b84a   ; tecla_de_zona: la tecla pulsada de la fila (el primer bit a 0 desde el 0): su numero en C
+	ld a,001h		;b84d   ; la fila 1: 8 y 9
+	push bc			;b84f
+	call 00141h		;b850   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b853
+	cpl			;b854   ; pulsadas a 1
+	and 003h		;b855   ; 8 o 9?
+	jp nz,teclas_8_9		;b857   ; teclas_8_9: 8 o 9
+	ld a,002h		;b85a   ; la fila 2: A y B
+	push bc			;b85c
+	call 00141h		;b85d   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b860
+	cpl			;b861   ; pulsadas a 1
+	and 0c0h		;b862   ; A o B?
+	jp nz,teclas_a_b		;b864   ; teclas_a_b: B (0x0B) o A (0x0A)
+	ld a,003h		;b867   ; la fila 3: C-J
+	push bc			;b869
+	call 00141h		;b86a   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b86d
+	cpl			;b86e   ; pulsadas a 1
+	and a			;b86f   ; alguna?
+	jp nz,teclas_c_j		;b870   ; teclas_c_j: C-J: 0x0C-0x13
+	ld a,001h		;b873   ; la fila 1, bit 7 (;)
+	push bc			;b875
+	call 00141h		;b876   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b879
+	rla			;b87a   ; ;: la fase uno mas
+	jp nc,fase_mas		;b87b   ; fase_mas: la fase uno mas, hasta 8
+	ld a,002h		;b87e   ; la fila 2, bit 0 (])
+	push bc			;b880
+	call 00141h		;b881   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b884
+	rra			;b885   ; ]: la fase uno menos
+	jp nc,fase_menos		;b886   ; fase_menos: la fase uno menos, desde 0
+	ld a,009h		;b889   ; la fila 9 del teclado numerico
+	push bc			;b88b
+	call 00141h		;b88c   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b88f
+	cpl			;b890   ; pulsadas a 1
+	rla			;b891   ; 4: a la izquierda
+	jr c,sala_de_la_izquierda		;b892
+	rla			;b894   ; 2: abajo
+	rla			;b895
+	jr c,sala_de_abajo		;b896
+	ld a,00ah		;b898   ; la fila 10 del teclado numerico
+	push bc			;b89a
+	call 00141h		;b89b   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	pop bc			;b89e
+	cpl			;b89f   ; pulsadas a 1
+	rra			;b8a0   ; 6: a la derecha
+	rra			;b8a1
+	jr c,sala_de_la_derecha		;b8a2
+	rra			;b8a4   ; 8: arriba...
+	rra			;b8a5
+	ret nc			;b8a6
+	inc c			;b8a7   ; ...la fila de encima
+	call casilla_del_mapa		;b8a8   ; hay sala?
+	ret z			;b8ab
+	ld (hl),001h		;b8ac   ; sale por arriba
+	or a			;b8ae   ; el juego corre
+	ret			;b8af
+sala_de_abajo:		; la fila de debajo
+	dec c			;b8b0
+	call casilla_del_mapa		;b8b1   ; casilla_del_mapa: DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+	ret z			;b8b4
+	ld (hl),002h		;b8b5   ; sale por abajo
+	or a			;b8b7
+	ret			;b8b8
+sala_de_la_izquierda:		; la columna de la izquierda
+	dec b			;b8b9
+	call casilla_del_mapa		;b8ba   ; casilla_del_mapa: DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+	ret z			;b8bd
+	ld (hl),003h		;b8be   ; sale por la izquierda
+	or a			;b8c0
+	ret			;b8c1
+sala_de_la_derecha:		; la columna de la derecha
+	inc b			;b8c2
+	call casilla_del_mapa		;b8c3   ; casilla_del_mapa: DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+	ret z			;b8c6
+	ld (hl),004h		;b8c7   ; sale por la derecha
+	or a			;b8c9
+	ret			;b8ca
+fase_mas:		; la fase uno mas, hasta 8
+	ld hl,0ca22h		;b8cb   ; apunta a la fase de la partida (indice de las listas de p06:B40C)
+	ld a,(hl)			;b8ce   ; hasta 8
+	cp 008h		;b8cf
+	ret nc			;b8d1
+	inc (hl)			;b8d2   ; uno mas
+	ret			;b8d3
+fase_menos:		; la fase uno menos, desde 0
+	ld hl,0ca22h		;b8d4   ; apunta a la fase de la partida (indice de las listas de p06:B40C)
+	ld a,(hl)			;b8d7   ; desde 0
+	and a			;b8d8
+	ret z			;b8d9
+	dec (hl)			;b8da   ; uno menos
+	ret			;b8db
+llegada_a_zona:		; la sala de llegada a la zona puesta (fila, columna): la 7 (1, 5), la 6 (2, 7), la 0x0F (2, 6), las demas (1, 7)
+	ld a,(de)			;b8dc   ; la zona puesta
+	cp 087h		;b8dd   ; la zona 7
+	ld hl,00501h		;b8df   ; (1, 5)
+	jr z,L_B8F5		;b8e2
+	cp 086h		;b8e4   ; la 6
+	ld hl,00702h		;b8e6   ; (2, 7)
+	jr z,L_B8F5		;b8e9
+	cp 08fh		;b8eb   ; la 0x0F
+	ld hl,00602h		;b8ed   ; (2, 6)
+	jr z,L_B8F5		;b8f0
+	ld hl,00701h		;b8f2   ; las demas
+L_B8F5:
+	ld (0ca50h),hl		;b8f5   ; a 0xCA50-0xCA51
+	ret			;b8f8
+tecla_de_zona:		; la tecla pulsada de la fila (el primer bit a 0 desde el 0): su numero en C
+	push bc			;b8f9
+	ld b,007h		;b8fa   ; hasta 7 bits
+	ld c,000h		;b8fc   ; desde 0
+bit_de_tecla:		; el bit siguiente
+	rra			;b8fe   ; el bit a 0 es la tecla
+	jr c,numero_de_tecla		;b8ff
+	inc c			;b901   ; una mas
+	djnz bit_de_tecla		;b902   ; el siguiente
+numero_de_tecla:		; A = el numero
+	ld a,c			;b904
+	pop bc			;b905
+pon_zona:		; la casilla de encima en el mapa (fila + 1) * 16 + columna...
+	push af			;b906
+	ld a,c			;b907   ; la fila...
+	inc a			;b908   ; ...+ 1...
+	add a,a			;b909   ; ...* 16...
+	add a,a			;b90a
+	add a,a			;b90b
+	add a,a			;b90c
+	add a,b			;b90d   ; ...+ la columna
+	call de_mas_a		;b90e   ; de_mas_a: DE = DE + A
+	pop af			;b911   ; la zona...
+	set 7,a		;b912   ; ...= la zona con el bit 7...
+	ld (de),a			;b914   ; ...en la casilla
+	ld a,001h		;b915   ; ...sale por arriba...
+	ld (hl),a			;b917   ; sale por arriba
+	jp llegada_a_zona		;b918   ; ...y la sala de llegada
+teclas_8_9:		; 8 o 9
+	rra			;b91b
+	ld a,008h		;b91c   ; 8
+	jr c,pon_zona_a		;b91e
+	ld a,009h		;b920   ; 9
+pon_zona_a:
+	jr pon_zona		;b922
+teclas_a_b:		; B (0x0B) o A (0x0A)
+	rla			;b924
+	ld a,00bh		;b925   ; B
+	jr c,pon_zona_b		;b927
+	ld a,00ah		;b929   ; A
+pon_zona_b:
+	jr pon_zona		;b92b
+teclas_c_j:		; C-J: 0x0C-0x13
+	push bc			;b92d
+	ld b,007h		;b92e   ; hasta 7 bits
+	ld c,00ch		;b930   ; desde 0x0C (C)
+	rra			;b932
+	jr c,numero_de_tecla		;b933
+	inc c			;b935
+	djnz bit_de_tecla		;b936
+	ld a,c			;b938
+	pop bc			;b939
+	jr pon_zona		;b93a
+casilla_del_mapa:		; DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+	ld a,c			;b93c   ; la fila * 16...
+	add a,a			;b93d
+	add a,a			;b93e
+	add a,a			;b93f
+	add a,a			;b940
+	add a,b			;b941   ; ...+ la columna
+	call de_mas_a		;b942   ; de_mas_a: DE = DE + A
+	ld a,(de)			;b945   ; 0xFF: Z
+	inc a			;b946
+	ret			;b947
+de_mas_a:		; DE = DE + A
+	add a,e			;b948   ; + A
+	ld e,a			;b949
+	ret nc			;b94a   ; con acarreo...
+	inc d			;b94b   ; ...el alto
+	ret			;b94c
+tecla_punto:		; con el punto del teclado numerico (fila 10, bit 7), 0xE257 = 1
+	ld a,00ah		;b94d   ; la fila 10
+	call 00141h		;b94f   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 7,a		;b952   ; el punto (bit 7)?
+	ret nz			;b954
+	ld a,001h		;b955   ; 0xE257 = 1
+	ld (0e257h),a		;b957   ; guarda 1 con el punto del teclado numerico en el monitor de p63
+	ret			;b95a
+teclas_de_pausa:		; en la pausa: ESC sale (p63:B9C4); en el modo 2 (TAB), el visor de sprites; en el 3 (HOME), el cursor; TAB y HOME los ponen; 0-3 enseñan esa pagina de la VRAM; arriba y abajo mueven la pantalla (R#23); acarreo: el juego sigue parado
+	ld a,007h		;b95b   ; la fila 7...
+	call 00141h		;b95d   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;b960
+	and 004h		;b961   ; ...ESC: sale
+	jp nz,sale_de_la_pausa		;b963   ; sale_de_la_pausa: R#23 = 0; desde el modo 2, R#1 = 0x62, los colores y atributos de los sprites 0-1 de vuelta y el cuadro de (0xC0, 0x60) copiado de la otra pagina; 0xCA3E = 0 y la pagina de dibujar en pantalla
+	ld a,(0ca3eh)		;b966   ; el modo 2...
+	cp 002h		;b969
+	jp z,visor_cada_cuadro		;b96b   ; visor_cada_cuadro: el modo 2 de cada cuadro: las tablas de sprites cambiadas, el teclado como mando; arriba los patrones de los dos sprites 8 mas, abajo 8 menos, y escritos en (0xEC, 0x74) y (0xEC, 0x9C); los sprites a la VRAM
+	cp 003h		;b96e   ; ...o el 3
+	jp z,cursor_cada_cuadro		;b970   ; cursor_cada_cuadro: el modo 3 de cada cuadro: el patron 0x18, las flechas lo mueven, su color cambia de 0 a 15 y su Y + 1 y su X escritas
+	ld a,007h		;b973   ; TAB...
+	call 00141h		;b975   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;b978
+	and 008h		;b979   ; ...el modo 2
+	jp nz,visor_de_sprites		;b97b   ; visor_de_sprites: TAB, el modo 2: R#1 = 0x63 (sprites de 16 x 16 al doble), los colores y atributos de los sprites 0-1 guardados en 0xE800 y 0xE820, sus colores a 7, los dos sprites de p63:BA77 en (0xC8, 0x68) y (0xC8, 0x90), el cuadro de (0xC0, 0x60) de 0x40 x 0x60 a 0xFF con dos marcos de 0x20 x 0x20 y sus patrones escritos
+	ld a,008h		;b97e   ; la fila 8: HOME...
+	call 00141h		;b980   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 1,a		;b983   ; ...el modo 3
+	jp z,cursor_de_depuracion		;b985   ; cursor_de_depuracion: HOME, el modo 3: el sprite 4 en (0x60, 0x60) con el color 0
+	xor a			;b988   ; la fila 0: 0-3
+	call 00141h		;b989   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;b98c
+	rra			;b98d   ; 0
+	jp c,pagina_0		;b98e   ; pagina_0:
+	rra			;b991   ; 1
+	jp c,pagina_1		;b992   ; pagina_1:
+	rra			;b995   ; 2
+	jp c,pagina_2		;b996   ; pagina_2:
+	rra			;b999   ; 3
+	jp c,pagina_3		;b99a   ; pagina_3:
+	ld a,008h		;b99d   ; la fila 8: arriba y abajo
+	call 00141h		;b99f   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;b9a2
+	rla			;b9a3
+	rla			;b9a4
+	ld hl,0ca3fh		;b9a5   ; la cuenta de R#23
+	jr c,baja_pantalla		;b9a8   ; abajo
+	rla			;b9aa
+	jr c,sube_pantalla		;b9ab   ; arriba
+	scf			;b9ad   ; parado
+	ret			;b9ae
+pagina_3:
+	ld a,003h		;b9af   ; 3
+	jp ensena_pagina		;b9b1   ; ensena_pagina: esa pagina en pantalla
+pagina_0:
+	xor a			;b9b4   ; 0
+	jp ensena_pagina		;b9b5   ; ensena_pagina: esa pagina en pantalla
+pagina_1:
+	ld a,001h		;b9b8   ; 1
+	jp ensena_pagina		;b9ba   ; ensena_pagina: esa pagina en pantalla
+pagina_2:
+	ld a,002h		;b9bd   ; 2
+ensena_pagina:		; esa pagina en pantalla
+	call pagina_en_pantalla		;b9bf   ; pagina_en_pantalla: la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+	scf			;b9c2   ; el juego sigue parado
+	ret			;b9c3
+sale_de_la_pausa:		; R#23 = 0; desde el modo 2, R#1 = 0x62, los colores y atributos de los sprites 0-1 de vuelta y el cuadro de (0xC0, 0x60) copiado de la otra pagina; 0xCA3E = 0 y la pagina de dibujar en pantalla
+	ld b,000h		;b9c4   ; R#23 = 0
+	ld c,017h		;b9c6
+	call 00047h		;b9c8   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld a,(0ca3eh)		;b9cb   ; desde el modo 2...
+	cp 002h		;b9ce
+	jr nz,fuera_pausa		;b9d0
+	ld bc,06201h		;b9d2   ; ...R#1 = 0x62...
+	call 00047h		;b9d5   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld de,0da00h		;b9d8   ; ...los colores de vuelta...
+	ld hl,0e800h		;b9db   ; apunta a los colores de la lista de dibujos en curso (p00:4DB3)
+	ld bc,00020h		;b9de
+	ldir		;b9e1
+	ld de,0dc00h		;b9e3   ; ...los atributos...
+	ld hl,0e820h		;b9e6
+	ld bc,00009h		;b9e9
+	ldir		;b9ec
+	ld hl,0c060h		;b9ee   ; ...y el cuadro de 0x40 x 0x60 de la otra pagina
+	ld de,0c060h		;b9f1
+	ld bc,04060h		;b9f4
+	call copia_de_la_otra		;b9f7   ; copia_de_la_otra: B x C de (H, L) de la otra pagina a (D, E) de la de dibujar
+fuera_pausa:		; sin pausa
+	xor a			;b9fa
+	ld (0ca3eh),a		;b9fb   ; guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor
+	ld a,(0ca42h)		;b9fe   ; la pagina de dibujar en pantalla
+	call pagina_en_pantalla		;ba01   ; pagina_en_pantalla: la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+	or a			;ba04   ; el juego corre
+	ret			;ba05
+sube_pantalla:		; uno menos
+	dec (hl)			;ba06   ; R#23 uno menos
+	jr pon_r23		;ba07
+baja_pantalla:		; uno mas
+	inc (hl)			;ba09   ; R#23 uno mas
+pon_r23:		; R#23 = 0xCA3F
+	ld b,(hl)			;ba0a
+	ld c,017h		;ba0b
+	call 00047h		;ba0d   ; BIOS WRTVDP - Writes data in the VDP-register
+	scf			;ba10   ; el juego sigue parado
+	ret			;ba11
+visor_de_sprites:		; TAB, el modo 2: R#1 = 0x63 (sprites de 16 x 16 al doble), los colores y atributos de los sprites 0-1 guardados en 0xE800 y 0xE820, sus colores a 7, los dos sprites de p63:BA77 en (0xC8, 0x68) y (0xC8, 0x90), el cuadro de (0xC0, 0x60) de 0x40 x 0x60 a 0xFF con dos marcos de 0x20 x 0x20 y sus patrones escritos
+	ld a,002h		;ba12   ; el modo 2
+	ld (0ca3eh),a		;ba14   ; guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor
+	ld bc,06301h		;ba17   ; R#1 = 0x63
+	call 00047h		;ba1a   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld hl,0da00h		;ba1d   ; los colores de los sprites 0-1...
+	ld de,0e800h		;ba20   ; apunta a los colores de la lista de dibujos en curso (p00:4DB3)
+	ld bc,00020h		;ba23
+	ldir		;ba26
+	ld hl,0dc00h		;ba28   ; ...y sus atributos, guardados
+	ld de,0e820h		;ba2b
+	ld bc,00009h		;ba2e
+	ldir		;ba31
+	ld hl,0da00h		;ba33   ; sus colores a 7
+	ld de,0da01h		;ba36
+	ld bc,0001fh		;ba39
+	ld (hl),007h		;ba3c
+	ldir		;ba3e
+	ld de,0dc00h		;ba40   ; los dos sprites de p63:BA77
+	ld hl,0ba77h		;ba43   ; desde p63:BA77
+	ld bc,00009h		;ba46
+	ldir		;ba49
+	ld hl,0c060h		;ba4b   ; el cuadro...
+	ld bc,04060h		;ba4e
+	ld a,(0ca42h)		;ba51   ; ...en la pagina de dibujar...
+	ld d,a			;ba54
+	ld a,0ffh		;ba55   ; ...a 0xFF
+	call rellena_hmmv		;ba57   ; rellena_hmmv: orden HMMV del VDP: B x C desde (H, L) de la pagina D con el byte A (B o C = 0: 256)
+	ld hl,0c868h		;ba5a   ; un marco en (0xC8, 0x68)...
+	call marco_de_sprite		;ba5d   ; marco_de_sprite: un marco de 0x20 x 0x20 de color 0x0D en HL
+	ld hl,0c890h		;ba60   ; ...y otro en (0xC8, 0x90)
+	call marco_de_sprite		;ba63   ; marco_de_sprite: un marco de 0x20 x 0x20 de color 0x0D en HL
+	ld hl,0dc03h		;ba66   ; y sus patrones escritos (p63:BAB9)
+	jr $+80		;ba69
+marco_de_sprite:		; un marco de 0x20 x 0x20 de color 0x0D en HL
+	ld de,02020h		;ba6b   ; 0x20 x 0x20
+	ld c,00dh		;ba6e   ; color 0x0D
+	ld a,(0ca42h)		;ba70   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	call marco_63		;ba73   ; marco_63: un marco de D x E de color C desde (H, L) en la pagina A: dos lineas verticales de E y dos horizontales de D
+	ret			;ba76
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb802..0xbf6b  (1897 bytes)
-DATA_B802:
-	defb 0cdh,0ffh,0bdh,0cdh,0e1h,0beh,0cdh,02fh,0bfh,0cdh,0f8h,0beh,0cdh,00eh,0bfh,0cdh	; b802  ......./........
-	defb 021h,0bfh,0cdh,050h,0bfh,0cdh,0d0h,0bah,0cdh,04dh,0b9h,03ah,03eh,0cah,0a7h,0c2h	; b812  !..P.....M.:>...
-	defb 05bh,0b9h,03eh,007h,0cdh,041h,001h,02fh,0e6h,010h,0cah,037h,0b8h,021h,001h,000h	; b822  [.>..A./...7.!..
-	defb 022h,03eh,0cah,037h,0c9h,021h,041h,0cah,011h,000h,0d9h,0edh,04bh,050h,0cah,03eh	; b832  ">.7.!A.....KP.>
-	defb 000h,0c5h,0cdh,041h,001h,0c1h,02fh,0a7h,0c2h,0f9h,0b8h,03eh,001h,0c5h,0cdh,041h	; b842  ...A../....>...A
-	defb 001h,0c1h,02fh,0e6h,003h,0c2h,01bh,0b9h,03eh,002h,0c5h,0cdh,041h,001h,0c1h,02fh	; b852  ../.....>...A../
-	defb 0e6h,0c0h,0c2h,024h,0b9h,03eh,003h,0c5h,0cdh,041h,001h,0c1h,02fh,0a7h,0c2h,02dh	; b862  ...$.>...A../..-
-	defb 0b9h,03eh,001h,0c5h,0cdh,041h,001h,0c1h,017h,0d2h,0cbh,0b8h,03eh,002h,0c5h,0cdh	; b872  .>...A......>...
-	defb 041h,001h,0c1h,01fh,0d2h,0d4h,0b8h,03eh,009h,0c5h,0cdh,041h,001h,0c1h,02fh,017h	; b882  A......>...A../.
-	defb 038h,025h,017h,017h,038h,018h,03eh,00ah,0c5h,0cdh,041h,001h,0c1h,02fh,01fh,01fh	; b892  8%..8.>...A../..
-	defb 038h,01eh,01fh,01fh,0d0h,00ch,0cdh,03ch,0b9h,0c8h,036h,001h,0b7h,0c9h,00dh,0cdh	; b8a2  8......<..6.....
-	defb 03ch,0b9h,0c8h,036h,002h,0b7h,0c9h,005h,0cdh,03ch,0b9h,0c8h,036h,003h,0b7h,0c9h	; b8b2  <..6.....<..6...
-	defb 004h,0cdh,03ch,0b9h,0c8h,036h,004h,0b7h,0c9h,021h,022h,0cah,07eh,0feh,008h,0d0h	; b8c2  ..<..6...!".~...
-	defb 034h,0c9h,021h,022h,0cah,07eh,0a7h,0c8h,035h,0c9h,01ah,0feh,087h,021h,001h,005h	; b8d2  4.!".~..5....!..
-	defb 028h,011h,0feh,086h,021h,002h,007h,028h,00ah,0feh,08fh,021h,002h,006h,028h,003h	; b8e2  (...!..(...!..(.
-	defb 021h,001h,007h,022h,050h,0cah,0c9h,0c5h,006h,007h,00eh,000h,01fh,038h,003h,00ch	; b8f2  !.."P........8..
-	defb 010h,0fah,079h,0c1h,0f5h,079h,03ch,087h,087h,087h,087h,080h,0cdh,048h,0b9h,0f1h	; b902  ..y..y<......H..
-	defb 0cbh,0ffh,012h,03eh,001h,077h,0c3h,0dch,0b8h,01fh,03eh,008h,038h,002h,03eh,009h	; b912  ...>.w....>.8.>.
-	defb 018h,0e2h,017h,03eh,00bh,038h,002h,03eh,00ah,018h,0d9h,0c5h,006h,007h,00eh,00ch	; b922  ...>.8.>........
-	defb 01fh,038h,0cfh,00ch,010h,0c6h,079h,0c1h,018h,0cah,079h,087h,087h,087h,087h,080h	; b932  .8....y...y.....
-	defb 0cdh,048h,0b9h,01ah,03ch,0c9h,083h,05fh,0d0h,014h,0c9h,03eh,00ah,0cdh,041h,001h	; b942  .H..<.._...>..A.
-	defb 0cbh,07fh,0c0h,03eh,001h,032h,057h,0e2h,0c9h,03eh,007h,0cdh,041h,001h,02fh,0e6h	; b952  ...>.2W..>..A./.
-	defb 004h,0c2h,0c4h,0b9h,03ah,03eh,0cah,0feh,002h,0cah,092h,0bah,0feh,003h,0cah,0f0h	; b962  ....:>..........
-	defb 0bah,03eh,007h,0cdh,041h,001h,02fh,0e6h,008h,0c2h,012h,0bah,03eh,008h,0cdh,041h	; b972  .>..A./.....>..A
-	defb 001h,0cbh,04fh,0cah,080h,0bah,0afh,0cdh,041h,001h,02fh,01fh,0dah,0b4h,0b9h,01fh	; b982  ..O.....A./.....
-	defb 0dah,0b8h,0b9h,01fh,0dah,0bdh,0b9h,01fh,0dah,0afh,0b9h,03eh,008h,0cdh,041h,001h	; b992  ...........>..A.
-	defb 02fh,017h,017h,021h,03fh,0cah,038h,05fh,017h,038h,059h,037h,0c9h,03eh,003h,0c3h	; b9a2  /..!?.8_.8Y7.>..
-	defb 0bfh,0b9h,0afh,0c3h,0bfh,0b9h,03eh,001h,0c3h,0bfh,0b9h,03eh,002h,0cdh,04bh,0bbh	; b9b2  ......>....>..K.
-	defb 037h,0c9h,006h,000h,00eh,017h,0cdh,047h,000h,03ah,03eh,0cah,0feh,002h,020h,028h	; b9c2  7......G.:>... (
-	defb 001h,001h,062h,0cdh,047h,000h,011h,000h,0dah,021h,000h,0e8h,001h,020h,000h,0edh	; b9d2  ..b.G....!... ..
-	defb 0b0h,011h,000h,0dch,021h,020h,0e8h,001h,009h,000h,0edh,0b0h,021h,060h,0c0h,011h	; b9e2  ....! ......!`..
-	defb 060h,0c0h,001h,060h,040h,0cdh,08ch,0bbh,0afh,032h,03eh,0cah,03ah,042h,0cah,0cdh	; b9f2  `..`@....2>.:B..
-	defb 04bh,0bbh,0b7h,0c9h,035h,018h,001h,034h,046h,00eh,017h,0cdh,047h,000h,037h,0c9h	; ba02  K...5..4F...G.7.
-	defb 03eh,002h,032h,03eh,0cah,001h,001h,063h,0cdh,047h,000h,021h,000h,0dah,011h,000h	; ba12  >.2>...c.G.!....
-	defb 0e8h,001h,020h,000h,0edh,0b0h,021h,000h,0dch,011h,020h,0e8h,001h,009h,000h,0edh	; ba22  .. ...!... .....
-	defb 0b0h,021h,000h,0dah,011h,001h,0dah,001h,01fh,000h,036h,007h,0edh,0b0h,011h,000h	; ba32  .!........6.....
-	defb 0dch,021h,077h,0bah,001h,009h,000h,0edh,0b0h,021h,060h,0c0h,001h,060h,040h,03ah	; ba42  .!w......!`..`@:
-	defb 042h,0cah,057h,03eh,0ffh,0cdh,0ddh,0bbh,021h,068h,0c8h,0cdh,06bh,0bah,021h,090h	; ba52  B.W>....!h..k.!.
-	defb 0c8h,0cdh,06bh,0bah,021h,003h,0dch,018h,04eh,011h,020h,020h,00eh,00dh,03ah,042h	; ba62  ..k.!...N.  ..:B
-	defb 0cah,0cdh,08ah,0bch,0c9h,068h,0c8h,000h,000h,090h,0c8h,004h,000h,0d8h,03eh,003h	; ba72  .....h........>.
-	defb 032h,03eh,0cah,03eh,060h,032h,010h,0dch,032h,011h,0dch,0afh,032h,013h,0dch,0c9h	; ba82  2>.>`2..2...2...
-	defb 0cdh,0beh,0bch,0cdh,041h,0bdh,021h,002h,0dch,011h,006h,0dch,03ah,007h,0cah,01fh	; ba92  ....A.!.....:...
-	defb 038h,00dh,01fh,030h,024h,07eh,0d6h,008h,077h,01ah,0d6h,008h,012h,018h,008h,07eh	; baa2  8..0$~..w......~
-	defb 0c6h,008h,077h,01ah,0c6h,008h,012h,006h,001h,0d5h,011h,074h,0ech,0cdh,0eeh,0bch	; bab2  ..w........t....
-	defb 0e1h,006h,001h,011h,09ch,0ech,0cdh,0eeh,0bch,0cdh,0e0h,0bch,037h,0c9h,03ah,05fh	; bac2  ............7.:_
-	defb 0e2h,0b7h,028h,00ch,0cdh,0beh,0bch,021h,003h,0cbh,011h,005h,0cbh,0c3h,0b9h,0bah	; bad2  ..(....!........
-	defb 03eh,004h,0cdh,041h,001h,0cbh,06fh,0c0h,03eh,001h,032h,05fh,0e2h,0c9h,0cdh,0beh	; bae2  >..A..o.>.2_....
-	defb 0bch,03eh,018h,032h,012h,0dch,0cdh,023h,0bbh,0cdh,00dh,0bbh,021h,010h,0dch,034h	; baf2  .>.2...#....!..4
-	defb 011h,011h,0dch,0cdh,0b9h,0bah,021h,010h,0dch,035h,0c9h,03ah,013h,0dch,03ch,0e6h	; bb02  ......!..5.:..<.
-	defb 00fh,032h,013h,0dch,021h,040h,0dah,011h,041h,0dah,077h,001h,00fh,000h,0edh,0b0h	; bb12  .2..!@..A.w.....
-	defb 0c9h,03eh,008h,0cdh,041h,001h,02fh,0e6h,0f0h,0c8h,0cdh,033h,0bbh,07eh,080h,077h	; bb22  .>..A./....3.~.w
-	defb 0c9h,021h,010h,0dch,006h,0ffh,0cbh,06fh,0c0h,006h,001h,0cbh,077h,0c0h,021h,011h	; bb32  .!.....o....w.!.
-	defb 0dch,006h,0ffh,0cbh,067h,0c0h,006h,001h,0c9h,032h,0f5h,0fah,087h,087h,087h,087h	; bb42  ....g....2......
-	defb 05fh,087h,067h,03ah,0e1h,0f3h,0e6h,01fh,0b4h,047h,00eh,002h,0cdh,06eh,0bbh,03ah	; bb52  _.g:.....G...n.:
-	defb 0e3h,0f3h,0e6h,00fh,0b3h,047h,00eh,004h,0cdh,06eh,0bbh,0c9h,079h,008h,03ah,007h	; bb62  .....G...n..y.:.
-	defb 000h,03ch,04fh,078h,0f3h,0edh,079h,008h,0f6h,080h,0fbh,0edh,079h,0c9h,0f5h,03eh	; bb72  .<Ox..y.....y..>
-	defb 002h,0cdh,0dfh,0bdh,01fh,0dah,081h,0bbh,0f1h,0c9h,0c5h,03ah,042h,0cah,0eeh,001h	; bb82  ...........:B...
-	defb 047h,0eeh,001h,007h,007h,0b0h,0c1h,008h,0cdh,080h,0bbh,0c5h,03ah,007h,000h,03ch	; bb92  G...........:..<
-	defb 04fh,03eh,020h,0f3h,0edh,079h,03eh,091h,0edh,079h,00ch,00ch,0edh,061h,0afh,0edh	; bba2  O> ..y>..y...a..
-	defb 079h,0edh,069h,008h,06fh,0e6h,003h,0edh,079h,0edh,051h,0afh,0edh,079h,0edh,059h	; bbb2  y.i.o...y.Q..y.Y
-	defb 07dh,01fh,01fh,0e6h,003h,0edh,079h,0e1h,0edh,061h,0afh,0edh,079h,0edh,069h,0edh	; bbc2  }.....y..a..y.i.
-	defb 079h,0edh,079h,0edh,079h,03eh,0d0h,0edh,079h,0fbh,0c9h,008h,0cdh,080h,0bbh,0c5h	; bbd2  y.y.y>..y.......
-	defb 03ah,007h,000h,03ch,04fh,03eh,024h,0f3h,0edh,079h,03eh,091h,0edh,079h,00ch,00ch	; bbe2  :..<O>$..y>..y..
-	defb 0edh,061h,0afh,0edh,079h,0edh,069h,0edh,051h,0e1h,0edh,061h,0bch,020h,001h,03ch	; bbf2  .a..y.i.Q..a. .<
-	defb 0edh,079h,0afh,0edh,069h,0bdh,020h,001h,03ch,0edh,079h,008h,0edh,079h,0afh,0edh	; bc02  .y..i. .<.y..y..
-	defb 079h,03eh,0c0h,0edh,079h,0fbh,0c9h,008h,0cdh,080h,0bbh,0c5h,03ah,007h,000h,03ch	; bc12  y>..y.......:..<
-	defb 04fh,03eh,024h,0f3h,0edh,079h,03eh,091h,0edh,079h,00ch,00ch,0edh,061h,0afh,0edh	; bc22  O>$..y>..y...a..
-	defb 079h,0edh,069h,008h,0edh,079h,0e1h,0edh,061h,0afh,0bch,020h,001h,03ch,0edh,079h	; bc32  y.i..y..a.. .<.y
-	defb 0afh,0edh,079h,0edh,079h,0edh,069h,0edh,079h,03eh,070h,0edh,079h,0fbh,0c9h,008h	; bc42  ..y.y.i.y>p.y...
-	defb 0cdh,080h,0bbh,0c5h,03ah,007h,000h,03ch,04fh,03eh,024h,0f3h,0edh,079h,03eh,091h	; bc52  ....:..<O>$..y>.
-	defb 0edh,079h,00ch,00ch,0edh,061h,0afh,0edh,079h,0edh,069h,008h,0edh,079h,0e1h,0edh	; bc62  .y...a..y.i..y..
-	defb 061h,0afh,0bch,020h,001h,03ch,0edh,079h,0afh,0edh,079h,0edh,079h,0edh,069h,03ch	; bc72  a.. .<.y..y.y.i<
-	defb 0edh,079h,03eh,070h,0edh,079h,0fbh,0c9h,043h,0cdh,0a6h,0bch,042h,0cdh,0b2h,0bch	; bc82  .y>p.y..C...B...
-	defb 0e5h,0f5h,07dh,083h,06fh,042h,0f1h,0cdh,0b2h,0bch,0e1h,0f5h,07ch,082h,067h,043h	; bc92  ..}.oB......|.gC
-	defb 0f1h,0c3h,0a6h,0bch,0f5h,0e5h,0d5h,0c5h,0cdh,051h,0bch,0c1h,0d1h,0e1h,0f1h,0c9h	; bca2  .........Q......
-	defb 0f5h,0e5h,0d5h,0c5h,0cdh,019h,0bch,0c1h,0d1h,0e1h,0f1h,0c9h,02ah,00ch,0cah,0cbh	; bcb2  ............*...
-	defb 054h,021h,000h,0f6h,011h,000h,0f4h,001h,005h,0e7h,028h,008h,021h,000h,0f2h,011h	; bcc2  T!........(.!...
-	defb 000h,0f0h,006h,0efh,022h,00eh,0cah,0edh,053h,00ch,0cah,0c3h,06eh,0bbh,021h,000h	; bcd2  ...."...S...n.!.
-	defb 0dah,0edh,05bh,00ch,0cah,001h,080h,002h,0afh,0c3h,0a0h,0bdh,00eh,000h,005h,020h	; bce2  ..[............
-	defb 002h,00eh,0ffh,004h,07eh,01fh,01fh,01fh,01fh,0cdh,006h,0bdh,07eh,0cdh,006h,0bdh	; bcf2  ....~.......~...
-	defb 02bh,010h,0ebh,0c9h,0e6h,00fh,028h,002h,00eh,0ffh,03ch,0a1h,0cdh,016h,0bdh,07ah	; bd02  +.....(...<....z
-	defb 0c6h,008h,057h,0c9h,0c5h,0e5h,0d5h,0cdh,030h,0bdh,001h,008h,008h,03ah,042h,0cah	; bd12  ..W.....0....:B.
-	defb 0a7h,03eh,003h,028h,002h,03eh,007h,0cdh,099h,0bbh,0d1h,0e1h,0c1h,0c9h,00eh,000h	; bd22  .>.(.>..........
-	defb 047h,0e6h,01fh,087h,087h,087h,067h,078h,0e6h,0e0h,00fh,00fh,081h,06fh,0c9h,0cdh	; bd32  G.....gx.....o..
-	defb 059h,0bdh,0cdh,04fh,0bdh,0cdh,080h,0bdh,021h,00ah,0cah,018h,003h,021h,008h,0cah	; bd42  Y..O....!....!..
-	defb 04eh,077h,0a9h,0a6h,02bh,077h,0c9h,03eh,004h,0cdh,041h,001h,02fh,007h,007h,007h	; bd52  Nw..+w.>..A./...
-	defb 0e6h,020h,05fh,03eh,008h,0cdh,041h,001h,02fh,00fh,00fh,047h,0e6h,004h,0b3h,04fh	; bd62  . _>..A./..G...O
-	defb 078h,00fh,00fh,047h,0e6h,018h,0b1h,04fh,078h,00fh,0e6h,003h,0b1h,0c9h,03eh,006h	; bd72  x..G...Ox.....>.
-	defb 0cdh,041h,001h,02fh,0e6h,0e0h,05fh,03eh,007h,0cdh,041h,001h,02fh,047h,0e6h,003h	; bd82  .A./.._>..A./G..
-	defb 0b3h,007h,007h,007h,05fh,078h,0e6h,080h,00fh,00fh,0b3h,0e6h,03fh,0c9h,0cdh,080h	; bd92  ...._x......?...
-	defb 0bbh,0ebh,0cdh,0b6h,0bdh,0cdh,0d7h,0bdh,008h,03ah,007h,000h,04fh,008h,0edh,0b3h	; bda2  .........:..O...
-	defb 03dh,020h,0fbh,0c9h,0c5h,01fh,03ah,007h,000h,03ch,04fh,07ch,017h,017h,017h,0e6h	; bdb2  = ....:..<O|....
-	defb 007h,0f3h,0edh,079h,03eh,08eh,0edh,079h,07dh,0edh,079h,07ch,0e6h,03fh,0f6h,040h	; bdc2  ...y>..y}.y|.?.@
-	defb 0edh,079h,0c1h,0fbh,0c9h,0ebh,079h,0b7h,078h,041h,0c8h,03ch,0c9h,0c5h,0e5h,02ah	; bdd2  .y....y.xA.<...*
-	defb 006h,000h,024h,02ch,04ch,0f3h,0edh,079h,03eh,08fh,0edh,079h,04dh,0edh,078h,0f5h	; bde2  ..$,L..y>..yM.x.
-	defb 0afh,04ch,0edh,079h,03eh,08fh,0edh,079h,0f1h,0e1h,0c1h,0fbh,0c9h,03eh,005h,0cdh	; bdf2  .L.y>..y.....>..
-	defb 041h,001h,02fh,0e6h,080h,0c8h,0cdh,011h,0beh,03eh,001h,032h,061h,0cah,0c9h,021h	; be02  A./......>.2a..!
-	defb 01dh,0beh,011h,000h,0d6h,001h,0c4h,000h,0edh,0b0h,0c9h,001h,099h,009h,000h,001h	; be12  ................
-	defb 099h,009h,000h,001h,099h,009h,000h,000h,000h,000h,000h,001h,099h,009h,000h,001h	; be22  ................
-	defb 099h,009h,000h,001h,099h,009h,000h,001h,099h,009h,000h,001h,001h,000h,000h,001h	; be32  ................
-	defb 099h,009h,000h,001h,010h,000h,000h,001h,001h,000h,000h,000h,000h,000h,000h,001h	; be42  ................
-	defb 001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h	; be52  ................
-	defb 001h,000h,000h,001h,001h,000h,000h,000h,000h,000h,000h,001h,001h,000h,000h,001h	; be62  ................
-	defb 001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h	; be72  ................
-	defb 001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h	; be82  ................
-	defb 001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,000h	; be92  ................
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bea2  ................
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; beb2  ................
-	defb 000h,000h,000h,001h,001h,000h,000h,000h,000h,000h,000h,001h,001h,000h,000h,001h	; bec2  ................
-	defb 010h,000h,000h,001h,010h,000h,000h,001h,010h,000h,000h,001h,099h,000h,000h,03eh	; bed2  ...............>
-	defb 005h,0cdh,041h,001h,02fh,0e6h,020h,0c8h,021h,078h,0d6h,011h,079h,0d6h,036h,001h	; bee2  ..A./. .!x..y.6.
-	defb 001h,02fh,000h,0edh,0b0h,0c9h,03eh,008h,0cdh,041h,001h,02fh,01fh,01fh,01fh,00eh	; bef2  ./....>..A./....
-	defb 001h,038h,004h,01fh,0d0h,00eh,000h,079h,032h,03ch,0cah,0c9h,03eh,007h,0cdh,041h	; bf02  .8.....y2<..>..A
-	defb 001h,0cbh,06fh,0c0h,03eh,002h,032h,030h,0d4h,021h,0d1h,0d7h,0cbh,0e6h,0c9h,03eh	; bf12  ..o.>.20.!.....>
-	defb 005h,0cdh,041h,001h,0cbh,04fh,0c0h,03eh,001h,032h,08eh,0cah,0c9h,03eh,004h,0cdh	; bf22  ..A..O.>.2...>..
-	defb 041h,001h,0cbh,07fh,0c0h,021h,0b4h,0d6h,036h,001h,023h,036h,020h,021h,0b8h,0d6h	; bf32  A....!..6.#6 !..
-	defb 036h,001h,023h,036h,040h,021h,0bch,0d6h,036h,001h,023h,036h,060h,0c9h,03eh,001h	; bf42  6.#6@!..6.#6`.>.
-	defb 0cdh,041h,001h,0cbh,05fh,0c0h,021h,000h,0d7h,011h,001h,0d7h,036h,000h,001h,01fh	; bf52  .A.._.!.....6...
-	defb 000h,0edh,0b0h,03eh,001h,032h,0afh,0cah,0c9h	; bf62  ...>.2...
+; DATOS resto_BA77: lo apuntan con el banco puesto p63:BA43 (0xBA77); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p63:BA43 (9 bytes)
+;   0xba77..0xba80  (9 bytes)
+DATA_resto_BA77:
+	defb 068h,0c8h,000h,000h,090h,0c8h,004h,000h,0d8h	; ba77  h........
+
+; ======================================================================
+; CODIGO 0xba80..0xbe1d  (925 bytes)
+; ======================================================================
+
+
+cursor_de_depuracion:		; HOME, el modo 3: el sprite 4 en (0x60, 0x60) con el color 0
+	ld a,003h		;ba80   ; el modo 3
+	ld (0ca3eh),a		;ba82   ; guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor
+	ld a,060h		;ba85   ; Y = X = 0x60
+	ld (0dc10h),a		;ba87   ; la X
+	ld (0dc11h),a		;ba8a
+	xor a			;ba8d   ; el color 0
+	ld (0dc13h),a		;ba8e   ; el color
+	ret			;ba91
+visor_cada_cuadro:		; el modo 2 de cada cuadro: las tablas de sprites cambiadas, el teclado como mando; arriba los patrones de los dos sprites 8 mas, abajo 8 menos, y escritos en (0xEC, 0x74) y (0xEC, 0x9C); los sprites a la VRAM
+	call tablas_de_sprites_63		;ba92   ; las tablas cambiadas
+	call teclado_como_mando		;ba95   ; el teclado como mando
+	ld hl,0dc02h		;ba98   ; el patron del sprite 0...
+	ld de,0dc06h		;ba9b   ; ...y el del 1
+	ld a,(0ca07h)		;ba9e   ; lo recien pulsado: arriba...
+	rra			;baa1
+	jr c,patrones_mas		;baa2
+	rra			;baa4   ; ...abajo
+	jr nc,sprites_a_vram		;baa5
+	ld a,(hl)			;baa7   ; 8 menos
+	sub 008h		;baa8   ; el sprite 0...
+	ld (hl),a			;baaa
+	ld a,(de)			;baab   ; ...y el 1
+	sub 008h		;baac
+	ld (de),a			;baae
+	jr escribe_dos		;baaf
+patrones_mas:		; 8 mas
+	ld a,(hl)			;bab1
+	add a,008h		;bab2   ; el sprite 0...
+	ld (hl),a			;bab4
+	ld a,(de)			;bab5   ; ...y el 1
+	add a,008h		;bab6
+	ld (de),a			;bab8
+escribe_dos:		; (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+	ld b,001h		;bab9   ; un byte...
+	push de			;babb
+	ld de,0ec74h		;babc   ; ...en (0xEC, 0x74)
+	call escribe_hexa		;babf   ; escribe_hexa: B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+	pop hl			;bac2
+	ld b,001h		;bac3   ; un byte
+	ld de,0ec9ch		;bac5   ; el otro en (0xEC, 0x9C)
+	call escribe_hexa		;bac8   ; escribe_hexa: B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+sprites_a_vram:		; los sprites a la VRAM
+	call sprites_a_vram_63		;bacb   ; sprites_a_vram_63: la copia de 0xDA00 (colores y atributos, 0x280 bytes) a la VRAM de 0xCA0C
+	scf			;bace   ; el juego sigue parado
+	ret			;bacf
+tecla_p:		; con 0xE25F (lo pone la P), cada cuadro la Y y la X de Snake en hexadecimal en (0xEC, 0x74) y (0xEC, 0x9C)
+	ld a,(0e25fh)		;bad0   ; ya puesto?
+	or a			;bad3   ; sin 0xE25F...
+	jr z,mira_tecla_p		;bad4   ; ...mira la tecla
+	call tablas_de_sprites_63		;bad6   ; las tablas cambiadas
+	ld hl,0cb03h		;bad9   ; la Y...
+	ld de,0cb05h		;badc   ; ...y la X de Snake
+	jp escribe_dos		;badf   ; escribe_dos: (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+mira_tecla_p:		; la fila 4, bit 5: P
+	ld a,004h		;bae2
+	call 00141h		;bae4   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 5,a		;bae7   ; la P?
+	ret nz			;bae9
+	ld a,001h		;baea   ; 0xE25F = 1
+	ld (0e25fh),a		;baec   ; guarda 1: el monitor de p63 escribe la Y y la X de Snake (tecla P)
+	ret			;baef
+cursor_cada_cuadro:		; el modo 3 de cada cuadro: el patron 0x18, las flechas lo mueven, su color cambia de 0 a 15 y su Y + 1 y su X escritas
+	call tablas_de_sprites_63		;baf0   ; tablas_de_sprites_63: alterna las tablas de sprites: 0xF400/0xF600 o 0xF000/0xF200 en 0xCA0C-0xCA0F y R#5
+	ld a,018h		;baf3   ; el patron 0x18
+	ld (0dc12h),a		;baf5
+	call flechas_del_cursor		;baf8   ; las flechas
+	call color_del_cursor		;bafb   ; el color
+	ld hl,0dc10h		;bafe   ; la Y + 1...
+	inc (hl)			;bb01   ; + 1 mientras se escribe
+	ld de,0dc11h		;bb02   ; ...y la X escritas
+	call escribe_dos		;bb05   ; escribe_dos: (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+	ld hl,0dc10h		;bb08   ; la Y de vuelta
+	dec (hl)			;bb0b   ; de vuelta
+	ret			;bb0c
+color_del_cursor:		; el color del sprite 4 uno mas (0-15) en sus 16 lineas
+	ld a,(0dc13h)		;bb0d   ; el color...
+	inc a			;bb10
+	and 00fh		;bb11   ; ...de 0 a 15
+	ld (0dc13h),a		;bb13
+	ld hl,0da40h		;bb16   ; las 16 lineas del sprite 4
+	ld de,0da41h		;bb19
+	ld (hl),a			;bb1c   ; a las 16 lineas
+	ld bc,0000fh		;bb1d
+	ldir		;bb20
+	ret			;bb22
+flechas_del_cursor:		; la fila 8: las flechas mueven la Y o la X
+	ld a,008h		;bb23   ; la fila 8
+	call 00141h		;bb25   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;bb28   ; pulsadas a 1
+	and 0f0h		;bb29   ; sin flechas, nada
+	ret z			;bb2b   ; ninguna flecha
+	call flecha_pulsada		;bb2c   ; flecha_pulsada: HL y B por la flecha: arriba Y - 1, abajo Y + 1, izquierda X - 1, derecha X + 1
+	ld a,(hl)			;bb2f   ; la Y o la X...
+	add a,b			;bb30   ; ...+ B
+	ld (hl),a			;bb31
+	ret			;bb32
+flecha_pulsada:		; HL y B por la flecha: arriba Y - 1, abajo Y + 1, izquierda X - 1, derecha X + 1
+	ld hl,0dc10h		;bb33   ; la Y
+	ld b,0ffh		;bb36   ; - 1
+	bit 5,a		;bb38   ; arriba
+	ret nz			;bb3a
+	ld b,001h		;bb3b   ; + 1
+	bit 6,a		;bb3d   ; abajo
+	ret nz			;bb3f
+	ld hl,0dc11h		;bb40   ; la X
+	ld b,0ffh		;bb43   ; - 1
+	bit 4,a		;bb45   ; izquierda
+	ret nz			;bb47
+	ld b,001h		;bb48   ; + 1
+	ret			;bb4a
+pagina_en_pantalla:		; la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+	ld (0faf5h),a		;bb4b   ; la copia de la BIOS
+	add a,a			;bb4e   ; la pagina * 16...
+	add a,a			;bb4f
+	add a,a			;bb50
+	add a,a			;bb51
+	ld e,a			;bb52   ; ...en E
+	add a,a			;bb53   ; la pagina * 32...
+	ld h,a			;bb54   ; ...en H
+	ld a,(0f3e1h)		;bb55   ; R#2...
+	and 01fh		;bb58   ; R#2 sin la pagina...
+	or h			;bb5a   ; ...con la nueva
+	ld b,a			;bb5b
+	ld c,002h		;bb5c   ; ...con la pagina
+	call escribe_registro		;bb5e   ; escribe_registro: R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+	ld a,(0f3e3h)		;bb61   ; R#4...
+	and 00fh		;bb64   ; R#4 sin la pagina...
+	or e			;bb66   ; ...con la nueva
+	ld b,a			;bb67
+	ld c,004h		;bb68   ; ...con la pagina
+	call escribe_registro		;bb6a   ; escribe_registro: R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+	ret			;bb6d
+escribe_registro:		; R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+	ld a,c			;bb6e
+	ex af,af'			;bb6f   ; el registro, aparte
+	ld a,(00007h)		;bb70   ; el puerto
+	inc a			;bb73   ; el puerto de control
+	ld c,a			;bb74
+	ld a,b			;bb75
+	di			;bb76   ; sin interrupciones
+	out (c),a		;bb77   ; el dato...
+	ex af,af'			;bb79
+	or 080h		;bb7a   ; el registro + 0x80
+	ei			;bb7c
+	out (c),a		;bb7d   ; ...y el registro
+	ret			;bb7f
+espera_al_vdp:		; espera a que el VDP acabe su orden (S#2, bit 0)
+	push af			;bb80
+mira_s2:		; S#2
+	ld a,002h		;bb81   ; S#2...
+	call lee_estado		;bb83   ; lee_estado: A = el registro de estado A del VDP (R#15) y de vuelta al 0
+	rra			;bb86   ; ...con la orden en marcha (CE)...
+	jp c,mira_s2		;bb87   ; ...espera
+	pop af			;bb8a
+	ret			;bb8b
+copia_de_la_otra:		; B x C de (H, L) de la otra pagina a (D, E) de la de dibujar
+	push bc			;bb8c
+	ld a,(0ca42h)		;bb8d   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	xor 001h		;bb90   ; la otra pagina...
+	ld b,a			;bb92   ; ...de origen
+	xor 001h		;bb93   ; la de dibujar...
+	rlca			;bb95   ; ...de destino (bits 2-3)
+	rlca			;bb96
+	or b			;bb97
+	pop bc			;bb98
+copia_hmmm:		; orden HMMM del VDP: B x C de (H, L) a (D, E); A: pagina de origen (bits 0-1) y de destino (2-3)
+	ex af,af'			;bb99
+	call espera_al_vdp		;bb9a   ; espera
+	push bc			;bb9d
+	ld a,(00007h)		;bb9e   ; el puerto + 1
+	inc a			;bba1
+	ld c,a			;bba2
+	ld a,020h		;bba3   ; desde R#32...
+	di			;bba5
+	out (c),a		;bba6   ; R#17 = 32...
+	ld a,091h		;bba8   ; ...con autoincremento
+	out (c),a		;bbaa
+	inc c			;bbac   ; el puerto + 3
+	inc c			;bbad
+	out (c),h		;bbae   ; SX = H
+	xor a			;bbb0   ; SX alto 0
+	out (c),a		;bbb1
+	out (c),l		;bbb3   ; SY = L
+	ex af,af'			;bbb5   ; la pagina de origen
+	ld l,a			;bbb6   ; las paginas
+	and 003h		;bbb7
+	out (c),a		;bbb9
+	out (c),d		;bbbb   ; DX = D
+	xor a			;bbbd   ; DX alto 0
+	out (c),a		;bbbe
+	out (c),e		;bbc0   ; DY = E
+	ld a,l			;bbc2   ; la pagina de destino
+	rra			;bbc3   ; la de destino
+	rra			;bbc4
+	and 003h		;bbc5
+	out (c),a		;bbc7
+	pop hl			;bbc9   ; HL = BC
+	out (c),h		;bbca   ; NX = B
+	xor a			;bbcc   ; NX alto 0
+	out (c),a		;bbcd
+	out (c),l		;bbcf   ; NY = C
+	out (c),a		;bbd1   ; NY alto 0
+	out (c),a		;bbd3   ; el color 0
+	out (c),a		;bbd5   ; ARG 0
+	ld a,0d0h		;bbd7   ; HMMM
+	out (c),a		;bbd9
+	ei			;bbdb
+	ret			;bbdc
+rellena_hmmv:		; orden HMMV del VDP: B x C desde (H, L) de la pagina D con el byte A (B o C = 0: 256)
+	ex af,af'			;bbdd   ; el byte, aparte
+	call espera_al_vdp		;bbde   ; espera
+	push bc			;bbe1
+	ld a,(00007h)		;bbe2   ; el puerto de control
+	inc a			;bbe5
+	ld c,a			;bbe6
+	ld a,024h		;bbe7   ; desde R#36
+	di			;bbe9
+	out (c),a		;bbea   ; R#17 = 36...
+	ld a,091h		;bbec
+	out (c),a		;bbee
+	inc c			;bbf0   ; el puerto de registros
+	inc c			;bbf1
+	out (c),h		;bbf2   ; DX = H
+	xor a			;bbf4   ; DX alto 0
+	out (c),a		;bbf5
+	out (c),l		;bbf7   ; DY = L
+	out (c),d		;bbf9   ; la pagina
+	pop hl			;bbfb   ; HL = BC
+	out (c),h		;bbfc   ; NX = B
+	cp h			;bbfe   ; con NX = 0...
+	jr nz,L_BC02		;bbff
+	inc a			;bc01   ; ...256
+L_BC02:
+	out (c),a		;bc02
+	xor a			;bc04
+	out (c),l		;bc05   ; NY = C
+	cp l			;bc07   ; con NY = 0...
+	jr nz,L_BC0B		;bc08
+	inc a			;bc0a   ; ...256
+L_BC0B:
+	out (c),a		;bc0b
+	ex af,af'			;bc0d
+	out (c),a		;bc0e   ; el byte
+	xor a			;bc10   ; ARG 0
+	out (c),a		;bc11
+	ld a,0c0h		;bc13   ; HMMV
+	out (c),a		;bc15
+	ei			;bc17
+	ret			;bc18
+linea_horizontal_63:		; orden LINE del VDP: B puntos en horizontal desde (H, L) de la pagina A con el color C
+	ex af,af'			;bc19   ; la pagina, aparte
+	call espera_al_vdp		;bc1a   ; espera
+	push bc			;bc1d
+	ld a,(00007h)		;bc1e   ; el puerto de control
+	inc a			;bc21
+	ld c,a			;bc22
+	ld a,024h		;bc23
+	di			;bc25
+	out (c),a		;bc26   ; R#17 = 36...
+	ld a,091h		;bc28
+	out (c),a		;bc2a
+	inc c			;bc2c   ; el puerto de registros
+	inc c			;bc2d
+	out (c),h		;bc2e   ; DX = H
+	xor a			;bc30   ; DX alto 0
+	out (c),a		;bc31
+	out (c),l		;bc33   ; DY = L
+	ex af,af'			;bc35
+	out (c),a		;bc36   ; la pagina
+	pop hl			;bc38   ; HL = BC
+	out (c),h		;bc39   ; B de largo
+	xor a			;bc3b   ; con B = 0...
+	cp h			;bc3c
+	jr nz,L_BC40		;bc3d
+	inc a			;bc3f   ; ...256
+L_BC40:
+	out (c),a		;bc40
+	xor a			;bc42   ; NY = 0
+	out (c),a		;bc43
+	out (c),a		;bc45
+	out (c),l		;bc47   ; el color
+	out (c),a		;bc49   ; ARG = 0: horizontal
+	ld a,070h		;bc4b   ; LINE
+	out (c),a		;bc4d
+	ei			;bc4f   ; con interrupciones
+	ret			;bc50
+linea_vertical_63:		; la misma en vertical (ARG = 1)
+	ex af,af'			;bc51   ; la pagina, aparte
+	call espera_al_vdp		;bc52   ; espera
+	push bc			;bc55
+	ld a,(00007h)		;bc56   ; el puerto de control
+	inc a			;bc59
+	ld c,a			;bc5a
+	ld a,024h		;bc5b
+	di			;bc5d
+	out (c),a		;bc5e   ; R#17 = 36...
+	ld a,091h		;bc60
+	out (c),a		;bc62
+	inc c			;bc64   ; el puerto de registros
+	inc c			;bc65
+	out (c),h		;bc66   ; DX = H
+	xor a			;bc68   ; DX alto 0
+	out (c),a		;bc69
+	out (c),l		;bc6b   ; DY = L
+	ex af,af'			;bc6d
+	out (c),a		;bc6e   ; la pagina
+	pop hl			;bc70   ; HL = BC
+	out (c),h		;bc71   ; B de largo
+	xor a			;bc73   ; con B = 0...
+	cp h			;bc74
+	jr nz,L_BC78		;bc75
+	inc a			;bc77   ; ...256
+L_BC78:
+	out (c),a		;bc78
+	xor a			;bc7a   ; NY = 0
+	out (c),a		;bc7b
+	out (c),a		;bc7d
+	out (c),l		;bc7f   ; el color
+	inc a			;bc81   ; ARG = 1: vertical
+	out (c),a		;bc82
+	ld a,070h		;bc84   ; LINE
+	out (c),a		;bc86
+	ei			;bc88   ; con interrupciones
+	ret			;bc89
+marco_63:		; un marco de D x E de color C desde (H, L) en la pagina A: dos lineas verticales de E y dos horizontales de D
+	ld b,e			;bc8a   ; la izquierda
+	call vertical_guarda		;bc8b   ; vertical_guarda: p63:BC51 guardando todo
+	ld b,d			;bc8e   ; arriba
+	call horizontal_guarda		;bc8f   ; horizontal_guarda: p63:BC19 guardando todo
+	push hl			;bc92   ; la Y + el alto
+	push af			;bc93
+	ld a,l			;bc94   ; abajo
+	add a,e			;bc95
+	ld l,a			;bc96
+	ld b,d			;bc97   ; D de largo
+	pop af			;bc98
+	call horizontal_guarda		;bc99   ; horizontal_guarda: p63:BC19 guardando todo
+	pop hl			;bc9c
+	push af			;bc9d   ; la X + el ancho
+	ld a,h			;bc9e   ; la derecha
+	add a,d			;bc9f
+	ld h,a			;bca0
+	ld b,e			;bca1   ; E de largo
+	pop af			;bca2
+	jp vertical_guarda		;bca3   ; vertical_guarda: p63:BC51 guardando todo
+vertical_guarda:		; p63:BC51 guardando todo
+	push af			;bca6
+	push hl			;bca7
+	push de			;bca8
+	push bc			;bca9
+	call linea_vertical_63		;bcaa   ; linea_vertical_63: la misma en vertical (ARG = 1)
+	pop bc			;bcad
+	pop de			;bcae
+	pop hl			;bcaf
+	pop af			;bcb0
+	ret			;bcb1
+horizontal_guarda:		; p63:BC19 guardando todo
+	push af			;bcb2
+	push hl			;bcb3
+	push de			;bcb4
+	push bc			;bcb5
+	call linea_horizontal_63		;bcb6   ; linea_horizontal_63: orden LINE del VDP: B puntos en horizontal desde (H, L) de la pagina A con el color C
+	pop bc			;bcb9
+	pop de			;bcba
+	pop hl			;bcbb
+	pop af			;bcbc
+	ret			;bcbd
+tablas_de_sprites_63:		; alterna las tablas de sprites: 0xF400/0xF600 o 0xF000/0xF200 en 0xCA0C-0xCA0F y R#5
+	ld hl,(0ca0ch)		;bcbe   ; la de ahora
+	bit 2,h		;bcc1   ; la de ahora es la 0xF4xx?
+	ld hl,0f600h		;bcc3   ; la otra: atributos 0xF600...
+	ld de,0f400h		;bcc6   ; ...colores 0xF400...
+	ld bc,0e705h		;bcc9   ; ...R#5 = 0xE7
+	jr z,pon_tablas_63		;bccc
+	ld hl,0f200h		;bcce   ; o atributos 0xF200, colores 0xF000...
+	ld de,0f000h		;bcd1   ; colores 0xF000
+	ld b,0efh		;bcd4   ; ...R#5 = 0xEF
+pon_tablas_63:
+	ld (0ca0eh),hl		;bcd6   ; guarda la direccion en la VRAM de la tabla de atributos de sprites (16 bits)
+	ld (0ca0ch),de		;bcd9   ; guarda la direccion en la VRAM de la tabla de colores de sprites (16 bits)
+	jp escribe_registro		;bcdd   ; escribe_registro: R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+sprites_a_vram_63:		; la copia de 0xDA00 (colores y atributos, 0x280 bytes) a la VRAM de 0xCA0C
+	ld hl,0da00h		;bce0   ; apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
+	ld de,(0ca0ch)		;bce3   ; lee la direccion en la VRAM de la tabla de colores de sprites (16 bits)
+	ld bc,00280h		;bce7   ; 0x280 bytes
+	xor a			;bcea
+	jp escribe_vram_63		;bceb   ; escribe_vram_63: BC bytes de HL a la VRAM de DE con otir
+escribe_hexa:		; B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+	ld c,000h		;bcee   ; sin escribir ceros
+byte_hexa:		; en el ultimo byte...
+	dec b			;bcf0   ; el ultimo byte?
+	jr nz,L_BCF5		;bcf1
+	ld c,0ffh		;bcf3   ; ...ya se escriben
+L_BCF5:
+	inc b			;bcf5
+	ld a,(hl)			;bcf6   ; la cifra alta...
+	rra			;bcf7   ; la cifra alta
+	rra			;bcf8
+	rra			;bcf9
+	rra			;bcfa
+	call cifra_hexa		;bcfb   ; cifra_hexa: la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+	ld a,(hl)			;bcfe   ; ...y la baja
+	call cifra_hexa		;bcff   ; cifra_hexa: la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+	dec hl			;bd02   ; el byte anterior
+	djnz byte_hexa		;bd03   ; B bytes
+	ret			;bd05
+cifra_hexa:		; la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+	and 00fh		;bd06   ; la cifra
+	jr z,pon_cifra		;bd08   ; distinta de 0: ya se escriben
+	ld c,0ffh		;bd0a   ; con cifra, ya se escriben
+pon_cifra:		; el caracter A + 1...
+	inc a			;bd0c
+	and c			;bd0d   ; ...0 en blanco
+	call caracter_63		;bd0e   ; caracter_63: el caracter A (8 x 8) de la pagina 3 a (D, E) de la pagina de dibujar
+	ld a,d			;bd11   ; 8 a la derecha
+	add a,008h		;bd12   ; 8 a la derecha
+	ld d,a			;bd14
+	ret			;bd15
+caracter_63:		; el caracter A (8 x 8) de la pagina 3 a (D, E) de la pagina de dibujar
+	push bc			;bd16
+	push hl			;bd17
+	push de			;bd18
+	call sitio_de_caracter		;bd19   ; su sitio
+	ld bc,00808h		;bd1c   ; 8 x 8
+	ld a,(0ca42h)		;bd1f   ; de la 3 a la 0...
+	and a			;bd22   ; la pagina de dibujar
+	ld a,003h		;bd23
+	jr z,L_BD29		;bd25
+	ld a,007h		;bd27   ; ...o a la 1
+L_BD29:
+	call copia_hmmm		;bd29   ; copia_hmmm: orden HMMM del VDP: B x C de (H, L) a (D, E); A: pagina de origen (bits 0-1) y de destino (2-3)
+	pop de			;bd2c
+	pop hl			;bd2d
+	pop bc			;bd2e
+	ret			;bd2f
+sitio_de_caracter:		; HL = el sitio del caracter A en la pagina 3: X = (A & 0x1F) * 8, Y = (A & 0xE0) / 4
+	ld c,000h		;bd30
+	ld b,a			;bd32   ; A aparte
+	and 01fh		;bd33   ; la columna...
+	add a,a			;bd35
+	add a,a			;bd36
+	add a,a			;bd37
+	ld h,a			;bd38   ; ...* 8
+	ld a,b			;bd39
+	and 0e0h		;bd3a   ; la fila...
+	rrca			;bd3c   ; / 4
+	rrca			;bd3d
+	add a,c			;bd3e
+	ld l,a			;bd3f   ; ...* 8
+	ret			;bd40
+teclado_como_mando:		; el teclado como mando: 0xCA07-0xCA08 (flechas y espacio, p63:BD59) y 0xCA09-0xCA0A (p63:BD80) con lo recien pulsado
+	call flechas_de_teclado		;bd41   ; las flechas y el espacio
+	call mando_de_teclado		;bd44   ; mando_de_teclado:
+	call teclas_de_funcion_63		;bd47   ; las otras teclas
+	ld hl,0ca0ah		;bd4a   ; apunta a las teclas de funcion pulsadas: bit 0 F1, 1 F2, 2 F3, 3 F4, 4 F5, 5 RETURN
+	jr recien_pulsado		;bd4d
+mando_de_teclado:
+	ld hl,0ca08h		;bd4f   ; apunta a el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+recien_pulsado:		; (HL) = A y en (HL - 1) los bits que no estaban
+	ld c,(hl)			;bd52   ; lo de antes
+	ld (hl),a			;bd53   ; lo de ahora
+	xor c			;bd54   ; lo que cambia...
+	and (hl)			;bd55   ; ...y esta pulsado
+	dec hl			;bd56
+	ld (hl),a			;bd57   ; lo recien pulsado
+	ret			;bd58
+flechas_de_teclado:		; A = las flechas (bits 0-3: arriba, abajo, izquierda, derecha) y el espacio (bit 4) de la fila 8, y la M (bit 5) de la fila 4
+	ld a,004h		;bd59   ; la fila 4
+	call 00141h		;bd5b   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;bd5e   ; pulsadas a 1
+	rlca			;bd5f
+	rlca			;bd60
+	rlca			;bd61
+	and 020h		;bd62   ; la M al bit 5
+	ld e,a			;bd64
+	ld a,008h		;bd65   ; la fila 8
+	call 00141h		;bd67   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;bd6a   ; pulsadas a 1
+	rrca			;bd6b
+	rrca			;bd6c
+	ld b,a			;bd6d
+	and 004h		;bd6e   ; izquierda al bit 2
+	or e			;bd70
+	ld c,a			;bd71
+	ld a,b			;bd72
+	rrca			;bd73
+	rrca			;bd74
+	ld b,a			;bd75
+	and 018h		;bd76   ; la derecha y el espacio a los bits 3-4
+	or c			;bd78
+	ld c,a			;bd79
+	ld a,b			;bd7a
+	rrca			;bd7b
+	and 003h		;bd7c   ; arriba y abajo a los bits 0-1
+	or c			;bd7e
+	ret			;bd7f
+teclas_de_funcion_63:		; A = las teclas F1-F3 (fila 6) y F4-F5 y RETURN (fila 7), como 0xCA0A
+	ld a,006h		;bd80   ; la fila 6
+	call 00141h		;bd82   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;bd85   ; pulsadas a 1
+	and 0e0h		;bd86   ; F1-F3
+	ld e,a			;bd88
+	ld a,007h		;bd89   ; la fila 7
+	call 00141h		;bd8b   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;bd8e   ; pulsadas a 1
+	ld b,a			;bd8f
+	and 003h		;bd90   ; F4 y F5
+	or e			;bd92
+	rlca			;bd93   ; a los bits 0-4
+	rlca			;bd94
+	rlca			;bd95
+	ld e,a			;bd96
+	ld a,b			;bd97
+	and 080h		;bd98   ; RETURN...
+	rrca			;bd9a   ; ...al bit 5
+	rrca			;bd9b
+	or e			;bd9c
+	and 03fh		;bd9d
+	ret			;bd9f
+escribe_vram_63:		; BC bytes de HL a la VRAM de DE con otir
+	call espera_al_vdp		;bda0   ; espera_al_vdp: espera a que el VDP acabe su orden (S#2, bit 0)
+	ex de,hl			;bda3
+	call direccion_vram_63		;bda4   ; la direccion
+	call vueltas_de_otir		;bda7   ; las vueltas
+	ex af,af'			;bdaa
+	ld a,(00007h)		;bdab   ; el puerto de datos
+	ld c,a			;bdae
+	ex af,af'			;bdaf
+escribe_bloque:		; B bytes, A veces
+	otir		;bdb0   ; B bytes a la VRAM
+	dec a			;bdb2   ; A veces
+	jr nz,escribe_bloque		;bdb3
+	ret			;bdb5
+direccion_vram_63:		; la direccion HL de la VRAM para escribir: R#14 y el puerto
+	push bc			;bdb6
+	rra			;bdb7
+	ld a,(00007h)		;bdb8   ; el puerto de control
+	inc a			;bdbb
+	ld c,a			;bdbc
+	ld a,h			;bdbd   ; los bits 14-16 a R#14
+	rla			;bdbe
+	rla			;bdbf
+	rla			;bdc0
+	and 007h		;bdc1
+	di			;bdc3   ; sin interrupciones
+	out (c),a		;bdc4
+	ld a,08eh		;bdc6   ; R#14
+	out (c),a		;bdc8
+	ld a,l			;bdca   ; el byte bajo...
+	out (c),a		;bdcb
+	ld a,h			;bdcd   ; ...y el alto para escribir
+	and 03fh		;bdce   ; para escribir (bit 6)
+	or 040h		;bdd0
+	out (c),a		;bdd2
+	pop bc			;bdd4
+	ei			;bdd5
+	ret			;bdd6
+vueltas_de_otir:		; B = C, A = B (+1 con C distinto de 0)
+	ex de,hl			;bdd7
+	ld a,c			;bdd8   ; C = 0?
+	or a			;bdd9
+	ld a,b			;bdda
+	ld b,c			;bddb   ; B = C
+	ret z			;bddc   ; con C = 0, A vueltas de 256
+	inc a			;bddd   ; si no, una mas
+	ret			;bdde
+lee_estado:		; A = el registro de estado A del VDP (R#15) y de vuelta al 0
+	push bc			;bddf
+	push hl			;bde0
+	ld hl,(00006h)		;bde1   ; los puertos de la BIOS
+	inc h			;bde4   ; el puerto de control (0x99)
+	inc l			;bde5
+	ld c,h			;bde6
+	di			;bde7
+	out (c),a		;bde8   ; R#15 = A
+	ld a,08fh		;bdea
+	out (c),a		;bdec
+	ld c,l			;bdee
+	in a,(c)		;bdef   ; lee el estado
+	push af			;bdf1
+	xor a			;bdf2   ; R#15 = 0
+	ld c,h			;bdf3   ; R#15 = 0...
+	out (c),a		;bdf4
+	ld a,08fh		;bdf6
+	out (c),a		;bdf8
+	pop af			;bdfa
+	pop hl			;bdfb
+	pop bc			;bdfc
+	ei			;bdfd
+	ret			;bdfe
+tecla_z:		; Z (fila 5, bit 7): todo el equipo (p63:BE1D a 0xD600) y 0xCA61 = 1
+	ld a,005h		;bdff
+	call 00141h		;be01   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;be04   ; pulsadas a 1
+	and 080h		;be05   ; Z?
+	ret z			;be07
+	call todo_el_equipo		;be08   ; el equipo
+	ld a,001h		;be0b   ; 0xCA61 = 1
+	ld (0ca61h),a		;be0d   ; guarda 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
+	ret			;be10
+todo_el_equipo:		; los 0xC4 bytes de p63:BE1D a 0xD600: fichas [la tiene][cuenta en BCD] con 999 en las que cuentan
+	ld hl,0be1dh		;be11   ; desde p63:BE1D...
+	ld de,0d600h		;be14   ; ...al equipo
+	ld bc,000c4h		;be17   ; 0xC4 bytes
+	ldir		;be1a
+	ret			;be1c
+
+; ----------------------------------------------------------------------
+; DATOS resto_BE1D: lo apuntan con el banco puesto p63:BE11 (0xBE1D); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p63:BE11 (196 bytes)
+;   0xbe1d..0xbee1  (196 bytes)
+DATA_resto_BE1D:
+	defb 001h,099h,009h,000h,001h,099h,009h,000h,001h,099h,009h,000h,000h,000h,000h,000h	; be1d  ................
+	defb 001h,099h,009h,000h,001h,099h,009h,000h,001h,099h,009h,000h,001h,099h,009h,000h	; be2d  ................
+	defb 001h,001h,000h,000h,001h,099h,009h,000h,001h,010h,000h,000h,001h,001h,000h,000h	; be3d  ................
+	defb 000h,000h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h	; be4d  ................
+	defb 001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,000h,000h,000h,000h	; be5d  ................
+	defb 001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h	; be6d  ................
+	defb 001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h	; be7d  ................
+	defb 001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h,001h,001h,000h,000h	; be8d  ................
+	defb 001h,001h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; be9d  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bead  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,001h,001h,000h,000h,000h,000h,000h,000h	; bebd  ................
+	defb 001h,001h,000h,000h,001h,010h,000h,000h,001h,010h,000h,000h,001h,010h,000h,000h	; becd  ................
+	defb 001h,099h,000h,000h	; bedd
+
+; ======================================================================
+; CODIGO 0xbee1..0xbf6b  (138 bytes)
+; ======================================================================
+
+
+tecla_x:		; X (fila 5, bit 5): 0xD678-0xD6A7 a 1
+	ld a,005h		;bee1
+	call 00141h		;bee3   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;bee6   ; pulsadas a 1
+	and 020h		;bee7   ; X?
+	ret z			;bee9
+	ld hl,0d678h		;beea   ; 0xD678...
+	ld de,0d679h		;beed
+	ld (hl),001h		;bef0   ; ...a 1...
+	ld bc,0002fh		;bef2   ; ...0x30 bytes
+	ldir		;bef5
+	ret			;bef7
+teclas_ins_del:		; la fila 8: INS, 0xCA3C = 1; DEL, 0xCA3C = 0
+	ld a,008h		;bef8
+	call 00141h		;befa   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	cpl			;befd   ; pulsadas a 1
+	rra			;befe   ; INS?
+	rra			;beff
+	rra			;bf00
+	ld c,001h		;bf01   ; 1 con INS
+	jr c,pon_ca3c		;bf03
+	rra			;bf05   ; DEL?
+	ret nc			;bf06
+	ld c,000h		;bf07   ; 0 con DEL
+pon_ca3c:
+	ld a,c			;bf09
+	ld (0ca3ch),a		;bf0a   ; a 0xCA3C
+	ret			;bf0d
+tecla_bs:		; BS (fila 7, bit 5): 0xD430 = 2 y el bit 4 de 0xD7D1
+	ld a,007h		;bf0e
+	call 00141h		;bf10   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 5,a		;bf13   ; BS?
+	ret nz			;bf15
+	ld a,002h		;bf16   ; 0xD430 = 2...
+	ld (0d430h),a		;bf18
+	ld hl,0d7d1h		;bf1b   ; ...y el bit 4 de 0xD7D1
+	set 4,(hl)		;bf1e
+	ret			;bf20
+tecla_t:		; T (fila 5, bit 1): 0xCA8E = 1
+	ld a,005h		;bf21
+	call 00141h		;bf23   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 1,a		;bf26   ; T?
+	ret nz			;bf28
+	ld a,001h		;bf29   ; 0xCA8E = 1
+	ld (0ca8eh),a		;bf2b   ; guarda 1-2: hacia donde va 0xCA89 (0 o 4; p10:A0DB)
+	ret			;bf2e
+tecla_r:		; R (fila 4, bit 7): 0xD6B4, 0xD6B8 y 0xD6BC a 1 con 0x20, 0x40 y 0x60 detras
+	ld a,004h		;bf2f
+	call 00141h		;bf31   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 7,a		;bf34   ; R?
+	ret nz			;bf36
+	ld hl,0d6b4h		;bf37   ; 0xD6B4 = 1...
+	ld (hl),001h		;bf3a
+	inc hl			;bf3c
+	ld (hl),020h		;bf3d   ; ...0xD6B5 = 0x20
+	ld hl,0d6b8h		;bf3f   ; 0xD6B8 = 1...
+	ld (hl),001h		;bf42
+	inc hl			;bf44
+	ld (hl),040h		;bf45   ; ...0xD6B9 = 0x40
+	ld hl,0d6bch		;bf47   ; 0xD6BC = 1...
+	ld (hl),001h		;bf4a
+	inc hl			;bf4c
+	ld (hl),060h		;bf4d   ; ...0xD6BD = 0x60
+	ret			;bf4f
+tecla_circunflejo:		; ^ (fila 1, bit 3): 0xD700-0xD71F a 0 y 0xCAAF = 1
+	ld a,001h		;bf50
+	call 00141h		;bf52   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
+	bit 3,a		;bf55   ; ^?
+	ret nz			;bf57
+	ld hl,0d700h		;bf58   ; 0xD700...
+	ld de,0d701h		;bf5b   ; apunta a 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6); en el estado 7, su paso (p13:9555)
+	ld (hl),000h		;bf5e   ; ...0x20 bytes a 0
+	ld bc,0001fh		;bf60
+	ldir		;bf63
+	ld a,001h		;bf65   ; 0xCAAF = 1
+	ld (0caafh),a		;bf67
+	ret			;bf6a
 
 ; ----------------------------------------------------------------------
 ; DATOS relleno_ff: 149 bytes a 0xFF hasta el final del banco: relleno; lo

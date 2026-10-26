@@ -1,4 +1,433 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+C 0xB800 sin acarreo...
+C 0xB801 ...y vuelve: lo de 0xB802 no corre
+C 0xB802 Z: todo el equipo
+C 0xB805 X: 0xD678-0xD6A7 a 1
+C 0xB808 R: 0xD6B4-0xD6BD
+C 0xB80B INS/DEL: 0xCA3C
+C 0xB80E BS: 0xD430 y 0xD7D1
+C 0xB811 T: 0xCA8E
+C 0xB814 ^: 0xD700 a 0 y 0xCAAF
+C 0xB817 P: la Y y la X de Snake
+C 0xB81A el punto: 0xE257
+C 0xB81D en la pausa, sus teclas
+C 0xB824 la fila 7 del teclado...
+C 0xB82A ...STOP (bit 4)?
+C 0xB82F la pausa: 0xCA3E = 1 (y 0xCA3F = 0)...
+C 0xB835 ...con acarreo: el juego no corre
+C 0xB837 la salida de la sala...
+C 0xB83A ...el mapa de salas...
+C 0xB83D ...C = la fila, B = la columna
+C 0xB841 la fila 0: 0-7
+C 0xB84D la fila 1: 8 y 9
+C 0xB85A la fila 2: A y B
+C 0xB867 la fila 3: C-J
+C 0xB873 la fila 1, bit 7 (;)
+C 0xB87A ;: la fase uno mas
+C 0xB87E la fila 2, bit 0 (])
+C 0xB885 ]: la fase uno menos
+C 0xB889 la fila 9 del teclado numerico
+C 0xB891 4: a la izquierda
+C 0xB894 2: abajo
+C 0xB898 la fila 10 del teclado numerico
+C 0xB8A0 6: a la derecha
+C 0xB8A4 8: arriba...
+C 0xB8A7 ...la fila de encima
+C 0xB8A8 hay sala?
+C 0xB8AC sale por arriba
+C 0xB8AE el juego corre
+C 0xB8B5 sale por abajo
+C 0xB8BE sale por la izquierda
+C 0xB8C7 sale por la derecha
+C 0xB8DD la zona 7
+C 0xB8E4 la 6
+C 0xB8EB la 0x0F
+C 0xB8F2 las demas
+C 0xB8F5 a 0xCA50-0xCA51
+C 0xB901 una mas
+C 0xB912 ...= la zona con el bit 7...
+C 0xB915 ...sale por arriba...
+C 0xB918 ...y la sala de llegada
+C 0xB93C la fila * 16...
+C 0xB941 ...+ la columna
+C 0xB945 0xFF: Z
+C 0xB95B la fila 7...
+C 0xB961 ...ESC: sale
+C 0xB966 el modo 2...
+C 0xB96E ...o el 3
+C 0xB973 TAB...
+C 0xB979 ...el modo 2
+C 0xB97E la fila 8: HOME...
+C 0xB983 ...el modo 3
+C 0xB988 la fila 0: 0-3
+C 0xB98D 0
+C 0xB991 1
+C 0xB995 2
+C 0xB999 3
+C 0xB99D la fila 8: arriba y abajo
+C 0xB9A5 la cuenta de R#23
+C 0xB9A8 abajo
+C 0xB9AB arriba
+C 0xB9AD parado
+C 0xB9C4 R#23 = 0
+C 0xB9CB desde el modo 2...
+C 0xB9D2 ...R#1 = 0x62...
+C 0xB9D8 ...los colores de vuelta...
+C 0xB9E3 ...los atributos...
+C 0xB9EE ...y el cuadro de 0x40 x 0x60 de la otra pagina
+C 0xB9FE la pagina de dibujar en pantalla
+C 0xBA04 el juego corre
+C 0xBA12 el modo 2
+C 0xBA17 R#1 = 0x63
+C 0xBA1D los colores de los sprites 0-1...
+C 0xBA28 ...y sus atributos, guardados
+C 0xBA33 sus colores a 7
+C 0xBA40 los dos sprites de p63:BA77
+C 0xBA4B el cuadro...
+C 0xBA51 ...en la pagina de dibujar...
+C 0xBA55 ...a 0xFF
+C 0xBA5A un marco en (0xC8, 0x68)...
+C 0xBA60 ...y otro en (0xC8, 0x90)
+C 0xBA66 y sus patrones escritos (p63:BAB9)
+C 0xBA6B 0x20 x 0x20
+C 0xBA6E color 0x0D
+C 0xBA80 el modo 3
+C 0xBA85 Y = X = 0x60
+C 0xBA8D el color 0
+C 0xBA92 las tablas cambiadas
+C 0xBA95 el teclado como mando
+C 0xBA98 el patron del sprite 0...
+C 0xBA9B ...y el del 1
+C 0xBA9E lo recien pulsado: arriba...
+C 0xBAA4 ...abajo
+C 0xBAA7 8 menos
+C 0xBAB9 un byte...
+C 0xBABC ...en (0xEC, 0x74)
+C 0xBAC5 el otro en (0xEC, 0x9C)
+C 0xBACE el juego sigue parado
+C 0xBAD0 ya puesto?
+C 0xBAD6 las tablas cambiadas
+C 0xBAD9 la Y...
+C 0xBADC ...y la X de Snake
+C 0xBAEA 0xE25F = 1
+C 0xBAF3 el patron 0x18
+C 0xBAF8 las flechas
+C 0xBAFB el color
+C 0xBAFE la Y + 1...
+C 0xBB02 ...y la X escritas
+C 0xBB08 la Y de vuelta
+C 0xBB16 las 16 lineas del sprite 4
+C 0xBB29 sin flechas, nada
+C 0xBB33 la Y
+C 0xBB38 arriba
+C 0xBB3D abajo
+C 0xBB40 la X
+C 0xBB45 izquierda
+C 0xBB4B la copia de la BIOS
+C 0xBB55 R#2...
+C 0xBB5C ...con la pagina
+C 0xBB61 R#4...
+C 0xBB68 ...con la pagina
+C 0xBB70 el puerto
+C 0xBB77 el dato...
+C 0xBB7D ...y el registro
+C 0xBB9A espera
+C 0xBB9E el puerto + 1
+C 0xBBA3 desde R#32...
+C 0xBBA8 ...con autoincremento
+C 0xBBAC el puerto + 3
+C 0xBBAE SX = H
+C 0xBBB3 SY = L
+C 0xBBB5 la pagina de origen
+C 0xBBBB DX = D
+C 0xBBC0 DY = E
+C 0xBBC2 la pagina de destino
+C 0xBBCA NX = B
+C 0xBBCF NY = C
+C 0xBBD7 HMMM
+C 0xBBE7 desde R#36
+C 0xBBF2 DX = H
+C 0xBBF7 DY = L
+C 0xBBF9 la pagina
+C 0xBBFC NX = B
+C 0xBC05 NY = C
+C 0xBC0E el byte
+C 0xBC13 HMMV
+C 0xBC2E DX = H
+C 0xBC33 DY = L
+C 0xBC36 la pagina
+C 0xBC39 B de largo
+C 0xBC47 el color
+C 0xBC4B LINE
+C 0xBC66 DX = H
+C 0xBC6B DY = L
+C 0xBC6E la pagina
+C 0xBC71 B de largo
+C 0xBC7F el color
+C 0xBC81 ARG = 1: vertical
+C 0xBC84 LINE
+C 0xBC8A la izquierda
+C 0xBC8E arriba
+C 0xBC94 abajo
+C 0xBC9E la derecha
+C 0xBCBE la de ahora
+C 0xBCC3 la otra: atributos 0xF600...
+C 0xBCC6 ...colores 0xF400...
+C 0xBCC9 ...R#5 = 0xE7
+C 0xBCCE o atributos 0xF200, colores 0xF000...
+C 0xBCD4 ...R#5 = 0xEF
+C 0xBCEE sin escribir ceros
+C 0xBCF3 ...ya se escriben
+C 0xBCF6 la cifra alta...
+C 0xBCFE ...y la baja
+C 0xBD02 el byte anterior
+C 0xBD08 distinta de 0: ya se escriben
+C 0xBD0D ...0 en blanco
+C 0xBD11 8 a la derecha
+C 0xBD19 su sitio
+C 0xBD1C 8 x 8
+C 0xBD1F de la 3 a la 0...
+C 0xBD27 ...o a la 1
+C 0xBD33 la columna...
+C 0xBD38 ...* 8
+C 0xBD3A la fila...
+C 0xBD3F ...* 8
+C 0xBD41 las flechas y el espacio
+C 0xBD47 las otras teclas
+C 0xBD59 la fila 4
+C 0xBD62 la M al bit 5
+C 0xBD65 la fila 8
+C 0xBD6E izquierda al bit 2
+C 0xBD76 la derecha y el espacio a los bits 3-4
+C 0xBD7C arriba y abajo a los bits 0-1
+C 0xBD80 la fila 6
+C 0xBD89 la fila 7
+C 0xBDA4 la direccion
+C 0xBDA7 las vueltas
+C 0xBDAB el puerto de datos
+C 0xBDBD los bits 14-16 a R#14
+C 0xBDCA el byte bajo...
+C 0xBDCD ...y el alto para escribir
+C 0xBDE1 los puertos de la BIOS
+C 0xBDE8 R#15 = A
+C 0xBDEF lee el estado
+C 0xBDF2 R#15 = 0
+C 0xBE08 el equipo
+C 0xBE0B 0xCA61 = 1
+C 0xBEFE INS?
+C 0xBF05 DEL?
+C 0xB848 pulsadas a 1
+C 0xB849 alguna?
+C 0xB854 pulsadas a 1
+C 0xB855 8 o 9?
+C 0xB861 pulsadas a 1
+C 0xB862 A o B?
+C 0xB86E pulsadas a 1
+C 0xB86F alguna?
+C 0xB890 pulsadas a 1
+C 0xB89F pulsadas a 1
+C 0xB8CE hasta 8
+C 0xB8D2 uno mas
+C 0xB8D7 desde 0
+C 0xB8DA uno menos
+C 0xB8DC la zona puesta
+C 0xB8DF (1, 5)
+C 0xB8E6 (2, 7)
+C 0xB8ED (2, 6)
+C 0xB8FA hasta 7 bits
+C 0xB8FC desde 0
+C 0xB8FE el bit a 0 es la tecla
+C 0xB902 el siguiente
+C 0xB907 la fila...
+C 0xB908 ...+ 1...
+C 0xB909 ...* 16...
+C 0xB90D ...+ la columna
+C 0xB911 la zona...
+C 0xB914 ...en la casilla
+C 0xB917 sale por arriba
+C 0xB91C 8
+C 0xB920 9
+C 0xB925 B
+C 0xB929 A
+C 0xB92E hasta 7 bits
+C 0xB930 desde 0x0C (C)
+C 0xB948 + A
+C 0xB94A con acarreo...
+C 0xB94B ...el alto
+C 0xB94D la fila 10
+C 0xB952 el punto (bit 7)?
+C 0xB955 0xE257 = 1
+C 0xB9AF 3
+C 0xB9B4 0
+C 0xB9B8 1
+C 0xB9BD 2
+C 0xB9C2 el juego sigue parado
+C 0xBA06 R#23 uno menos
+C 0xBA09 R#23 uno mas
+C 0xBA10 el juego sigue parado
+C 0xBA43 desde p63:BA77
+C 0xBA87 la X
+C 0xBA8E el color
+C 0xBAA8 el sprite 0...
+C 0xBAAB ...y el 1
+C 0xBAB2 el sprite 0...
+C 0xBAB5 ...y el 1
+C 0xBAC3 un byte
+C 0xBAD3 sin 0xE25F...
+C 0xBAD4 ...mira la tecla
+C 0xBAE7 la P?
+C 0xBB01 + 1 mientras se escribe
+C 0xBB0B de vuelta
+C 0xBB0D el color...
+C 0xBB11 ...de 0 a 15
+C 0xBB1C a las 16 lineas
+C 0xBB23 la fila 8
+C 0xBB28 pulsadas a 1
+C 0xBB2B ninguna flecha
+C 0xBB2F la Y o la X...
+C 0xBB30 ...+ B
+C 0xBB36 - 1
+C 0xBB3B + 1
+C 0xBB43 - 1
+C 0xBB48 + 1
+C 0xBB4E la pagina * 16...
+C 0xBB52 ...en E
+C 0xBB53 la pagina * 32...
+C 0xBB54 ...en H
+C 0xBB58 R#2 sin la pagina...
+C 0xBB5A ...con la nueva
+C 0xBB64 R#4 sin la pagina...
+C 0xBB66 ...con la nueva
+C 0xBB6F el registro, aparte
+C 0xBB73 el puerto de control
+C 0xBB76 sin interrupciones
+C 0xBB7A el registro + 0x80
+C 0xBB81 S#2...
+C 0xBB86 ...con la orden en marcha (CE)...
+C 0xBB87 ...espera
+C 0xBB90 la otra pagina...
+C 0xBB92 ...de origen
+C 0xBB93 la de dibujar...
+C 0xBB95 ...de destino (bits 2-3)
+C 0xBBA6 R#17 = 32...
+C 0xBBB0 SX alto 0
+C 0xBBB6 las paginas
+C 0xBBBD DX alto 0
+C 0xBBC3 la de destino
+C 0xBBC9 HL = BC
+C 0xBBCC NX alto 0
+C 0xBBD1 NY alto 0
+C 0xBBD3 el color 0
+C 0xBBD5 ARG 0
+C 0xBBDD el byte, aparte
+C 0xBBDE espera
+C 0xBBE2 el puerto de control
+C 0xBBEA R#17 = 36...
+C 0xBBF0 el puerto de registros
+C 0xBBF4 DX alto 0
+C 0xBBFB HL = BC
+C 0xBBFE con NX = 0...
+C 0xBC01 ...256
+C 0xBC07 con NY = 0...
+C 0xBC0A ...256
+C 0xBC10 ARG 0
+C 0xBC19 la pagina, aparte
+C 0xBC1A espera
+C 0xBC1E el puerto de control
+C 0xBC26 R#17 = 36...
+C 0xBC2C el puerto de registros
+C 0xBC30 DX alto 0
+C 0xBC38 HL = BC
+C 0xBC3B con B = 0...
+C 0xBC3F ...256
+C 0xBC42 NY = 0
+C 0xBC49 ARG = 0: horizontal
+C 0xBC4F con interrupciones
+C 0xBC51 la pagina, aparte
+C 0xBC52 espera
+C 0xBC56 el puerto de control
+C 0xBC5E R#17 = 36...
+C 0xBC64 el puerto de registros
+C 0xBC68 DX alto 0
+C 0xBC70 HL = BC
+C 0xBC73 con B = 0...
+C 0xBC77 ...256
+C 0xBC7A NY = 0
+C 0xBC88 con interrupciones
+C 0xBC92 la Y + el alto
+C 0xBC97 D de largo
+C 0xBC9D la X + el ancho
+C 0xBCA1 E de largo
+C 0xBCC1 la de ahora es la 0xF4xx?
+C 0xBCD1 colores 0xF000
+C 0xBCE7 0x280 bytes
+C 0xBCF0 el ultimo byte?
+C 0xBCF7 la cifra alta
+C 0xBD03 B bytes
+C 0xBD06 la cifra
+C 0xBD0A con cifra, ya se escriben
+C 0xBD12 8 a la derecha
+C 0xBD22 la pagina de dibujar
+C 0xBD32 A aparte
+C 0xBD3C / 4
+C 0xBD52 lo de antes
+C 0xBD53 lo de ahora
+C 0xBD54 lo que cambia...
+C 0xBD55 ...y esta pulsado
+C 0xBD57 lo recien pulsado
+C 0xBD5E pulsadas a 1
+C 0xBD6A pulsadas a 1
+C 0xBD85 pulsadas a 1
+C 0xBD86 F1-F3
+C 0xBD8E pulsadas a 1
+C 0xBD90 F4 y F5
+C 0xBD93 a los bits 0-4
+C 0xBD98 RETURN...
+C 0xBD9A ...al bit 5
+C 0xBDB0 B bytes a la VRAM
+C 0xBDB2 A veces
+C 0xBDB8 el puerto de control
+C 0xBDC3 sin interrupciones
+C 0xBDC6 R#14
+C 0xBDCE para escribir (bit 6)
+C 0xBDD8 C = 0?
+C 0xBDDB B = C
+C 0xBDDC con C = 0, A vueltas de 256
+C 0xBDDD si no, una mas
+C 0xBDE4 el puerto de control (0x99)
+C 0xBDF3 R#15 = 0...
+C 0xBE04 pulsadas a 1
+C 0xBE05 Z?
+C 0xBE11 desde p63:BE1D...
+C 0xBE14 ...al equipo
+C 0xBE17 0xC4 bytes
+C 0xBEE6 pulsadas a 1
+C 0xBEE7 X?
+C 0xBEEA 0xD678...
+C 0xBEF0 ...a 1...
+C 0xBEF2 ...0x30 bytes
+C 0xBEFD pulsadas a 1
+C 0xBF01 1 con INS
+C 0xBF07 0 con DEL
+C 0xBF0A a 0xCA3C
+C 0xBF13 BS?
+C 0xBF16 0xD430 = 2...
+C 0xBF1B ...y el bit 4 de 0xD7D1
+C 0xBF26 T?
+C 0xBF29 0xCA8E = 1
+C 0xBF34 R?
+C 0xBF37 0xD6B4 = 1...
+C 0xBF3D ...0xD6B5 = 0x20
+C 0xBF3F 0xD6B8 = 1...
+C 0xBF45 ...0xD6B9 = 0x40
+C 0xBF47 0xD6BC = 1...
+C 0xBF4D ...0xD6BD = 0x60
+C 0xBF55 ^?
+C 0xBF58 0xD700...
+C 0xBF5E ...0x20 bytes a 0
+C 0xBF65 0xCAAF = 1
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA300 mapa_de_bits_8000_cola  mapa de bits de 112 filas de 80 bytes (dos puntos por byte) que p01:6ED6 copia a la VRAM, 128 bytes por fila (p00:4486) (sigue del banco 62); lo leen p01:6E54 (768 bytes)
 F 0xA000 16
@@ -8,7 +437,173 @@ D 0xBF6B 0xC000 relleno_ff  149 bytes a 0xFF hasta el final del banco: relleno; 
 F 0xBF6B 16
 D 0xB1CC 0xB800 resto_B1CC  lo apuntan con el banco puesto p12:77BB (0xB1CC), p12:78EE (0xB1D2), p12:7B4D (0xB1D8), p12:7A79 (0xB242), p12:7B10 (0xB242), p12:78BB (0xB25A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:77BB, p12:78EE, p12:7B4D, p12:7A79, p12:7B10, p12:78BB (1588 bytes)
 F 0xB1CC 16
+D 0xBA77 0xBA80 resto_BA77  lo apuntan con el banco puesto p63:BA43 (0xBA77); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p63:BA43 (9 bytes)
+F 0xBA77 16
+D 0xBE1D 0xBEE1 resto_BE1D  lo apuntan con el banco puesto p63:BE11 (0xBE1D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p63:BE11 (196 bytes)
+F 0xBE1D 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xB800 depuracion_apagada lo que la interrupcion llama cada cuadro (p03:A12F): vuelve sin acarreo (el juego corre) y lo de detras, un monitor de depuracion, no llega a correr nunca
+L 0xB802 monitor NUNCA CORRE (p63:B800 vuelve antes). El monitor de depuracion de cada cuadro: las teclas de trampa (Z, X, R, INS/DEL, BS, T, ^, P y el punto del teclado numerico); en la pausa (0xCA3E), sus teclas (p63:B95B); con STOP, la pausa (acarreo: el juego no corre); si no, el cambio de sala o de zona (p63:B837)
+L 0xB837 cambia_de_sala sin pausa: las teclas 0-9 y A-J ponen esa zona encima de la sala en el mapa de 0xD900 y sale por arriba (p63:B8F9); ; y ] suben y bajan la fase (0xCA22, 0-8); 8, 2, 4 y 6 del teclado numerico salen por arriba, abajo, izquierda o derecha si hay sala alli
+L 0xB8B0 sala_de_abajo la fila de debajo
+L 0xB8B9 sala_de_la_izquierda la columna de la izquierda
+L 0xB8C2 sala_de_la_derecha la columna de la derecha
+L 0xB8CB fase_mas la fase uno mas, hasta 8
+L 0xB8D4 fase_menos la fase uno menos, desde 0
+L 0xB8DC llegada_a_zona la sala de llegada a la zona puesta (fila, columna): la 7 (1, 5), la 6 (2, 7), la 0x0F (2, 6), las demas (1, 7)
+L 0xB8F9 tecla_de_zona la tecla pulsada de la fila (el primer bit a 0 desde el 0): su numero en C
+L 0xB8FE bit_de_tecla el bit siguiente
+L 0xB904 numero_de_tecla A = el numero
+L 0xB906 pon_zona la casilla de encima en el mapa (fila + 1) * 16 + columna...
+L 0xB91B teclas_8_9 8 o 9
+L 0xB922 pon_zona_a 
+L 0xB924 teclas_a_b B (0x0B) o A (0x0A)
+L 0xB92B pon_zona_b 
+L 0xB92D teclas_c_j C-J: 0x0C-0x13
+L 0xB93C casilla_del_mapa DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+L 0xB948 de_mas_a DE = DE + A
+L 0xB94D tecla_punto con el punto del teclado numerico (fila 10, bit 7), 0xE257 = 1
+L 0xB95B teclas_de_pausa en la pausa: ESC sale (p63:B9C4); en el modo 2 (TAB), el visor de sprites; en el 3 (HOME), el cursor; TAB y HOME los ponen; 0-3 enseñan esa pagina de la VRAM; arriba y abajo mueven la pantalla (R#23); acarreo: el juego sigue parado
+L 0xB9AF pagina_3 
+L 0xB9B4 pagina_0 
+L 0xB9B8 pagina_1 
+L 0xB9BD pagina_2 
+L 0xB9BF ensena_pagina esa pagina en pantalla
+L 0xB9C4 sale_de_la_pausa R#23 = 0; desde el modo 2, R#1 = 0x62, los colores y atributos de los sprites 0-1 de vuelta y el cuadro de (0xC0, 0x60) copiado de la otra pagina; 0xCA3E = 0 y la pagina de dibujar en pantalla
+L 0xB9FA fuera_pausa sin pausa
+L 0xBA06 sube_pantalla uno menos
+L 0xBA09 baja_pantalla uno mas
+L 0xBA0A pon_r23 R#23 = 0xCA3F
+L 0xBA12 visor_de_sprites TAB, el modo 2: R#1 = 0x63 (sprites de 16 x 16 al doble), los colores y atributos de los sprites 0-1 guardados en 0xE800 y 0xE820, sus colores a 7, los dos sprites de p63:BA77 en (0xC8, 0x68) y (0xC8, 0x90), el cuadro de (0xC0, 0x60) de 0x40 x 0x60 a 0xFF con dos marcos de 0x20 x 0x20 y sus patrones escritos
+L 0xBA6B marco_de_sprite un marco de 0x20 x 0x20 de color 0x0D en HL
+L 0xBA80 cursor_de_depuracion HOME, el modo 3: el sprite 4 en (0x60, 0x60) con el color 0
+L 0xBA92 visor_cada_cuadro el modo 2 de cada cuadro: las tablas de sprites cambiadas, el teclado como mando; arriba los patrones de los dos sprites 8 mas, abajo 8 menos, y escritos en (0xEC, 0x74) y (0xEC, 0x9C); los sprites a la VRAM
+L 0xBAB1 patrones_mas 8 mas
+L 0xBAB9 escribe_dos (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+L 0xBACB sprites_a_vram los sprites a la VRAM
+L 0xBAD0 tecla_p con 0xE25F (lo pone la P), cada cuadro la Y y la X de Snake en hexadecimal en (0xEC, 0x74) y (0xEC, 0x9C)
+L 0xBAE2 mira_tecla_p la fila 4, bit 5: P
+L 0xBAF0 cursor_cada_cuadro el modo 3 de cada cuadro: el patron 0x18, las flechas lo mueven, su color cambia de 0 a 15 y su Y + 1 y su X escritas
+L 0xBB0D color_del_cursor el color del sprite 4 uno mas (0-15) en sus 16 lineas
+L 0xBB23 flechas_del_cursor la fila 8: las flechas mueven la Y o la X
+L 0xBB33 flecha_pulsada HL y B por la flecha: arriba Y - 1, abajo Y + 1, izquierda X - 1, derecha X + 1
+L 0xBB4B pagina_en_pantalla la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+L 0xBB6E escribe_registro R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+L 0xBB80 espera_al_vdp espera a que el VDP acabe su orden (S#2, bit 0)
+L 0xBB81 mira_s2 S#2
+L 0xBB8C copia_de_la_otra B x C de (H, L) de la otra pagina a (D, E) de la de dibujar
+L 0xBB99 copia_hmmm orden HMMM del VDP: B x C de (H, L) a (D, E); A: pagina de origen (bits 0-1) y de destino (2-3)
+L 0xBBDD rellena_hmmv orden HMMV del VDP: B x C desde (H, L) de la pagina D con el byte A (B o C = 0: 256)
+L 0xBC19 linea_horizontal_63 orden LINE del VDP: B puntos en horizontal desde (H, L) de la pagina A con el color C
+L 0xBC51 linea_vertical_63 la misma en vertical (ARG = 1)
+L 0xBC8A marco_63 un marco de D x E de color C desde (H, L) en la pagina A: dos lineas verticales de E y dos horizontales de D
+L 0xBCA6 vertical_guarda p63:BC51 guardando todo
+L 0xBCB2 horizontal_guarda p63:BC19 guardando todo
+L 0xBCBE tablas_de_sprites_63 alterna las tablas de sprites: 0xF400/0xF600 o 0xF000/0xF200 en 0xCA0C-0xCA0F y R#5
+L 0xBCD6 pon_tablas_63 
+L 0xBCE0 sprites_a_vram_63 la copia de 0xDA00 (colores y atributos, 0x280 bytes) a la VRAM de 0xCA0C
+L 0xBCEE escribe_hexa B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+L 0xBCF0 byte_hexa en el ultimo byte...
+L 0xBD06 cifra_hexa la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+L 0xBD0C pon_cifra el caracter A + 1...
+L 0xBD16 caracter_63 el caracter A (8 x 8) de la pagina 3 a (D, E) de la pagina de dibujar
+L 0xBD30 sitio_de_caracter HL = el sitio del caracter A en la pagina 3: X = (A & 0x1F) * 8, Y = (A & 0xE0) / 4
+L 0xBD41 teclado_como_mando el teclado como mando: 0xCA07-0xCA08 (flechas y espacio, p63:BD59) y 0xCA09-0xCA0A (p63:BD80) con lo recien pulsado
+L 0xBD4F mando_de_teclado 
+L 0xBD52 recien_pulsado (HL) = A y en (HL - 1) los bits que no estaban
+L 0xBD59 flechas_de_teclado A = las flechas (bits 0-3: arriba, abajo, izquierda, derecha) y el espacio (bit 4) de la fila 8, y la M (bit 5) de la fila 4
+L 0xBD80 teclas_de_funcion_63 A = las teclas F1-F3 (fila 6) y F4-F5 y RETURN (fila 7), como 0xCA0A
+L 0xBDA0 escribe_vram_63 BC bytes de HL a la VRAM de DE con otir
+L 0xBDB0 escribe_bloque B bytes, A veces
+L 0xBDB6 direccion_vram_63 la direccion HL de la VRAM para escribir: R#14 y el puerto
+L 0xBDD7 vueltas_de_otir B = C, A = B (+1 con C distinto de 0)
+L 0xBDDF lee_estado A = el registro de estado A del VDP (R#15) y de vuelta al 0
+L 0xBDFF tecla_z Z (fila 5, bit 7): todo el equipo (p63:BE1D a 0xD600) y 0xCA61 = 1
+L 0xBE11 todo_el_equipo los 0xC4 bytes de p63:BE1D a 0xD600: fichas [la tiene][cuenta en BCD] con 999 en las que cuentan
+L 0xBEE1 tecla_x X (fila 5, bit 5): 0xD678-0xD6A7 a 1
+L 0xBEF8 teclas_ins_del la fila 8: INS, 0xCA3C = 1; DEL, 0xCA3C = 0
+L 0xBF09 pon_ca3c 
+L 0xBF0E tecla_bs BS (fila 7, bit 5): 0xD430 = 2 y el bit 4 de 0xD7D1
+L 0xBF21 tecla_t T (fila 5, bit 1): 0xCA8E = 1
+L 0xBF2F tecla_r R (fila 4, bit 7): 0xD6B4, 0xD6B8 y 0xD6BC a 1 con 0x20, 0x40 y 0x60 detras
+L 0xBF50 tecla_circunflejo ^ (fila 1, bit 3): 0xD700-0xD71F a 0 y 0xCAAF = 1
+C 0xB821 teclas_de_pausa: en la pausa: ESC sale (p63:B9C4); en el modo 2 (TAB), el visor de sprites; en el 3 (HOME), el cursor; TAB y HOME los ponen; 0-3 enseñan esa pagina de la VRAM; arriba y abajo mueven la pantalla (R#23); acarreo: el juego sigue parado
+C 0xB82C cambia_de_sala: sin pausa: las teclas 0-9 y A-J ponen esa zona encima de la sala en el mapa de 0xD900 y sale por arriba (p63:B8F9); ; y ] suben y bajan la fase (0xCA22, 0-8); 8, 2, 4 y 6 del teclado numerico salen por arriba, abajo, izquierda o derecha si hay sala alli
+C 0xB832 guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor y el byte siguiente (16 bits)
+C 0xB84A tecla_de_zona: la tecla pulsada de la fila (el primer bit a 0 desde el 0): su numero en C
+C 0xB857 teclas_8_9: 8 o 9
+C 0xB864 teclas_a_b: B (0x0B) o A (0x0A)
+C 0xB870 teclas_c_j: C-J: 0x0C-0x13
+C 0xB87B fase_mas: la fase uno mas, hasta 8
+C 0xB886 fase_menos: la fase uno menos, desde 0
+C 0xB8B1 casilla_del_mapa: DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+C 0xB8BA casilla_del_mapa: DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+C 0xB8C3 casilla_del_mapa: DE = la casilla (C * 16 + B) del mapa de 0xD900; Z si es 0xFF (no hay sala)
+C 0xB8CB apunta a la fase de la partida (indice de las listas de p06:B40C)
+C 0xB8D4 apunta a la fase de la partida (indice de las listas de p06:B40C)
+C 0xB90E de_mas_a: DE = DE + A
+C 0xB942 de_mas_a: DE = DE + A
+C 0xB957 guarda 1 con el punto del teclado numerico en el monitor de p63
+C 0xB963 sale_de_la_pausa: R#23 = 0; desde el modo 2, R#1 = 0x62, los colores y atributos de los sprites 0-1 de vuelta y el cuadro de (0xC0, 0x60) copiado de la otra pagina; 0xCA3E = 0 y la pagina de dibujar en pantalla
+C 0xB96B visor_cada_cuadro: el modo 2 de cada cuadro: las tablas de sprites cambiadas, el teclado como mando; arriba los patrones de los dos sprites 8 mas, abajo 8 menos, y escritos en (0xEC, 0x74) y (0xEC, 0x9C); los sprites a la VRAM
+C 0xB970 cursor_cada_cuadro: el modo 3 de cada cuadro: el patron 0x18, las flechas lo mueven, su color cambia de 0 a 15 y su Y + 1 y su X escritas
+C 0xB97B visor_de_sprites: TAB, el modo 2: R#1 = 0x63 (sprites de 16 x 16 al doble), los colores y atributos de los sprites 0-1 guardados en 0xE800 y 0xE820, sus colores a 7, los dos sprites de p63:BA77 en (0xC8, 0x68) y (0xC8, 0x90), el cuadro de (0xC0, 0x60) de 0x40 x 0x60 a 0xFF con dos marcos de 0x20 x 0x20 y sus patrones escritos
+C 0xB985 cursor_de_depuracion: HOME, el modo 3: el sprite 4 en (0x60, 0x60) con el color 0
+C 0xB98E pagina_0: 
+C 0xB992 pagina_1: 
+C 0xB996 pagina_2: 
+C 0xB99A pagina_3: 
+C 0xB9B1 ensena_pagina: esa pagina en pantalla
+C 0xB9B5 ensena_pagina: esa pagina en pantalla
+C 0xB9BA ensena_pagina: esa pagina en pantalla
+C 0xB9BF pagina_en_pantalla: la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+C 0xB9DB apunta a los colores de la lista de dibujos en curso (p00:4DB3)
+C 0xB9F7 copia_de_la_otra: B x C de (H, L) de la otra pagina a (D, E) de la de dibujar
+C 0xB9FB guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor
+C 0xBA01 pagina_en_pantalla: la pagina A en pantalla: 0xFAF5, R#2 y R#4 desde sus copias de la BIOS (0xF3E1, 0xF3E3)
+C 0xBA14 guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor
+C 0xBA20 apunta a los colores de la lista de dibujos en curso (p00:4DB3)
+C 0xBA57 rellena_hmmv: orden HMMV del VDP: B x C desde (H, L) de la pagina D con el byte A (B o C = 0: 256)
+C 0xBA5D marco_de_sprite: un marco de 0x20 x 0x20 de color 0x0D en HL
+C 0xBA63 marco_de_sprite: un marco de 0x20 x 0x20 de color 0x0D en HL
+C 0xBA70 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBA73 marco_63: un marco de D x E de color C desde (H, L) en la pagina A: dos lineas verticales de E y dos horizontales de D
+C 0xBA82 guarda el monitor de depuracion de p63:B802 (nunca corre): 0 nada, 1 pausa, 2 visor de sprites, 3 cursor
+C 0xBABF escribe_hexa: B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+C 0xBAC8 escribe_hexa: B bytes desde HL hacia atras en hexadecimal en (D, E), sin los ceros de la izquierda (salvo el ultimo byte)
+C 0xBACB sprites_a_vram_63: la copia de 0xDA00 (colores y atributos, 0x280 bytes) a la VRAM de 0xCA0C
+C 0xBADF escribe_dos: (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+C 0xBAEC guarda 1: el monitor de p63 escribe la Y y la X de Snake (tecla P)
+C 0xBAF0 tablas_de_sprites_63: alterna las tablas de sprites: 0xF400/0xF600 o 0xF000/0xF200 en 0xCA0C-0xCA0F y R#5
+C 0xBB05 escribe_dos: (HL) en hexadecimal en (0xEC, 0x74) y (DE) en (0xEC, 0x9C)
+C 0xBB2C flecha_pulsada: HL y B por la flecha: arriba Y - 1, abajo Y + 1, izquierda X - 1, derecha X + 1
+C 0xBB5E escribe_registro: R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+C 0xBB6A escribe_registro: R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+C 0xBB83 lee_estado: A = el registro de estado A del VDP (R#15) y de vuelta al 0
+C 0xBB8D lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBC8B vertical_guarda: p63:BC51 guardando todo
+C 0xBC8F horizontal_guarda: p63:BC19 guardando todo
+C 0xBC99 horizontal_guarda: p63:BC19 guardando todo
+C 0xBCA3 vertical_guarda: p63:BC51 guardando todo
+C 0xBCAA linea_vertical_63: la misma en vertical (ARG = 1)
+C 0xBCB6 linea_horizontal_63: orden LINE del VDP: B puntos en horizontal desde (H, L) de la pagina A con el color C
+C 0xBCD6 guarda la direccion en la VRAM de la tabla de atributos de sprites (16 bits)
+C 0xBCD9 guarda la direccion en la VRAM de la tabla de colores de sprites (16 bits)
+C 0xBCDD escribe_registro: R#C = B por el puerto del VDP de la BIOS (0x0007) + 1
+C 0xBCE0 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
+C 0xBCE3 lee la direccion en la VRAM de la tabla de colores de sprites (16 bits)
+C 0xBCEB escribe_vram_63: BC bytes de HL a la VRAM de DE con otir
+C 0xBCFB cifra_hexa: la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+C 0xBCFF cifra_hexa: la cifra A en (D, E) y D 8 mas: el caracter A + 1 (0 en blanco si C = 0)
+C 0xBD0E caracter_63: el caracter A (8 x 8) de la pagina 3 a (D, E) de la pagina de dibujar
+C 0xBD29 copia_hmmm: orden HMMM del VDP: B x C de (H, L) a (D, E); A: pagina de origen (bits 0-1) y de destino (2-3)
+C 0xBD44 mando_de_teclado: 
+C 0xBD4A apunta a las teclas de funcion pulsadas: bit 0 F1, 1 F2, 2 F3, 3 F4, 4 F5, 5 RETURN
+C 0xBD4F apunta a el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xBDA0 espera_al_vdp: espera a que el VDP acabe su orden (S#2, bit 0)
+C 0xBE0D guarda 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
+C 0xBF2B guarda 1-2: hacia donde va 0xCA89 (0 o 4; p10:A0DB)
+C 0xBF5B apunta a 1 con la pantalla de F2/F3 ya montada (cada cuadro, p10:AED6); en el estado 7, su paso (p13:9555)
 # --- fin de las anotaciones de anota.py ---

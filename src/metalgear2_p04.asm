@@ -1040,10 +1040,10 @@ pon_musica_a6:		; 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 	ld (0ca19h),hl		;86ca   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	jp 06bd0h		;86cd   ; sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 si_c692:		; con 0xC692, lo borra y salta a HL
-	ld de,0c692h		;86d0
+	ld de,0c692h		;86d0   ; apunta a 1 al acabar la musica 0xA1
 	jr L_86D8		;86d3
 si_c693:		; con 0xC693, lo borra y salta a HL
-	ld de,0c693h		;86d5
+	ld de,0c693h		;86d5   ; apunta a 1 al acabar la musica 0xA6
 L_86D8:
 	ld a,(de)			;86d8   ; la bandera...
 	and a			;86d9
@@ -2787,7 +2787,7 @@ a_alerta_1:		; 0xD43E = 0xFF, 0xD416 = 0xD42A = 0, la alerta 1, p15:BE48, la sal
 	call a_p15_be48_guarda		;935a   ; a_p15_be48_guarda: p15:BE48 guardando el banco de 0xA000
 	call guarda_d428		;935d   ; guarda_d428: 0xD428-0xD429 = la fila y la columna de ahora
 	call ventana_de_alerta		;9360   ; ventana_de_alerta: los rotulos (p04:984C), la imagen (p04:98FB) y p12:6FFE
-	ld a,(0c697h)		;9363
+	ld a,(0c697h)		;9363   ; lee 1 mientras suenan las musicas 0x82 u 0x88
 	and a			;9366
 	ret nz			;9367
 	jp 06bech		;9368   ; orden_sonido_f7: la orden 0xF7 al sonido
@@ -2977,7 +2977,7 @@ alerta_a_0:		; los de otras salas fuera, la alerta a 0 y los actores como antes 
 actores_como_antes:		; los actores como antes y, sin 0xC697, la musica de la zona con la orden 0xF4
 	push ix		;94b2
 	call tipos_como_antes		;94b4   ; tipos_como_antes: los actores sin el bit 7 del tipo; los de tipo menor de 0x10, con el dibujo (0x17) y el eje (0x16) de antes
-	ld a,(0c697h)		;94b7
+	ld a,(0c697h)		;94b7   ; lee 1 mientras suenan las musicas 0x82 u 0x88
 	and a			;94ba
 	jr nz,L_94CB		;94bb
 	call 07a88h		;94bd   ; rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
