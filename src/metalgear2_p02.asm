@@ -113,7 +113,7 @@ L_8084:
 	ld (hl),a			;8093
 	jr L_8084		;8094
 sala_de_al_lado:		; p01:7BAA
-	call 07baah		;8096
+	call 07baah		;8096   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	xor a			;8099   ; 0xD42E = 0xD44F = 0xD456 = 0xD451 = 0
 	ld (0d42eh),a		;809a
 	ld (0d44fh),a		;809d
@@ -220,7 +220,7 @@ L_813C:
 	push de			;8146
 	ld a,(0ca5fh)		;8147
 	and a			;814a
-	call z,07c77h		;814b
+	call z,07c77h		;814b   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	pop de			;814e
 L_814F:
 	ex de,hl			;814f   ; la fila uno menos
@@ -458,20 +458,20 @@ borra_esta_pantalla:		; 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
 	ld a,(0ca42h)		;829c   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jp 04452h		;829f   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 pantalla_del_marcador:		; el marcador entero: p01:6DDA, p02:850C, el mosaico de p56:A03C, p01:6DCF, p02:831F y p01:722C
-	call 06ddah		;82a2   ; p01:6DDA
+	call 06ddah		;82a2   ; dibujos_b58b: los dibujos de p58:B58B en la VRAM de 0xA000
 	call paleta_bc3c		;82a5   ; paleta_bc3c: la paleta de p56:BC3C
 	call mosaico_a03c		;82a8   ; mosaico_a03c: el mosaico de p56:A03C y las piezas de la lista de p56:A0B4 con una pausa entre una y otra
-	call 06dcfh		;82ab   ; p01:6DCF
+	call 06dcfh		;82ab   ; dibujos_812a: los dibujos de p52:812A en la VRAM de 0xA000
 	call 0418eh		;82ae   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call rotulos_del_marcador		;82b1   ; rotulos_del_marcador: los rotulos del marcador (p56:A000, A008, A00A) y las 10 piezas de p56:A014
 	call 040f0h		;82b4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	jp 0722ch		;82b7   ; p01:722C
+	jp 0722ch		;82b7   ; letras_de_44: 0x80 letras de p44:BADB en la fila 0x40
 mosaico_a03c:		; el mosaico de p56:A03C y las piezas de la lista de p56:A0B4 con una pausa entre una y otra
 	call 0418eh		;82ba   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0a03ch		;82bd   ; mosaico_A03C: un mosaico de 10 x 12 caracteres, un byte cada uno
 	ld de,03030h		;82c0   ; en X = 0x30, Y = 0x30...
 	ld bc,00a0ch		;82c3   ; ...10 x 12 caracteres
-	call 050c4h		;82c6
+	call 050c4h		;82c6   ; mosaico_fa_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 10 de la franja 1 (p00:512C)
 	ld b,0ffh		;82c9   ; una pausa
 	call pausa		;82cb   ; pausa: una espera de B x B vueltas
 	ld hl,0a0b4h		;82ce   ; la lista de piezas
@@ -535,15 +535,15 @@ rotulos_del_marcador:		; los rotulos del marcador (p56:A000, A008, A00A) y las 1
 	ld hl,0a000h		;831f
 	ld de,068a8h		;8322   ; en X = 0x68, Y = 0xA8: 2 filas de 4
 	ld bc,00204h		;8325
-	call 050c4h		;8328
+	call 050c4h		;8328   ; mosaico_fa_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 10 de la franja 1 (p00:512C)
 	ld hl,0a008h		;832b
 	ld de,084a8h		;832e   ; en X = 0x84, Y = 0xA8: 2 filas de 1
 	ld bc,00201h		;8331
-	call 050c4h		;8334
+	call 050c4h		;8334   ; mosaico_fa_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 10 de la franja 1 (p00:512C)
 	ld hl,0a00ah		;8337
 	ld de,090a8h		;833a   ; en X = 0x90, Y = 0xA8: 2 filas de 5
 	ld bc,00205h		;833d
-	call 050c4h		;8340
+	call 050c4h		;8340   ; mosaico_fa_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 10 de la franja 1 (p00:512C)
 	ld hl,0a014h		;8343
 	ld b,00ah		;8346   ; 10 piezas de 4 bytes [X][Y][origen X][origen Y]
 L_8348:
@@ -679,7 +679,7 @@ borra_cb80:
 	call 04236h		;841e   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	cp 008h		;8421
 	ret nz			;8423
-	jp 06a6bh		;8424   ; p01:6A6B
+	jp 06a6bh		;8424   ; sonido_04: pide el sonido 0x04
 pantalla_de_47:		; una pantalla desde cero: pagina 0, los dibujos de p47:AAE7, la pagina 1 borrada, p01:6D8A con p47:BD48 y la paleta de p56:BC23
 	xor a			;8427
 	ld (0ca42h),a		;8428   ; se dibuja en la 0
@@ -701,13 +701,13 @@ pantalla_de_47:		; una pantalla desde cero: pagina 0, los dibujos de p47:AAE7, l
 	ld e,l			;8453
 	ld hl,0bd48h		;8454   ; p47:BD48...
 	ld bc,00a1bh		;8457   ; ...0x0A x 0x1B
-	call 06d8ah		;845a   ; p01:6D8A
+	call 06d8ah		;845a   ; pinta_mosaico_e500: B filas de C caracteres de 0xE500 en (D, E), los distintos de 0, de la pagina 2 a la otra
 	call paleta_comun		;845d   ; la paleta comun (p02:8502)
 	call 0418eh		;8460   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0bc23h		;8463   ; y la de p56:BC23
 	call 0463fh		;8466   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call 040f0h		;8469   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	jp 06dbbh		;846c   ; p01:6DBB
+	jp 06dbbh		;846c   ; dibujos_52_cabecera: los dibujos de p52:8114 en la VRAM de 0 y los de p52:811F en la de 0x6000
 paleta_de_la_sala_bancos_10:
 	call paleta_de_la_sala		;846f   ; paleta_de_la_sala: la paleta comun y la de la sala
 	jp 041cah		;8472   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -750,7 +750,7 @@ L_84B9:
 	ld a,(0cadfh)		;84bf   ; con 0xCADF, p01:6DF4
 	or a			;84c2
 	ret z			;84c3
-	jp 06df4h		;84c4   ; p01:6DF4
+	jp 06df4h		;84c4   ; paleta_aa44: la paleta de p14:AA44
 L_84C7:
 	ld a,(0ca76h)		;84c7   ; la de la sala especial (p56:B8A0)
 	ld hl,0b8a0h		;84ca
@@ -1252,7 +1252,7 @@ palabra_bdd2:		; HL = la palabra A de p06:BDD2 y de ella la de 0xCAB5
 palabra_de_cab5:		; HL = la palabra 0xCAB5 de la tabla de HL (banco 6)
 	call 041a0h		;8847   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_884A:
-	ld a,(0cab5h)		;884a
+	ld a,(0cab5h)		;884a   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	call 043f6h		;884d   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	jr L_887B		;8850
 junto_a_snake_beac:		; la ficha IX junto a Snake, con los desplazamientos de p06:BEAC
@@ -1536,7 +1536,7 @@ L_8A5B:
 	jr nz,L_8A6F		;8a65
 	ld a,(0ca76h)		;8a67   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 02ah		;8a6a
-	call nz,06b12h		;8a6c
+	call nz,06b12h		;8a6c   ; sonido_05: pide el sonido 0x05
 L_8A6F:
 	push hl			;8a6f
 	ld hl,0ca97h		;8a70   ; 0xCA97 = 0
@@ -1895,7 +1895,7 @@ L_8D1D:
 	call 057aeh		;8d20   ; pinta_mapa: pinta los 24 x 24 caracteres de 0xDD00
 	jr $-115		;8d23
 L_8D25:
-	call 050e8h		;8d25
+	call 050e8h		;8d25   ; mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 	jr $-120		;8d28
 a_p10_bce4:		; p10:BCE4 con el banco 10 en 0xA000
 	call 041cah		;8d2a   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1930,7 +1930,7 @@ cambia_de_zona_b_1_2_15:		; cambia_de_zona y deja los bancos 1, 2 y 15
 	call 059a7h		;8d5b   ; cambia_de_zona: pasa a la zona A
 	jr L_8D53		;8d5e
 L_8D60:
-	call 07c77h		;8d60
+	call 07c77h		;8d60   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	jr L_8D53		;8d63
 a_p11_bdbd_2:		; p11:BDBD con el banco 11 en 0xA000
 	call 041d5h		;8d65   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1953,7 +1953,7 @@ dibujos_de_sala_b_7:		; dibujos_de_sala y deja el banco 7
 	call 04cb8h		;8d86   ; dibujos_de_sala: con 0xCA77 puesto, p02:8578
 	jr L_8D83		;8d89
 L_8D8B:
-	call 07c77h		;8d8b
+	call 07c77h		;8d8b   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	jr L_8DC3		;8d8e
 a_p03_bda5:		; p03:BDA5 con el banco 3 en 0xA000
 	call 040f0h		;8d90   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2003,7 +2003,7 @@ cambia_de_zona_b_1_2_8:		; cambia_de_zona y deja los bancos 1, 2 y 8
 	jr $+24		;8de6
 a_p01_6fd5:		; p01:6FD5 con el banco 1 en 0x6000
 	call 040f0h		;8de8   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 06fd5h		;8deb
+	call 06fd5h		;8deb   ; rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 	jr $+16		;8dee
 
 ; ----------------------------------------------------------------------
@@ -2042,7 +2042,7 @@ a_p03_b866:		; p03:B866 con el banco 3 en 0xA000
 	call 0b866h		;8e29
 	jr $+64		;8e2c
 L_8E2E:
-	call 06e18h		;8e2e   ; p01:6E18
+	call 06e18h		;8e2e   ; dibujos_de_93e5: la lista de dibujos A de p44:93E5 en la VRAM de 0x6000
 	jr $+59		;8e31
 a_p15_a316:		; p15:A316 con el banco 15 en 0xA000
 	call 041f4h		;8e33   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2050,7 +2050,7 @@ a_p15_a316:		; p15:A316 con el banco 15 en 0xA000
 	jr $+51		;8e39
 a_p01_6fd5_2:		; p01:6FD5 con el banco 1 en 0x6000
 	call 040f0h		;8e3b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 06fd5h		;8e3e
+	call 06fd5h		;8e3e   ; rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 	jr $+43		;8e41
 a_p06_aeff:		; p06:AEFF con el banco 6 en 0xA000
 	call 041a0h		;8e43   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2079,13 +2079,13 @@ a_p03_b3e8:		; p03:B3E8 con el banco 3 en 0xA000
 	call 0b3e8h		;8e72   ; p03:B3E8
 	jr L_8E6C		;8e75
 L_8E77:
-	call 067cdh		;8e77
+	call 067cdh		;8e77   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 	jr L_8E6C		;8e7a
 L_8E7C:
-	call 067f5h		;8e7c
+	call 067f5h		;8e7c   ; sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
 	jr L_8E6C		;8e7f
 L_8E81:
-	call 07c77h		;8e81
+	call 07c77h		;8e81   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	jr L_8E6C		;8e84
 L_8E86:
 	call 040f0h		;8e86   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2132,10 +2132,10 @@ DATA_8EC8:
 
 
 L_8ECD:
-	call 067cdh		;8ecd
+	call 067cdh		;8ecd   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 	jr L_8ED5		;8ed0
 L_8ED2:
-	call 067f5h		;8ed2
+	call 067f5h		;8ed2   ; sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
 L_8ED5:
 	jp 041cah		;8ed5   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 sprites_a_vram_b_1_2_10:		; sprites_a_vram y deja los bancos 1, 2 y 10
@@ -2154,7 +2154,7 @@ a_p03_af05:		; p03:AF05 con el banco 3 en 0xA000
 L_8EF0:
 	jp 041a0h		;8ef0   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8EF3:
-	call 07c77h		;8ef3   ; p01:7C77
+	call 07c77h		;8ef3   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 	jr L_8EF0		;8ef6
 L_8EF8:
 	call 040f0h		;8ef8   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2182,7 +2182,7 @@ L_8F0E:
 	jr L_8F60		;8f14
 a_p01_7f37:		; p01:7F37 con el banco 1 en 0x6000
 	call 040f0h		;8f16   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 07f37h		;8f19
+	call 07f37h		;8f19   ; es_solido: p01:7F3D guardando HL
 	jr L_8F60		;8f1c
 a_p03_b1be_2:		; p03:B1BE con el banco 3 en 0xA000
 	call 040f0h		;8f1e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2206,7 +2206,7 @@ a_p03_b322:		; p03:B322 con el banco 3 en 0xA000
 	jr L_8F60		;8f44
 a_p01_7f3d:		; p01:7F3D con el banco 1 en 0x6000
 	call 040f0h		;8f46   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 07f3dh		;8f49
+	call 07f3dh		;8f49   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	jr L_8F60		;8f4c
 L_8F4E:
 	call cuatro_bytes_por_direccion		;8f4e   ; cuatro_bytes_por_direccion: 4 bytes de la tabla de HL (banco 6) segun la direccion de Snake, a donde dice p01:6406
@@ -3567,7 +3567,7 @@ cabe_en_si:		; E = la Y + E
 	inc b			;97e9
 L_97EA:
 	ld a,(0cb0eh)		;97ea   ; y la direccion
-	jp 07ef6h		;97ed   ; p01:7EF6
+	jp 07ef6h		;97ed   ; choca_en_direccion: acarreo si alguno de los 3 puntos de Snake en la direccion A da con un caracter solido (p56:A30A)
 
 ; ----------------------------------------------------------------------
 ; DATOS sin identificar  0x97f0..0x97f8  (8 bytes)
@@ -3804,10 +3804,10 @@ delante_de_snake:		; lo que hay delante de Snake: p11:A117 y p01:6A19 o p01:6ACA
 	call L_9955		;994f
 	jp 0af05h		;9952   ; p03:AF05
 L_9955:
-	jp nc,06a19h		;9955   ; p01:6A19
-	jp 06acah		;9958   ; p01:6ACA
+	jp nc,06a19h		;9955   ; sonido_0a: pide el sonido 0x0A
+	jp 06acah		;9958   ; sonido_47: pide el sonido 0x47
 L_995B:
-	jp 06a15h		;995b
+	jp 06a15h		;995b   ; sonido_09: pide el sonido 0x09
 punto_delante:		; L = la Y, H = la X de Snake mas lo de su direccion en p02:9980
 	ld hl,09980h		;995e
 	ld a,(0cb0eh)		;9961   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -3826,8 +3826,8 @@ punto_delante:		; L = la Y, H = la X de Snake mas lo de su direccion en p02:9980
 mira_delante:		; hacia arriba p01:7F3D, si no p01:7F88
 	ld a,(0cb0eh)		;9976   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;9979
-	jp z,07f3dh		;997a
-	jp 07f88h		;997d   ; p01:7F88
+	jp z,07f3dh		;997a   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+	jp 07f88h		;997d   ; cuatro_hacia_abajo: acarreo si (H, L) y los 3 puntos de 8 en 8 hacia abajo son solidos o estan fuera
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_9980: lo apuntan con el banco puesto p02:995E (0x9980); el
@@ -4082,7 +4082,7 @@ que_cb3f:		; 0xCB3F = 0
 	cp 010h		;9b0a
 	ret z			;9b0c
 	call y_x_de_snake		;9b0d   ; el caracter de la sala bajo Snake (p01:7F69)
-	call 07f69h		;9b10
+	call 07f69h		;9b10   ; caracter_en: A = el caracter del mapa en (H = X, L = Y)
 	ld hl,0cb3fh		;9b13   ; apunta a en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	cp 090h		;9b16   ; 0x90-0xB3: 1
 	ret c			;9b18
@@ -4282,9 +4282,9 @@ L_9C50:
 cb80_a_cero:		; 0xCB80 = 0 y p01:6C6B
 	xor a			;9c5e
 	ld (0cb80h),a		;9c5f
-	jp 06c6bh		;9c62   ; p01:6C6B
+	jp 06c6bh		;9c62   ; sonido_53: pide el sonido 0x53
 pisa_con_cb21_20:		; p01:6ACE
-	call 06aceh		;9c65   ; p01:6ACE
+	call 06aceh		;9c65   ; sonido_44: pide el sonido 0x44
 	call apunta_lo_pisado		;9c68   ; apunta_lo_pisado: el nibble bajo de B...
 	call mosaico_de_lo_pisado		;9c6b   ; mosaico_de_lo_pisado: el nibble alto de B: el mosaico de p06:BD1B...
 	call mira_d6b4		;9c6e   ; mira_d6b4: con 0xD6B4 puesto...
@@ -4495,7 +4495,7 @@ a_p06_a330:		; p06:A330 con el banco 6 en 0xA000
 	call 0a330h		;9dab   ; p06:A330
 	jp 040f0h		;9dae   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 llama_6e0d_a3c8:		; p01:6E0D y p06:A3C8
-	call 06e0dh		;9db1   ; p01:6E0D
+	call 06e0dh		;9db1   ; rachas_bba0: las rachas de p41:BBA0 con su destino
 	call 041a0h		;9db4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a3c8h		;9db7   ; p06:A3C8
 	jp 040f0h		;9dba   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4512,7 +4512,7 @@ L_9DC7:
 	set 1,b		;9dcd
 L_9DCF:
 	ld a,b			;9dcf
-	ld (0c38bh),a		;9dd0
+	ld (0c38bh),a		;9dd0   ; guarda bit 0: hay disquetera; bit 1: hay Game Master 2
 	ret			;9dd3
 busca_gm2:		; busca en los 4 slots (y sus subslots) un cartucho con "YZ" en 0x4010: el Game Master 2; 0xC38A = su slot o 0xFF
 	ld bc,00400h		;9dd4
@@ -4536,7 +4536,7 @@ L_9DEA:
 	inc c			;9dee
 	djnz L_9DDA		;9def
 	ld a,0ffh		;9df1   ; no esta
-	ld (0c38ah),a		;9df3
+	ld (0c38ah),a		;9df3   ; guarda el slot del Game Master 2 (0xFF: no hay)
 	ret			;9df6
 busca_gm2_subslots:		; el bit 7 de expandido con el slot...
 	and 080h		;9df7
@@ -4551,21 +4551,21 @@ L_9DFC:
 	djnz L_9DFC		;9e04
 	ret			;9e06
 es_gm2:		; el slot que se mira
-	ld (0c38ah),a		;9e07
+	ld (0c38ah),a		;9e07   ; guarda el slot del Game Master 2 (0xFF: no hay)
 	ld hl,04010h		;9e0a   ; 0x4010...
 	call 0000ch		;9e0d   ; BIOS RDSLT - Reads the value of an address in another slot
 	cp 059h		;9e10   ; ...es 'Y'?
 	jr nz,L_9E26		;9e12
 	ld hl,04011h		;9e14   ; 0x4011...
-	ld a,(0c38ah)		;9e17
+	ld a,(0c38ah)		;9e17   ; lee el slot del Game Master 2 (0xFF: no hay)
 	call 0000ch		;9e1a   ; BIOS RDSLT - Reads the value of an address in another slot
 	cp 05ah		;9e1d   ; ...es 'Z'?
 	jr nz,L_9E26		;9e1f
-	ld a,(0c38ah)		;9e21
+	ld a,(0c38ah)		;9e21   ; lee el slot del Game Master 2 (0xFF: no hay)
 	scf			;9e24   ; si: con acarreo
 	ret			;9e25
 L_9E26:
-	ld a,(0c38ah)		;9e26
+	ld a,(0c38ah)		;9e26   ; lee el slot del Game Master 2 (0xFF: no hay)
 	and a			;9e29
 	ret			;9e2a
 partida_nueva:		; la partida desde el principio
@@ -4739,7 +4739,7 @@ L_9F8E:
 	cp (hl)			;9f8e   ; el mismo: nada
 	ret z			;9f8f
 	ld (hl),a			;9f90
-	jp 06ccah		;9f91   ; p01:6CCA
+	jp 06ccah		;9f91   ; sonido_66: pide el sonido 0x66
 cuenta_cb3a:		; con 0xCB39, sin 0xCA5F, chocando y sin 0xCB3C
 	ld a,(0cb39h)		;9f94
 	or a			;9f97

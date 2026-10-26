@@ -118,7 +118,7 @@ L_6080:
 	ld (hl),a			;6089
 	jp L_60D3		;608a
 L_608D:
-	ld a,(0c38bh)		;608d
+	ld a,(0c38bh)		;608d   ; lee bit 0: hay disquetera; bit 1: hay Game Master 2
 	ld c,010h		;6090
 	and a			;6092
 	jr z,L_609D		;6093
@@ -133,10 +133,10 @@ L_609D:
 	ld hl,0bf95h		;60a5
 	call 04918h		;60a8   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 	ld hl,0bfa0h		;60ab
-	ld a,(0c38bh)		;60ae
+	ld a,(0c38bh)		;60ae   ; lee bit 0: hay disquetera; bit 1: hay Game Master 2
 	rra			;60b1
 	call c,04918h		;60b2   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
-	ld a,(0c38bh)		;60b5
+	ld a,(0c38bh)		;60b5   ; lee bit 0: hay disquetera; bit 1: hay Game Master 2
 	sub 002h		;60b8
 	jr c,L_60CB		;60ba
 	ld de,06828h		;60bc
@@ -190,7 +190,7 @@ L_60FF:
 	jr L_6143		;6110
 L_6112:
 	push de			;6112
-	ld a,(0c38bh)		;6113
+	ld a,(0c38bh)		;6113   ; lee bit 0: hay disquetera; bit 1: hay Game Master 2
 	and a			;6116
 	jr z,L_612F		;6117
 	cp 003h		;6119
@@ -230,7 +230,7 @@ L_6155:
 	call L_63FC		;6155
 	ret nz			;6158
 	ld hl,0c38dh		;6159
-	ld a,(0c38bh)		;615c
+	ld a,(0c38bh)		;615c   ; lee bit 0: hay disquetera; bit 1: hay Game Master 2
 	ld b,002h		;615f
 	and a			;6161
 	jr z,L_6175		;6162
@@ -332,7 +332,7 @@ L_621A:
 	ld a,(0caa0h)		;6222
 	ld (hl),a			;6225
 	inc hl			;6226
-	ld a,(0cab5h)		;6227
+	ld a,(0cab5h)		;6227   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	ld (hl),a			;622a
 	inc hl			;622b
 	ld a,(0d430h)		;622c
@@ -437,7 +437,7 @@ L_62B4:
 	ld a,(0c38dh)		;62ca
 	cp 002h		;62cd
 	jr z,L_62D9		;62cf
-	ld a,(0c38bh)		;62d1
+	ld a,(0c38bh)		;62d1   ; lee bit 0: hay disquetera; bit 1: hay Game Master 2
 	cp 002h		;62d4
 	jp nz,L_60CE		;62d6
 L_62D9:
@@ -517,7 +517,7 @@ L_6327:
 	ld (0caa0h),a		;635f
 	inc hl			;6362
 	ld a,(hl)			;6363
-	ld (0cab5h),a		;6364
+	ld (0cab5h),a		;6364   ; guarda el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	inc hl			;6367
 	ld a,(hl)			;6368
 	ld (0d430h),a		;6369
@@ -613,7 +613,7 @@ L_63F3:
 	dec (hl)			;63fa
 	ret			;63fb
 L_63FC:
-	ld a,(0ca09h)		;63fc   ; lee lo recien pulsado de las teclas de funcion
+	ld a,(0ca09h)		;63fc   ; lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 	and 01fh		;63ff
 	ret z			;6401
 	ld a,(0ca00h)		;6402   ; lee el estado de la partida (p01:729F: 8 estados)
@@ -932,7 +932,7 @@ L_6685:
 	inc de			;668a
 	inc de			;668b
 	inc de			;668c
-	ld a,(0c399h)		;668d
+	ld a,(0c399h)		;668d   ; lee el slot del cartucho para ENASLT
 	ld (de),a			;6690
 	ret			;6691
 L_6692:
@@ -966,7 +966,7 @@ L_66BF:
 	ret			;66d3
 L_66D4:
 	push bc			;66d4
-	ld a,(0c38ah)		;66d5
+	ld a,(0c38ah)		;66d5   ; lee el slot del Game Master 2 (0xFF: no hay)
 	ld h,080h		;66d8
 	call 00024h		;66da   ; BIOS ENASLT - Switches to specified slot and page definitively
 	ld a,004h		;66dd
@@ -975,7 +975,7 @@ L_66D4:
 	ld de,(0c390h)		;66e3
 	call 08000h		;66e7   ; p02:8000
 	push af			;66ea
-	ld a,(0c399h)		;66eb
+	ld a,(0c399h)		;66eb   ; lee el slot del cartucho para ENASLT
 	ld h,080h		;66ee
 	call 00024h		;66f0   ; BIOS ENASLT - Switches to specified slot and page definitively
 	pop af			;66f3
@@ -4261,7 +4261,7 @@ L_7D51:
 	ld a,(0caa8h)		;7d56
 	or a			;7d59
 	ret nz			;7d5a
-	ld a,(0cb4bh)		;7d5b
+	ld a,(0cb4bh)		;7d5b   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;7d5e
 	jr z,L_7D68		;7d5f
 	ld a,(0ca03h)		;7d61   ; lee el contador de cuadros (uno mas en cada interrupcion)
@@ -4302,7 +4302,7 @@ L_7D99:
 	ld (hl),c			;7d9e
 	ret			;7d9f
 L_7DA0:
-	ld hl,0cb4bh		;7da0
+	ld hl,0cb4bh		;7da0   ; apunta a con el puesto, la vida baja un punto cada 16 cuadros
 	ld a,(hl)			;7da3
 	or a			;7da4
 	ret z			;7da5

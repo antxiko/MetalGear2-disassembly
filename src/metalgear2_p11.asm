@@ -75,7 +75,7 @@ L_A044:
 	ld a,(hl)			;a044
 	cp 00ch		;a045
 	ret nz			;a047
-	jp 06ba8h		;a048   ; p01:6BA8
+	jp 06ba8h		;a048   ; sonido_9b: pide el sonido 0x9B (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_A04B:
 	ld hl,0cb49h		;a04b
 	dec (hl)			;a04e
@@ -172,7 +172,7 @@ L_A0ED:
 	ld a,(0e257h)		;a0ed
 	or a			;a0f0
 	jr nz,L_A106		;a0f1
-	call 0640eh		;a0f3   ; p01:640E
+	call 0640eh		;a0f3   ; conversacion_8008_b: la conversacion de p48:8008, 0xD7BB = 1, p09:B68E y el paso 4
 	ld a,002h		;a0f6
 	ld (0cb15h),a		;a0f8   ; guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
 	xor a			;a0fb
@@ -191,7 +191,7 @@ L_A106:
 	inc l			;a10f
 	ld (hl),a			;a110
 	ld (0cb16h),a		;a111   ; guarda 1 mientras Snake se da la vuelta
-	jp 06b1eh		;a114
+	jp 06b1eh		;a114   ; sonido_6a: pide el sonido 0x6A (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_A117:
 	ld a,(0ca4bh)		;a117   ; lee la sala de la zona
 	ld c,a			;a11a
@@ -218,7 +218,7 @@ L_A124:
 L_A141:
 	call L_A1E2		;a141
 	ret c			;a144
-	call 06c8fh		;a145   ; p01:6C8F
+	call 06c8fh		;a145   ; sonido_62: pide el sonido 0x62
 	push hl			;a148
 	ld a,(0d8f3h)		;a149
 	ld hl,0ca4bh		;a14c   ; apunta a la sala de la zona
@@ -233,7 +233,7 @@ L_A141:
 	pop bc			;a15b
 	pop de			;a15c
 	pop hl			;a15d
-	call 071ddh		;a15e
+	call 071ddh		;a15e   ; mosaico_y_al_mapa: el mosaico en la pantalla (p01:71E9) y en el mapa (p01:62B1)
 	call L_A6B3		;a161
 	jp L_A947		;a164
 L_A167:
@@ -434,7 +434,7 @@ L_A23C:
 	inc hl			;a261
 	ld h,(hl)			;a262
 	ld l,a			;a263
-	call 071ddh		;a264   ; p01:71DD
+	call 071ddh		;a264   ; mosaico_y_al_mapa: el mosaico en la pantalla (p01:71E9) y en el mapa (p01:62B1)
 L_A267:
 	pop hl			;a267
 	ld a,009h		;a268
@@ -554,7 +554,7 @@ L_A409:
 	ret z			;a40e
 	cp 01bh		;a40f
 	ret nc			;a411
-	jp 06adeh		;a412   ; p01:6ADE
+	jp 06adeh		;a412   ; sonido_33: pide el sonido 0x33
 L_A415:
 	call L_A409		;a415
 	ld hl,0dfeah		;a418
@@ -640,7 +640,7 @@ L_A497:
 L_A49D:
 	ld hl,0a4a6h		;a49d
 	call 043f6h		;a4a0   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	jp 0714fh		;a4a3   ; p01:714F
+	jp 0714fh		;a4a3   ; mosaico_de_56_10x2: el mosaico de HL del banco 56 en X = 0x10, Y = 0x68, 10 x 2
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_A4A6: lo apuntan con el banco puesto p11:A49D (0xA4A6); el
@@ -772,7 +772,7 @@ L_A54A:
 	or a			;a557
 	ret nz			;a558
 	ld (hl),001h		;a559
-	jp 06c8bh		;a55b   ; p01:6C8B
+	jp 06c8bh		;a55b   ; sonido_61: pide el sonido 0x61
 L_A55E:
 	ld hl,(0e066h)		;a55e
 	ld d,h			;a561
@@ -1410,8 +1410,8 @@ L_A9DD:
 L_AA11:
 	ld a,(0d634h)		;aa11
 	or a			;aa14
-	jp z,06a25h		;aa15   ; p01:6A25
-	jp 06afeh		;aa18   ; p01:6AFE
+	jp z,06a25h		;aa15   ; sonido_0d: pide el sonido 0x0D
+	jp 06afeh		;aa18   ; sonido_3a: pide el sonido 0x3A
 L_AA1B:
 	ld a,(0cb0eh)		;aa1b   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;aa1e
@@ -1471,7 +1471,7 @@ L_AA80:
 	jr nz,L_AA8F		;aa85
 	ld a,(0ca4bh)		;aa87   ; lee la sala de la zona
 	cp 008h		;aa8a
-	jp z,06c77h		;aa8c
+	jp z,06c77h		;aa8c   ; sonido_5c: pide el sonido 0x5C
 L_AA8F:
 	ld a,(ix+000h)		;aa8f
 	cp 006h		;aa92
@@ -1487,7 +1487,7 @@ L_AA8F:
 	ld a,(0cb0eh)		;aaaa   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ld (ix+00bh),a		;aaad
 	call 08f4eh		;aab0
-	jp 06a7fh		;aab3
+	jp 06a7fh		;aab3   ; sonido_21: pide el sonido 0x21
 L_AAB6:
 	ld a,(0ca07h)		;aab6   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and 00fh		;aab9
@@ -1516,7 +1516,7 @@ L_AADA:
 	jr nz,L_AAE9		;aadf
 	ld a,(0ca4bh)		;aae1   ; lee la sala de la zona
 	cp 008h		;aae4
-	jp z,06c77h		;aae6
+	jp z,06c77h		;aae6   ; sonido_5c: pide el sonido 0x5C
 L_AAE9:
 	ld ix,0cb80h		;aae9
 	ld a,(ix+000h)		;aaed
@@ -1547,7 +1547,7 @@ L_AAE9:
 	ld (ix+00bh),a		;ab2b
 	ld hl,0bebch		;ab2e
 	call 08f4eh		;ab31   ; p02:8F4E
-	jp 06a8bh		;ab34   ; p01:6A8B
+	jp 06a8bh		;ab34   ; sonido_24: pide el sonido 0x24
 L_AB37:
 	call L_AC47		;ab37
 	ld a,(ix+003h)		;ab3a
@@ -1667,7 +1667,7 @@ L_AC10:
 	ld (ix+000h),a		;ac11
 	ld (0cb52h),a		;ac14
 	ld (0d44fh),a		;ac17
-	jp 06a6bh		;ac1a
+	jp 06a6bh		;ac1a   ; sonido_04: pide el sonido 0x04
 L_AC1D:
 	ld a,(ix+00bh)		;ac1d
 	ld hl,0ac37h		;ac20
@@ -1745,7 +1745,7 @@ L_AC8B:
 	jr nz,L_ACA2		;ac98
 	ld a,(0ca4bh)		;ac9a   ; lee la sala de la zona
 	cp 008h		;ac9d
-	jp z,06c77h		;ac9f
+	jp z,06c77h		;ac9f   ; sonido_5c: pide el sonido 0x5C
 L_ACA2:
 	ld a,(0dff8h)		;aca2
 	or a			;aca5
@@ -1761,7 +1761,7 @@ L_ACB6:
 	ld hl,0acd9h		;acb6
 L_ACB9:
 	push hl			;acb9
-	call 06406h		;acba
+	call 06406h		;acba   ; de_ix_mas_6: DE = IX + 6
 	pop hl			;acbd
 	ld a,(0cb0eh)		;acbe   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;acc1
@@ -1905,21 +1905,21 @@ L_ADC0:
 	jr z,L_ADCE		;adc5
 	ld a,(0d7dah)		;adc7
 	rra			;adca
-	jp nc,06c77h		;adcb
+	jp nc,06c77h		;adcb   ; sonido_5c: pide el sonido 0x5C
 L_ADCE:
 	ld a,(0cb0eh)		;adce   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	cp 003h		;add1
-	jp nc,06c77h		;add3
+	jp nc,06c77h		;add3   ; sonido_5c: pide el sonido 0x5C
 	ld ix,0d760h		;add6
 	ld a,(ix+000h)		;adda
 	or a			;addd
 	ret nz			;adde
 	call L_ADF0		;addf
-	jp c,06c77h		;ade2
+	jp c,06c77h		;ade2   ; sonido_5c: pide el sonido 0x5C
 	call L_AEB6		;ade5
 	ld a,001h		;ade8
 	ld (0d752h),a		;adea
-	jp 06a50h		;aded   ; p01:6A50
+	jp 06a50h		;aded   ; sonido_17: pide el sonido 0x17
 L_ADF0:
 	call L_AE87		;adf0
 	call L_AEA4		;adf3
@@ -2293,7 +2293,7 @@ L_B078:
 	inc hl			;b09a
 	ld a,(ix+00bh)		;b09b
 	ld (hl),a			;b09e
-	call 06a7fh		;b09f   ; p01:6A7F
+	call 06a7fh		;b09f   ; sonido_21: pide el sonido 0x21
 	push ix		;b0a2
 	ld a,(0cb20h)		;b0a4
 	call 08f95h		;b0a7   ; a_p03_be60: p03:BE60 con el banco 3 en 0xA000
@@ -2520,8 +2520,8 @@ L_B22A:
 	ld a,001h		;b233
 	ld (0d752h),a		;b235
 	dec c			;b238
-	jp z,06c33h		;b239
-	jp 06c87h		;b23c   ; p01:6C87
+	jp z,06c33h		;b239   ; sonido_46: pide el sonido 0x46
+	jp 06c87h		;b23c   ; sonido_60: pide el sonido 0x60
 L_B23F:
 	ld a,(0cb44h)		;b23f
 	or a			;b242
@@ -2738,18 +2738,18 @@ L_B386:
 	ld de,00010h		;b38c
 	add ix,de		;b38f
 	djnz L_B386		;b391
-	jp 06c77h		;b393
+	jp 06c77h		;b393   ; sonido_5c: pide el sonido 0x5C
 L_B396:
 	push bc			;b396
 	call L_B3AD		;b397
 	pop bc			;b39a
 	ld a,(0d752h)		;b39b
 	or a			;b39e
-	jp z,06c77h		;b39f
+	jp z,06c77h		;b39f   ; sonido_5c: pide el sonido 0x5C
 	ld hl,0cb60h		;b3a2
 	ld (hl),001h		;b3a5
 	call L_A652		;b3a7
-	jp 06a50h		;b3aa
+	jp 06a50h		;b3aa   ; sonido_17: pide el sonido 0x17
 L_B3AD:
 	call L_B446		;b3ad
 	call L_B438		;b3b0
@@ -2970,7 +2970,7 @@ L_B513:
 	call L_B563		;b51a
 	ld b,(ix+005h)		;b51d
 	ld c,(ix+004h)		;b520
-	call 07bfch		;b523
+	call 07bfch		;b523   ; sala_de_casilla: A = la sala de la fila C y la columna B en la tabla de 0xD900 (16 columnas por fila)
 	ld c,a			;b526
 	ld a,(ix+002h)		;b527
 	add a,004h		;b52a
@@ -3023,18 +3023,18 @@ L_B57A:
 	ld de,00008h		;b580
 	add ix,de		;b583
 	djnz L_B57A		;b585
-	jp 06c77h		;b587
+	jp 06c77h		;b587   ; sonido_5c: pide el sonido 0x5C
 L_B58A:
 	call L_B5A2		;b58a
 	ld a,(0d752h)		;b58d
 	or a			;b590
-	jp z,06c77h		;b591
+	jp z,06c77h		;b591   ; sonido_5c: pide el sonido 0x5C
 	push ix		;b594
 	pop hl			;b596
 	call 08f78h		;b597   ; a_p12_6e70_b_1_2_11: a_p12_6e70 y deja los bancos 1, 2 y 11
 	ld hl,0cb61h		;b59a
 	ld (hl),001h		;b59d
-	jp 06a50h		;b59f
+	jp 06a50h		;b59f   ; sonido_17: pide el sonido 0x17
 L_B5A2:
 	call L_B64B		;b5a2
 	ld a,(ix+002h)		;b5a5
@@ -3063,19 +3063,19 @@ L_B5A2:
 	ret c			;b5d2
 	ld l,(ix+002h)		;b5d3
 	ld h,(ix+003h)		;b5d6
-	call 07f3dh		;b5d9
+	call 07f3dh		;b5d9   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	ret c			;b5dc
 	ld a,(ix+002h)		;b5dd
 	add a,008h		;b5e0
 	ld l,a			;b5e2
 	ld h,(ix+003h)		;b5e3
-	call 07f3dh		;b5e6
+	call 07f3dh		;b5e6   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	ret c			;b5e9
 	ld l,(ix+002h)		;b5ea
 	ld a,(ix+003h)		;b5ed
 	add a,008h		;b5f0
 	ld h,a			;b5f2
-	call 07f3dh		;b5f3
+	call 07f3dh		;b5f3   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	ret c			;b5f6
 	ld a,(ix+002h)		;b5f7
 	add a,008h		;b5fa
@@ -3083,7 +3083,7 @@ L_B5A2:
 	ld a,(ix+003h)		;b5fd
 	add a,008h		;b600
 	ld h,a			;b602
-	call 07f3dh		;b603
+	call 07f3dh		;b603   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	ret c			;b606
 	ld a,(0cb3fh)		;b607   ; lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	or a			;b60a
@@ -3422,8 +3422,8 @@ L_B885:
 	ld (hl),e			;b89a
 	inc hl			;b89b
 	ld (hl),d			;b89c
-	call 06f27h		;b89d   ; p01:6F27
-	jp 06cceh		;b8a0   ; p01:6CCE
+	call 06f27h		;b89d   ; rachas_de_ca61: con 0xCA61, las rachas A - 1 de la tabla de p41:BC04
+	jp 06cceh		;b8a0   ; sonido_67: pide el sonido 0x67
 L_B8A3:
 	ld a,(0ca61h)		;b8a3
 	dec a			;b8a6
@@ -3645,7 +3645,7 @@ L_B9C1:
 	or a			;b9df
 	ret nz			;b9e0
 	ld (hl),001h		;b9e1
-	jp 06a9bh		;b9e3
+	jp 06a9bh		;b9e3   ; sonido_28: pide el sonido 0x28
 L_B9E6:
 	ld hl,0cadeh		;b9e6
 	ld a,(hl)			;b9e9
@@ -3655,7 +3655,7 @@ L_B9E6:
 	ld (hl),a			;b9ed
 	ld hl,0cabfh		;b9ee
 	ld (hl),a			;b9f1
-	jp 06b12h		;b9f2
+	jp 06b12h		;b9f2   ; sonido_05: pide el sonido 0x05
 L_B9F5:
 	ld hl,0cabfh		;b9f5
 	ld (hl),001h		;b9f8
@@ -3871,7 +3871,7 @@ L_BB1E:
 	jr z,L_BB33		;bb27
 	dec a			;bb29
 	ret z			;bb2a
-	call 06a0dh		;bb2b
+	call 06a0dh		;bb2b   ; sonido_01: pide el sonido 0x01
 L_BB2E:
 	ld hl,0caf2h		;bb2e
 	inc (hl)			;bb31
@@ -3880,11 +3880,11 @@ L_BB33:
 	call L_BB2E		;bb33
 	ld hl,0d443h		;bb36
 	ld (hl),001h		;bb39
-	call 06c33h		;bb3b
+	call 06c33h		;bb3b   ; sonido_46: pide el sonido 0x46
 	ld a,(0caf5h)		;bb3e
 	cp 00ah		;bb41
-	jp z,06c9bh		;bb43   ; p01:6C9B
-	jp 06abfh		;bb46   ; p01:6ABF
+	jp z,06c9bh		;bb43   ; sonido_88: pide el sonido 0x88 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+	jp 06abfh		;bb46   ; sonido_82: pide el sonido 0x82 (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 L_BB49:
 	ld a,(0d674h)		;bb49
 	or a			;bb4c
@@ -4068,7 +4068,7 @@ L_BC62:
 	ld hl,0d7dfh		;bc80
 	res 6,(hl)		;bc83
 	call 08f70h		;bc85   ; a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
-	jp 06a93h		;bc88   ; p01:6A93
+	jp 06a93h		;bc88   ; sonido_26: pide el sonido 0x26
 L_BC8B:
 	call L_BCA0		;bc8b
 	ret nz			;bc8e
@@ -4309,7 +4309,7 @@ L_BE0F:
 	ld (hl),d			;be2f
 	ld hl,0cb7bh		;be30
 	inc (hl)			;be33
-	jp 06c2bh		;be34
+	jp 06c2bh		;be34   ; sonido_43: pide el sonido 0x43
 L_BE37:
 	ld hl,0cb78h		;be37
 	ld (hl),000h		;be3a

@@ -65,7 +65,7 @@ C 0xA003 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA01F a_p13_93f7: p13:93F7 con el banco 13 en 0x8000
 C 0xA029 a_p13_941a: p13:941A con el banco 13 en 0x8000
 C 0xA03B apunta a el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
-C 0xA048 p01:6BA8
+C 0xA048 sonido_9b: pide el sonido 0x9B (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA05D suma_a_hl: HL = HL + A
 C 0xA061 guarda la Y de Snake
 C 0xA066 guarda la X de Snake
@@ -87,15 +87,17 @@ C 0xA0CE guarda la marcha de Snake: el indice de las velocidades de p02:9520
 C 0xA0D4 a_p03_b11f: p03:B11F con el banco 3 en 0xA000
 C 0xA0E4 a_p03_b132: p03:B132 con el banco 3 en 0xA000
 C 0xA0EA a_p03_b19a: p03:B19A con el banco 3 en 0xA000
-C 0xA0F3 p01:640E
+C 0xA0F3 conversacion_8008_b: la conversacion de p48:8008, 0xD7BB = 1, p09:B68E y el paso 4
 C 0xA0F8 guarda la espera hasta el paso siguiente (p02:988A, segun la marcha)
 C 0xA0FC apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA102 guarda 1 mientras Snake se da la vuelta
 C 0xA10B apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA111 guarda 1 mientras Snake se da la vuelta
+C 0xA114 sonido_6a: pide el sonido 0x6A (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA117 lee la sala de la zona
-C 0xA145 p01:6C8F
+C 0xA145 sonido_62: pide el sonido 0x62
 C 0xA14C apunta a la sala de la zona
+C 0xA15E mosaico_y_al_mapa: el mosaico en la pantalla (p01:71E9) y en el mapa (p01:62B1)
 C 0xA178 lee la zona
 C 0xA180 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA1D2 suma_a_hl: HL = HL + A
@@ -106,24 +108,24 @@ C 0xA219 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA226 lee la zona
 C 0xA22E lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA23C lee la sala de la zona
-C 0xA264 p01:71DD
+C 0xA264 mosaico_y_al_mapa: el mosaico en la pantalla (p01:71E9) y en el mapa (p01:62B1)
 C 0xA26A suma_a_hl: HL = HL + A
 C 0xA390 lee la zona
 C 0xA396 lee la sala de la zona
 C 0xA3E3 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA409 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
-C 0xA412 p01:6ADE
+C 0xA412 sonido_33: pide el sonido 0x33
 C 0xA427 lee la zona
 C 0xA42D lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA433 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA46C pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xA497 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA4A0 palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xA4A3 p01:714F
+C 0xA4A3 mosaico_de_56_10x2: el mosaico de HL del banco 56 en X = 0x10, Y = 0x68, 10 x 2
 C 0xA4B8 lee la Y de Snake
 C 0xA4D0 apunta a el contador de cuadros (uno mas en cada interrupcion)
 C 0xA4F3 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA55B p01:6C8B
+C 0xA55B sonido_61: pide el sonido 0x61
 C 0xA577 lee la zona
 C 0xA57D lee la sala de la zona
 C 0xA589 lee la zona
@@ -169,23 +171,26 @@ C 0xA971 a_p03_b3a6: p03:B3A6 con el banco 3 en 0xA000
 C 0xA97D lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA9B9 a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
 C 0xAA00 a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
-C 0xAA15 p01:6A25
-C 0xAA18 p01:6AFE
+C 0xAA15 sonido_0d: pide el sonido 0x0D
+C 0xAA18 sonido_3a: pide el sonido 0x3A
 C 0xAA1B lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAA2A suma_a_hl: HL = HL + A
 C 0xAA30 dos_palabras_por_b_b_1_2_11: dos_palabras_por_b y deja los bancos 1, 2 y 11
 C 0xAA80 lee la zona
 C 0xAA87 lee la sala de la zona
+C 0xAA8C sonido_5c: pide el sonido 0x5C
 C 0xAAA4 p02:8F5D
 C 0xAAAA lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xAAB3 sonido_21: pide el sonido 0x21
 C 0xAAB6 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xAADA lee la zona
 C 0xAAE1 lee la sala de la zona
+C 0xAAE6 sonido_5c: pide el sonido 0x5C
 C 0xAB0E lee la Y de Snake
 C 0xAB1D lee la X de Snake
 C 0xAB25 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAB31 p02:8F4E
-C 0xAB34 p01:6A8B
+C 0xAB34 sonido_24: pide el sonido 0x24
 C 0xAB52 a_p01_7f3d: p01:7F3D con el banco 1 en 0x6000
 C 0xAB6A palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAB80 p02:8F53
@@ -193,17 +198,23 @@ C 0xABA3 lee la zona
 C 0xABAA lee la sala de la zona
 C 0xABF8 apunta a el contador de cuadros (uno mas en cada interrupcion)
 C 0xAC0B a_p01_7f3d: p01:7F3D con el banco 1 en 0x6000
+C 0xAC1A sonido_04: pide el sonido 0x04
 C 0xAC29 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAC88 p02:8F58
 C 0xAC93 lee la zona
 C 0xAC9A lee la sala de la zona
+C 0xAC9F sonido_5c: pide el sonido 0x5C
+C 0xACBA de_ix_mas_6: DE = IX + 6
 C 0xACBE lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xACC6 suma_a_hl: HL = HL + A
 C 0xACD2 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAD41 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAD84 a_p03_b1ba: p03:B1BA con el banco 3 en 0xA000
+C 0xADCB sonido_5c: pide el sonido 0x5C
 C 0xADCE lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xADED p01:6A50
+C 0xADD3 sonido_5c: pide el sonido 0x5C
+C 0xADE2 sonido_5c: pide el sonido 0x5C
+C 0xADED sonido_17: pide el sonido 0x17
 C 0xAE08 a_p07_bb10: p07:BB10 con el banco 7 en 0xA000
 C 0xAE0E a_p07_bf5c: p07:BF5C con el banco 7 en 0xA000
 C 0xAE22 lee la fila de la sala en la zona (uno mas al salir por arriba)
@@ -243,7 +254,7 @@ C 0xB043 lee la X de Snake
 C 0xB059 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB064 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB06B lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
-C 0xB09F p01:6A7F
+C 0xB09F sonido_21: pide el sonido 0x21
 C 0xB0A7 a_p03_be60: p03:BE60 con el banco 3 en 0xA000
 C 0xB130 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB138 lee la columna de la sala en la zona (uno mas al salir por la derecha)
@@ -256,7 +267,8 @@ C 0xB1AB a_p03_b1f5: p03:B1F5 con el banco 3 en 0xA000
 C 0xB1AE a_p03_b1be_2: p03:B1BE con el banco 3 en 0xA000
 C 0xB1E6 suma_a_hl: HL = HL + A
 C 0xB1F5 suma_a_hl: HL = HL + A
-C 0xB23C p01:6C87
+C 0xB239 sonido_46: pide el sonido 0x46
+C 0xB23C sonido_60: pide el sonido 0x60
 C 0xB2BF lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB2C6 suma_a_hl: HL = HL + A
 C 0xB2CB lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -270,6 +282,9 @@ C 0xB349 lee la X de Snake
 C 0xB357 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB35A lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB369 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB393 sonido_5c: pide el sonido 0x5C
+C 0xB39F sonido_5c: pide el sonido 0x5C
+C 0xB3AA sonido_17: pide el sonido 0x17
 C 0xB3CE a_p07_bb10: p07:BB10 con el banco 7 en 0xA000
 C 0xB3D4 a_p07_bf5c: p07:BF5C con el banco 7 en 0xA000
 C 0xB3DC lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
@@ -286,12 +301,20 @@ C 0xB47C lee la sala de la zona
 C 0xB4E5 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB4FC lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB504 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB523 sala_de_casilla: A = la sala de la fila C y la columna B en la tabla de 0xD900 (16 columnas por fila)
 C 0xB560 a_p03_b1be_2: p03:B1BE con el banco 3 en 0xA000
 C 0xB563 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB56A lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB587 sonido_5c: pide el sonido 0x5C
+C 0xB591 sonido_5c: pide el sonido 0x5C
 C 0xB597 a_p12_6e70_b_1_2_11: a_p12_6e70 y deja los bancos 1, 2 y 11
+C 0xB59F sonido_17: pide el sonido 0x17
 C 0xB5C5 a_p07_bb10: p07:BB10 con el banco 7 en 0xA000
 C 0xB5CB a_p07_bf5c: p07:BF5C con el banco 7 en 0xA000
+C 0xB5D9 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xB5E6 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xB5F3 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xB603 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xB607 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xB622 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB630 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
@@ -345,8 +368,8 @@ C 0xB849 copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a 
 C 0xB85D lee la direccion en la VRAM de la tabla de colores de sprites (16 bits)
 C 0xB86C copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a la VRAM de DE
 C 0xB87D lee la direccion en la VRAM de la tabla de atributos de sprites (16 bits)
-C 0xB89D p01:6F27
-C 0xB8A0 p01:6CCE
+C 0xB89D rachas_de_ca61: con 0xCA61, las rachas A - 1 de la tabla de p41:BC04
+C 0xB8A0 sonido_67: pide el sonido 0x67
 C 0xB8AB suma_a_hl: HL = HL + A
 C 0xB8C2 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB90D despachador: salta a la palabra A de la tabla que va detras del call
@@ -358,6 +381,8 @@ C 0xB9AC lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB9C8 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB9CE lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB9D5 lee la sala de la zona
+C 0xB9E3 sonido_28: pide el sonido 0x28
+C 0xB9F2 sonido_05: pide el sonido 0x05
 C 0xBA06 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBA11 lee la zona
 C 0xBA18 lee la sala de la zona
@@ -366,15 +391,17 @@ C 0xBAA6 lee la zona
 C 0xBAAD lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBAB3 lee la sala de la zona
 C 0xBAFF lee la zona
-C 0xBB43 p01:6C9B
-C 0xBB46 p01:6ABF
+C 0xBB2B sonido_01: pide el sonido 0x01
+C 0xBB3B sonido_46: pide el sonido 0x46
+C 0xBB43 sonido_88: pide el sonido 0x88 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xBB46 sonido_82: pide el sonido 0x82 (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 C 0xBBD6 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBBDC lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBBE8 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xBBF8 p02:8F0E
 C 0xBC12 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBC85 a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
-C 0xBC88 p01:6A93
+C 0xBC88 sonido_26: pide el sonido 0x26
 C 0xBCC2 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBCCE copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xBCD1 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -388,6 +415,7 @@ C 0xBD81 suma_a_hl: HL = HL + A
 C 0xBD84 lee la Y de Snake
 C 0xBD8F lee la X de Snake
 C 0xBE21 suma_a_hl: HL = HL + A
+C 0xBE34 sonido_43: pide el sonido 0x43
 C 0xBE91 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xBEA2 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xBECB lee el contador de cuadros (uno mas en cada interrupcion)

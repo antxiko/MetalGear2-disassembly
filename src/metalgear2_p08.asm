@@ -201,7 +201,7 @@ L_A13B:
 	ld a,(0cb21h)		;a144
 	cp 003h		;a147
 	jr nz,L_A14E		;a149
-	jp 071fah		;a14b   ; p01:71FA
+	jp 071fah		;a14b   ; paleta_bccf: la paleta de p56:BCCF
 L_A14E:
 	ld a,(0ca42h)		;a14e   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	push bc			;a151
@@ -235,11 +235,11 @@ L_A17C:
 L_A187:
 	ld hl,0d7e1h		;a187
 	res 3,(hl)		;a18a
-	call 07c0eh		;a18c
+	call 07c0eh		;a18c   ; guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
 	call 045cch		;a18f   ; apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
 	call 05debh		;a192   ; p00:5DEB
 	call 045c5h		;a195   ; enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
-	call 07c1ah		;a198   ; p01:7C1A
+	call 07c1ah		;a198   ; vuelve_el_mapa_bancos_8:
 	call L_A1CB		;a19b
 	call 045cch		;a19e   ; apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
 	call L_A1CB		;a1a1
@@ -394,7 +394,7 @@ L_A2AC:
 	push hl			;a2b9
 	push bc			;a2ba
 	ex de,hl			;a2bb
-	call 07f3dh		;a2bc
+	call 07f3dh		;a2bc   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	pop bc			;a2bf
 	pop hl			;a2c0
 	ld a,000h		;a2c1
@@ -407,7 +407,7 @@ L_A2C7:
 	ld a,(0ca03h)		;a2cd   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;a2d0
 	ret nc			;a2d1
-	jp 06c63h		;a2d2   ; p01:6C63
+	jp 06c63h		;a2d2   ; sonido_51: pide el sonido 0x51
 L_A2D5:
 	ld d,(ix+005h)		;a2d5
 	ld e,(ix+003h)		;a2d8
@@ -483,7 +483,7 @@ L_A315:
 	and 0f8h		;a333
 	ld (ix+005h),a		;a335
 	call 08100h		;a338
-	call z,06c5fh		;a33b   ; p01:6C5F
+	call z,06c5fh		;a33b   ; sonido_50: pide el sonido 0x50
 L_A33E:
 	ld (ix+00eh),010h		;a33e
 	jp L_A221		;a342
@@ -778,8 +778,8 @@ L_A55A:
 	and c			;a55c
 	ret nz			;a55d
 	call 08100h		;a55e
-	jp nz,06c7bh		;a561   ; p01:6C7B
-	jp 06b02h		;a564   ; p01:6B02
+	jp nz,06c7bh		;a561   ; sonido_5d: pide el sonido 0x5D
+	jp 06b02h		;a564   ; sonido_3b: pide el sonido 0x3B
 L_A567:
 	ld a,(ix+00eh)		;a567
 	cp 020h		;a56a
@@ -818,7 +818,7 @@ L_A5A9:
 	ld (ix+023h),000h		;a5ac
 L_A5B0:
 	call 08100h		;a5b0
-	call z,06b4dh		;a5b3   ; p01:6B4D
+	call z,06b4dh		;a5b3   ; sonido_57: pide el sonido 0x57
 	ld a,(ix+000h)		;a5b6
 	cp 017h		;a5b9
 	jr z,L_A5E9		;a5bb
@@ -1104,7 +1104,7 @@ L_A7F1:
 	cp 012h		;a7f4
 	jr nz,L_A7FE		;a7f6
 	call 08100h		;a7f8
-	jp z,06a8bh		;a7fb
+	jp z,06a8bh		;a7fb   ; sonido_24: pide el sonido 0x24
 L_A7FE:
 	ld de,00040h		;a7fe
 	add ix,de		;a801
@@ -1628,20 +1628,20 @@ L_AB8E:
 	ld a,(ix+000h)		;ab94
 	cp 016h		;ab97
 	call nz,L_ABBD		;ab99
-	call 06211h		;ab9c   ; p01:6211
+	call 06211h		;ab9c   ; mensaje_de_ix: el mensaje de la ficha IX (del banco 50) arriba o abajo segun Snake
 L_AB9F:
 	ld hl,0d434h		;ab9f
 	inc (hl)			;aba2
 	ret			;aba3
 L_ABA4:
-	call 0620bh		;aba4   ; p01:620B
+	call 0620bh		;aba4   ; mensaje_cada_cuadro_bancos_8:
 	ret nz			;aba7
 	jr L_AB9F		;aba8
 L_ABAA:
 	ld a,(0ca07h)		;abaa   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 	and a			;abad
 	ret z			;abae
-	call 07a2dh		;abaf   ; p01:7A2D
+	call 07a2dh		;abaf   ; llama_7a27_1_bancos_8:
 	ld a,(ix+015h)		;abb2
 	ld (ix+00dh),a		;abb5
 	xor a			;abb8
@@ -1715,7 +1715,7 @@ L_AC24:
 L_AC2A:
 	call 08100h		;ac2a
 	jr nz,L_AC32		;ac2d
-	call 06adah		;ac2f   ; p01:6ADA
+	call 06adah		;ac2f   ; sonido_32: pide el sonido 0x32
 L_AC32:
 	ld a,(ix+001h)		;ac32
 	cp 001h		;ac35
@@ -1728,7 +1728,7 @@ L_AC41:
 	and a			;ac44
 	jr z,L_AC4D		;ac45
 	call 08100h		;ac47
-	call z,06c73h		;ac4a   ; p01:6C73
+	call z,06c73h		;ac4a   ; sonido_55: pide el sonido 0x55
 L_AC4D:
 	ld a,(ix+011h)		;ac4d
 	ld hl,0ace3h		;ac50
@@ -2226,7 +2226,7 @@ L_B006:
 L_B011:
 	ld (ix+00dh),002h		;b011
 	ld (ix+00eh),010h		;b015
-	call 06a48h		;b019
+	call 06a48h		;b019   ; sonido_15: pide el sonido 0x15
 L_B01C:
 	inc (ix+001h)		;b01c
 	ret			;b01f
@@ -2495,7 +2495,7 @@ L_BC76:
 	call 04d16h		;bc83   ; dibujos_7118_bancos_8:
 	call 04266h		;bc86   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045d7h		;bc89   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-	call 07072h		;bc8c   ; p01:7072
+	call 07072h		;bc8c   ; mapa_96bf_bancos_8:
 	call 084f4h		;bc8f   ; paleta_b98a_bancos_8:
 	ld hl,00000h		;bc92
 	ld d,h			;bc95
@@ -2584,7 +2584,7 @@ L_BD1F:
 	ld hl,0e1f2h		;bd24
 	ld (hl),0f0h		;bd27
 	call L_BCED		;bd29
-	call 06ab7h		;bd2c   ; p01:6AB7
+	call 06ab7h		;bd2c   ; sonido_2f: pide el sonido 0x2F
 	jp L_BCB6		;bd2f
 L_BD32:
 	call L_BD45		;bd32
@@ -2593,7 +2593,7 @@ L_BD32:
 	ret nz			;bd39
 	ld b,000h		;bd3a
 	call L_BD4E		;bd3c
-	call 06abbh		;bd3f   ; p01:6ABB
+	call 06abbh		;bd3f   ; sonido_30: pide el sonido 0x30
 	jp L_BCB6		;bd42
 L_BD45:
 	ld a,(0ca03h)		;bd45   ; lee el contador de cuadros (uno mas en cada interrupcion)

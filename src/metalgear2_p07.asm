@@ -78,7 +78,7 @@ L_A054:
 	ld (hl),001h		;a06b
 	call L_A076		;a06d
 	call L_A83A		;a070
-	jp 06c33h		;a073
+	jp 06c33h		;a073   ; sonido_46: pide el sonido 0x46
 L_A076:
 	ld hl,0d8c1h		;a076
 	inc (hl)			;a079
@@ -93,7 +93,7 @@ L_A07B:
 	call L_A076		;a088
 	ld hl,0d8c3h		;a08b
 	ld (hl),020h		;a08e
-	jp 06a58h		;a090
+	jp 06a58h		;a090   ; sonido_19: pide el sonido 0x19
 L_A093:
 	ld b,003h		;a093
 	call L_A0A2		;a095
@@ -120,7 +120,7 @@ L_A0B0:
 	ld a,001h		;a0bb
 	ld (0d4e9h),a		;a0bd
 	call L_A83A		;a0c0
-	jp 06a4ch		;a0c3
+	jp 06a4ch		;a0c3   ; sonido_16: pide el sonido 0x16
 L_A0C6:
 	ld a,(0d8c9h)		;a0c6
 	add a,002h		;a0c9
@@ -165,7 +165,7 @@ L_A116:
 	ld a,001h		;a11e
 	ld (0d4e9h),a		;a120
 	call L_A862		;a123
-	jp 06a4ch		;a126
+	jp 06a4ch		;a126   ; sonido_16: pide el sonido 0x16
 L_A129:
 	ld a,(0cb0eh)		;a129   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	dec a			;a12c
@@ -226,7 +226,7 @@ L_A17B:
 	ld a,002h		;a191
 	ld (0d8c3h),a		;a193
 	call L_A076		;a196
-	jp 06c33h		;a199
+	jp 06c33h		;a199   ; sonido_46: pide el sonido 0x46
 L_A19C:
 	ld hl,0d8c3h		;a19c
 	dec (hl)			;a19f
@@ -252,7 +252,7 @@ L_A1C1:
 	ld hl,0d8c3h		;a1c6
 	ld (hl),018h		;a1c9
 	call L_A918		;a1cb
-	call 06b1ah		;a1ce   ; p01:6B1A
+	call 06b1ah		;a1ce   ; sonido_41: pide el sonido 0x41
 	jp L_A076		;a1d1
 L_A1D4:
 	ld a,(0d8a0h)		;a1d4
@@ -280,7 +280,7 @@ L_A1F3:
 L_A1FB:
 	ld hl,0d8cdh		;a1fb
 	cp (hl)			;a1fe
-	jp z,06a58h		;a1ff   ; p01:6A58
+	jp z,06a58h		;a1ff   ; sonido_19: pide el sonido 0x19
 	ret			;a202
 L_A203:
 	ld a,(0d8c4h)		;a203
@@ -297,7 +297,7 @@ L_A20D:
 	add a,b			;a215
 L_A216:
 	ld (hl),a			;a216
-	call 071c2h		;a217
+	call 071c2h		;a217   ; mosaico_de_d8cd: el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
 	call L_A248		;a21a
 	ld a,(0d8a0h)		;a21d
 	or a			;a220
@@ -341,7 +341,7 @@ L_A248:
 	call L_AB96		;a26b
 	ld hl,0d8c3h		;a26e
 	ld (hl),010h		;a271
-	jp 06a58h		;a273
+	jp 06a58h		;a273   ; sonido_19: pide el sonido 0x19
 L_A276:
 	ld hl,0d8c3h		;a276
 	dec (hl)			;a279
@@ -354,7 +354,7 @@ L_A282:
 	ld (hl),020h		;a282
 	call L_A076		;a284
 	call L_A296		;a287
-	jp 06a54h		;a28a   ; p01:6A54
+	jp 06a54h		;a28a   ; sonido_18: pide el sonido 0x18
 L_A28D:
 	ld a,(0d8c3h)		;a28d
 	dec a			;a290
@@ -378,12 +378,12 @@ L_A29D:
 	ld (0d8c1h),a		;a2ad
 	ld a,010h		;a2b0
 	ld (0d8c3h),a		;a2b2
-	jp 06c33h		;a2b5
+	jp 06c33h		;a2b5   ; sonido_46: pide el sonido 0x46
 L_A2B8:
 	ld a,002h		;a2b8
 	ld (0d8c3h),a		;a2ba
 	call L_A076		;a2bd
-	jp 06a4ch		;a2c0
+	jp 06a4ch		;a2c0   ; sonido_16: pide el sonido 0x16
 L_A2C3:
 	ld hl,0d8c3h		;a2c3
 	dec (hl)			;a2c6
@@ -471,8 +471,8 @@ L_A356:
 	or a			;a365
 	jr nz,L_A370		;a366
 	ld (hl),001h		;a368
-	call 06b12h		;a36a
-	call 06caah		;a36d   ; p01:6CAA
+	call 06b12h		;a36a   ; sonido_05: pide el sonido 0x05
+	call 06caah		;a36d   ; sonido_8a: pide el sonido 0x8A (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_A370:
 	call L_A39D		;a370
 	call L_ABA2		;a373
@@ -482,7 +482,7 @@ L_A370:
 	ld (hl),002h		;a37b
 	ld hl,0d8cdh		;a37d
 	dec (hl)			;a380
-	call 071c2h		;a381
+	call 071c2h		;a381   ; mosaico_de_d8cd: el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
 	ld hl,0d8cdh		;a384
 	ld a,(0d8d2h)		;a387
 	cp (hl)			;a38a
@@ -491,7 +491,7 @@ L_A370:
 	call L_AB9B		;a38f
 	ld hl,0d8c3h		;a392
 	ld (hl),008h		;a395
-	call 06c97h		;a397   ; p01:6C97
+	call 06c97h		;a397   ; sonido_87: pide el sonido 0x87 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jp L_A076		;a39a
 L_A39D:
 	ld a,(0d8c3h)		;a39d
@@ -530,7 +530,7 @@ L_A3CE:
 	ld (hl),000h		;a3e1
 	call 08529h		;a3e3   ; paleta_bc9e: la paleta de p56:BC9E y los bancos 1, 2 y 7
 	call 04606h		;a3e6   ; enciende_todo: la pantalla y los sprites encendidos
-	call 06cd6h		;a3e9   ; p01:6CD6
+	call 06cd6h		;a3e9   ; sonido_69: pide el sonido 0x69
 	xor a			;a3ec
 	ld (0cb5fh),a		;a3ed
 	jp L_A076		;a3f0
@@ -604,7 +604,7 @@ L_A470:
 	or a			;a485
 	ret z			;a486
 L_A487:
-	call 07cafh		;a487   ; p01:7CAF
+	call 07cafh		;a487   ; quita_ca5f_bancos_7:
 	jp 08d8bh		;a48a   ; p02:8D8B
 L_A48D:
 	cp 009h		;a48d
@@ -633,12 +633,12 @@ L_A4A6:
 	ld (0ca42h),a		;a4bd   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 0547ch		;a4c0   ; copia_marcador_bancos_7:
 	call 08524h		;a4c3   ; paleta_bbf2: la paleta de p56:BBF2 y los bancos 1, 2 y 7
-	call 071a2h		;a4c6   ; p01:71A2
+	call 071a2h		;a4c6   ; mosaico_be74: el mosaico en rachas de p37:BE74 (0x14 x 0x0E) en X = 0x28, Y = 0x18, y p06:A0F9
 	call L_A83A		;a4c9
 	ld a,(0d8a0h)		;a4cc
 	or a			;a4cf
 	call z,L_A8C3		;a4d0
-	call 071c2h		;a4d3   ; p01:71C2
+	call 071c2h		;a4d3   ; mosaico_de_d8cd: el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
 	ld a,(0ca42h)		;a4d6   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 04879h		;a4d9   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 	ld a,(0d7d5h)		;a4dc
@@ -1451,7 +1451,7 @@ L_AB75:
 	ld de,0707ch		;ab7d
 L_AB80:
 	ld bc,00104h		;ab80
-	jp 050e8h		;ab83
+	jp 050e8h		;ab83   ; mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 L_AB86:
 	bit 7,a		;ab86
 	ld b,001h		;ab88
@@ -2159,7 +2159,7 @@ L_B06A:
 	pop de			;b07f
 	pop hl			;b080
 	pop bc			;b081
-	jp 06a38h		;b082
+	jp 06a38h		;b082   ; sonido_10: pide el sonido 0x10
 L_B085:
 	ld iy,0cc80h		;b085
 	exx			;b089
@@ -2392,7 +2392,7 @@ L_B221:
 	ret nz			;b22a
 	call L_B5AF		;b22b
 	ret nc			;b22e
-	call 06a38h		;b22f
+	call 06a38h		;b22f   ; sonido_10: pide el sonido 0x10
 	call 08d9dh		;b232   ; a_p11_aee4_2: p11:AEE4 con el banco 11 en 0xA000
 	ld a,009h		;b235
 	jp 08da5h		;b237   ; a_p03_be51: p03:BE51 con el banco 3 en 0xA000
@@ -2437,7 +2437,7 @@ L_B267:
 	push de			;b27e
 	push bc			;b27f
 	push hl			;b280
-	call 06a38h		;b281
+	call 06a38h		;b281   ; sonido_10: pide el sonido 0x10
 	call 07ae8h		;b284   ; a_p04_834c: p04:834C con el banco 4 en 0x8000
 	call L_B2C0		;b287
 	pop hl			;b28a
@@ -2463,7 +2463,7 @@ L_B29A:
 	exx			;b2a7
 	call L_B5AF		;b2a8
 	ret nc			;b2ab
-	call 06a38h		;b2ac
+	call 06a38h		;b2ac   ; sonido_10: pide el sonido 0x10
 	xor a			;b2af
 	ld (0e060h),a		;b2b0
 	ld hl,0dc70h		;b2b3
@@ -2602,7 +2602,7 @@ L_B393:
 	pop bc			;b39f
 	pop de			;b3a0
 	pop hl			;b3a1
-	jp 06b16h		;b3a2   ; p01:6B16
+	jp 06b16h		;b3a2   ; sonido_40: pide el sonido 0x40
 L_B3A5:
 	ld a,(0cb3dh)		;b3a5
 	or a			;b3a8
@@ -2645,7 +2645,7 @@ L_B3E3:
 	ld a,(ix+010h)		;b3e3
 	cp 0ffh		;b3e6
 	ret z			;b3e8
-	call 06a40h		;b3e9   ; p01:6A40
+	call 06a40h		;b3e9   ; sonido_13: pide el sonido 0x13
 	ld (ix+01fh),004h		;b3ec
 	dec (ix+010h)		;b3f0
 	jr z,L_B3F8		;b3f3
@@ -2662,7 +2662,7 @@ L_B401:
 	and 07fh		;b409
 	cp 00ah		;b40b
 	ret nc			;b40d
-	ld a,(0cab5h)		;b40e
+	ld a,(0cab5h)		;b40e   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	ld hl,0b447h		;b411
 	call 0423eh		;b414   ; suma_a_hl: HL = HL + A
 	ld a,(0ca03h)		;b417   ; lee el contador de cuadros (uno mas en cada interrupcion)
@@ -2778,8 +2778,8 @@ L_B4A3:
 L_B4B6:
 	ld a,(ix+010h)		;b4b6
 	cp c			;b4b9
-	jp nc,06c17h		;b4ba   ; p01:6C17
-	jp 06c57h		;b4bd   ; p01:6C57
+	jp nc,06c17h		;b4ba   ; sonido_48: pide el sonido 0x48
+	jp 06c57h		;b4bd   ; sonido_4e: pide el sonido 0x4E
 L_B4C0:
 	ld hl,lb520h		;b4c0
 	ld a,(ix+000h)		;b4c3
@@ -4296,7 +4296,7 @@ L_BED8:
 	call L_BEC5		;bf0c
 	pop bc			;bf0f
 	ret nc			;bf10
-	call 06c17h		;bf11
+	call 06c17h		;bf11   ; sonido_48: pide el sonido 0x48
 	ld hl,0d810h		;bf14
 	dec (hl)			;bf17
 	jr nz,L_BF22		;bf18

@@ -51,7 +51,7 @@ arranque_por_el_gancho:		; ya desde el gancho H.STKE: no vuelve a la BIOS
 	call 06011h		;405c   ; vuelve a buscar la ranura del cartucho
 	call 00138h		;405f   ; BIOS RSLREG - Reads the primary slot register
 	ld (0c388h),a		;4062   ; guarda el registro de slots primarios
-	call 07243h		;4065   ; p01:7243
+	call 07243h		;4065   ; busca_la_ram: A = el slot con RAM en 0x8000: prueba los 4 slots y sus subslots (acarreo si la encuentra)
 	ld (0c386h),a		;4068   ; guarda lo que devuelve p01:7243
 	ld a,(0c388h)		;406b   ; vuelve a poner los slots de antes
 	call 0013bh		;406e   ; BIOS WSLREG - Writes value to the primary slot register
@@ -420,12 +420,12 @@ marcador_bancos_1_4_5:		; rehace el marcador (p00:4279) y deja los bancos 1, 4 y
 	call rehace_marcador		;4270   ; rehace_marcador: el marcador: lineas, marco y barra de vida
 	jp bancos_1_4_5		;4273   ; ...y deja los bancos 1, 4 y 5
 marcador_entero:		; p01:6DFF y el marcador (p00:4279)
-	call 06dffh		;4276   ; p01:6DFF
+	call 06dffh		;4276   ; dibujos_8037: los dibujos de p46:8037 en la VRAM de 0xA000
 rehace_marcador:		; el marcador: lineas, marco y barra de vida
 	call a_p12_6f41		;4279   ; a_p12_6f41: p12:6F41 con el banco 12 en 0x6000
 	call lineas_c3		;427c   ; las lineas de p00:439D
 	call copia_marcador_a_la_otra		;427f   ; copia la franja del marcador de una pagina a la otra
-	call 06ff9h		;4282   ; p01:6FF9
+	call 06ff9h		;4282   ; mosaicos_del_marcador: cuatro mosaicos del banco 46 en el marcador
 	call marco_barra_de_vida		;4285   ; el marco de la barra de vida
 barras_de_vida:		; la barra de vida y, con 0xCA5F, p04:9889
 	call borra_barra_de_vida		;4288   ; borra_barra_de_vida: borra la barra de vida con el ancho de 0xCA52
@@ -446,7 +446,7 @@ marco_barra_cac4:		; el marco de la barra de la derecha con el ancho de 0xCAC4
 	ld a,(0cac4h)		;42a8   ; lee lo largo de la barra de la derecha llena
 	jr L_42B0		;42ab
 marco_barra_ca54:		; el marco de la barra de la derecha con el ancho de 0xCA54
-	ld a,(0ca54h)		;42ad
+	ld a,(0ca54h)		;42ad   ; lee el ancho de la tercera barra (lo maximo)
 L_42B0:
 	ld b,a			;42b0
 	ld a,(0cae2h)		;42b1   ; sin la barra de la derecha (0xCAE2 = 0) no se pinta
@@ -2839,99 +2839,99 @@ sprites_de_858d:		; p36:858D...
 	ld hl,0fc80h		;5071   ; ...a la VRAM de 0xFC80
 	call sprites_de_en		;5074   ; sprites_de_en: con los bancos 35-37
 	jp bancos_4_5		;5077   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-L_507A:
+mosaico_fc_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 12 de la franja 3 (p00:512C)
 	push bc			;507a
 	ld bc,0030ch		;507b   ; forma 0x0C en la franja 3
 	jp mosaico_con_forma		;507e   ; mosaico_con_forma: guarda la forma (BC de la entrada) en 0xCA48 y pinta el mosaico
-L_5081:
+mosaico_fb_b2:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 11 de la franja 2 (p00:512C)
 	push bc			;5081
 	ld bc,0020bh		;5082   ; forma 0x0B en la franja 2
 	jp mosaico_con_forma		;5085   ; mosaico_con_forma: guarda la forma (BC de la entrada) en 0xCA48 y pinta el mosaico
-L_5088:
+mosaico_f2_b0:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 0 (p00:512C)
 	push bc			;5088
 	ld bc,00002h		;5089   ; forma 2 en la franja 0
 	jr mosaico_con_forma		;508c
-L_508E:
+mosaico_f7_b0:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 0 (p00:512C)
 	push bc			;508e
 	ld bc,00007h		;508f   ; forma 7 en la franja 0
 	jr mosaico_con_forma		;5092
-L_5094:
+mosaico_f8_b0:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 8 de la franja 0 (p00:512C)
 	push bc			;5094
 	ld bc,00008h		;5095   ; forma 8 en la franja 0
 	jr mosaico_con_forma		;5098
-L_509A:
+mosaico_f1_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 1 de la franja 1 (p00:512C)
 	push bc			;509a
 	ld bc,00101h		;509b   ; forma 1 en la franja 1
 	jr mosaico_con_forma		;509e
-L_50A0:
+mosaico_f2_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 	push bc			;50a0
 	ld bc,00102h		;50a1   ; forma 2 en la franja 1
 	jr mosaico_con_forma		;50a4
-L_50A6:
+mosaico_f5_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 1 (p00:512C)
 	push bc			;50a6
 	ld bc,00105h		;50a7   ; forma 5 en la franja 1
 	jr mosaico_con_forma		;50aa
-L_50AC:
+mosaico_f6_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 6 de la franja 1 (p00:512C)
 	push bc			;50ac
 	ld bc,00106h		;50ad   ; forma 6 en la franja 1
 	jr mosaico_con_forma		;50b0
-L_50B2:
+mosaico_f7_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 1 (p00:512C)
 	push bc			;50b2
 	ld bc,00107h		;50b3   ; forma 7 en la franja 1
 	jr mosaico_con_forma		;50b6
-L_50B8:
+mosaico_f8_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 8 de la franja 1 (p00:512C)
 	push bc			;50b8
 	ld bc,00108h		;50b9   ; forma 8 en la franja 1
 	jr mosaico_con_forma		;50bc
-L_50BE:
+mosaico_f9_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 9 de la franja 1 (p00:512C)
 	push bc			;50be
 	ld bc,00109h		;50bf   ; forma 9 en la franja 1
 	jr mosaico_con_forma		;50c2
-L_50C4:
+mosaico_fa_b1:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 10 de la franja 1 (p00:512C)
 	push bc			;50c4
 	ld bc,0010ah		;50c5   ; forma 0x0A en la franja 1
 	jr mosaico_con_forma		;50c8
-L_50CA:
+mosaico_f0_b2:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 0 de la franja 2 (p00:512C)
 	push bc			;50ca
 	ld bc,00200h		;50cb   ; forma 0 en la franja 2
 	jr mosaico_con_forma		;50ce
-L_50D0:
+mosaico_f1_b2:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 1 de la franja 2 (p00:512C)
 	push bc			;50d0
 	ld bc,00201h		;50d1   ; forma 1 en la franja 2
 	jr mosaico_con_forma		;50d4
-L_50D6:
+mosaico_f2_b2:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 	push bc			;50d6
 	ld bc,00202h		;50d7   ; forma 2 en la franja 2
 	jr mosaico_con_forma		;50da
-L_50DC:
+mosaico_f5_b2:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 2 (p00:512C)
 	push bc			;50dc
 	ld bc,00205h		;50dd   ; forma 5 en la franja 2
 	jr mosaico_con_forma		;50e0
-L_50E2:
+mosaico_f7_b2:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 2 (p00:512C)
 	push bc			;50e2
 	ld bc,00207h		;50e3   ; forma 7 en la franja 2
 	jr mosaico_con_forma		;50e6
-L_50E8:
+mosaico_f2_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 	push bc			;50e8
 	ld bc,00302h		;50e9   ; forma 2 en la franja 3
 	jr mosaico_con_forma		;50ec
-L_50EE:
+mosaico_f3_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 3 de la franja 3 (p00:512C)
 	push bc			;50ee
 	ld bc,00303h		;50ef   ; forma 3 en la franja 3
 	jr mosaico_con_forma		;50f2
-L_50F4:
+mosaico_f4_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 4 de la franja 3 (p00:512C)
 	push bc			;50f4
 	ld bc,00304h		;50f5   ; forma 4 en la franja 3
 	jr mosaico_con_forma		;50f8
-L_50FA:
+mosaico_f5_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 3 (p00:512C)
 	push bc			;50fa
 	ld bc,00305h		;50fb   ; forma 5 en la franja 3
 	jr mosaico_con_forma		;50fe
-L_5100:
+mosaico_f7_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 3 (p00:512C)
 	push bc			;5100
 	ld bc,00307h		;5101   ; forma 7 en la franja 3
 	jr mosaico_con_forma		;5104
-L_5106:
+mosaico_f8_b3:		; el mosaico de HL en (D, E), B filas de C caracteres, con la forma 8 de la franja 3 (p00:512C)
 	push bc			;5106
 	ld bc,00308h		;5107   ; forma 8 en la franja 3
 mosaico_con_forma:		; guarda la forma (BC de la entrada) en 0xCA48 y pinta el mosaico
@@ -3115,13 +3115,13 @@ rotulos_a7b1:
 	call palabra_de_tabla		;5204   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,04838h		;5207   ; ...en X = 0x48, Y = 0x38...
 	ld bc,00106h		;520a   ; ...una fila de 6 caracteres
-	call L_50E8		;520d   ; de la franja 3, a la pagina en la que se dibuja
+	call mosaico_f2_b3		;520d   ; de la franja 3, a la pagina en la que se dibuja
 	pop af			;5210
 	ld hl,0a7c5h		;5211   ; la segunda, de p47:A7C5...
 	call palabra_de_tabla		;5214   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,04840h		;5217   ; ...en X = 0x48, Y = 0x40...
 	ld bc,00102h		;521a   ; ...una fila de 2 caracteres
-	call L_50E8		;521d
+	call mosaico_f2_b3		;521d   ; mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 	jp bancos_1_2_9		;5220   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 fichas_de_sprites:		; fichas de 4 bytes [orden][cuantos][patron de origen][de destino] hasta una orden 0: 1 da la vuelta de arriba abajo, las demas en espejo
 	ld a,(ix+000h)		;5223
@@ -3257,7 +3257,7 @@ L_5310:
 	xor a			;531f
 	ld (0dff8h),a		;5320   ; 0xDFF8 = 0
 	call bancos_1_2_3		;5323   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 07df4h		;5326   ; p01:7DF4
+	call 07df4h		;5326   ; cosas_fijas_en_la_otra: lo mismo en la otra pagina
 	call 08415h		;5329   ; borra_cb80:
 	call 08281h		;532c   ; llama_ab91: p06:AB91 guardando el banco de 0xA000
 	call 0b1a3h		;532f
@@ -3437,7 +3437,7 @@ copia_marcador:		; sin 0xCA5F, el marcador de una pagina a la otra
 	call L_5FAF		;54ae   ; ...p00:5FAF...
 	jp a_p12_6e3a		;54b1   ; ...y p00:5F68
 entra_en_sala_corta:		; la entrada a la sala con 0xD8A4: menos cosas
-	call 07bf1h		;54b4
+	call 07bf1h		;54b4   ; sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 	call 0823ch		;54b7   ; bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
 	call carga_y_pinta_sala		;54ba   ; carga_y_pinta_sala: la sala 0xCA4B al mapa de 0xDD00 y a la otra pagina, con los casos de la zona 0x12
 	call bancos_1_2_3		;54bd   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3527,7 +3527,7 @@ L_5560:
 	ld a,(hl)			;5569
 	and a			;556a
 	ld (hl),000h		;556b
-	call nz,07c77h		;556d
+	call nz,07c77h		;556d   ; musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 L_5570:
 	xor a			;5570   ; 0xD300 = 0
 	ld (0d300h),a		;5571
@@ -3578,7 +3578,7 @@ entra_en_sala_especial_1:		; entra en una sala de 0xCA76 con 0xD440 = 1
 	ld a,001h		;55d2
 L_55D4:
 	ld (0d440h),a		;55d4
-	call 07bf1h		;55d7
+	call 07bf1h		;55d7   ; sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 L_55DA:
 	call marcador_y_ventana		;55da   ; el marcador
 	call 0823ch		;55dd   ; bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
@@ -3588,7 +3588,7 @@ L_55DA:
 	call sala_banco_15		;55e9   ; sala_banco_15: p15:A005 con el banco 15
 	xor a			;55ec
 	ld (0dff8h),a		;55ed
-	call 07df4h		;55f0
+	call 07df4h		;55f0   ; cosas_fijas_en_la_otra: lo mismo en la otra pagina
 	call 08415h		;55f3   ; borra_cb80:
 	call apaga_sprites		;55f6   ; sin sprites
 	call sprites_de_sala_especial_bancos		;55f9   ; los sprites de la sala especial
@@ -3843,14 +3843,14 @@ pinta_mapa_aqui:		; C = 1: el mapa a la pagina de dibujar
 	ld c,001h		;57e5
 	jr L_57B0		;57e7
 vuelve_a_la_sala:		; p01:7BAA y la sala de 0xCA50
-	call 07baah		;57e9
+	call 07baah		;57e9   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	ld bc,(0ca50h)		;57ec   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	jr L_57FE		;57f0
 cambia_a_la_sala:		; la sala BC: 0xCA50 = C, 0xCA51 = B
 	push bc			;57f2
 	ld (0ca50h),bc		;57f3   ; guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-	call 07c0eh		;57f7
-	call 07baah		;57fa
+	call 07c0eh		;57f7   ; guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
+	call 07baah		;57fa   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	pop bc			;57fd
 L_57FE:
 	call 07bf5h		;57fe   ; p01:7BF5: A = la sala de la zona
@@ -4124,7 +4124,7 @@ limpia_sprites_y_d300:
 	ld bc,0006fh		;59f5
 	ld a,0e0h		;59f8
 	call llena_bloque		;59fa   ; llena_bloque: pone A en BC + 1 bytes desde HL
-	call 07baah		;59fd
+	call 07baah		;59fd   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	ld hl,0d300h		;5a00   ; 0xD300-0xD3FF a cero
 	ld bc,000ffh		;5a03
 	call borra_bloque		;5a06   ; borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -4181,7 +4181,7 @@ prepara_la_zona:		; C = la zona (o la de antes): las zonas 0x0B-0x10 no rehacen 
 	call mapas_de_bits_de_la_zona		;5a65   ; ...los mapas de bits de las salas (p00:5BA1)
 	ld a,(0ca64h)		;5a68   ; con 0xCA64 puesto, p01:6A6B
 	and a			;5a6b
-	call nz,06a6bh		;5a6c
+	call nz,06a6bh		;5a6c   ; sonido_04: pide el sonido 0x04
 L_5A6F:
 	call rachas_de_zona_a_e740		;5a6f   ; las rachas de la zona a 0xE740
 	call bancos_15		;5a72   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4227,7 +4227,7 @@ L_5AB4:
 	call 068e3h		;5ac6   ; p12:68E3
 	call L_5D9D		;5ac9
 	call bancos_1_2_3		;5acc   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 063ebh		;5acf   ; p01:63EB
+	call 063ebh		;5acf   ; borra_cc00_d760: 0xCC80-0xCCFF, 0xCC00-0xCC7F y 0xD760-0xD76F a cero
 	ld a,(0ca4ah)		;5ad2   ; en la zona 0x12...
 	cp 012h		;5ad5
 	jr nz,L_5AF8		;5ad7
@@ -4244,7 +4244,7 @@ L_5AB4:
 	ld a,(0ca42h)		;5af2   ; ...y la pagina de dibujar en negro
 	call borra_pantalla_de		;5af5   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 L_5AF8:
-	call 07bf1h		;5af8
+	call 07bf1h		;5af8   ; sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 	call musica_de_la_zona		;5afb   ; la musica de la zona (p00:5B33)
 copia_a_c700:		; copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
 	ld a,(0ca4ah)		;5afe   ; lee la zona
@@ -4311,7 +4311,7 @@ musica_de_la_zona_si:		; ni con 0xC697
 	inc a			;5b6b
 L_5B6C:
 	ld (0ca18h),a		;5b6c   ; la espera
-	jp 06be4h		;5b6f
+	jp 06be4h		;5b6f   ; orden_sonido_f4: la orden 0xF4 al sonido
 musica_de_la_zona_bancos_9:
 	call musica_de_la_zona_si		;5b72   ; musica_de_la_zona_si: ni con 0xC697
 	jp bancos_1_2_9		;5b75   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4725,7 +4725,7 @@ repinta_la_sala_si:		; apaga la pantalla y los sprites, vuelve a cargar la sala 
 	call apaga_pantalla_y_sprites		;5e09   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call esconde_sprites_ram		;5e0c   ; los sprites fuera
 	call esconde_sprites_vram		;5e0f   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-	call 07c0eh		;5e12   ; p01:7C0E
+	call 07c0eh		;5e12   ; guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
 	call carga_esta_sala		;5e15   ; la sala al mapa
 	ld a,(0d8a4h)		;5e18   ; con 0xD8A4: p00:5E8C
 	and a			;5e1b
@@ -4735,7 +4735,7 @@ repinta_la_sala_si:		; apaga la pantalla y los sprites, vuelve a cargar la sala 
 	and a			;5e24
 	jp nz,L_5EBC		;5e25
 	call sala_a_esta_segun		;5e28   ; la sala a la pagina de dibujar (p00:5EF0)
-	call 07de2h		;5e2b   ; p01:7DE2
+	call 07de2h		;5e2b   ; cosas_fijas_de_la_sala: lo fijo de la sala (p01:7E0D), p07:A4EB y p11:A20D
 	ld a,(0d8c0h)		;5e2e   ; con 0xD8C0 o 0xCA65 puestos se salta lo que sigue
 	and a			;5e31
 	jr nz,L_5E6D		;5e32
@@ -4768,7 +4768,7 @@ L_5E6D:
 	call sala_con_cb21		;5e6d   ; sala_con_cb21: salvo en la zona 0x12, la especial 0x29 o con 0xD433: p12:6E4B, o p12:6E4F con 0xCB21 = 8
 	ld a,(0d8c0h)		;5e70   ; sin 0xD8C0, p01:7C20
 	or a			;5e73
-	call z,07c20h		;5e74   ; p01:7C20
+	call z,07c20h		;5e74   ; vuelve_el_mapa: el mapa guardado en 0xE2C0 otra vez a 0xDD00 y lo de la sala en la otra pagina
 	ld a,(0cb21h)		;5e77   ; con 0xCB21 = 1, p02:8B70
 	dec a			;5e7a
 	call z,08b70h		;5e7b   ; a_p14_b712: p14:B712 con el banco 14 en 0xA000
@@ -4798,7 +4798,7 @@ L_5E8C:
 	pop hl			;5eae   ; el banco de antes...
 	ld a,l			;5eaf
 	call bancos_0_1		;5eb0   ; ...otra vez en 0x8000 (y el siguiente en 0xA000)
-	call 07c20h		;5eb3
+	call 07c20h		;5eb3   ; vuelve_el_mapa: el mapa guardado en 0xE2C0 otra vez a 0xDD00 y lo de la sala en la otra pagina
 L_5EB6:
 	call espera_vdp		;5eb6   ; al acabar el VDP, se enciende todo
 	jp enciende_todo		;5eb9   ; enciende_todo: la pantalla y los sprites encendidos
@@ -4831,7 +4831,7 @@ sala_a_esta_segun:		; con 0xD8C0: p07:A4A6
 	jp nz,a_p07_a4a6		;5ef4   ; a_p07_a4a6: p07:A4A6 con el banco 7 en 0xA000
 	ld a,(0ca65h)		;5ef7   ; con 0xCA65: 0x707E
 	and a			;5efa
-	jp nz,0707eh		;5efb
+	jp nz,0707eh		;5efb   ; mapa_96bf_en_la_otra: p01:708E con la pagina de dibujar cambiada un momento
 	jp pinta_mapa_aqui		;5efe   ; si no, el mapa a la pagina de dibujar
 a_p12_67e1:		; p12:67E1 con el banco 12 en 0x6000
 	call bancos_12		;5f01   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)

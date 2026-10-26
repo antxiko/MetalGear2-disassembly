@@ -48,7 +48,7 @@ DATA_tabla_800D:
 
 
 L_808F:
-	call 06ba4h		;808f
+	call 06ba4h		;808f   ; sonido_99: pide el sonido 0x99 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	call L_9152		;8092
 	ld hl,0e900h		;8095   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;8098   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
@@ -893,7 +893,7 @@ L_87B1:
 	call L_9175		;87ba
 	ret nz			;87bd
 	call 04266h		;87be   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 06e29h		;87c1   ; p01:6E29
+	call 06e29h		;87c1   ; mapa_de_bits_8098: el mapa de bits de p57:8098 en la VRAM de 0x0820
 	jp L_8148		;87c4
 L_87C7:
 	ld a,(0ca03h)		;87c7   ; lee el contador de cuadros (uno mas en cada interrupcion)
@@ -908,7 +908,7 @@ L_87C7:
 L_87DC:
 	call L_87F5		;87dc
 	ret nz			;87df
-	call 06be8h		;87e0
+	call 06be8h		;87e0   ; orden_sonido_f6: la orden 0xF6 al sonido
 	jp L_8148		;87e3
 L_87E6:
 	ld a,(0ca03h)		;87e6   ; lee el contador de cuadros (uno mas en cada interrupcion)
@@ -2617,7 +2617,7 @@ L_959D:
 	ld c,001h		;95a3
 	ld hl,09fc1h		;95a5
 	call L_9371		;95a8
-	call 06be8h		;95ab
+	call 06be8h		;95ab   ; orden_sonido_f6: la orden 0xF6 al sonido
 	jr L_960E		;95ae
 L_95B0:
 	ld c,001h		;95b0
@@ -2649,10 +2649,10 @@ L_95D6:
 	ld hl,09ff2h		;95e9
 	call 0463fh		;95ec   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
 	call 04606h		;95ef   ; enciende_todo: la pantalla y los sprites encendidos
-	call 06f07h		;95f2   ; p01:6F07
-	call 06f19h		;95f5   ; p01:6F19
+	call 06f07h		;95f2   ; letras_b093: 0x26 letras de p58:B093 en 4 bits, con el color 5, a la VRAM de 0x0080
+	call 06f19h		;95f5   ; dibujos_8114_en_e000: los dibujos de p52:8114 en la VRAM de 0xE000
 	call L_9522		;95f8
-	call 0715eh		;95fb   ; p01:715E
+	call 0715eh		;95fb   ; mosaico_bb4a: el mosaico en rachas de p54:BB4A (0x0B x 0x10) en X = 0x40, Y = 0x41
 	call L_9549		;95fe
 	ld hl,0d703h		;9601
 	ld (hl),006h		;9604
@@ -2669,7 +2669,7 @@ L_9613:
 	ld de,000b4h		;9616
 	and a			;9619
 	sbc hl,de		;961a
-	jp z,06cb2h		;961c   ; p01:6CB2
+	jp z,06cb2h		;961c   ; sonido_98: pide el sonido 0x98 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ret			;961f
 L_9620:
 	ld a,002h		;9620
@@ -2770,7 +2770,7 @@ L_96B9:
 	inc (hl)			;96d5
 	ld a,(hl)			;96d6
 	cp 084h		;96d7
-	jp z,06be8h		;96d9
+	jp z,06be8h		;96d9   ; orden_sonido_f6: la orden 0xF6 al sonido
 	cp 0b0h		;96dc
 	ret c			;96de
 	ld hl,0d703h		;96df
@@ -2814,9 +2814,9 @@ L_9715:
 	call 04266h		;9722   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0a01dh		;9725
 	call 0463fh		;9728   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-	call 07190h		;972b   ; p01:7190
+	call 07190h		;972b   ; mosaico_bbd5: el mosaico de p54:BBD5 (0x0C x 0x10) en X = 0x40, Y = 0x38
 	call 04606h		;972e   ; enciende_todo: la pantalla y los sprites encendidos
-	call 06bc0h		;9731   ; p01:6BC0
+	call 06bc0h		;9731   ; sonido_a3: pide el sonido 0xA3 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ld a,0c0h		;9734
 	ld (0d709h),a		;9736
 	ld hl,0d703h		;9739
@@ -2943,7 +2943,7 @@ L_97DE:
 	inc l			;9814
 	ld (hl),d			;9815
 	ld hl,0aa98h		;9816
-	call 06460h		;9819
+	call 06460h		;9819   ; mosaico_de_57: el mosaico de HL del banco 57-58 en X = 0, Y = 0xF0, 1 fila de 0x12, forma 0x0B
 	jp L_960E		;981c
 L_981F:
 	ld hl,0d70fh		;981f
@@ -2995,10 +2995,10 @@ L_9871:
 	ld de,00012h		;9884
 	add hl,de			;9887
 	ld (0d711h),hl		;9888
-	call 0646fh		;988b   ; p01:646F
+	call 0646fh		;988b   ; byte_de_57: A = (HL) del banco 57-58
 	jr z,L_9896		;988e
 	ld hl,(0d711h)		;9890
-	jp 06460h		;9893   ; p01:6460
+	jp 06460h		;9893   ; mosaico_de_57: el mosaico de HL del banco 57-58 en X = 0, Y = 0xF0, 1 fila de 0x12, forma 0x0B
 L_9896:
 	ld hl,0d703h		;9896
 	ld (hl),0ffh		;9899
@@ -3011,7 +3011,7 @@ L_98A1:
 	ld c,001h		;98a6
 	ld hl,0a01dh		;98a8
 	call L_9371		;98ab
-	call 06be8h		;98ae
+	call 06be8h		;98ae   ; orden_sonido_f6: la orden 0xF6 al sonido
 	jp L_960E		;98b1
 L_98B4:
 	ld c,001h		;98b4
@@ -3050,7 +3050,7 @@ L_98EA:
 	call 046ffh		;9900   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld a,001h		;9903
 	ld (0ca42h),a		;9905   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 07179h		;9908   ; p01:7179
+	call 07179h		;9908   ; mosaico_bc95: el mosaico en rachas de p54:BC95 (5 x 0x0C) en X = 0x50, Y = 0x50
 	xor a			;990b
 	ld (0ca42h),a		;990c   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ret			;990f
@@ -3082,8 +3082,8 @@ DATA_tabla_9928:
 
 
 L_9930:
-	call 064a5h		;9930   ; p01:64A5
-	call 064ddh		;9933   ; p01:64DD
+	call 064a5h		;9930   ; palabra_8042_d706: HL = la palabra 0xD706 de la tabla de p50:8042
+	call 064ddh		;9933   ; mensaje_abajo: el mensaje de HL en (0x10, 0x98), 4 lineas
 L_9936:
 	ld hl,0d702h		;9936
 	inc (hl)			;9939
@@ -3180,9 +3180,9 @@ L_99E3:
 	ld hl,0bcd3h		;99ef
 	ld de,07055h		;99f2
 	ld bc,00204h		;99f5
-	call 0647ah		;99f8
+	call 0647ah		;99f8   ; mosaico_de_54_bc: forma 0x0C en la franja 3
 	call L_960E		;99fb
-	jp 06bc4h		;99fe   ; p01:6BC4
+	jp 06bc4h		;99fe   ; sonido_a4: pide el sonido 0xA4 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_9A01:
 	ld hl,0d703h		;9a01
 	dec (hl)			;9a04
@@ -3349,11 +3349,11 @@ L_9B28:
 	inc l			;9b36
 	ld d,(hl)			;9b37
 	ld hl,(0d718h)		;9b38
-	call 06477h		;9b3b   ; p01:6477
+	call 06477h		;9b3b   ; mosaico_de_54: el mosaico de HL del banco 54 (2 filas de 1)
 	ld hl,(0d718h)		;9b3e
 	inc hl			;9b41
 	inc hl			;9b42
-	call 06482h		;9b43   ; p01:6482
+	call 06482h		;9b43   ; byte_de_54: A = (HL) del banco 54
 	cp 0ffh		;9b46
 	jr z,L_9B54		;9b48
 	inc hl			;9b4a
@@ -3412,7 +3412,7 @@ L_9BA3:
 	jp 07b40h		;9bb2   ; a_p04_8957: p04:8957 con el banco 4 en 0x8000
 L_9BB5:
 	ld de,08000h		;9bb5
-	jp 06e2ch		;9bb8   ; p01:6E2C
+	jp 06e2ch		;9bb8   ; mapa_de_bits_8098_en: el mapa de bits de p57:8098 (0xA8 filas de 0x40 bytes) en la VRAM de DE
 L_9BBB:
 	call 07b55h		;9bbb   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld c,001h		;9bbe
@@ -3442,7 +3442,7 @@ L_9BE6:
 	ld hl,0bcdbh		;9bf3
 	ld de,07458h		;9bf6
 	ld bc,00203h		;9bf9
-	call 0647ah		;9bfc   ; p01:647A
+	call 0647ah		;9bfc   ; mosaico_de_54_bc: forma 0x0C en la franja 3
 	jp L_9936		;9bff
 L_9C02:
 	ld hl,0d703h		;9c02
@@ -3481,7 +3481,7 @@ L_9C2A:
 L_9C3C:
 	call 045f1h		;9c3c   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_9625		;9c3f
-	call 06ec0h		;9c42   ; p01:6EC0
+	call 06ec0h		;9c42   ; mapa_de_bits_9c58_bancos:
 	call 04606h		;9c45   ; enciende_todo: la pantalla y los sprites encendidos
 	call 04650h		;9c48   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld hl,0d702h		;9c4b
@@ -3517,7 +3517,7 @@ L_9CCE:
 	ld c,002h		;9cce
 	ld hl,0a06dh		;9cd0
 	call L_94A3		;9cd3
-	call 06be8h		;9cd6
+	call 06be8h		;9cd6   ; orden_sonido_f6: la orden 0xF6 al sonido
 	jp L_960E		;9cd9
 L_9CDC:
 	ld c,002h		;9cdc
@@ -3542,7 +3542,7 @@ L_9D01:
 	push bc			;9d01
 	push de			;9d02
 	push af			;9d03
-	call 07b48h		;9d04   ; p01:7B48
+	call 07b48h		;9d04   ; dibujos_de_93e5_bancos_14:
 	pop af			;9d07
 	pop de			;9d08
 	pop bc			;9d09
@@ -3571,7 +3571,7 @@ L_9D2D:
 	ld (hl),a			;9d30
 	ld de,0a0a1h		;9d31
 	ld bc,00101h		;9d34
-	jp 050d6h		;9d37
+	jp 050d6h		;9d37   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9D3A:
 	ld a,(0d706h)		;9d3a
 	cp 038h		;9d3d
@@ -3591,7 +3591,7 @@ L_9D50:
 	ld (hl),a			;9d53
 	ld de,048c9h		;9d54
 	ld bc,00101h		;9d57
-	jp 050d6h		;9d5a
+	jp 050d6h		;9d5a   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9D5D:
 	ld a,(0d706h)		;9d5d
 	cp 038h		;9d60
@@ -3614,7 +3614,7 @@ L_9D75:
 	dec hl			;9d7b
 	ld de,0a8c9h		;9d7c
 	ld bc,00102h		;9d7f
-	jp 050d6h		;9d82
+	jp 050d6h		;9d82   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9D85:
 	ld a,(0d706h)		;9d85
 	cp 040h		;9d88
@@ -3634,7 +3634,7 @@ L_9D9A:
 	ld (hl),a			;9d9d
 	ld de,058d1h		;9d9e
 	ld bc,00101h		;9da1
-	jp 050d6h		;9da4
+	jp 050d6h		;9da4   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 L_9DA7:
 	call L_9E3B		;9da7
 	call L_9DB1		;9daa

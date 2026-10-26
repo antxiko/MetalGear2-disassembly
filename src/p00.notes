@@ -1524,6 +1524,30 @@ L 0x5043 sprites_de_en con los bancos 35-37
 L 0x504C sprites_de_670e p35:670E a 0xFA00
 L 0x5065 sprites_de_6860 
 L 0x506E sprites_de_858d p36:858D...
+L 0x507A mosaico_fc_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 12 de la franja 3 (p00:512C)
+L 0x5081 mosaico_fb_b2 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 11 de la franja 2 (p00:512C)
+L 0x5088 mosaico_f2_b0 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 0 (p00:512C)
+L 0x508E mosaico_f7_b0 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 0 (p00:512C)
+L 0x5094 mosaico_f8_b0 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 8 de la franja 0 (p00:512C)
+L 0x509A mosaico_f1_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 1 de la franja 1 (p00:512C)
+L 0x50A0 mosaico_f2_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
+L 0x50A6 mosaico_f5_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 1 (p00:512C)
+L 0x50AC mosaico_f6_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 6 de la franja 1 (p00:512C)
+L 0x50B2 mosaico_f7_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 1 (p00:512C)
+L 0x50B8 mosaico_f8_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 8 de la franja 1 (p00:512C)
+L 0x50BE mosaico_f9_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 9 de la franja 1 (p00:512C)
+L 0x50C4 mosaico_fa_b1 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 10 de la franja 1 (p00:512C)
+L 0x50CA mosaico_f0_b2 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 0 de la franja 2 (p00:512C)
+L 0x50D0 mosaico_f1_b2 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 1 de la franja 2 (p00:512C)
+L 0x50D6 mosaico_f2_b2 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
+L 0x50DC mosaico_f5_b2 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 2 (p00:512C)
+L 0x50E2 mosaico_f7_b2 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 2 (p00:512C)
+L 0x50E8 mosaico_f2_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
+L 0x50EE mosaico_f3_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 3 de la franja 3 (p00:512C)
+L 0x50F4 mosaico_f4_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 4 de la franja 3 (p00:512C)
+L 0x50FA mosaico_f5_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 5 de la franja 3 (p00:512C)
+L 0x5100 mosaico_f7_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 7 de la franja 3 (p00:512C)
+L 0x5106 mosaico_f8_b3 el mosaico de HL en (D, E), B filas de C caracteres, con la forma 8 de la franja 3 (p00:512C)
 L 0x510A mosaico_con_forma guarda la forma (BC de la entrada) en 0xCA48 y pinta el mosaico
 L 0x510F mosaico B filas de C caracteres de HL en DE, de la forma de 0xCA48
 L 0x512C caracter_de_mosaico pinta un caracter del mosaico de la forma de 0xCA48
@@ -1651,7 +1675,7 @@ L 0x5FE6 a_p12_6f41_b_7 a_p12_6f41 y deja el banco 7
 L 0x5FEB a_p12_6f41_b_8 a_p12_6f41 y deja el banco 8
 L 0x5FF1 slot_del_cartucho el slot de la pagina 1 (la del cartucho)...
 C 0x4059 slot_del_cartucho: el slot de la pagina 1 (la del cartucho)...
-C 0x4065 p01:7243
+C 0x4065 busca_la_ram: A = el slot con RAM en 0x8000: prueba los 4 slots y sus subslots (acarreo si la encuentra)
 C 0x4082 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x40B1 apunta a la copia del banco de 0x4000
 C 0x40B5 el mapper: pone en 0x4000 el banco de A
@@ -1685,14 +1709,15 @@ C 0x4230 el mapper: pone en 0x8000 el banco de A
 C 0x4257 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x4266 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x4270 rehace_marcador: el marcador: lineas, marco y barra de vida
-C 0x4276 p01:6DFF
+C 0x4276 dibujos_8037: los dibujos de p46:8037 en la VRAM de 0xA000
 C 0x4279 a_p12_6f41: p12:6F41 con el banco 12 en 0x6000
-C 0x4282 p01:6FF9
+C 0x4282 mosaicos_del_marcador: cuatro mosaicos del banco 46 en el marcador
 C 0x4288 borra_barra_de_vida: borra la barra de vida con el ancho de 0xCA52
 C 0x4293 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x429C barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
 C 0x42A2 barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
 C 0x42A8 lee lo largo de la barra de la derecha llena
+C 0x42AD lee el ancho de la tercera barra (lo maximo)
 C 0x42BC lee el ancho de la barra de vida (lo maximo)
 C 0x42D4 lee el ancho de la barra de vida (lo maximo)
 C 0x42E2 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -1929,6 +1954,7 @@ C 0x51DD bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x51FD bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5204 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x5214 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0x521D mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 C 0x5220 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x522A patrones_de_arriba_abajo: copia patrones de sprite de 16 x 16 dados la vuelta de arriba abajo
 C 0x5265 lee_de_vram_espera: espera al VDP y copia BC bytes de la VRAM de HL a DE
@@ -1942,7 +1968,7 @@ C 0x5316 mira_ca67: 0xCA67 = 1 en la zona 4, sala 9
 C 0x5319 bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
 C 0x531C carga_y_pinta_sala: la sala 0xCA4B al mapa de 0xDD00 y a la otra pagina, con los casos de la zona 0x12
 C 0x5323 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5326 p01:7DF4
+C 0x5326 cosas_fijas_en_la_otra: lo mismo en la otra pagina
 C 0x5329 borra_cb80: 
 C 0x532C llama_ab91: p06:AB91 guardando el banco de 0xA000
 C 0x5332 llama_aebb: p06:AEBB con el banco 6 en 0xA000
@@ -2022,6 +2048,7 @@ C 0x5492 marco_c4: p00:5F90 y las lineas de p00:439D, salvo en la zona 0x12 sala
 C 0x5498 a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
 C 0x549E a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
 C 0x54A8 copia_marcador_a_esta: copia las lineas 0x16-0x51 de la otra pagina a la de dibujar (YMMM)
+C 0x54B4 sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 C 0x54B7 bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
 C 0x54BA carga_y_pinta_sala: la sala 0xCA4B al mapa de 0xDD00 y a la otra pagina, con los casos de la zona 0x12
 C 0x54BD bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2041,6 +2068,7 @@ C 0x5518 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x554E guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0x5553 guarda la espera hasta poner la musica pendiente
 C 0x5556 p12:6BE4
+C 0x556D musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x557E borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x5584 llama_ab91: p06:AB91 guardando el banco de 0xA000
 C 0x559A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2048,8 +2076,10 @@ C 0x55A0 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 iz
 C 0x55AD guarda la X de Snake
 C 0x55B1 bancos_24_25_26: pone el 24 en 0x6000, el 25 en 0x8000, el 26 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x55C9 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0x55D7 sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 C 0x55DD bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
 C 0x55E9 sala_banco_15: p15:A005 con el banco 15
+C 0x55F0 cosas_fijas_en_la_otra: lo mismo en la otra pagina
 C 0x55F3 borra_cb80: 
 C 0x55FC a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
 C 0x55FF llama_ab91: p06:AB91 guardando el banco de 0xA000
@@ -2092,8 +2122,11 @@ C 0x5774 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5777 lee la zona
 C 0x577D lee la sala de la zona
 C 0x579A sala_banco_15: p15:A005 con el banco 15
+C 0x57E9 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0x57EC lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x57F3 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0x57F7 guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
+C 0x57FA borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0x580D bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5816 paleta_de_la_sala: la paleta comun y la de la sala
 C 0x581F guarda la sala de la zona
@@ -2142,11 +2175,13 @@ C 0x59E9 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0x59EC esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0x59EF apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 C 0x59FA llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x59FD borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0x5A06 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x5A09 d41a_y_compania: C = 0
 C 0x5A0C enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 C 0x5A25 limpia_sala: 0xD8D8-0xD8DF a cero
 C 0x5A4E sala_de_entrada: por la salida 1: 0xCA50 = 1; por la 2, la pareja de C en p02:827A
+C 0x5A6C sonido_04: pide el sonido 0x04
 C 0x5A72 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5A75 p15:A2EB
 C 0x5A78 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2159,12 +2194,14 @@ C 0x5AC0 p10:BC0F
 C 0x5AC3 bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5AC6 p12:68E3
 C 0x5ACC bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5ACF p01:63EB
+C 0x5ACF borra_cc00_d760: 0xCC80-0xCCFF, 0xCC00-0xCC7F y 0xD760-0xD76F a cero
 C 0x5AE7 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0x5AEC guarda la Y de Snake
 C 0x5AEF guarda la X de Snake
 C 0x5AF5 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
+C 0x5AF8 sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 C 0x5AFE lee la zona
+C 0x5B6F orden_sonido_f4: la orden 0xF4 al sonido
 C 0x5B72 musica_de_la_zona_si: ni con 0xC697
 C 0x5B75 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5B78 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -2236,9 +2273,9 @@ C 0x5DFD lee los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente
 C 0x5E01 repinta_la_sala_si: apaga la pantalla y los sprites, vuelve a cargar la sala y la pinta segun el caso
 C 0x5E09 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0x5E0F esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-C 0x5E12 p01:7C0E
+C 0x5E12 guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
 C 0x5E1E paleta_de_la_sala: la paleta comun y la de la sala
-C 0x5E2B p01:7DE2
+C 0x5E2B cosas_fijas_de_la_sala: lo fijo de la sala (p01:7E0D), p07:A4EB y p11:A20D
 C 0x5E34 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0x5E3A bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E3D bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2250,7 +2287,7 @@ C 0x5E61 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5E64 llama_abbb: p06:ABBB guardando el banco de 0xA000
 C 0x5E67 piezas_de_83dc: en las zonas 1-6, fila 3, columna 7: dos piezas (p02:8409) en Y = 0x88, X = 0x58 y 0x60
 C 0x5E6D sala_con_cb21: salvo en la zona 0x12, la especial 0x29 o con 0xD433: p12:6E4B, o p12:6E4F con 0xCB21 = 8
-C 0x5E74 p01:7C20
+C 0x5E74 vuelve_el_mapa: el mapa guardado en 0xE2C0 otra vez a 0xDD00 y lo de la sala en la otra pagina
 C 0x5E7B a_p14_b712: p14:B712 con el banco 14 en 0xA000
 C 0x5E7E pinta_cosas: las 4 cosas de 0xD7C0 que no tengan el bit 7 del numero
 C 0x5E81 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2258,6 +2295,7 @@ C 0x5E87 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x5E8F p10:AAA9
 C 0x5E92 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E99 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5EB3 vuelve_el_mapa: el mapa guardado en 0xE2C0 otra vez a 0xDD00 y lo de la sala en la otra pagina
 C 0x5EB9 enciende_todo: la pantalla y los sprites encendidos
 C 0x5EC5 guarda el puntero a los bloques de 4 x 4 de la sala y el byte siguiente (16 bits)
 C 0x5EC9 sala_a_ram: los 6 x 6 bloques de HL, de 4 x 4 caracteres, en el mapa de 0xDD00
@@ -2267,6 +2305,7 @@ C 0x5EDA lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x5EEA a_p12_6e4b: p12:6E4B con el banco 12 en 0x6000
 C 0x5EED a_p12_6e4f: p12:6E4F con el banco 12 en 0x6000
 C 0x5EF4 a_p07_a4a6: p07:A4A6 con el banco 7 en 0xA000
+C 0x5EFB mapa_96bf_en_la_otra: p01:708E con la pagina de dibujar cambiada un momento
 C 0x5F01 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x5F07 bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5F0A bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)

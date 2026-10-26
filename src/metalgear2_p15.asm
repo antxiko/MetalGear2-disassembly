@@ -329,7 +329,7 @@ L_A224:
 	ld (hl),a			;a22c
 	call L_A263		;a22d
 	ex de,hl			;a230
-	call 07d66h		;a231   ; p01:7D66
+	call 07d66h		;a231   ; copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
 	pop af			;a234
 	pop hl			;a235
 	ld (hl),a			;a236
@@ -538,7 +538,7 @@ DATA_tabla_A36F:
 
 
 L_A399:
-	ld a,(0cb4bh)		;a399
+	ld a,(0cb4bh)		;a399   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	and a			;a39c
 	ret nz			;a39d
 	ld a,(ix+004h)		;a39e
@@ -622,8 +622,8 @@ L_A406:
 L_A40F:
 	call L_A263		;a40f
 	ex de,hl			;a412
-	call 07d66h		;a413
-	call 06c33h		;a416
+	call 07d66h		;a413   ; copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
+	call 06c33h		;a416   ; sonido_46: pide el sonido 0x46
 	jp L_A85F		;a419
 L_A41C:
 	ld a,(ix+001h)		;a41c
@@ -895,7 +895,7 @@ L_A5C6:
 	ld (ix+009h),a		;a5d0
 	call L_A5DC		;a5d3
 	call L_A887		;a5d6
-	jp 06a4ch		;a5d9   ; p01:6A4C
+	jp 06a4ch		;a5d9   ; sonido_16: pide el sonido 0x16
 L_A5DC:
 	ld hl,0c0d4h		;a5dc
 	ld bc,0402ch		;a5df
@@ -1267,7 +1267,7 @@ L_A807:
 	ld a,0cah		;a820
 L_A822:
 	ld (0d8e0h),hl		;a822   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7 y el byte siguiente (16 bits)
-	ld (0d8e2h),a		;a825
+	ld (0d8e2h),a		;a825   ; guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter
 	ld d,(ix+003h)		;a828
 	push de			;a82b
 	push bc			;a82c
@@ -1275,7 +1275,7 @@ L_A822:
 	add a,c			;a82e
 	add a,b			;a82f
 	ld d,a			;a830
-	ld a,(0d8e2h)		;a831
+	ld a,(0d8e2h)		;a831   ; lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
 	rra			;a834
 	ld h,0e6h		;a835
 	jr nc,L_A83A		;a837
@@ -1288,7 +1288,7 @@ L_A83A:
 	pop de			;a842
 	ld a,(0d8e1h)		;a843
 	ld l,a			;a846
-	ld a,(0d8e2h)		;a847
+	ld a,(0d8e2h)		;a847   ; lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
 	add a,b			;a84a
 	ld h,a			;a84b
 L_A84C:
@@ -1563,8 +1563,8 @@ L_A9DC:
 	ld bc,0000fh		;a9df
 	ld a,0e0h		;a9e2
 	call 04237h		;a9e4   ; llena_bloque: pone A en BC + 1 bytes desde HL
-	call 067efh		;a9e7   ; p01:67EF
-	jp 067cdh		;a9ea
+	call 067efh		;a9e7   ; sprites_a_vram_bancos_15:
+	jp 067cdh		;a9ea   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 L_A9ED:
 	call L_AAF6		;a9ed
 	push af			;a9f0
@@ -1583,7 +1583,7 @@ L_A9ED:
 L_AA08:
 	call L_ABB9		;aa08
 L_AA0B:
-	call 07baah		;aa0b
+	call 07baah		;aa0b   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	call 08d4bh		;aa0e
 	pop bc			;aa11
 	pop af			;aa12
@@ -1619,7 +1619,7 @@ L_AA4D:
 	ld (0d4e2h),a		;aa52
 	ld a,(0ca5fh)		;aa55
 	and a			;aa58
-	call z,07a43h		;aa59
+	call z,07a43h		;aa59   ; musica_de_la_zona_bancos_15:
 L_AA5C:
 	jp 04606h		;aa5c   ; enciende_todo: la pantalla y los sprites encendidos
 L_AA5F:
@@ -1635,7 +1635,7 @@ L_AA6C:
 	jr z,L_AA5F		;aa71
 	cp 003h		;aa73
 	jr nz,L_AA5C		;aa75
-	call 06b99h		;aa77
+	call 06b99h		;aa77   ; sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 	jr L_AA5C		;aa7a
 L_AA7C:
 	ld a,(0ca4bh)		;aa7c   ; lee la sala de la zona
@@ -1681,9 +1681,9 @@ L_AAA2:
 	xor a			;aac0
 	ld (0d8a4h),a		;aac1
 	ld (hl),a			;aac4
-	call 06077h		;aac5   ; p01:6077
+	call 06077h		;aac5   ; borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
 	ld a,001h		;aac8
-	call 06077h		;aaca
+	call 06077h		;aaca   ; borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
 	call 08d56h		;aacd   ; rehace_marcador_b_1_2_15: rehace_marcador y deja los bancos 1, 2 y 15
 	call 08d6dh		;aad0   ; a_p10_b9e5: p10:B9E5 con el banco 10 en 0xA000
 	ld bc,00600h		;aad3
@@ -1753,7 +1753,7 @@ L_AB4F:
 	ld (0ca76h),a		;ab55   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	push de			;ab58
 	push bc			;ab59
-	call 07baah		;ab5a
+	call 07baah		;ab5a   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	call 08d4bh		;ab5d
 	call 08d50h		;ab60   ; mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 	call 08d46h		;ab63   ; lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
@@ -1794,7 +1794,7 @@ L_ABB0:
 	ld a,(0ca51h)		;abb0   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp 007h		;abb3
 	ret nz			;abb5
-	jp 06aeah		;abb6   ; p01:6AEA
+	jp 06aeah		;abb6   ; sonido_35: pide el sonido 0x35
 L_ABB9:
 	ld a,(0ca4ah)		;abb9   ; lee la zona
 	ld c,a			;abbc
@@ -1888,7 +1888,7 @@ L_AC5E:
 	call 08d3ch		;ac6c   ; p02:8D3C
 	xor a			;ac6f
 	ld (0ca76h),a		;ac70   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
-	call 07baah		;ac73
+	call 07baah		;ac73   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	call 08d4bh		;ac76
 	pop bc			;ac79
 	call L_ABB9		;ac7a
@@ -1919,12 +1919,12 @@ L_AC97:
 L_ACB2:
 	xor a			;acb2
 	ld (0d4e2h),a		;acb3
-	jp 07a43h		;acb6   ; p01:7A43
+	jp 07a43h		;acb6   ; musica_de_la_zona_bancos_15:
 L_ACB9:
 	ld a,(0caf6h)		;acb9
 	dec a			;acbc
 	dec a			;acbd
-	jp z,06be0h		;acbe
+	jp z,06be0h		;acbe   ; orden_sonido_f3: la orden 0xF3 al sonido
 	dec a			;acc1
 	ret nz			;acc2
 	xor a			;acc3
@@ -1934,7 +1934,7 @@ L_ACB9:
 L_ACCD:
 	call L_AAF6		;accd
 	push bc			;acd0
-	call 07baah		;acd1
+	call 07baah		;acd1   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	call 08d4bh		;acd4   ; p02:8D4B
 	pop bc			;acd7
 	call L_ABB9		;acd8
@@ -2434,8 +2434,8 @@ L_B9D5:
 	ld (ix+007h),004h		;b9e6
 	ld (ix+00ch),003h		;b9ea
 	call L_BB99		;b9ee
-	call 06b6dh		;b9f1
-	call 06b12h		;b9f4   ; p01:6B12
+	call 06b6dh		;b9f1   ; sonido_77: pide el sonido 0x77 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+	call 06b12h		;b9f4   ; sonido_05: pide el sonido 0x05
 	jp L_B968		;b9f7
 L_B9FA:
 	push bc			;b9fa
@@ -2614,8 +2614,8 @@ L_BB33:
 	cp 010h		;bb36
 	ret c			;bb38
 	call 08100h		;bb39
-	jp z,06af2h		;bb3c   ; p01:6AF2
-	jp 06c13h		;bb3f   ; p01:6C13
+	jp z,06af2h		;bb3c   ; sonido_36: pide el sonido 0x36
+	jp 06c13h		;bb3f   ; sonido_37: pide el sonido 0x37
 L_BB42:
 	ld hl,0d8b7h		;bb42
 	ld a,(hl)			;bb45
@@ -2645,7 +2645,7 @@ L_BB54:
 	ld e,(ix+003h)		;bb71
 	ld a,0f0h		;bb74
 	ld b,001h		;bb76
-	call 07a4eh		;bb78   ; p01:7A4E
+	call 07a4eh		;bb78   ; apunta_con_b_bancos_15:
 	ld (ix+01eh),h		;bb7b
 	ld (ix+01dh),l		;bb7e
 	ld (ix+01ch),d		;bb81
@@ -2758,15 +2758,15 @@ L_BCD5:
 	ld de,05030h		;bcde
 	call L_BDB2		;bce1
 	ld de,09040h		;bce4
-	call 062a5h		;bce7
+	call 062a5h		;bce7   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,03050h		;bcea
 	ld bc,00602h		;bced
 	call L_BDB2		;bcf0
 	ld de,04070h		;bcf3
-	call 062a5h		;bcf6
+	call 062a5h		;bcf6   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,08030h		;bcf9
 	ld bc,00802h		;bcfc
-	call 062a5h		;bcff
+	call 062a5h		;bcff   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,05090h		;bd02
 	ld bc,0020eh		;bd05
 	jr L_BD40		;bd08
@@ -2775,41 +2775,41 @@ L_BD0A:
 	ld bc,00206h		;bd0d
 	call L_BDB2		;bd10
 	ld de,09060h		;bd13
-	call 062a5h		;bd16
+	call 062a5h		;bd16   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,09000h		;bd19
 	ld bc,00402h		;bd1c
 	call L_BDB2		;bd1f
 	ld de,09070h		;bd22
-	call 062a5h		;bd25
+	call 062a5h		;bd25   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,03020h		;bd28
 	ld bc,00602h		;bd2b
-	call 062a5h		;bd2e
+	call 062a5h		;bd2e   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,04020h		;bd31
 	ld bc,0020ch		;bd34
-	call 062a5h		;bd37
+	call 062a5h		;bd37   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,00090h		;bd3a
 	ld bc,00218h		;bd3d
 L_BD40:
-	jp 062a5h		;bd40   ; p01:62A5
+	jp 062a5h		;bd40   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 L_BD43:
 	ld de,06030h		;bd43
 	ld bc,00206h		;bd46
 	call L_BDB2		;bd49
 	ld de,00060h		;bd4c
-	call 062a5h		;bd4f
+	call 062a5h		;bd4f   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,03060h		;bd52
 	ld bc,00602h		;bd55
 	call L_BDB2		;bd58
 	ld de,06050h		;bd5b
 	call L_BDB2		;bd5e
 	ld de,09030h		;bd61
-	call 062a5h		;bd64
+	call 062a5h		;bd64   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,04000h		;bd67
 	ld bc,00804h		;bd6a
-	call 062a5h		;bd6d
+	call 062a5h		;bd6d   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,07050h		;bd70
 	ld bc,00204h		;bd73
-	call 062a5h		;bd76
+	call 062a5h		;bd76   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld bc,00202h		;bd79
 	ld de,00090h		;bd7c
 	jr L_BD40		;bd7f
@@ -2818,13 +2818,13 @@ L_BD81:
 	ld bc,00206h		;bd84
 	call L_BDB2		;bd87
 	ld de,06080h		;bd8a
-	call 062a5h		;bd8d
+	call 062a5h		;bd8d   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld bc,00802h		;bd90
 	ld de,09080h		;bd93
-	call 062a5h		;bd96
+	call 062a5h		;bd96   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,02040h		;bd99
 	ld bc,00404h		;bd9c
-	call 062a5h		;bd9f
+	call 062a5h		;bd9f   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	ld de,02080h		;bda2
 	ld bc,00408h		;bda5
 	jr L_BD40		;bda8
@@ -2834,7 +2834,7 @@ L_BDAA:
 	jr L_BD40		;bdb0
 L_BDB2:
 	push bc			;bdb2
-	call 062a5h		;bdb3
+	call 062a5h		;bdb3   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	pop bc			;bdb6
 	ret			;bdb7
 L_BDB8:
@@ -2929,7 +2929,7 @@ L_BE35:
 	jr nc,L_BE0C		;be44
 	jr L_BE18		;be46
 L_BE48:
-	ld a,(0cab5h)		;be48
+	ld a,(0cab5h)		;be48   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	ld hl,lbe54h		;be4b
 	call 043f6h		;be4e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld (0d42bh),hl		;be51

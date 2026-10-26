@@ -88,7 +88,7 @@ C 0xA49D lee la sala de la zona
 C 0xA4E4 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA4EE copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xA527 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
-C 0xA52B p01:6C2F
+C 0xA52B sonido_45: pide el sonido 0x45
 C 0xA542 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA54C copia_en_y: orden YMMM del VDP
 C 0xA575 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
@@ -135,17 +135,23 @@ C 0xAA89 tabla_AA8F: 13 destinos del despachador p00
 C 0xAA8C despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAABF guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0xAAD3 a_p03_b67d_b_10: a_p03_b67d y deja el banco 10
+C 0xAAD6 sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAADB a_p03_b6c8_b_10: a_p03_b6c8 y deja el banco 10
+C 0xAAE6 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xAAEB mensaje_cada_cuadro_bancos_10: 
+C 0xAAEF llama_7a27_1_bancos_10: 
 C 0xAAFC lee la sala de la zona
 C 0xAB45 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xAB4D p01:6B75
-C 0xAB74 p01:6CBA
-C 0xAB79 p01:6CB6
+C 0xAB4D sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xAB53 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xAB74 sonido_97: pide el sonido 0x97 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xAB79 sonido_65: pide el sonido 0x65
 C 0xAB80 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAB92 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xABA5 p01:61FE
-C 0xABA9 p01:7A3E
+C 0xABA5 mensaje_cada_cuadro_bancos_10: 
+C 0xABA9 llama_7a27_1_bancos_10: 
 C 0xABB9 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xABCE sonido_05: pide el sonido 0x05
 C 0xAC23 lee la Y de Snake
 C 0xAC27 lee la X de Snake
 C 0xAC48 p04:9B30
@@ -153,15 +159,19 @@ C 0xAC5F azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAC77 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xACBC suma_a_hl: HL = HL + A
 C 0xACCA borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xACE7 sonido_1d: pide el sonido 0x1D
+C 0xAD1E sonido_15: pide el sonido 0x15
 C 0xAD2A suma_a_hl: HL = HL + A
 C 0xAD6E suma_a_hl: HL = HL + A
 C 0xAD8B rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 C 0xADCD palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xADDC sonido_14: pide el sonido 0x14
 C 0xADE9 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xADF5 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAE1E llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAEBB lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAEC3 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xAED6 vida_que_se_va: con 0xCB4B (y sin 0xCB3C), la vida baja un punto cada 16 cuadros (0xCB4E)
 C 0xAEED espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xAEF0 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xAEF6 scroll_a_cero: R#23 = 0 (el desplazamiento vertical)
@@ -171,6 +181,7 @@ C 0xAF05 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y o
 C 0xAF21 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xAF24 enciende_todo: la pantalla y los sprites encendidos
 C 0xAF2D borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xAF30 vida_que_se_va: con 0xCB4B (y sin 0xCB3C), la vida baja un punto cada 16 cuadros (0xCB4E)
 C 0xAF42 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xAF45 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xAF4B scroll_a_cero: R#23 = 0 (el desplazamiento vertical)
@@ -182,7 +193,8 @@ C 0xAF77 lee la fila de la sala en la zona (uno mas al salir por arriba) y el by
 C 0xAF82 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xAF85 enciende_todo: la pantalla y los sprites encendidos
 C 0xAFE8 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xB00B p01:64B7
+C 0xB005 letrero_de_50: el letrero con sitio de la palabra HL del banco 50
+C 0xB00B letrero_de_50: el letrero con sitio de la palabra HL del banco 50
 C 0xB09F suma_a_hl: HL = HL + A
 C 0xB0BE palabra_a6af_d708: HL = la palabra 0xD708 - 1 de p56:A6AF
 C 0xB0D9 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
@@ -195,13 +207,13 @@ C 0xB15E copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 C 0xB167 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB17A borra_bloque_pagina: p00:46FF en la pagina en la que se dibuja (0xCA42)
 C 0xB182 rachas_b2d5: p37:B2D5 y 4 patrones de sprite en espejo de 0xF800 a 0xF890
-C 0xB191 lee lo recien pulsado de las teclas de funcion
+C 0xB191 lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 C 0xB1CB lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB1DC sonido_11: pide el sonido 0x11
 C 0xB1DF p02:8ECD
 C 0xB1EF p02:8EE5
 C 0xB201 p02:8ED2
-C 0xB204 lee lo recien pulsado de las teclas de funcion
+C 0xB204 lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 C 0xB238 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB264 apunta a el ancho de la barra de vida (lo maximo)
 C 0xB275 a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
@@ -209,9 +221,13 @@ C 0xB27B a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
 C 0xB282 lee el ancho de la barra de vida (lo maximo)
 C 0xB285 guarda la vida de Snake (lo largo de la barra)
 C 0xB288 barras_bancos_1_2_10: p00:4288 y los bancos 1, 2 y 10
+C 0xB28B sonido_4d: pide el sonido 0x4D
+C 0xB28E lee con el puesto, la vida baja un punto cada 16 cuadros
+C 0xB293 sonido_5c: pide el sonido 0x5C
 C 0xB2AC borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB2D4 a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
 C 0xB2DA a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
+C 0xB2F1 sonido_22: pide el sonido 0x22
 C 0xB2F8 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB311 sonido_11: pide el sonido 0x11
 C 0xB31E sonido_11: pide el sonido 0x11
@@ -226,8 +242,12 @@ C 0xB3BE copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xB3F6 borra_bloque_pagina: p00:46FF en la pagina en la que se dibuja (0xCA42)
 C 0xB41A suma_a_hl: HL = HL + A
 C 0xB429 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
+C 0xB458 sonido_5c: pide el sonido 0x5C
+C 0xB45E sonido_5c: pide el sonido 0x5C
+C 0xB464 sonido_5c: pide el sonido 0x5C
 C 0xB477 pon_cb35: 0xCB35 = 1 si 0xCB20 es 1, 2, 5 o 6
 C 0xB48F despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB4B1 lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xB4B7 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB4D1 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB4D7 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
@@ -236,11 +256,17 @@ C 0xB4EA lee la zona
 C 0xB4F1 lee la sala de la zona
 C 0xB55E lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB569 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xB586 sonido_5c: pide el sonido 0x5C
+C 0xB58C sonido_5c: pide el sonido 0x5C
+C 0xB592 sonido_5c: pide el sonido 0x5C
+C 0xB598 sonido_5c: pide el sonido 0x5C
+C 0xB59E sonido_5c: pide el sonido 0x5C
 C 0xB5BF rachas_b007_af4c_bancos_10: 
 C 0xB5C8 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB5CE estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xB5DE lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB5E5 lee la sala de la zona
+C 0xB5EF lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xB5F6 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB60A lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB617 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
@@ -262,48 +288,58 @@ C 0xB769 lee la sala de la zona
 C 0xB799 apunta a lo largo de la barra de la derecha llena
 C 0xB7A8 lee la zona
 C 0xB7AD barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
+C 0xB7B0 apunta a el ancho de la tercera barra (lo maximo)
 C 0xB7B6 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xB7BF lee la zona
 C 0xB7C4 barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
 C 0xB7DD borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xB7E8 lee la zona
-C 0xB7ED p01:7053
-C 0xB7F0 p01:7042
+C 0xB7ED marco_derecha_ca54_bancos_10: 
+C 0xB7F0 marco_derecha_cac4_bancos_10: 
 C 0xB7F3 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xB7FA apunta a lo largo de la barra de la derecha llena
 C 0xB800 borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
+C 0xB803 marco_derecha_cac4_bancos_10: 
 C 0xB806 marco_barra_cac4: el marco de la barra de la derecha con el ancho de 0xCAC4
 C 0xB809 barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 C 0xB80E apunta a lo largo de la barra de la derecha llena
+C 0xB814 apunta a el ancho de la tercera barra (lo maximo)
 C 0xB829 barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
+C 0xB83F apunta a el ancho de la tercera barra (lo maximo)
 C 0xB845 borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
+C 0xB848 marco_derecha_ca54_bancos_10: 
 C 0xB84B marco_barra_ca54: el marco de la barra de la derecha con el ancho de 0xCA54
 C 0xB84E barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
+C 0xB853 apunta a el ancho de la tercera barra (lo maximo)
 C 0xB859 apunta a lo largo de la barra de la derecha llena
 C 0xB85C lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xB86F barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 C 0xB877 rachas_b34a: p37:B34A a la VRAM de 0x1E200 (A = 1)
 C 0xB892 suma_a_hl: HL = HL + A
+C 0xB898 sonido_22: pide el sonido 0x22
 C 0xB89B repinta_la_sala_b_1_2_10: repinta_la_sala y deja los bancos 1, 2 y 10
 C 0xB8A8 guarda 1 mientras Snake se da la vuelta
 C 0xB8AF guarda el quinto byte de la ficha de la sala (p02:877F)
 C 0xB8BA a_p03_b4e0_2: p03:B4E0 con el banco 3 en 0xA000
 C 0xB8BE lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB8C1 marco: cuatro lineas: un marco de D x E desde HL
-C 0xB8D2 p01:64C3
+C 0xB8D2 letrero_a_de_50: el letrero A de la tabla de la palabra HL del banco 50, en (0x0C, 0x94)
 C 0xB8EC letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
 C 0xB8F5 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
 C 0xB8F8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB908 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xB931 letrero_a_de_50: el letrero A de la tabla de la palabra HL del banco 50, en (0x0C, 0x94)
 C 0xB945 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB954 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xB95D borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB9B8 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
-C 0xB9C8 p01:71F4
+C 0xB9C8 palabra_de_96ab_bancos_10: 
 C 0xB9E0 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
-C 0xB9EF p01:649C
+C 0xB9EF palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
+C 0xBA12 palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
 C 0xBA43 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBA4E copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xBA51 apunta a con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBA5A esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBA7B apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xBA81 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
@@ -311,19 +347,27 @@ C 0xBA90 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0
 C 0xBA93 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xBA9B llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xBAA5 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xBAB3 apunta a con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBABC esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBAC0 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xBAC3 apunta a la copia de la tabla de colores de sprites: 32 x 16 lineas (va con 0xDC00 detras)
+C 0xBB2B lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBB30 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xBB40 sonido_22: pide el sonido 0x22
+C 0xBB48 sonido_22: pide el sonido 0x22
+C 0xBB50 lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBB55 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xBB64 suma_a_hl: HL = HL + A
 C 0xBB72 lee la vida de Snake (lo largo de la barra)
 C 0xBB76 lee el ancho de la barra de vida (lo maximo)
 C 0xBB81 a_p03_be60_2: p03:BE60 con el banco 3 en 0xA000
 C 0xBB87 a_p03_be42: p03:BE42 con el banco 3 en 0xA000
+C 0xBB9B sonido_22: pide el sonido 0x22
 C 0xBBA1 a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
 C 0xBBA7 a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
 C 0xBBC6 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
+C 0xBBDD lee con el puesto, la vida baja un punto cada 16 cuadros
+C 0xBBFB guarda con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBC09 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBC0C a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 C 0xBC0F lee la zona
@@ -353,8 +397,8 @@ C 0xBEF8 lee la fila de la sala en la zona (uno mas al salir por arriba) y el by
 C 0xBF1B lee la Y de Snake
 C 0xBF31 lee la X de Snake
 C 0xBF44 guarda la X de Snake
-C 0xBF4F p01:6AE6
-C 0xBF62 p01:6B49
+C 0xBF4F sonido_34: pide el sonido 0x34
+C 0xBF62 sonido_56: pide el sonido 0x56
 C 0xBF77 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xBF8A lee la X de Snake
 C 0xBFA0 lee la Y de Snake

@@ -105,7 +105,7 @@ L_A070:
 L_A076:
 	ld a,008h		;a076
 	ld (0d8b7h),a		;a078
-	jp 06c17h		;a07b
+	jp 06c17h		;a07b   ; sonido_48: pide el sonido 0x48
 L_A07E:
 	ld b,0ffh		;a07e
 	cp 005h		;a080
@@ -286,7 +286,7 @@ L_A1AC:
 	ld l,a			;a1af
 	ld a,(0cb05h)		;a1b0   ; lee la X de Snake
 	ld h,a			;a1b3
-	call 07f69h		;a1b4   ; p01:7F69
+	call 07f69h		;a1b4   ; caracter_en: A = el caracter del mapa en (H = X, L = Y)
 	ld b,a			;a1b7
 	ld a,(0ca76h)		;a1b8   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	or a			;a1bb
@@ -610,7 +610,7 @@ L_A3B2:
 	ret			;a3c7
 L_A3C8:
 	xor a			;a3c8
-	ld hl,0cb4bh		;a3c9
+	ld hl,0cb4bh		;a3c9   ; apunta a con el puesto, la vida baja un punto cada 16 cuadros
 	ld (hl),001h		;a3cc
 	inc l			;a3ce
 	ld (hl),004h		;a3cf
@@ -692,7 +692,7 @@ L_A461:
 	jr nz,L_A497		;a46c
 L_A46E:
 	push hl			;a46e
-	call 06a97h		;a46f   ; p01:6A97
+	call 06a97h		;a46f   ; sonido_27: pide el sonido 0x27
 	pop hl			;a472
 	inc hl			;a473
 	ld e,(hl)			;a474
@@ -738,11 +738,11 @@ L_A4AB:
 	ret			;a4ac
 L_A4AD:
 	or a			;a4ad
-	jp z,05088h		;a4ae   ; p00:5088
+	jp z,05088h		;a4ae   ; mosaico_f2_b0: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 0 (p00:512C)
 	dec a			;a4b1
-	jp z,050a0h		;a4b2
+	jp z,050a0h		;a4b2   ; mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 	dec a			;a4b5
-	jp z,050d6h		;a4b6
+	jp z,050d6h		;a4b6   ; mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 	ret			;a4b9
 
 ; ----------------------------------------------------------------------
@@ -792,7 +792,7 @@ L_A4E8:
 	cp 00bh		;a519
 	ret nz			;a51b
 L_A51C:
-	jp 06c7fh		;a51c   ; p01:6C7F
+	jp 06c7fh		;a51c   ; sonido_5e: pide el sonido 0x5E
 L_A51F:
 	ld a,(0ca4ah)		;a51f   ; lee la zona
 	cp 006h		;a522
@@ -1111,7 +1111,7 @@ L_A6EC:
 L_A6F9:
 	call L_A710		;a6f9
 	call L_A7D9		;a6fc
-	ld hl,0cb4bh		;a6ff
+	ld hl,0cb4bh		;a6ff   ; apunta a con el puesto, la vida baja un punto cada 16 cuadros
 	ld a,(hl)			;a702
 	or a			;a703
 	ret z			;a704
@@ -1125,7 +1125,7 @@ L_A6F9:
 	ld (hl),a			;a70e
 	ret			;a70f
 L_A710:
-	ld hl,0d8e2h		;a710
+	ld hl,0d8e2h		;a710   ; apunta a 0: p01:62B5 copia con ldir; 1: caracter a caracter
 	call L_A798		;a713
 	ld a,(hl)			;a716
 	or a			;a717
@@ -1139,7 +1139,7 @@ L_A710:
 	ld l,a			;a725
 	ld a,(0cb05h)		;a726   ; lee la X de Snake
 	ld h,a			;a729
-	call 07f69h		;a72a
+	call 07f69h		;a72a   ; caracter_en: A = el caracter del mapa en (H = X, L = Y)
 	or a			;a72d
 	jr z,L_A780		;a72e
 	cp 001h		;a730
@@ -1172,16 +1172,16 @@ L_A748:
 	dec (hl)			;a765
 	ld a,(hl)			;a766
 	or a			;a767
-	jp nz,06c6bh		;a768
+	jp nz,06c6bh		;a768   ; sonido_53: pide el sonido 0x53
 	ld hl,0cb00h		;a76b   ; apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld (hl),01bh		;a76e
-	jp 06ba0h		;a770
+	jp 06ba0h		;a770   ; sonido_8d: pide el sonido 0x8D (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_A773:
 	ld hl,0cb38h		;a773
 	ld (hl),001h		;a776
 	ld a,010h		;a778
 	ld (0cb29h),a		;a77a
-	jp 06c6bh		;a77d
+	jp 06c6bh		;a77d   ; sonido_53: pide el sonido 0x53
 L_A780:
 	ld a,001h		;a780
 	ld (0cb37h),a		;a782
@@ -1308,7 +1308,7 @@ L_A847:
 	ld a,(ix+00dh)		;a852
 	cp 004h		;a855
 	ret nz			;a857
-	call 06a1dh		;a858   ; p01:6A1D
+	call 06a1dh		;a858   ; sonido_0b: pide el sonido 0x0B
 	push ix		;a85b
 	ld e,(ix+00ah)		;a85d
 	ld d,(ix+00bh)		;a860
@@ -1359,7 +1359,7 @@ L_A8A9:
 	ld (ix+006h),a		;a8b8
 	ld (ix+009h),a		;a8bb
 	ld (ix+008h),a		;a8be
-	jp 06a44h		;a8c1
+	jp 06a44h		;a8c1   ; sonido_14: pide el sonido 0x14
 L_A8C4:
 	call L_A8CB		;a8c4
 	ret nz			;a8c7
@@ -1382,7 +1382,7 @@ L_A8E1:
 	ret nz			;a8e4
 	jp 09caah		;a8e5   ; p04:9CAA
 L_A8E8:
-	call 06a29h		;a8e8   ; p01:6A29
+	call 06a29h		;a8e8   ; sonido_0e: pide el sonido 0x0E
 	ld (hl),001h		;a8eb
 	inc hl			;a8ed
 	ld (hl),001h		;a8ee
@@ -1407,7 +1407,7 @@ L_A8E8:
 	ld a,048h		;a91f
 	jp 09c5bh		;a921
 L_A924:
-	call 06c2bh		;a924   ; p01:6C2B
+	call 06c2bh		;a924   ; sonido_43: pide el sonido 0x43
 	ld (hl),001h		;a927
 	ld (iy+00eh),c		;a929
 	ld (iy+000h),007h		;a92c
@@ -1685,7 +1685,7 @@ L_AAC8:
 	ld de,02888h		;aadd
 	ld bc,00202h		;aae0
 	ld hl,0ab19h		;aae3   ; mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
-	jp 050a0h		;aae6
+	jp 050a0h		;aae6   ; mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 L_AAE9:
 	ld a,(0ca4ah)		;aae9   ; lee la zona
 	cp 00bh		;aaec
@@ -1700,7 +1700,7 @@ L_AAE9:
 	ld de,02888h		;aafd
 	ld bc,00202h		;ab00
 	ld hl,0ab1dh		;ab03   ; mosaico_AB1D: un mosaico de 2 x 2 caracteres, un byte cada uno
-	call 050e8h		;ab06   ; p00:50E8
+	call 050e8h		;ab06   ; mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 	xor a			;ab09
 	sub 0a0h		;ab0a
 	ret			;ab0c
@@ -1770,7 +1770,7 @@ L_AB53:
 	ld hl,0ab7dh		;ab53   ; mosaico_AB7D: un mosaico de 5 x 4 caracteres, un byte cada uno
 	ld de,04080h		;ab56
 	ld bc,00504h		;ab59
-	call 050a0h		;ab5c
+	call 050a0h		;ab5c   ; mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 	ld hl,040a0h		;ab5f
 	ld de,060a0h		;ab62
 	call L_AB6E		;ab65
@@ -2128,7 +2128,7 @@ DATA_ADBC:
 
 L_ADC0:
 	ld h,l			;adc0
-	ld a,(0c399h)		;adc1
+	ld a,(0c399h)		;adc1   ; lee el slot del cartucho para ENASLT
 	ld h,040h		;adc4
 	call 00024h		;adc6   ; BIOS ENASLT - Switches to specified slot and page definitively
 	call 065c6h		;adc9   ; p12:65C6
@@ -2310,8 +2310,8 @@ L_AF60:
 	ld (hl),000h		;af68
 	ld hl,0cb7dh		;af6a
 	ld (hl),001h		;af6d
-	call 06b12h		;af6f
-	jp 06bach		;af72
+	call 06b12h		;af6f   ; sonido_05: pide el sonido 0x05
+	jp 06bach		;af72   ; sonido_9c: pide el sonido 0x9C (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_AF75:
 	ld hl,0d7d2h		;af75
 	res 5,(hl)		;af78
@@ -2325,7 +2325,7 @@ L_AF80:
 	set 5,(hl)		;af88
 	ld hl,0cb7dh		;af8a
 	ld (hl),001h		;af8d
-	jp 06b95h		;af8f
+	jp 06b95h		;af8f   ; sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_AF92:
 	ld hl,0d7d4h		;af92
 	set 5,(hl)		;af95
@@ -2459,7 +2459,7 @@ L_B060:
 	ret			;b065
 L_B066:
 	call 0c000h		;b066
-	call 06a0dh		;b069
+	call 06a0dh		;b069   ; sonido_01: pide el sonido 0x01
 	ld a,005h		;b06c
 	call 0005fh		;b06e   ; BIOS CHGMOD - Switches to given screen mode
 	ld d,000h		;b071
@@ -2504,7 +2504,7 @@ lee_mando_y_teclas:		; el mando a 0xCA08/0xCA07 y las teclas de funcion a 0xCA0A
 	call mando		;b0b0   ; mando: A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
 	call guarda_mando		;b0b3   ; guarda_mando: (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
 	call teclas_de_funcion		;b0b6   ; teclas_de_funcion: A = las filas 6 y 7 de la matriz, en 6 bits
-	ld hl,0ca0ah		;b0b9   ; apunta a las teclas de funcion pulsadas (filas 6 y 7 de la matriz)
+	ld hl,0ca0ah		;b0b9   ; apunta a las teclas de funcion pulsadas: bit 0 F1, 1 F2, 2 F3, 3 F4, 4 F5, 5 RETURN
 	jr L_B0C1		;b0bc
 guarda_mando:		; (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
 	ld hl,0ca08h		;b0be   ; apunta a el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
@@ -2953,7 +2953,7 @@ L_B357:
 	jr nz,L_B36A		;b360
 	ld a,(ix+004h)		;b362
 	cp 004h		;b365
-	call z,06c6fh		;b367   ; p01:6C6F
+	call z,06c6fh		;b367   ; sonido_54: pide el sonido 0x54
 L_B36A:
 	dec (ix+004h)		;b36a
 	jr z,L_B379		;b36d

@@ -68,8 +68,9 @@ C 0xA095 p04:900B
 C 0xA0A4 a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 C 0xA0C5 apunta a la fase de la partida (indice de las listas de p06:B40C)
 C 0xA0CF guarda la fase de la partida (indice de las listas de p06:B40C)
-C 0xA0D5 p01:6C33
+C 0xA0D5 sonido_46: pide el sonido 0x46
 C 0xA0DE p04:9E51
+C 0xA182 sonido_46: pide el sonido 0x46
 C 0xA185 a_p08_a13b: p08:A13B con el banco 8 en 0xA000
 C 0xA1EF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA22A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -81,18 +82,27 @@ C 0xA2DF lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA300 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA367 p04:9D1B
 C 0xA36E azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xA429 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA49D p04:9038
 C 0xA4D6 salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xA4F7 lee la zona
 C 0xA500 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA532 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xA53F es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xA55E es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
+C 0xA56B es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA582 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xA5B9 es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA605 salta_por_tabla: salta a la palabra A de la tabla de HL
-C 0xA672 p01:6C47
+C 0xA666 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xA672 sonido_4a: pide el sonido 0x4A
+C 0xA676 mensaje_cada_cuadro_bancos_5: 
+C 0xA682 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xA6E0 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 C 0xA6F8 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA743 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA748 palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xA75C p01:6C4B
+C 0xA75C sonido_4b: pide el sonido 0x4B
 C 0xA784 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA78C salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xA78F p04:8097
@@ -106,19 +116,29 @@ C 0xA8A8 suma_a_hl: HL = HL + A
 C 0xA927 p04:9B06
 C 0xA975 de_negativo: DE = -DE
 C 0xA98D de_negativo: DE = -DE
-C 0xA9E8 p01:6BAC
+C 0xA9AD sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xA9B3 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xA9E8 sonido_9c: pide el sonido 0x9C (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA9F1 lee la Y de Snake
 C 0xAA14 suma_a_hl: HL = HL + A
+C 0xAA33 sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAA4A despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAA61 a_p11_a000: p11:A000 con el banco 11 en 0xA000
 C 0xAA70 a_p02_905e: p02:905E con el banco 2 en 0x8000
+C 0xAA78 sonido_42: pide el sonido 0x42
 C 0xAAA1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xAAC9 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xAAEC sprites_de_8773: 
 C 0xAB05 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAB2B sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAB2F a_p03_b11f: p03:B11F con el banco 3 en 0xA000
 C 0xAB33 a_p03_b132: p03:B132 con el banco 3 en 0xA000
 C 0xAB43 a_p03_b19a: p03:B19A con el banco 3 en 0xA000
+C 0xAB47 conversacion_de_a: la conversacion de p48:8010 (A = 0), p48:8012 (1) o p48:8014 (2)
+C 0xAB50 sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xAB71 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xAB74 mensaje_cada_cuadro_bancos_5: 
+C 0xAB78 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xABD6 a_p14_af96: p14:AF96 con el banco 14 en 0xA000
 C 0xABE4 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAC14 a_p14_ae76: p14:AE76 con el banco 14 en 0xA000
@@ -126,8 +146,18 @@ C 0xAC1F lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC33 salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xAC39 lee la sala de la zona
 C 0xAC6E lee la sala de la zona
-C 0xAC92 p01:6C67
-C 0xAD46 p01:6A87
+C 0xAC8F sonido_51: pide el sonido 0x51
+C 0xAC92 sonido_52: pide el sonido 0x52
+C 0xACEC mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xACEF mensaje_cada_cuadro_bancos_5: 
+C 0xACF3 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xAD3C mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xAD3F mensaje_cada_cuadro_bancos_5: 
+C 0xAD43 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xAD46 sonido_23: pide el sonido 0x23
+C 0xAD4C mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xAD52 mensaje_cada_cuadro_bancos_5: 
+C 0xAD56 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAD67 guarda 1 mientras se ve la barra de la derecha
 C 0xAD6F a_p03_bb38: p03:BB38 con el banco 3 en 0xA000
 C 0xAD7D sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
@@ -135,12 +165,17 @@ C 0xAD9C palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xADB4 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xADC3 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xAE40 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xAE4D es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xAE66 sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 C 0xAED7 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAF0B salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xAF48 a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
+C 0xAF4B sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAF5D lee la X de Snake
 C 0xAF6A lee la Y de Snake
+C 0xAF7D pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xAF86 mensaje_cada_cuadro_bancos_5: 
+C 0xAF8A llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAF98 lee la sala de la zona
 C 0xAFBD lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAFE0 salta_por_tabla: salta a la palabra A de la tabla de HL
@@ -148,6 +183,8 @@ C 0xB051 guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0xB055 a_p03_b11f: p03:B11F con el banco 3 en 0xA000
 C 0xB064 a_p03_b132: p03:B132 con el banco 3 en 0xA000
 C 0xB06C a_p03_b19a: p03:B19A con el banco 3 en 0xA000
+C 0xB06F sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xB07A conversacion_de_a: la conversacion de p48:8010 (A = 0), p48:8012 (1) o p48:8014 (2)
 C 0xB0A7 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB0B9 sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 C 0xB0CB azar: A = un numero al azar (0xCA03 rotado mas R)
@@ -164,12 +201,15 @@ C 0xB2D4 p04:873C
 C 0xB2D8 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB2E0 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xB31A lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xB337 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 C 0xB34B sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
+C 0xB34E mensaje_cada_cuadro_bancos_5: 
 C 0xB351 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xB35A llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xB36E sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 C 0xB37F azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB3EC lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xB3F2 p01:6A73
+C 0xB3F2 sonido_1e: pide el sonido 0x1E
 C 0xB3F5 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB410 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB42D lee el contador de cuadros (uno mas en cada interrupcion)
@@ -178,15 +218,23 @@ C 0xB4CA lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB501 a_p02_86c3: angulo_hacia (p02:86C3) con el banco 2
 C 0xB51F lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xB525 p04:9B19
-C 0xB567 p01:6CD2
+C 0xB567 sonido_68: pide el sonido 0x68
 C 0xB57B p04:86D5
 C 0xB57E lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB589 salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xB58C p04:8082
-C 0xB5BA p01:6CA6
+C 0xB5BA sonido_89: pide el sonido 0x89 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xB5E3 lee la sala de la zona
-C 0xB603 p01:79C4
+C 0xB5F3 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xB5F6 mensaje_cada_cuadro_bancos_5: 
+C 0xB5FA llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xB5FF mensaje_cada_cuadro_bancos_5: 
+C 0xB603 llama_7a27_0: p01:7A27 con A = 0 y los bancos 4 y 5
 C 0xB608 lee la sala de la zona
+C 0xB62F sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xB656 mensaje_de_50_en: p03:B612 con DE
+C 0xB65D dibujos_de_93e5_bancos_5: 
+C 0xB662 dibujos_de_93e5_bancos_5: 
 C 0xB66E copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xB671 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB674 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
@@ -195,6 +243,7 @@ C 0xB67A a_p02_8507: paleta_b914 (p02:8507) con el banco 2
 C 0xB682 a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xB68C a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xB68F apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
+C 0xB695 mensaje_de_50_en: p03:B612 con DE
 C 0xB69B a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xB6A2 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xB6AC a_p03_b866: p03:B866 con el banco 3 en 0xA000
@@ -215,8 +264,10 @@ C 0xB7EB guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus
 C 0xB7EE guarda 1 mientras Snake se da la vuelta
 C 0xB7F8 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xB80B llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xB811 rachas_bc6e: las rachas de p41:BC6E a la VRAM de 0xFE00
+C 0xB814 sonido_14: pide el sonido 0x14
 C 0xB82E sprites_de_858d: p36:858D...
-C 0xB848 p01:6CAE
+C 0xB848 sonido_64: pide el sonido 0x64
 C 0xB84B p04:9D2A
 C 0xB84E azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xB869 palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -226,23 +277,28 @@ C 0xB92E salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xB9D5 a_p03_b108: p03:B108 con el banco 3 en 0xA000
 C 0xB9FB lee la sala de la zona
 C 0xBA0C lee la sala de la zona
+C 0xBA1C sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xBA32 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 C 0xBA40 a_p03_b67d: p03:B67D con el banco 3 en 0xA000
 C 0xBA45 a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
+C 0xBA51 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 C 0xBA68 a_p03_b108: p03:B108 con el banco 3 en 0xA000
-C 0xBB05 p01:6A15
+C 0xBB05 sonido_09: pide el sonido 0x09
 C 0xBB2E azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xBB54 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xBB78 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xBBB8 a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
+C 0xBBBB sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xBBCD copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xBBD3 a_p03_b68e: p03:B68E con el banco 3 en 0xA000
 C 0xBBD9 a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
-C 0xBBE1 p01:6CC2
+C 0xBBE1 sonido_a0: pide el sonido 0xA0 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xBBE4 apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 C 0xBBEC esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-C 0xBBEF p01:6F6A
+C 0xBBEF rachas_be79: las rachas de p43:BE79
 C 0xBC14 llena_bloque: pone A en BC + 1 bytes desde HL
-C 0xBC18 p01:7A9B
+C 0xBC18 dibujos_de_93e5_bancos_5: 
+C 0xBC1D dibujos_de_93e5_bancos_5: 
 C 0xBC20 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBC23 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0xBC26 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
@@ -250,7 +306,7 @@ C 0xBC29 a_p02_8507: paleta_b914 (p02:8507) con el banco 2
 C 0xBC2C enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 C 0xBC34 a_p03_b814: p03:B814 con el banco 3 en 0xA000
 C 0xBC3E a_p03_b814: p03:B814 con el banco 3 en 0xA000
-C 0xBC44 p01:61D3
+C 0xBC44 mensaje_de_50_en: p03:B612 con DE
 C 0xBC4A a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xBC51 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xBC5A borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -282,17 +338,29 @@ C 0xBD07 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguie
 C 0xBD23 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xBD46 lee la sala de la zona
 C 0xBD52 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xBDA2 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 C 0xBDA7 guarda la espera hasta poner la musica pendiente
+C 0xBDD4 mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
+C 0xBDD9 mensaje_cada_cuadro_bancos_5: 
+C 0xBDDD llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xBDE2 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBDF6 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xBE00 lee la X de Snake
 C 0xBE0D lee la Y de Snake
+C 0xBE2B mensaje_cada_cuadro_bancos_5: 
+C 0xBE2F llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xBE36 orden_sonido_f6: la orden 0xF6 al sonido
 C 0xBE40 a_p03_b11f: p03:B11F con el banco 3 en 0xA000
-C 0xBE46 p01:6B95
+C 0xBE43 sonido_05: pide el sonido 0x05
+C 0xBE46 sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xBE4F a_p03_b132: p03:B132 con el banco 3 en 0xA000
 C 0xBE56 a_p03_b19a: p03:B19A con el banco 3 en 0xA000
-C 0xBE5F p01:6250
+C 0xBE5F conversacion_de_a: la conversacion de p48:8010 (A = 0), p48:8012 (1) o p48:8014 (2)
+C 0xBE64 sonido_84: pide el sonido 0x84 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xBE6C mensaje_cada_cuadro_bancos_5: 
+C 0xBE70 llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xBE79 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xBE8F sonido_05: pide el sonido 0x05
 C 0xBEC6 lee la X de Snake
 C 0xBEF7 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBEFA guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
@@ -305,12 +373,17 @@ C 0xBF68 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguie
 C 0xBF6B apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBF74 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBF7A bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0xBF8A p01:6C1B
+C 0xBF8A sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xBF8D rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
+C 0xBF90 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 C 0xBFAD guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xBFB2 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBFB8 lee la Y de Snake
 C 0xBFC8 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xBFE1 p01:6BE8
+C 0xBFCE pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
+C 0xBFDA mensaje_cada_cuadro_bancos_5: 
+C 0xBFDE llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
+C 0xBFE1 orden_sonido_f6: la orden 0xF6 al sonido
+C 0xBFF5 sonido_05: pide el sonido 0x05
 C 0xBFFD p04:8C65
 # --- fin de las anotaciones de anota.py ---

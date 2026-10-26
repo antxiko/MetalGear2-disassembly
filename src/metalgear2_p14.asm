@@ -133,7 +133,7 @@ L_A208:
 	ld bc,0d81ch		;a21d
 	jp L_A270		;a220
 L_A223:
-	call 06ad6h		;a223   ; p01:6AD6
+	call 06ad6h		;a223   ; sonido_90: pide el sonido 0x90 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	call L_A22E		;a226
 	xor a			;a229
 	ld (0cafah),a		;a22a
@@ -279,7 +279,7 @@ L_A323:
 	call L_A551		;a32e
 	ld d,000h		;a331
 	call 04be4h		;a333   ; borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
-	call 06c27h		;a336
+	call 06c27h		;a336   ; sonido_9a: pide el sonido 0x9A (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jp L_A3EA		;a339
 L_A33C:
 	call L_A564		;a33c
@@ -492,7 +492,7 @@ L_A501:
 L_A521:
 	call L_A64B		;a521
 	ret c			;a524
-	call 06be8h		;a525
+	call 06be8h		;a525   ; orden_sonido_f6: la orden 0xF6 al sonido
 	jp L_A3EA		;a528
 L_A52B:
 	xor a			;a52b
@@ -995,7 +995,7 @@ L_AB01:
 	ld (ix+006h),a		;ab0d
 	ld (ix+009h),a		;ab10
 	ld (ix+008h),a		;ab13
-	jp 06a48h		;ab16
+	jp 06a48h		;ab16   ; sonido_15: pide el sonido 0x15
 L_AB19:
 	ld (ix+000h),000h		;ab19
 	ld a,(ix+00eh)		;ab1d
@@ -1130,12 +1130,12 @@ L_ABEE:
 	ret nz			;abf1
 	call 086c2h		;abf2
 	ld de,00a80h		;abf5
-	call 061c0h		;abf8   ; p01:61C0
+	call 061c0h		;abf8   ; mensaje_de_50_con_ventana: p01:61CE y los bancos 4, 5 y 14
 L_ABFB:
 	inc (ix+001h)		;abfb
 	ret			;abfe
 L_ABFF:
-	call 061f8h		;abff
+	call 061f8h		;abff   ; mensaje_cada_cuadro_bancos_14:
 	ret nz			;ac02
 	call L_AC48		;ac03
 	jr L_ABFB		;ac06
@@ -1151,12 +1151,12 @@ L_AC08:
 	ld (ix+00ch),a		;ac19
 	ld (ix+00dh),a		;ac1c
 	ld d,00bh		;ac1f
-	call 061c9h		;ac21   ; p01:61C9
+	call 061c9h		;ac21   ; mensaje_de_50_bancos_14: p01:61DC y los bancos 4, 5 y 14
 	jr L_ABFB		;ac24
 L_AC26:
-	call 061f8h		;ac26   ; p01:61F8
+	call 061f8h		;ac26   ; mensaje_cada_cuadro_bancos_14:
 	ret nz			;ac29
-	call 07a59h		;ac2a   ; p01:7A59
+	call 07a59h		;ac2a   ; llama_7a27_1_bancos_14:
 	jp L_ABFB		;ac2d
 L_AC30:
 	call 08685h		;ac30   ; p04:8685
@@ -1328,7 +1328,7 @@ L_AD4D:
 	ld (ix+011h),a		;ad76
 	ld (ix+00fh),a		;ad79
 	ld (ix+00ch),003h		;ad7c
-	call 06b59h		;ad80
+	call 06b59h		;ad80   ; sonido_5a: pide el sonido 0x5A
 	jp L_ADE7		;ad83
 
 ; ----------------------------------------------------------------------
@@ -1381,7 +1381,7 @@ L_ADD9:
 	call 04256h		;addc   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 01fh		;addf
 	ld (ix+00eh),a		;ade1
-	call 06b5dh		;ade4   ; p01:6B5D
+	call 06b5dh		;ade4   ; sonido_5b: pide el sonido 0x5B
 L_ADE7:
 	inc (ix+001h)		;ade7
 	ret			;adea
@@ -1475,7 +1475,7 @@ L_AE76:
 	ld (ix+00eh),a		;aea2
 	ld (ix+00ch),003h		;aea5
 	ld (ix+001h),005h		;aea9
-	call 06b59h		;aead   ; p01:6B59
+	call 06b59h		;aead   ; sonido_5a: pide el sonido 0x5A
 	ld hl,0af6fh		;aeb0
 L_AEB3:
 	ld a,(ix+01ah)		;aeb3
@@ -1591,13 +1591,13 @@ L_AF77:
 	ld (ix+00eh),00ch		;af77
 	ld (ix+00dh),080h		;af7b
 	ld (ix+00ch),000h		;af7f
-	call 06fa8h		;af83   ; p01:6FA8
+	call 06fa8h		;af83   ; rachas_bc6e_bancos_14:
 	call L_ADE7		;af86
 	call L_AF96		;af89
 	dec c			;af8c
-	jp nz,06a44h		;af8d
-	call 06b12h		;af90
-	jp 06c3fh		;af93   ; p01:6C3F
+	jp nz,06a44h		;af8d   ; sonido_14: pide el sonido 0x14
+	call 06b12h		;af90   ; sonido_05: pide el sonido 0x05
+	jp 06c3fh		;af93   ; sonido_86: pide el sonido 0x86 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_AF96:
 	ld hl,0d800h		;af96
 	ld bc,00400h		;af99
@@ -1844,10 +1844,10 @@ L_B15C:
 	ld a,(ix+000h)		;b165
 	cp 015h		;b168
 	jr z,L_B171		;b16a
-	call 06b99h		;b16c   ; p01:6B99
+	call 06b99h		;b16c   ; sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 	jr L_B185		;b16f
 L_B171:
-	call 06a31h		;b171   ; p01:6A31
+	call 06a31h		;b171   ; sonido_8e: pide el sonido 0x8E (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 	jr L_B185		;b174
 L_B176:
 	ld a,(0ca76h)		;b176   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1962,7 +1962,7 @@ L_B22A:
 	djnz L_B219		;b230
 	ret			;b232
 L_B233:
-	ld a,(0cab5h)		;b233
+	ld a,(0cab5h)		;b233   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 	and 007h		;b236
 	ld hl,0b261h		;b238
 	call 0423eh		;b23b   ; suma_a_hl: HL = HL + A
@@ -2168,7 +2168,7 @@ L_B399:
 	ld a,(0ca4bh)		;b39f   ; lee la sala de la zona
 	cp 00ch		;b3a2
 	jr z,L_B3CA		;b3a4
-	call 06b99h		;b3a6
+	call 06b99h		;b3a6   ; sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 	ld a,005h		;b3a9
 	ld (ix+019h),a		;b3ab
 	ld a,(ix+001h)		;b3ae
@@ -2216,7 +2216,7 @@ L_B403:
 	push hl			;b403
 	push de			;b404
 	push bc			;b405
-	call 06b99h		;b406
+	call 06b99h		;b406   ; sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 	call L_B284		;b409
 	ld a,003h		;b40c
 	ld (0ca5fh),a		;b40e
@@ -2297,7 +2297,7 @@ L_B45F:
 	xor 001h		;b48e
 	ld (hl),a			;b490
 	push af			;b491
-	call 06c33h		;b492
+	call 06c33h		;b492   ; sonido_46: pide el sonido 0x46
 	pop af			;b495
 	jp z,07b65h		;b496   ; a_p08_a187: p08:A187 con el banco 8 en 0xA000
 	jp 07b6eh		;b499   ; a_p08_a13b: p08:A13B con el banco 8 en 0xA000
@@ -2384,7 +2384,7 @@ L_B51B:
 	call L_B527		;b51b
 	call L_B539		;b51e
 	call L_B61D		;b521
-	jp 06af6h		;b524   ; p01:6AF6
+	jp 06af6h		;b524   ; sonido_38: pide el sonido 0x38
 L_B527:
 	ld hl,0e231h		;b527
 	xor a			;b52a
@@ -2456,7 +2456,7 @@ L_B589:
 	xor a			;b596
 	ld (0ca73h),a		;b597
 	ld (0e230h),a		;b59a
-	call 07b76h		;b59d
+	call 07b76h		;b59d   ; sonido_8e_y_9955_bancos_14:
 	jp 08f00h		;b5a0   ; sprites_de_sala_si_b_14: sprites_de_sala_si y deja el banco 14
 L_B5A3:
 	ld a,(0e231h)		;b5a3
@@ -2514,7 +2514,7 @@ L_B603:
 	xor a			;b605
 	ld (0e231h),a		;b606
 	call L_B61D		;b609
-	jp 06af6h		;b60c
+	jp 06af6h		;b60c   ; sonido_38: pide el sonido 0x38
 L_B60F:
 	call L_B62C		;b60f
 	ld d,h			;b612
@@ -2840,7 +2840,7 @@ L_B81A:
 	ld a,h			;b839
 	cp d			;b83a
 	ret c			;b83b
-	call 07b76h		;b83c   ; p01:7B76
+	call 07b76h		;b83c   ; sonido_8e_y_9955_bancos_14:
 	jp 08f00h		;b83f   ; sprites_de_sala_si_b_14: sprites_de_sala_si y deja el banco 14
 L_B842:
 	ld a,(ix+000h)		;b842
@@ -3176,14 +3176,14 @@ L_BA75:
 	inc (hl)			;ba79
 	ld bc,000b4h		;ba7a
 	ld (0caf7h),bc		;ba7d
-	jp 06be4h		;ba81
+	jp 06be4h		;ba81   ; orden_sonido_f4: la orden 0xF4 al sonido
 L_BA84:
 	call L_BA91		;ba84
 	ret nz			;ba87
 	ld a,001h		;ba88
 	ld (0d443h),a		;ba8a
 	inc (hl)			;ba8d
-	jp 06abfh		;ba8e
+	jp 06abfh		;ba8e   ; sonido_82: pide el sonido 0x82 (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 L_BA91:
 	ld bc,(0caf7h)		;ba91
 	ld a,b			;ba95
@@ -3437,7 +3437,7 @@ L_BBEC:
 	jr c,L_BB9C		;bbfc
 	rra			;bbfe
 	jr c,L_BC43		;bbff
-	ld a,(0ca09h)		;bc01   ; lee lo recien pulsado de las teclas de funcion
+	ld a,(0ca09h)		;bc01   ; lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 	and 020h		;bc04
 	jp nz,L_BCD3		;bc06
 	call L_BDC1		;bc09

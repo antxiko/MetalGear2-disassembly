@@ -492,7 +492,7 @@ L_831B:
 L_8326:
 	ld a,(ix+000h)		;8326
 	push af			;8329
-	call 06a2dh		;832a   ; p01:6A2D
+	call 06a2dh		;832a   ; sonido_0f: pide el sonido 0x0F
 	call L_834C		;832d
 	call L_92F4		;8330
 	pop af			;8333
@@ -926,7 +926,7 @@ L_8607:
 	cp 0c0h		;8608
 	ccf			;860a
 	ret c			;860b
-	jp 07f37h		;860c   ; p01:7F37
+	jp 07f37h		;860c   ; es_solido: p01:7F3D guardando HL
 L_860F:
 	ld a,(ix+000h)		;860f
 	and 07fh		;8612
@@ -1038,7 +1038,7 @@ L_86C2:
 	ld (0ca26h),a		;86c4
 	ld hl,00000h		;86c7
 	ld (0ca19h),hl		;86ca   ; guarda la musica pendiente: la rutina que la pide (16 bits)
-	jp 06bd0h		;86cd   ; p01:6BD0
+	jp 06bd0h		;86cd   ; sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_86D0:
 	ld de,0c692h		;86d0
 	jr L_86D8		;86d3
@@ -1633,7 +1633,7 @@ L_8AF4:
 	jr z,L_8B41		;8b12
 	ld (ix+00eh),00ch		;8b14
 	ld (ix+00dh),080h		;8b18
-	call 06faeh		;8b1c
+	call 06faeh		;8b1c   ; rachas_bc6e: las rachas de p41:BC6E a la VRAM de 0xFE00
 	call L_8C68		;8b1f
 	call L_8BDC		;8b22
 	jr L_8B3B		;8b25
@@ -1646,8 +1646,8 @@ L_8B30:
 	ld (ix+001h),02ah		;8b34
 	call L_8100		;8b38
 L_8B3B:
-	call 06b12h		;8b3b
-	jp 06c3fh		;8b3e
+	call 06b12h		;8b3b   ; sonido_05: pide el sonido 0x05
+	jp 06c3fh		;8b3e   ; sonido_86: pide el sonido 0x86 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 L_8B41:
 	call L_8D78		;8b41
 	ld a,003h		;8b44
@@ -1693,8 +1693,8 @@ L_8B90:
 	call 04248h		;8b96   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	and a			;8b99
 	jr nz,L_8BA2		;8b9a
-	call 06278h		;8b9c   ; p01:6278
-	call 06c53h		;8b9f   ; p01:6C53
+	call 06278h		;8b9c   ; sube_de_nivel: 0xCAB5 uno mas y la barra de vida 8 puntos mas larga
+	call 06c53h		;8b9f   ; sonido_4d: pide el sonido 0x4D
 L_8BA2:
 	ld a,(0ca52h)		;8ba2   ; lee el ancho de la barra de vida (lo maximo)
 	ld (0ca53h),a		;8ba5   ; guarda la vida de Snake (lo largo de la barra)
@@ -1761,7 +1761,7 @@ L_8BF1:
 	ld c,02dh		;8c0b
 	ret nz			;8c0d
 L_8C0E:
-	call 06c3bh		;8c0e   ; p01:6C3B
+	call 06c3bh		;8c0e   ; sonido_42: pide el sonido 0x42
 	call L_8C4A		;8c11
 L_8C14:
 	ld a,(ix+000h)		;8c14
@@ -1828,7 +1828,7 @@ L_8C83:
 	call 04142h		;8c89   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	dec (ix+00eh)		;8c8c
 	ret nz			;8c8f
-	call 06f5eh		;8c90   ; p01:6F5E
+	call 06f5eh		;8c90   ; rachas_a81b_bancos_5:
 	ld (ix+00eh),060h		;8c93
 	xor a			;8c97
 	ld (ix+00fh),a		;8c98
@@ -1891,7 +1891,7 @@ L_8CC5:
 	call 04650h		;8d2f   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld bc,00600h		;8d32
 	call 00047h		;8d35   ; BIOS WRTVDP - Writes data in the VDP-register
-	call 06caeh		;8d38
+	call 06caeh		;8d38   ; sonido_64: pide el sonido 0x64
 	pop ix		;8d3b
 	jp 04606h		;8d3d   ; enciende_todo: la pantalla y los sprites encendidos
 L_8D40:
@@ -1913,7 +1913,7 @@ L_8D52:
 L_8D5B:
 	xor a			;8d5b
 	ld (0d8aeh),a		;8d5c
-	call 06fbeh		;8d5f   ; p01:6FBE
+	call 06fbeh		;8d5f   ; rachas_bd99: las rachas de p41:BD99 a la VRAM de 0xFA00
 	call 041a0h		;8d62   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b2d6h		;8d65   ; p06:B2D6
 	call 04142h		;8d68   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2503,7 +2503,7 @@ L_913A:
 	ld e,030h		;914d
 L_914F:
 	ld (0ca4eh),de		;914f   ; guarda el umbral de los caracteres 0x00-0x80 de la sala (de p56:A727; p00:5C28) y el byte siguiente (16 bits)
-	call 07f3dh		;9153
+	call 07f3dh		;9153   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	pop de			;9156
 	ld (0ca4eh),de		;9157   ; guarda el umbral de los caracteres 0x00-0x80 de la sala (de p56:A727; p00:5C28) y el byte siguiente (16 bits)
 	ret			;915b
@@ -2790,7 +2790,7 @@ L_934C:
 	ld a,(0c697h)		;9363
 	and a			;9366
 	ret nz			;9367
-	jp 06bech		;9368   ; p01:6BEC
+	jp 06bech		;9368   ; orden_sonido_f7: la orden 0xF7 al sonido
 L_936B:
 	ld hl,(0ca50h)		;936b   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	ld (0d428h),hl		;936e
@@ -2857,7 +2857,7 @@ L_93DA:
 	call L_941E		;93e0
 	jp z,L_924C		;93e3
 	ld hl,(0d418h)		;93e6
-	call 07f3dh		;93e9
+	call 07f3dh		;93e9   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	jp c,L_9306		;93ec
 	ld de,(0d418h)		;93ef
 	ld a,(0d41eh)		;93f3
@@ -2946,7 +2946,7 @@ L_946F:
 	ret nz			;947d
 	ld a,001h		;947e
 	ld (0d42ah),a		;9480
-	call 06a60h		;9483   ; p01:6A60
+	call 06a60h		;9483   ; sonido_1b: pide el sonido 0x1B
 	xor a			;9486
 	ret			;9487
 L_9488:
@@ -2984,7 +2984,7 @@ L_94B2:
 	ld (0ca19h),hl		;94c0   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	ld a,0b4h		;94c3
 	ld (0ca18h),a		;94c5   ; guarda la espera hasta poner la musica pendiente
-	call 06be4h		;94c8
+	call 06be4h		;94c8   ; orden_sonido_f4: la orden 0xF4 al sonido
 L_94CB:
 	call L_94D2		;94cb
 	pop ix		;94ce
@@ -3169,7 +3169,7 @@ L_960D:
 	ld de,(0d447h)		;9633
 	push de			;9637
 	ex de,hl			;9638
-	call 07f3dh		;9639
+	call 07f3dh		;9639   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	pop de			;963c
 	ld c,001h		;963d
 	ld a,d			;963f
@@ -3185,7 +3185,7 @@ L_9648:
 	jp nz,L_924C		;9651
 L_9654:
 	ld hl,(0d418h)		;9654
-	call 07f3dh		;9657
+	call 07f3dh		;9657   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	jr c,L_968A		;965a
 	ld a,(0d444h)		;965c
 	and a			;965f
@@ -3226,7 +3226,7 @@ L_9699:
 	ld a,c			;969a
 	inc a			;969b
 	push bc			;969c
-	call 07da9h		;969d
+	call 07da9h		;969d   ; hay_sala_al_lado: Z si no hay sala por la salida A (la casilla de 0xD900 vale 0xFF); con 0xD433, NZ
 	pop bc			;96a0
 	scf			;96a1
 	jr z,L_96AB		;96a2
@@ -3989,9 +3989,9 @@ L_9B8F:
 	ld b,0c0h		;9bd7
 L_9BD9:
 	ld a,b			;9bd9
-	call 07987h		;9bda   ; p01:7987
+	call 07987h		;9bda   ; apunta_bancos_4_5: apunta (p02:8656) con la rapidez A, guardando el banco de 0xA000
 	ld (0d8e0h),hl		;9bdd   ; guarda 1: el juego de dibujos solo pinta sus listas 6 y 7 y el byte siguiente (16 bits)
-	ld (0d8e2h),de		;9be0
+	ld (0d8e2h),de		;9be0   ; guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter y el byte siguiente (16 bits)
 	call L_9C6C		;9be4
 	pop bc			;9be7
 	pop hl			;9be8
@@ -4004,7 +4004,7 @@ L_9BD9:
 	ld bc,(0d8e4h)		;9bf8
 	ld (iy+003h),c		;9bfc
 	ld (iy+005h),b		;9bff
-	ld bc,(0d8e2h)		;9c02
+	ld bc,(0d8e2h)		;9c02   ; lee 0: p01:62B5 copia con ldir; 1: caracter a caracter y el byte siguiente (16 bits)
 	ld (iy+007h),b		;9c06
 	ld (iy+006h),c		;9c09
 	ld bc,(0d8e0h)		;9c0c   ; lee 1: el juego de dibujos solo pinta sus listas 6 y 7 y el byte siguiente (16 bits)
@@ -4021,13 +4021,13 @@ L_9C23:
 	call L_9C5B		;9c23
 	ld a,(0d800h)		;9c26
 	cp 005h		;9c29
-	jp z,06c4fh		;9c2b   ; p01:6C4F
+	jp z,06c4fh		;9c2b   ; sonido_4c: pide el sonido 0x4C
 	cp 002h		;9c2e
-	jp z,06a6fh		;9c30   ; p01:6A6F
+	jp z,06a6fh		;9c30   ; sonido_1d: pide el sonido 0x1D
 	ld a,(0d8e8h)		;9c33
 	cp 005h		;9c36
-	jp z,06c1fh		;9c38   ; p01:6C1F
-	jp 06a5ch		;9c3b   ; p01:6A5C
+	jp z,06c1fh		;9c38   ; sonido_49: pide el sonido 0x49
+	jp 06a5ch		;9c3b   ; sonido_1a: pide el sonido 0x1A
 L_9C3E:
 	ld (hl),001h		;9c3e
 	ld a,(0d8e8h)		;9c40
@@ -4080,7 +4080,7 @@ L_9C82:
 	ld h,a			;9c98
 	cp 0c0h		;9c99
 	jr nc,L_9CA1		;9c9b
-	call 07f88h		;9c9d
+	call 07f88h		;9c9d   ; cuatro_hacia_abajo: acarreo si (H, L) y los 3 puntos de 8 en 8 hacia abajo son solidos o estan fuera
 	ret nc			;9ca0
 L_9CA1:
 	ld a,(ix+000h)		;9ca1

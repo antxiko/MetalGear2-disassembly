@@ -65,7 +65,7 @@ C 0xA186 lee la zona
 C 0xA1AE palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA1F7 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA224 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-C 0xA231 p01:7D66
+C 0xA231 copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
 C 0xA258 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA260 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xA285 suma_a_de: DE = DE + A
@@ -77,9 +77,12 @@ C 0xA2F1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA2F4 lee la zona
 C 0xA31B lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA36C despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA399 lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xA3C7 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA3D6 lee la zona
 C 0xA3ED lee la zona
+C 0xA413 copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
+C 0xA416 sonido_46: pide el sonido 0x46
 C 0xA41F despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA443 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA448 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
@@ -98,7 +101,7 @@ C 0xA55D p00:4A19
 C 0xA56F bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xA585 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA5A4 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA5D9 p01:6A4C
+C 0xA5D9 sonido_16: pide el sonido 0x16
 C 0xA5E9 lee la Y de Snake
 C 0xA5F8 lee la X de Snake
 C 0xA620 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -123,6 +126,9 @@ C 0xA7BF lee la Y de Snake
 C 0xA7C8 lee la X de Snake
 C 0xA7D7 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA822 guarda 1: el juego de dibujos solo pinta sus listas 6 y 7 y el byte siguiente (16 bits)
+C 0xA825 guarda 0: p01:62B5 copia con ldir; 1: caracter a caracter
+C 0xA831 lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
+C 0xA847 lee 0: p01:62B5 copia con ldir; 1: caracter a caracter
 C 0xA84F lee 1: el juego de dibujos solo pinta sus listas 6 y 7
 C 0xA853 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA85C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
@@ -137,21 +143,26 @@ C 0xA9BC palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA9D1 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA9DC apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xA9E4 llena_bloque: pone A en BC + 1 bytes desde HL
-C 0xA9E7 p01:67EF
+C 0xA9E7 sprites_a_vram_bancos_15: 
+C 0xA9EA cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 C 0xA9F5 apunta a la zona
 C 0xA9FC cambia_de_zona_b_1_2_15: cambia_de_zona y deja los bancos 1, 2 y 15
 C 0xAA03 copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
+C 0xAA0B borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xAA16 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
 C 0xAA19 lee la zona
 C 0xAA28 lee la sala de la zona
+C 0xAA59 musica_de_la_zona_bancos_15: 
 C 0xAA5C enciende_todo: la pantalla y los sprites encendidos
 C 0xAA64 limpia_sprites_y_d300: 
 C 0xAA67 a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAA6C lee la sala de la zona
+C 0xAA77 sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 C 0xAA7C lee la sala de la zona
 C 0xAAA8 lee la zona
 C 0xAAB6 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-C 0xAAC5 p01:6077
+C 0xAAC5 borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
+C 0xAACA borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
 C 0xAACD rehace_marcador_b_1_2_15: rehace_marcador y deja los bancos 1, 2 y 15
 C 0xAAD0 a_p10_b9e5: p10:B9E5 con el banco 10 en 0xA000
 C 0xAAE4 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -166,6 +177,7 @@ C 0xAB3B guarda la marcha de Snake: el indice de las velocidades de p02:9520
 C 0xAB3E guarda 1 mientras Snake se da la vuelta
 C 0xAB45 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAB55 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAB5A borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xAB60 mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 C 0xAB63 lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
 C 0xAB7E a_p12_69e0: p12:69E0 con el banco 12 en 0x6000
@@ -174,7 +186,7 @@ C 0xAB84 entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los 
 C 0xAB87 a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
 C 0xAB8A lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xABB0 lee la columna de la sala en la zona (uno mas al salir por la derecha)
-C 0xABB6 p01:6AEA
+C 0xABB6 sonido_35: pide el sonido 0x35
 C 0xABB9 lee la zona
 C 0xABC1 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xABD0 guarda la Y de Snake
@@ -196,12 +208,15 @@ C 0xAC64 guarda la zona
 C 0xAC67 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC6C p02:8D3C
 C 0xAC70 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAC73 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xAC83 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xAC97 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
 C 0xAC9A a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
 C 0xAC9F a_p11_bdbd_2: p11:BDBD con el banco 11 en 0xA000
-C 0xACB6 p01:7A43
+C 0xACB6 musica_de_la_zona_bancos_15: 
+C 0xACBE orden_sonido_f3: la orden 0xF3 al sonido
 C 0xACCA p02:8D60
+C 0xACD1 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xACD4 p02:8D4B
 C 0xACDB entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
 C 0xACE1 lee la zona
@@ -224,7 +239,8 @@ C 0xB97C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de 
 C 0xB9B4 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB9C8 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB9CF sprites_de_670e: p35:670E a 0xFA00
-C 0xB9F4 p01:6B12
+C 0xB9F1 sonido_77: pide el sonido 0x77 (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xB9F4 sonido_05: pide el sonido 0x05
 C 0xBA39 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBA42 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xBA47 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -232,20 +248,36 @@ C 0xBA4E copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xBA6F salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xBA8A palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBB33 lee la sala de la zona
-C 0xBB3C p01:6AF2
-C 0xBB3F p01:6C13
-C 0xBB78 p01:7A4E
+C 0xBB3C sonido_36: pide el sonido 0x36
+C 0xBB3F sonido_37: pide el sonido 0x37
+C 0xBB78 apunta_con_b_bancos_15: 
 C 0xBB99 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xBBE0 p04:9AF4
 C 0xBCB4 lee la zona
 C 0xBCBA lee la sala de la zona
-C 0xBD40 p01:62A5
+C 0xBCE7 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBCF6 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBCFF copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD16 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD25 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD2E copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD37 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD40 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD4F copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD64 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD6D copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD76 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD8D copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD96 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD9F copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBDB3 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBDD5 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBE05 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBE0F lee la sala de la zona
 C 0xBE22 lee la zona
 C 0xBE2B lee la zona
 C 0xBE35 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0xBE48 lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 C 0xBE4E palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBE69 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBE77 lee la zona

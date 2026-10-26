@@ -64,6 +64,7 @@ L 0xB109 teclas_de_funcion A = las filas 6 y 7 de la matriz, en 6 bits
 L 0xB129 matriz_del_teclado en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo recien pulsado a 0xC7E0
 C 0xA006 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA033 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0xA07B sonido_48: pide el sonido 0x48
 C 0xA0AB apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA0B1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA0BA borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -80,7 +81,7 @@ C 0xA193 a_p03_af05: p03:AF05 con el banco 3 en 0xA000
 C 0xA199 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA1AC lee la Y de Snake
 C 0xA1B0 lee la X de Snake
-C 0xA1B4 p01:7F69
+C 0xA1B4 caracter_en: A = el caracter del mapa en (H = X, L = Y)
 C 0xA1B8 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA1BE lee la zona
 C 0xA1FF lee la sala de la zona
@@ -117,6 +118,7 @@ C 0xA394 apunta a hacia donde empuja la zona (1 arriba, 2 abajo, 3 izquierda, 4 
 C 0xA39F lee la sala de la zona
 C 0xA3B3 lee la Y de Snake
 C 0xA3BC lee la X de Snake
+C 0xA3C9 apunta a con el puesto, la vida baja un punto cada 16 cuadros
 C 0xA3EF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA3F8 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA401 borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -129,14 +131,16 @@ C 0xA432 lee la zona
 C 0xA457 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA461 lee la zona
 C 0xA468 lee la sala de la zona
-C 0xA46F p01:6A97
+C 0xA46F sonido_27: pide el sonido 0x27
 C 0xA485 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA48C lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xA4AE p00:5088
+C 0xA4AE mosaico_f2_b0: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 0 (p00:512C)
+C 0xA4B2 mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
+C 0xA4B6 mosaico_f2_b2: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 2 (p00:512C)
 C 0xA4ED lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA4F6 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA4FD lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xA51C p01:6C7F
+C 0xA51C sonido_5e: pide el sonido 0x5E
 C 0xA51F lee la zona
 C 0xA52C lee la sala de la zona
 C 0xA536 lee la sala de la zona
@@ -166,10 +170,16 @@ C 0xA6E1 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 
 C 0xA6E8 guarda 1 si Snake ha chocado en este cuadro
 C 0xA6ED guarda 1 si Snake ha chocado en este cuadro
 C 0xA6F5 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA6FF apunta a con el puesto, la vida baja un punto cada 16 cuadros
+C 0xA710 apunta a 0: p01:62B5 copia con ldir; 1: caracter a caracter
 C 0xA71D lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA722 lee la Y de Snake
 C 0xA726 lee la X de Snake
+C 0xA72A caracter_en: A = el caracter del mapa en (H = X, L = Y)
+C 0xA768 sonido_53: pide el sonido 0x53
 C 0xA76B apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xA770 sonido_8d: pide el sonido 0x8D (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xA77D sonido_53: pide el sonido 0x53
 C 0xA789 pon_cb28: 0xCB28 = B, 0xCB29 = C
 C 0xA795 pon_cb28: 0xCB28 = B, 0xCB29 = C
 C 0xA79A lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -180,12 +190,13 @@ C 0xA7C1 lee la X de Snake
 C 0xA7CA lee la Y de Snake
 C 0xA7D0 lee la X de Snake
 C 0xA7ED despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA858 p01:6A1D
+C 0xA858 sonido_0b: pide el sonido 0x0B
 C 0xA86A p04:9D03
+C 0xA8C1 sonido_14: pide el sonido 0x14
 C 0xA8E5 p04:9CAA
-C 0xA8E8 p01:6A29
+C 0xA8E8 sonido_0e: pide el sonido 0x0E
 C 0xA8F3 lee la Y de Snake
-C 0xA924 p01:6C2B
+C 0xA924 sonido_43: pide el sonido 0x43
 C 0xA94B palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA962 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA984 p02:9CB7
@@ -194,10 +205,11 @@ C 0xAA26 suma_a_hl: HL = HL + A
 C 0xAA33 p04:9CB7
 C 0xAAA0 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAAE3 mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
+C 0xAAE6 mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 C 0xAAE9 lee la zona
 C 0xAAF7 lee la sala de la zona
 C 0xAB03 mosaico_AB1D: un mosaico de 2 x 2 caracteres, un byte cada uno
-C 0xAB06 p00:50E8
+C 0xAB06 mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 C 0xAB0D lee la sala de la zona
 C 0xAB13 lee la sala de la zona
 C 0xAB26 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
@@ -205,6 +217,7 @@ C 0xAB2B lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAB30 lee la zona
 C 0xAB36 lee la sala de la zona
 C 0xAB53 mosaico_AB7D: un mosaico de 5 x 4 caracteres, un byte cada uno
+C 0xAB5C mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
 C 0xAB71 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAB7A copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xABA3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -224,6 +237,7 @@ C 0xAD4B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xAD9D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xADA0 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0xADA6 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
+C 0xADC1 lee el slot del cartucho para ENASLT
 C 0xADC9 p12:65C6
 C 0xAE65 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xAE86 sonido_11: pide el sonido 0x11
@@ -237,7 +251,11 @@ C 0xAECD lee la sala de la zona
 C 0xAEE8 apunta a 8 sitios de 4 bytes [numero][Y][X][...] en los que se entra yendo hacia arriba
 C 0xAEF3 suma_a_hl: HL = HL + A
 C 0xAEFF despachador: salta a la palabra A de la tabla que va detras del call
+C 0xAF6F sonido_05: pide el sonido 0x05
+C 0xAF72 sonido_9c: pide el sonido 0x9C (de los que tienen la partitura en un banco de musica, p16:4CE3)
+C 0xAF8F sonido_81: pide el sonido 0x81 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xAFA4 guarda la fase de la partida (indice de las listas de p06:B40C)
+C 0xB069 sonido_01: pide el sonido 0x01
 C 0xB073 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xB078 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xB07D borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
@@ -248,7 +266,7 @@ C 0xB0AD matriz_del_teclado: en el estado (5, 8): las filas 0-5 a 0xC7D0 y lo re
 C 0xB0B0 mando: A = el joystick 1 y el teclado juntos (bits 0-3 direcciones, 4-5 disparos)
 C 0xB0B3 guarda_mando: (0xCA08) = A y (0xCA07) = lo que no estaba pulsado
 C 0xB0B6 teclas_de_funcion: A = las filas 6 y 7 de la matriz, en 6 bits
-C 0xB0B9 apunta a las teclas de funcion pulsadas (filas 6 y 7 de la matriz)
+C 0xB0B9 apunta a las teclas de funcion pulsadas: bit 0 F1, 1 F2, 2 F3, 3 F4, 4 F5, 5 RETURN
 C 0xB0BE apunta a el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xB129 lee el estado de la partida (p01:729F: 8 estados) y el byte siguiente (16 bits)
 C 0xB133 apunta a las 6 primeras filas de la matriz del teclado (en el estado 5, paso 8)
@@ -272,7 +290,7 @@ C 0xB2DC borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB2FD suma_a_de: DE = DE + A
 C 0xB308 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 C 0xB331 suma_a_hl: HL = HL + A
-C 0xB367 p01:6C6F
+C 0xB367 sonido_54: pide el sonido 0x54
 C 0xB385 suma_a_hl: HL = HL + A
 C 0xB3A0 suma_a_hl: HL = HL + A
 C 0xB3C9 lee la sala especial (0 = ninguna; indice de p24:64B6)

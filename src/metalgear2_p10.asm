@@ -812,7 +812,7 @@ L_A509:
 	ld bc,02020h		;a524
 	call 0474dh		;a527   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	pop hl			;a52a
-	call 06c2fh		;a52b   ; p01:6C2F
+	call 06c2fh		;a52b   ; sonido_45: pide el sonido 0x45
 L_A52E:
 	ld a,l			;a52e
 	and 0f8h		;a52f
@@ -1600,7 +1600,7 @@ L_AAB8:
 	ld (0cb3ch),a		;aacd
 	ld de,06060h		;aad0
 	call 07a33h		;aad3   ; a_p03_b67d_b_10: a_p03_b67d y deja el banco 10
-	call 06b75h		;aad6
+	call 06b75h		;aad6   ; sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jr L_AB22		;aad9
 L_AADB:
 	call 07a38h		;aadb   ; a_p03_b6c8_b_10: a_p03_b6c8 y deja el banco 10
@@ -1608,12 +1608,12 @@ L_AADB:
 	and a			;aae1
 	ret nz			;aae2
 	ld de,00d10h		;aae3
-	call 061ceh		;aae6
+	call 061ceh		;aae6   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 	jr L_AB22		;aae9
 L_AAEB:
-	call 061feh		;aaeb
+	call 061feh		;aaeb   ; mensaje_cada_cuadro_bancos_10:
 	ret nz			;aaee
-	call 07a3eh		;aaef
+	call 07a3eh		;aaef   ; llama_7a27_1_bancos_10:
 	xor a			;aaf2
 	ld (0d8a4h),a		;aaf3
 L_AAF6:
@@ -1659,9 +1659,9 @@ L_AB26:
 	ld bc,00501h		;ab48
 	jr L_AB58		;ab4b
 L_AB4D:
-	call 06b75h		;ab4d   ; p01:6B75
+	call 06b75h		;ab4d   ; sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ld de,00ec0h		;ab50
-	call 061ceh		;ab53
+	call 061ceh		;ab53   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 	jr L_AB22		;ab56
 L_AB58:
 	dec (ix+011h)		;ab58
@@ -1677,10 +1677,10 @@ L_AB58:
 	ld a,(ix+001h)		;ab6d
 	cp 004h		;ab70
 	jr nz,L_AB79		;ab72
-	call 06cbah		;ab74   ; p01:6CBA
+	call 06cbah		;ab74   ; sonido_97: pide el sonido 0x97 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jr L_AB7C		;ab77
 L_AB79:
-	call 06cb6h		;ab79   ; p01:6CB6
+	call 06cb6h		;ab79   ; sonido_65: pide el sonido 0x65
 L_AB7C:
 	pop af			;ab7c
 L_AB7D:
@@ -1719,9 +1719,9 @@ DATA_resto_AB9D:
 
 
 L_ABA5:
-	call 061feh		;aba5   ; p01:61FE
+	call 061feh		;aba5   ; mensaje_cada_cuadro_bancos_10:
 	ret nz			;aba8
-	call 07a3eh		;aba9   ; p01:7A3E
+	call 07a3eh		;aba9   ; llama_7a27_1_bancos_10:
 	ld a,(0d8a5h)		;abac
 	add a,0d8h		;abaf
 	ld e,a			;abb1
@@ -1737,7 +1737,7 @@ L_ABA5:
 	ld (ix+016h),a		;abc5
 	ld (ix+016h),a		;abc8
 	call L_AAF6		;abcb
-	call 06b12h		;abce
+	call 06b12h		;abce   ; sonido_05: pide el sonido 0x05
 	jp 08685h		;abd1
 L_ABD4:
 	call L_ABE6		;abd4
@@ -1891,7 +1891,7 @@ L_ACE1:
 	add a,l			;ace4
 	ld l,a			;ace5
 	ld (hl),c			;ace6
-	jp 06a6fh		;ace7
+	jp 06a6fh		;ace7   ; sonido_1d: pide el sonido 0x1D
 L_ACEA:
 	ld a,001h		;acea
 	ld (0cb3ch),a		;acec
@@ -1919,7 +1919,7 @@ L_AD12:
 	ld a,(ix+00fh)		;ad18
 	and 007h		;ad1b
 	ret nz			;ad1d
-	jp 06a48h		;ad1e
+	jp 06a48h		;ad1e   ; sonido_15: pide el sonido 0x15
 L_AD21:
 	ld a,(ix+00fh)		;ad21
 	and 00ch		;ad24
@@ -2017,7 +2017,7 @@ L_ADC3:
 	ld a,(ix+00fh)		;add4
 	inc (ix+00fh)		;add7
 	and 007h		;adda
-	jp z,06a44h		;addc
+	jp z,06a44h		;addc   ; sonido_14: pide el sonido 0x14
 	ret			;addf
 L_ADE0:
 	push de			;ade0
@@ -2133,7 +2133,7 @@ L_AED2:
 	djnz L_AEB9		;aed3
 	ret			;aed5
 L_AED6:
-	call 0642ch		;aed6
+	call 0642ch		;aed6   ; vida_que_se_va: con 0xCB4B (y sin 0xCB3C), la vida baja un punto cada 16 cuadros (0xCB4E)
 	call L_BBDD		;aed9
 	ld a,(0d701h)		;aedc
 	dec a			;aedf
@@ -2167,7 +2167,7 @@ L_AF27:
 	ld bc,0003fh		;af2a
 	jp 04236h		;af2d   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 L_AF30:
-	call 0642ch		;af30
+	call 0642ch		;af30   ; vida_que_se_va: con 0xCB4B (y sin 0xCB3C), la vida baja un punto cada 16 cuadros (0xCB4E)
 	call L_BBDD		;af33
 	ld a,(0d701h)		;af36
 	dec a			;af39
@@ -2276,10 +2276,10 @@ L_AFFF:
 	ret			;b001
 L_B002:
 	ld hl,08044h		;b002
-	jp 064b7h		;b005
+	jp 064b7h		;b005   ; letrero_de_50: el letrero con sitio de la palabra HL del banco 50
 L_B008:
 	ld hl,0804ah		;b008
-	jp 064b7h		;b00b   ; p01:64B7
+	jp 064b7h		;b00b   ; letrero_de_50: el letrero con sitio de la palabra HL del banco 50
 L_B00E:
 	ld ix,0d600h		;b00e
 	ld b,00dh		;b012
@@ -2510,7 +2510,7 @@ L_B185:
 	call L_B191		;b18b
 	jp 08ed2h		;b18e
 L_B191:
-	ld a,(0ca09h)		;b191   ; lee lo recien pulsado de las teclas de funcion
+	ld a,(0ca09h)		;b191   ; lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 	and 01fh		;b194
 	jp nz,L_B44D		;b196
 	ld de,00106h		;b199
@@ -2560,7 +2560,7 @@ L_B1F2:
 L_B201:
 	jp 08ed2h		;b201   ; p02:8ED2
 L_B204:
-	ld a,(0ca09h)		;b204   ; lee lo recien pulsado de las teclas de funcion
+	ld a,(0ca09h)		;b204   ; lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 	and 01fh		;b207
 	jp nz,L_B57B		;b209
 	ld de,00406h		;b20c
@@ -2621,13 +2621,13 @@ L_B25D:
 	ld a,(0ca52h)		;b282   ; lee el ancho de la barra de vida (lo maximo)
 	ld (0ca53h),a		;b285   ; guarda la vida de Snake (lo largo de la barra)
 	call 0429ch		;b288   ; barras_bancos_1_2_10: p00:4288 y los bancos 1, 2 y 10
-	jp 06c53h		;b28b
+	jp 06c53h		;b28b   ; sonido_4d: pide el sonido 0x4D
 L_B28E:
-	ld a,(0cb4bh)		;b28e
+	ld a,(0cb4bh)		;b28e   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;b291
 	ret nz			;b292
 L_B293:
-	jp 06c77h		;b293
+	jp 06c77h		;b293   ; sonido_5c: pide el sonido 0x5C
 L_B296:
 	ld (hl),000h		;b296
 	ld de,00e1ch		;b298
@@ -2669,7 +2669,7 @@ L_B2CB:
 	set 2,(hl)		;b2ea
 	ld hl,0d7e0h		;b2ec
 	res 6,(hl)		;b2ef
-	jp 06a83h		;b2f1
+	jp 06a83h		;b2f1   ; sonido_22: pide el sonido 0x22
 L_B2F4:
 	xor a			;b2f4
 	ld (0d707h),a		;b2f5
@@ -2880,11 +2880,11 @@ L_B44D:
 	call L_B880		;b44f
 	ld (0d704h),a		;b452
 	call L_B4B1		;b455
-	jp c,06c77h		;b458
+	jp c,06c77h		;b458   ; sonido_5c: pide el sonido 0x5C
 	call L_B501		;b45b
-	jp c,06c77h		;b45e
+	jp c,06c77h		;b45e   ; sonido_5c: pide el sonido 0x5C
 	call L_B558		;b461
-	jp c,06c77h		;b464
+	jp c,06c77h		;b464   ; sonido_5c: pide el sonido 0x5C
 	ld de,0d70bh		;b467
 	ld hl,0d702h		;b46a
 	ldi		;b46d
@@ -2919,7 +2919,7 @@ DATA_tabla_B492:
 L_B4B0:
 	ret			;b4b0
 L_B4B1:
-	ld a,(0cb4bh)		;b4b1
+	ld a,(0cb4bh)		;b4b1   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;b4b4
 	jr nz,L_B517		;b4b5
 	ld a,(0cb00h)		;b4b7   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -3041,15 +3041,15 @@ L_B57B:
 	call L_B880		;b57d
 	ld (0d704h),a		;b580
 	call L_B5D1		;b583
-	jp c,06c77h		;b586
+	jp c,06c77h		;b586   ; sonido_5c: pide el sonido 0x5C
 	call L_B649		;b589
-	jp c,06c77h		;b58c
+	jp c,06c77h		;b58c   ; sonido_5c: pide el sonido 0x5C
 	call L_B737		;b58f
-	jp c,06c77h		;b592
+	jp c,06c77h		;b592   ; sonido_5c: pide el sonido 0x5C
 	call L_B75B		;b595
-	jp c,06c77h		;b598
+	jp c,06c77h		;b598   ; sonido_5c: pide el sonido 0x5C
 	call L_B773		;b59b
-	jp c,06c77h		;b59e
+	jp c,06c77h		;b59e   ; sonido_5c: pide el sonido 0x5C
 	ld de,0d70dh		;b5a1
 	ld hl,0d702h		;b5a4
 	ldi		;b5a7
@@ -3083,7 +3083,7 @@ L_B5D1:
 	jp z,L_B6A4		;b5e9
 	jp L_B68D		;b5ec
 L_B5EF:
-	ld a,(0cb4bh)		;b5ef
+	ld a,(0cb4bh)		;b5ef   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;b5f2
 	jp nz,L_B682		;b5f3
 	ld a,(0cb00h)		;b5f6   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -3332,7 +3332,7 @@ L_B78D:
 	cp 006h		;b7ab
 	call z,0431eh		;b7ad   ; barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 L_B7B0:
-	ld hl,0ca54h		;b7b0
+	ld hl,0ca54h		;b7b0   ; apunta a el ancho de la tercera barra (lo maximo)
 	call L_B7C8		;b7b3
 	ld a,(0cb3fh)		;b7b6   ; lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	cp 002h		;b7b9
@@ -3367,8 +3367,8 @@ L_B7DD:
 L_B7E8:
 	ld a,(0ca4ah)		;b7e8   ; lee la zona
 	cp 006h		;b7eb
-	jp nz,07053h		;b7ed   ; p01:7053
-	jp 07042h		;b7f0   ; p01:7042
+	jp nz,07053h		;b7ed   ; marco_derecha_ca54_bancos_10:
+	jp 07042h		;b7f0   ; marco_derecha_cac4_bancos_10:
 L_B7F3:
 	ld a,(0cb3fh)		;b7f3   ; lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	cp 002h		;b7f6
@@ -3376,7 +3376,7 @@ L_B7F3:
 	ld hl,0cac4h		;b7fa   ; apunta a lo largo de la barra de la derecha llena
 	call L_B82C		;b7fd
 	call 04309h		;b800   ; borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
-	call 07042h		;b803
+	call 07042h		;b803   ; marco_derecha_cac4_bancos_10:
 	call 042a8h		;b806   ; marco_barra_cac4: el marco de la barra de la derecha con el ancho de 0xCAC4
 	jp 0431eh		;b809   ; barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 L_B80C:
@@ -3385,7 +3385,7 @@ L_B80C:
 	ld (hl),a			;b811
 	inc hl			;b812
 	ld (hl),a			;b813
-	ld hl,0ca54h		;b814
+	ld hl,0ca54h		;b814   ; apunta a el ancho de la tercera barra (lo maximo)
 	ld a,(0dff0h)		;b817
 	or a			;b81a
 	jr nz,L_B823		;b81b
@@ -3413,15 +3413,15 @@ L_B839:
 	ld a,(0dff0h)		;b839
 	or a			;b83c
 	jr z,L_B851		;b83d
-	ld hl,0ca54h		;b83f
+	ld hl,0ca54h		;b83f   ; apunta a el ancho de la tercera barra (lo maximo)
 	call L_B82C		;b842
 	call 04309h		;b845   ; borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
-	call 07053h		;b848
+	call 07053h		;b848   ; marco_derecha_ca54_bancos_10:
 	call 042adh		;b84b   ; marco_barra_ca54: el marco de la barra de la derecha con el ancho de 0xCA54
 	jp 04331h		;b84e   ; barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
 L_B851:
 	ld a,040h		;b851
-	ld hl,0ca54h		;b853
+	ld hl,0ca54h		;b853   ; apunta a el ancho de la tercera barra (lo maximo)
 	ld (hl),a			;b856
 	inc hl			;b857
 	ld (hl),a			;b858
@@ -3465,7 +3465,7 @@ L_B88B:
 	ret			;b896
 L_B897:
 	or a			;b897
-	call nz,06a83h		;b898
+	call nz,06a83h		;b898   ; sonido_22: pide el sonido 0x22
 	call 092f3h		;b89b   ; repinta_la_sala_b_1_2_10: repinta_la_sala y deja los bancos 1, 2 y 10
 	call L_B957		;b89e
 	xor a			;b8a1
@@ -3493,7 +3493,7 @@ L_B8CC:
 	ld a,(0d704h)		;b8cc
 L_B8CF:
 	ld hl,08046h		;b8cf
-	jp 064c3h		;b8d2   ; p01:64C3
+	jp 064c3h		;b8d2   ; letrero_a_de_50: el letrero A de la tabla de la palabra HL del banco 50, en (0x0C, 0x94)
 L_B8D5:
 	ld a,(0d704h)		;b8d5
 	cp 007h		;b8d8
@@ -3545,7 +3545,7 @@ L_B926:
 L_B92B:
 	ld a,(0d704h)		;b92b
 	ld hl,08048h		;b92e
-	jp 064c3h		;b931
+	jp 064c3h		;b931   ; letrero_a_de_50: el letrero A de la tabla de la palabra HL del banco 50, en (0x0C, 0x94)
 L_B934:
 	ld a,(0d704h)		;b934
 	sub 014h		;b937
@@ -3649,7 +3649,7 @@ L_B9BB:
 	ret			;b9c6
 L_B9C7:
 	push de			;b9c7
-	call 071f4h		;b9c8   ; p01:71F4
+	call 071f4h		;b9c8   ; palabra_de_96ab_bancos_10:
 	call L_B9D0		;b9cb
 	pop de			;b9ce
 	ret			;b9cf
@@ -3674,7 +3674,7 @@ L_B9E5:
 	jr z,L_BA09		;b9e9
 	dec a			;b9eb
 	ld hl,0a6afh		;b9ec
-	call 0649ch		;b9ef   ; p01:649C
+	call 0649ch		;b9ef   ; palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
 	call L_BA32		;b9f2
 	ld a,(0cb20h)		;b9f5
 	ld hl,0d600h		;b9f8
@@ -3690,7 +3690,7 @@ L_BA09:
 	ret z			;ba0d
 	dec a			;ba0e
 	ld hl,0a6cbh		;ba0f
-	call 0649ch		;ba12
+	call 0649ch		;ba12   ; palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
 	call L_BA2A		;ba15
 	ld a,(0cb21h)		;ba18
 	ld de,0e0b8h		;ba1b
@@ -3722,7 +3722,7 @@ L_BA43:
 	or 0c8h		;ba4c
 	jp 047edh		;ba4e   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 L_BA51:
-	ld hl,0cb4bh		;ba51
+	ld hl,0cb4bh		;ba51   ; apunta a con el puesto, la vida baja un punto cada 16 cuadros
 	ld a,(hl)			;ba54
 	or a			;ba55
 	ret z			;ba56
@@ -3783,7 +3783,7 @@ L_BAA8:
 	ld (hl),a			;bab1
 	ret			;bab2
 L_BAB3:
-	ld hl,0cb4bh		;bab3
+	ld hl,0cb4bh		;bab3   ; apunta a con el puesto, la vida baja un punto cada 16 cuadros
 	ld a,(hl)			;bab6
 	or a			;bab7
 	ret z			;bab8
@@ -3866,7 +3866,7 @@ L_BB00:
 	exx			;bb29
 	ret			;bb2a
 L_BB2B:
-	ld a,(0cb4bh)		;bb2b
+	ld a,(0cb4bh)		;bb2b   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;bb2e
 	ret z			;bb2f
 	ld a,(0ca07h)		;bb30   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
@@ -3877,15 +3877,15 @@ L_BB2B:
 	jr z,L_BB48		;bb3b
 	cp 00bh		;bb3d
 	ret nz			;bb3f
-	call 06a83h		;bb40
+	call 06a83h		;bb40   ; sonido_22: pide el sonido 0x22
 	ld hl,0d629h		;bb43
 	jr L_BB7D		;bb46
 L_BB48:
-	call 06a83h		;bb48
+	call 06a83h		;bb48   ; sonido_22: pide el sonido 0x22
 	ld hl,0d621h		;bb4b
 	jr L_BB7D		;bb4e
 L_BB50:
-	ld a,(0cb4bh)		;bb50
+	ld a,(0cb4bh)		;bb50   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;bb53
 	ret z			;bb54
 	ld a,(0ca07h)		;bb55   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
@@ -3924,7 +3924,7 @@ L_BB96:
 	push hl			;bb96
 	ld a,(0d704h)		;bb97
 	or a			;bb9a
-	call nz,06a83h		;bb9b
+	call nz,06a83h		;bb9b   ; sonido_22: pide el sonido 0x22
 	ld a,(0d704h)		;bb9e
 	call 092d2h		;bba1   ; a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
 	ld a,(0d704h)		;bba4
@@ -3955,7 +3955,7 @@ L_BBB4:
 	call L_B172		;bbd7
 	jp L_B8C4		;bbda
 L_BBDD:
-	ld a,(0cb4bh)		;bbdd
+	ld a,(0cb4bh)		;bbdd   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	or a			;bbe0
 	ret z			;bbe1
 	ld hl,0d600h		;bbe2
@@ -3972,7 +3972,7 @@ L_BBEA:
 	ld hl,0d7d5h		;bbf5
 	res 0,(hl)		;bbf8
 	xor a			;bbfa
-	ld (0cb4bh),a		;bbfb
+	ld (0cb4bh),a		;bbfb   ; guarda con el puesto, la vida baja un punto cada 16 cuadros
 	ld (0e1e8h),a		;bbfe
 	ld (0d7bbh),a		;bc01
 	ld hl,0d88ch		;bc04
@@ -4268,7 +4268,7 @@ L_BF47:
 	dec (ix+007h)		;bf47
 	ret nz			;bf4a
 	ld (ix+007h),004h		;bf4b
-	call 06ae6h		;bf4f   ; p01:6AE6
+	call 06ae6h		;bf4f   ; sonido_34: pide el sonido 0x34
 	ld a,(0ca5fh)		;bf52
 	cp 002h		;bf55
 	jr nc,L_BF5E		;bf57
@@ -4277,7 +4277,7 @@ L_BF47:
 L_BF5E:
 	dec (ix+006h)		;bf5e
 	ret nz			;bf61
-	call 06b49h		;bf62   ; p01:6B49
+	call 06b49h		;bf62   ; sonido_56: pide el sonido 0x56
 	ld a,(ix+000h)		;bf65
 	ld (ix+000h),000h		;bf68
 	call L_BF7A		;bf6c

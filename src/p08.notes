@@ -66,17 +66,18 @@ C 0xA0FF lee la zona
 C 0xA11E lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA138 a_p02_8475_2: paleta_de_la_sala (p02:8475) con el banco 2
 C 0xA13B lee la zona
-C 0xA14B p01:71FA
+C 0xA14B paleta_bccf: la paleta de p56:BCCF
 C 0xA14E lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA152 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0xA15F lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA169 lee la sala de la zona
 C 0xA179 pieza_de_sala_a_esta: el caracter A de la sala de la pagina 2 a la pagina en la que se dibuja
 C 0xA17C lee la sala de la zona
+C 0xA18C guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
 C 0xA18F apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
 C 0xA192 p00:5DEB
 C 0xA195 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
-C 0xA198 p01:7C1A
+C 0xA198 vuelve_el_mapa_bancos_8: 
 C 0xA19E apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
 C 0xA1A4 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 C 0xA1AA apaga_pantalla: R#1 con el bit 6 (BL) a cero, desde la copia 0xF3E0
@@ -91,10 +92,11 @@ C 0xA1FF despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA21E bloques_de_77ef: la sala de la ficha IX de p24:77EF con los bloques de p25:9EE4, a 0xE500
 C 0xA245 suma_a_hl: HL = HL + A
 C 0xA279 bloques_de_77ef: la sala de la ficha IX de p24:77EF con los bloques de p25:9EE4, a 0xE500
+C 0xA2BC es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0xA2CD lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xA2D2 p01:6C63
+C 0xA2D2 sonido_51: pide el sonido 0x51
 C 0xA2DC despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA33B p01:6C5F
+C 0xA33B sonido_50: pide el sonido 0x50
 C 0xA371 suma_a_hl: HL = HL + A
 C 0xA404 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA44D lee la X de Snake
@@ -105,9 +107,9 @@ C 0xA4C8 suma_a_hl: HL = HL + A
 C 0xA4EA suma_a_hl: HL = HL + A
 C 0xA518 p04:80E6
 C 0xA53F suma_a_hl: HL = HL + A
-C 0xA561 p01:6C7B
-C 0xA564 p01:6B02
-C 0xA5B3 p01:6B4D
+C 0xA561 sonido_5d: pide el sonido 0x5D
+C 0xA564 sonido_3b: pide el sonido 0x3B
+C 0xA5B3 sonido_57: pide el sonido 0x57
 C 0xA5C1 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA5CA palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA5F5 suma_a_hl: HL = HL + A
@@ -120,6 +122,7 @@ C 0xA76F p04:902E
 C 0xA7CF azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA7DA lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7E3 lee la sala de la zona
+C 0xA7FB sonido_24: pide el sonido 0x24
 C 0xA806 lee la sala de la zona
 C 0xA83C suma_a_hl: HL = HL + A
 C 0xA842 lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -146,14 +149,14 @@ C 0xAB30 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xAB39 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAB58 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAB85 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xAB9C p01:6211
-C 0xABA4 p01:620B
+C 0xAB9C mensaje_de_ix: el mensaje de la ficha IX (del banco 50) arriba o abajo segun Snake
+C 0xABA4 mensaje_cada_cuadro_bancos_8: 
 C 0xABAA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
-C 0xABAF p01:7A2D
+C 0xABAF llama_7a27_1_bancos_8: 
 C 0xABC0 lee la Y de Snake
 C 0xABCD lee la X de Snake
-C 0xAC2F p01:6ADA
-C 0xAC4A p01:6C73
+C 0xAC2F sonido_32: pide el sonido 0x32
+C 0xAC4A sonido_55: pide el sonido 0x55
 C 0xAC53 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAC5C suma_a_hl: HL = HL + A
 C 0xAC7F p04:8E65
@@ -176,6 +179,7 @@ C 0xAF38 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAF57 suma_a_hl: HL = HL + A
 C 0xAFEF despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB006 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xB019 sonido_15: pide el sonido 0x15
 C 0xB028 suma_a_hl: HL = HL + A
 C 0xB02F llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB035 p04:834C
@@ -184,7 +188,7 @@ C 0xBC80 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xBC83 dibujos_7118_bancos_8: 
 C 0xBC86 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xBC89 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-C 0xBC8C p01:7072
+C 0xBC8C mapa_96bf_bancos_8: 
 C 0xBC8F paleta_b98a_bancos_8: 
 C 0xBC9A copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xBCA0 apunta a la Y de Snake
@@ -201,8 +205,8 @@ C 0xBCFF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBD07 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xBD0C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBD11 marco: cuatro lineas: un marco de D x E desde HL
-C 0xBD2C p01:6AB7
-C 0xBD3F p01:6ABB
+C 0xBD2C sonido_2f: pide el sonido 0x2F
+C 0xBD3F sonido_30: pide el sonido 0x30
 C 0xBD45 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xBD69 letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
 C 0xBD9B lee la Y de Snake
