@@ -46,11 +46,14 @@ F 0xBDF7 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0xA199 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA223 p01:6AD6
 C 0xA242 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xA282 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA296 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA29C despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA2A7 p13:91F0
 C 0xA2AD lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA2B6 p13:9175
 C 0xA2D4 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA333 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xA364 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
@@ -66,10 +69,13 @@ C 0xA4B6 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA4F8 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xA507 borra_toda_la_pagina: p00:46FF desde (0,0) con BC = 0 y A = 0 en la pagina D
 C 0xA518 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xA543 pon_color: el color A de la paleta = D (rojo y azul), E (verde)
+C 0xA54E pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 C 0xA5A0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xA5CA apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xA5DA apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xA63D apunta a los caracteres de un dibujo pasados a 4 bits
+C 0xA657 p13:90FD
 C 0xA67D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xA68B borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xA696 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -99,13 +105,31 @@ C 0xAB49 suma_a_hl: HL = HL + A
 C 0xAB67 suma_a_de: DE = DE + A
 C 0xAB93 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xABB1 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xABF8 p01:61C0
+C 0xAC21 p01:61C9
+C 0xAC26 p01:61F8
+C 0xAC2A p01:7A59
+C 0xAC30 p04:8685
+C 0xAC4B p04:8107
+C 0xAC5C de_negativo: DE = -DE
+C 0xACF8 p04:9AF8
 C 0xAD2F salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xAD55 suma_a_hl: HL = HL + A
 C 0xADDC azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xADE4 p01:6B5D
+C 0xADFF de_negativo: DE = -DE
+C 0xAE1F de_negativo: DE = -DE
+C 0xAE32 p04:86DE
+C 0xAE7C de_negativo: DE = -DE
+C 0xAE8B de_negativo: DE = -DE
 C 0xAE9D suma_a_hl: HL = HL + A
+C 0xAEAD p01:6B59
 C 0xAEB6 suma_a_hl: HL = HL + A
+C 0xAF19 p04:9B3B
 C 0xAF2B azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAF46 suma_a_hl: HL = HL + A
+C 0xAF83 p01:6FA8
+C 0xAF93 p01:6C3F
 C 0xAFA5 suma_a_hl: HL = HL + A
 C 0xAFD2 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAFE6 lee la zona
@@ -114,27 +138,40 @@ C 0xB03A lee la zona
 C 0xB041 lee la sala de la zona
 C 0xB06B lee la zona
 C 0xB077 guarda la zona
+C 0xB0CD p02:8EF8
 C 0xB10A borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB113 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB131 p04:9961
 C 0xB13B lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB16C p01:6B99
+C 0xB171 p01:6A31
 C 0xB176 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB18E guarda la musica pendiente: la rutina que la pide (16 bits)
 C 0xB19A lee la sala de la zona
 C 0xB19E lee la zona
 C 0xB1ED lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB211 p04:9814
 C 0xB227 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB23B suma_a_hl: HL = HL + A
+C 0xB277 p04:9CA1
 C 0xB2BC despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB2EC p04:806F
+C 0xB349 p04:8273
+C 0xB34C p04:80F3
 C 0xB36A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB374 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xB39F lee la sala de la zona
+C 0xB3C7 p04:8E2A
 C 0xB44A lee la zona
 C 0xB455 lee la sala de la zona
 C 0xB45C lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB496 p01:7B65
+C 0xB499 p01:7B6E
 C 0xB49F suma_a_hl: HL = HL + A
 C 0xB4BD lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB4EA lee la zona
 C 0xB4F0 lee la sala de la zona
+C 0xB524 p01:6AF6
 C 0xB548 lee la zona
 C 0xB555 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xB558 lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -145,16 +182,21 @@ C 0xB626 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB629 marco: cuatro lineas: un marco de D x E desde HL
 C 0xB6D4 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB6DA lee la zona
+C 0xB6E3 p02:876B
 C 0xB70F borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB732 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xB743 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB746 linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 C 0xB74C linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 C 0xB782 suma_a_hl: HL = HL + A
+C 0xB786 p02:8777
 C 0xB7B9 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
+C 0xB83C p01:7B76
+C 0xB83F p02:8F00
 C 0xB866 suma_a_hl: HL = HL + A
 C 0xB916 suma_a_hl: HL = HL + A
 C 0xB921 suma_a_hl: HL = HL + A
+C 0xB92C p04:81BF
 C 0xB96D suma_a_hl: HL = HL + A
 C 0xB971 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB9DC lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -178,11 +220,13 @@ C 0xBC53 suma_a_hl: HL = HL + A
 C 0xBC79 suma_a_hl: HL = HL + A
 C 0xBCB8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBCC2 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xBCD0 letra_transparente: la letra A de la pagina 3, con el 0 transparente, a la pagina en la que se dibuja
 C 0xBCDB apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBCF4 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBCFC apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBD02 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xBD1B rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
+C 0xBD1E sonido_3f: pide el sonido 0x3F
 C 0xBD32 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0xBD57 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0xBD70 apunta a los caracteres de un dibujo pasados a 4 bits

@@ -133,7 +133,7 @@ L_A208:
 	ld bc,0d81ch		;a21d
 	jp L_A270		;a220
 L_A223:
-	call 06ad6h		;a223
+	call 06ad6h		;a223   ; p01:6AD6
 	call L_A22E		;a226
 	xor a			;a229
 	ld (0cafah),a		;a22a
@@ -226,14 +226,14 @@ DATA_tabla_A29F:
 
 
 L_A2A7:
-	call 091f0h		;a2a7
+	call 091f0h		;a2a7   ; p13:91F0
 	jp L_A1B3		;a2aa
 L_A2AD:
 	ld a,(0ca03h)		;a2ad   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 001h		;a2b0
 	ret nz			;a2b2
 	ld de,09278h		;a2b3
-	call 09175h		;a2b6
+	call 09175h		;a2b6   ; p13:9175
 	ret nz			;a2b9
 	ld a,020h		;a2ba
 	ld (0cafch),a		;a2bc
@@ -510,13 +510,13 @@ L_A53C:
 L_A53F:
 	ld a,c			;a53f
 	ld de,00000h		;a540
-	call 04614h		;a543
+	call 04614h		;a543   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 	inc c			;a546
 	djnz L_A53F		;a547
 L_A549:
 	ld a,00fh		;a549
 	ld de,07707h		;a54b
-	jp 04614h		;a54e
+	jp 04614h		;a54e   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 L_A551:
 	ld (0ca31h),hl		;a551
 	ld (0ca33h),de		;a554
@@ -697,7 +697,7 @@ L_A64B:
 	and 007h		;a653
 	scf			;a655
 	ret nz			;a656
-	call 090fdh		;a657
+	call 090fdh		;a657   ; p13:90FD
 	scf			;a65a
 	ret			;a65b
 L_A65C:
@@ -1130,7 +1130,7 @@ L_ABEE:
 	ret nz			;abf1
 	call 086c2h		;abf2
 	ld de,00a80h		;abf5
-	call 061c0h		;abf8
+	call 061c0h		;abf8   ; p01:61C0
 L_ABFB:
 	inc (ix+001h)		;abfb
 	ret			;abfe
@@ -1151,15 +1151,15 @@ L_AC08:
 	ld (ix+00ch),a		;ac19
 	ld (ix+00dh),a		;ac1c
 	ld d,00bh		;ac1f
-	call 061c9h		;ac21
+	call 061c9h		;ac21   ; p01:61C9
 	jr L_ABFB		;ac24
 L_AC26:
-	call 061f8h		;ac26
+	call 061f8h		;ac26   ; p01:61F8
 	ret nz			;ac29
-	call 07a59h		;ac2a
+	call 07a59h		;ac2a   ; p01:7A59
 	jp L_ABFB		;ac2d
 L_AC30:
-	call 08685h		;ac30
+	call 08685h		;ac30   ; p04:8685
 	xor a			;ac33
 	ld (0cb3ch),a		;ac34
 	ld (ix+011h),a		;ac37
@@ -1170,7 +1170,7 @@ L_AC30:
 	jp L_ABFB		;ac45
 L_AC48:
 	ld de,00200h		;ac48
-	call 08107h		;ac4b
+	call 08107h		;ac4b   ; p04:8107
 	jr z,L_AC54		;ac4e
 	jr nc,L_AC5F		;ac50
 	jr L_AC5C		;ac52
@@ -1179,7 +1179,7 @@ L_AC54:
 	cp (ix+005h)		;ac57
 	jr nc,L_AC5F		;ac5a
 L_AC5C:
-	call 04442h		;ac5c
+	call 04442h		;ac5c   ; de_negativo: DE = -DE
 L_AC5F:
 	ld (ix+009h),d		;ac5f
 	ld (ix+008h),e		;ac62
@@ -1255,7 +1255,7 @@ L_ACED:
 	ret nz			;acf0
 	inc (ix+00dh)		;acf1
 	ld (ix+00eh),004h		;acf4
-	call 09af8h		;acf8
+	call 09af8h		;acf8   ; p04:9AF8
 	jp L_ABFB		;acfb
 L_ACFE:
 	dec (ix+00eh)		;acfe
@@ -1381,7 +1381,7 @@ L_ADD9:
 	call 04256h		;addc   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 01fh		;addf
 	ld (ix+00eh),a		;ade1
-	call 06b5dh		;ade4
+	call 06b5dh		;ade4   ; p01:6B5D
 L_ADE7:
 	inc (ix+001h)		;ade7
 	ret			;adea
@@ -1394,7 +1394,7 @@ L_ADEB:
 	ld de,00400h		;adf8
 	ld b,002h		;adfb
 	jr nc,L_AE04		;adfd
-	call 04442h		;adff
+	call 04442h		;adff   ; de_negativo: DE = -DE
 	ld b,000h		;ae02
 L_AE04:
 	ld (ix+00dh),b		;ae04
@@ -1408,7 +1408,7 @@ L_AE12:
 	ld de,00400h		;ae18
 	ld b,006h		;ae1b
 	jr nc,L_AE24		;ae1d
-	call 04442h		;ae1f
+	call 04442h		;ae1f   ; de_negativo: DE = -DE
 	ld b,004h		;ae22
 L_AE24:
 	ld (ix+00dh),b		;ae24
@@ -1417,7 +1417,7 @@ L_AE24:
 	ld (ix+00ch),002h		;ae2d
 	ret			;ae31
 L_AE32:
-	call 086deh		;ae32
+	call 086deh		;ae32   ; p04:86DE
 	call L_AEEE		;ae35
 	jr c,L_AE76		;ae38
 	ld a,(ix+00eh)		;ae3a
@@ -1456,12 +1456,12 @@ L_AE6A:
 L_AE76:
 	ld e,(ix+01bh)		;ae76
 	ld d,(ix+01ch)		;ae79
-	call 04442h		;ae7c
+	call 04442h		;ae7c   ; de_negativo: DE = -DE
 	ld (ix+006h),e		;ae7f
 	ld (ix+007h),d		;ae82
 	ld e,(ix+01dh)		;ae85
 	ld d,(ix+01eh)		;ae88
-	call 04442h		;ae8b
+	call 04442h		;ae8b   ; de_negativo: DE = -DE
 	ld (ix+008h),e		;ae8e
 	ld (ix+009h),d		;ae91
 	ld a,(ix+01ah)		;ae94
@@ -1475,7 +1475,7 @@ L_AE76:
 	ld (ix+00eh),a		;aea2
 	ld (ix+00ch),003h		;aea5
 	ld (ix+001h),005h		;aea9
-	call 06b59h		;aead
+	call 06b59h		;aead   ; p01:6B59
 	ld hl,0af6fh		;aeb0
 L_AEB3:
 	ld a,(ix+01ah)		;aeb3
@@ -1530,7 +1530,7 @@ L_AF0F:
 	jr z,L_AF1D		;af12
 	ld a,(ix+00eh)		;af14
 	and 007h		;af17
-	jp z,09b3bh		;af19
+	jp z,09b3bh		;af19   ; p04:9B3B
 	ret			;af1c
 L_AF1D:
 	inc (ix+00fh)		;af1d
@@ -1591,13 +1591,13 @@ L_AF77:
 	ld (ix+00eh),00ch		;af77
 	ld (ix+00dh),080h		;af7b
 	ld (ix+00ch),000h		;af7f
-	call 06fa8h		;af83
+	call 06fa8h		;af83   ; p01:6FA8
 	call L_ADE7		;af86
 	call L_AF96		;af89
 	dec c			;af8c
 	jp nz,06a44h		;af8d
 	call 06b12h		;af90
-	jp 06c3fh		;af93
+	jp 06c3fh		;af93   ; p01:6C3F
 L_AF96:
 	ld hl,0d800h		;af96
 	ld bc,00400h		;af99
@@ -1770,7 +1770,7 @@ L_B0BA:
 	ld a,(0d88ch)		;b0c7
 	inc a			;b0ca
 	jr z,L_B0D7		;b0cb
-	call 08ef8h		;b0cd
+	call 08ef8h		;b0cd   ; p02:8EF8
 	ld hl,00903h		;b0d0
 	ld c,002h		;b0d3
 	jr L_B0F1		;b0d5
@@ -1817,7 +1817,7 @@ L_B128:
 	ret z			;b12d
 	sub 01bh		;b12e
 	ret nc			;b130
-	call 09961h		;b131
+	call 09961h		;b131   ; p04:9961
 	call L_B214		;b134
 	xor a			;b137
 	ld (0caf6h),a		;b138
@@ -1844,10 +1844,10 @@ L_B15C:
 	ld a,(ix+000h)		;b165
 	cp 015h		;b168
 	jr z,L_B171		;b16a
-	call 06b99h		;b16c
+	call 06b99h		;b16c   ; p01:6B99
 	jr L_B185		;b16f
 L_B171:
-	call 06a31h		;b171
+	call 06a31h		;b171   ; p01:6A31
 	jr L_B185		;b174
 L_B176:
 	ld a,(0ca76h)		;b176   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1940,7 +1940,7 @@ L_B20A:
 	ld a,b			;b20a
 	ld (0ca5fh),a		;b20b
 	call L_B233		;b20e
-	jp 09814h		;b211
+	jp 09814h		;b211   ; p04:9814
 L_B214:
 	ld hl,0d300h		;b214
 	ld b,004h		;b217
@@ -2008,7 +2008,7 @@ L_B26F:
 	jr z,L_B27C		;b273
 	push bc			;b275
 	push bc			;b276
-	call 09ca1h		;b277
+	call 09ca1h		;b277   ; p04:9CA1
 	pop bc			;b27a
 	pop bc			;b27b
 L_B27C:
@@ -2075,7 +2075,7 @@ L_B2D6:
 	ld (ix+016h),a		;b2e5
 L_B2E8:
 	ld (ix+00ch),000h		;b2e8
-	call 0806fh		;b2ec
+	call 0806fh		;b2ec   ; p04:806F
 	jr c,L_B2F6		;b2ef
 	call 08100h		;b2f1
 	jr z,L_B2FB		;b2f4
@@ -2119,8 +2119,8 @@ L_B32C:
 	ld (ix+001h),003h		;b341
 	call 08100h		;b345
 	ret nz			;b348
-	call 08273h		;b349
-	call 080f3h		;b34c
+	call 08273h		;b349   ; p04:8273
+	call 080f3h		;b34c   ; p04:80F3
 L_B34F:
 	ld a,(ix+00dh)		;b34f
 	add a,a			;b352
@@ -2183,7 +2183,7 @@ L_B3C1:
 	ld a,(ix+00dh)		;b3c1
 	rra			;b3c4
 	and 003h		;b3c5
-	jp 08e2ah		;b3c7
+	jp 08e2ah		;b3c7   ; p04:8E2A
 L_B3CA:
 	ld a,(ix+000h)		;b3ca
 	and 07fh		;b3cd
@@ -2299,8 +2299,8 @@ L_B45F:
 	push af			;b491
 	call 06c33h		;b492
 	pop af			;b495
-	jp z,07b65h		;b496
-	jp 07b6eh		;b499
+	jp z,07b65h		;b496   ; p01:7B65
+	jp 07b6eh		;b499   ; p01:7B6E
 L_B49C:
 	pop hl			;b49c
 	ld a,005h		;b49d
@@ -2384,7 +2384,7 @@ L_B51B:
 	call L_B527		;b51b
 	call L_B539		;b51e
 	call L_B61D		;b521
-	jp 06af6h		;b524
+	jp 06af6h		;b524   ; p01:6AF6
 L_B527:
 	ld hl,0e231h		;b527
 	xor a			;b52a
@@ -2646,7 +2646,7 @@ L_B6C3:
 	cp 003h		;b6e0
 	ret nz			;b6e2
 L_B6E3:
-	call 0876bh		;b6e3
+	call 0876bh		;b6e3   ; p02:876B
 	ld hl,0d7e2h		;b6e6
 	set 1,(hl)		;b6e9
 	jr L_B712		;b6eb
@@ -2727,7 +2727,7 @@ L_B761:
 	ld hl,0ca6bh		;b77f
 	call 0423eh		;b782   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;b785
-	call 08777h		;b786
+	call 08777h		;b786   ; p02:8777
 	jp L_B712		;b789
 L_B78C:
 	ld hl,0ca6ah		;b78c
@@ -2840,8 +2840,8 @@ L_B81A:
 	ld a,h			;b839
 	cp d			;b83a
 	ret c			;b83b
-	call 07b76h		;b83c
-	jp 08f00h		;b83f
+	call 07b76h		;b83c   ; p01:7B76
+	jp 08f00h		;b83f   ; p02:8F00
 L_B842:
 	ld a,(ix+000h)		;b842
 	and 07fh		;b845
@@ -2972,7 +2972,7 @@ L_B90F:
 L_B927:
 	call 08100h		;b927
 	jr nz,L_B92F		;b92a
-	call 081bfh		;b92c
+	call 081bfh		;b92c   ; p04:81BF
 L_B92F:
 	or a			;b92f
 	ret			;b930
@@ -3569,7 +3569,7 @@ L_BCC2:
 	jr c,L_BCD0		;bccc
 	add a,002h		;bcce
 L_BCD0:
-	jp 049c1h		;bcd0
+	jp 049c1h		;bcd0   ; letra_transparente: la letra A de la pagina 3, con el 0 transparente, a la pagina en la que se dibuja
 L_BCD3:
 	call L_BD43		;bcd3
 	jr c,L_BD1E		;bcd6
@@ -3609,7 +3609,7 @@ L_BCEF:
 	ld hl,0c700h		;bd18
 	jp 051e0h		;bd1b   ; rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 L_BD1E:
-	call 05f4dh		;bd1e
+	call 05f4dh		;bd1e   ; sonido_3f: pide el sonido 0x3F
 	ld a,002h		;bd21
 	ld (0c3a1h),a		;bd23
 	ld hl,03074h		;bd26

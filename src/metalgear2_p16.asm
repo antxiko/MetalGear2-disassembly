@@ -17,7 +17,7 @@
 entrada_arranque:		; jp p16:4009
 	jp calla_todo		;4000   ; calla_todo: arranque del sonido: todo callado
 entrada_pide:		; jp p16:4024
-	jp pide_sonido		;4003   ; pide_sonido: pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+	jp pide_sonido		;4003   ; pide_sonido: pide el sonido A por el puente de 0xC340 (copiado de p03:A14B)
 entrada_cuadro:		; jp p16:428F
 	jp sonido_cada_cuadro		;4006   ; sonido_cada_cuadro: el sonido de un cuadro: los ocho canales
 calla_todo:		; arranque del sonido: todo callado

@@ -241,7 +241,7 @@ L_6134:
 	push bc			;6134
 	push hl			;6135
 	call 040f0h		;6136   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b0f6h		;6139
+	call 0b0f6h		;6139   ; p03:B0F6
 	call 0411dh		;613c   ; bancos_48_49: pone el 48 en 0x8000, el 49 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop hl			;613f
 	pop bc			;6140
@@ -308,7 +308,7 @@ siguiente_accion:		; la accion que sigue en la conversacion (0xFE [espera]...) o
 	inc hl			;6197
 	call hace_accion		;6198   ; hace_accion: accion 0: un mensaje; 1: uno al azar (p01:6142); otra: nada
 	call 041c2h		;619b   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	jp 0ba96h		;619e
+	jp 0ba96h		;619e   ; p09:BA96
 L_61A1:
 	call 0ba96h		;61a1
 	inc (hl)			;61a4
@@ -347,7 +347,7 @@ L_61D3:
 	ex de,hl			;61d3
 	push hl			;61d4
 	call 040f0h		;61d5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b612h		;61d8
+	call 0b612h		;61d8   ; p03:B612
 	pop de			;61db
 L_61DC:
 	call 04122h		;61dc   ; bancos_50_51: pone el 50 en 0x8000, el 51 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -416,7 +416,7 @@ L_625F:
 	call L_636D		;6265
 	ld a,001h		;6268
 	ld (0d7bbh),a		;626a
-	call 08b1fh		;626d
+	call 08b1fh		;626d   ; p02:8B1F
 	ld a,004h		;6270
 	ld (0ca01h),a		;6272   ; guarda el paso del estado de la partida
 L_6275:
@@ -434,8 +434,8 @@ L_6278:
 	ld d,a			;628c
 	xor a			;628d
 	call 046ffh		;628e   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-	call 04288h		;6291
-	call 042bch		;6294
+	call 04288h		;6291   ; barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
+	call 042bch		;6294   ; marco_barra_de_vida: el marco de la barra de vida: X = 0x0F, Y = 0xCA, el ancho de 0xCA52 + 2, en el color 7
 	jr L_6275		;6297
 L_6299:
 	ld hl,0d8e1h		;6299
@@ -707,12 +707,12 @@ L_6459:
 	xor a			;6459
 	ld (0ca40h),a		;645a
 L_645D:
-	jp 04288h		;645d
+	jp 04288h		;645d   ; barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
 L_6460:
 	call 0412ch		;6460   ; bancos_57_58: pone el 57 en 0x8000, el 58 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,000f0h		;6463
 	ld bc,00112h		;6466
-	call 05081h		;6469
+	call 05081h		;6469   ; p00:5081
 L_646C:
 	jp 04176h		;646c   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_646F:
@@ -724,7 +724,7 @@ L_6477:
 	ld bc,00201h		;6477
 L_647A:
 	call 04183h		;647a   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0507ah		;647d
+	call 0507ah		;647d   ; p00:507A
 	jr L_646C		;6480
 L_6482:
 	call 04183h		;6482   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -771,7 +771,7 @@ L_64C3:
 	jr L_64C0		;64d2
 L_64D4:
 	call 041a0h		;64d4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a543h		;64d7
+	call 0a543h		;64d7   ; p06:A543
 	jp 040f0h		;64da   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_64DD:
 	ld de,01098h		;64dd
@@ -1244,7 +1244,7 @@ L_67F5:
 	cp 009h		;6801
 	jr z,L_680E		;6803
 	call 041d5h		;6805   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b67dh		;6808
+	call 0b67dh		;6808   ; p11:B67D
 	jp 040f0h		;680b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_680E:
 	ld a,(0cb4bh)		;680e
@@ -1345,7 +1345,7 @@ L_68B1:
 	jr z,L_68F5		;68b5
 	ld a,(0ca1ch)		;68b7
 	or a			;68ba
-	jp z,04f97h		;68bb
+	jp z,04f97h		;68bb   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 L_68BE:
 	ld hl,0da00h		;68be
 	ld bc,00200h		;68c1
@@ -1409,17 +1409,17 @@ L_6926:
 L_6935:
 	ld a,(0cb0eh)		;6935
 	cp 002h		;6938
-	jp z,04f97h		;693a
+	jp z,04f97h		;693a   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	jr L_6954		;693d
 L_693F:
 	ld a,(0ca4bh)		;693f   ; lee la sala de la zona
 	cp 002h		;6942
-	jp nz,04f97h		;6944
+	jp nz,04f97h		;6944   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	ld a,(0cb03h)		;6947
 	ld b,a			;694a
 	ld a,(0d823h)		;694b
 	cp b			;694e
-	jp c,04f97h		;694f
+	jp c,04f97h		;694f   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	jr L_6954		;6952
 L_6954:
 	ld hl,0dbe0h		;6954
@@ -2093,11 +2093,11 @@ L_6CE3:
 	call 04127h		;6ce6   ; bancos_52_53: pone el 52 en 0x8000, el 53 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,082b8h		;6ce9   ; lista_82B8: 25 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	ld de,08000h		;6cec   ; tabla_colores_8000: 53 punteros a colores de dibujo
-	call 04d4ah		;6cef
+	call 04d4ah		;6cef   ; dibujos_en_0000: en la VRAM de 0x0000
 	ld hl,08135h		;6cf2   ; lista_8135: 19 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d4eh		;6cf5
+	call 04d4eh		;6cf5   ; dibujos_en_2000: en la VRAM de 0x2000
 	ld hl,08195h		;6cf8   ; lista_8195: 58 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d52h		;6cfb
+	call 04d52h		;6cfb   ; dibujos_en_4000: en la VRAM de 0x4000
 	ld a,055h		;6cfe
 	ld (0ca75h),a		;6d00
 	xor a			;6d03
@@ -2182,7 +2182,7 @@ L_6D8A:
 L_6D8D:
 	ld a,(hl)			;6d8d
 	and a			;6d8e
-	call nz,04a0bh		;6d8f
+	call nz,04a0bh		;6d8f   ; pieza_de_sala_a_la_otra: el caracter A de la sala (p00:4A36) de la pagina 2 a la otra
 	ld a,d			;6d92
 	add a,008h		;6d93
 	ld d,a			;6d95
@@ -2219,9 +2219,9 @@ L_6DBB:
 	call 04127h		;6dbb   ; bancos_52_53: pone el 52 en 0x8000, el 53 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,08114h		;6dbe   ; lista_8114: 2 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	ld de,08000h		;6dc1   ; tabla_colores_8000: 53 punteros a colores de dibujo
-	call 04d4ah		;6dc4
+	call 04d4ah		;6dc4   ; dibujos_en_0000: en la VRAM de 0x0000
 	ld hl,0811fh		;6dc7   ; lista_811F: 2 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d56h		;6dca
+	call 04d56h		;6dca   ; dibujos_en_6000: en la VRAM de 0x6000
 	jr L_6DE6		;6dcd
 L_6DCF:
 	call 04127h		;6dcf   ; bancos_52_53: pone el 52 en 0x8000, el 53 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2233,7 +2233,7 @@ L_6DDA:
 	ld de,0b567h		;6ddd   ; tabla_colores_B567: 8 punteros a colores de dibujo
 	ld hl,0b58bh		;6de0   ; lista_B58B: 15 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 L_6DE3:
-	call 04d3eh		;6de3
+	call 04d3eh		;6de3   ; dibujos_en_a000: en la VRAM de 0xA000
 L_6DE6:
 	jp 040f0h		;6de6   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_6DE9:
@@ -2250,7 +2250,7 @@ L_6DFF:
 	call 04171h		;6dff   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,08000h		;6e02   ; tabla_colores_8000: 13 punteros a colores de dibujo
 	ld hl,08037h		;6e05   ; lista_8037: 17 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d3eh		;6e08
+	call 04d3eh		;6e08   ; dibujos_en_a000: en la VRAM de 0xA000
 	jr L_6DE6		;6e0b
 L_6E0D:
 	call 04162h		;6e0d   ; bancos_40_41: pone el 40 en 0x8000, el 41 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2262,7 +2262,7 @@ L_6E18:
 	ld hl,093e5h		;6e1b   ; tabla_dibujos_93E5: 12 punteros a listas de dibujos
 	call 043f6h		;6e1e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld de,092b8h		;6e21   ; tabla_colores_92B8: 15 punteros a colores de dibujo
-	call 04d56h		;6e24
+	call 04d56h		;6e24   ; dibujos_en_6000: en la VRAM de 0x6000
 	jr L_6DE6		;6e27
 L_6E29:
 	ld de,00820h		;6e29
@@ -2359,11 +2359,11 @@ L_6EE9:
 	call 04171h		;6ee9   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0863dh		;6eec   ; tabla_colores_863D: 21 punteros a colores de dibujo
 	ld hl,086a1h		;6eef   ; lista_86A1: 23 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d46h		;6ef2
+	call 04d46h		;6ef2   ; dibujos_en_e000: en la VRAM de 0xE000
 	call 04162h		;6ef5   ; bancos_40_41: pone el 40 en 0x8000, el 41 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0b905h		;6ef8   ; tabla_colores_B905: 1 punteros a colores de dibujo
 	ld hl,0b909h		;6efb   ; lista_B909: 1 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d46h		;6efe
+	call 04d46h		;6efe   ; dibujos_en_e000: en la VRAM de 0xE000
 	call 040f0h		;6f01   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp L_6FE8		;6f04
 L_6F07:
@@ -2378,7 +2378,7 @@ L_6F19:
 	call 04127h		;6f19   ; bancos_52_53: pone el 52 en 0x8000, el 53 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,08114h		;6f1c   ; lista_8114: 2 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	ld de,08000h		;6f1f   ; tabla_colores_8000: 53 punteros a colores de dibujo
-	call 04d46h		;6f22
+	call 04d46h		;6f22   ; dibujos_en_e000: en la VRAM de 0xE000
 	jr L_6F16		;6f25
 L_6F27:
 	ld a,(0ca61h)		;6f27
@@ -2394,7 +2394,7 @@ L_6F3C:
 	call 04171h		;6f3c   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,09ea2h		;6f3f   ; tabla_colores_9EA2: 3 punteros a colores de dibujo
 	ld hl,09eb2h		;6f42   ; lista_9EB2: 6 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d56h		;6f45
+	call 04d56h		;6f45   ; dibujos_en_6000: en la VRAM de 0x6000
 	jr L_6F53		;6f48
 L_6F4A:
 	ld de,0a81bh		;6f4a
@@ -2436,7 +2436,7 @@ L_6F94:
 L_6F97:
 	ld de,0b9b2h		;6f97
 	call 0416ch		;6f9a   ; bancos_44_45: pone el 44 en 0x8000, el 45 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 04d56h		;6f9d
+	call 04d56h		;6f9d   ; dibujos_en_6000: en la VRAM de 0x6000
 	jp 041c2h		;6fa0   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_6FA3:
 	ld hl,0b9e1h		;6fa3
@@ -2476,7 +2476,7 @@ L_6FE8:
 	ld hl,0a412h		;6feb   ; mosaico_A412: un mosaico de 8 x 32 caracteres, un byte cada uno
 	ld de,00080h		;6fee
 	ld bc,00820h		;6ff1
-	call 050f4h		;6ff4
+	call 050f4h		;6ff4   ; p00:50F4
 	jr L_703F		;6ff7
 L_6FF9:
 	call 04171h		;6ff9   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2506,7 +2506,7 @@ L_7033:
 	ld de,0d004h		;7036
 	ld bc,00204h		;7039
 L_703C:
-	call 0509ah		;703c
+	call 0509ah		;703c   ; p00:509A
 L_703F:
 	jp 040f0h		;703f   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7042:
@@ -2518,7 +2518,7 @@ L_7048:
 	ret z			;704c
 	call L_7064		;704d
 L_7050:
-	jp 042a8h		;7050
+	jp 042a8h		;7050   ; marco_barra_cac4: el marco de la barra de la derecha con el ancho de 0xCAC4
 L_7053:
 	call L_7059		;7053
 	jp 041cah		;7056   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2527,7 +2527,7 @@ L_7059:
 	or a			;705c
 	ret z			;705d
 	call L_7064		;705e
-	jp 042adh		;7061
+	jp 042adh		;7061   ; marco_barra_ca54: el marco de la barra de la derecha con el ancho de 0xCA54
 L_7064:
 	call 04171h		;7064   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,09663h		;7067   ; mosaico_9663: un mosaico de 2 x 4 caracteres, un byte cada uno
@@ -2562,7 +2562,7 @@ L_708E:
 	ld hl,00706h		;709f
 	ld (0ca75h),a		;70a2
 	ld (0ca4ch),hl		;70a5   ; guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
-	call 04d1ch		;70a8
+	call 04d1ch		;70a8   ; dibujos_7118:
 	jp 057aeh		;70ab   ; pinta_mapa: pinta los 24 x 24 caracteres de 0xDD00
 L_70AE:
 	ld hl,0d8e3h		;70ae
@@ -2604,7 +2604,7 @@ L_70F2:
 	ld a,(0d8e3h)		;70f2
 	or a			;70f5
 	jp z,050e8h		;70f6
-	jp 050fah		;70f9
+	jp 050fah		;70f9   ; p00:50FA
 L_70FC:
 	call 04171h		;70fc   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0a719h		;70ff   ; mosaico_A719: un mosaico de 1 x 3 caracteres, un byte cada uno
@@ -2626,11 +2626,11 @@ L_711E:
 	jp 041c2h		;711e   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7121:
 	call L_7131		;7121
-	call 05106h		;7124
+	call 05106h		;7124   ; p00:5106
 	jr L_711E		;7127
 L_7129:
 	call L_7131		;7129
-	call 05100h		;712c
+	call 05100h		;712c   ; p00:5100
 	jr L_711E		;712f
 L_7131:
 	call 0416ch		;7131   ; bancos_44_45: pone el 44 en 0x8000, el 45 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2649,7 +2649,7 @@ L_714F:
 	call 0418eh		;714f   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,01068h		;7152
 	ld bc,00a02h		;7155
-	call 050a0h		;7158
+	call 050a0h		;7158   ; p00:50A0
 	jp 041d2h		;715b   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 L_715E:
 	call 04183h		;715e   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2659,7 +2659,7 @@ L_715E:
 	ld hl,0e900h		;716a   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld de,04041h		;716d
 	ld bc,00b10h		;7170
-	call 050e2h		;7173
+	call 050e2h		;7173   ; p00:50E2
 	jp 04179h		;7176   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7179:
 	call 04183h		;7179   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2688,7 +2688,7 @@ L_71A2:
 	ld bc,0140eh		;71b4
 	call 050e8h		;71b7
 	call 0419dh		;71ba   ; bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a0f9h		;71bd
+	call 0a0f9h		;71bd   ; p06:A0F9
 	jr L_71DA		;71c0
 L_71C2:
 	call 04158h		;71c2   ; bancos_36_37: pone el 36 en 0x8000, el 37 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2714,7 +2714,7 @@ L_71DD:
 L_71E9:
 	ld a,(0ca4ah)		;71e9   ; lee la zona
 	cp 006h		;71ec
-	jp z,050d6h		;71ee
+	jp z,050d6h		;71ee   ; p00:50D6
 	jp 050a0h		;71f1
 L_71F4:
 	call L_6FDD		;71f4
@@ -2838,14 +2838,14 @@ L_72B2:
 	cp 001h		;72b3
 	jr z,L_72C8		;72b5
 	jr nc,L_72DC		;72b7
-	call 045fdh		;72b9
+	call 045fdh		;72b9   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call 04179h		;72bc   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 092d1h		;72bf
+	call 092d1h		;72bf   ; p13:92D1
 	call 040f0h		;72c2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp L_7348		;72c5
 L_72C8:
 	call 04179h		;72c8   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0932fh		;72cb
+	call 0932fh		;72cb   ; p13:932F
 	call 040f0h		;72ce   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca14h)		;72d1
 	or a			;72d4
@@ -2857,7 +2857,7 @@ L_72DC:
 	ld hl,0ca04h		;72dc   ; apunta a la espera del paso del estado
 	dec (hl)			;72df
 	ret nz			;72e0
-	call 045fdh		;72e1
+	call 045fdh		;72e1   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld bc,00007h		;72e4
 	call 00047h		;72e7   ; BIOS WRTVDP - Writes data in the VDP-register
 	call 045f6h		;72ea   ; apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
@@ -2891,15 +2891,15 @@ L_731F:
 	cp 080h		;7326
 	call c,L_67CD		;7328
 	call 04179h		;732b   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08000h		;732e
+	call 08000h		;732e   ; p13:8000
 	call 040f0h		;7331   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca2ch)		;7334
 	cp 080h		;7337
-	call c,04f97h		;7339
+	call c,04f97h		;7339   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	ld a,(0ca2ch)		;733c
 	and a			;733f
 	ret nz			;7340
-	call 08427h		;7341
+	call 08427h		;7341   ; p02:8427
 	xor a			;7344
 L_7345:
 	ld (0ca04h),a		;7345   ; guarda la espera del paso del estado
@@ -2909,7 +2909,7 @@ L_7348:
 	ret			;734c
 L_734D:
 	call 04179h		;734d   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a196h		;7350
+	call 0a196h		;7350   ; p14:A196
 	call 040f0h		;7353   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cafah)		;7356
 	or a			;7359
@@ -2929,7 +2929,7 @@ L_735E:
 	jp L_7348		;736f
 L_7372:
 	call 04179h		;7372   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a299h		;7375
+	call 0a299h		;7375   ; p14:A299
 	call 040f0h		;7378   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cafah)		;737b
 	or a			;737e
@@ -2951,8 +2951,8 @@ L_738E:
 	call L_6056		;7393
 	jr L_73A3		;7396
 L_7398:
-	call 045b3h		;7398
-	call 09e2bh		;739b
+	call 045b3h		;7398   ; pantalla_a_negro: sin sprites ni pantalla, la pagina 0 a cero y sin desplazamiento
+	call 09e2bh		;739b   ; p02:9E2B
 	ld hl,0ca40h		;739e
 	ld (hl),001h		;73a1
 L_73A3:
@@ -3005,7 +3005,7 @@ L_73E4:
 	sub 005h		;73e9
 	cp 002h		;73eb
 	push bc			;73ed
-	call nc,089d9h		;73ee
+	call nc,089d9h		;73ee   ; p02:89D9
 	pop bc			;73f1
 L_73F2:
 	ld hl,0d4f0h		;73f2
@@ -3090,7 +3090,7 @@ L_7485:
 	call L_6DE9		;748a
 	jp L_73A3		;748d
 L_7490:
-	call 08754h		;7490
+	call 08754h		;7490   ; p02:8754
 	ret nc			;7493
 	ld a,(0ca58h)		;7494
 	or a			;7497
@@ -3136,23 +3136,23 @@ L_74CA:
 	inc a			;74e3
 	ret z			;74e4
 L_74E5:
-	call 05d6eh		;74e5
+	call 05d6eh		;74e5   ; llama_6be6_6000_8502:
 	ld a,008h		;74e8
 	jp L_73AC		;74ea
 L_74ED:
-	call 08096h		;74ed
+	call 08096h		;74ed   ; p02:8096
 	xor a			;74f0
 	ld (0ca41h),a		;74f1
 	jp L_73AB		;74f4
 L_74F7:
-	call 092f8h		;74f7
+	call 092f8h		;74f7   ; p02:92F8
 	call L_7485		;74fa
 	ld a,(0d706h)		;74fd
 	or a			;7500
 	ret z			;7501
 	jp L_73AB		;7502
 L_7505:
-	call 09301h		;7505
+	call 09301h		;7505   ; p02:9301
 	call L_7485		;7508
 	ld a,(0d706h)		;750b
 	or a			;750e
@@ -3165,7 +3165,7 @@ L_7505:
 	ret			;751d
 L_751E:
 	call 041c5h		;751e   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b76dh		;7521
+	call 0b76dh		;7521   ; p09:B76D
 	call 040f0h		;7524   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0d7b4h)		;7527
 	or a			;752a
@@ -3177,7 +3177,7 @@ L_751E:
 	jp L_73AC		;7535
 L_7538:
 	call 041c5h		;7538   ; bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a5a9h		;753b
+	call 0a5a9h		;753b   ; p09:A5A9
 	call 040f0h		;753e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0e040h)		;7541
 	or a			;7544
@@ -3186,7 +3186,7 @@ L_7538:
 L_7549:
 	call L_67CD		;7549
 	call 041bdh		;754c   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bc53h		;754f
+	call 0bc53h		;754f   ; p08:BC53
 	call 040f0h		;7552   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 05dc3h		;7555
 	call L_67F5		;7558
@@ -3200,7 +3200,7 @@ L_7566:
 	call 05dcbh		;7569
 	call 04650h		;756c   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	call 041bdh		;756f   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ab7dh		;7572
+	call 0ab7dh		;7572   ; p08:AB7D
 	call 040f0h		;7575   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 05dabh		;7578
 	call L_67F5		;757b
@@ -3209,7 +3209,7 @@ L_7566:
 	ret nz			;7582
 	jp L_73AB		;7583
 L_7586:
-	call 05d7ch		;7586
+	call 05d7ch		;7586   ; llama_6055:
 	ld a,(0c3a2h)		;7589
 	and a			;758c
 	jp z,L_73AB		;758d
@@ -3219,32 +3219,32 @@ L_7586:
 L_7595:
 	call L_6074		;7595
 	call L_605F		;7598
-	call 0a1bbh		;759b
+	call 0a1bbh		;759b   ; p03:A1BB
 	call 041efh		;759e   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b06bh		;75a1
+	call 0b06bh		;75a1   ; p14:B06B
 	call 040f0h		;75a4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_6F78		;75a7
-	call 09e94h		;75aa
+	call 09e94h		;75aa   ; p02:9E94
 	call L_6488		;75ad
-	call 04279h		;75b0
+	call 04279h		;75b0   ; rehace_marcador: el marcador: lineas, marco y barra de vida
 	call 041efh		;75b3   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0afe1h		;75b6
+	call 0afe1h		;75b6   ; p14:AFE1
 	call 040f0h		;75b9   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 059bbh		;75bc
+	call 059bbh		;75bc   ; p00:59BB
 	ld a,001h		;75bf
 	ld (0ca18h),a		;75c1
 	call 041a0h		;75c4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b3c9h		;75c7
+	call 0b3c9h		;75c7   ; p06:B3C9
 	call 041efh		;75ca   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b06bh		;75cd
-	call 0b03ah		;75d0
+	call 0b03ah		;75d0   ; p14:B03A
 	jp 040f0h		;75d3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_75D6:
 	call L_67CD		;75d6
 	call 05dcbh		;75d9
 	call 04650h		;75dc   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	call 04142h		;75df   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09cd5h		;75e2
+	call 09cd5h		;75e2   ; p04:9CD5
 	call 040f0h		;75e5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 05dabh		;75e8
 	call L_67F5		;75eb
@@ -3260,7 +3260,7 @@ L_75F6:
 	and 003h		;7602
 	jp nz,L_67F5		;7604
 	call 041f7h		;7607   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a354h		;760a
+	call 0a354h		;760a   ; p15:A354
 	call 040f0h		;760d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_67F5		;7610
 	ld a,(0cae7h)		;7613
@@ -3317,7 +3317,7 @@ L_7661:
 	xor a			;7667
 	ld (0ca1ch),a		;7668
 	ld (0ca29h),a		;766b
-	call 0542bh		;766e
+	call 0542bh		;766e   ; limpia_sprites: sin sprites, todos fuera en la RAM y en la VRAM, y otra vez con sprites
 	call 08502h		;7671
 	ld bc,00f07h		;7674
 	call 00047h		;7677   ; BIOS WRTVDP - Writes data in the VDP-register
@@ -3326,7 +3326,7 @@ L_7661:
 	and a			;7680
 	call nz,L_6074		;7681
 	call L_7714		;7684
-	call 04606h		;7687
+	call 04606h		;7687   ; enciende_todo: la pantalla y los sprites encendidos
 	ld a,0c0h		;768a
 	jp L_7345		;768c
 L_768F:
@@ -3342,7 +3342,7 @@ L_768F:
 	jp L_7348		;76a2
 L_76A5:
 	call 041a0h		;76a5   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ae62h		;76a8
+	call 0ae62h		;76a8   ; p06:AE62
 	call 040f0h		;76ab   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ret nc			;76ae
 	ld a,(0ca29h)		;76af
@@ -3354,22 +3354,22 @@ L_76A5:
 	call L_6A0D		;76bb
 	xor a			;76be
 	ld (0ca42h),a		;76bf   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04879h		;76c2
+	call 04879h		;76c2   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 	ld hl,0ca02h		;76c5
 	ld a,(hl)			;76c8
 	and 0bfh		;76c9
 	ld (hl),a			;76cb
 	jp L_7380		;76cc
 L_76CF:
-	call 05d66h		;76cf
-	call 05d85h		;76d2
-	call 05d8dh		;76d5
+	call 05d66h		;76cf   ; llama_6be6:
+	call 05d85h		;76d2   ; p00:5D85
+	call 05d8dh		;76d5   ; p00:5D8D
 	jr L_76EB		;76d8
 L_76DA:
-	call 05d6eh		;76da
+	call 05d6eh		;76da   ; llama_6be6_6000_8502:
 	jp L_7348		;76dd
 L_76E0:
-	call 05d7ch		;76e0
+	call 05d7ch		;76e0   ; llama_6055:
 	ld a,(0c3a2h)		;76e3
 	and a			;76e6
 	jr z,L_76F4		;76e7
@@ -3387,23 +3387,23 @@ L_76F4:
 	call L_7714		;76ff
 	ld hl,0a004h		;7702
 	call 04918h		;7705   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
-	call 04606h		;7708
+	call 04606h		;7708   ; enciende_todo: la pantalla y los sprites encendidos
 L_770B:
 	call 041a0h		;770b   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ae89h		;770e
+	call 0ae89h		;770e   ; p06:AE89
 	jp 040f0h		;7711   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7714:
 	ld a,(0ca42h)		;7714   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04452h		;7717
+	call 04452h		;7717   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	call 041a0h		;771a   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a5d6h		;771d
+	call 0a5d6h		;771d   ; p06:A5D6
 	call 040f0h		;7720   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp L_722C		;7723
 L_7726:
 	call 04179h		;7726   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_67CD		;7729
-	call 09555h		;772c
-	call 04f97h		;772f
+	call 09555h		;772c   ; p13:9555
+	call 04f97h		;772f   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	call 040f0h		;7732   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0caafh)		;7735
 	or a			;7738
@@ -3452,7 +3452,7 @@ L_7789:
 	xor 001h		;77ae
 	ld (hl),a			;77b0
 	push hl			;77b1
-	call 0bfb0h		;77b2
+	call 0bfb0h		;77b2   ; p03:BFB0
 	pop hl			;77b5
 L_77B6:
 	ld a,(hl)			;77b6
@@ -3480,16 +3480,16 @@ L_77DE:
 	ld a,(0caa8h)		;77de
 	or a			;77e1
 	jr z,L_77EA		;77e2
-	call 0bf14h		;77e4
+	call 0bf14h		;77e4   ; p03:BF14
 	jp L_7902		;77e7
 L_77EA:
 	call 05f5fh		;77ea
 	call 041b0h		;77ed   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0ab44h		;77f0
 	call 041a0h		;77f3   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a4e8h		;77f6
+	call 0a4e8h		;77f6   ; p06:A4E8
 	call 04142h		;77f9   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa43h		;77fc
+	call 0aa43h		;77fc   ; p05:AA43
 	call 089c3h		;77ff
 	call 041f4h		;7802   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a316h		;7805
@@ -3497,88 +3497,88 @@ L_77EA:
 	call 0a1deh		;780b
 	xor a			;780e
 	ld (0d4f1h),a		;780f
-	call 0af18h		;7812
-	call 0b2bch		;7815
+	call 0af18h		;7812   ; p03:AF18
+	call 0b2bch		;7815   ; p03:B2BC
 	call 0b404h		;7818
 	call 041efh		;781b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b558h		;781e
-	call 0ba62h		;7821
+	call 0b558h		;781e   ; p14:B558
+	call 0ba62h		;7821   ; p14:BA62
 	call 041b5h		;7824   ; bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a842h		;7827
+	call 0a842h		;7827   ; p08:A842
 	call 04142h		;782a   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 092c0h		;782d
-	call 0952ch		;7830
-	call 09372h		;7833
-	call 05f12h		;7836
+	call 092c0h		;782d   ; p04:92C0
+	call 0952ch		;7830   ; p04:952C
+	call 09372h		;7833   ; p04:9372
+	call 05f12h		;7836   ; p00:5F12
 	ld a,(0cb21h)		;7839
 	cp 002h		;783c
-	call nz,08000h		;783e
-	call 0827bh		;7841
-	call 09982h		;7844
+	call nz,08000h		;783e   ; p04:8000
+	call 0827bh		;7841   ; p04:827B
+	call 09982h		;7844   ; p04:9982
 	call 040f0h		;7847   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 08bf1h		;784a
 	call 041b0h		;784d   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ac38h		;7850
+	call 0ac38h		;7850   ; p07:AC38
 	call 041a0h		;7853   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a000h		;7856
+	call 0a000h		;7856   ; p06:A000
 	call 040f0h		;7859   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 05f57h		;785c
 	call 041d5h		;785f   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a6e1h		;7862
 	call 0bcd1h		;7865
 	call 040f0h		;7868   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b329h		;786b
+	call 0b329h		;786b   ; p03:B329
 	call 0b4e0h		;786e
 	call 05dabh		;7871
 	call 04142h		;7874   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09a80h		;7877
+	call 09a80h		;7877   ; p04:9A80
 	call 040f0h		;787a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bc4bh		;787d
+	call 0bc4bh		;787d   ; p03:BC4B
 	ld a,(0caa8h)		;7880
 	or a			;7883
 	jp nz,L_7902		;7884
-	call 08adfh		;7887
-	call 08acfh		;788a
+	call 08adfh		;7887   ; p02:8ADF
+	call 08acfh		;788a   ; p02:8ACF
 	call 041d5h		;788d   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bb1eh		;7890
-	call 0bc0ch		;7893
+	call 0bb1eh		;7890   ; p11:BB1E
+	call 0bc0ch		;7893   ; p11:BC0C
 	call 040f0h		;7896   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cb21h)		;7899
 	cp 002h		;789c
 	jr z,L_78F7		;789e
-	call 08affh		;78a0
-	call 0bb4ch		;78a3
+	call 08affh		;78a0   ; p02:8AFF
+	call 0bb4ch		;78a3   ; p03:BB4C
 	call 041efh		;78a6   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b761h		;78a9
+	call 0b761h		;78a9   ; p14:B761
 	call 041cdh		;78ac   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a170h		;78af
-	call 0a067h		;78b2
-	call 0a143h		;78b5
-	call 0a4f1h		;78b8
-	call 0a1d2h		;78bb
-	call 0a24dh		;78be
+	call 0a170h		;78af   ; p10:A170
+	call 0a067h		;78b2   ; p10:A067
+	call 0a143h		;78b5   ; p10:A143
+	call 0a4f1h		;78b8   ; p10:A4F1
+	call 0a1d2h		;78bb   ; p10:A1D2
+	call 0a24dh		;78be   ; p10:A24D
 	call 041d2h		;78c1   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b8c2h		;78c4
-	call 0bb49h		;78c7
+	call 0b8c2h		;78c4   ; p11:B8C2
+	call 0bb49h		;78c7   ; p11:BB49
 	call 040f0h		;78ca   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08ba8h		;78cd
+	call 08ba8h		;78cd   ; p02:8BA8
 	call 0b132h		;78d0
-	call 08b0fh		;78d3
-	call 08b17h		;78d6
-	call 08b58h		;78d9
+	call 08b0fh		;78d3   ; p02:8B0F
+	call 08b17h		;78d6   ; p02:8B17
+	call 08b58h		;78d9   ; p02:8B58
 	call 041a0h		;78dc   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a428h		;78df
-	call 0ace2h		;78e2
+	call 0a428h		;78df   ; p06:A428
+	call 0ace2h		;78e2   ; p06:ACE2
 	call 041d5h		;78e5   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca01h)		;78e8   ; lee el paso del estado de la partida
 	or a			;78eb
 	jr nz,L_78F4		;78ec
-	call 0aec9h		;78ee
-	call 0a61eh		;78f1
+	call 0aec9h		;78ee   ; p11:AEC9
+	call 0a61eh		;78f1   ; p11:A61E
 L_78F4:
 	call 040f0h		;78f4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_78F7:
-	call 089aah		;78f7
+	call 089aah		;78f7   ; p02:89AA
 	ld a,(0cb21h)		;78fa
 	cp 002h		;78fd
 	call nz,0b5b5h		;78ff
@@ -3607,7 +3607,7 @@ L_7914:
 	call 04142h		;7933   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 09a80h		;7936
 	call 041efh		;7939   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa5eh		;793c
+	call 0aa5eh		;793c   ; p14:AA5E
 	call 041d2h		;793f   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a6e1h		;7942
 	call 040f0h		;7945   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3620,11 +3620,11 @@ L_7914:
 	call 0ae57h		;7957
 	call 0b037h		;795a
 	call 0af64h		;795d
-	call 0af39h		;7960
-	call 0b309h		;7963
+	call 0af39h		;7960   ; p07:AF39
+	call 0b309h		;7963   ; p07:B309
 	call 0aff7h		;7966
-	call 0b338h		;7969
-	call 0be40h		;796c
+	call 0b338h		;7969   ; p07:B338
+	call 0be40h		;796c   ; p07:BE40
 	call 040f0h		;796f   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7972:
 	call 0bc4bh		;7972
@@ -3633,7 +3633,7 @@ L_7972:
 	call 089aah		;797b
 L_797E:
 	call 05dc3h		;797e
-	call 08998h		;7981
+	call 08998h		;7981   ; p02:8998
 	jp L_67F5		;7984
 L_7987:
 	ld b,a			;7987
@@ -3641,7 +3641,7 @@ L_7987:
 	push af			;798b
 	ld a,b			;798c
 	call 040f0h		;798d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08656h		;7990
+	call 08656h		;7990   ; p02:8656
 	call 04142h		;7993   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop af			;7996
 	push af			;7997
@@ -3656,16 +3656,16 @@ L_79A3:
 	jr L_79B1		;79a9
 L_79AB:
 	call 04142h		;79ab   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09ceeh		;79ae
+	call 09ceeh		;79ae   ; p04:9CEE
 L_79B1:
 	jp 040f0h		;79b1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_79B4:
 	call 04179h		;79b4   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b43dh		;79b7
+	call 0b43dh		;79b7   ; p14:B43D
 	jr L_79B1		;79ba
 L_79BC:
 	call 04142h		;79bc   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09949h		;79bf
+	call 09949h		;79bf   ; p04:9949
 	jr L_79B1		;79c2
 L_79C4:
 	xor a			;79c4
@@ -3694,16 +3694,16 @@ L_79E9:
 	jr L_79F7		;79ef
 L_79F1:
 	call 040f0h		;79f1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b132h		;79f4
+	call 0b132h		;79f4   ; p03:B132
 L_79F7:
 	jp 04142h		;79f7   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 L_79FA:
 	call 040f0h		;79fa   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b19ah		;79fd
+	call 0b19ah		;79fd   ; p03:B19A
 	jr L_79F7		;7a00
 L_7A02:
 	call 040f0h		;7a02   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b68eh		;7a05
+	call 0b68eh		;7a05   ; p03:B68E
 	jr L_79F7		;7a08
 L_7A0A:
 	call 040f0h		;7a0a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3714,7 +3714,7 @@ L_7A12:
 	jr L_79F7		;7a15
 L_7A17:
 	call 040f0h		;7a17   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b1bah		;7a1a
+	call 0b1bah		;7a1a   ; p03:B1BA
 	jr L_79F7		;7a1d
 L_7A1F:
 	call 040f0h		;7a1f   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3722,7 +3722,7 @@ L_7A1F:
 	jr L_79F7		;7a25
 L_7A27:
 	ld (0d8a8h),a		;7a27
-	jp 0b63eh		;7a2a
+	jp 0b63eh		;7a2a   ; p03:B63E
 L_7A2D:
 	call L_79C7		;7a2d
 	jp 041bdh		;7a30   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3754,7 +3754,7 @@ L_7A4B:
 	jp 041f7h		;7a4b   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7A4E:
 	call 040f0h		;7a4e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08658h		;7a51
+	call 08658h		;7a51   ; p02:8658
 	call 0413fh		;7a54   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	jr L_7A4B		;7a57
 L_7A59:
@@ -3766,7 +3766,7 @@ L_7A5F:
 	jp 041b5h		;7a65   ; bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7A68:
 	call 040f0h		;7a68   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a8d8h		;7a6b
+	call 0a8d8h		;7a6b   ; p03:A8D8
 	jr $+42		;7a6e
 L_7A70:
 	call 040f0h		;7a70   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3778,14 +3778,14 @@ L_7A78:
 	jr $+26		;7a7e
 L_7A80:
 	call 040f0h		;7a80   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09db1h		;7a83
+	call 09db1h		;7a83   ; p02:9DB1
 	jr $+18		;7a86
 L_7A88:
 	call rutina_de_fase		;7a88   ; rutina_de_fase: HL = la rutina de la zona en la lista de la fase 0xCA22 (p06:B40C)
 	jr $+13		;7a8b
 L_7A8D:
 	call 040f0h		;7a8d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bb38h		;7a90
+	call 0bb38h		;7a90   ; p03:BB38
 	jr $+5		;7a93
 
 ; ----------------------------------------------------------------------
@@ -3821,7 +3821,7 @@ L_7AB8:
 	jr L_7A98		;7abe
 L_7AC0:
 	call 040f0h		;7ac0   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0905eh		;7ac3
+	call 0905eh		;7ac3   ; p02:905E
 	jr L_7A98		;7ac6
 L_7AC8:
 	call 04142h		;7ac8   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3837,7 +3837,7 @@ L_7AD8:
 	jr L_7AF6		;7ade
 L_7AE0:
 	call 04142h		;7ae0   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 082fdh		;7ae3
+	call 082fdh		;7ae3   ; p04:82FD
 	jr L_7AF6		;7ae6
 L_7AE8:
 	call 04142h		;7ae8   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3845,12 +3845,12 @@ L_7AE8:
 	jr L_7AF6		;7aee
 L_7AF0:
 	call 04142h		;7af0   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08326h		;7af3
+	call 08326h		;7af3   ; p04:8326
 L_7AF6:
 	jp 041adh		;7af6   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7AF9:
 	call 04142h		;7af9   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08ebeh		;7afc
+	call 08ebeh		;7afc   ; p04:8EBE
 	jr L_7AF6		;7aff
 L_7B01:
 	call 04142h		;7b01   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3859,15 +3859,15 @@ L_7B01:
 L_7B09:
 	call 0413fh		;7b09   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 041efh		;7b0c   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ab01h		;7b0f
+	call 0ab01h		;7b0f   ; p14:AB01
 	jr L_7AF6		;7b12
 L_7B14:
 	call 04176h		;7b14   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09371h		;7b17
+	call 09371h		;7b17   ; p13:9371
 	jr L_7B2A		;7b1a
 L_7B1C:
 	call 04176h		;7b1c   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 09387h		;7b1f
+	call 09387h		;7b1f   ; p13:9387
 	jr L_7B2A		;7b22
 L_7B24:
 	call 04176h		;7b24   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3885,7 +3885,7 @@ L_7B35:
 	jr L_7B2A		;7b3e
 L_7B40:
 	call 04142h		;7b40   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08957h		;7b43
+	call 08957h		;7b43   ; p04:8957
 	jr L_7B6B		;7b46
 L_7B48:
 	call L_6E18		;7b48
@@ -3904,7 +3904,7 @@ L_7B5D:
 	jr L_7B6B		;7b63
 L_7B65:
 	call 041bdh		;7b65   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a187h		;7b68
+	call 0a187h		;7b68   ; p08:A187
 L_7B6B:
 	jp 04176h		;7b6b   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7B6E:
@@ -3917,7 +3917,7 @@ L_7B76:
 	jp 041efh		;7b7c   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7B7F:
 	call 04142h		;7b7f   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 092ebh		;7b82
+	call 092ebh		;7b82   ; p04:92EB
 	jr $+5		;7b85
 
 ; ----------------------------------------------------------------------
@@ -3940,7 +3940,7 @@ L_7B8D:
 L_7B98:
 	call L_6A31		;7b98
 	call 04142h		;7b9b   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	jp 09955h		;7b9e
+	jp 09955h		;7b9e   ; p04:9955
 L_7BA1:
 	call 0413fh		;7ba1   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0924ch		;7ba4
@@ -4013,7 +4013,7 @@ L_7C20:
 	ld de,0dd00h		;7c22   ; apunta a el mapa de la sala: 24 x 24 caracteres
 	ld hl,0e2c0h		;7c25
 	call L_7C14		;7c28
-	call 05d4fh		;7c2b
+	call 05d4fh		;7c2b   ; prepara_d400:
 	ld hl,0ca42h		;7c2e   ; apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld a,(hl)			;7c31
 	push af			;7c32
@@ -4023,9 +4023,9 @@ L_7C20:
 	call 04142h		;7c37   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bcf5h		;7c3a
 	call 0418eh		;7c3d   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 05fcah		;7c40
+	call 05fcah		;7c40   ; p00:5FCA
 	call 041f7h		;7c43   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a008h		;7c46
+	call 0a008h		;7c46   ; p15:A008
 	call 040f0h		;7c49   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop hl			;7c4c
 	pop af			;7c4d
@@ -4103,13 +4103,13 @@ L_7CBB:
 	call 09431h		;7cc6
 	call 094dah		;7cc9
 	call 040f0h		;7ccc   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 05f98h		;7ccf
-	call 0439dh		;7cd2
+	call 05f98h		;7ccf   ; p00:5F98
+	call 0439dh		;7cd2   ; lineas_c3: las lineas de las listas de p00:43C8 (verticales) y p00:43E3 (horizontales), de 0x3A de largo en el color 0x0D
 	ld a,(0cb00h)		;7cd5
 	sub 011h		;7cd8
 	cp 002h		;7cda
-	jp nc,0438ah		;7cdc
-	jp 0437eh		;7cdf
+	jp nc,0438ah		;7cdc   ; copia_marcador_a_esta: copia las lineas 0x16-0x51 de la otra pagina a la de dibujar (YMMM)
+	jp 0437eh		;7cdf   ; copia_marcador_a_la_otra: copia las lineas 0x16-0x51 de la pagina en la que se dibuja a la otra (YMMM)
 L_7CE2:
 	ld hl,06b8dh		;7ce2
 	ret			;7ce5
@@ -4303,7 +4303,7 @@ DATA_7DDC:
 L_7DE2:
 	call L_7E0D		;7de2
 	call 041adh		;7de5   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a4ebh		;7de8
+	call 0a4ebh		;7de8   ; p07:A4EB
 	call 041d2h		;7deb   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a20dh		;7dee
 	jp 040f0h		;7df1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4314,22 +4314,22 @@ L_7DF4:
 	ld (0ca42h),a		;7dfa   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call L_7E0D		;7dfd
 	call 041d2h		;7e00   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a20dh		;7e03
+	call 0a20dh		;7e03   ; p11:A20D
 	pop af			;7e06
 	ld (0ca42h),a		;7e07   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jp 040f0h		;7e0a   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7E0D:
-	call 08ba0h		;7e0d
+	call 08ba0h		;7e0d   ; p02:8BA0
 	call L_7E22		;7e10
 	call L_7E7E		;7e13
 	call L_7E3C		;7e16
 	call 041a0h		;7e19   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aac8h		;7e1c
-	jp 0ab21h		;7e1f
+	call 0aac8h		;7e1c   ; p06:AAC8
+	jp 0ab21h		;7e1f   ; p06:AB21
 L_7E22:
 	call L_7E29		;7e22
 	ret nz			;7e25
-	jp 08535h		;7e26
+	jp 08535h		;7e26   ; p02:8535
 L_7E29:
 	ld a,(0ca4ah)		;7e29   ; lee la zona
 	cp 00ah		;7e2c
@@ -4380,7 +4380,7 @@ L_7E6E:
 L_7E75:
 	ld bc,00203h		;7e75
 	ld hl,0a7c7h		;7e78
-	jp 050c4h		;7e7b
+	jp 050c4h		;7e7b   ; p00:50C4
 L_7E7E:
 	ld hl,0bd9bh		;7e7e
 	ld a,(0ca76h)		;7e81   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -4435,7 +4435,7 @@ L_7EAC:
 	inc hl			;7ed5
 	ld c,(hl)			;7ed6
 	inc hl			;7ed7
-	jp 05094h		;7ed8
+	jp 05094h		;7ed8   ; p00:5094
 L_7EDB:
 	call L_7EE5		;7edb
 	ld a,(0ca8fh)		;7ede
@@ -4508,7 +4508,7 @@ L_7F37:
 	ret			;7f3c
 L_7F3D:
 	call L_7F4F		;7f3d
-	call 04411h		;7f40
+	call 04411h		;7f40   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 	ld a,(hl)			;7f43
 	ld hl,0ca4eh		;7f44
 	cp 081h		;7f47
@@ -4539,7 +4539,7 @@ L_7F61:
 	ret			;7f68
 L_7F69:
 	call L_7F4F		;7f69
-	call 04411h		;7f6c
+	call 04411h		;7f6c   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 	ld a,(hl)			;7f6f
 	ret			;7f70
 L_7F71:
@@ -4549,7 +4549,7 @@ L_7F71:
 	ld a,l			;7f76
 	cp 0c0h		;7f77
 	jr nc,L_7F4D		;7f79
-	call 04411h		;7f7b
+	call 04411h		;7f7b   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 	ld a,(hl)			;7f7e
 	or a			;7f7f
 	jr z,L_7F4D		;7f80
@@ -4583,23 +4583,23 @@ L_7F9C:
 	ret			;7fa6
 L_7FA7:
 	call L_67CD		;7fa7
-	call 05dcbh		;7faa
+	call 05dcbh		;7faa   ; p00:5DCB
 	call 04650h		;7fad   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	call 0b593h		;7fb0
+	call 0b593h		;7fb0   ; p03:B593
 	call 04650h		;7fb3   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	call 0a1deh		;7fb6
+	call 0a1deh		;7fb6   ; p03:A1DE
 	call 04142h		;7fb9   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 089c3h		;7fbc
+	call 089c3h		;7fbc   ; p04:89C3
 	call 040f0h		;7fbf   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08bf1h		;7fc2
+	call 08bf1h		;7fc2   ; p02:8BF1
 	call 041d5h		;7fc5   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a6e1h		;7fc8
-	call 0bcd1h		;7fcb
-	call 0a577h		;7fce
-	call 0a427h		;7fd1
+	call 0a6e1h		;7fc8   ; p11:A6E1
+	call 0bcd1h		;7fcb   ; p11:BCD1
+	call 0a577h		;7fce   ; p11:A577
+	call 0a427h		;7fd1   ; p11:A427
 	call 040f0h		;7fd4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 05dabh		;7fd7
-	call 05dc3h		;7fda
+	call 05dabh		;7fd7   ; p00:5DAB
+	call 05dc3h		;7fda   ; p00:5DC3
 	ld a,(0caa0h)		;7fdd
 	or a			;7fe0
 	jr nz,L_7FED		;7fe1
@@ -4611,11 +4611,11 @@ L_7FED:
 	jp L_67F5		;7fed
 L_7FF0:
 	call 041d5h		;7ff0   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08001h		;7ff3
+	call 08001h		;7ff3   ; p02:8001
 	jp 040f0h		;7ff6   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7FF9:
 	call 041d5h		;7ff9   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 08028h		;7ffc
+	call 08028h		;7ffc   ; p02:8028
 
 ; ----------------------------------------------------------------------
 ; DATOS partida_7FFF: los 1 primeros bytes de una instruccion de 2 (18 F5) que

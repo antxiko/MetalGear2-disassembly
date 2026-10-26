@@ -116,7 +116,7 @@ L 0x4D3A pon_banco_de_musica pone en 0xA000 el banco de 0xC68F
 L 0x4D41 orden_de_partitura salta por la tabla p16:4D52 con la orden A (0xD0-0xFE)
 L 0x547E escribe_psg escribe A en el registro del PSG (PR2 p13:73A6)
 C 0x4000 calla_todo: arranque del sonido: todo callado
-C 0x4003 pide_sonido: pide el sonido A (0xF0-0xFF son ordenes: callar, fundir...)
+C 0x4003 pide_sonido: pide el sonido A por el puente de 0xC340 (copiado de p03:A14B)
 C 0x4006 sonido_cada_cuadro: el sonido de un cuadro: los ocho canales
 C 0x4025 guarda el ultimo sonido pedido
 C 0x4028 banco_de_musica: el banco de la musica A (0x6A-0xEF) de p16:4CF9 a 0xC68F

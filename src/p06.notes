@@ -67,7 +67,9 @@ C 0xA0BA borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA0F2 guarda 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xA10D suma_a_de: DE = DE + A
 C 0xA11B llena_bloque: pone A en BC + 1 bytes desde HL
+C 0xA193 p02:8EEA
 C 0xA199 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA1B4 p01:7F69
 C 0xA1B8 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA1BE lee la zona
 C 0xA1FF lee la sala de la zona
@@ -93,11 +95,14 @@ C 0xA432 lee la zona
 C 0xA457 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA461 lee la zona
 C 0xA468 lee la sala de la zona
+C 0xA46F p01:6A97
 C 0xA485 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA48C lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA4AE p00:5088
 C 0xA4ED lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA4F6 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA4FD lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xA51C p01:6C7F
 C 0xA51F lee la zona
 C 0xA52C lee la sala de la zona
 C 0xA536 lee la sala de la zona
@@ -114,14 +119,22 @@ C 0xA79A lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7A0 lee la zona
 C 0xA7A7 lee la sala de la zona
 C 0xA7ED despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA858 p01:6A1D
+C 0xA86A p04:9D03
+C 0xA8E5 p04:9CAA
+C 0xA8E8 p01:6A29
+C 0xA924 p01:6C2B
 C 0xA94B palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA962 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA984 p02:9CB7
 C 0xA9B0 suma_a_hl: HL = HL + A
 C 0xAA26 suma_a_hl: HL = HL + A
+C 0xAA33 p04:9CB7
 C 0xAAE3 mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
 C 0xAAE9 lee la zona
 C 0xAAF7 lee la sala de la zona
 C 0xAB03 mosaico_AB1D: un mosaico de 2 x 2 caracteres, un byte cada uno
+C 0xAB06 p00:50E8
 C 0xAB0D lee la sala de la zona
 C 0xAB13 lee la sala de la zona
 C 0xAB2B lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -137,6 +150,7 @@ C 0xABBB lee la zona
 C 0xABC1 lee la sala de la zona
 C 0xABD5 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xABE1 suma_a_hl: HL = HL + A
+C 0xABEA pieza_de_2_a_la_otra: el caracter A de la pagina 2 a la otra
 C 0xAC2C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xAC2F lee la zona
 C 0xAC38 lee la sala de la zona
@@ -146,7 +160,9 @@ C 0xAD4B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xAD9D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xADA0 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0xADA6 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
+C 0xADC9 p12:65C6
 C 0xAE65 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAE86 sonido_11: pide el sonido 0x11
 C 0xAE98 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xAEB6 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xAEC1 borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -182,18 +198,25 @@ C 0xB1E5 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB207 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xB213 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xB22C copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xB239 borra_pagina_0: la pagina 0 a cero y R#23 = 0
+C 0xB24C pieza_de_sala_a_la_otra: el caracter A de la sala (p00:4A36) de la pagina 2 a la otra
 C 0xB26A palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB2C6 p04:90CE
 C 0xB2DC borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB2FD suma_a_de: DE = DE + A
 C 0xB308 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
 C 0xB331 suma_a_hl: HL = HL + A
+C 0xB367 p01:6C6F
 C 0xB385 suma_a_hl: HL = HL + A
 C 0xB3A0 suma_a_hl: HL = HL + A
 C 0xB3C9 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB53F lee la zona
 C 0xB546 lee la sala de la zona
+C 0xB56F p02:806F
+C 0xB581 p02:8100
 C 0xB5C1 lee la zona
 C 0xB5D6 suma_a_de: DE = DE + A
+C 0xB5D9 p04:8E40
 C 0xB5E8 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xB5F4 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 # --- fin de las anotaciones de anota.py ---

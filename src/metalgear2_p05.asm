@@ -90,7 +90,7 @@ L_A071:
 	ret nz			;a074
 	ld (ix+00eh),010h		;a075
 	ld (ix+001h),020h		;a079
-	jp 09d25h		;a07d
+	jp 09d25h		;a07d   ; p04:9D25
 L_A080:
 	ld b,098h		;a080
 	call L_A08A		;a082
@@ -105,7 +105,7 @@ L_A08A:
 	or a			;a093
 	ret			;a094
 L_A095:
-	call 0900bh		;a095
+	call 0900bh		;a095   ; p04:900B
 	scf			;a098
 	ret			;a099
 L_A09A:
@@ -113,7 +113,7 @@ L_A09A:
 	cp 02ah		;a09d
 	jp nc,0900bh		;a09f
 	ld a,003h		;a0a2
-	call 08e25h		;a0a4
+	call 08e25h		;a0a4   ; p04:8E25
 	jp L_A27B		;a0a7
 L_A0AA:
 	ld b,0aah		;a0aa
@@ -137,11 +137,11 @@ L_A0BC:
 	ld (0ca22h),a		;a0cf   ; guarda la fase de la partida (indice de las listas de p06:B40C)
 	call 07a12h		;a0d2
 L_A0D5:
-	call 06c33h		;a0d5
+	call 06c33h		;a0d5   ; p01:6C33
 	jp L_A27B		;a0d8
 L_A0DB:
 	inc (ix+00eh)		;a0db
-	jp 09e51h		;a0de
+	jp 09e51h		;a0de   ; p04:9E51
 L_A0E1:
 	call 0900bh		;a0e1
 	ld a,(ix+003h)		;a0e4
@@ -226,7 +226,7 @@ L_A16D:
 	call 08100h		;a17e
 	ret nz			;a181
 	call 06c33h		;a182
-	jp 08da8h		;a185
+	jp 08da8h		;a185   ; p04:8DA8
 L_A188:
 	ld de,01604h		;a188
 	ld c,002h		;a18b
@@ -323,9 +323,9 @@ L_A23F:
 L_A250:
 	call L_A0EE		;a250
 	ret c			;a253
-	call 09f6bh		;a254
+	call 09f6bh		;a254   ; p04:9F6B
 	ret z			;a257
-	call 09f22h		;a258
+	call 09f22h		;a258   ; p04:9F22
 	ret z			;a25b
 	call 08e82h		;a25c
 	jp c,L_A27B		;a25f
@@ -462,7 +462,7 @@ L_A35C:
 	ld (ix+00eh),0c0h		;a360
 	jp L_A27B		;a364
 L_A367:
-	call 09d1bh		;a367
+	call 09d1bh		;a367   ; p04:9D1B
 	ld (ix+001h),003h		;a36a
 	call 04256h		;a36e   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 003h		;a371
@@ -635,7 +635,7 @@ L_A496:
 	ld (ix+001h),001h		;a496
 	jp L_A32E		;a49a
 L_A49D:
-	call 09038h		;a49d
+	call 09038h		;a49d   ; p04:9038
 	jp z,0900bh		;a4a0
 	call L_A27B		;a4a3
 	jp L_A57C		;a4a6
@@ -915,7 +915,7 @@ L_A66C:
 	ld c,040h		;a66c
 	call L_A675		;a66e
 	ret nc			;a671
-	jp 06c47h		;a672
+	jp 06c47h		;a672   ; p01:6C47
 L_A675:
 	push bc			;a675
 	call 06247h		;a676
@@ -1043,7 +1043,7 @@ L_A743:
 	ld (ix+00ch),a		;a752
 	ld (ix+016h),a		;a755
 	ld (ix+00eh),008h		;a758
-	jp 06c4bh		;a75c
+	jp 06c4bh		;a75c   ; p01:6C4B
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_A75F: lo apuntan con el banco puesto p05:A740 (0xA75F); el
@@ -1083,9 +1083,9 @@ L_A781:
 	ld a,b			;a788
 	ld hl,0a79ch		;a789
 	call 0424eh		;a78c   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	call 08097h		;a78f
+	call 08097h		;a78f   ; p04:8097
 	ex de,hl			;a792
-	call 080a7h		;a793
+	call 080a7h		;a793   ; p04:80A7
 	ld a,003h		;a796
 	ld (ix+00ch),a		;a798
 	ret			;a79b
@@ -1104,13 +1104,13 @@ DATA_resto_A79C:
 
 
 L_A7A4:
-	call 04442h		;a7a4
+	call 04442h		;a7a4   ; de_negativo: DE = -DE
 L_A7A7:
 	ex de,hl			;a7a7
 	ld de,00000h		;a7a8
 	ret			;a7ab
 L_A7AC:
-	call 04442h		;a7ac
+	call 04442h		;a7ac   ; de_negativo: DE = -DE
 L_A7AF:
 	ld hl,00000h		;a7af
 	ret			;a7b2
@@ -1331,7 +1331,7 @@ L_A919:
 	ret z			;a923
 	cp 002h		;a924
 	ret nz			;a926
-	jp 09b06h		;a927
+	jp 09b06h		;a927   ; p04:9B06
 L_A92A:
 	ld a,(ix+01ah)		;a92a
 	ld (ix+001h),a		;a92d
@@ -1364,7 +1364,7 @@ L_A968:
 	ld a,(ix+005h)		;a96e
 	cp 080h		;a971
 	jr c,L_A97A		;a973
-	call nc,04442h		;a975
+	call nc,04442h		;a975   ; de_negativo: DE = -DE
 	ld b,004h		;a978
 L_A97A:
 	ld (ix+00dh),b		;a97a
@@ -1375,7 +1375,7 @@ L_A980:
 	ld a,(ix+003h)		;a986
 	cp 060h		;a989
 	jr c,L_A992		;a98b
-	call 04442h		;a98d
+	call 04442h		;a98d   ; de_negativo: DE = -DE
 	ld b,000h		;a990
 L_A992:
 	ld (ix+00dh),b		;a992
@@ -1420,7 +1420,7 @@ L_A9E0:
 L_A9E4:
 	dec (ix+00eh)		;a9e4
 	ret nz			;a9e7
-	call 06bach		;a9e8
+	call 06bach		;a9e8   ; p01:6BAC
 	ld (ix+011h),000h		;a9eb
 	ld b,000h		;a9ef
 	ld a,(0cb03h)		;a9f1
@@ -1572,7 +1572,7 @@ L_AAB3:
 	ld (0d820h),a		;aae3
 	ld (0d840h),a		;aae6
 	ld (0d860h),a		;aae9
-	jp 05019h		;aaec
+	jp 05019h		;aaec   ; sprites_de_8773:
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_AAEF: lo apuntan con el banco puesto p05:AAA9 (0xAAEF); el
@@ -1735,7 +1735,7 @@ L_ABCC:
 	djnz L_ABB8		;abd3
 	ret			;abd5
 L_ABD6:
-	call 08751h		;abd6
+	call 08751h		;abd6   ; p04:8751
 	ld a,c			;abd9
 	and a			;abda
 	ret nz			;abdb
@@ -1787,7 +1787,7 @@ L_AC07:
 	ld a,(ix+001h)		;ac0d
 	sub 003h		;ac10
 	cp 002h		;ac12
-	call c,08759h		;ac14
+	call c,08759h		;ac14   ; p04:8759
 L_AC17:
 	ld de,00020h		;ac17
 	add ix,de		;ac1a
@@ -1843,7 +1843,7 @@ L_AC88:
 	ret nz			;ac8b
 	call 08100h		;ac8c
 	jp z,06c63h		;ac8f
-	jp 06c67h		;ac92
+	jp 06c67h		;ac92   ; p01:6C67
 L_AC95:
 	call L_AC88		;ac95
 	ld l,007h		;ac98
@@ -1935,7 +1935,7 @@ L_AD3F:
 	call 06247h		;ad3f
 	ret nz			;ad42
 	call 079c7h		;ad43
-	call 06a87h		;ad46
+	call 06a87h		;ad46   ; p01:6A87
 	ld de,00550h		;ad49
 L_AD4C:
 	call 061ceh		;ad4c
@@ -1953,13 +1953,13 @@ L_AD52:
 	ld (0cae2h),a		;ad67
 	ld a,010h		;ad6a
 	ld (0dff2h),a		;ad6c
-	call 07a8dh		;ad6f
+	call 07a8dh		;ad6f   ; p01:7A8D
 	jr L_AD80		;ad72
 L_AD74:
 	ld (ix+016h),001h		;ad74
 	ld a,003h		;ad78
 	call L_AECB		;ad7a
-	call 05929h		;ad7d
+	call 05929h		;ad7d   ; sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 L_AD80:
 	inc (ix+001h)		;ad80
 	ret			;ad83
@@ -2097,7 +2097,7 @@ L_AE5C:
 	ld hl,008b9h		;ae5f
 	call L_AE6B		;ae62
 	ret c			;ae65
-	call 05929h		;ae66
+	call 05929h		;ae66   ; sala_especial_a_e500: la sala especial de la ficha IX (sus bytes 10-11) a 0xE500
 	or a			;ae69
 	ret			;ae6a
 L_AE6B:
@@ -2423,7 +2423,7 @@ L_B0B5:
 	inc (ix+001h)		;b0b5
 	ret			;b0b8
 L_B0B9:
-	call 05955h		;b0b9
+	call 05955h		;b0b9   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 L_B0BC:
 	ld a,(ix+01bh)		;b0bc
 	dec a			;b0bf
@@ -2672,7 +2672,7 @@ L_B270:
 	ld (ix+005h),a		;b270
 L_B273:
 	ld (ix+00eh),020h		;b273
-	call 05955h		;b277
+	call 05955h		;b277   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 	jp L_B161		;b27a
 L_B27D:
 	ld a,(ix+018h)		;b27d
@@ -2685,7 +2685,7 @@ L_B27D:
 	jr z,L_B295		;b28d
 	and 003h		;b28f
 	ret nz			;b291
-	jp 09b40h		;b292
+	jp 09b40h		;b292   ; p04:9B40
 L_B295:
 	ld (ix+001h),003h		;b295
 	ld (ix+00ch),003h		;b299
@@ -2702,19 +2702,19 @@ L_B2A8:
 	ret			;b2b1
 L_B2B2:
 	call L_B2D8		;b2b2
-	jp nc,086a4h		;b2b5
+	jp nc,086a4h		;b2b5   ; p04:86A4
 	ld hl,06bcch		;b2b8
 	call 086d5h		;b2bb
 	ld a,(ix+001h)		;b2be
 	ld hl,0b2e8h		;b2c1
 	call 0424eh		;b2c4   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	call 08082h		;b2c7
-	jp 08671h		;b2ca
+	jp 08671h		;b2ca   ; p04:8671
 L_B2CD:
 	call 08728h		;b2cd
 	ld a,(ix+014h)		;b2d0
 	and a			;b2d3
-	jp z,0873ch		;b2d4
+	jp z,0873ch		;b2d4   ; p04:873C
 	ret			;b2d7
 L_B2D8:
 	ld a,(0ca50h)		;b2d8
@@ -2776,7 +2776,7 @@ L_B341:
 L_B347:
 	call L_AE6B		;b347
 	ret c			;b34a
-	jp 05955h		;b34b
+	jp 05955h		;b34b   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 L_B34E:
 	call 06247h		;b34e
 	ld a,(0e220h)		;b351   ; lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
@@ -2792,7 +2792,7 @@ L_B35F:
 	call L_A77D		;b364
 	ld (ix+00ch),001h		;b367
 	call L_B310		;b36b
-	call 05955h		;b36e
+	call 05955h		;b36e   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 	call 08685h		;b371
 L_B374:
 	ld a,(ix+000h)		;b374
@@ -2856,7 +2856,7 @@ L_B3E3:
 	ld a,(0ca03h)		;b3ec   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b3ef
 	ret nz			;b3f1
-	jp 06a73h		;b3f2
+	jp 06a73h		;b3f2   ; p01:6A73
 L_B3F5:
 	call 04256h		;b3f5   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 01fh		;b3f8
@@ -3026,7 +3026,7 @@ L_B4F8:
 	ld d,(ix+005h)		;b4f8
 	ld e,(ix+003h)		;b4fb
 	call 08079h		;b4fe
-	jp 079d1h		;b501
+	jp 079d1h		;b501   ; p01:79D1
 L_B504:
 	call 08100h		;b504
 	jr nz,L_B53F		;b507
@@ -3043,7 +3043,7 @@ L_B51F:
 	ld a,(0ca03h)		;b51f   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b522
 	ret nz			;b524
-	jp 09b19h		;b525
+	jp 09b19h		;b525   ; p04:9B19
 L_B528:
 	ld (ix+00eh),020h		;b528
 	jp L_B310		;b52c
@@ -3073,7 +3073,7 @@ L_B546:
 L_B563:
 	call 08100h		;b563
 	ret nz			;b566
-	jp 06cd2h		;b567
+	jp 06cd2h		;b567   ; p01:6CD2
 L_B56A:
 	ld a,(ix+001h)		;b56a
 	cp 005h		;b56d
@@ -3084,14 +3084,14 @@ L_B573:
 	and a			;b576
 	ret z			;b577
 	ld hl,06bcch		;b578
-	call 086d5h		;b57b
+	call 086d5h		;b57b   ; p04:86D5
 	ld a,(0ca76h)		;b57e   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;b581
 	ret nz			;b582
 	ld a,(ix+001h)		;b583
 	ld hl,0b58fh		;b586
 	call 0424eh		;b589   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	jp 08082h		;b58c
+	jp 08082h		;b58c   ; p04:8082
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B58F: lo apuntan con el banco puesto p05:B586 (0xB58F); el
@@ -3112,7 +3112,7 @@ L_B5B5:
 	ld a,(0d6b0h)		;b5b5
 	and a			;b5b8
 	ret z			;b5b9
-	call 06ca6h		;b5ba
+	call 06ca6h		;b5ba   ; p01:6CA6
 	ld (ix+00eh),008h		;b5bd
 	ld a,001h		;b5c1
 	ld (0cb3ch),a		;b5c3
@@ -3152,7 +3152,7 @@ L_B5F6:
 L_B5FF:
 	call 06247h		;b5ff
 	ret nz			;b602
-	call 079c4h		;b603
+	call 079c4h		;b603   ; p01:79C4
 	xor a			;b606
 	ret			;b607
 L_B608:
@@ -3198,7 +3198,7 @@ L_B659:
 	ld bc,0c0c0h		;b66b
 	call 0474dh		;b66e   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	ld a,(0ca42h)		;b671   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04452h		;b674
+	call 04452h		;b674   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	call 04650h		;b677   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	call 07ab8h		;b67a
 	ld de,02020h		;b67d
@@ -3230,8 +3230,8 @@ L_B69B:
 	ld bc,0c0c0h		;b6bd
 	call 0475ah		;b6c0   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 	call 04650h		;b6c3   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	call 04606h		;b6c6
-	call 05955h		;b6c9
+	call 04606h		;b6c6   ; enciende_todo: la pantalla y los sprites encendidos
+	call 05955h		;b6c9   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 	call L_B374		;b6cc
 	call L_A777		;b6cf
 	call 08685h		;b6d2
@@ -3290,7 +3290,7 @@ L_B73D:
 	ld hl,0b751h		;b745
 	call 0423eh		;b748   ; suma_a_hl: HL = HL + A
 	ld b,(hl)			;b74b
-	jp 084a4h		;b74c
+	jp 084a4h		;b74c   ; p04:84A4
 L_B74F:
 	scf			;b74f
 	ret			;b750
@@ -3371,7 +3371,7 @@ L_B7C6:
 	ld a,(0ca03h)		;b7d1   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b7d4
 	ret nz			;b7d6
-	jp 09b0dh		;b7d7
+	jp 09b0dh		;b7d7   ; p04:9B0D
 L_B7DA:
 	ld (ix+001h),008h		;b7da
 	jp L_B728		;b7de
@@ -3408,7 +3408,7 @@ L_B81D:
 	ret			;b82b
 L_B82C:
 	push ix		;b82c
-	call 0506eh		;b82e
+	call 0506eh		;b82e   ; sprites_de_858d: p36:858D...
 	pop ix		;b831
 	call 090c8h		;b833
 	call L_B84E		;b836
@@ -3416,8 +3416,8 @@ L_B82C:
 	ld (ix+00dh),014h		;b83d
 	ld (ix+00eh),0c0h		;b841
 	call L_B5DF		;b845
-	call 06caeh		;b848
-	jp 09d2ah		;b84b
+	call 06caeh		;b848   ; p01:6CAE
+	jp 09d2ah		;b84b   ; p04:9D2A
 L_B84E:
 	call 04256h		;b84e   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	rrca			;b851
@@ -3511,7 +3511,7 @@ L_B8D4:
 	dec (ix+00eh)		;b8d4
 	ld a,(ix+00eh)		;b8d7
 	cp 060h		;b8da
-	jp z,09d2fh		;b8dc
+	jp z,09d2fh		;b8dc   ; p04:9D2F
 	and a			;b8df
 	ret nz			;b8e0
 	call 09d2fh		;b8e1
@@ -3537,7 +3537,7 @@ L_B90A:
 	dec (ix+00eh)		;b90a
 	ld a,(ix+00eh)		;b90d
 	cp 020h		;b910
-	jp z,09d34h		;b912
+	jp z,09d34h		;b912   ; p04:9D34
 	and a			;b915
 	ret nz			;b916
 	jp L_B5DF		;b917
@@ -3695,7 +3695,7 @@ L_BA58:
 	ld (ix+011h),a		;ba5f
 	ld (ix+00fh),a		;ba62
 	call 08685h		;ba65
-	call 07a70h		;ba68
+	call 07a70h		;ba68   ; p01:7A70
 	call L_BA54		;ba6b
 L_BA6E:
 	xor a			;ba6e
@@ -3791,7 +3791,7 @@ L_BAFC:
 	ld a,008h		;baff
 	add a,b			;bb01
 	ld (ix+00dh),a		;bb02
-	jp 06a15h		;bb05
+	jp 06a15h		;bb05   ; p01:6A15
 L_BB08:
 	ld a,(ix+017h)		;bb08
 	and a			;bb0b
@@ -3893,7 +3893,7 @@ L_BBA2:
 	ld (0cb3ch),a		;bbad
 	ld (ix+00dh),00ch		;bbb0
 	ld (ix+00eh),020h		;bbb4
-	call 07a0ah		;bbb8
+	call 07a0ah		;bbb8   ; p01:7A0A
 	call 06c1bh		;bbbb
 	jp L_BA54		;bbbe
 L_BBC1:
@@ -3906,19 +3906,19 @@ L_BBC1:
 	ld bc,0c0c0h		;bbca
 	call 0474dh		;bbcd   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	ld de,06060h		;bbd0
-	call 07a02h		;bbd3
+	call 07a02h		;bbd3   ; p01:7A02
 	jp L_BA54		;bbd6
 L_BBD9:
 	call 079e1h		;bbd9
 	ld a,(0e270h)		;bbdc
 	and a			;bbdf
 	ret nz			;bbe0
-	call 06cc2h		;bbe1
+	call 06cc2h		;bbe1   ; p01:6CC2
 	call 045f6h		;bbe4   ; apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 	ld a,002h		;bbe7
 	ld (0d8aah),a		;bbe9
 	call 045d7h		;bbec   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
-	call 06f6ah		;bbef
+	call 06f6ah		;bbef   ; p01:6F6A
 	ld a,0d8h		;bbf2
 	ld (0dc70h),a		;bbf4
 	ld hl,0dc78h		;bbf7
@@ -3939,27 +3939,27 @@ L_BBD9:
 	ld a,00ah		;bc12
 	call 04237h		;bc14   ; llena_bloque: pone A en BC + 1 bytes desde HL
 	xor a			;bc17
-	call 07a9bh		;bc18
+	call 07a9bh		;bc18   ; p01:7A9B
 	ld a,008h		;bc1b
 	call 07a9bh		;bc1d
 	ld a,(0ca42h)		;bc20   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04452h		;bc23
+	call 04452h		;bc23   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	call 04650h		;bc26   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	call 07ab8h		;bc29
+	call 07ab8h		;bc29   ; p01:7AB8
 	call 04609h		;bc2c   ; enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 	ld de,02020h		;bc2f
 	xor a			;bc32
 	ld b,a			;bc33
-	call 07aa0h		;bc34
+	call 07aa0h		;bc34   ; p01:7AA0
 	ld de,08020h		;bc37
 	ld a,008h		;bc3a
 	ld b,001h		;bc3c
 	call 07aa0h		;bc3e
 	ld de,01070h		;bc41
-	call 061d3h		;bc44
+	call 061d3h		;bc44   ; p01:61D3
 	jp L_BA54		;bc47
 L_BC4A:
-	call 07aa8h		;bc4a
+	call 07aa8h		;bc4a   ; p01:7AA8
 	call L_B5FF		;bc4d
 	ret nz			;bc50
 	call 045f1h		;bc51   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
@@ -3977,14 +3977,14 @@ L_BC4A:
 	ld (0cb16h),a		;bc70
 	inc a			;bc73
 	ld (0cb14h),a		;bc74
-	call 05dd3h		;bc77
-	call 07ab0h		;bc7a
+	call 05dd3h		;bc77   ; p00:5DD3
+	call 07ab0h		;bc7a   ; p01:7AB0
 	ld a,001h		;bc7d
 	call 07ab0h		;bc7f
-	call 07a1fh		;bc82
-	call 0444fh		;bc85
+	call 07a1fh		;bc82   ; p01:7A1F
+	call 0444fh		;bc85   ; borra_pantalla_negro: 0xC0 x 0xC0 puntos a 0 en la pagina de dibujar
 	ld de,06060h		;bc88
-	call 079d9h		;bc8b
+	call 079d9h		;bc8b   ; p01:79D9
 	call 045c5h		;bc8e   ; enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 	ld hl,0dc70h		;bc91
 	ld bc,0000fh		;bc94
@@ -4003,7 +4003,7 @@ L_BC9F:
 	ld bc,00800h		;bcaf
 	jp 04680h		;bcb2   ; linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 L_BCB5:
-	call 079e1h		;bcb5
+	call 079e1h		;bcb5   ; p01:79E1
 	ld a,(0e270h)		;bcb8
 	and a			;bcbb
 	ret nz			;bcbc
@@ -4181,20 +4181,20 @@ L_BE3B:
 	dec (ix+00eh)		;be3b
 	ret nz			;be3e
 	xor a			;be3f
-	call 079e9h		;be40
+	call 079e9h		;be40   ; p01:79E9
 	call 06b12h		;be43
-	call 06b95h		;be46
+	call 06b95h		;be46   ; p01:6B95
 	ld (ix+00eh),020h		;be49
 	jr L_BDF9		;be4d
 L_BE4F:
-	call 079f1h		;be4f
+	call 079f1h		;be4f   ; p01:79F1
 	dec (ix+00eh)		;be52
 	ret nz			;be55
-	call 079fah		;be56
+	call 079fah		;be56   ; p01:79FA
 	ld a,001h		;be59
 	ld (0e25ah),a		;be5b
 	inc a			;be5e
-	call 06250h		;be5f
+	call 06250h		;be5f   ; p01:6250
 	jr L_BDF9		;be62
 L_BE64:
 	call 06bcch		;be64
@@ -4279,7 +4279,7 @@ L_BF08:
 	jr nz,L_BF19		;bf10
 	ld a,(0ca53h)		;bf12
 	and a			;bf15
-	call nz,09d20h		;bf16
+	call nz,09d20h		;bf16   ; p04:9D20
 L_BF19:
 	ld a,(0cb0eh)		;bf19
 	ld b,a			;bf1c
@@ -4346,7 +4346,7 @@ L_BF65:
 L_BF86:
 	dec (ix+00eh)		;bf86
 	ret nz			;bf89
-	call 06c1bh		;bf8a
+	call 06c1bh		;bf8a   ; p01:6C1B
 	call 07a88h		;bf8d
 	call 07c85h		;bf90
 	call 08728h		;bf93
@@ -4384,7 +4384,7 @@ L_BFDA:
 	call 06247h		;bfda
 	ret nz			;bfdd
 	call 079c7h		;bfde
-	call 06be8h		;bfe1
+	call 06be8h		;bfe1   ; p01:6BE8
 	ld (ix+00eh),020h		;bfe4
 	jp L_BDF9		;bfe8
 L_BFEB:
@@ -4397,4 +4397,4 @@ L_BFEB:
 L_BFF8:
 	ld a,001h		;bff8
 	ld (0e070h),a		;bffa
-	jp 08c65h		;bffd
+	jp 08c65h		;bffd   ; p04:8C65

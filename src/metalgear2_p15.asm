@@ -329,7 +329,7 @@ L_A224:
 	ld (hl),a			;a22c
 	call L_A263		;a22d
 	ex de,hl			;a230
-	call 07d66h		;a231
+	call 07d66h		;a231   ; p01:7D66
 	pop af			;a234
 	pop hl			;a235
 	ld (hl),a			;a236
@@ -807,7 +807,7 @@ L_A559:
 	ld c,004h		;a55a
 L_A55C:
 	ld a,(hl)			;a55c
-	call 04a19h		;a55d
+	call 04a19h		;a55d   ; p00:4A19
 	ld a,d			;a560
 	add a,008h		;a561
 	ld d,a			;a563
@@ -895,7 +895,7 @@ L_A5C6:
 	ld (ix+009h),a		;a5d0
 	call L_A5DC		;a5d3
 	call L_A887		;a5d6
-	jp 06a4ch		;a5d9
+	jp 06a4ch		;a5d9   ; p01:6A4C
 L_A5DC:
 	ld hl,0c0d4h		;a5dc
 	ld bc,0402ch		;a5df
@@ -1071,7 +1071,7 @@ L_A6EB:
 	ld a,l			;a6ed
 	add a,020h		;a6ee
 	ld l,a			;a6f0
-	call 04411h		;a6f1
+	call 04411h		;a6f1   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 	ld b,003h		;a6f4
 L_A6F6:
 	ld (hl),000h		;a6f6
@@ -1336,7 +1336,7 @@ L_A890:
 	add a,l			;a890
 	sub 008h		;a891
 	ld l,a			;a893
-	call 04411h		;a894
+	call 04411h		;a894   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 	push hl			;a897
 	push bc			;a898
 	call L_A8B0		;a899
@@ -1563,7 +1563,7 @@ L_A9DC:
 	ld bc,0000fh		;a9df
 	ld a,0e0h		;a9e2
 	call 04237h		;a9e4   ; llena_bloque: pone A en BC + 1 bytes desde HL
-	call 067efh		;a9e7
+	call 067efh		;a9e7   ; p01:67EF
 	jp 067cdh		;a9ea
 L_A9ED:
 	call L_AAF6		;a9ed
@@ -1575,10 +1575,10 @@ L_A9ED:
 	cp (hl)			;a9f8
 	jr z,L_AA08		;a9f9
 	push bc			;a9fb
-	call 08d5bh		;a9fc
+	call 08d5bh		;a9fc   ; p02:8D5B
 	pop bc			;a9ff
 	call L_ABB9		;aa00
-	call 05afeh		;aa03
+	call 05afeh		;aa03   ; copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
 	jr L_AA0B		;aa06
 L_AA08:
 	call L_ABB9		;aa08
@@ -1621,12 +1621,12 @@ L_AA4D:
 	and a			;aa58
 	call z,07a43h		;aa59
 L_AA5C:
-	jp 04606h		;aa5c
+	jp 04606h		;aa5c   ; enciende_todo: la pantalla y los sprites encendidos
 L_AA5F:
 	ld a,(0ca5fh)		;aa5f
 	and a			;aa62
 	ret z			;aa63
-	call 059efh		;aa64
+	call 059efh		;aa64   ; limpia_sprites_y_d300:
 	call 07ba1h		;aa67
 	jr L_AA5C		;aa6a
 L_AA6C:
@@ -1681,11 +1681,11 @@ L_AAA2:
 	xor a			;aac0
 	ld (0d8a4h),a		;aac1
 	ld (hl),a			;aac4
-	call 06077h		;aac5
+	call 06077h		;aac5   ; p01:6077
 	ld a,001h		;aac8
 	call 06077h		;aaca
-	call 08d56h		;aacd
-	call 08d6dh		;aad0
+	call 08d56h		;aacd   ; p02:8D56
+	call 08d6dh		;aad0   ; p02:8D6D
 	ld bc,00600h		;aad3
 	call 00047h		;aad6   ; BIOS WRTVDP - Writes data in the VDP-register
 	ld bc,00017h		;aad9
@@ -1755,8 +1755,8 @@ L_AB4F:
 	push bc			;ab59
 	call 07baah		;ab5a
 	call 08d4bh		;ab5d
-	call 08d50h		;ab60
-	call 08d46h		;ab63
+	call 08d50h		;ab60   ; p02:8D50
+	call 08d46h		;ab63   ; p02:8D46
 	xor a			;ab66
 	ld (0d44ch),a		;ab67
 	ld (0d44dh),a		;ab6a
@@ -1767,8 +1767,8 @@ L_AB4F:
 	call L_ABB9		;ab77
 	pop de			;ab7a
 	call L_AC3B		;ab7b
-	call 05f0ah		;ab7e
-	call 08d2ah		;ab81
+	call 05f0ah		;ab7e   ; p00:5F0A
+	call 08d2ah		;ab81   ; p02:8D2A
 	call 08d41h		;ab84
 	call 05f01h		;ab87
 	ld a,(0ca76h)		;ab8a   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1794,7 +1794,7 @@ L_ABB0:
 	ld a,(0ca51h)		;abb0
 	cp 007h		;abb3
 	ret nz			;abb5
-	jp 06aeah		;abb6
+	jp 06aeah		;abb6   ; p01:6AEA
 L_ABB9:
 	ld a,(0ca4ah)		;abb9   ; lee la zona
 	ld c,a			;abbc
@@ -1866,7 +1866,7 @@ L_AC3B:
 	ret z			;ac3f
 	ld a,(0ca76h)		;ac40   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 002h		;ac43
-	jp z,07ba1h		;ac45
+	jp z,07ba1h		;ac45   ; p01:7BA1
 	cp 029h		;ac48
 	jp z,07ba1h		;ac4a
 	cp 02dh		;ac4d
@@ -1885,7 +1885,7 @@ L_AC5E:
 	ld a,(0ca76h)		;ac67   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	push af			;ac6a
 	push bc			;ac6b
-	call 08d3ch		;ac6c
+	call 08d3ch		;ac6c   ; p02:8D3C
 	xor a			;ac6f
 	ld (0ca76h),a		;ac70   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	call 07baah		;ac73
@@ -1903,10 +1903,10 @@ L_AC5E:
 	ld a,078h		;ac92
 	ld (0d825h),a		;ac94
 L_AC97:
-	call 08d37h		;ac97
-	call 05f01h		;ac9a
+	call 08d37h		;ac97   ; p02:8D37
+	call 05f01h		;ac9a   ; p00:5F01
 	ld c,004h		;ac9d
-	call 08d65h		;ac9f
+	call 08d65h		;ac9f   ; p02:8D65
 	pop af			;aca2
 	cp 002h		;aca3
 	jr z,L_ACB9		;aca5
@@ -1919,7 +1919,7 @@ L_AC97:
 L_ACB2:
 	xor a			;acb2
 	ld (0d4e2h),a		;acb3
-	jp 07a43h		;acb6
+	jp 07a43h		;acb6   ; p01:7A43
 L_ACB9:
 	ld a,(0caf6h)		;acb9
 	dec a			;acbc
@@ -1930,15 +1930,15 @@ L_ACB9:
 	xor a			;acc3
 	ld (0c690h),a		;acc4
 	ld (0d443h),a		;acc7
-	jp 08d60h		;acca
+	jp 08d60h		;acca   ; p02:8D60
 L_ACCD:
 	call L_AAF6		;accd
 	push bc			;acd0
 	call 07baah		;acd1
-	call 08d4bh		;acd4
+	call 08d4bh		;acd4   ; p02:8D4B
 	pop bc			;acd7
 	call L_ABB9		;acd8
-	jp 08d41h		;acdb
+	jp 08d41h		;acdb   ; p02:8D41
 L_ACDE:
 	ld b,a			;acde
 	rla			;acdf
@@ -2352,7 +2352,7 @@ L_B92D:
 	xor a			;b942
 	ld (ix+00dh),a		;b943
 	ld (ix+00fh),060h		;b946
-	call 05065h		;b94a
+	call 05065h		;b94a   ; sprites_de_6860:
 	ld a,007h		;b94d
 	call L_B867		;b94f
 	ld (ix+00eh),010h		;b952
@@ -2360,7 +2360,7 @@ L_B92D:
 L_B959:
 	dec (ix+00eh)		;b959
 	ret nz			;b95c
-	call 086c2h		;b95d
+	call 086c2h		;b95d   ; p04:86C2
 	ld (ix+00eh),000h		;b960
 	ld (ix+01fh),014h		;b964
 L_B968:
@@ -2421,7 +2421,7 @@ L_B9C1:
 L_B9CB:
 	xor a			;b9cb
 	ld (0cb3ch),a		;b9cc
-	call 0504ch		;b9cf
+	call 0504ch		;b9cf   ; sprites_de_670e: p35:670E a 0xFA00
 	jp L_B968		;b9d2
 L_B9D5:
 	xor a			;b9d5
@@ -2435,7 +2435,7 @@ L_B9D5:
 	ld (ix+00ch),003h		;b9ea
 	call L_BB99		;b9ee
 	call 06b6dh		;b9f1
-	call 06b12h		;b9f4
+	call 06b12h		;b9f4   ; p01:6B12
 	jp L_B968		;b9f7
 L_B9FA:
 	push bc			;b9fa
@@ -2614,8 +2614,8 @@ L_BB33:
 	cp 010h		;bb36
 	ret c			;bb38
 	call 08100h		;bb39
-	jp z,06af2h		;bb3c
-	jp 06c13h		;bb3f
+	jp z,06af2h		;bb3c   ; p01:6AF2
+	jp 06c13h		;bb3f   ; p01:6C13
 L_BB42:
 	ld hl,0d8b7h		;bb42
 	ld a,(hl)			;bb45
@@ -2645,7 +2645,7 @@ L_BB54:
 	ld e,(ix+003h)		;bb71
 	ld a,0f0h		;bb74
 	ld b,001h		;bb76
-	call 07a4eh		;bb78
+	call 07a4eh		;bb78   ; p01:7A4E
 	ld (ix+01eh),h		;bb7b
 	ld (ix+01dh),l		;bb7e
 	ld (ix+01ch),d		;bb81
@@ -2690,7 +2690,7 @@ L_BBAD:
 	ld a,l			;bbdb
 	sub 008h		;bbdc
 	cp 0a8h		;bbde
-	jp c,09af4h		;bbe0
+	jp c,09af4h		;bbe0   ; p04:9AF4
 L_BBE3:
 	ld (ix+00fh),000h		;bbe3
 	ret			;bbe7
@@ -2790,7 +2790,7 @@ L_BD0A:
 	ld de,00090h		;bd3a
 	ld bc,00218h		;bd3d
 L_BD40:
-	jp 062a5h		;bd40
+	jp 062a5h		;bd40   ; p01:62A5
 L_BD43:
 	ld de,06030h		;bd43
 	ld bc,00206h		;bd46

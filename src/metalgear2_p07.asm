@@ -145,7 +145,7 @@ L_A0E2:
 	cp 018h		;a0f3
 	jr nz,L_A10D		;a0f5
 	ld a,027h		;a0f7
-	call 08d7dh		;a0f9
+	call 08d7dh		;a0f9   ; p02:8D7D
 	jr nz,L_A10D		;a0fc
 	ld a,001h		;a0fe
 	ld (0caa0h),a		;a100
@@ -252,7 +252,7 @@ L_A1C1:
 	ld hl,0d8c3h		;a1c6
 	ld (hl),018h		;a1c9
 	call L_A918		;a1cb
-	call 06b1ah		;a1ce
+	call 06b1ah		;a1ce   ; p01:6B1A
 	jp L_A076		;a1d1
 L_A1D4:
 	ld a,(0d8a0h)		;a1d4
@@ -280,7 +280,7 @@ L_A1F3:
 L_A1FB:
 	ld hl,0d8cdh		;a1fb
 	cp (hl)			;a1fe
-	jp z,06a58h		;a1ff
+	jp z,06a58h		;a1ff   ; p01:6A58
 	ret			;a202
 L_A203:
 	ld a,(0d8c4h)		;a203
@@ -354,7 +354,7 @@ L_A282:
 	ld (hl),020h		;a282
 	call L_A076		;a284
 	call L_A296		;a287
-	jp 06a54h		;a28a
+	jp 06a54h		;a28a   ; p01:6A54
 L_A28D:
 	ld a,(0d8c3h)		;a28d
 	dec a			;a290
@@ -423,7 +423,7 @@ L_A2FF:
 	inc a			;a30c
 	ld (0d456h),a		;a30d
 	ld c,003h		;a310
-	jp 08ddbh		;a312
+	jp 08ddbh		;a312   ; p02:8DDB
 L_A315:
 	call L_A129		;a315
 	ret nc			;a318
@@ -472,7 +472,7 @@ L_A356:
 	jr nz,L_A370		;a366
 	ld (hl),001h		;a368
 	call 06b12h		;a36a
-	call 06caah		;a36d
+	call 06caah		;a36d   ; p01:6CAA
 L_A370:
 	call L_A39D		;a370
 	call L_ABA2		;a373
@@ -491,7 +491,7 @@ L_A370:
 	call L_AB9B		;a38f
 	ld hl,0d8c3h		;a392
 	ld (hl),008h		;a395
-	call 06c97h		;a397
+	call 06c97h		;a397   ; p01:6C97
 	jp L_A076		;a39a
 L_A39D:
 	ld a,(0d8c3h)		;a39d
@@ -529,8 +529,8 @@ L_A3CE:
 	ld hl,0cabdh		;a3de
 	ld (hl),000h		;a3e1
 	call 08529h		;a3e3
-	call 04606h		;a3e6
-	call 06cd6h		;a3e9
+	call 04606h		;a3e6   ; enciende_todo: la pantalla y los sprites encendidos
+	call 06cd6h		;a3e9   ; p01:6CD6
 	xor a			;a3ec
 	ld (0cb5fh),a		;a3ed
 	jp L_A076		;a3f0
@@ -540,7 +540,7 @@ L_A3F3:
 	or a			;a3f7
 	jr z,L_A3FF		;a3f8
 	ld (hl),000h		;a3fa
-	call 08529h		;a3fc
+	call 08529h		;a3fc   ; p02:8529
 L_A3FF:
 	ld hl,0cb57h		;a3ff
 	ld (hl),000h		;a402
@@ -566,8 +566,8 @@ L_A40D:
 	call 04236h		;a430   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	call L_A470		;a433
 	call 08578h		;a436
-	call 0875dh		;a439
-	call 059efh		;a43c
+	call 0875dh		;a439   ; p02:875D
+	call 059efh		;a43c   ; limpia_sprites_y_d300:
 	call L_A4A6		;a43f
 	call L_AB96		;a442
 	ld hl,0ca4eh		;a445
@@ -604,8 +604,8 @@ L_A470:
 	or a			;a485
 	ret z			;a486
 L_A487:
-	call 07cafh		;a487
-	jp 08d8bh		;a48a
+	call 07cafh		;a487   ; p01:7CAF
+	jp 08d8bh		;a48a   ; p02:8D8B
 L_A48D:
 	cp 009h		;a48d
 	ret nz			;a48f
@@ -623,24 +623,24 @@ L_A49D:
 L_A4A6:
 	call 045f6h		;a4a6   ; apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 	xor a			;a4a9
-	call 04452h		;a4aa
+	call 04452h		;a4aa   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	ld a,001h		;a4ad
-	call 04452h		;a4af
+	call 04452h		;a4af   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	call 08281h		;a4b2
-	call 05470h		;a4b5
+	call 05470h		;a4b5   ; marcador_y_ventana_bancos_7:
 	ld a,(0ca42h)		;a4b8   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	xor 001h		;a4bb
 	ld (0ca42h),a		;a4bd   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 0547ch		;a4c0
-	call 08524h		;a4c3
-	call 071a2h		;a4c6
+	call 0547ch		;a4c0   ; copia_marcador_bancos_7:
+	call 08524h		;a4c3   ; p02:8524
+	call 071a2h		;a4c6   ; p01:71A2
 	call L_A83A		;a4c9
 	ld a,(0d8a0h)		;a4cc
 	or a			;a4cf
 	call z,L_A8C3		;a4d0
-	call 071c2h		;a4d3
+	call 071c2h		;a4d3   ; p01:71C2
 	ld a,(0ca42h)		;a4d6   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04879h		;a4d9
+	call 04879h		;a4d9   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 	ld a,(0d7d5h)		;a4dc
 	bit 7,a		;a4df
 	jr nz,L_A4E8		;a4e1
@@ -940,8 +940,8 @@ L_A69A:
 	xor a			;a6db
 	ld (0ca77h),a		;a6dc
 	push bc			;a6df
-	call 059efh		;a6e0
-	call 08d75h		;a6e3
+	call 059efh		;a6e0   ; limpia_sprites_y_d300:
+	call 08d75h		;a6e3   ; p02:8D75
 	pop bc			;a6e6
 	call L_A731		;a6e7
 	call L_A80B		;a6ea
@@ -984,7 +984,7 @@ L_A731:
 	sub 00bh		;a734
 	cp 006h		;a736
 	push bc			;a738
-	call c,08d86h		;a739
+	call c,08d86h		;a739   ; p02:8D86
 	pop bc			;a73c
 	ld a,(0d8c2h)		;a73d
 	cp 003h		;a740
@@ -1083,14 +1083,14 @@ L_A7E1:
 	jr z,L_A7FA		;a7ea
 	push af			;a7ec
 	cp 00ch		;a7ed
-	call z,07ad0h		;a7ef
+	call z,07ad0h		;a7ef   ; p01:7AD0
 	pop af			;a7f2
 	push af			;a7f3
 	cp 006h		;a7f4
 	call z,07ad0h		;a7f6
 	pop af			;a7f9
 L_A7FA:
-	jp 08d98h		;a7fa
+	jp 08d98h		;a7fa   ; p02:8D98
 L_A7FD:
 	ld a,008h		;a7fd
 	ld (0ca51h),a		;a7ff
@@ -1643,7 +1643,7 @@ L_ACB9:
 	sub 00ah		;acd0
 	cp 002h		;acd2
 	push bc			;acd4
-	call nc,07ad8h		;acd5
+	call nc,07ad8h		;acd5   ; p01:7AD8
 	pop bc			;acd8
 L_ACD9:
 	exx			;acd9
@@ -2155,7 +2155,7 @@ L_B06A:
 	push de			;b076
 	ld hl,0d61ch		;b077
 	ld (hl),001h		;b07a
-	call 08d90h		;b07c
+	call 08d90h		;b07c   ; p02:8D90
 	pop de			;b07f
 	pop hl			;b080
 	pop bc			;b081
@@ -2393,9 +2393,9 @@ L_B221:
 	call L_B5AF		;b22b
 	ret nc			;b22e
 	call 06a38h		;b22f
-	call 08d9dh		;b232
+	call 08d9dh		;b232   ; p02:8D9D
 	ld a,009h		;b235
-	jp 08da5h		;b237
+	jp 08da5h		;b237   ; p02:8DA5
 L_B23A:
 	ld b,003h		;b23a
 	ld a,(0d8c0h)		;b23c
@@ -2438,7 +2438,7 @@ L_B267:
 	push bc			;b27f
 	push hl			;b280
 	call 06a38h		;b281
-	call 07ae8h		;b284
+	call 07ae8h		;b284   ; p01:7AE8
 	call L_B2C0		;b287
 	pop hl			;b28a
 	pop bc			;b28b
@@ -2493,7 +2493,7 @@ L_B2CB:
 	ld (0cb73h),a		;b2e2
 L_B2E5:
 	pop af			;b2e5
-	jp 08dd3h		;b2e6
+	jp 08dd3h		;b2e6   ; p02:8DD3
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B2E9: lo apuntan con el banco puesto p07:B2CE (0xB2E9); el
@@ -2535,7 +2535,7 @@ L_B313:
 	push hl			;b325
 	push de			;b326
 	push bc			;b327
-	call 07b09h		;b328
+	call 07b09h		;b328   ; p01:7B09
 	pop bc			;b32b
 	pop de			;b32c
 	pop hl			;b32d
@@ -2589,7 +2589,7 @@ L_B377:
 	ld a,(ix+000h)		;b384
 	and 07fh		;b387
 	cp 014h		;b389
-	jp z,08dbdh		;b38b
+	jp z,08dbdh		;b38b   ; p02:8DBD
 	cp 012h		;b38e
 	jp z,08dbdh		;b390
 L_B393:
@@ -2597,12 +2597,12 @@ L_B393:
 	push de			;b394
 	push bc			;b395
 	call L_B3A5		;b396
-	call 08dc6h		;b399
-	call 08dcbh		;b39c
+	call 08dc6h		;b399   ; p02:8DC6
+	call 08dcbh		;b39c   ; p02:8DCB
 	pop bc			;b39f
 	pop de			;b3a0
 	pop hl			;b3a1
-	jp 06b16h		;b3a2
+	jp 06b16h		;b3a2   ; p01:6B16
 L_B3A5:
 	ld a,(0cb3dh)		;b3a5
 	or a			;b3a8
@@ -2630,7 +2630,7 @@ L_B3C2:
 	ret			;b3cc
 L_B3CD:
 	ld (hl),000h		;b3cd
-	call 08dadh		;b3cf
+	call 08dadh		;b3cf   ; p02:8DAD
 	ld a,(0ca53h)		;b3d2
 	or a			;b3d5
 	jp z,08dbdh		;b3d6
@@ -2645,15 +2645,15 @@ L_B3E3:
 	ld a,(ix+010h)		;b3e3
 	cp 0ffh		;b3e6
 	ret z			;b3e8
-	call 06a40h		;b3e9
+	call 06a40h		;b3e9   ; p01:6A40
 	ld (ix+01fh),004h		;b3ec
 	dec (ix+010h)		;b3f0
 	jr z,L_B3F8		;b3f3
-	jp 07af9h		;b3f5
+	jp 07af9h		;b3f5   ; p01:7AF9
 L_B3F8:
 	call L_B401		;b3f8
-	call 07af0h		;b3fb
-	jp 07ae0h		;b3fe
+	call 07af0h		;b3fb   ; p01:7AF0
+	jp 07ae0h		;b3fe   ; p01:7AE0
 L_B401:
 	ld a,(0ca5fh)		;b401
 	and a			;b404
@@ -2695,7 +2695,7 @@ L_B433:
 	or b			;b442
 	ret z			;b443
 L_B444:
-	jp 07b01h		;b444
+	jp 07b01h		;b444   ; p01:7B01
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B447: lo apuntan con el banco puesto p07:B411 (0xB447); el
@@ -2714,7 +2714,7 @@ L_B44E:
 	push hl			;b44e
 	push de			;b44f
 	push bc			;b450
-	call 07ac8h		;b451
+	call 07ac8h		;b451   ; p01:7AC8
 	jr L_B465		;b454
 L_B456:
 	ld a,(ix+010h)		;b456
@@ -2778,8 +2778,8 @@ L_B4A3:
 L_B4B6:
 	ld a,(ix+010h)		;b4b6
 	cp c			;b4b9
-	jp nc,06c17h		;b4ba
-	jp 06c57h		;b4bd
+	jp nc,06c17h		;b4ba   ; p01:6C17
+	jp 06c57h		;b4bd   ; p01:6C57
 L_B4C0:
 	ld hl,lb520h		;b4c0
 	ld a,(ix+000h)		;b4c3
@@ -2884,7 +2884,7 @@ L_B563:
 	push bc			;b565
 	push iy		;b566
 	pop hl			;b568
-	call 05fe0h		;b569
+	call 05fe0h		;b569   ; p00:5FE0
 	xor a			;b56c
 	ld (iy+000h),a		;b56d
 	ld (0cb52h),a		;b570
@@ -2914,7 +2914,7 @@ L_B595:
 	ld a,0b0h		;b59b
 L_B59D:
 	ld h,a			;b59d
-	call 08db5h		;b59e
+	call 08db5h		;b59e   ; p02:8DB5
 L_B5A1:
 	jp L_B465		;b5a1
 L_B5A4:
@@ -4350,7 +4350,7 @@ L_BF7D:
 	ld hl,0cb74h		;bf7d
 	ld (hl),000h		;bf80
 L_BF82:
-	call 07f25h		;bf82
+	call 07f25h		;bf82   ; p12:7F25
 	ld a,(0cb74h)		;bf85
 	cp 0ffh		;bf88
 	jr nz,L_BF8E		;bf8a

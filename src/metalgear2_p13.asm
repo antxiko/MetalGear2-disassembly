@@ -18,7 +18,7 @@ L_8000:
 	ld de,0ca2ch		;8000
 	ld a,(de)			;8003
 	cp 080h		;8004
-	jp nc,0a2cfh		;8006
+	jp nc,0a2cfh		;8006   ; p14:A2CF
 	dec a			;8009
 	call 0424dh		;800a   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -70,7 +70,7 @@ L_80B7:
 L_80BE:
 	call L_90F7		;80be
 	ret nz			;80c1
-	call 045fdh		;80c2
+	call 045fdh		;80c2   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call L_9152		;80c5
 	ld hl,0e900h		;80c8   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;80cb
@@ -120,7 +120,7 @@ L_8126:
 	jp L_8E2F		;8127
 L_812A:
 	call 04266h		;812a   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;812d
+	call 045fdh		;812d   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld a,038h		;8130
 	ld (0ca31h),a		;8132
 	ld hl,00e3eh		;8135
@@ -176,7 +176,7 @@ L_8197:
 	jp L_8E2F		;8199
 L_819C:
 	call 04266h		;819c   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;819f
+	call 045fdh		;819f   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,08038h		;81a2
 	ld de,02050h		;81a5
 	ld bc,03830h		;81a8
@@ -192,7 +192,7 @@ L_81B8:
 	ld a,002h		;81bf
 	jp L_8E2F		;81c1
 L_81C4:
-	call 045fdh		;81c4
+	call 045fdh		;81c4   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,L_8646		;81c7
 	ld de,06c44h		;81ca
 	ld c,006h		;81cd
@@ -242,7 +242,7 @@ L_8228:
 	jp L_8E2F		;822a
 L_822D:
 	call 04266h		;822d   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;8230
+	call 045fdh		;8230   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,00e3eh		;8233
 	ld de,06444h		;8236
 	ld c,006h		;8239
@@ -313,10 +313,10 @@ L_82BC:
 	ret nz			;82bf
 	call 045f1h		;82c0   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call 04266h		;82c3   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045b9h		;82c6
+	call 045b9h		;82c6   ; borra_pagina_0: la pagina 0 a cero y R#23 = 0
 	ld de,04000h		;82c9
 	ld a,00eh		;82cc
-	call 04614h		;82ce
+	call 04614h		;82ce   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 	ld b,002h		;82d1
 	ld de,0dc00h		;82d3   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c40h		;82d6
@@ -333,7 +333,7 @@ L_82BC:
 	ld bc,03030h		;82f5
 	ld a,0c8h		;82f8
 	call 047edh		;82fa   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-	call 04606h		;82fd
+	call 04606h		;82fd   ; enciende_todo: la pantalla y los sprites encendidos
 	xor a			;8300
 	ld (0ca30h),a		;8301
 	ld de,00080h		;8304
@@ -433,7 +433,7 @@ L_83C6:
 	ret nz			;83c9
 	call 045f1h		;83ca   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call 04266h		;83cd   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045b9h		;83d0
+	call 045b9h		;83d0   ; borra_pagina_0: la pagina 0 a cero y R#23 = 0
 	ld hl,08f5eh		;83d3
 	call 0463fh		;83d6
 	ld hl,08000h		;83d9
@@ -463,7 +463,7 @@ L_83C6:
 	ld bc,0005fh		;8416
 	ld (hl),005h		;8419
 	ldir		;841b
-	call 04606h		;841d
+	call 04606h		;841d   ; enciende_todo: la pantalla y los sprites encendidos
 	xor a			;8420
 	ld (0ca30h),a		;8421
 	ld de,00020h		;8424
@@ -481,7 +481,7 @@ L_8434:
 	jp L_8E2F		;843f
 L_8442:
 	call 04266h		;8442   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;8445
+	call 045fdh		;8445   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	xor a			;8448
 	call 07b5dh		;8449
 	ld a,001h		;844c
@@ -556,7 +556,7 @@ L_84D9:
 	jp L_8148		;84dd
 L_84E0:
 	call 04266h		;84e0   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;84e3
+	call 045fdh		;84e3   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,L_8646		;84e6
 	call L_900C		;84e9
 	ld hl,000a8h		;84ec
@@ -638,7 +638,7 @@ L_858E:
 	jp L_8E2F		;8594
 L_8597:
 	call 04266h		;8597   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;859a
+	call 045fdh		;859a   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,00e3eh		;859d
 	ld de,06444h		;85a0
 	ld c,006h		;85a3
@@ -706,7 +706,7 @@ L_8622:
 	call L_87F5		;8622
 	ret nz			;8625
 	call 04266h		;8626   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;8629
+	call 045fdh		;8629   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,00e3eh		;862c
 	call L_900C		;862f
 	ld hl,050a8h		;8632
@@ -802,7 +802,7 @@ L_86F5:
 	jp L_8E2F		;86f7
 L_86FA:
 	call 04266h		;86fa   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 045fdh		;86fd
+	call 045fdh		;86fd   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld de,00040h		;8700
 	jp L_8144		;8703
 L_8706:
@@ -836,7 +836,7 @@ L_873B:
 	ret nz			;873e
 	jp L_8148		;873f
 L_8742:
-	call 045fdh		;8742
+	call 045fdh		;8742   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call L_9152		;8745
 	ld hl,0e900h		;8748   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;874b
@@ -893,7 +893,7 @@ L_87B1:
 	call L_9175		;87ba
 	ret nz			;87bd
 	call 04266h		;87be   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	call 06e29h		;87c1
+	call 06e29h		;87c1   ; p01:6E29
 	jp L_8148		;87c4
 L_87C7:
 	ld a,(0ca03h)		;87c7   ; lee el contador de cuadros (uno mas en cada interrupcion)
@@ -1991,11 +1991,11 @@ L_9133:
 L_9135:
 	push bc			;9135
 	xor a			;9136
-	call 044b9h		;9137
+	call 044b9h		;9137   ; lee_byte_vram: A = el byte de la VRAM de HL
 	ld e,a			;913a
 	inc hl			;913b
 	xor a			;913c
-	call 044b9h		;913d
+	call 044b9h		;913d   ; lee_byte_vram: A = el byte de la VRAM de HL
 	ld b,a			;9140
 	call L_911C		;9141
 	ld e,b			;9144
@@ -2004,7 +2004,7 @@ L_9135:
 	push bc			;9149
 	ld a,b			;914a
 	push de			;914b
-	call 04614h		;914c
+	call 04614h		;914c   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 	pop de			;914f
 	pop bc			;9150
 	ret			;9151
@@ -2206,7 +2206,7 @@ L_92D1:
 	ld hl,0aea5h		;9317
 	call L_9351		;931a
 	call 041efh		;931d   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 04606h		;9320
+	call 04606h		;9320   ; enciende_todo: la pantalla y los sprites encendidos
 	ld hl,0ca12h		;9323
 	ld (hl),03ch		;9326
 	inc hl			;9328
@@ -2257,7 +2257,7 @@ L_9352:
 	jr L_9351		;9364
 L_9366:
 	ld a,c			;9366
-	call 049fbh		;9367
+	call 049fbh		;9367   ; pieza_de_3_a_3:
 	call 04af9h		;936a   ; siguiente_caracter: avanza al siguiente caracter (PR2 p01:6937)
 	jr L_9352		;936d
 L_936F:
@@ -2571,16 +2571,16 @@ L_9522:
 	call 04183h		;9522   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0bea0h		;9525   ; tabla_colores_BEA0: 24 punteros a colores de dibujo
 	ld hl,0bf21h		;9528   ; lista_BF21: 21 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d52h		;952b
+	call 04d52h		;952b   ; dibujos_en_4000: en la VRAM de 0x4000
 	ld de,0bea0h		;952e   ; tabla_colores_BEA0: 24 punteros a colores de dibujo
 	ld hl,0bf8bh		;9531   ; lista_BF8B: 13 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d56h		;9534
+	call 04d56h		;9534   ; dibujos_en_6000: en la VRAM de 0x6000
 	jp 04179h		;9537   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_953A:
 	call 04183h		;953a   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,0bea0h		;953d   ; tabla_colores_BEA0: 24 punteros a colores de dibujo
 	ld hl,0bfcdh		;9540   ; lista_BFCD: 3 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
-	call 04d56h		;9543
+	call 04d56h		;9543   ; dibujos_en_6000: en la VRAM de 0x6000
 	jp 04179h		;9546   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 L_9549:
 	call 04183h		;9549   ; bancos_54: pone el 54 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2631,7 +2631,7 @@ L_95B0:
 	xor a			;95c3
 	ld hl,0ca42h		;95c4   ; apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld (hl),a			;95c7
-	call 04879h		;95c8
+	call 04879h		;95c8   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 	call L_9620		;95cb
 	call 04266h		;95ce   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045d7h		;95d1   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
@@ -2648,11 +2648,11 @@ L_95D6:
 	call L_962E		;95e6
 	ld hl,09ff2h		;95e9
 	call 0463fh		;95ec
-	call 04606h		;95ef
-	call 06f07h		;95f2
-	call 06f19h		;95f5
+	call 04606h		;95ef   ; enciende_todo: la pantalla y los sprites encendidos
+	call 06f07h		;95f2   ; p01:6F07
+	call 06f19h		;95f5   ; p01:6F19
 	call L_9522		;95f8
-	call 0715eh		;95fb
+	call 0715eh		;95fb   ; p01:715E
 	call L_9549		;95fe
 	ld hl,0d703h		;9601
 	ld (hl),006h		;9604
@@ -2669,17 +2669,17 @@ L_9613:
 	ld de,000b4h		;9616
 	and a			;9619
 	sbc hl,de		;961a
-	jp z,06cb2h		;961c
+	jp z,06cb2h		;961c   ; p01:6CB2
 	ret			;961f
 L_9620:
 	ld a,002h		;9620
-	call 0444ah		;9622
+	call 0444ah		;9622   ; borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
 L_9625:
 	ld a,001h		;9625
-	call 0444ah		;9627
+	call 0444ah		;9627   ; borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
 L_962A:
 	xor a			;962a
-	jp 0444ah		;962b
+	jp 0444ah		;962b   ; borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
 L_962E:
 	xor a			;962e
 	call L_9634		;962f
@@ -2804,7 +2804,7 @@ L_9708:
 	or d			;970e
 	ld d,a			;970f
 	ld a,007h		;9710
-	jp 04614h		;9712
+	jp 04614h		;9712   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 L_9715:
 	call 045f1h		;9715   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962A		;9718
@@ -2814,9 +2814,9 @@ L_9715:
 	call 04266h		;9722   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0a01dh		;9725
 	call 0463fh		;9728
-	call 07190h		;972b
-	call 04606h		;972e
-	call 06bc0h		;9731
+	call 07190h		;972b   ; p01:7190
+	call 04606h		;972e   ; enciende_todo: la pantalla y los sprites encendidos
+	call 06bc0h		;9731   ; p01:6BC0
 	ld a,0c0h		;9734
 	ld (0d709h),a		;9736
 	ld hl,0d703h		;9739
@@ -2983,7 +2983,7 @@ L_981F:
 	call 047edh		;9865   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	call 04650h		;9868   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld a,(0d710h)		;986b
-	jp 04879h		;986e
+	jp 04879h		;986e   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 L_9871:
 	ld (hl),000h		;9871
 	ld hl,000a0h		;9873
@@ -2995,10 +2995,10 @@ L_9871:
 	ld de,00012h		;9884
 	add hl,de			;9887
 	ld (0d711h),hl		;9888
-	call 0646fh		;988b
+	call 0646fh		;988b   ; p01:646F
 	jr z,L_9896		;988e
 	ld hl,(0d711h)		;9890
-	jp 06460h		;9893
+	jp 06460h		;9893   ; p01:6460
 L_9896:
 	ld hl,0d703h		;9896
 	ld (hl),0ffh		;9899
@@ -3024,8 +3024,8 @@ L_98B4:
 	call L_9625		;98c4
 	xor a			;98c7
 	ld (0ca42h),a		;98c8   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04879h		;98cb
-	call 04606h		;98ce
+	call 04879h		;98cb   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
+	call 04606h		;98ce   ; enciende_todo: la pantalla y los sprites encendidos
 	ld hl,0a01dh		;98d1
 	call 0463fh		;98d4
 	call L_98EA		;98d7
@@ -3050,7 +3050,7 @@ L_98EA:
 	call 046ffh		;9900   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	ld a,001h		;9903
 	ld (0ca42h),a		;9905   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 07179h		;9908
+	call 07179h		;9908   ; p01:7179
 	xor a			;990b
 	ld (0ca42h),a		;990c   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ret			;990f
@@ -3082,14 +3082,14 @@ DATA_tabla_9928:
 
 
 L_9930:
-	call 064a5h		;9930
-	call 064ddh		;9933
+	call 064a5h		;9930   ; p01:64A5
+	call 064ddh		;9933   ; p01:64DD
 L_9936:
 	ld hl,0d702h		;9936
 	inc (hl)			;9939
 	ret			;993a
 L_993B:
-	call 06585h		;993b
+	call 06585h		;993b   ; p01:6585
 	ld a,(0e220h)		;993e   ; lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
 	or a			;9941
 	ret nz			;9942
@@ -3138,7 +3138,7 @@ L_998A:
 	ld a,0bbh		;999a
 	ld d,000h		;999c
 	call 046ffh		;999e   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-	jp 05f4dh		;99a1
+	jp 05f4dh		;99a1   ; sonido_3f: pide el sonido 0x3F
 L_99A4:
 	ld hl,0d717h		;99a4
 	inc (hl)			;99a7
@@ -3182,7 +3182,7 @@ L_99E3:
 	ld bc,00204h		;99f5
 	call 0647ah		;99f8
 	call L_960E		;99fb
-	jp 06bc4h		;99fe
+	jp 06bc4h		;99fe   ; p01:6BC4
 L_9A01:
 	ld hl,0d703h		;9a01
 	dec (hl)			;9a04
@@ -3228,7 +3228,7 @@ L_9A46:
 	ret nz			;9a4a
 	ld de,06706h		;9a4b
 	ld a,007h		;9a4e
-	call 04614h		;9a50
+	call 04614h		;9a50   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 	ld hl,0d71dh		;9a53
 	ld (hl),000h		;9a56
 	jp L_960E		;9a58
@@ -3349,11 +3349,11 @@ L_9B28:
 	inc l			;9b36
 	ld d,(hl)			;9b37
 	ld hl,(0d718h)		;9b38
-	call 06477h		;9b3b
+	call 06477h		;9b3b   ; p01:6477
 	ld hl,(0d718h)		;9b3e
 	inc hl			;9b41
 	inc hl			;9b42
-	call 06482h		;9b43
+	call 06482h		;9b43   ; p01:6482
 	cp 0ffh		;9b46
 	jr z,L_9B54		;9b48
 	inc hl			;9b4a
@@ -3408,13 +3408,13 @@ L_9BA3:
 	jr z,L_9BB5		;9baa
 	cp 00ah		;9bac
 	ret nz			;9bae
-	call 04ca6h		;9baf
-	jp 07b40h		;9bb2
+	call 04ca6h		;9baf   ; dibujos_a34b: los bancos 32-34...
+	jp 07b40h		;9bb2   ; p01:7B40
 L_9BB5:
 	ld de,08000h		;9bb5
-	jp 06e2ch		;9bb8
+	jp 06e2ch		;9bb8   ; p01:6E2C
 L_9BBB:
-	call 07b55h		;9bbb
+	call 07b55h		;9bbb   ; p01:7B55
 	ld c,001h		;9bbe
 	call L_9387		;9bc0
 	ld a,(0cadah)		;9bc3
@@ -3423,10 +3423,10 @@ L_9BBB:
 	call 045f1h		;9bc8   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_962A		;9bcb
 	xor a			;9bce
-	call 07b5dh		;9bcf
+	call 07b5dh		;9bcf   ; p01:7B5D
 	ld a,001h		;9bd2
 	call 07b5dh		;9bd4
-	call 04606h		;9bd7
+	call 04606h		;9bd7   ; enciende_todo: la pantalla y los sprites encendidos
 	ld a,(0d706h)		;9bda
 	cp 00ch		;9bdd
 	jr z,L_9BE6		;9bdf
@@ -3436,13 +3436,13 @@ L_9BBB:
 L_9BE6:
 	ld de,00000h		;9be6
 	ld a,007h		;9be9
-	call 04614h		;9beb
+	call 04614h		;9beb   ; pon_color: el color A de la paleta = D (rojo y azul), E (verde)
 	ld hl,0d717h		;9bee
 	ld (hl),000h		;9bf1
 	ld hl,0bcdbh		;9bf3
 	ld de,07458h		;9bf6
 	ld bc,00203h		;9bf9
-	call 0647ah		;9bfc
+	call 0647ah		;9bfc   ; p01:647A
 	jp L_9936		;9bff
 L_9C02:
 	ld hl,0d703h		;9c02
@@ -3481,8 +3481,8 @@ L_9C2A:
 L_9C3C:
 	call 045f1h		;9c3c   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call L_9625		;9c3f
-	call 06ec0h		;9c42
-	call 04606h		;9c45
+	call 06ec0h		;9c42   ; p01:6EC0
+	call 04606h		;9c45   ; enciende_todo: la pantalla y los sprites encendidos
 	call 04650h		;9c48   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld hl,0d702h		;9c4b
 	ld (hl),000h		;9c4e
@@ -3542,11 +3542,11 @@ L_9D01:
 	push bc			;9d01
 	push de			;9d02
 	push af			;9d03
-	call 07b48h		;9d04
+	call 07b48h		;9d04   ; p01:7B48
 	pop af			;9d07
 	pop de			;9d08
 	pop bc			;9d09
-	jp 07b4dh		;9d0a
+	jp 07b4dh		;9d0a   ; p01:7B4D
 L_9D0D:
 	call L_9D18		;9d0d
 	call L_9D3A		;9d10

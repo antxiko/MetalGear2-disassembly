@@ -33,7 +33,7 @@ l7ecfh:	equ 0x07ecf
 
 L_6000:
 	call 045f1h		;6000   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-	call 09dbdh		;6003
+	call 09dbdh		;6003   ; p02:9DBD
 	xor a			;6006
 	ld (0c3a0h),a		;6007
 	ld (0c38dh),a		;600a
@@ -42,7 +42,7 @@ L_6000:
 	ld a,001h		;6013
 	ld (0c3a2h),a		;6015
 	ld a,(0ca42h)		;6018   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	call 04452h		;601b
+	call 04452h		;601b   ; borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 	ld hl,01018h		;601e
 	ld bc,0381ch		;6021
 	call L_603C		;6024
@@ -111,7 +111,7 @@ L_606E:
 	jr nz,L_608D		;607d
 	ret			;607f
 L_6080:
-	call 05f49h		;6080
+	call 05f49h		;6080   ; sonido_11: pide el sonido 0x11
 	ld hl,0c39fh		;6083
 	ld a,(hl)			;6086
 	xor 001h		;6087
@@ -265,7 +265,7 @@ L_6187:
 	and a			;619c
 	jr nz,L_61A8		;619d
 	call 041efh		;619f   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ba98h		;61a2
+	call 0ba98h		;61a2   ; p14:BA98
 	jp 041a0h		;61a5   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_61A8:
 	ld hl,0e900h		;61a8   ; apunta a los caracteres de un dibujo pasados a 4 bits
@@ -296,7 +296,7 @@ L_61D7:
 	xor a			;61dc
 L_61DD:
 	ld (hl),a			;61dd
-	call 05f49h		;61de
+	call 05f49h		;61de   ; sonido_11: pide el sonido 0x11
 	jp L_60EF		;61e1
 L_61E4:
 	ld hl,05850h		;61e4
@@ -310,7 +310,7 @@ L_61F3:
 	ret nz			;61f7
 L_61F8:
 	call 041efh		;61f8   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bf36h		;61fb
+	call 0bf36h		;61fb   ; p14:BF36
 	call 041a0h		;61fe   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca4ah)		;6201   ; lee la zona
 	cp 004h		;6204
@@ -433,7 +433,7 @@ L_62B4:
 	jr c,L_62DF		;62c2
 	and 00ch		;62c4
 	ret z			;62c6
-	call 05f41h		;62c7
+	call 05f41h		;62c7   ; sonido_fa: pide el sonido 0xFA
 	ld a,(0c38dh)		;62ca
 	cp 002h		;62cd
 	jr z,L_62D9		;62cf
@@ -459,17 +459,17 @@ L_62E8:
 	ld a,002h		;62ee
 L_62F0:
 	ld (hl),a			;62f0
-	call 05f49h		;62f1
+	call 05f49h		;62f1   ; sonido_11: pide el sonido 0x11
 	jp L_60E0		;62f4
 L_62F7:
 	call L_6480		;62f7
-	call 05f45h		;62fa
+	call 05f45h		;62fa   ; sonido_fb: pide el sonido 0xFB
 	ld a,(0c3a1h)		;62fd
 	cp 002h		;6300
 	jr nz,L_630F		;6302
 	ld a,040h		;6304
 	ld (0c3a3h),a		;6306
-	call 05f4dh		;6309
+	call 05f4dh		;6309   ; sonido_3f: pide el sonido 0x3F
 	jp L_60CE		;630c
 L_630F:
 	ld a,(0c39fh)		;630f
@@ -619,7 +619,7 @@ L_63FC:
 	ld a,(0ca00h)		;6402   ; lee el estado de la partida (p01:729F: 8 estados)
 	cp 005h		;6405
 	jr nz,L_640C		;6407
-	call 05de2h		;6409
+	call 05de2h		;6409   ; p00:5DE2
 L_640C:
 	xor a			;640c
 	ld (0c3a2h),a		;640d
@@ -627,13 +627,13 @@ L_640C:
 	ret			;6412
 L_6413:
 	call L_6628		;6413
-	call 05f45h		;6416
+	call 05f45h		;6416   ; sonido_fb: pide el sonido 0xFB
 	ld a,(0c3a1h)		;6419
 	and a			;641c
 	jr z,L_642A		;641d
 	ld a,040h		;641f
 	ld (0c3a3h),a		;6421
-	call 05f4dh		;6424
+	call 05f4dh		;6424   ; sonido_3f: pide el sonido 0x3F
 	jp L_60CE		;6427
 L_642A:
 	ld a,(0c39fh)		;642a
@@ -647,7 +647,7 @@ L_643A:
 	and a			;643d
 	jp z,L_63FC		;643e
 	call 041efh		;6441   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bbech		;6444
+	call 0bbech		;6444   ; p14:BBEC
 	call 041a0h		;6447   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0c3a1h)		;644a
 	and a			;644d
@@ -668,8 +668,8 @@ L_6458:
 	ld bc,0a888h		;646e
 	call L_603C		;6471
 	call 041efh		;6474   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bc7fh		;6477
-	call 0bba7h		;647a
+	call 0bc7fh		;6477   ; p14:BC7F
+	call 0bba7h		;647a   ; p14:BBA7
 	jp 041a0h		;647d   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_6480:
 	di			;6480
@@ -726,7 +726,7 @@ L_64EF:
 	call 0f37dh		;64f5
 	ld c,002h		;64f8
 	inc a			;64fa
-	jp z,0ad94h		;64fb
+	jp z,0ad94h		;64fb   ; p06:AD94
 	ret			;64fe
 
 ; ----------------------------------------------------------------------
@@ -973,7 +973,7 @@ L_66D4:
 	ld (08000h),a		;66df
 	pop bc			;66e2
 	ld de,(0c390h)		;66e3
-	call 08000h		;66e7
+	call 08000h		;66e7   ; p02:8000
 	push af			;66ea
 	ld a,(0c399h)		;66eb
 	ld h,080h		;66ee
@@ -1263,7 +1263,7 @@ L_696A:
 	ld a,(hl)			;6975
 	and a			;6976
 	ld de,(0ca50h)		;6977
-	call nz,08e75h		;697b
+	call nz,08e75h		;697b   ; p04:8E75
 	ld (ix+00ah),e		;697e
 	ld (ix+00bh),d		;6981
 	inc hl			;6984
@@ -1312,7 +1312,7 @@ L_69BD:
 	ld a,(0c383h)		;69bd   ; lee la copia del banco de 0xA000
 	push af			;69c0
 	call 041bdh		;69c1   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ad58h		;69c4
+	call 0ad58h		;69c4   ; p08:AD58
 	pop af			;69c7
 	push af			;69c8
 	jp 041a3h		;69c9
@@ -1824,7 +1824,7 @@ L_6D3F:
 	ld a,(hl)			;6d5c
 	cp 002h		;6d5d
 	ret c			;6d5f
-	call 05f3ch		;6d60
+	call 05f3ch		;6d60   ; sonido_08: pide el sonido 8
 L_6D63:
 	call L_6D6E		;6d63
 	ld c,00ch		;6d66
@@ -2921,7 +2921,7 @@ L_741E:
 	push de			;741f
 L_7420:
 	ld a,(hl)			;7420
-	call 04a8ch		;7421
+	call 04a8ch		;7421   ; pieza_de_sala_transparente: el caracter A de la sala, con el 0 transparente, a la otra pagina
 	inc hl			;7424
 	ld a,d			;7425
 	add a,008h		;7426
@@ -2957,7 +2957,7 @@ L_7445:
 	cp 006h		;744e
 	ret nz			;7450
 L_7451:
-	call 04411h		;7451
+	call 04411h		;7451   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 	ld bc,00380h		;7454
 L_7457:
 	ld (hl),c			;7457

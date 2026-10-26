@@ -812,7 +812,7 @@ L_A509:
 	ld bc,02020h		;a524
 	call 0474dh		;a527   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	pop hl			;a52a
-	call 06c2fh		;a52b
+	call 06c2fh		;a52b   ; p01:6C2F
 L_A52E:
 	ld a,l			;a52e
 	and 0f8h		;a52f
@@ -1558,7 +1558,7 @@ L_AA78:
 	and a			;aa7b
 	ret z			;aa7c
 	ld hl,06bcch		;aa7d
-	call 086d0h		;aa80
+	call 086d0h		;aa80   ; p04:86D0
 	call L_AAA9		;aa83
 	ld a,(ix+001h)		;aa86
 	ld hl,0aa8fh		;aa89   ; tabla_AA8F: 13 destinos del despachador p00
@@ -1599,11 +1599,11 @@ L_AAB8:
 	inc a			;aacc
 	ld (0cb3ch),a		;aacd
 	ld de,06060h		;aad0
-	call 07a33h		;aad3
+	call 07a33h		;aad3   ; p01:7A33
 	call 06b75h		;aad6
 	jr L_AB22		;aad9
 L_AADB:
-	call 07a38h		;aadb
+	call 07a38h		;aadb   ; p01:7A38
 	ld a,(0e270h)		;aade
 	and a			;aae1
 	ret nz			;aae2
@@ -1659,7 +1659,7 @@ L_AB26:
 	ld bc,00501h		;ab48
 	jr L_AB58		;ab4b
 L_AB4D:
-	call 06b75h		;ab4d
+	call 06b75h		;ab4d   ; p01:6B75
 	ld de,00ec0h		;ab50
 	call 061ceh		;ab53
 	jr L_AB22		;ab56
@@ -1677,10 +1677,10 @@ L_AB58:
 	ld a,(ix+001h)		;ab6d
 	cp 004h		;ab70
 	jr nz,L_AB79		;ab72
-	call 06cbah		;ab74
+	call 06cbah		;ab74   ; p01:6CBA
 	jr L_AB7C		;ab77
 L_AB79:
-	call 06cb6h		;ab79
+	call 06cb6h		;ab79   ; p01:6CB6
 L_AB7C:
 	pop af			;ab7c
 L_AB7D:
@@ -1719,9 +1719,9 @@ DATA_resto_AB9D:
 
 
 L_ABA5:
-	call 061feh		;aba5
+	call 061feh		;aba5   ; p01:61FE
 	ret nz			;aba8
-	call 07a3eh		;aba9
+	call 07a3eh		;aba9   ; p01:7A3E
 	ld a,(0d8a5h)		;abac
 	add a,0d8h		;abaf
 	ld e,a			;abb1
@@ -1799,7 +1799,7 @@ L_AC3A:
 	add a,h			;ac44
 	sub 010h		;ac45
 	ld h,a			;ac47
-	jp 09b30h		;ac48
+	jp 09b30h		;ac48   ; p04:9B30
 L_AC4B:
 	ld (ix+011h),001h		;ac4b
 	ld a,(ix+001h)		;ac4f
@@ -2161,7 +2161,7 @@ L_AED6:
 	ld hl,0cabdh		;af1c
 	ld (hl),001h		;af1f
 	call 04650h		;af21   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	jp 04606h		;af24
+	jp 04606h		;af24   ; enciende_todo: la pantalla y los sprites encendidos
 L_AF27:
 	ld hl,0df80h		;af27
 	ld bc,0003fh		;af2a
@@ -2180,7 +2180,7 @@ L_AF30:
 	call 045beh		;af4b   ; scroll_a_cero: R#23 = 0 (el desplazamiento vertical)
 	ld bc,00f07h		;af4e
 	call 00047h		;af51   ; BIOS WRTVDP - Writes data in the VDP-register
-	call 0846fh		;af54
+	call 0846fh		;af54   ; p02:846F
 	call 04266h		;af57   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045d7h		;af5a   ; esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 	call L_AFCD		;af5d
@@ -2191,13 +2191,13 @@ L_AF30:
 	call L_B401		;af6b
 	call L_B926		;af6e
 	call L_B17D		;af71
-	call 08ed8h		;af74
+	call 08ed8h		;af74   ; p02:8ED8
 	ld hl,(0ca50h)		;af77
 	ld (0ca70h),hl		;af7a
 	ld hl,0cabdh		;af7d
 	ld (hl),001h		;af80
 	call 04650h		;af82   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
-	jp 04606h		;af85
+	jp 04606h		;af85   ; enciende_todo: la pantalla y los sprites encendidos
 L_AF88:
 	call L_B161		;af88
 	call L_B002		;af8b
@@ -2279,7 +2279,7 @@ L_B002:
 	jp 064b7h		;b005
 L_B008:
 	ld hl,0804ah		;b008
-	jp 064b7h		;b00b
+	jp 064b7h		;b00b   ; p01:64B7
 L_B00E:
 	ld ix,0d600h		;b00e
 	ld b,00dh		;b012
@@ -2380,7 +2380,7 @@ L_B0B4:
 	ld e,a			;b0bc
 	ret			;b0bd
 L_B0BE:
-	call 08813h		;b0be
+	call 08813h		;b0be   ; p02:8813
 	push hl			;b0c1
 	ld a,(0d708h)		;b0c2
 	dec a			;b0c5
@@ -2406,7 +2406,7 @@ L_B0DC:
 	jr z,L_B10B		;b0e5
 	cp 010h		;b0e7
 	jr z,$+60		;b0e9
-	call 0881bh		;b0eb
+	call 0881bh		;b0eb   ; p02:881B
 L_B0EE:
 	ld bc,01010h		;b0ee
 	jp 0473bh		;b0f1   ; copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
@@ -2503,7 +2503,7 @@ L_B17D:
 	ld a,(0e1d8h)		;b17d
 	and a			;b180
 	ret z			;b181
-	jp 085feh		;b182
+	jp 085feh		;b182   ; p02:85FE
 L_B185:
 	call 08ecdh		;b185
 	call L_BA51		;b188
@@ -2540,16 +2540,16 @@ L_B1C2:
 	xor 001h		;b1d4
 	ld (0d70ah),a		;b1d6
 	call L_B8F8		;b1d9
-	jp 05f49h		;b1dc
+	jp 05f49h		;b1dc   ; sonido_11: pide el sonido 0x11
 L_B1DF:
-	call 08ecdh		;b1df
+	call 08ecdh		;b1df   ; p02:8ECD
 	ld a,(0d704h)		;b1e2
 	cp 00dh		;b1e5
 	jr z,L_B1F2		;b1e7
 	ld a,(0d443h)		;b1e9
 	or a			;b1ec
 	jr z,L_B1F2		;b1ed
-	call 08ee5h		;b1ef
+	call 08ee5h		;b1ef   ; p02:8EE5
 L_B1F2:
 	call L_BAB3		;b1f2
 	call L_B204		;b1f5
@@ -2558,7 +2558,7 @@ L_B1F2:
 	jr nz,L_B201		;b1fc
 	call L_A28F		;b1fe
 L_B201:
-	jp 08ed2h		;b201
+	jp 08ed2h		;b201   ; p02:8ED2
 L_B204:
 	ld a,(0ca09h)		;b204   ; lee lo recien pulsado de las teclas de funcion
 	and 01fh		;b207
@@ -2620,7 +2620,7 @@ L_B25D:
 	call c,L_B296		;b27f
 	ld a,(0ca52h)		;b282
 	ld (0ca53h),a		;b285
-	call 0429ch		;b288
+	call 0429ch		;b288   ; barras_bancos_1_2_10: p00:4288 y los bancos 1, 2 y 10
 	jp 06c53h		;b28b
 L_B28E:
 	ld a,(0cb4bh)		;b28e
@@ -2687,28 +2687,28 @@ L_B2F4:
 	ret nc			;b30b
 	ld a,004h		;b30c
 	ld (0d707h),a		;b30e
-	jp 05f49h		;b311
+	jp 05f49h		;b311   ; sonido_11: pide el sonido 0x11
 L_B314:
 	ld a,(0d702h)		;b314
 	or a			;b317
 	ret z			;b318
 	ld a,001h		;b319
 	ld (0d707h),a		;b31b
-	jp 05f49h		;b31e
+	jp 05f49h		;b31e   ; sonido_11: pide el sonido 0x11
 L_B321:
 	ld a,(0d702h)		;b321
 	cp e			;b324
 	ret nc			;b325
 	ld a,002h		;b326
 	ld (0d707h),a		;b328
-	jp 05f49h		;b32b
+	jp 05f49h		;b32b   ; sonido_11: pide el sonido 0x11
 L_B32E:
 	ld a,(0d703h)		;b32e
 	or a			;b331
 	ret z			;b332
 	ld a,003h		;b333
 	ld (0d707h),a		;b335
-	jp 05f49h		;b338
+	jp 05f49h		;b338   ; sonido_11: pide el sonido 0x11
 L_B33B:
 	ld bc,03810h		;b33b
 	jr L_B343		;b33e
@@ -2891,7 +2891,7 @@ L_B44D:
 	ldi		;b46f
 	ld de,0cb20h		;b471
 	call L_B87B		;b474
-	call 0992ah		;b477
+	call 0992ah		;b477   ; p02:992A
 	call L_B5C8		;b47a
 	ld a,(0d70ah)		;b47d
 	ld (0cb24h),a		;b480
@@ -3061,7 +3061,7 @@ L_B57B:
 	call L_B78D		;b5b7
 	ld a,(0cb20h)		;b5ba
 	cp 00ch		;b5bd
-	call nz,085aah		;b5bf
+	call nz,085aah		;b5bf   ; p02:85AA
 	ld a,(0cb21h)		;b5c2
 	jp L_B897		;b5c5
 L_B5C8:
@@ -3330,7 +3330,7 @@ L_B78D:
 	call L_B7DD		;b7a5
 	ld a,(0ca4ah)		;b7a8   ; lee la zona
 	cp 006h		;b7ab
-	call z,0431eh		;b7ad
+	call z,0431eh		;b7ad   ; barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 L_B7B0:
 	ld hl,0ca54h		;b7b0
 	call L_B7C8		;b7b3
@@ -3340,7 +3340,7 @@ L_B7B0:
 	call L_B7DD		;b7bc
 	ld a,(0ca4ah)		;b7bf   ; lee la zona
 	cp 006h		;b7c2
-	jp nz,04331h		;b7c4
+	jp nz,04331h		;b7c4   ; barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
 	ret			;b7c7
 L_B7C8:
 	ld a,(hl)			;b7c8
@@ -3360,25 +3360,25 @@ L_B7DB:
 	ld (hl),a			;b7db
 	ret			;b7dc
 L_B7DD:
-	call 04309h		;b7dd
+	call 04309h		;b7dd   ; borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 	call L_B7E8		;b7e0
 	ld a,020h		;b7e3
 	jp 042b0h		;b7e5
 L_B7E8:
 	ld a,(0ca4ah)		;b7e8   ; lee la zona
 	cp 006h		;b7eb
-	jp nz,07053h		;b7ed
-	jp 07042h		;b7f0
+	jp nz,07053h		;b7ed   ; p01:7053
+	jp 07042h		;b7f0   ; p01:7042
 L_B7F3:
 	ld a,(0cb3fh)		;b7f3
 	cp 002h		;b7f6
 	jr c,L_B80C		;b7f8
 	ld hl,0cac4h		;b7fa
 	call L_B82C		;b7fd
-	call 04309h		;b800
+	call 04309h		;b800   ; borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 	call 07042h		;b803
-	call 042a8h		;b806
-	jp 0431eh		;b809
+	call 042a8h		;b806   ; marco_barra_cac4: el marco de la barra de la derecha con el ancho de 0xCAC4
+	jp 0431eh		;b809   ; barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 L_B80C:
 	ld a,040h		;b80c
 	ld hl,0cac4h		;b80e
@@ -3397,7 +3397,7 @@ L_B80C:
 L_B823:
 	call L_B7C8		;b823
 	call L_B7DD		;b826
-	jp 04331h		;b829
+	jp 04331h		;b829   ; barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
 L_B82C:
 	ld a,(hl)			;b82c
 	cp 040h		;b82d
@@ -3415,10 +3415,10 @@ L_B839:
 	jr z,L_B851		;b83d
 	ld hl,0ca54h		;b83f
 	call L_B82C		;b842
-	call 04309h		;b845
+	call 04309h		;b845   ; borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 	call 07053h		;b848
-	call 042adh		;b84b
-	jp 04331h		;b84e
+	call 042adh		;b84b   ; marco_barra_ca54: el marco de la barra de la derecha con el ancho de 0xCA54
+	jp 04331h		;b84e   ; barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
 L_B851:
 	ld a,040h		;b851
 	ld hl,0ca54h		;b853
@@ -3437,7 +3437,7 @@ L_B851:
 L_B869:
 	call L_B7C8		;b869
 	call L_B7DD		;b86c
-	jp 0431eh		;b86f
+	jp 0431eh		;b86f   ; barra_derecha_cac4: la barra de la derecha de 0xCAC5 (con 0xCAE2 puesto)
 L_B872:
 	ld a,(0cb21h)		;b872
 	cp 001h		;b875
@@ -3466,7 +3466,7 @@ L_B88B:
 L_B897:
 	or a			;b897
 	call nz,06a83h		;b898
-	call 092f3h		;b89b
+	call 092f3h		;b89b   ; p02:92F3
 	call L_B957		;b89e
 	xor a			;b8a1
 	ld (0d700h),a		;b8a2
@@ -3478,7 +3478,7 @@ L_B897:
 	ld (0e236h),a		;b8b2
 	ld a,(0cb21h)		;b8b5
 	cp 002h		;b8b8
-	jp z,08ec0h		;b8ba
+	jp z,08ec0h		;b8ba   ; p02:8EC0
 	ret			;b8bd
 L_B8BE:
 	ld a,(0ca42h)		;b8be   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -3493,7 +3493,7 @@ L_B8CC:
 	ld a,(0d704h)		;b8cc
 L_B8CF:
 	ld hl,08046h		;b8cf
-	jp 064c3h		;b8d2
+	jp 064c3h		;b8d2   ; p01:64C3
 L_B8D5:
 	ld a,(0d704h)		;b8d5
 	cp 007h		;b8d8
@@ -3649,7 +3649,7 @@ L_B9BB:
 	ret			;b9c6
 L_B9C7:
 	push de			;b9c7
-	call 071f4h		;b9c8
+	call 071f4h		;b9c8   ; p01:71F4
 	call L_B9D0		;b9cb
 	pop de			;b9ce
 	ret			;b9cf
@@ -3674,7 +3674,7 @@ L_B9E5:
 	jr z,L_BA09		;b9e9
 	dec a			;b9eb
 	ld hl,0a6afh		;b9ec
-	call 0649ch		;b9ef
+	call 0649ch		;b9ef   ; p01:649C
 	call L_BA32		;b9f2
 	ld a,(0cb20h)		;b9f5
 	ld hl,0d600h		;b9f8
@@ -3911,9 +3911,9 @@ L_BB50:
 L_BB7D:
 	push hl			;bb7d
 	ld a,(0d704h)		;bb7e
-	call 092e3h		;bb81
+	call 092e3h		;bb81   ; p02:92E3
 	ld a,(0d704h)		;bb84
-	call 092ebh		;bb87
+	call 092ebh		;bb87   ; p02:92EB
 	pop hl			;bb8a
 	ret nc			;bb8b
 	ld (hl),000h		;bb8c
@@ -3978,7 +3978,7 @@ L_BBEA:
 	ld hl,0d88ch		;bc04
 	ld (hl),0ffh		;bc07
 	call 04266h		;bc09   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
-	jp 08eddh		;bc0c
+	jp 08eddh		;bc0c   ; p02:8EDD
 L_BC0F:
 	ld a,(0ca4ah)		;bc0f   ; lee la zona
 	cp 00ah		;bc12
@@ -4268,7 +4268,7 @@ L_BF47:
 	dec (ix+007h)		;bf47
 	ret nz			;bf4a
 	ld (ix+007h),004h		;bf4b
-	call 06ae6h		;bf4f
+	call 06ae6h		;bf4f   ; p01:6AE6
 	ld a,(0ca5fh)		;bf52
 	cp 002h		;bf55
 	jr nc,L_BF5E		;bf57
@@ -4277,7 +4277,7 @@ L_BF47:
 L_BF5E:
 	dec (ix+006h)		;bf5e
 	ret nz			;bf61
-	call 06b49h		;bf62
+	call 06b49h		;bf62   ; p01:6B49
 	ld a,(ix+000h)		;bf65
 	ld (ix+000h),000h		;bf68
 	call L_BF7A		;bf6c
@@ -4350,10 +4350,10 @@ L_BFD9:
 	push hl			;bfe2
 	push bc			;bfe3
 	ld a,b			;bfe4
-	call 092d2h		;bfe5
+	call 092d2h		;bfe5   ; p02:92D2
 	pop af			;bfe8
 	push af			;bfe9
-	call 092dbh		;bfea
+	call 092dbh		;bfea   ; p02:92DB
 	pop bc			;bfed
 	pop hl			;bfee
 	ret nc			;bfef

@@ -70,6 +70,14 @@ C 0xA1A3 el mapper: pone en 0x4000 el banco de A
 C 0xA1A8 el mapper: pone en 0x6000 el banco de A
 C 0xA1AD el mapper: pone en 0x8000 el banco de A
 C 0xA1B2 el mapper: pone en 0xA000 el banco de A
+C 0xA1F0 p02:8BFC
+C 0xA1F3 p01:642C
+C 0xA1F6 p02:9AA5
+C 0xA1F9 p02:9F7D
+C 0xA1FC p02:9F94
+C 0xA1FF p02:9FF7
+C 0xA202 p02:9C02
+C 0xA208 p02:9A96
 C 0xA213 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA288 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA290 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
@@ -81,21 +89,33 @@ C 0xA2F4 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 
 C 0xA2FA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA31A lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA343 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xA351 p02:889D
 C 0xA378 lee la velocidad del mensaje en curso (0 = ninguno; 1-3, 4 sin espera)
+C 0xA37C p02:9942
+C 0xA382 p02:8BC8
+C 0xA385 p02:8BD0
 C 0xA3C4 lee la zona
 C 0xA3D0 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xA3DB despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA3FD suma_a_hl: HL = HL + A
 C 0xA400 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA457 p02:986A
+C 0xA477 p02:9988
 C 0xA4A6 suma_a_hl: HL = HL + A
 C 0xA4DB lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA4E2 lee la sala de la zona
+C 0xA506 p02:9375
+C 0xA518 p02:9448
+C 0xA55A p01:79B4
 C 0xA64E lee la zona
 C 0xA655 lee la sala de la zona
+C 0xA65B p02:9DA8
 C 0xA66C lee la zona
 C 0xA68B lee la zona
 C 0xA691 lee la sala de la zona
 C 0xA6DE lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xA6FF p02:936E
+C 0xA702 p02:9402
 C 0xA72A lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA730 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA748 lee la zona
@@ -103,23 +123,40 @@ C 0xA753 lee la sala de la zona
 C 0xA772 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA7BB lee la zona
 C 0xA7C0 lee la sala de la zona
+C 0xA859 p01:7EEE
+C 0xA85D p02:9804
 C 0xA88A lee la zona
 C 0xA890 lee la sala de la zona
 C 0xA89D lee la sala de la zona
 C 0xA8A4 lee la zona
 C 0xA8CA lee la zona
 C 0xA8EA borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA8ED limpia_sprites_y_d300: 
+C 0xA8F0 dibujos_70f9: 
 C 0xA8F3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA8F6 borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
+C 0xA8F9 p02:8511
 C 0xA8FF apunta a los 4 bits altos del byte de la sala (p56:BD28)
+C 0xA90D sala_de_bloques_de: p00:5590 con los bancos 24-26
+C 0xA910 p02:9364
+C 0xA92E p01:6AE2
 C 0xA959 lee la zona
+C 0xA96C cambia_de_zona: pasa a la zona A
+C 0xA96F p01:6A3C
+C 0xA974 cambia_de_zona: pasa a la zona A
 C 0xA97E lee la zona
 C 0xA983 lee la sala de la zona
 C 0xA9FC lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+C 0xAA2E p01:7DA9
+C 0xAA33 p01:6C77
 C 0xAA4F esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xAA52 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
 C 0xAA55 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0xAA5C cambia_a_la_sala: la sala BC: 0xCA50 = C, 0xCA51 = B
 C 0xAA5F lee la sala de la zona
 C 0xAA6A guarda la sala de la zona
+C 0xAA70 enciende_todo: la pantalla y los sprites encendidos
+C 0xAA73 p01:6AFA
 C 0xAA79 lee la zona
 C 0xAA85 lee la sala de la zona
 C 0xAAC6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -127,31 +164,56 @@ C 0xAACC borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00
 C 0xAAE0 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xAAE3 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 C 0xAAE6 esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y otros 128 en 0xF200
+C 0xAAEC vuelve_a_la_sala: p02:7BAA y la sala de 0xCA50
 C 0xAB0A espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0xAB0D enciende_todo: la pantalla y los sprites encendidos
 C 0xAB10 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xAB1D p02:8587
 C 0xAB9D lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xABBB lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xABF3 lee la zona
 C 0xAC3F llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xAC50 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xACC5 copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
+C 0xACDC p01:79A3
 C 0xACFA guarda el paso del estado de la partida
+C 0xAD0D copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
+C 0xAD1A cambia_de_zona: pasa a la zona A
+C 0xAD5D p02:98BF
 C 0xAD7E suma_a_hl: HL = HL + A
+C 0xADC8 p02:8B68
 C 0xAE14 lee la zona
 C 0xAE1A lee la sala de la zona
+C 0xAE44 p02:8ABE
 C 0xAEE0 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAEE9 p01:7FF0
+C 0xAEFF p01:79BC
+C 0xAF21 p02:8B2F
+C 0xAF24 p02:8B60
+C 0xAF3E p01:7FF9
+C 0xAF67 p02:8B80
+C 0xAF7E p02:8B88
 C 0xB00B lee la zona
 C 0xB012 lee la sala de la zona
 C 0xB05B suma_a_hl: HL = HL + A
 C 0xB108 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
+C 0xB113 p01:6361
 C 0xB116 lee 1 si una conversacion ha encontrado su ficha
 C 0xB140 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0xB145 lee lo recien pulsado de las teclas de funcion
+C 0xB16A p01:7030
+C 0xB175 p01:6A64
+C 0xB18A p01:702B
+C 0xB196 p01:6C5B
 C 0xB1A3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB1AA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB1B7 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xB1BE lee la zona
 C 0xB1C9 lee la sala de la zona
+C 0xB1EE p01:7F71
 C 0xB1FD lee la sala de la zona
+C 0xB24D p01:6A44
+C 0xB257 p01:6A48
 C 0xB28C copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xB326 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB366 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
@@ -163,9 +225,12 @@ C 0xB43B suma_a_hl: HL = HL + A
 C 0xB474 suma_a_hl: HL = HL + A
 C 0xB47D suma_a_hl: HL = HL + A
 C 0xB480 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB4A0 de_negativo: DE = -DE
+C 0xB4A7 de_negativo: DE = -DE
 C 0xB523 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xB526 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB5B2 copia_en_y: orden YMMM del VDP
+C 0xB5CC p01:6FD5
 C 0xB5EF pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xB5F2 pon_sprite_mas_4: p00:5D41 con el patron C + 4
 C 0xB5F9 pon_sprite_mas_4: p00:5D41 con el patron C + 4
@@ -178,6 +243,7 @@ C 0xB67A copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xB75C copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB811 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB826 suma_a_hl: HL = HL + A
+C 0xB863 p01:70AE
 C 0xB86C suma_a_hl: HL = HL + A
 C 0xB884 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB887 lee el paso del estado de la partida
@@ -189,21 +255,46 @@ C 0xB995 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB99D borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xBA15 lee el paso del mensaje en curso (p01:6597)
 C 0xBA2D lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBA42 p01:64D4
+C 0xBA4C p01:6302
+C 0xBA50 p01:70E4
 C 0xBA64 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBA7F lee la zona
 C 0xBA97 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBABE borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xBAD3 lee la sala de la zona
 C 0xBAD8 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBB23 p02:8516
+C 0xBB38 p01:7059
+C 0xBB46 p00:42B0
+C 0xBB49 barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
+C 0xBB6A borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
+C 0xBB9A borra_franja_80c0: borra 0x5A x 0x10 puntos desde X = 0x80, Y = 0xC0 en las paginas 0 y 1
 C 0xBBA8 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBBB4 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBBDD barra_derecha_ca54: la barra de la derecha de 0xCA55 (con 0xCAE2 puesto)
+C 0xBBEE barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
 C 0xBC1E byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xBC29 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xBC6C p02:8BC0
 C 0xBC7C lee la zona
+C 0xBCB4 p02:8BD8
+C 0xBCB7 p02:8BE0
+C 0xBCFA p01:6A38
+C 0xBD27 p02:8B78
 C 0xBD30 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBD69 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xBD77 p02:8C1C
+C 0xBD7F p02:929A
+C 0xBDB4 p02:87E9
+C 0xBDDF p02:8847
+C 0xBDE4 p02:883C
 C 0xBE08 suma_a_hl: HL = HL + A
 C 0xBE10 lee el paso del estado de la partida
 C 0xBE22 lee el paso del estado de la partida
+C 0xBE3E p02:9331
+C 0xBE90 p02:9319
+C 0xBEE2 p01:631A
 C 0xBEF7 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBEFC copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xBEFF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -215,14 +306,17 @@ C 0xBF24 lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 
 C 0xBF2B lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xBF40 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBF47 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBF52 p01:634C
 C 0xBF5C lee la zona
 C 0xBF63 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBF6C lee la sala de la zona
 C 0xBF88 lee la zona
 C 0xBF8F lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBF97 lee la sala de la zona
+C 0xBFB3 p01:6BDC
 C 0xBFC8 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xBFCC mosaico_BFD8: un mosaico de 2 x 5 caracteres, un byte cada uno
+C 0xBFE2 p01:6BD8
 C 0xBFF4 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xBFFD copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 # --- fin de las anotaciones de anota.py ---

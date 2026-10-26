@@ -50,12 +50,12 @@ L_A016:
 	ld (0cadfh),a		;a017
 	ld hl,0aa51h		;a01a
 	ld c,004h		;a01d
-	call 07b24h		;a01f
+	call 07b24h		;a01f   ; p01:7B24
 	jr L_A03F		;a022
 L_A024:
 	ld de,0aa51h		;a024
 	ld c,004h		;a027
-	call 07b2dh		;a029
+	call 07b2dh		;a029   ; p01:7B2D
 	ld a,(0cadah)		;a02c
 	or a			;a02f
 	ret nz			;a030
@@ -75,7 +75,7 @@ L_A044:
 	ld a,(hl)			;a044
 	cp 00ch		;a045
 	ret nz			;a047
-	jp 06ba8h		;a048
+	jp 06ba8h		;a048   ; p01:6BA8
 L_A04B:
 	ld hl,0cb49h		;a04b
 	dec (hl)			;a04e
@@ -142,7 +142,7 @@ L_A098:
 	ld (0cb05h),a		;a0b6
 	jr $-122		;a0b9
 L_A0BB:
-	call 09430h		;a0bb
+	call 09430h		;a0bb   ; p02:9430
 	ld hl,0cb05h		;a0be
 	ld a,(hl)			;a0c1
 	cp 08ah		;a0c2
@@ -155,7 +155,7 @@ L_A0BB:
 	jr $-82		;a0d1
 L_A0D3:
 	xor a			;a0d3
-	jp 08f8dh		;a0d4
+	jp 08f8dh		;a0d4   ; p02:8F8D
 L_A0D7:
 	ld hl,0cb49h		;a0d7
 	dec (hl)			;a0da
@@ -165,14 +165,14 @@ L_A0D7:
 	cp 022h		;a0e0
 	ret nc			;a0e2
 	or a			;a0e3
-	jp nz,08f85h		;a0e4
+	jp nz,08f85h		;a0e4   ; p02:8F85
 	call L_A03F		;a0e7
-	jp 08f7dh		;a0ea
+	jp 08f7dh		;a0ea   ; p02:8F7D
 L_A0ED:
 	ld a,(0e257h)		;a0ed
 	or a			;a0f0
 	jr nz,L_A106		;a0f1
-	call 0640eh		;a0f3
+	call 0640eh		;a0f3   ; p01:640E
 	ld a,002h		;a0f6
 	ld (0cb15h),a		;a0f8
 	xor a			;a0fb
@@ -218,7 +218,7 @@ L_A124:
 L_A141:
 	call L_A1E2		;a141
 	ret c			;a144
-	call 06c8fh		;a145
+	call 06c8fh		;a145   ; p01:6C8F
 	push hl			;a148
 	ld a,(0d8f3h)		;a149
 	ld hl,0ca4bh		;a14c   ; apunta a la sala de la zona
@@ -434,7 +434,7 @@ L_A23C:
 	inc hl			;a261
 	ld h,(hl)			;a262
 	ld l,a			;a263
-	call 071ddh		;a264
+	call 071ddh		;a264   ; p01:71DD
 L_A267:
 	pop hl			;a267
 	ld a,009h		;a268
@@ -554,7 +554,7 @@ L_A409:
 	ret z			;a40e
 	cp 01bh		;a40f
 	ret nc			;a411
-	jp 06adeh		;a412
+	jp 06adeh		;a412   ; p01:6ADE
 L_A415:
 	call L_A409		;a415
 	ld hl,0dfeah		;a418
@@ -640,7 +640,7 @@ L_A497:
 L_A49D:
 	ld hl,0a4a6h		;a49d
 	call 043f6h		;a4a0   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	jp 0714fh		;a4a3
+	jp 0714fh		;a4a3   ; p01:714F
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_A4A6: lo apuntan con el banco puesto p11:A49D (0xA4A6); el
@@ -772,7 +772,7 @@ L_A54A:
 	or a			;a557
 	ret nz			;a558
 	ld (hl),001h		;a559
-	jp 06c8bh		;a55b
+	jp 06c8bh		;a55b   ; p01:6C8B
 L_A55E:
 	ld hl,(0e066h)		;a55e
 	ld d,h			;a561
@@ -1301,7 +1301,7 @@ L_A91C:
 	cp (ix+005h)		;a935
 	jr nz,L_A93F		;a938
 	push bc			;a93a
-	call 08f3eh		;a93b
+	call 08f3eh		;a93b   ; p02:8F3E
 	pop bc			;a93e
 L_A93F:
 	ld de,00008h		;a93f
@@ -1326,9 +1326,9 @@ L_A94D:
 	jr nz,L_A975		;a969
 	push bc			;a96b
 	push bc			;a96c
-	call 08f36h		;a96d
+	call 08f36h		;a96d   ; p02:8F36
 	pop bc			;a970
-	call 08f2eh		;a971
+	call 08f2eh		;a971   ; p02:8F2E
 	pop bc			;a974
 L_A975:
 	ld de,00008h		;a975
@@ -1397,7 +1397,7 @@ L_A9DD:
 	ld (ix+00bh),a		;a9f9
 	ld a,(0d634h)		;a9fc
 	or a			;a9ff
-	call z,08f70h		;aa00
+	call z,08f70h		;aa00   ; p02:8F70
 	call L_AA11		;aa03
 	ld hl,0d751h		;aa06
 	inc (hl)			;aa09
@@ -1410,8 +1410,8 @@ L_A9DD:
 L_AA11:
 	ld a,(0d634h)		;aa11
 	or a			;aa14
-	jp z,06a25h		;aa15
-	jp 06afeh		;aa18
+	jp z,06a25h		;aa15   ; p01:6A25
+	jp 06afeh		;aa18   ; p01:6AFE
 L_AA1B:
 	ld a,(0cb0eh)		;aa1b
 	dec a			;aa1e
@@ -1425,7 +1425,7 @@ L_AA1B:
 	call 0423eh		;aa2a   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;aa2d
 	ld b,008h		;aa2e
-	call 08f63h		;aa30
+	call 08f63h		;aa30   ; p02:8F63
 	ld (ix+006h),e		;aa33
 	ld (ix+007h),d		;aa36
 	ld (ix+008h),l		;aa39
@@ -1482,7 +1482,7 @@ L_AA8F:
 	ld (0cacfh),a		;aa9d
 	inc a			;aaa0
 	ld (0d752h),a		;aaa1
-	call 08f5dh		;aaa4
+	call 08f5dh		;aaa4   ; p02:8F5D
 	ld hl,0becch		;aaa7
 	ld a,(0cb0eh)		;aaaa
 	ld (ix+00bh),a		;aaad
@@ -1546,8 +1546,8 @@ L_AAE9:
 	ld (ix+00ah),a		;ab28
 	ld (ix+00bh),a		;ab2b
 	ld hl,0bebch		;ab2e
-	call 08f4eh		;ab31
-	jp 06a8bh		;ab34
+	call 08f4eh		;ab31   ; p02:8F4E
+	jp 06a8bh		;ab34   ; p01:6A8B
 L_AB37:
 	call L_AC47		;ab37
 	ld a,(ix+003h)		;ab3a
@@ -1559,7 +1559,7 @@ L_AB37:
 	call L_ABA3		;ab4a
 	jr c,$+115		;ab4d
 	call L_AC1D		;ab4f
-	call 08f46h		;ab52
+	call 08f46h		;ab52   ; p02:8F46
 	jr c,$+107		;ab55
 	ret			;ab57
 L_AB58:
@@ -1582,7 +1582,7 @@ L_AB58:
 	ld a,b			;ab7b
 	inc a			;ab7c
 	ld hl,0bebch		;ab7d
-	jp 08f53h		;ab80
+	jp 08f53h		;ab80   ; p02:8F53
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_AB83: lo apuntan con el banco puesto p11:AB67 (0xAB83); el
@@ -1733,7 +1733,7 @@ L_AC6C:
 	inc a			;ac81
 	ld (0d752h),a		;ac82
 	ld hl,0beb4h		;ac85
-	jp 08f58h		;ac88
+	jp 08f58h		;ac88   ; p02:8F58
 L_AC8B:
 	ld hl,0cb5ch		;ac8b
 	ld a,(hl)			;ac8e
@@ -1865,7 +1865,7 @@ L_AD65:
 	cp 007h		;ad7e
 	jr z,L_AD87		;ad80
 	ld c,000h		;ad82
-	jp 08f68h		;ad84
+	jp 08f68h		;ad84   ; p02:8F68
 L_AD87:
 	ld e,l			;ad87
 	ld d,h			;ad88
@@ -1919,7 +1919,7 @@ L_ADCE:
 	call L_AEB6		;ade5
 	ld a,001h		;ade8
 	ld (0d752h),a		;adea
-	jp 06a50h		;aded
+	jp 06a50h		;aded   ; p01:6A50
 L_ADF0:
 	call L_AE87		;adf0
 	call L_AEA4		;adf3
@@ -1933,11 +1933,11 @@ L_ADF0:
 	ld de,00a23h		;ae03
 	push de			;ae06
 	push hl			;ae07
-	call 06424h		;ae08
+	call 06424h		;ae08   ; p01:6424
 	pop hl			;ae0b
 	pop de			;ae0c
 	ret c			;ae0d
-	call 08fa5h		;ae0e
+	call 08fa5h		;ae0e   ; p02:8FA5
 	ret c			;ae11
 	call L_AF20		;ae12
 	ret c			;ae15
@@ -2093,7 +2093,7 @@ L_AF1B:
 	ret			;af1f
 L_AF20:
 	call L_AEF8		;af20
-	call 08f16h		;af23
+	call 08f16h		;af23   ; p02:8F16
 	ret c			;af26
 	call L_AF37		;af27
 	ret c			;af2a
@@ -2293,10 +2293,10 @@ L_B078:
 	inc hl			;b09a
 	ld a,(ix+00bh)		;b09b
 	ld (hl),a			;b09e
-	call 06a7fh		;b09f
+	call 06a7fh		;b09f   ; p01:6A7F
 	push ix		;b0a2
 	ld a,(0cb20h)		;b0a4
-	call 08f95h		;b0a7
+	call 08f95h		;b0a7   ; p02:8F95
 	pop ix		;b0aa
 	ret			;b0ac
 L_B0AD:
@@ -2428,11 +2428,11 @@ L_B18B:
 	ld c,000h		;b19e
 	ld a,(0ca50h)		;b1a0
 	cp e			;b1a3
-	jp nz,08f26h		;b1a4
+	jp nz,08f26h		;b1a4   ; p02:8F26
 	ld a,(0ca51h)		;b1a7
 	cp d			;b1aa
 	jp nz,08f26h		;b1ab
-	jp 08f1eh		;b1ae
+	jp 08f1eh		;b1ae   ; p02:8F1E
 L_B1B1:
 	rra			;b1b1
 	jr c,L_B1C4		;b1b2
@@ -2521,7 +2521,7 @@ L_B22A:
 	ld (0d752h),a		;b235
 	dec c			;b238
 	jp z,06c33h		;b239
-	jp 06c87h		;b23c
+	jp 06c87h		;b23c   ; p01:6C87
 L_B23F:
 	ld a,(0cb44h)		;b23f
 	or a			;b242
@@ -3031,7 +3031,7 @@ L_B58A:
 	jp z,06c77h		;b591
 	push ix		;b594
 	pop hl			;b596
-	call 08f78h		;b597
+	call 08f78h		;b597   ; p02:8F78
 	ld hl,0cb61h		;b59a
 	ld (hl),001h		;b59d
 	jp 06a50h		;b59f
@@ -3214,14 +3214,14 @@ L_B6C8:
 	jp c,L_B747		;b6cc
 	ld a,(0e243h)		;b6cf
 	cp (hl)			;b6d2
-	jp c,04f97h		;b6d3
+	jp c,04f97h		;b6d3   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 	jr L_B715		;b6d6
 L_B6D8:
 	ld hl,0dfdbh		;b6d8
 	ld a,(0cb03h)		;b6db
 	cp (hl)			;b6de
 	jp c,L_B79B		;b6df
-	jp 04f97h		;b6e2
+	jp 04f97h		;b6e2   ; sprites_a_vram: los colores de los sprites (0xDA00) y detras sus atributos (0xDC00)...
 L_B6E5:
 	ld de,00080h		;b6e5
 	ld bc,00480h		;b6e8
@@ -3422,8 +3422,8 @@ L_B885:
 	ld (hl),e			;b89a
 	inc hl			;b89b
 	ld (hl),d			;b89c
-	call 06f27h		;b89d
-	jp 06cceh		;b8a0
+	call 06f27h		;b89d   ; p01:6F27
+	jp 06cceh		;b8a0   ; p01:6CCE
 L_B8A3:
 	ld a,(0ca61h)		;b8a3
 	dec a			;b8a6
@@ -3883,8 +3883,8 @@ L_BB33:
 	call 06c33h		;bb3b
 	ld a,(0caf5h)		;bb3e
 	cp 00ah		;bb41
-	jp z,06c9bh		;bb43
-	jp 06abfh		;bb46
+	jp z,06c9bh		;bb43   ; p01:6C9B
+	jp 06abfh		;bb46   ; p01:6ABF
 L_BB49:
 	ld a,(0d674h)		;bb49
 	or a			;bb4c
@@ -3991,7 +3991,7 @@ DATA_resto_BBEB:
 
 L_BBF5:
 	ld hl,0d8a4h		;bbf5
-	jp 08f0eh		;bbf8
+	jp 08f0eh		;bbf8   ; p02:8F0E
 L_BBFB:
 	ld hl,0ca90h		;bbfb
 	ld (hl),001h		;bbfe
@@ -4068,7 +4068,7 @@ L_BC62:
 	ld hl,0d7dfh		;bc80
 	res 6,(hl)		;bc83
 	call 08f70h		;bc85
-	jp 06a93h		;bc88
+	jp 06a93h		;bc88   ; p01:6A93
 L_BC8B:
 	call L_BCA0		;bc8b
 	ret nz			;bc8e

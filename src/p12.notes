@@ -46,7 +46,9 @@ F 0x7FBE 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0x6000 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0x6003 p02:9DBD
 C 0x6018 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0x601B borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0x6033 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x6039 enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
 C 0x603C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -54,6 +56,7 @@ C 0x6045 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00
 C 0x604D marco: cuatro lineas: un marco de D x E desde HL
 C 0x6059 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x6072 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0x6080 sonido_11: pide el sonido 0x11
 C 0x60A8 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x60B2 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x60EA suma_a_de: DE = DE + A
@@ -68,6 +71,7 @@ C 0x6149 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6152 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0x6169 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0x619F bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x61A2 p14:BA98
 C 0x61A5 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x61A8 apunta a los caracteres de un dibujo pasados a 4 bits
 C 0x61AE borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -75,12 +79,18 @@ C 0x61B7 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x61C2 llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x61C5 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x61CB bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x61DE sonido_11: pide el sonido 0x11
 C 0x61F0 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x61F8 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x61FB p14:BF36
 C 0x61FE bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6201 lee la zona
 C 0x621D lee la fase de la partida (indice de las listas de p06:B40C)
 C 0x62BB lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0x62C7 sonido_fa: pide el sonido 0xFA
+C 0x62F1 sonido_11: pide el sonido 0x11
+C 0x62FA sonido_fb: pide el sonido 0xFB
+C 0x6309 sonido_3f: pide el sonido 0x3F
 C 0x6318 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x6327 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6331 borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -90,15 +100,23 @@ C 0x6341 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x635A guarda la fase de la partida (indice de las listas de p06:B40C)
 C 0x63FC lee lo recien pulsado de las teclas de funcion
 C 0x6402 lee el estado de la partida (p01:729F: 8 estados)
+C 0x6409 p00:5DE2
+C 0x6416 sonido_fb: pide el sonido 0xFB
+C 0x6424 sonido_3f: pide el sonido 0x3F
 C 0x6434 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x6441 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x6444 p14:BBEC
 C 0x6447 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6458 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0x6474 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x6477 p14:BC7F
+C 0x647A p14:BBA7
 C 0x647D bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x64FB p06:AD94
 C 0x652C suma_a_hl: HL = HL + A
 C 0x659B apunta a el mapa de la sala: 24 x 24 caracteres
 C 0x6670 suma_a_hl: HL = HL + A
+C 0x66E7 p02:8000
 C 0x670D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x6710 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0x6716 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
@@ -120,8 +138,10 @@ C 0x68F6 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x68FD lee la zona
 C 0x6903 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x695C lee la zona
+C 0x697B p04:8E75
 C 0x69BD lee la copia del banco de 0xA000
 C 0x69C1 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x69C4 p08:AD58
 C 0x69CC lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x69D7 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x69E3 lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -149,6 +169,7 @@ C 0x6C10 suma_a_hl: HL = HL + A
 C 0x6C1B suma_a_hl: HL = HL + A
 C 0x6CA2 suma_a_hl: HL = HL + A
 C 0x6CDA suma_a_hl: HL = HL + A
+C 0x6D60 sonido_08: pide el sonido 8
 C 0x6D68 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x6D6B linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 C 0x6DCF lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -200,7 +221,9 @@ C 0x73CA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x7403 lee la sala de la zona
 C 0x740C guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0x740F azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0x7421 pieza_de_sala_transparente: el caracter A de la sala, con el 0 transparente, a la otra pagina
 C 0x744B lee la sala de la zona
+C 0x7451 punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
 C 0x745C suma_a_hl: HL = HL + A
 C 0x7462 lee la zona
 C 0x746B lee la zona

@@ -39,17 +39,39 @@ C 0xA006 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA00F despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA0AD suma_a_hl: HL = HL + A
 C 0xA0F0 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA0F9 p02:8D7D
+C 0xA1CE p01:6B1A
+C 0xA1FF p01:6A58
+C 0xA28A p01:6A54
+C 0xA312 p02:8DDB
+C 0xA36D p01:6CAA
+C 0xA397 p01:6C97
 C 0xA3B9 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xA3CE apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0xA3E6 enciende_todo: la pantalla y los sprites encendidos
+C 0xA3E9 p01:6CD6
+C 0xA3FC p02:8529
 C 0xA424 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA430 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA439 p02:875D
+C 0xA43C limpia_sprites_y_d300: 
 C 0xA47C lee la zona
+C 0xA487 p01:7CAF
+C 0xA48A p02:8D8B
 C 0xA490 lee la zona
 C 0xA4A3 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA4A6 apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
+C 0xA4AA borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
+C 0xA4AF borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
+C 0xA4B5 marcador_y_ventana_bancos_7: 
 C 0xA4B8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA4BD guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA4C0 copia_marcador_bancos_7: 
+C 0xA4C3 p02:8524
+C 0xA4C6 p01:71A2
+C 0xA4D3 p01:71C2
 C 0xA4D6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA4D9 pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
 C 0xA4E8 enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 C 0xA4F2 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA543 lee la zona
@@ -67,10 +89,15 @@ C 0xA671 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0xA678 lee la sala de la zona
 C 0xA6BC palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA6C5 suma_a_hl: HL = HL + A
+C 0xA6E0 limpia_sprites_y_d300: 
+C 0xA6E3 p02:8D75
 C 0xA731 lee la zona
+C 0xA739 p02:8D86
 C 0xA7AE guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7CF guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7E2 guarda la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA7EF p01:7AD0
+C 0xA7FA p02:8D98
 C 0xA804 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA81E lee la zona
 C 0xA86A borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -103,14 +130,34 @@ C 0xABFC linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 C 0xAC01 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAC06 linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
 C 0xAC71 lee la zona
+C 0xACD5 p01:7AD8
 C 0xAF39 lee la zona
 C 0xAFA4 lee la zona
 C 0xAFB9 lee la sala de la zona
+C 0xB07C p02:8D90
+C 0xB232 p02:8D9D
+C 0xB237 p02:8DA5
 C 0xB24B lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB284 p01:7AE8
 C 0xB2D1 suma_a_hl: HL = HL + A
+C 0xB2E6 p02:8DD3
+C 0xB328 p01:7B09
 C 0xB338 lee la sala de la zona
+C 0xB38B p02:8DBD
+C 0xB399 p02:8DC6
+C 0xB39C p02:8DCB
+C 0xB3A2 p01:6B16
+C 0xB3CF p02:8DAD
+C 0xB3E9 p01:6A40
+C 0xB3F5 p01:7AF9
+C 0xB3FB p01:7AF0
+C 0xB3FE p01:7AE0
 C 0xB414 suma_a_hl: HL = HL + A
 C 0xB417 lee el contador de cuadros (uno mas en cada interrupcion)
+C 0xB444 p01:7B01
+C 0xB451 p01:7AC8
+C 0xB4BA p01:6C17
+C 0xB4BD p01:6C57
 C 0xB4C6 suma_a_hl: HL = HL + A
 C 0xB4DB borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xB4E4 borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -118,6 +165,8 @@ C 0xB4EF llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB4FF llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB530 suma_a_hl: HL = HL + A
 C 0xB556 suma_a_hl: HL = HL + A
+C 0xB569 p00:5FE0
+C 0xB59E p02:8DB5
 C 0xB5CC lee la zona
 C 0xB5D3 lee la sala de la zona
 C 0xB62B despachador: salta a la palabra A de la tabla que va detras del call
@@ -156,6 +205,7 @@ C 0xBEB7 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBEC5 suma_a_hl: HL = HL + A
 C 0xBF74 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBF7A bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xBF82 p12:7F25
 C 0xBFAA lee la zona
 C 0xBFB1 lee la sala de la zona
 # --- fin de las anotaciones de anota.py ---

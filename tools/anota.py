@@ -250,6 +250,10 @@ def comentario(b, filas, k, fichas, ventanas=None, medido=None):
         hecho = RUTINAS.get((banco, dest)) if banco is not None else None
         if hecho:
             return "%s: %s" % hecho
+        # sin nombre todavia: el banco al que va, si lo midio el trazador de
+        # cartucho entero (no la suposicion de las ventanas)
+        if (b, a) in (medido or {}) and banco not in (None, b) and banco >= 0:
+            return "p%02d:%04X" % (banco, dest)
     # los campos de la ficha del actor
     if fichas.get(k):
         mm = re.search(r"\(ix\+0?([0-9a-f]+)h?\)", t)
