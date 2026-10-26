@@ -3587,7 +3587,7 @@ L_55DA:
 	call pinta_sala_especial		;55e6   ; la sala de 0xCA76 al mapa y a la VRAM
 	call sala_banco_15		;55e9   ; sala_banco_15: p15:A005 con el banco 15
 	xor a			;55ec
-	ld (0dff8h),a		;55ed
+	ld (0dff8h),a		;55ed   ; guarda con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	call 07df4h		;55f0   ; cosas_fijas_en_la_otra: lo mismo en la otra pagina
 	call 08415h		;55f3   ; borra_cb80:
 	call apaga_sprites		;55f6   ; sin sprites
@@ -4105,7 +4105,7 @@ L_59C0:
 	call copia_marcador		;59c9   ; ...y el marcador a la otra pagina
 L_59CC:
 	xor a			;59cc   ; 0xCB73 = 0
-	ld (0cb73h),a		;59cd
+	ld (0cb73h),a		;59cd   ; guarda cuantas cosas al azar de p07:B2E9 se han dado (hasta 3)
 	ld a,(0ca76h)		;59d0   ; sala normal: p00:5310
 	and a			;59d3
 	jp z,L_5310		;59d4
@@ -4668,7 +4668,7 @@ L_5D8D:
 	jr L_5D82		;5d93
 a_p07_a4a6:		; p07:A4A6 con el banco 7 en 0xA000
 	call bancos_7		;5d95   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a4a6h		;5d98   ; p07:A4A6
+	call 0a4a6h		;5d98   ; pantalla_d8c0: sin sprites, las paginas 0 y 1 a cero, p06:AB91, el marcador, la paleta de p56:BBF2, el mosaico de p37:BE74, p07:A83A, sin 0xD8A0 p07:A8C3, el numero 0xD8CD, la pagina a la vista; sin el bit 7 de 0xD7D5, la ficha 0xE248 a cero; y los sprites encendidos
 	jr L_5D82		;5d9b
 L_5D9D:
 	call bancos_4_5		;5d9d   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4826,7 +4826,7 @@ sala_con_cb21:		; salvo en la zona 0x12, la especial 0x29 o con 0xD433: p12:6E4B
 	jp nz,a_p12_6e4b		;5eea   ; a_p12_6e4b: p12:6E4B con el banco 12 en 0x6000
 	jp a_p12_6e4f		;5eed   ; a_p12_6e4f: p12:6E4F con el banco 12 en 0x6000
 sala_a_esta_segun:		; con 0xD8C0: p07:A4A6
-	ld a,(0d8c0h)		;5ef0
+	ld a,(0d8c0h)		;5ef0   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	and a			;5ef3
 	jp nz,a_p07_a4a6		;5ef4   ; a_p07_a4a6: p07:A4A6 con el banco 7 en 0xA000
 	ld a,(0ca65h)		;5ef7   ; con 0xCA65: 0x707E

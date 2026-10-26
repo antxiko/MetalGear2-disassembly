@@ -20,7 +20,7 @@ L_A000:
 	ld a,(0ca65h)		;a004   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	or a			;a007
 	jr nz,L_A048		;a008
-	ld a,(0d8c0h)		;a00a
+	ld a,(0d8c0h)		;a00a   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;a00d
 	jr nz,L_A04E		;a00e
 	ld hl,0cab2h		;a010
@@ -84,10 +84,10 @@ L_A067:
 	ld a,(0ca65h)		;a067   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 	or a			;a06a
 	ret nz			;a06b
-	ld a,(0d8c0h)		;a06c
+	ld a,(0d8c0h)		;a06c   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;a06f
 	ret nz			;a070
-	ld a,(0dff8h)		;a071
+	ld a,(0dff8h)		;a071   ; lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	or a			;a074
 	ret nz			;a075
 	ld a,(0cab0h)		;a076
@@ -693,11 +693,11 @@ L_A471:
 	call L_B172		;a471
 	jp L_B8C4		;a474
 L_A477:
-	ld hl,0e070h		;a477
+	ld hl,0e070h		;a477   ; apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	ld bc,0000fh		;a47a
 	call 04236h		;a47d   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld hl,0a61bh		;a480
-	ld de,0e070h		;a483
+	ld de,0e070h		;a483   ; apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	ld a,(0ca4ah)		;a486   ; lee la zona
 	cp 010h		;a489
 	jr nz,L_A493		;a48b
@@ -748,7 +748,7 @@ L_A4AA:
 	inc hl			;a4c6
 	jr L_A493		;a4c7
 L_A4C9:
-	ld hl,0e070h		;a4c9
+	ld hl,0e070h		;a4c9   ; apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	call L_A4D2		;a4cc
 	ld hl,0e078h		;a4cf
 L_A4D2:
@@ -773,7 +773,7 @@ L_A4D2:
 L_A4EE:
 	jp 04767h		;a4ee   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 L_A4F1:
-	ld hl,0e070h		;a4f1
+	ld hl,0e070h		;a4f1   ; apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	ld de,0e078h		;a4f4
 	push hl			;a4f7
 	push de			;a4f8
@@ -1850,7 +1850,7 @@ L_ACAB:
 	ld e,a			;acad
 	ld d,080h		;acae
 L_ACB0:
-	ld hl,0d4c0h		;acb0
+	ld hl,0d4c0h		;acb0   ; apunta a 2 fichas de 16 bytes; tocan a Snake con 0x18 de dano (p07:B309)
 	ld bc,00200h		;acb3
 L_ACB6:
 	ld a,(hl)			;acb6
@@ -2931,7 +2931,7 @@ L_B4B1:
 	ld a,(0d8a4h)		;b4c4
 	or a			;b4c7
 	jp nz,L_B54F		;b4c8
-	ld a,(0d8c0h)		;b4cb
+	ld a,(0d8c0h)		;b4cb   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;b4ce
 	jr nz,L_B520		;b4cf
 	ld a,(0ca65h)		;b4d1   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
@@ -3092,7 +3092,7 @@ L_B5EF:
 	ld a,(0ca64h)		;b5fd
 	or a			;b600
 	jr nz,L_B661		;b601
-	ld a,(0d8c0h)		;b603
+	ld a,(0d8c0h)		;b603   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;b606
 	jp nz,L_B6A4		;b607
 	ld a,(0ca65h)		;b60a   ; lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)

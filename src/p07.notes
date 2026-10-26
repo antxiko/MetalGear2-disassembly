@@ -1,4 +1,1140 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+C 0xA03D sin 0xD8C2, nada
+C 0xA042 con 0xD8CE, a cero
+C 0xA049 sin salir, nada
+C 0xA04B 0xD8C9 = 0...
+C 0xA04E ...0xD4E9 = 0
+C 0xA05E sin 0xD8C2, nada
+C 0xA060 0xD8CE = 0
+C 0xA066 el byte 6 de su ficha...
+C 0xA06B ...a 1
+C 0xA080 0xD8CD...
+C 0xA083 ...distinto del byte 5: nada
+C 0xA08B 0x20 cuadros
+C 0xA0A6 * 8...
+C 0xA0A9 ...+ B
+C 0xA0BB 0xD4E9 = 1
+C 0xA0C9 2 mas...
+C 0xA0CE ...y pintado
+C 0xA0D4 hasta 0x10
+C 0xA0D7 0x40 cuadros
+C 0xA0DD 0xD4E9 = 0
+C 0xA0E7 Snake dentro
+C 0xA0EE ya con alguien detras, no
+C 0xA0F5 solo en la sala especial 0x18
+C 0xA0F9 la bandera 0x27...
+C 0xA0FC ...puesta, no
+C 0xA0FE uno detras
+C 0xA110 ...y dos pasos mas
+C 0xA11B ...el paso siguiente...
+C 0xA11E ...0xD4E9 = 1
+C 0xA12C solo hacia arriba
+C 0xA134 con 0x0A...
+C 0xA138 ...u 0x0B en 0xCB21, no
+C 0xA13A B = 0xD8C8, C = B - 4
+C 0xA144 desde B, no
+C 0xA146 por debajo de C, no
+C 0xA149 B = 0xD8C7, C = B + 0x20
+C 0xA153 a la izquierda, no
+C 0xA156 acarreo por debajo de C
+C 0xA162 pintado
+C 0xA169 hasta 0
+C 0xA16A el byte 6 de su ficha...
+C 0xA170 ...a cero
+C 0xA171 0xD4E9 = 0
+C 0xA174 el paso 0...
+C 0xA177 ...y sin 0xD8C2
+C 0xA183 desde el paso 0x0D, nada mas
+C 0xA18B sin 0xD8C4, nada
+C 0xA18C 0xD8C9 = 0x10
+C 0xA191 2 cuadros
+C 0xA1A1 otros 2
+C 0xA1A4 2 menos...
+C 0xA1AC ...y pintado
+C 0xA1B4 0x10 cuadros
+C 0xA1B9 0xCA77 = 2
+C 0xA1C9 0x18 cuadros
+C 0xA1CB p07:A918
+C 0xA1CE el sonido 0x41
+C 0xA1D8 con 0xD8A0, nada
+C 0xA1DF la cuenta
+C 0xA1E6 a 8...
+C 0xA1E9 ...el sentido: 0xD8C4 = 1, -1; si no, +1
+C 0xA1F8 el 0 se salta
+C 0xA1FE si es 0xD8CD, el sonido 0x19
+C 0xA210 0xD8CD + el sentido...
+C 0xA213 ...saltando el 0
+C 0xA217 el numero pintado (p01:71C2)
+C 0xA21A p07:A248
+C 0xA221 con 0xD8A0, nada mas
+C 0xA222 0x18 cuadros...
+C 0xA22B ...0x0C con 0xD8C2 4-6
+C 0xA235 0xD8CD...
+C 0xA23B ...sin llegar a 0xD8D2, nada mas
+C 0xA23D 8 cuadros
+C 0xA24E sin 0xD658, nada
+C 0xA253 solo con 0xD8C2 = 5
+C 0xA259 solo con 0xD8C4 = 1
+C 0xA25E 0xD8C4 = 2
+C 0xA263 p07:A918
+C 0xA266 el paso 0x0F
+C 0xA26E 0x10 cuadros
+C 0xA27C desde 5, nada
+C 0xA2A3 p07:A61D
+C 0xA2AA sin 0xD8C4, nada
+C 0xA2AB el paso 8
+C 0xA2B0 0x10 cuadros
+C 0xA2C8 otros 2
+C 0xA2CD 2 mas...
+C 0xA2D5 ...y pintado
+C 0xA2DB hasta 0x10
+C 0xA2DE 0xCA77 = 1
+C 0xA2E3 el paso 6
+C 0xA2ED saliendo: a cero
+C 0xA2EF 2 menos...
+C 0xA2F7 ...y pintado
+C 0xA301 el byte 6 de su ficha...
+C 0xA305 ...a cero
+C 0xA306 el paso 0...
+C 0xA309 ...sin 0xD8C2
+C 0xA30D 0xD456 = 1
+C 0xA310 p11:BDBD con 3
+C 0xA318 fuera, nada
+C 0xA31C con alguien detras...
+C 0xA320 ...p03:B4D1
+C 0xA323 el paso 6
+C 0xA330 a 4...
+C 0xA332 ...0xE0
+C 0xA336 a 2...
+C 0xA338 ...0x20
+C 0xA342 0xCB5F = 0
+C 0xA346 0xD8A0 = 1
+C 0xA349 2 cuadros
+C 0xA35B sin 0xD88A a 0xFF, nada
+C 0xA360 sin 0xD69C, nada
+C 0xA361 la primera vez...
+C 0xA368 ...0xCB5F = 1...
+C 0xA36A ...el sonido 5...
+C 0xA36D ...y el 0x8A
+C 0xA373 p07:ABA2
+C 0xA37B otros 2
+C 0xA37D 0xD8CD uno menos...
+C 0xA381 ...y pintado
+C 0xA387 sin llegar a 0xD8D2, nada mas
+C 0xA38C R#18 a 0
+C 0xA392 8 cuadros
+C 0xA397 el sonido 0x87
+C 0xA3B1 R#18 a 0
+C 0xA3B4 0x20 cuadros
+C 0xA3B9 pantalla apagada
+C 0xA3D6 0xD8C9 = 0x10...
+C 0xA3DB ...y pintado
+C 0xA3DE 0xCABD = 0
+C 0xA3E3 la paleta
+C 0xA3E6 todo encendido
+C 0xA3E9 el sonido 0x69
+C 0xA3ED 0xCB5F = 0
+C 0xA3FA 0xCABD = 0...
+C 0xA3FC ...y la paleta
+C 0xA402 0xCB57 = 0
+C 0xA408 con 0xD69C, p07:A69A
+C 0xA40B si no, 0xCB57 = 1
+C 0xA414 sin darse la vuelta
+C 0xA418 0xD8C0 = 1...
+C 0xA41B ...0xCA77 = 1
+C 0xA41E las cosas de la sala a cero
+C 0xA427 0xDF80-0xDFBF a cero
+C 0xA42A lo lanzado por Snake a cero
+C 0xA433 p07:A470
+C 0xA436 los dibujos de p37:B845
+C 0xA439 los actores a cero
+C 0xA43C los sprites
+C 0xA43F la pantalla
+C 0xA442 p07:AB96
+C 0xA445 los umbrales de los caracteres: 0x40...
+C 0xA44B ...y 0x81
+C 0xA44D Snake en Y = 0x50...
+C 0xA452 ...X = 0x60...
+C 0xA457 ...en el estado 0x0F
+C 0xA45C el dibujo 0 (2 en el estado 2)
+C 0xA467 hacia abajo
+C 0xA475 el 9
+C 0xA47B sin 0xD658, nada
+C 0xA481 en la zona 0x0D, nada
+C 0xA486 sin alerta, nada
+C 0xA48F ni el 5 ni el 9, nada
+C 0xA495 solo en la zona 0x0A
+C 0xA49A sin alerta, nada
+C 0xA4A9 la pagina 0...
+C 0xA4AD ...y la 1 a cero
+C 0xA4B2 p06:AB91
+C 0xA4B5 el marcador y la ventana
+C 0xA4B8 la otra pagina...
+C 0xA4C0 ...el marcador tambien
+C 0xA4C3 la paleta
+C 0xA4C6 el mosaico de p37:BE74
+C 0xA4C9 p07:A83A
+C 0xA4CC sin 0xD8A0...
+C 0xA4D0 ...p07:A8C3
+C 0xA4D3 el numero 0xD8CD
+C 0xA4D6 la pagina a la vista
+C 0xA4DF con el bit 7 de 0xD7D5 se queda...
+C 0xA4E3 ...si no, la ficha 0xE248 a cero
+C 0xA4F0 sin 0xCB21 = 2, sigue
+C 0xA4F7 en la sala especial 0x2A, nada
+C 0xA4FC con 0xCB62, nada
+C 0xA501 en el paso 0, nada
+C 0xA502 en el 1...
+C 0xA504 ...p07:A5D7
+C 0xA50D solo en el estado 3...
+C 0xA513 ...hacia arriba
+C 0xA519 0xFF: se acaba
+C 0xA521 con 0xD8C2 puesto, ya esta
+C 0xA527 la siguiente (8 bytes)
+C 0xA532 solo el 3...
+C 0xA537 ...sin 0xD4F3...
+C 0xA53D ...ni el bit 1 de 0xD7D4...
+C 0xA53E ...se quita
+C 0xA547 otra zona, nada
+C 0xA54A 0xFF...
+C 0xA54E ...0xFE...
+C 0xA552 ...o la sala
+C 0xA559 la especial 0x18...
+C 0xA55E ...en la sala 1
+C 0xA566 la especial 0x2E
+C 0xA56F ya es la de 0xD8C2, nada
+C 0xA574 B = su numero
+C 0xA576 su Y a 0xD8CF
+C 0xA57A la Y de Snake - 0x1C...
+C 0xA57F ...por encima, nada
+C 0xA581 ...hasta su Y + 0x10
+C 0xA58D su X a 0xD8D0
+C 0xA591 la X de Snake + 4...
+C 0xA596 ...a la izquierda, nada
+C 0xA598 ...hasta su X + 0x10
+C 0xA5A3 0xD8C2 = B
+C 0xA5AC sin el bit 5 de 0xD7E2, se queda
+C 0xA5B1 el 5 con el bit 5: no
+C 0xA5B9 3 bytes a 0xD8C6
+C 0xA5CA la pagina 2 a la de dibujo
+C 0xA5D1 8 x 8
+C 0xA621 solo en el estado 3...
+C 0xA627 ...hacia arriba...
+C 0xA62C ...en Y 0x40-0x5B
+C 0xA635 por debajo de X = 0x3C, nada
+C 0xA63B en 0x3C-0x47
+C 0xA63F en 0x77-0x7F...
+C 0xA645 ...con 0xD8CC por debajo de 0xD8CB...
+C 0xA64D ...0xD8C4 = 1
+C 0xA656 en las zonas 0x12...
+C 0xA65B ...y 0x11, no
+C 0xA660 con 0xD8CC a 0, no
+C 0xA661 0xD8C4 = 2
+C 0xA69E solo hacia arriba
+C 0xA6A4 desde Y = 0x50, nada
+C 0xA6AA X 0x58...
+C 0xA6AD ...a 0x68
+C 0xA6AE 0xD8C0 = 0
+C 0xA6B2 0xDF80 a cero
+C 0xA6B5 la lista de 0xD8C2 en p07:AA0F...
+C 0xA6BF ...su entrada 0xD8CC (4 bytes), desde el segundo
+C 0xA6C8 B = la sala
+C 0xA6CA la Y...
+C 0xA6CF ...y la X de Snake
+C 0xA6D3 hacia abajo
+C 0xA6DC 0xCA77 = 0
+C 0xA6E0 los sprites
+C 0xA6E3 p03:B4D1
+C 0xA6E7 a la sala B
+C 0xA6EA p07:A80B
+C 0xA6ED 0xD8C9 = 0x10
+C 0xA6F2 p07:A83A
+C 0xA6F5 pintado
+C 0xA6F8 el paso
+C 0xA6FD su ficha de 0xDC80...
+C 0xA700 ...byte 1 = 0
+C 0xA705 0xD8CB-0xD8CD a los bytes 3-5
+C 0xA714 no el 8
+C 0xA71B no el 1
+C 0xA71D el paso 0x0E
+C 0xA722 0xD8C7 = 0x60...
+C 0xA728 ...0xD8C8 = 0x29
+C 0xA734 zonas 0x0B-0x10...
+C 0xA739 ...los dibujos de la sala
+C 0xA740 el 3
+C 0xA745 el 5
+C 0xA749 el 7
+C 0xA74D el 8
+C 0xA751 el 9
+C 0xA755 el 0x0A; los demas, sin cambiar
+C 0xA75E el 1: fila 1, columna 6...
+C 0xA768 ...los demas: fila 0x0C, columna 7
+C 0xA7AC la sala especial 0x2A
+C 0xA7CD la sala especial 0x2E
+C 0xA7E2 sin sala especial
+C 0xA7EA sin alerta, a la sala
+C 0xA7ED la sala 0x0C...
+C 0xA7F4 ...o la 6: p04:924C
+C 0xA802 ...la sala especial 0x18
+C 0xA80F 0xFF: se acaba
+C 0xA817 encontrada
+C 0xA818 la siguiente (8 bytes)
+C 0xA822 otra zona
+C 0xA82A otro numero
+C 0xA82F los bytes 5-6 a 0xD8C6
+C 0xA83D (0xC0, 0xE0)...
+C 0xA840 ...a (0xA0, 0xB0)
+C 0xA846 (0xC0, 0xF0) a (0xB0, 0xB0)
+C 0xA84F (0xF0, 0xE0) a (0xC0, 0xB0)
+C 0xA858 (0xF0, 0xF0) a (0xD0, 0xB0)
+C 0xA86D (0xA0, 0xB0) a (0xC0, 0xE0)
+C 0xA89B el sitio
+C 0xA8A9 el trozo de 0x10 a la derecha...
+C 0xA8AD ...a 0x30 mas
+C 0xA8E0 ...a 0x10 a la derecha
+C 0xA907 dentro...
+C 0xA90D ...en (0x50, 0x28)
+C 0xA91B la lista de 0xD8C2...
+C 0xA925 ...su entrada 0xD8CC (4 bytes)
+C 0xA969 el otro sentido
+C 0xA974 el de abajo
+C 0xA9A0 libre: la siguiente
+C 0xA9A4 el tipo 0x0A...
+C 0xA9AB ...solo con 0xD8C2 = 0x0A
+C 0xA9BE otros 0x20
+C 0xA9CD sin el byte 6, al azar
+C 0xA9CF su numero + 0x10...
+C 0xA9D5 ...0xD8CD + 0x10
+C 0xA9DB igual, nada
+C 0xA9DC por debajo, una menos
+C 0xA9E9 en la 0, nada
+C 0xA9F4 en la ultima (byte 3), nada
+C 0xAB48 con 0xD8C0, nada
+C 0xAB4D zona 0, nada
+C 0xAB50 desde la 7, nada
+C 0xAB56 solo la fila 3...
+C 0xAB5C ...columna 7
+C 0xAB6F en (0x30, 0x7C)
+C 0xAB7D en (0x70, 0x7C)
+C 0xAC3D Snake con los actores
+C 0xAC40 Snake con lo que lanzan
+C 0xAC43 lo lanzado por Snake con los actores
+C 0xAC46 el tipo 6 de Snake con Snake
+C 0xAC49 Snake con las fichas de 0xD800
+C 0xAC4C lo lanzado por Snake con las fichas de 0xD800
+C 0xAC4F Snake con las fichas de 0xDF80
+C 0xAC52 las de 0xDF80 con los actores
+C 0xAC55 las de 0xDF80 con las de 0xD800
+C 0xAC58 Snake con las de 0xCC80
+C 0xAC5B las de 0xCC80 con los actores
+C 0xAC5E las de 0xCC80 con las de 0xD800
+C 0xAC61 Snake con los actores de tipo 0x18 y con 0xE060
+C 0xAC64 con 0xDFF8
+C 0xAC67 Snake con la ficha 0xD760
+C 0xAC74 zona 0x0F...
+C 0xAC78 ...su caja de Snake
+C 0xAC7B sin caja, nada
+C 0xAC86 24 actores
+C 0xAC89 la caja del actor (en el otro juego de registros)
+C 0xAC8D sin caja, el siguiente
+C 0xAC8F se tocan?
+C 0xAC97 el tipo sin el bit 7
+C 0xAC9C el 0x18, nada
+C 0xACA0 el 0x16, aparte
+C 0xACA4 el 0x0A, nada
+C 0xACA8 el 0x10 y el 0x11, aparte
+C 0xACAF el dano: 4...
+C 0xACB3 ...el 0x13 pasa al paso 2...
+C 0xACB7 ...y hace 0x0C
+C 0xACBA el dano a Snake
+C 0xACC4 desde el tipo 0x10, nada mas
+C 0xACCB con alerta 2 o mas, nada mas
+C 0xACD0 con 0x0A-0x0B en 0xCB21, no...
+C 0xACD5 ...si no, la alerta
+C 0xACDA el siguiente (0x40 bytes)
+C 0xACE8 sin 0x21, nada
+C 0xACEF fuera del paso 3, nada
+C 0xACF5 con el byte 0x21, nada
+C 0xACF7 0xD43F = 1
+C 0xAD13 el actor...
+C 0xAD16 ...a 0xD435
+C 0xAD19 0x3C cuadros
+C 0xAD26 24 actores
+C 0xAD2F se tocan?
+C 0xAD39 el 0x16...
+C 0xAD3D ...el 0x0A...
+C 0xAD43 ...y el 0x10-0x11, no
+C 0xAD47 4 de dano
+C 0xAD5B con 0xCA8D, nada
+C 0xAD60 con 0xD445, nada
+C 0xAD64 sin caja, nada
+C 0xAD69 6 fichas
+C 0xAD72 se tocan?
+C 0xAD77 C = su dano
+C 0xAD7A el dano a Snake
+C 0xAD7F se acaba
+C 0xAD91 6 fichas
+C 0xAD94 su caja
+C 0xAD97 sin caja, la siguiente
+C 0xAD9D 24 actores
+C 0xADA4 el 0x14 vale con todas
+C 0xADA9 la de tipo 8 solo con el 0x14
+C 0xADB4 se tocan?
+C 0xADBC el tipo 6...
+C 0xADC0 ...se acaba...
+C 0xADC7 ...con p07:AE3D
+C 0xADD3 los 0x16-0x17, nada
+C 0xADD7 se acaba
+C 0xADE5 los 0x10-0x11...
+C 0xADE9 ...0x10 de dano a Snake
+C 0xAE0B sin 0xCACF, nada
+C 0xAE14 6 fichas
+C 0xAE1D se tocan?
+C 0xAE25 solo el 6
+C 0xAE5F 4 fichas
+C 0xAE6D el tipo 9, nada
+C 0xAE6F se tocan?
+C 0xAE74 4 de dano
+C 0xAE89 6 fichas
+C 0xAE9E se tocan?
+C 0xAEA3 C = el tipo...
+C 0xAEA7 ...y se acaba
+C 0xAEAF el 6...
+C 0xAEB3 ...con p07:AE3D
+C 0xAEBB ...a la ficha
+C 0xAED9 24 actores
+C 0xAEE2 se tocan?
+C 0xAEEE el 0x0A, nada
+C 0xAEF2 por debajo de 0x10, el golpe
+C 0xAEF8 desde 0x12, nada
+C 0xAEFA los 0x10-0x11: 4 de dano a Snake
+C 0xAF15 4 fichas
+C 0xAF1C el tipo 0x0A, nada
+C 0xAF25 se tocan?
+C 0xAF2A 1 de dano
+C 0xAF3E solo en la zona 0x12
+C 0xAF42 sin caja, nada
+C 0xAF47 4 fichas
+C 0xAF50 se tocan?
+C 0xAF55 6 de dano
+C 0xAF67 sin caja, nada
+C 0xAF6C 8 fichas
+C 0xAF75 se tocan?
+C 0xAF7A 0x12 de dano
+C 0xAF8F 8 fichas
+C 0xAF92 su caja
+C 0xAF9B 24 actores
+C 0xAFA9 en la zona 0x0C...
+C 0xAFB0 ...con el actor en la fila 3...
+C 0xAFB7 ...columna 6...
+C 0xAFBE ...solo en la sala 3
+C 0xAFCE los 0x16-0x17, nada
+C 0xAFD9 los 0x10-0x11...
+C 0xAFDB ...0x10 de dano a Snake
+C 0xAFFC 8 fichas
+C 0xB002 sin caja, la siguiente
+C 0xB008 4 fichas
+C 0xB011 se tocan?
+C 0xB016 con el bit 7 del byte 7, 3...
+C 0xB01F ...si no, 6
+C 0xB03B con 0xE1D0, nada
+C 0xB03F sin caja, nada
+C 0xB044 0x30 fichas de 8 bytes
+C 0xB04D se tocan?
+C 0xB057 en el estado 2...
+C 0xB05B ...o el 0x0B, se coge
+C 0xB05D si no, p07:B563
+C 0xB06D la ficha fuera
+C 0xB077 0xD61C = 1
+C 0xB07C 7 mas a la cosa 1
+C 0xB08A 0x30 fichas
+C 0xB096 24 actores
+C 0xB09D los tipos 1...
+C 0xB0A1 ...y 4 valen con todos
+C 0xB0A3 los demas, no con el de su byte 0x1B
+C 0xB0AE ...es la de la ficha?
+C 0xB0B9 la caja del actor
+C 0xB0BF se tocan?
+C 0xB0CD los 0x16-0x17, nada
+C 0xB0EA 16 fichas
+C 0xB0F6 4 fichas
+C 0xB104 el tipo 1...
+C 0xB108 ...y el 4: todas salvo el 0x0B
+C 0xB10C el 2: ninguna
+C 0xB113 los demas: solo el 0x0B
+C 0xB124 ...es la de la de 0xCC80?
+C 0xB12E se tocan?
+C 0xB15B con 4 en 0xCB21, nada
+C 0xB15F sin caja, nada
+C 0xB166 se tocan?
+C 0xB16A 0x10 de dano
+C 0xB174 con 0xD437, nada
+C 0xB17C 24 actores
+C 0xB185 se tocan?
+C 0xB191 desde 0x13, nada
+C 0xB19C los 0x10-0x11...
+C 0xB19E ...6 de dano a Snake
+C 0xB1B8 4 fichas
+C 0xB1C6 el 8...
+C 0xB1CA ...o el 5
+C 0xB1D1 3 de dano
+C 0xB20C con 0xCA8D, nada
+C 0xB210 la ficha de otro sitio, nada
+C 0xB216 en el estado 0x0B, nada
+C 0xB21E en el 2, solo a los lados
+C 0xB224 sin caja, nada
+C 0xB22B se tocan?
+C 0xB232 p11:AEE4
+C 0xB235 una mas de la cosa 9
+C 0xB260 sin caja, nada
+C 0xB265 24 actores
+C 0xB275 solo el 0x18
+C 0xB277 se tocan?
+C 0xB284 fuera
+C 0xB287 una cosa al azar
+C 0xB29E sin 0xE060, nada
+C 0xB2A2 sin caja, nada
+C 0xB2A4 la caja de 0xE060
+C 0xB2A8 se tocan?
+C 0xB2AF 0xE060 = 0
+C 0xB2B3 0xDC70-0xDC77 a 0xE0
+C 0xB2C2 con 0xCB73 desde 3...
+C 0xB2C9 ...solo las 8 primeras
+C 0xB2D4 la cosa
+C 0xB2D8 desde la 0x31, sin contar
+C 0xB2DF 0xCB73 hasta 3...
+C 0xB2E1 ...uno mas
+C 0xB30C sin caja, nada
+C 0xB311 2 fichas
+C 0xB31A se tocan?
+C 0xB31F 0x18 de dano
+C 0xB328 p14:AB01
+C 0xB33D solo en la sala 2
+C 0xB347 solo el tipo 9
+C 0xB34F solo los dibujos 8-0x0B
+C 0xB350 la caja de Snake
+C 0xB354 la de la ficha
+C 0xB358 se tocan?
+C 0xB35C 4 de dano
+C 0xB365 con 0xCB54, nada mas
+C 0xB366 0xCB54 = 1...
+C 0xB36B ...0xCB56 = 9
+C 0xB37E saliendo, nada
+C 0xB383 en una escena, nada
+C 0xB38B el 0x14: al estado 0x14
+C 0xB390 el 0x12: al estado 0x14
+C 0xB396 la vida
+C 0xB399 las barras
+C 0xB3A9 con 0xCB3D, nada
+C 0xB3AF en el estado 0x14, nada
+C 0xB3B4 sin 0xD4E7, entero
+C 0xB3BB sin 0xCB21 = 5, entero
+C 0xB3BD la mitad
+C 0xB3C6 menos el dano
+C 0xB3C7 a cero o por debajo...
+C 0xB3CB ...si queda, esa
+C 0xB3CF p10:BFBC
+C 0xB3D6 sigue a cero: el estado 0x14
+C 0xB3E6 0xFF: no le pasa nada
+C 0xB3EC el byte 0x1F = 4
+C 0xB3F0 uno menos
+C 0xB3F5 queda: al paso 8
+C 0xB3FB cae
+C 0xB405 con alerta, nada
+C 0xB40D desde el tipo 0x0A, nada
+C 0xB40E el valor del nivel
+C 0xB417 los cuadros...
+C 0xB41B ...* 4
+C 0xB41E por debajo, nada
+C 0xB420 cuadros & 0x0F: 0-3...
+C 0xB428 ...4-7...
+C 0xB42D ...8-0x0B...
+C 0xB432 ...0x0C-0x0F
+C 0xB434 + 0x2E
+C 0xB437 la 0x31...
+C 0xB43B ...solo con la cosa 0...
+C 0xB43F ...o la 1
+C 0xB459 0xFF: nada
+C 0xB476 su vida...
+C 0xB479 ...menos el dano
+C 0xB47C no baja de 0
+C 0xB481 a cero: vencida
+C 0xB484 el sonido
+C 0xB488 el byte 0x16 = 0
+C 0xB48C C * 4...
+C 0xB48F ...al menos 0x0A...
+C 0xB49B solo el 9...
+C 0xB49E ...byte 0x13 = 0xFD
+C 0xB4A8 el 6...
+C 0xB4AC ...el 0x0A...
+C 0xB4B0 ...y el 8: 0x18
+C 0xB4B4 los demas: 8
+C 0xB4BA por encima: el 0x48
+C 0xB4BD por debajo: el 0x4E
+C 0xB4C9 el paso
+C 0xB4CD el byte 0x16 = 0...
+C 0xB4D1 ...el 0x17 = 4
+C 0xB4DE 0xD4C0-0xD4DF
+C 0xB4E7 0xDC68-0xDC7F...
+C 0xB4ED ...a 0xE0
+C 0xB4F6 sin 0xD8A4, ya esta
+C 0xB4F7 0xDC28-0xDC37 a 0xE0
+C 0xB508 el byte 0x18 = 6
+C 0xB50C el 0x0C al 0x15
+C 0xB512 el dibujo al 0x1D
+C 0xB519 el 0x0C...
+C 0xB51C ...y el 0x16 a 0
+C 0xB540 con 0xD8A0...
+C 0xB541 ...0x0A
+C 0xB546 la ficha 0xD840 de tipo 0x0A...
+C 0xB54B ...0x10
+C 0xB550 el de su tipo
+C 0xB56A la ficha fuera
+C 0xB574 su fila y columna
+C 0xB57A C = 1
+C 0xB57C la Y - 4...
+C 0xB583 ...no por debajo de 0...
+C 0xB588 ...hasta 0xB0
+C 0xB58D la X - 4, igual
+C 0xB5B2 D + D'...
+C 0xB5B5 ...lo que hay de H' a H...
+C 0xB5BA ...en positivo
+C 0xB5BC lejos en X: no
+C 0xB5C1 L' - L
+C 0xB5C4 por debajo: menos que E'
+C 0xB5D1 fuera de la zona 0x0A...
+C 0xB5D8 ...las salas 0x0B...
+C 0xB5DC ...0x0C...
+C 0xB5E0 ...0x10...
+C 0xB5E4 ...y 0x11 si valen
+C 0xB5EA con 0xCA8D, vale
+C 0xB5F0 con 0xCB32, sin caja
+C 0xB5F9 con 0xCA8D, tal cual
+C 0xB5FE la Y + 0xCB43
+C 0xB603 y 0xCB28
+C 0xB60C sin 0xCB28, nada
+C 0xB610 con 2...
+C 0xB614 ...E = 0xCB29 - 4...
+C 0xB617 ...y la Y menos 0x20 - 0xCB29
+C 0xB716 la direccion...
+C 0xB71D ...su desplazamiento
+C 0xB720 la Y + el de Y
+C 0xB725 la X + el de X
+C 0xB924 libre, ninguna
+C 0xB92A el 8 con 0xD441, ninguna
+C 0xB934 p12:7E35
+C 0xB93B acarreo: ninguna
+C 0xB93D en otra sala, ninguna
+C 0xB953 el 0x13 desde el paso 2, ninguna
+C 0xB95B desde el 0x10...
+C 0xB960 ...la entrada * 3
+C 0xB966 a cero, ninguna
+C 0xB969 E...
+C 0xB96B ...D...
+C 0xB96D ...la Y + dY...
+C 0xB972 ...y la X
+C 0xB9CE sin el byte 0x16, ninguna
+C 0xB9D4 sin sala especial, sigue
+C 0xB9DB en ella, solo con 0x29 en el byte 0x12
+C 0xB9E1 otra sala, ninguna
+C 0xB9EE el 7...
+C 0xB9F4 ...con el byte 0x14, ninguna...
+C 0xB9FC ...o con el dibujo 8
+C 0xBA04 el 0x0B vale siempre
+C 0xBA0A con 0xCA77, ninguna
+C 0xBA10 ...D...
+C 0xBA12 ...la Y + dY...
+C 0xBA17 ...la X
+C 0xBA21 libre, ninguna
+C 0xBA29 desde el paso 3, ninguna
+C 0xBA2F desde 3...
+C 0xBA33 ...menos 3
+C 0xBA3E libre, ninguna
+C 0xBA43 el 1 y el 2, ninguna
+C 0xBA46 el 3, aparte
+C 0xBA48 la entrada tipo - 4
+C 0xBA53 E...
+C 0xBA55 ...D...
+C 0xBA57 ...la Y + dY...
+C 0xBA5D ...la X + dX
+C 0xBA69 en el paso 0, ninguna
+C 0xBA6C la de p07:BB00
+C 0xBA7C la X + el desplazamiento...
+C 0xBA81 ...la Y + el suyo
+C 0xBB12 las cosas de la sala
+C 0xBB17 las fichas de 0xCC00
+C 0xBB1C las de 0xCC80
+C 0xBB21 0xD760
+C 0xBB26 la zona 0x0A sala 0x0E
+C 0xBB2B con 0xD8C0
+C 0xBB30 las entradas de p07:AA83
+C 0xBB35 las fichas de 0xD500
+C 0xBB3A la zona 0x13 sala 4
+C 0xBB3F la zona 4
+C 0xBB48 en una sala especial, sin 0xE070
+C 0xBB4A las fichas de 0xE070
+C 0xBB60 sin caja, la siguiente
+C 0xBB65 se tocan: acarreo
+C 0xBB6F ninguna: sin acarreo
+C 0xBBEB libre, la siguiente
+C 0xBC0F fuera de esa sala, no
+C 0xBC12 0x20 x 0x18...
+C 0xBC15 ...en (Y = 0x80, X = 0x60)
+C 0xBC20 sin 0xD8C0, no
+C 0xBC22 0x12 x 0x18...
+C 0xBC25 ...en (Y = 0x46, X = 0x60)
+C 0xBC30 con 0xD8C0, no
+C 0xBC34 sin entrada, no
+C 0xBC42 otra zona
+C 0xBC48 la 0xD0, no
+C 0xBC4C 0xFF...
+C 0xBC53 ...la sala especial 0x18...
+C 0xBC59 ...en la sala 1
+C 0xBC5F 0xFE...
+C 0xBC66 ...la sala especial 0x2E
+C 0xBC6E otra sala
+C 0xBC76 su Y + 0x20...
+C 0xBC7B ...su X + 0x10
+C 0xBC80 0x12 x 0x20
+C 0xBC88 la siguiente (8 bytes)
+C 0xBC8F hasta 0xFF
+C 0xBC99 8 fichas
+C 0xBC9F libre, la siguiente
+C 0xBCA2 D = el byte 8 / 2...
+C 0xBCA9 ...H = la X + D
+C 0xBCAD E = el alto...
+C 0xBCB1 ...L = la Y + E
+C 0xBCB6 se tocan: acarreo
+C 0xBCDD fuera de esa sala, no
+C 0xBCDF 3 cajas
+C 0xBCE3 la caja B - 1 (4 bytes)
+C 0xBCF4 se tocan: acarreo
+C 0xBD0D otra zona, no
+C 0xBD12 sin cajas en la sala, no
+C 0xBD18 el sitio B - 1...
+C 0xBD1E ...0x38 x 0x0C
+C 0xBD22 se tocan: acarreo
+C 0xBE45 solo el tipo 2...
+C 0xBE4B ...en la sala 8...
+C 0xBE50 ...con 0xD816...
+C 0xBE56 ...por debajo del paso 0x0A
+C 0xBE57 Snake
+C 0xBE5A la ficha de 0xDF80
+C 0xBE61 6 fichas
+C 0xBE68 libre, la siguiente
+C 0xBE6A su X y su Y
+C 0xBE73 fuera, sigue
+C 0xBE75 dentro: se acaba
+C 0xBEA2 lo que hay de C a la Y de la ficha...
+C 0xBEA5 ...por encima, desde 0x80, no
+C 0xBEA6 / 8...
+C 0xBEAC ...la fila: 0x0F - eso
+C 0xBEB0 las filas 0-0x0B: una franja
+C 0xBEB4 [desde][ancho]
+C 0xBED1 la primera...
+C 0xBED4 ...dentro: acarreo
+C 0xBED6 ...si no, la segunda
+C 0xBEDC sin 0xD816, nada
+C 0xBEE1 sin la ficha, nada
+C 0xBEE6 con su byte 7, nada
+C 0xBEE7 su Y y X...
+C 0xBEED ...+ 8
+C 0xBEF0 la fila...
+C 0xBEF6 ...por encima, nada
+C 0xBF03 por encima de la fila 0x0A, nada
+C 0xBF05 las dos franjas de la fila
+C 0xBF10 fuera, nada
+C 0xBF14 uno menos a 0xD810
+C 0xBF1A a cero: el paso 0x0A...
+C 0xBF1F ...y fuera lo lanzado
+C 0xBF26 ...0xD817 = 0x10
+C 0xBF66 la de 0xE230
+C 0xBF6E la de la zona 0x0C sala 6
+C 0xBF77 las de p12:7F25
+C 0xBF88 0xFF: se acabaron
+C 0xA003 14 bytes
+C 0xA048 sin salir...
+C 0xA05D sin 0xD8C2, nada
+C 0xA079 uno mas
+C 0xA07B el byte 5 (su numero)
+C 0xA084 aun no esta aqui
+C 0xA093 desde el byte 3
+C 0xA09B la ultima entrada...
+C 0xA09D ...la entrada...
+C 0xA09F ...y el numero
+C 0xA0A5 desde la ficha 0
+C 0xA0B3 al acabar la cuenta
+C 0xA0D6 aun no
+C 0xA0DC 0xD4E9 = 0
+C 0xA0E5 fuera: la cuenta
+C 0xA0F3 solo en la sala especial 0x18
+C 0xA0F7 la bandera 0x27
+C 0xA106 el bit 1 de 0xD7D4
+C 0xA10B fuera el bit 4 de 0xD7DE
+C 0xA119 la cuenta...
+C 0xA11A ...aun no
+C 0xA120 0xD4E9 = 1
+C 0xA12D hacia otro lado, no
+C 0xA13E C = la Y de 0xD8C8 - 4
+C 0xA145 desde la Y de 0xD8C8, no
+C 0xA14D C = la X + 0x20
+C 0xA157 acarreo dentro
+C 0xA158 sin acarreo
+C 0xA15D 2 menos
+C 0xA168 hasta 0
+C 0xA181 desde el paso 0x0D...
+C 0xA18A sin boton, nada
+C 0xA19F la cuenta...
+C 0xA1A0 ...cada 2 cuadros
+C 0xA1A7 2 menos
+C 0xA1B3 hasta 0
+C 0xA1C4 la cuenta...
+C 0xA1C5 ...aun no
+C 0xA1E2 la cuenta
+C 0xA1E3 al acabar, cambia
+C 0xA1E8 solo a 8
+C 0xA1EC -1...
+C 0xA1F1 ...o +1
+C 0xA1F7 el 0...
+C 0xA1FA ...se salta
+C 0xA206 +1...
+C 0xA20B ...o -1
+C 0xA212 el 0...
+C 0xA215 ...se salta
+C 0xA227 0xD8C2 4-6...
+C 0xA22F ...0x0C
+C 0xA234 la cuenta
+C 0xA240 8 cuadros
+C 0xA24B solo en el 0x13
+C 0xA271 0x10 cuadros
+C 0xA27D desde 5, nada
+C 0xA280 en los 4 ultimos, tiembla
+C 0xA282 0x20 cuadros
+C 0xA291 los pares, 0xE0
+C 0xA296 los impares, 0
+C 0xA298 el registro 18 del VDP
+C 0xA2A0 la cuenta
+C 0xA2A9 sin boton, sigue
+C 0xA2B8 2 cuadros
+C 0xA2C6 cada 2 cuadros
+C 0xA2D0 2 mas
+C 0xA2DD hasta 0x10
+C 0xA2E0 0xCA77 = 1
+C 0xA2EC saliendo...
+C 0xA2F2 2 menos
+C 0xA2FE hasta 0
+C 0xA304 a cero
+C 0xA30C 0xD456 = 1
+C 0xA31F con alguien detras...
+C 0xA32C la cuenta
+C 0xA32D al acabar, aparte
+C 0xA334 a 4: 0xE0
+C 0xA33A a 2: 0x20
+C 0xA33D los demas, nada
+C 0xA341 0xCB5F = 0...
+C 0xA345 ...0xD8A0 = 1
+C 0xA34C 2 cuadros
+C 0xA351 el registro 18
+C 0xA359 0xD88A a 0xFF...
+C 0xA35F ...y 0xD69C
+C 0xA365 la primera vez
+C 0xA379 cada 2 cuadros...
+C 0xA380 ...uno menos
+C 0xA38A hasta 0xD8D2
+C 0xA395 8 cuadros
+C 0xA3A0 los impares, 0xF0
+C 0xA3AF la cuenta
+C 0xA3B7 0x20 cuadros
+C 0xA3C3 los impares, 0xE0...
+C 0xA3C7 ...los pares, 0x20
+C 0xA3C9 el registro 18
+C 0xA3D4 la cuenta...
+C 0xA3D5 ...aun no
+C 0xA3F3 con 0xCABD...
+C 0xA407 con 0xD69C...
+C 0xA40D 0xDFF8 = 0...
+C 0xA417 A = 1
+C 0xA421 16 bytes
+C 0xA42D 0x60 bytes
+C 0xA448 los de abajo, 0x40
+C 0xA45F en el estado 2...
+C 0xA462 ...el dibujo 2
+C 0xA473 el 5...
+C 0xA47A ...con 0xD658
+C 0xA47F la zona 0x0D...
+C 0xA485 con alerta, se quita
+C 0xA48D el 9...
+C 0xA493 ...en la zona 0x0A...
+C 0xA499 ...con alerta, se quita
+C 0xA4A0 0x40 bytes
+C 0xA4BB la otra
+C 0xA4CF con 0xD8A0, sin p07:A8C3
+C 0xA4E6 la ficha 0xE248 libre
+C 0xA4EE 0xCB21 = 2...
+C 0xA4F5 ...en la sala especial 0x2A, nada
+C 0xA4FB ...con 0xCB62, nada
+C 0xA500 en el paso 0, nada
+C 0xA50F fuera del estado 3, nada
+C 0xA514 hacia otro lado, nada
+C 0xA515 las entradas de p07:AA83
+C 0xA51B 0xFF: ninguna
+C 0xA51D la mira
+C 0xA525 encontrada
+C 0xA52B la siguiente
+C 0xA530 solo el 3
+C 0xA536 con 0xD4F3, se queda
+C 0xA53B con el bit 1 de 0xD7D4, se queda
+C 0xA546 su zona
+C 0xA549 su sala
+C 0xA557 la especial 0x18...
+C 0xA55D ...en la sala 1
+C 0xA564 la especial 0x2E
+C 0xA56C la sala
+C 0xA572 la misma: nada
+C 0xA57D la Y de Snake - 0x1C...
+C 0xA580 ...por encima: nada
+C 0xA582 la Y + 0x10
+C 0xA58B por debajo: nada
+C 0xA594 la X de Snake + 4...
+C 0xA597 ...a la izquierda: nada
+C 0xA599 la X + 0x10
+C 0xA5A2 a la derecha: nada
+C 0xA5AA con el bit 5 de 0xD7E2...
+C 0xA5AF ...el 5...
+C 0xA5B3 ...no vale
+C 0xA5BC la Y...
+C 0xA5BE ...la X...
+C 0xA5C0 ...y la Y de entrada
+C 0xA5CD la pagina de dibujo de destino...
+C 0xA5CF ...y la 2 de origen
+C 0xA5DD por debajo de la zona 7...
+C 0xA5DF ...0x10...
+C 0xA5E3 ...si no, 8
+C 0xA5E5 a la derecha
+C 0xA5EC (0x70, 0x28)...
+C 0xA5F1 ...la zona 0x12...
+C 0xA5F4 ...y la 0x13
+C 0xA5F5 (0xE8, 0x78)...
+C 0xA5FA ...las 0x0C...
+C 0xA5FD ...0x0D...
+C 0xA600 ...y 0x0E
+C 0xA601 (0x70, 0xA8): la 0x0B
+C 0xA607 (0x70, 0xF8): la 0x0A
+C 0xA60C (0xA8, 0x30): la 8
+C 0xA612 las demas: (0xC8, 0xF0)...
+C 0xA619 ...con el 1...
+C 0xA61A ...si no, (0xD0, 0xF0)
+C 0xA61D sin boton
+C 0xA626 fuera del estado 3, nada
+C 0xA62B hacia otro lado, nada
+C 0xA631 por encima de 0x40, nada
+C 0xA634 desde 0x5C, nada
+C 0xA63A a la izquierda de 0x3C, nada
+C 0xA63D 0x3C-0x47: el de la izquierda
+C 0xA641 0x48-0x76, nada
+C 0xA644 desde 0x80, nada
+C 0xA64C en la ultima, nada
+C 0xA658 en la 0x12, nada
+C 0xA65F en la 0, nada
+C 0xA66C la zona 6, aparte
+C 0xA66E el de la zona
+C 0xA67D 0xFF en la sala 0x23...
+C 0xA681 ...0xFE en las demas
+C 0xA69D solo hacia arriba
+C 0xA6A2 por debajo de 0x50
+C 0xA6A8 X desde 0x58...
+C 0xA6AB ...hasta 0x68
+C 0xA6BB la lista de 0xD8C2
+C 0xA6C2 la entrada * 4 + 1
+C 0xA6DB 0xCA77 = 0
+C 0xA6FB el byte 1 de su ficha
+C 0xA704 al byte 3
+C 0xA712 el 8...
+C 0xA719 ...con el numero 1
+C 0xA725 0xD8C7 = 0x60...
+C 0xA72B el paso 0x0D
+C 0xA736 zonas 0x0B-0x10
+C 0xA747 el 5
+C 0xA74B el 7
+C 0xA74F el 8
+C 0xA753 el 9
+C 0xA761 con el 1...
+C 0xA763 ...fila 1, columna 6
+C 0xA76B la fila...
+C 0xA76D ...la columna
+C 0xA774 solo con el 1
+C 0xA77B fila 1...
+C 0xA77E ...columna 9
+C 0xA785 fila 4...
+C 0xA78A con el numero negativo...
+C 0xA78D ...fila 0x0C
+C 0xA790 columna 7
+C 0xA797 negativo...
+C 0xA79D ...fila 5...
+C 0xA7A0 ...columna 5
+C 0xA7A7 fila 1...
+C 0xA7AA ...columna 8
+C 0xA7B1 la sala B
+C 0xA7B8 negativo...
+C 0xA7BE ...fila 2...
+C 0xA7C1 ...columna 7
+C 0xA7C8 fila 1...
+C 0xA7CB ...columna 7
+C 0xA7D2 la sala B
+C 0xA7D9 negativo...
+C 0xA7DC ...columna 7
+C 0xA7E9 la sala B
+C 0xA7FD columna 8
+C 0xA807 la sala B
+C 0xA80B las entradas de p07:AA83
+C 0xA811 0xFF: ninguna
+C 0xA81C la siguiente
+C 0xA821 su zona
+C 0xA829 su numero
+C 0xA832 la Y...
+C 0xA834 ...y la X
+C 0xA836 encontrada
+C 0xA838 no
+C 0xA85E de la pagina 0 a la 3
+C 0xA865 0x40 x 0x20...
+C 0xA868 ...en la pagina 0, al color 0
+C 0xA88E de la pagina 3 a la 0
+C 0xA899 sin mas
+C 0xA89F a (0xC0, 0xE5)
+C 0xA8B1 0x10 x 0x1A
+C 0xA8BC 0x40 x 0x2C...
+C 0xA8BF ...pagina 0, color 0
+C 0xA8C6 0x20 x 0x19...
+C 0xA8CD ...al color 0
+C 0xAD51 la ficha siguiente (0x40 bytes)
+C 0xAD54 hasta la ultima
+C 0xAD86 la ficha siguiente (0x10 bytes)
+C 0xAD89 hasta la ultima
+C 0xAE00 la ficha siguiente (0x10 bytes)
+C 0xAE03 hasta la ultima
+C 0xAE37 la ficha siguiente (0x10 bytes)
+C 0xAE3A hasta la ultima
+C 0xAE7E la ficha siguiente (0x20 bytes)
+C 0xAE81 hasta la ultima
+C 0xAECA la ficha siguiente (0x10 bytes)
+C 0xAECD hasta la ultima
+C 0xAF07 la ficha siguiente (0x40 bytes)
+C 0xAF0A hasta la ultima
+C 0xAF33 la ficha siguiente (0x20 bytes)
+C 0xAF36 hasta la ultima
+C 0xAF5E la ficha siguiente (0x20 bytes)
+C 0xAF61 hasta la ultima
+C 0xAF84 la ficha siguiente (0x08 bytes)
+C 0xAF87 hasta la ultima
+C 0xAFF0 la ficha siguiente (0x08 bytes)
+C 0xAFF3 hasta la ultima
+C 0xB030 la ficha siguiente (0x08 bytes)
+C 0xB033 hasta la ultima
+C 0xB064 la ficha siguiente (0x08 bytes)
+C 0xB067 hasta la ultima
+C 0xB0DE la ficha siguiente (0x08 bytes)
+C 0xB0E1 hasta la ultima
+C 0xB142 la ficha siguiente (0x08 bytes)
+C 0xB145 hasta la ultima
+C 0xB1AB la ficha siguiente (0x40 bytes)
+C 0xB1AE hasta la ultima
+C 0xB1DA la ficha siguiente (0x20 bytes)
+C 0xB1DD hasta la ultima
+C 0xB294 la ficha siguiente (0x40 bytes)
+C 0xB297 hasta la ultima
+C 0xB332 la ficha siguiente (0x10 bytes)
+C 0xB335 hasta la ultima
+C 0xA911 D = la X + B
+C 0xA914 E = la Y + 5
+C 0xAC2B de 0...
+C 0xAC2F ...pasa a 5
+C 0xB1E3 0xD881 a 0xFF: vale
+C 0xB1EA 0xD88A distinto de 0xFF: mira 0xD883
+C 0xB1F0 con 0xD680...
+C 0xB1F6 ...o 0xD69C; sin ninguno, nada
+C 0xB1FB 0xD883 distinto de 0xFF: vale
+C 0xB201 con 0xD678...
+C 0xB207 ...o 0xD68C; sin ninguno, nada
+C 0xB2FC la Y + 0x10
+C 0xB302 la X + 8
+C 0xB305 8 x 0x10
+C 0xB751 la Y + 2
+C 0xB757 la X + 1
+C 0xB759 1 x 2
+C 0xB761 con el byte 0x0B desde 2...
+C 0xB765 ...8 x 6...
+C 0xB76B ...en la Y + 6...
+C 0xB771 ...y la X + 8
+C 0xB776 3 x 0x10...
+C 0xB77C ...en la Y + 0x10...
+C 0xB782 ...y la X + 3
+C 0xB7A8 la Y + 0x20
+C 0xB7AE la X + 8
+C 0xB7B1 0x18 x 0x30
+C 0xB7F6 la Y + 0x0A
+C 0xB7FC la X + 4
+C 0xB7FF 6 x 0x0C
+C 0xB8A6 la Y de 0xDFFD...
+C 0xB8A7 ...la X 0x60
+C 0xB8A9 0x60 x 0x10
+C 0xB8B1 la X de 0xDFFE + 8...
+C 0xB8B4 ...la Y 0xC0
+C 0xB8B6 8 x 0xC0
+C 0xB8EF la sala de la ficha
+C 0xB8F7 el 0x14...
+C 0xB8FE ...desde 0x10...
+C 0xB905 ...los demas
+C 0xB913 desde 0x10...
+C 0xB91A ...los demas
+C 0xB99C la sala de la ficha
+C 0xB9A3 libre, ninguna
+C 0xB9A7 el 1 y el 2, ninguna
+C 0xB9A9 el 7...
+C 0xB9AB ...los demas
+C 0xB9BE el 1 y el 2, ninguna
+C 0xB9C0 el 7...
+C 0xB9C2 ...los demas
+C 0xBB86 la ficha siguiente (8 bytes)
+C 0xBB89 hasta la ultima
+C 0xBB8B ninguna: sin acarreo
+C 0xBBA2 la siguiente (16 bytes)
+C 0xBBA7 ninguna: sin acarreo
+C 0xBBBE la ficha siguiente (8 bytes)
+C 0xBBC1 hasta la ultima
+C 0xBBC3 ninguna: sin acarreo
+C 0xBBDA la cosa siguiente (4 bytes)
+C 0xBBDD hasta la ultima
+C 0xBBDF ninguna: sin acarreo
+C 0xBCBE la ficha siguiente (16 bytes)
+C 0xBCC1 hasta la ultima
+C 0xBCC3 ninguna: sin acarreo
+C 0xBCC8 con el byte 8 = 8...
+C 0xBCCA ...el byte 7...
+C 0xBCCE ...+ 0x12
+C 0xBD2F la sala 0x17: 2 cajas...
+C 0xBD32 ...de p07:BD62
+C 0xBD3D la 0x13: 2 de p07:BD6C
+C 0xBD44 4 cajas...
+C 0xBD47 ...la 0x12: p07:BD66
+C 0xBD4F la 0x0D: p07:BD5E
+C 0xBD57 la 0x0E: p07:BD70
+C 0xBD5D Z si es la 0x0E
+C 0xBE1A sin cosa, ninguna
+C 0xBE1F la Y + 0x10
+C 0xBE25 la X + 8
+C 0xBE28 0x0A x 0x12
+C 0xBE30 la Y + 0x20
+C 0xBE36 la X + 0x10
+C 0xBE39 0x10 x 0x20
+C 0xBE85 el 6...
+C 0xBE89 ...y el 1 y el 2 se miran
+C 0xBF98 sin 0xE230, nada
+C 0xBF9A la Y + 0x32...
+C 0xBFA0 ...0x34 de alto
+C 0xBFA2 la X...
+C 0xBFA6 ...0x32 de ancho
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA012 0xA03A tabla_A012  20 destinos del despachador p00:424D (call en p07:A00F, el indice en A): A054, A07B, A0B0, A0C6, A0E2, A15A, A17B, A19C, A1C1, A1D4, A276, A29D, A2C3, A2E9, A315, A329, A356, A3A9, A3CE, A3F3; lo leen p07:A00F (40 bytes)
 F 0xA012 w8
@@ -35,61 +1171,584 @@ F 0xBF2C 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xA000 borra_d8c0 0xD8C0-0xD8CD a cero
+L 0xA009 d8c1_cada_cuadro p07:A03A y el paso 0xD8C1 (p07:A012, 20 pasos)
+L 0xA03A d8c2_al_salir con 0xD8C2 y 0xD8CE (o saliendo de la sala): 0xD8C9 = 0xD4E9 = 0 y todo a cero (p07:A2FF)
+L 0xA04A d8c2_a_cero 
+L 0xA054 d8c1_paso_0 p07:A667 y p07:A50A; con 0xD8C2: 0xD8CE = 0, p07:A5D7, el byte 6 de su ficha de 0xDC80 a 1, el paso siguiente, p07:A83A y el sonido 0x46
+L 0xA076 d8c1_siguiente el paso siguiente de 0xD8C1
+L 0xA07B d8c1_paso_1 cuando el byte 5 de su ficha de 0xDC80 es 0xD8CD: sus bytes 3-5 a 0xD8CB, el paso siguiente, 0x20 cuadros y el sonido 0x19
+L 0xA093 ficha_a_d8cb los bytes 3-5 de su ficha de 0xDC80 a 0xD8CB-0xD8CD
+L 0xA0A2 ficha_dc80 HL = el byte B de la ficha 0xD8C2 - 1 de 0xDC80 (8 bytes cada una)
+L 0xA0B0 d8c1_paso_2 al acabar la cuenta: p07:A5C3, el paso siguiente, 0xD4E9 = 1, p07:A83A y el sonido 0x16
+L 0xA0C6 d8c1_paso_3 0xD8C9 sube de 2 en 2 (p07:A8D1) hasta 0x10; alli 0x40 cuadros, 0xD4E9 = 0 y el paso siguiente
+L 0xA0E2 d8c1_paso_4 con Snake dentro (p07:A129): p07:A40D, en la sala especial 0x18 sin nadie detras y sin la bandera 0x27, uno detras (0xCAA0 = 1, el bit 1 de 0xD7D4, fuera el 4 de 0xD7DE); p03:B4D1 y dos pasos mas; si no, al acabar la cuenta, el paso siguiente, 0xD4E9 = 1, p07:A862 y el sonido 0x16
+L 0xA10D d8c1_dos_pasos p03:B4D1...
+L 0xA116 d8c1_cuenta_4 al acabar la cuenta...
+L 0xA129 snake_dentro acarreo con Snake hacia arriba (sin 0xCB21 = 0x0A u 0x0B), su Y en 0xD8C8 - 4 a 0xD8C8 - 1 y su X en 0xD8C7 a 0xD8C7 + 0x1F
+L 0xA158 fuera_de_d8c7 
+L 0xA15A d8c1_paso_5 0xD8C9 baja de 2 en 2 (p07:A8D1) hasta 0; alli el byte 6 de su ficha, 0xD4E9, 0xD8C1 y 0xD8C2 a cero
+L 0xA17B d8c1_paso_6 p07:A69A; por debajo del paso 0x0D, p07:A61D y, con 0xD8C4: 0xD8C9 = 0x10, 2 cuadros, el paso siguiente y el sonido 0x46
+L 0xA19C d8c1_paso_7 cada 2 cuadros, 0xD8C9 baja 2 (p07:A8D1); a 0, 0x10 cuadros, 0xCA77 = 2 y el paso siguiente
+L 0xA1C1 d8c1_paso_8 al acabar la cuenta: 0x18 cuadros, p07:A918, el sonido 0x41 y el paso siguiente
+L 0xA1D4 d8c1_paso_9 sin 0xD8A0: p07:ABA2 y p07:A95D; a 8 de la cuenta, con 0xD8CD el siguiente en el sentido de 0xD8C4 (saltando el 0), el sonido 0x19; al acabar, 0xD8CD cambia uno en ese sentido y se pinta, p07:A248 y otra cuenta (0x18; 0x0C para 0xD8C2 4-6); al llegar a 0xD8D2, 8 cuadros, p07:AB9B y el paso siguiente
+L 0xA1F3 d8d2_mas_sentido 0xD8D2 + el sentido
+L 0xA1FB mira_d8cd 
+L 0xA203 d8cd_cambia el sentido: 0xD8C4 = 1, +1; si no, -1
+L 0xA20D suma_sentido 
+L 0xA216 pon_d8cd 
+L 0xA231 pon_cuenta_d8c3 
+L 0xA248 d8cd_13 con 0xD8CD = 0x13, 0xD658, 0xD8C2 = 5 y 0xD8C4 = 1: 0xD8C4 = 2, p07:A918, el paso 0x0F, p07:AB96, 0x10 cuadros y el sonido 0x19
+L 0xA276 d8c1_paso_10 la cuenta; en los 4 ultimos cuadros R#18 tiembla (p07:A28D); al acabar, 0x20 cuadros, el paso siguiente, R#18 a 0 y el sonido 0x18
+L 0xA282 d8c1_fin_10 0x20 cuadros
+L 0xA28D tiembla_r18 R#18 = 0xE0 en los cuadros pares de la cuenta, 0 en los impares
+L 0xA296 r18_a_cero R#18 = 0
+L 0xA298 pon_r18 R#18 (el ajuste de la pantalla) = B
+L 0xA29D d8c1_paso_11 la cuenta con p07:A61D; con 0xD8C4, el paso 8, 0x10 cuadros y el sonido 0x46; al acabar, 2 cuadros, el paso siguiente y el sonido 0x16
+L 0xA2B8 d8c1_fin_11 2 cuadros
+L 0xA2C3 d8c1_paso_12 cada 2 cuadros, 0xD8C9 sube 2 (p07:A8D1); a 0x10, 0xCA77 = 1 y el paso 6
+L 0xA2E9 d8c1_paso_13 sin salir de la sala, 0xD8C9 baja 2 (p07:A8D1) hasta 0; saliendo, o a 0, todo a cero (p07:A2FF)
+L 0xA2FF d8c1_todo_a_cero el byte 6 de su ficha, 0xD8C1 y 0xD8C2 a cero, 0xD456 = 1 y p11:BDBD con 3
+L 0xA315 d8c1_paso_14 con Snake dentro (p07:A129): p07:A40D, con alguien detras p03:B4D1, y el paso 6
+L 0xA329 d8c1_paso_15 la cuenta: a 4 R#18 = 0xE0, a 2 R#18 = 0x20; al acabar, R#18 a 0, 0xCB5F = 0, 0xD8A0 = 1, 2 cuadros y el paso siguiente
+L 0xA33E d8c1_fin_15 R#18 a 0
+L 0xA351 r18_b R#18 = B
+L 0xA356 d8c1_paso_16 con 0xD88A a 0xFF y 0xD69C: la primera vez, 0xCB5F = 1 y los sonidos 5 y 0x8A; R#18 tiembla (p07:A39D), p07:ABA2 y, cada 2 cuadros, 0xD8CD uno menos (pintado) hasta 0xD8D2; alli R#18 a 0, p07:AB9B, 8 cuadros, el sonido 0x87 y el paso siguiente
+L 0xA370 d8c1_baja R#18 tiembla
+L 0xA39D tiembla_f0 R#18 = 0xF0 en los cuadros impares de la cuenta, 0 en los pares
+L 0xA3A9 d8c1_paso_17 R#18 tiembla (0xE0 / 0x20); al acabar, R#18 a 0, 0x20 cuadros, la pantalla y los sprites apagados y el paso siguiente
+L 0xA3BF tiembla_e0_20 R#18 = 0xE0 en los cuadros impares, 0x20 en los pares
+L 0xA3C9 pon_r18_b 
+L 0xA3CE d8c1_paso_18 con la pantalla apagada, la cuenta; al acabar, 0xD8C9 = 0x10 (pintado), 0xCABD = 0, la paleta de p56:BC9E, todo encendido, el sonido 0x69, 0xCB5F = 0 y el paso siguiente
+L 0xA3F3 d8c1_paso_19 con 0xCABD, a cero y la paleta de p56:BC9E; 0xCB57 = 0 y, con 0xD69C, p07:A69A; sin el, 0xCB57 = 1
+L 0xA3FF mira_d69c 
+L 0xA40D snake_entra_en_d8c0 0xDFF8 = 0xD8C4 = 0xCB16 = 0, 0xD8C0 = 0xCA77 = 1; fuera las cosas, lo lanzado por Snake y los actores, p07:A470, los dibujos de p37:B845, los sprites, la pantalla de p07:A4A6, p07:AB96, los umbrales 0x40 y 0x81, y Snake en (0x50, 0x60) en el estado 0x0F mirando abajo
+L 0xA464 pon_dibujo_snake 
+L 0xA470 alerta_fuera_d8c2 con alerta, la quita (p01:7CAF y p02:8D8B) con 0xD8C2 = 5 (con 0xD658, fuera de la zona 0x0D) o 9 (en la zona 0x0A)
+L 0xA487 quita_la_alerta 
+L 0xA48D d8c2_9 
+L 0xA49D borra_df80 0xDF80-0xDFBF a cero
+L 0xA4A6 pantalla_d8c0 sin sprites, las paginas 0 y 1 a cero, p06:AB91, el marcador, la paleta de p56:BBF2, el mosaico de p37:BE74, p07:A83A, sin 0xD8A0 p07:A8C3, el numero 0xD8CD, la pagina a la vista; sin el bit 7 de 0xD7D5, la ficha 0xE248 a cero; y los sprites encendidos
+L 0xA4E8 sprites_d8c0 
+L 0xA4EB d8c1_al_pintar con 0xCB21 = 2 solo fuera de la sala especial 0x2A y sin 0xCB62; desde el paso 1 (en el 1, p07:A5D7) p07:A8D1
+L 0xA4FD d8c1_pinta 
+L 0xA50A busca_ficha_aa83 con Snake en el estado 3 hacia arriba: las fichas de p07:AA83 (8 bytes: zona, sala, numero, Y, X y 3 bytes) hasta la que pone 0xD8C2 (p07:A543); con el 3, sin 0xD4F3 ni el bit 1 de 0xD7D4, otra vez a 0
+L 0xA518 ficha_aa83 
+L 0xA52D d8c2_puesto 
+L 0xA543 mira_ficha_aa83 en su zona y sala (0xFF: la sala especial 0x18 en la sala 1; 0xFE: la especial 0x2E), con Snake (Y - 0x1C, X + 4) dentro de 16 x 16 desde su Y y X: 0xD8C2 = su numero (no el 5 con el bit 5 de 0xD7E2), 0xD8CF-0xD8D0 = su Y y X y sus 3 ultimos bytes a 0xD8C6
+L 0xA554 sala_ff 
+L 0xA561 sala_fe 
+L 0xA569 sala_aa83 
+L 0xA56E numero_aa83 
+L 0xA5B8 aa83_a_d8c6 
+L 0xA5C3 caracter_de_d8cf el caracter de la zona (p07:A5E9) en la Y y X de 0xD8CF
+L 0xA5C6 caracter_en_d8cf E = la Y, D = la X
+L 0xA5D7 caracter_b_de_d8cf el de al lado: 0x10 a la derecha (8 desde la zona 7)
+L 0xA5E5 mas_h 
+L 0xA5E9 caracter_de_la_zona HL = el sitio en la pagina 2 del caracter de la zona: (0x70, 0x28) en las 0x12-0x13, (0xE8, 0x78) en las 0x0C-0x0E, (0x70, 0xA8) en la 0x0B, (0x70, 0xF8) en la 0x0A, (0xA8, 0x30) en la 8 y (0xC8, 0xF0), o (0xD0, 0xF0) con 0xD8C2 distinto de 1, en las demas
+L 0xA61D botones_d8c4 0xD8C4 = 0; con Snake en el estado 3 hacia arriba en Y 0x40-0x5B: en X 0x3C-0x47 (salvo zonas 0x11 y 0x12) y 0xD8CC distinto de 0, 0xD8C4 = 2; en X 0x77-0x7F con 0xD8CC por debajo de 0xD8CB, 0xD8C4 = 1
+L 0xA653 boton_izquierdo 
+L 0xA667 d8cd_de_la_zona 0xD8CD = el de la zona en p07:A686; en la zona 6, 0xFF en la sala 0x23 y 0xFE en las demas
+L 0xA678 d8cd_zona_6 
+L 0xA682 pon_d8cd_zona 
+L 0xA69A snake_sale_de_d8c0 con Snake hacia arriba en Y < 0x50 y X 0x58-0x68: 0xD8C0 = 0, a la sala B y al sitio de la entrada 0xD8CC de p07:AA0F (p07:A731), mirando abajo, 0xCA77 = 0, p03:B4D1, p07:A80B, 0xD8C9 = 0x10, p07:A83A, p07:A8D1, el paso de p07:A70F y los bytes 3-5 de su ficha de 0xDC80 = 0xD8CB-0xD8CD
+L 0xA70F paso_al_salir con 0xD8C2 = 8 y 0xD8CD = 1, el paso 0x0E con 0xD8C7 = 0x60 y 0xD8C8 = 0x29; si no, el paso 0x0D
+L 0xA72B paso_0d 
+L 0xA731 a_la_sala_b en las zonas 0x0B-0x10, los dibujos de la sala; segun 0xD8C2 y 0xD8CD, la fila y columna (0xCA50-0xCA51) y la sala especial; con alerta en las salas 6 y 0x0C, p04:924C; y a la sala B (p02:8D98)
+L 0xA76B pon_fila_columna 
+L 0xA771 sale_con_d8c2_7 el 7 con 0xD8CD = 1: fila 1, columna 9
+L 0xA782 sale_con_d8c2_5 el 5: fila 4 (0x0C con 0xD8CD negativo), columna 7
+L 0xA78F columna_7 
+L 0xA794 sale_con_d8c2_8 el 8: negativo, fila 5 columna 5; si no, fila 1 columna 8 en la sala especial 0x2A
+L 0xA7A4 d8c2_8_especial 
+L 0xA7B5 sale_con_d8c2_9 el 9: negativo, fila 2 columna 7; si no, fila 1 columna 7 en la sala especial 0x2E
+L 0xA7C5 d8c2_9_especial 
+L 0xA7D6 sale_con_d8c2_3 el 3: negativo, columna 7; si no, columna 8 en la sala especial 0x18
+L 0xA7E1 sin_especial 
+L 0xA7FA a_la_sala_b_ya 
+L 0xA7FD d8c2_3_especial columna 8...
+L 0xA80B d8c6_de_aa83 la ficha de p07:AA83 de esta zona y 0xD8C2: sus bytes 5-6 a 0xD8C6-0xD8C7 (acarreo)
+L 0xA80E ficha_aa83_b 
+L 0xA81E es_la_de_d8c2 
+L 0xA838 no_es 
+L 0xA83A guarda_fondo_d8c0 p07:A896 y cuatro bloques de 16 x 16 de la pagina 0 a la 3: (0xC0, 0xE0), (0xC0, 0xF0), (0xF0, 0xE0) y (0xF0, 0xF0) a (0xA0-0xD0, 0xB0)
+L 0xA85E de_0_a_3 de la pagina 0 a la 3
+L 0xA862 repone_fondo_d8c0 0x40 x 0x20 a 0 en (0xC0, 0xE0) y los cuatro bloques de vuelta de la pagina 3 a la 0
+L 0xA88E de_3_a_0 de la pagina 3 a la 0
+L 0xA890 bloque_16 16 x 16
+L 0xA893 copia_hmmm 
+L 0xA896 mitades_d8c0 borra 0x40 x 0x2C en (0xC0, 0xD4) y copia el sitio de 0xD8C6 (p07:A8FF) a (0xC0, 0xE5) y a (0xF0, 0xE5) en dos trozos de 0x10 x 0x1A
+L 0xA8B1 trozo_10x1a 0x10 x 0x1A en la pagina de dibujo
+L 0xA8B9 borra_c0d4 0x40 x 0x2C a 0 en (0xC0, 0xD4) de la pagina 0
+L 0xA8C3 borra_502d 0x20 x 0x19 a 0 en (0x50, 0x2D) de la pagina de dibujo
+L 0xA8CE borra_vram 
+L 0xA8D1 pinta_d8c9 las dos mitades separadas 0xD8C9: la de (0xF0 - 0xD8C9, 0xE5) a la X de 0xD8C7 + 0x10 y la de (0xC0 + 0xD8C9, 0xE5) a la X de 0xD8C7
+L 0xA8D6 mitad_derecha desde 0xF0 - 0xD8C9...
+L 0xA8E5 trozo_a_pagina 0x10 x 0x1A de la pagina 0 a la de dibujo
+L 0xA8F0 mitad_izquierda desde 0xC0 + 0xD8C9...
+L 0xA8FF sitio_de_d8c6 DE = (0xD8C7 + B, 0xD8C6 + 5); con 0xD8C0, (0x50 + B, 0x2D)
+L 0xA910 mas_b_y_5 
+L 0xA918 d8d2_destino 0xD8CC cambia uno segun 0xD8C4 (p07:A931) y 0xD8D2 = el numero de esa entrada en la lista de 0xD8C2 de p07:AA0F
+L 0xA931 d8cc_sentido con 0xD8C4 = 1, 0xD8CC + 1; con 2, - 1
+L 0xA940 pon_d8cc 
+L 0xA945 d8cd_de_d8cc 0xD8CD = el numero de la entrada 0xD8CC de la lista de 0xD8C2 (p07:AA0F); sin llamada vista
+L 0xA95D flecha_d8c4 un caracter de 8 x 8 de la pagina 2: de (0xE8, 0xD0) a (0x78, 0x30) con 0xD8C4 = 1, de (0xE0, 0xD0) a (0x40, 0x30) si no; cada 4 cuadros, el de 0x10 mas abajo
+L 0xA96D cada_4_cuadros 
+L 0xA978 copia_flecha 
+L 0xA985 dc80_de_p57 las 10 fichas de 8 bytes de p57:8000 a 0xDC80
+L 0xA996 fichas_dc80 cada 0x20 cuadros, las fichas de 0xDC80 (la de tipo 0x0A solo con 0xD8C2 = 0x0A) cambian de entrada (p07:A9C9) y de numero (p07:A9F9)
+L 0xA99C ficha_dc80_b 
+L 0xA9AD mueve_ficha_dc80 
+L 0xA9B2 siguiente_dc80 
+L 0xA9BA cada_20_cuadros 
+L 0xA9C9 entrada_dc80 con el byte 6, la entrada (byte 4) va hacia 0xD8CD (una por vez); sin el, al azar (R) una mas o una menos, entre 0 y el byte 3
+L 0xA9E0 al_azar_dc80 el bit 0 de R
+L 0xA9E5 una_menos 
+L 0xA9EE una_mas 
+L 0xA9F9 numero_dc80 el byte 5 = el numero de la entrada (byte 4) de la lista de su tipo en p07:AA0F
+L 0xAB44 numeros_de_fuera sin 0xD8C0, en las zonas 1-6, fila 3 columna 7: los numeros de las fichas 0 y 1 de 0xDC80 (p07:AB66)
+L 0xAB66 numeros_dc85_dc8d con el byte 5 de la ficha 0, su numero (p57:8080) en (0x30, 0x7C); con el de la 1, en (0x70, 0x7C); 1 x 4
+L 0xAB75 numero_dc8d 
+L 0xAB80 numero_1x4 
+L 0xAB86 mosaico_del_numero HL = p57:8080 + (A + 1, o A + 2 si es negativo) * 4
+L 0xAB8D numero_mas_b 
+L 0xAB96 d8d1_a_cero 0xD8D1 = 0
+L 0xAB9B lineas_d8d1_0 las lineas de 0xD8D1 con el color 0
+L 0xABA2 lineas_d8d1_2 borra las de ahora, 0xD8D1 sigue (p07:AC0C) y las nuevas con el color 2
+L 0xABAB lineas_banco_57 
+L 0xABB4 lineas_8050 las 4 lineas de p57:8050 + A * 8 (4 palabras): dos de 0x18 en horizontal con dos de 0x2C en vertical, y dos de 0x20 en vertical
+L 0xABF7 linea_en_y 
+L 0xAC01 linea_en_x 
+L 0xAC09 fin_linea 
+L 0xAC0C d8d1_siguiente 0xD8D1 de 0 a 5 en vuelta: hacia arriba con el paso 0x0F en adelante o 0xD8C4 = 2, hacia abajo con 0xD8C4 = 1; sin 0xD8C4, nada
+L 0xAC19 d8d1_sentido 
+L 0xAC22 d8d1_mas 
+L 0xAC28 pon_d8d1 
+L 0xAC2A d8d1_menos 
+L 0xAC33 palabra_hl HL = la palabra de HL
+L 0xAC38 choques_cada_cuadro sin salir de la sala, los choques de cada cuadro: Snake con los actores, con lo que lanzan y con las fichas de 0xD800, 0xDF80, 0xCC80, 0xD4C0 y 0xD760; lo que lanza Snake con los actores y las fichas
+L 0xAC6A snake_con_actores con 0xCA8D, p07:AD1E; si no, la caja de Snake (p07:B5CC en la zona 0x0F, p07:B670 en las demas) contra cada actor (p07:B8C5): el que toca hace dano a Snake (4; 0x0C el 0x13, que pasa al paso 2), y los de tipo menor de 0x10, sin alerta 2 y sin 0x0A-0x0B en 0xCB21, dan la alerta (p04:9949); los 0x10-0x11 y el 0x16 (con 0xCB21 = 0x21 en su paso 3) pasan a 0xD434
+L 0xAC7E caja_b670 en las demas, la otra
+L 0xAC82 actores_contra_snake 
+L 0xAC88 actor_contra_snake 
+L 0xACB9 dano_del_actor 
+L 0xACD9 siguiente_actor_choque 
+L 0xACE3 actor_16 con 0xCB21 = 0x21, en su paso 3 y sin el byte 0x21: 0xD43F = 1, el bit 6 de 0xD7D4, fuera el 5 de 0xD7E0 y p07:AD0E
+L 0xAD08 actor_10_11 sin el byte 0x21: p07:AD0E
+L 0xAD0E actor_a_d434 0xD434 = 1, 0xD435 = el actor y el byte 0x21 = 0x3C (no otra vez en 0x3C cuadros)
+L 0xAD1E snake_con_actores_ca8d con 0xCA8D: la caja de p07:B5CC contra cada actor (p07:B90A); los que tocan (salvo los tipos 0x16, 0x0A y 0x10-0x11) hacen 4 de dano
+L 0xAD28 actor_ca8d 
+L 0xAD4D siguiente_ca8d 
+L 0xAD57 snake_con_lanzado sin 0xCA8D ni 0xD445: la caja de Snake contra lo que lanzan los actores (p07:BA3A): el dano de p07:B53D y lo lanzado se acaba (p04:9CA1)
+L 0xAD6B lanzado_contra_snake 
+L 0xAD82 siguiente_lanzado_choque 
+L 0xAD8C lanzado_de_snake_con_actores cada cosa lanzada por Snake (p07:B734) contra cada actor (p07:B90A; la de tipo 8 solo con los 0x14): el tipo 6 se acaba con p07:AE3D; las demas se acaban salvo con los 0x16-0x17, y el actor cae (p07:B456); los 0x10-0x11 ademas hacen 0x10 de dano a Snake
+L 0xAD93 lanzado_de_snake 
+L 0xAD9F actor_contra_lanzado 
+L 0xADAD caja_del_actor 
+L 0xADCC golpea_al_actor 
+L 0xADEF cae_el_actor_b el actor cae
+L 0xADF4 siguiente_actor_lanzado 
+L 0xADFD siguiente_lanzado_snake 
+L 0xAE07 lanzado_6_con_snake con 0xCACF: lo de tipo 6 lanzado por Snake que toca a Snake se acaba con p07:AE3D
+L 0xAE16 lanzado_6 
+L 0xAE33 siguiente_6 
+L 0xAE3D algo_en_la_sala_iy p03:B1BE con la fila y la columna de la sala, C = 0x80 y el sitio de lo lanzado (IY)
+L 0xAE57 snake_con_d800 la caja de Snake contra las 4 fichas de 0xD800 (p07:B97A): las que tocan (salvo el tipo 9) hacen 4 de dano
+L 0xAE61 d800_contra_snake 
+L 0xAE7A siguiente_d800 
+L 0xAE84 lanzado_de_snake_con_d800 cada cosa lanzada por Snake contra las fichas de 0xD800 (p07:B9B5): se acaba; el tipo 6 con p07:AE3D; las demas, el dano de su tipo (p07:B52C) a la ficha (p07:B469)
+L 0xAE8B lanzado_d800 
+L 0xAE97 ficha_d800_lanzado 
+L 0xAEB8 dano_a_d800 el dano de su tipo...
+L 0xAEBE siguiente_ficha_d800 
+L 0xAEC7 siguiente_lanzado_d800 
+L 0xAED1 delante_con_actores la caja de delante de Snake (p07:B70F) contra cada actor: salvo el 0x0A, los de tipo menor de 0x10 reciben el golpe (p07:B3DA); los 0x10-0x11 hacen 4 de dano a Snake
+L 0xAEDB actor_delante 
+L 0xAF00 golpe_al_actor 
+L 0xAF03 siguiente_delante 
+L 0xAF0D delante_con_d800 la caja de delante de Snake contra las fichas de 0xD800 (salvo el tipo 0x0A): 1 de dano a la ficha
+L 0xAF17 d800_delante 
+L 0xAF2F siguiente_d800_delante 
+L 0xAF39 cb44_con_d800 en la zona 0x12: la caja de 0xCB44 (p07:B84A) contra las fichas de 0xD800: 6 de dano a la ficha
+L 0xAF49 d800_cb44 
+L 0xAF5A siguiente_cb44 
+L 0xAF64 snake_con_df80 la caja de Snake (p07:B6CC) contra las 8 fichas de 0xDF80 de esta sala (p07:B790): 0x12 de dano
+L 0xAF6E df80_contra_snake 
+L 0xAF80 siguiente_df80 
+L 0xAF8A df80_con_actores cada ficha de 0xDF80 (p07:B787) contra los actores de su sala (p07:B8E4; en la zona 0x0C, los de la fila 3 columna 6 solo en la sala 3): salvo los 0x16-0x17, el actor cae (p07:B456); los 0x10-0x11 hacen 0x10 de dano a Snake
+L 0xAF91 df80_b 
+L 0xAF9D actor_df80 
+L 0xAFC0 toca_df80 se tocan?
+L 0xAFE1 cae_por_df80 
+L 0xAFE4 siguiente_actor_df80 
+L 0xAFED siguiente_df80_b 
+L 0xAFF7 df80_con_d800 cada ficha de 0xDF80 contra las de 0xD800 (p07:B991): dano 3 a la ficha (6 sin el bit 7 de su byte 7)
+L 0xAFFE df80_c 
+L 0xB00A d800_df80 
+L 0xB021 dano_df80 
+L 0xB024 siguiente_d800_df80 
+L 0xB02D siguiente_df80_c 
+L 0xB037 snake_con_cc80 sin 0xE1D0: la caja de Snake contra las fichas de 0xCC80 (p07:B7BF): en el estado 2 o el 0x0B, se coge (p07:B06A); si no, p07:B563
+L 0xB046 cc80_contra_snake 
+L 0xB060 siguiente_cc80 
+L 0xB06A coge_cc80 p12:6E6C, la ficha fuera, 0xD61C = 1, 7 mas a la cosa 1 (p03:BDA5) y el sonido 0x10
+L 0xB085 cc80_con_actores cada ficha de 0xCC80 (p07:B7B6) contra los actores de su sala (p07:B8EC; salvo los tipos 1 y 4, no el actor de su byte 0x1B): salvo los 0x16-0x17, p07:B563
+L 0xB08C cc80_b 
+L 0xB098 actor_cc80 
+L 0xB0A8 misma_sala_cc80 la sala del actor...
+L 0xB0D2 siguiente_actor_cc80 
+L 0xB0DB siguiente_cc80_b 
+L 0xB0E5 cc80_con_d800 las 16 primeras fichas de 0xCC80 contra las de 0xD800 de su sala (p07:B999): los tipos 1 y 4 con todas salvo el 0x0B, el 2 con ninguna, los demas solo con el 0x0B; p07:B563
+L 0xB0EC cc80_c 
+L 0xB0F8 d800_cc80 
+L 0xB117 cc80_tipo_1_4 
+L 0xB11E misma_sala_d800 la sala de la ficha de 0xD800...
+L 0xB136 siguiente_d800_cc80 
+L 0xB13F siguiente_cc80_c 
+L 0xB149 choques_dff8 con 0xDFF8: la caja de 0xDFF8 (p07:B889) con Snake (p07:B156), con los actores (p07:B170) y con las fichas de 0xD800 (p07:B1B1)
+L 0xB156 dff8_con_snake salvo con 0xCB21 = 4: si toca a Snake, 0x10 de dano
+L 0xB170 dff8_con_actores sin 0xD437: los actores de tipo menor de 0x13 que toca caen (p07:B456); los 0x10-0x11 hacen 6 de dano a Snake
+L 0xB17E actor_dff8 
+L 0xB1A4 cae_por_dff8 
+L 0xB1A7 siguiente_dff8 
+L 0xB1B1 dff8_con_d800 las fichas de 0xD800 de tipo 5 u 8 que toca: 3 de dano
+L 0xB1BA d800_dff8 
+L 0xB1CC toca_dff8 
+L 0xB1D6 siguiente_d800_dff8 
+L 0xB1E0 snake_con_d760 con lo mismo que p06:AA49 (0xD881-0xD883, 0xD678-0xD69C), sin 0xCA8D, con la ficha 0xD760 del sitio de Snake (p07:B23A) y fuera del estado 0x0B (en el 2, solo a los lados): si la caja de Snake toca la de 0xD760 (p07:B804), el sonido 0x10, p11:AEE4 y una mas de la cosa 9
+L 0xB1F7 mira_d883_b 
+L 0xB208 mira_ca8d 
+L 0xB221 caja_d760 
+L 0xB23A d760_aqui Z si el byte 0 de 0xD760 es el del sitio de Snake: 3 con 0xD8C0, 2 en un sitio de 0xCBE0, 4 en una sala especial, 1 en las demas
+L 0xB253 compara_d760 
+L 0xB258 snake_con_18_y_e060 Snake con los actores de tipo 0x18 (p07:B25D) y con la ficha de 0xE060 (p07:B29A)
+L 0xB25D snake_con_18 si la caja de Snake toca un actor de tipo 0x18: el sonido 0x10, fuera (p04:834C) y una cosa al azar (p07:B2C0)
+L 0xB267 actor_18 
+L 0xB290 siguiente_18 
+L 0xB29A snake_con_e060 con 0xE060, si la caja de Snake toca la suya (p07:B2F9): el sonido 0x10, 0xE060 = 0, los sprites de 0xDC70 fuera y una cosa al azar
+L 0xB2C0 cosa_al_azar la cosa de p07:B2E9 al azar (R & 0x0F; & 7 con 0xCB73 desde 3) y p03:BD82; con las de numero menor de 0x31, 0xCB73 sube hasta 3
+L 0xB2CB elige_cosa R & L
+L 0xB2E5 lleva_la_cosa 
+L 0xB2F9 caja_e060 la caja de 0xE060: Y = 0xE063 + 0x10, X = 0xE065 + 8, 8 x 0x10
+L 0xB309 snake_con_d4c0 la caja de Snake contra las 2 fichas de 0xD4C0 (p07:BA1D): 0x18 de dano y p14:AB01
+L 0xB313 d4c0_contra_snake 
+L 0xB32E siguiente_d4c0 
+L 0xB338 snake_con_d820 en la sala 2, con la ficha 0xD820 de tipo 9 en los dibujos 8-0x0B: si su caja (p07:BA71) toca a Snake, 4 de dano y, sin 0xCB54, 0xCB54 = 1 y 0xCB56 = 9
+L 0xB371 dano_sin_d4e7 0xD4E7 = 0 y el dano C (p07:B393)
+L 0xB377 dano_a_snake 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+L 0xB393 quita_vida la vida menos C (p07:B3A5), las barras, p02:8DCB y el sonido 0x40
+L 0xB3A5 vida_menos_c sin 0xCB3D y fuera del estado 0x14: 0xCA53 menos C (la mitad con 0xD4E7 y 0xCB21 = 5); a 0, p10:BFBC y, si sigue a 0, el estado 0x14
+L 0xB3C2 resta_vida 
+L 0xB3CD vida_a_cero a cero
+L 0xB3DA golpe_al_actor_b el golpe al actor IX (p07:B3E3) guardando HL, DE y BC
+L 0xB3E3 golpe_a_ix con el byte 0x10 distinto de 0xFF: el sonido 0x13, el byte 0x1F = 4 y uno menos al 0x10; queda: al paso 8 (p04:8EBE); a 0: quiza una cosa (p07:B401) y cae (p04:8326, p04:82FD)
+L 0xB3F8 actor_vencido quiza una cosa
+L 0xB401 cosa_del_actor sin alerta y con el tipo menor de 0x0A: si el contador de cuadros * 4 llega al valor de p07:B447 del nivel de Snake, la cosa 0x2E + (cuadros & 0x0F) / 4 (la 0x31 solo con la cosa 0 o la 1) donde estaba (p04:8C4A)
+L 0xB433 numero_de_cosa 
+L 0xB444 deja_cosa 
+L 0xB44E fin_de_lanzado_b lo lanzado se acaba (p04:9CA1) guardando los registros
+L 0xB456 cae_el_actor_c con el byte 0x10 distinto de 0xFF: cae (p04:8326, p04:82FD) guardando los registros
+L 0xB465 recupera_hl_de_bc 
+L 0xB469 dano_c_a_d800 el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
+L 0xB471 resta_a_d800 p07:B502; el byte 0x10 (su vida) menos C (no baja de 0); a 0, p07:B4C0; si queda: el sonido (p07:B4A3), el byte 0x16 = 0 y el 0x17 = C * 4 (al menos 0x0A); el tipo 9, el byte 0x13 = 0xFD
+L 0xB47D pon_vida_d800 
+L 0xB495 pon_byte_17 ...al byte 0x17
+L 0xB4A3 sonido_de_d800 con la vida desde 0x18 (los tipos 6, 8 y 0x0A) o desde 8 (los demas), el sonido 0x48; por debajo, el 0x4E
+L 0xB4B6 compara_vida 
+L 0xB4C0 d800_vencida el paso de p07:B521 segun su tipo, el byte 0x16 = 0, el 0x17 = 4 y fuera lo lanzado (p07:B4D5)
+L 0xB4D5 fuera_lo_lanzado 0xD460-0xD4BF y 0xD4C0-0xD4DF a cero, los sprites de 0xDC68-0xDC7F fuera y, con 0xD8A4, los de 0xDC28-0xDC37
+L 0xB502 d800_tipo_5 el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
+L 0xB520 nada_b520 
+L 0xB52C dano_del_tipo C = el dano del tipo C de lo lanzado por Snake (p07:B535)
+L 0xB534 nada_b534 
+L 0xB53D dano_del_lanzado C = el dano de lo lanzado por un actor: 0x0A con 0xD8A0, 0x10 con la ficha 0xD840 de tipo 0x0A, si no el de su tipo (p07:B55B); A = 1
+L 0xB55A nada_b55a 
+L 0xB563 fin_de_cc80 la ficha de 0xCC80 (IY) se acaba: p12:6E6C, tipo 0 y p03:B1BE con C = 1 en su sitio (Y - 4 y X - 4, pares, hasta 0xB0) y su fila y columna
+L 0xB584 y_par ...par...
+L 0xB58C pon_l_cc80 
+L 0xB595 x_par 
+L 0xB59D pon_h_cc80 
+L 0xB5A1 recupera_b5a1 
+L 0xB5A4 p12_6e6c_iy p12:6E6C con la ficha de IY guardando los registros
+L 0xB5AF se_tocan acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
+L 0xB5C8 por_encima por encima: menos que E
+L 0xB5CC caja_de_snake la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
+L 0xB5E6 mira_cb32 
+L 0xB5F2 caja_por_dibujo 
+L 0xB5FD baja_cb43 
+L 0xB608 caja_cb28 con 0xCB28 = 1, E = 0xCB29; con 2, E = 0xCB29 - 4 y la Y sube 0x20 - 0xCB29
+L 0xB61F caja_cb28_1 con 1, E = 0xCB29
+L 0xB624 caja_segun_dibujo la caja del dibujo de Snake (p07:B62E); desde el 0x0C, ninguna
+L 0xB646 sin_caja NZ: sin caja
+L 0xB649 caja_06_1c en Snake, 6 x 0x1C
+L 0xB650 caja_de_lado en Snake: a los lados 0x0E x 6, si no 8 x 0x0D
+L 0xB660 caja_z 
+L 0xB662 caja_06_14 en Snake, 6 x 0x14
+L 0xB669 caja_08_10 en Snake, 8 x 0x10
+L 0xB670 caja_de_snake_b como p07:B5CC con la tabla p07:B6A5 y sin lo de 0xCB28 ni 0xCA8D
+L 0xB68A mira_cb32_b 
+L 0xB690 caja_b_por_dibujo 
+L 0xB69B caja_b_segun_dibujo la caja del dibujo de Snake (p07:B6A5); desde el 0x0C, ninguna
+L 0xB6BD caja_alta en (Y - 0x0C, X), 5 x 8
+L 0xB6CC caja_de_snake_c sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
+L 0xB6DE caja_c_segun_dibujo la caja del dibujo de Snake (p07:B6E9); desde el 0x0C, ninguna
+L 0xB701 caja_06_04 en Snake, 6 x 4
+L 0xB708 caja_08_08 en Snake, 8 x 8
+L 0xB70F caja_delante la caja de 2 x 4 delante de Snake segun su direccion (p07:B72C: arriba Y - 0x20; abajo en Snake; a los lados Y - 0x1C y X - 0x0A o + 0x0A)
+L 0xB734 caja_lanzado_snake la caja de lo lanzado por Snake (IY) segun su tipo (p07:B73A): los 1, 2 y 9 de 1 x 2; el 6 por p07:B75E; los demas, ninguna
+L 0xB74E caja_1x2 en (Y + 2, X + 1), 1 x 2
+L 0xB75E caja_tipo_6 el tipo 6: con el byte 0x0B desde 2, 8 x 6 en (Y + 6, X + 8); si no, 3 x 0x10 en (Y + 0x10, X + 3)
+L 0xB776 caja_6_estrecha 
+L 0xB787 caja_df80 la caja de la ficha de 0xDF80 (IY), si esta activa
+L 0xB790 caja_df80_aqui la caja de la ficha de 0xDF80, si esta activa y en esta sala
+L 0xB7A5 caja_18x30 en (Y + 0x20, X + 8), 0x18 x 0x30
+L 0xB7B6 caja_cc80 la caja de la ficha de 0xCC80 (IY), si esta activa
+L 0xB7BF caja_cc80_aqui la caja de la ficha de 0xCC80 si su tipo es el del sitio de Snake (1 normal, 2 en un sitio de 0xCBE0, 3 con 0xCA77, 4 en una sala especial) y esta en esta sala
+L 0xB7E0 compara_sitio 
+L 0xB7F3 caja_06x0c en (Y + 0x0A, X + 4), 6 x 0x0C
+L 0xB804 caja_de_d760 la caja de la ficha 0xD760, si esta activa, con el byte 0 del sitio de Snake (4 sala especial, 3 con 0xD8C0, 2 en un sitio, 1) y en esta sala: en (Y + 0x20, X + 8), 8 x 0x20
+L 0xB826 compara_sitio_d760 
+L 0xB84A caja_cb44 con 0xCB44 y 0xCB46 desde 4: la caja de p07:B879 segun la direccion de Snake (4 bytes: E, D, dY, dX)
+L 0xB889 caja_dff8 con 0xDFF8 y 0xCA61: la caja segun 0xCA61 (p07:B89B)
+L 0xB8A3 caja_dffd en (Y = 0xDFFD, X = 0x60), 0x60 x 0x10
+L 0xB8AE caja_dffe en (Y = 0xC0, X = 0xDFFE + 8), 8 x 0xC0
+L 0xB8BB sitio_de_snake L = la Y, H = la X de Snake; Z
+L 0xB8C5 caja_actor_snake la caja del actor IX para tocar a Snake (p07:BA95 desde el tipo 0x10, p07:BA92 los demas; los menores de 0x10 en los pasos 8-9, ninguna)
+L 0xB8E4 caja_actor_df80 la caja del actor en la sala de la ficha IY
+L 0xB8EC caja_actor_cc80 la caja del actor en la sala de la ficha IY (p07:BABF el 0x14, p07:BAD1 desde 0x10, p07:BACE los demas)
+L 0xB90A caja_actor la caja del actor en esta sala (p07:BAB3 desde el tipo 0x10, p07:BAB0 los demas)
+L 0xB90E caja_actor_en_de 
+L 0xB91D caja_de_tabla sin caja: libre, el 8 con 0xD441, si p12:7E35 da acarreo, en otra sala o el 0x13 desde el paso 2; desde el tipo 0x10, la entrada (tipo - 0x10) * 3 de la tabla; [E][D][dY] con la Y del actor + dY y su X
+L 0xB95A entrada_de_tipo 
+L 0xB965 caja_e_d_dy 
+L 0xB977 caja_nz NZ: sin caja
+L 0xB97A caja_d800_snake la caja de la ficha de 0xD800 para tocar a Snake (desde el tipo 3; p07:BA95 el 0x0A, p07:BA92 los demas)
+L 0xB991 caja_d800_df80 la caja de la ficha de 0xD800 en la sala de IY
+L 0xB999 caja_d800_cc80 la caja de la ficha de 0xD800 en la sala de IY (desde el tipo 3; p07:BAD1 el 7, p07:BACE los demas)
+L 0xB9B5 caja_d800 la caja de la ficha de 0xD800 en esta sala (desde el tipo 3; p07:BAB3 el 7, p07:BAB0 los demas)
+L 0xB9B9 caja_d800_en_de 
+L 0xB9CA caja_d800_tabla sin caja: sin el byte 0x16, en una sala especial salvo con el byte 0x12 = 0x29, en otra sala, el 7 con el byte 0x14 o el dibujo 8, y (salvo el 0x0B) con 0xCA77; [E][D][dY] con la Y + dY y la X
+L 0xB9DD misma_sala_d800_b 
+L 0xB9FF mira_ca77 
+L 0xBA0D caja_d800_e_d E...
+L 0xBA1D caja_d4c0 la caja de la ficha de 0xD4C0: activa y en los pasos 0-2; la entrada del byte 0x0F (menos 3 desde 3) de p07:BB04
+L 0xBA35 tabla_bb04 
+L 0xBA3A caja_d460 la caja de lo lanzado por un actor: desde el tipo 3; el 3 (desde el paso 1) con p07:BB00; los demas, la entrada tipo - 4 de p07:BAEC
+L 0xBA4D entrada_de_4 * 4
+L 0xBA52 caja_de_4_bytes [E][D][dY][dX]: la caja en (Y + dY, X + dX)
+L 0xBA65 caja_lanzado_3 
+L 0xBA71 caja_d820 la caja de 2 x 4 de la ficha 0xD820 segun su dibujo - 8 (p07:BA8A: el desplazamiento de su sitio)
+L 0xBB10 sitio_ocupado acarreo si la caja de (H, L, D, E) toca algo de la sala (p02:9071, al dejar una cosa): las cosas de 0xD7C0, las fichas de 0xCC00 y 0xCC80, 0xD760, cajas fijas de algunas salas, 0xD8C0, las entradas de p07:AA83, las fichas de 0xD500, las de 0xE070 (fuera de las salas especiales) y las de 0xDF80
+L 0xBB4F mira_df80 las fichas de 0xDF80
+L 0xBB52 fin_sitio_ocupado 
+L 0xBB55 toca_cc00 acarreo si toca alguna de las 8 fichas de 0xCC00 de esta sala (p07:BD78)
+L 0xBB5B ficha_cc00 
+L 0xBB66 siguiente_cc00 
+L 0xBB71 toca_cc80 acarreo si toca alguna de las fichas de 0xCC80 de esta sala (p07:BDA1)
+L 0xBB77 ficha_cc80 
+L 0xBB82 siguiente_cc80_d 
+L 0xBB8D toca_d760 acarreo si toca la ficha 0xD760 (p07:BDC8)
+L 0xBB93 ficha_d760 
+L 0xBB9E siguiente_d760 
+L 0xBBA9 sitio_toca_df80 acarreo si toca alguna de las 8 fichas de 0xDF80 de esta sala (p07:BDEF)
+L 0xBBAF ficha_df80 
+L 0xBBBA siguiente_df80_d 
+L 0xBBC5 toca_cosa acarreo si toca alguna de las 4 cosas de 0xD7C0 (p07:BE16)
+L 0xBBCB cosa_d7c0 
+L 0xBBD6 siguiente_cosa 
+L 0xBBE1 toca_e070 acarreo si toca alguna de las 2 fichas activas de 0xE070 (p07:BE2D)
+L 0xBBE7 ficha_e070 
+L 0xBBF8 siguiente_e070 
+L 0xBC01 sin_acarreo_bc01 
+L 0xBC03 toca_caja_0a_0e en la zona 0x0A sala 0x0E: acarreo si toca la caja de (0x60, 0x80) de 0x20 x 0x18
+L 0xBC1C toca_caja_d8c0 con 0xD8C0: acarreo si toca la caja de (0x60, 0x46) de 0x12 x 0x18
+L 0xBC2C toca_entrada sin 0xD8C0: acarreo si toca la entrada de p07:AA83 de esta sala (p07:BC38)
+L 0xBC38 caja_entrada en el otro juego de registros, la caja de la entrada de p07:AA83 de esta sala (como p07:A543; la sala 0xD0 no vale): en (Y + 0x20, X + 0x10), 0x12 x 0x20 (acarreo)
+L 0xBC3D entrada_aa83 
+L 0xBC5D entrada_fe 
+L 0xBC6A entrada_sala 
+L 0xBC70 caja_de_entrada 
+L 0xBC87 siguiente_entrada 
+L 0xBC95 toca_d500 acarreo si toca alguna de las 8 fichas activas de 0xD500: su caja de (byte 8 / 2) de ancho desde su X + eso, y del alto de p07:BCC5 desde su Y + eso
+L 0xBC9B ficha_d500 
+L 0xBCBA siguiente_d500 
+L 0xBCC5 alto_d500 A = el byte 7; con el byte 8 = 8, + 0x12
+L 0xBCD1 toca_cajas_13_4 en la zona 0x13 sala 4: acarreo si toca alguna de las 3 cajas de p07:BCFC ([E][D][X][Y])
+L 0xBCE1 caja_13_4 
+L 0xBCFA no_13_4 
+L 0xBD08 toca_cajas_zona_4 en la zona 4, salas 0x0D, 0x0E, 0x12, 0x13 y 0x17: acarreo si toca alguna de sus cajas de 0x38 x 0x0C (los sitios de p07:BD5E segun la sala, p07:BD2F)
+L 0xBD14 caja_zona_4 
+L 0xBD2F cajas_de_la_sala B = cuantas y HL' = sus sitios: la sala 0x17 2 (p07:BD62), la 0x13 2 (p07:BD6C), la 0x12 4 (p07:BD66), la 0x0D 4 (p07:BD5E), la 0x0E 4 (p07:BD70); Z si es una de ellas
+L 0xBD78 caja_cc00 la caja de la ficha de 0xCC00 activa y en esta sala: en (Y + 0x0C, X + 4), 8 x 0x10 (acarreo)
+L 0xBD9F sin_caja_nc sin caja: sin acarreo
+L 0xBDA1 caja_cc80_b la caja de la ficha de 0xCC80 activa y en esta sala: en (Y + 0x0C, X + 4), 8 x 0x10
+L 0xBDC8 caja_d760_b la caja de la ficha 0xD760 activa y en esta sala: en (Y + 0x22, X + 9), 0x0A x 0x23
+L 0xBDEF caja_df80_b la caja de la ficha de 0xDF80 activa y en esta sala: en (Y + 0x10, X + 8), 0x0A x 0x12
+L 0xBE16 caja_cosa la caja de la cosa de 0xD7C0 (si hay): en (Y + 0x10, X + 8), 0x0A x 0x12
+L 0xBE2D caja_e070 la caja de la ficha de 0xE070: en (Y + 0x20, X + 0x10), 0x10 x 0x20
+L 0xBE3E sin_acarreo_be3e 
+L 0xBE40 choques_d800_tipo_2 con la ficha 0xD800 de tipo 2 en la sala 8, con 0xD816 y por debajo del paso 0x0A: Snake dentro de su forma va al estado 0x14 (p07:BE8E), la ficha 0 de 0xDF80 le quita vida (p07:BED8) y lo lanzado por Snake de tipos 1-2 y 6 que entra en ella se acaba
+L 0xBE63 lanzado_en_d800_2 
+L 0xBE79 siguiente_lanzado_d800_2 
+L 0xBE82 tipo_que_entra los tipos 1, 2 y 6 se miran (p07:BE9F); los demas, no
+L 0xBE8E snake_en_d800_2 Snake (X - 4, Y) dentro de la forma: al estado 0x14
+L 0xBE9F dentro_de_la_forma acarreo si (B = X, C = Y) cae dentro de la forma de la ficha: por la fila (0x0F - (Y de la ficha - C) / 8), una franja de X de p07:BF2C (filas 0-0x0B) o dos de p07:BF4C (las demas)
+L 0xBEBA en_la_franja acarreo con B - desde < ancho
+L 0xBEBE dos_franjas las demas: dos franjas de p07:BF4C (4 bytes)
+L 0xBEC5 una_de_dos 
+L 0xBED8 df80_en_d800_2 con 0xD816 y la ficha 0 de 0xDF80 activa con su byte 7 a cero: si su sitio (+8, +8) cae en la forma (filas 0x0A en adelante, p07:BF44), el sonido 0x48 y uno menos a 0xD810; a 0, el paso 0x0A y fuera lo lanzado; si no, 0xD816 = 0 y 0xD817 = 0x10
+L 0xBF22 d816_a_cero 0xD816 = 0...
+L 0xBF5C toca_e230_o_fijas acarreo si la caja de (H, L, D, E) toca la ficha 0xE230, la caja de la zona 0x0C sala 6 o alguna de las de p12:7F25
+L 0xBF64 toca_e230_b 
+L 0xBF7D cajas_7f25 0xCB74 = 0 y las cajas de p12:7F25 una tras otra hasta 0xCB74 = 0xFF; acarreo con la que toca
+L 0xBF82 caja_7f25 
+L 0xBF8C sin_acarreo_bf8c 
+L 0xBF8E toca_7f25 
+L 0xBF94 caja_e230 con 0xE230, su caja en (Y = 0xE233 + 0x32, X = 0xE234), 0x32 x 0x34
+L 0xBFAA caja_0c_6 en la zona 0x0C sala 6, la caja de (Y = 0xB8, X = 0x40), 0x30 x 0xB0
+L 0xBFBF toca_bfbf 
+C 0xA000 apunta a 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xA006 borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA009 d8c2_al_salir: con 0xD8C2 y 0xD8CE (o saliendo de la sala): 0xD8C9 = 0xD4E9 = 0 y todo a cero (p07:A2FF)
+C 0xA00C lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
 C 0xA00F despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA03A lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA03F lee con 1, lo de 0xD8C2 se acaba (p07:A03A)
 C 0xA045 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA051 d8c1_todo_a_cero: el byte 6 de su ficha, 0xD8C1 y 0xD8C2 a cero, 0xD456 = 1 y p11:BDBD con 3
+C 0xA054 d8cd_de_la_zona: 0xD8CD = el de la zona en p07:A686; en la zona 6, 0xFF en la sala 0x23 y 0xFE en las demas
+C 0xA057 busca_ficha_aa83: con Snake en el estado 3 hacia arriba: las fichas de p07:AA83 (8 bytes: zona, sala, numero, Y, X y 3 bytes) hasta la que pone 0xD8C2 (p07:A543); con el 3, sin 0xD4F3 ni el bit 1 de 0xD7D4, otra vez a 0
+C 0xA05A lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA063 caracter_b_de_d8cf: el de al lado: 0x10 a la derecha (8 desde la zona 7)
+C 0xA068 ficha_dc80: HL = el byte B de la ficha 0xD8C2 - 1 de 0xDC80 (8 bytes cada una)
+C 0xA06D d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA070 guarda_fondo_d8c0: p07:A896 y cuatro bloques de 16 x 16 de la pagina 0 a la 3: (0xC0, 0xE0), (0xC0, 0xF0), (0xF0, 0xE0) y (0xF0, 0xF0) a (0xA0-0xD0, 0xB0)
 C 0xA073 sonido_46: pide el sonido 0x46
+C 0xA076 apunta a el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA07D ficha_dc80: HL = el byte B de la ficha 0xD8C2 - 1 de 0xDC80 (8 bytes cada una)
+C 0xA085 ficha_a_d8cb: los bytes 3-5 de su ficha de 0xDC80 a 0xD8CB-0xD8CD
+C 0xA088 d8c1_siguiente: el paso siguiente de 0xD8C1
 C 0xA090 sonido_19: pide el sonido 0x19
+C 0xA095 ficha_dc80: HL = el byte B de la ficha 0xD8C2 - 1 de 0xDC80 (8 bytes cada una)
+C 0xA098 apunta a la ultima entrada de la lista de 0xD8C2 (p07:A61D)
+C 0xA0A2 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA0AA apunta a 10 fichas de 8 bytes de p57:8000 (p07:A985): [tipo][..][cuenta][ultima entrada][entrada][numero][llamada][..]
 C 0xA0AD suma_a_hl: HL = HL + A
+C 0xA0B0 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA0B5 caracter_de_d8cf: el caracter de la zona (p07:A5E9) en la Y y X de 0xD8CF
+C 0xA0B8 d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA0C0 guarda_fondo_d8c0: p07:A896 y cuatro bloques de 16 x 16 de la pagina 0 a la 3: (0xC0, 0xE0), (0xC0, 0xF0), (0xF0, 0xE0) y (0xF0, 0xF0) a (0xA0-0xD0, 0xB0)
 C 0xA0C3 sonido_16: pide el sonido 0x16
+C 0xA0C6 lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA0CB guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA0D1 lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA0D9 guarda la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA0E2 snake_dentro: acarreo con Snake hacia arriba (sin 0xCB21 = 0x0A u 0x0B), su Y en 0xD8C8 - 4 a 0xD8C8 - 1 y su X en 0xD8C7 a 0xD8C7 + 0x1F
 C 0xA0EA lee cuantos siguen a Snake por su rastro (1-4)
 C 0xA0F0 lee la sala especial (0 = ninguna; indice de p24:64B6)
-C 0xA0F9 a_p03_b0f6: p03:B0F6 con el banco 3 en 0xA000
 C 0xA100 guarda cuantos siguen a Snake por su rastro (1-4)
 C 0xA10D a_p03_b4d1: p03:B4D1 con el banco 3 en 0xA000
+C 0xA113 d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA116 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA123 repone_fondo_d8c0: 0x40 x 0x20 a 0 en (0xC0, 0xE0) y los cuatro bloques de vuelta de la pagina 3 a la 0
 C 0xA126 sonido_16: pide el sonido 0x16
 C 0xA129 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA12F lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA141 lee la Y de Snake
 C 0xA150 lee la X de Snake
+C 0xA15A lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA15F guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA165 lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA16C ficha_dc80: HL = el byte B de la ficha 0xD8C2 - 1 de 0xDC80 (8 bytes cada una)
+C 0xA17B snake_sale_de_d8c0: con Snake hacia arriba en Y < 0x50 y X 0x58-0x68: 0xD8C0 = 0, a la sala B y al sitio de la entrada 0xD8CC de p07:AA0F (p07:A731), mirando abajo, 0xCA77 = 0, p03:B4D1, p07:A80B, 0xD8C9 = 0x10, p07:A83A, p07:A8D1, el paso de p07:A70F y los bytes 3-5 de su ficha de 0xDC80 = 0xD8CB-0xD8CD
+C 0xA17E lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA184 botones_d8c4: 0xD8C4 = 0; con Snake en el estado 3 hacia arriba en Y 0x40-0x5B: en X 0x3C-0x47 (salvo zonas 0x11 y 0x12) y 0xD8CC distinto de 0, 0xD8C4 = 2; en X 0x77-0x7F con 0xD8CC por debajo de 0xD8CB, 0xD8C4 = 1
+C 0xA187 lee el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA18E guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA193 guarda la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA196 d8c1_siguiente: el paso siguiente de 0xD8C1
 C 0xA199 sonido_46: pide el sonido 0x46
-C 0xA1CE sonido_41: pide el sonido 0x41
+C 0xA19C apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA1A9 guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA1AF lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA1B6 guarda la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA1BE d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA1C1 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA1C6 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA1D1 d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA1D9 lineas_d8d1_2: borra las de ahora, 0xD8D1 sigue (p07:AC0C) y las nuevas con el color 2
+C 0xA1DC flecha_d8c4: un caracter de 8 x 8 de la pagina 2: de (0xE8, 0xD0) a (0x78, 0x30) con 0xD8C4 = 1, de (0xE0, 0xD0) a (0x40, 0x30) si no; cada 4 cuadros, el de 0x10 mas abajo
+C 0xA1F3 lee el numero de la entrada a la que va (p07:A918)
+C 0xA1FB apunta a el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA1FF sonido_19: pide el sonido 0x19
-C 0xA217 mosaico_de_d8cd: el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
+C 0xA203 lee el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA20D apunta a el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
+C 0xA224 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA231 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA238 apunta a el numero de la entrada a la que va (p07:A918)
+C 0xA242 lineas_d8d1_0: las lineas de 0xD8D1 con el color 0
+C 0xA245 d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA248 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
+C 0xA260 guarda el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA268 guarda el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA26B d8d1_a_cero: 0xD8D1 = 0
 C 0xA273 sonido_19: pide el sonido 0x19
+C 0xA276 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA284 d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA287 r18_a_cero: R#18 = 0
 C 0xA28A sonido_18: pide el sonido 0x18
+C 0xA28D lee la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA29D apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA2A6 lee el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA2AD guarda el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA2B2 guarda la cuenta de cuadros de los pasos de 0xD8C1
 C 0xA2B5 sonido_46: pide el sonido 0x46
+C 0xA2BA guarda la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA2BD d8c1_siguiente: el paso siguiente de 0xD8C1
 C 0xA2C0 sonido_16: pide el sonido 0x16
+C 0xA2C3 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA2CA guarda la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA2D2 guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA2D8 lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA2E5 guarda el paso de lo de 0xD8C2 (20 pasos, p07:A012)
 C 0xA2E9 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA2F4 guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA2FA lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
 C 0xA312 a_p11_bdbd_3: p11:BDBD con el banco 11 en 0xA000
-C 0xA31C lee cuantos siguen a Snake por su rastro (1-4)
-C 0xA320 a_p03_b4d1: p03:B4D1 con el banco 3 en 0xA000
-C 0xA36A sonido_05: pide el sonido 0x05
-C 0xA36D sonido_8a: pide el sonido 0x8A (de los que tienen la partitura en un banco de musica, p16:4CE3)
-C 0xA381 mosaico_de_d8cd: el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
-C 0xA397 sonido_87: pide el sonido 0x87 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-C 0xA3B9 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
+C 0xA315 snake_dentro: acarreo con Snake hacia arriba (sin 0xCB21 = 0x0A u 0x0B), su Y en 0xD8C8 - 4 a 0xD8C8 - 1 y su X en 0xD8C7 a 0xD8C7 + 0x1F
+C 0xA319 snake_entra_en_d8c0: 0xDFF8 = 0xD8C4 = 0xCB16 = 0, 0xD8C0 = 0xCA77 = 1; fuera las cosas, lo lanzado por Snake y los actores, p07:A470, los dibujos de p37:B845, los sprites, la pantalla de p07:A4A6, p07:AB96, los umbrales 0x40 y 0x81, y Snake en (0x50, 0x60) en el estado 0x0F mirando abajo
+C 0xA325 guarda el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA329 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA33E r18_a_cero: R#18 = 0
+C 0xA34E d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA370 tiembla_f0: R#18 = 0xF0 en los cuadros impares de la cuenta, 0 en los pares
+C 0xA376 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA384 apunta a el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
+C 0xA38F lineas_d8d1_0: las lineas de 0xD8D1 con el color 0
+C 0xA39A d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA39D lee la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA3A3 pon_r18: R#18 (el ajuste de la pantalla) = B
+C 0xA3A6 r18_a_cero: R#18 = 0
+C 0xA3A9 tiembla_e0_20: R#18 = 0xE0 en los cuadros impares, 0x20 en los pares
+C 0xA3AC apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA3BC d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA3BF lee la cuenta de cuadros de los pasos de 0xD8C1
 C 0xA3CE apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-C 0xA3E3 paleta_bc9e: la paleta de p56:BC9E y los bancos 1, 2 y 7
-C 0xA3E6 enciende_todo: la pantalla y los sprites encendidos
-C 0xA3E9 sonido_69: pide el sonido 0x69
-C 0xA3FC paleta_bc9e: la paleta de p56:BC9E y los bancos 1, 2 y 7
-C 0xA414 guarda 1 mientras Snake se da la vuelta
-C 0xA41E apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
+C 0xA3D1 apunta a la cuenta de cuadros de los pasos de 0xD8C1
+C 0xA3D8 guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA3F0 d8c1_siguiente: el paso siguiente de 0xD8C1
+C 0xA40E guarda con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
+C 0xA411 guarda el boton pulsado dentro: 1 o 2 (p07:A61D)
 C 0xA424 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xA42A apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA430 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xA436 dibujos_b845: los dibujos de p37:B845 con los colores de p37:B809 en la VRAM de 0x6000
-C 0xA439 borra_ce00: 0xD417 = 0x1E y 0xCE00-0xD3FF a cero
-C 0xA43C limpia_sprites_y_d300: 
-C 0xA445 apunta a el umbral de los caracteres 0x00-0x80 de la sala (de p56:A727; p00:5C28)
 C 0xA44F guarda la Y de Snake
 C 0xA454 guarda la X de Snake
 C 0xA459 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
-C 0xA45C lee 1 en el estado 2 de Snake
 C 0xA464 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xA469 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA46C guarda la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA470 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xA47C lee la zona
 C 0xA482 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA487 quita_ca5f_bancos_7: 
@@ -101,69 +1760,83 @@ C 0xA4A3 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA4A6 apaga_sprites: R#8 con el bit 1 (SPD) a uno, desde la copia 0xFFE7
 C 0xA4AA borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
 C 0xA4AF borra_pantalla_de: 0xC0 x 0xC0 puntos a 0 en la pagina A
-C 0xA4B2 llama_ab91: p06:AB91 guardando el banco de 0xA000
-C 0xA4B5 marcador_y_ventana_bancos_7: 
-C 0xA4B8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA4BD guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-C 0xA4C0 copia_marcador_bancos_7: 
-C 0xA4C3 paleta_bbf2: la paleta de p56:BBF2 y los bancos 1, 2 y 7
-C 0xA4C6 mosaico_be74: el mosaico en rachas de p37:BE74 (0x14 x 0x0E) en X = 0x28, Y = 0x18, y p06:A0F9
-C 0xA4D3 mosaico_de_d8cd: el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
-C 0xA4D6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA4D9 pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
-C 0xA4E3 apunta a la ficha del que sigue a Snake 12 posiciones por detras (0xE0A4)
 C 0xA4E8 enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 C 0xA4EB lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA4F2 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA4FD lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA507 pinta_d8c9: las dos mitades separadas 0xD8C9: la de (0xF0 - 0xD8C9, 0xE5) a la X de 0xD8C7 + 0x10 y la de (0xC0 + 0xD8C9, 0xE5) a la X de 0xD8C7
 C 0xA50A lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA510 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA52D lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA53F guarda la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xA543 lee la zona
 C 0xA554 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA55A lee la sala de la zona
 C 0xA561 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA569 lee la sala de la zona
-C 0xA57A lee la Y de Snake
+C 0xA577 guarda la Y de la entrada de p07:AA83 (p07:A577)
 C 0xA585 lee la Y de Snake
-C 0xA591 lee la X de Snake
+C 0xA58E guarda la X de la entrada de p07:AA83 (p07:A58E)
 C 0xA59C lee la X de Snake
-C 0xA5CA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA5A4 guarda la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA5B4 guarda la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA5C3 caracter_de_la_zona: HL = el sitio en la pagina 2 del caracter de la zona: (0x70, 0x28) en las 0x12-0x13, (0xE8, 0x78) en las 0x0C-0x0E, (0x70, 0xA8) en la 0x0B, (0x70, 0xF8) en la 0x0A, (0xA8, 0x30) en la 8 y (0xC8, 0xF0), o (0xD0, 0xF0) con 0xD8C2 distinto de 1, en las demas
+C 0xA5C6 lee la Y de la entrada de p07:AA83 (p07:A577) y el byte siguiente (16 bits)
 C 0xA5D4 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA5D7 caracter_de_la_zona: HL = el sitio en la pagina 2 del caracter de la zona: (0x70, 0x28) en las 0x12-0x13, (0xE8, 0x78) en las 0x0C-0x0E, (0x70, 0xA8) en la 0x0B, (0x70, 0xF8) en la 0x0A, (0xA8, 0x30) en la 8 y (0xC8, 0xF0), o (0xD0, 0xF0) con 0xD8C2 distinto de 1, en las demas
 C 0xA5DA lee la zona
 C 0xA5E9 lee la zona
-C 0xA621 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
-C 0xA627 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xA62C lee la Y de Snake
-C 0xA635 lee la X de Snake
+C 0xA615 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA61E guarda el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA648 lee la entrada de la lista de 0xD8C2 en la que esta (p07:AA0F)
+C 0xA64F guarda el boton pulsado dentro: 1 o 2 (p07:A61D)
 C 0xA653 lee la zona
+C 0xA65C lee la entrada de la lista de 0xD8C2 en la que esta (p07:AA0F)
+C 0xA663 guarda el boton pulsado dentro: 1 o 2 (p07:A61D)
 C 0xA667 lee la zona
 C 0xA671 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xA674 guarda el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA678 lee la sala de la zona
+C 0xA682 guarda el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA69A lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA69F lee la Y de Snake
 C 0xA6A5 lee la X de Snake
+C 0xA6AF guarda 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
+C 0xA6B8 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xA6BC palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA6C5 suma_a_hl: HL = HL + A
 C 0xA6CB guarda la Y de Snake
 C 0xA6D0 guarda la X de Snake
 C 0xA6D5 guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xA6D8 guarda la direccion pedida con el mando (1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xA6E0 limpia_sprites_y_d300: 
-C 0xA6E3 a_p03_b4d1: p03:B4D1 con el banco 3 en 0xA000
+C 0xA6EF guarda lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA70F lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA716 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
+C 0xA71F guarda el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xA72D guarda el paso de lo de 0xD8C2 (20 pasos, p07:A012)
 C 0xA731 lee la zona
-C 0xA739 dibujos_de_sala_b_7: dibujos_de_sala y deja el banco 7
+C 0xA73D lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA742 sale_con_d8c2_3: el 3: negativo, columna 7; si no, columna 8 en la sala especial 0x18
+C 0xA757 sin_especial: 
 C 0xA75A apunta a la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA771 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA778 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA782 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xA787 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
+C 0xA794 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA79A apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA7A4 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA7AE guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7B2 cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
+C 0xA7B5 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA7BB apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA7C5 apunta a la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA7CF guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7D3 cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
+C 0xA7D6 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0xA7DE guarda la columna de la sala en la zona (uno mas al salir por la derecha)
-C 0xA7E2 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA7E5 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xA7EF a_p04_924c_2: p04:924C con el banco 4 en 0x8000
 C 0xA7F6 a_p04_924c_2: p04:924C con el banco 4 en 0x8000
@@ -171,146 +1844,275 @@ C 0xA7FA cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
 C 0xA7FF guarda la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA804 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA808 cambia_de_zona_b_1_2_7: cambia_de_zona y deja los bancos 1, 2 y 7
+C 0xA813 es_la_de_d8c2: 
 C 0xA81E lee la zona
+C 0xA826 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA83A mitades_d8c0: borra 0x40 x 0x2C en (0xC0, 0xD4) y copia el sitio de 0xD8C6 (p07:A8FF) a (0xC0, 0xE5) y a (0xF0, 0xE5) en dos trozos de 0x10 x 0x1A
+C 0xA843 de_0_a_3: de la pagina 0 a la 3
+C 0xA84C de_0_a_3: de la pagina 0 a la 3
+C 0xA855 de_0_a_3: de la pagina 0 a la 3
 C 0xA86A borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA873 de_3_a_0: de la pagina 3 a la 0
+C 0xA87C de_3_a_0: de la pagina 3 a la 0
+C 0xA885 de_3_a_0: de la pagina 3 a la 0
 C 0xA893 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA896 borra_c0d4: 0x40 x 0x2C a 0 en (0xC0, 0xD4) de la pagina 0
+C 0xA8A4 trozo_10x1a: 0x10 x 0x1A en la pagina de dibujo
 C 0xA8B4 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA8C9 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA8CE borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA8D1 mitad_derecha: desde 0xF0 - 0xD8C9...
+C 0xA8D6 lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA8E2 sitio_de_d8c6: DE = (0xD8C7 + B, 0xD8C6 + 5); con 0xD8C0, (0x50 + B, 0x2D)
 C 0xA8E8 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA8ED copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA8F0 lee lo separadas que estan las dos mitades (0-0x10, p07:A8D1)
+C 0xA8FA sitio_de_d8c6: DE = (0xD8C7 + B, 0xD8C6 + 5); con 0xD8C0, (0x50 + B, 0x2D)
+C 0xA8FF lee la X del sitio de la entrada (p07:A8FF, p07:A129)
+C 0xA903 lee la Y del sitio de la entrada (p07:A8FF)
+C 0xA918 d8cc_sentido: con 0xD8C4 = 1, 0xD8CC + 1; con 2, - 1
+C 0xA91E lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xA922 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA92A byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xA92D guarda el numero de la entrada a la que va (p07:A918)
+C 0xA931 lee el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA939 lee la entrada de la lista de 0xD8C2 en la que esta (p07:AA0F)
+C 0xA941 guarda la entrada de la lista de 0xD8C2 en la que esta (p07:AA0F)
+C 0xA945 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xA94E palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA951 lee la entrada de la lista de 0xD8C2 en la que esta (p07:AA0F)
 C 0xA956 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xA959 guarda el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
+C 0xA963 lee el boton pulsado dentro: 1 o 2 (p07:A61D)
+C 0xA96D lee la cuenta de cuadros de los pasos de 0xD8C1
 C 0xA97B lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA982 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xA985 bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xA988 apunta a 10 fichas de 8 bytes de p57:8000 (p07:A985): [tipo][..][cuenta][ultima entrada][entrada][numero][llamada][..]
 C 0xA98B copia_8000: 80 bytes que p07
 C 0xA993 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xA996 apunta a 10 fichas de 8 bytes de p57:8000 (p07:A985): [tipo][..][cuenta][ultima entrada][entrada][numero][llamada][..]
+C 0xA9A6 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
+C 0xA9AE cada_20_cuadros: 
+C 0xA9C2 entrada_dc80: con el byte 6, la entrada (byte 4) va hacia 0xD8CD (una por vez); sin el, al azar (R) una mas o una menos, entre 0 y el byte 3
+C 0xA9C5 numero_dc80: el byte 5 = el numero de la entrada (byte 4) de la lista de su tipo en p07:AA0F
 C 0xAA00 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xAA08 byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
+C 0xAB44 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xAB49 lee la zona
 C 0xAB51 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xAB57 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xAB5D bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xAB60 numeros_dc85_dc8d: con el byte 5 de la ficha 0, su numero (p57:8080) en (0x30, 0x7C); con el de la 1, en (0x70, 0x7C); 1 x 4
 C 0xAB63 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0xAB6C mosaico_del_numero: HL = p57:8080 + (A + 1, o A + 2 si es negativo) * 4
+C 0xAB72 numero_1x4: 
+C 0xAB7A mosaico_del_numero: HL = p57:8080 + (A + 1, o A + 2 si es negativo) * 4
 C 0xAB83 mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 C 0xAB93 suma_a_hl: HL = HL + A
+C 0xAB97 guarda el paso de las lineas de p57:8050 (0-5, p07:AC0C)
+C 0xAB9B lee el paso de las lineas de p57:8050 (0-5, p07:AC0C)
+C 0xABA2 lineas_d8d1_0: las lineas de 0xD8D1 con el color 0
+C 0xABA5 d8d1_siguiente: 0xD8D1 de 0 a 5 en vuelta: hacia arriba con el paso 0x0F en adelante o 0xD8C4 = 2, hacia abajo con 0xD8C4 = 1; sin 0xD8C4, nada
 C 0xABAB bancos_57: pone el 57 en 0x8000 (con su copia en 0xC381-0xC383)
+C 0xABAE lineas_8050: las 4 lineas de p57:8050 + A * 8 (4 palabras): dos de 0x18 en horizontal con dos de 0x2C en vertical, y dos de 0x20 en vertical
 C 0xABB1 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xABBA suma_a_hl: HL = HL + A
+C 0xABBE palabra_hl: HL = la palabra de HL
+C 0xABC3 linea_en_x: 
+C 0xABC8 linea_en_y: 
+C 0xABCF palabra_hl: HL = la palabra de HL
+C 0xABD7 linea_en_x: 
+C 0xABE0 linea_en_y: 
+C 0xABE7 palabra_hl: HL = la palabra de HL
+C 0xABEC linea_en_y: 
+C 0xABF2 palabra_hl: HL = la palabra de HL
 C 0xABF7 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xABFC linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 C 0xAC01 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAC06 linea_horizontal: orden LINE del VDP (R#36-R#46) con el lado largo en X
+C 0xAC0C apunta a el paso de las lineas de p57:8050 (0-5, p07:AC0C)
+C 0xAC0F lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xAC19 lee el boton pulsado dentro: 1 o 2 (p07:A61D)
 C 0xAC38 lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xAC6A lee con el, otros choques de Snake con los actores (p07:AD1E)
+C 0xAC6E snake_con_actores_ca8d: con 0xCA8D: la caja de p07:B5CC contra cada actor (p07:B90A); los que tocan (salvo los tipos 0x16, 0x0A y 0x10-0x11) hacen 4 de dano
 C 0xAC71 lee la zona
+C 0xAC7E caja_de_snake_b: como p07:B5CC con la tabla p07:B6A5 y sin lo de 0xCB28 ni 0xCA8D
 C 0xAC82 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xAC94 lee el tipo del actor (0 = libre)
-C 0xACB3 el paso del actor = 0x02
 C 0xACBD lee el tipo del actor (0 = libre)
 C 0xACC6 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xACCD lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
-C 0xACD5 a_p04_9949_2: p04:9949 con el banco 4 en 0x8000
 C 0xACE3 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xAD10 guarda 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
+C 0xAD1E caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0xAD22 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xAD29 caja_actor: la caja del actor en esta sala (p07:BAB3 desde el tipo 0x10, p07:BAB0 los demas)
 C 0xAD34 lee el tipo del actor (0 = libre)
+C 0xAD4A dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+C 0xAD57 lee con el, otros choques de Snake con los actores (p07:AD1E)
+C 0xAD5C lee 1 mientras las 6 fichas de 0xD460 son las de p06:B2D6 (sin choques, p07:AD5C)
+C 0xAD61 caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0xAD65 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
+C 0xAD6C caja_d460: la caja de lo lanzado por un actor: desde el tipo 3; el 3 (desde el paso 1) con p07:BB00; los demas, la entrada tipo - 4 de p07:BAEC
+C 0xAD7C dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
 C 0xAD8C apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xAD99 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xAD9F lee el tipo del actor (0 = libre)
+C 0xADAE caja_actor: la caja del actor en esta sala (p07:BAB3 desde el tipo 0x10, p07:BAB0 los demas)
 C 0xADCC lee el tipo del actor (0 = libre)
 C 0xADDE lee el tipo del actor (0 = libre)
+C 0xADEC dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+C 0xADEF cae_el_actor_c: con el byte 0x10 distinto de 0xFF: cae (p04:8326, p04:82FD) guardando los registros
+C 0xAE0C caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0xAE10 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
+C 0xAE17 caja_lanzado_snake: la caja de lo lanzado por Snake (IY) segun su tipo (p07:B73A): los 1, 2 y 9 de 1 x 2; el 6 por p07:B75E; los demas, ninguna
+C 0xAE30 algo_en_la_sala_iy: p03:B1BE con la fila y la columna de la sala, C = 0x80 y el sitio de lo lanzado (IY)
 C 0xAE40 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xAE44 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xAE50 a_p03_b1be: p03:B1BE con el banco 3 en 0xA000
+C 0xAE57 caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0xAE5B apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xAE62 caja_d800_snake: la caja de la ficha de 0xD800 para tocar a Snake (desde el tipo 3; p07:BA95 el 0x0A, p07:BA92 los demas)
 C 0xAE68 lee el tipo de la ficha de 0xD800
+C 0xAE77 dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
 C 0xAE84 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
+C 0xAE8C caja_lanzado_snake: la caja de lo lanzado por Snake (IY) segun su tipo (p07:B73A): los 1, 2 y 9 de 1 x 2; el 6 por p07:B75E; los demas, ninguna
 C 0xAE91 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xAE98 caja_d800: la caja de la ficha de 0xD800 en esta sala (desde el tipo 3; p07:BAB3 el 7, p07:BAB0 los demas)
+C 0xAEB8 dano_del_tipo: C = el dano del tipo C de lo lanzado por Snake (p07:B535)
+C 0xAED1 caja_delante: la caja de 2 x 4 delante de Snake segun su direccion (p07:B72C: arriba Y - 0x20; abajo en Snake; a los lados Y - 0x1C y X - 0x0A o + 0x0A)
 C 0xAED5 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xAEDC caja_actor: la caja del actor en esta sala (p07:BAB3 desde el tipo 0x10, p07:BAB0 los demas)
 C 0xAEE7 lee el tipo del actor (0 = libre)
+C 0xAEFD dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+C 0xAF00 golpe_al_actor_b: el golpe al actor IX (p07:B3E3) guardando HL, DE y BC
+C 0xAF0D caja_delante: la caja de 2 x 4 delante de Snake segun su direccion (p07:B72C: arriba Y - 0x20; abajo en Snake; a los lados Y - 0x1C y X - 0x0A o + 0x0A)
 C 0xAF11 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xAF17 lee el tipo de la ficha de 0xD800
+C 0xAF1F caja_d800: la caja de la ficha de 0xD800 en esta sala (desde el tipo 3; p07:BAB3 el 7, p07:BAB0 los demas)
+C 0xAF2C dano_c_a_d800: el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
 C 0xAF39 lee la zona
+C 0xAF3F caja_cb44: con 0xCB44 y 0xCB46 desde 4: la caja de p07:B879 segun la direccion de Snake (4 bytes: E, D, dY, dX)
 C 0xAF43 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xAF4A caja_d800: la caja de la ficha de 0xD800 en esta sala (desde el tipo 3; p07:BAB3 el 7, p07:BAB0 los demas)
+C 0xAF57 dano_c_a_d800: el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
+C 0xAF64 caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 C 0xAF68 apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
+C 0xAF6F caja_df80_aqui: la caja de la ficha de 0xDF80, si esta activa y en esta sala
+C 0xAF7D dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
 C 0xAF8A apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
 C 0xAF97 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xAF9E caja_actor_df80: la caja del actor en la sala de la ficha IY
 C 0xAFA4 lee la zona
 C 0xAFAB lee la fila de la sala del actor
 C 0xAFB2 lee la columna de la sala del actor
 C 0xAFB9 lee la sala de la zona
+C 0xAFC0 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xAFC5 lee el tipo del actor (0 = libre)
 C 0xAFD0 lee el tipo del actor (0 = libre)
+C 0xAFDE dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+C 0xAFE1 cae_el_actor_c: con el byte 0x10 distinto de 0xFF: cae (p04:8326, p04:82FD) guardando los registros
 C 0xAFF7 apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
+C 0xAFFF caja_df80: la caja de la ficha de 0xDF80 (IY), si esta activa
 C 0xB004 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xB00B caja_d800_df80: la caja de la ficha de 0xD800 en la sala de IY
+C 0xB021 dano_c_a_d800: el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
+C 0xB03C caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 C 0xB040 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xB047 caja_cc80_aqui: la caja de la ficha de 0xCC80 si su tipo es el del sitio de Snake (1 normal, 2 en un sitio de 0xCBE0, 3 con 0xCA77, 4 en una sala especial) y esta en esta sala
 C 0xB052 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
-C 0xB07C a_p03_bda5: p03:BDA5 con el banco 3 en 0xA000
+C 0xB06A p12_6e6c_iy: p12:6E6C con la ficha de IY guardando los registros
 C 0xB082 sonido_10: pide el sonido 0x10
 C 0xB085 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xB08D caja_cc80: la caja de la ficha de 0xCC80 (IY), si esta activa
 C 0xB092 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
 C 0xB0A8 lee la fila de la sala del actor
 C 0xB0B0 lee la columna de la sala del actor
 C 0xB0C4 lee el tipo del actor (0 = libre)
+C 0xB0CF fin_de_cc80: la ficha de 0xCC80 (IY) se acaba: p12:6E6C, tipo 0 y p03:B1BE con C = 1 en su sitio (Y - 4 y X - 4, pares, hasta 0xB0) y su fila y columna
 C 0xB0E5 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xB0ED caja_cc80: la caja de la ficha de 0xCC80 (IY), si esta activa
 C 0xB0F2 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xB0F9 caja_d800_cc80: la caja de la ficha de 0xD800 en la sala de IY (desde el tipo 3; p07:BAD1 el 7, p07:BACE los demas)
 C 0xB10E lee el tipo de la ficha de 0xD800
 C 0xB117 lee el tipo de la ficha de 0xD800
+C 0xB133 fin_de_cc80: la ficha de 0xCC80 (IY) se acaba: p12:6E6C, tipo 0 y p03:B1BE con C = 1 en su sitio (Y - 4 y X - 4, pares, hasta 0xB0) y su fila y columna
+C 0xB149 lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
+C 0xB14E dff8_con_snake: salvo con 0xCB21 = 4: si toca a Snake, 0x10 de dano
+C 0xB151 dff8_con_actores: sin 0xD437: los actores de tipo menor de 0x13 que toca caen (p07:B456); los 0x10-0x11 hacen 6 de dano a Snake
 C 0xB156 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xB15C caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
+C 0xB161 caja_dff8: con 0xDFF8 y 0xCA61: la caja segun 0xCA61 (p07:B89B)
+C 0xB16D dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+C 0xB175 caja_dff8: con 0xDFF8 y 0xCA61: la caja segun 0xCA61 (p07:B89B)
 C 0xB178 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xB17F caja_actor: la caja del actor en esta sala (p07:BAB3 desde el tipo 0x10, p07:BAB0 los demas)
 C 0xB18A lee el tipo del actor (0 = libre)
 C 0xB193 lee el tipo del actor (0 = libre)
+C 0xB1A1 dano_a_snake: 0xD4E7 = A; saliendo de la sala o con 0xCB3C, nada; el actor 0x14 o 0x12 lleva a Snake al estado 0x14 (p03:AC02); si no, el dano C (p07:B393)
+C 0xB1A4 cae_el_actor_c: con el byte 0x10 distinto de 0xFF: cae (p04:8326, p04:82FD) guardando los registros
+C 0xB1B1 caja_dff8: con 0xDFF8 y 0xCA61: la caja segun 0xCA61 (p07:B89B)
 C 0xB1B4 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xB1BB caja_d800: la caja de la ficha de 0xD800 en esta sala (desde el tipo 3; p07:BAB3 el 7, p07:BAB0 los demas)
 C 0xB1C1 lee el tipo de la ficha de 0xD800
+C 0xB1CC se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
+C 0xB1D3 dano_c_a_d800: el dano C a la ficha de 0xD800 (p07:B471) guardando los registros
+C 0xB208 lee con el, otros choques de Snake con los actores (p07:AD1E)
+C 0xB20D d760_aqui: Z si el byte 0 de 0xD760 es el del sitio de Snake: 3 con 0xD8C0, 2 en un sitio de 0xCBE0, 4 en una sala especial, 1 en las demas
 C 0xB211 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB21B lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB221 caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
+C 0xB226 caja_de_d760: la caja de la ficha 0xD760, si esta activa, con el byte 0 del sitio de Snake (4 sala especial, 3 con 0xD8C0, 2 en un sitio, 1) y en esta sala: en (Y + 0x20, X + 8), 8 x 0x20
 C 0xB22F sonido_10: pide el sonido 0x10
-C 0xB232 a_p11_aee4_2: p11:AEE4 con el banco 11 en 0xA000
 C 0xB237 a_p03_be51: p03:BE51 con el banco 3 en 0xA000
+C 0xB23C lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xB243 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB24B lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB253 lee una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
+C 0xB258 snake_con_18: si la caja de Snake toca un actor de tipo 0x18: el sonido 0x10, fuera (p04:834C) y una cosa al azar (p07:B2C0)
+C 0xB25D caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 C 0xB261 apunta a los actores: 24 fichas de 0x40 bytes (p04:800D)
+C 0xB268 caja_actor: la caja del actor en esta sala (p07:BAB3 desde el tipo 0x10, p07:BAB0 los demas)
 C 0xB26E lee el tipo del actor (0 = libre)
 C 0xB281 sonido_10: pide el sonido 0x10
-C 0xB284 a_p04_834c: p04:834C con el banco 4 en 0x8000
+C 0xB29A lee 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
+C 0xB29F caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 C 0xB2AC sonido_10: pide el sonido 0x10
+C 0xB2B0 guarda 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 C 0xB2D1 suma_a_hl: HL = HL + A
+C 0xB2DA lee cuantas cosas al azar de p07:B2E9 se han dado (hasta 3)
+C 0xB2E2 guarda cuantas cosas al azar de p07:B2E9 se han dado (hasta 3)
 C 0xB2E6 a_p03_bd82: p03:BD82 con el banco 3 en 0xA000
-C 0xB328 a_p14_ab01: p14:AB01 con el banco 14 en 0xA000
+C 0xB309 caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
+C 0xB30D apunta a 2 fichas de 16 bytes; tocan a Snake con 0x18 de dano (p07:B309)
+C 0xB314 caja_d4c0: la caja de la ficha de 0xD4C0: activa y en los pasos 0-2; la entrada del byte 0x0F (menos 3 desde 3) de p07:BB04
+C 0xB322 quita_vida: la vida menos C (p07:B3A5), las barras, p02:8DCB y el sonido 0x40
 C 0xB338 lee la sala de la zona
 C 0xB342 lee el tipo de la ficha de 0xD800
 C 0xB348 lee el dibujo de la ficha de 0xD800
+C 0xB35E dano_sin_d4e7: 0xD4E7 = 0 y el dano C (p07:B393)
 C 0xB37A lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xB38B a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
-C 0xB390 a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
-C 0xB399 barras_de_vida_b_1_2_7: barras_de_vida y deja los bancos 1, 2 y 7
 C 0xB39C p02:8DCB
 C 0xB3A2 sonido_40: pide el sonido 0x40
 C 0xB3AA lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB3B6 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xB3C2 apunta a la vida de Snake (lo largo de la barra)
-C 0xB3CF a_p10_bfbc_2: p10:BFBC con el banco 10 en 0xA000
 C 0xB3D2 lee la vida de Snake (lo largo de la barra)
-C 0xB3D6 a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
+C 0xB3DD golpe_a_ix: con el byte 0x10 distinto de 0xFF: el sonido 0x13, el byte 0x1F = 4 y uno menos al 0x10; queda: al paso 8 (p04:8EBE); a 0: quiza una cosa (p07:B401) y cae (p04:8326, p04:82FD)
+C 0xB3E0 recupera_hl_de_bc: 
 C 0xB3E9 sonido_13: pide el sonido 0x13
-C 0xB3F5 a_p04_8ebe: p04:8EBE con el banco 4 en 0x8000
-C 0xB3FB a_p04_8326: p04:8326 con el banco 4 en 0x8000
+C 0xB3F8 cosa_del_actor: sin alerta y con el tipo menor de 0x0A: si el contador de cuadros * 4 llega al valor de p07:B447 del nivel de Snake, la cosa 0x2E + (cuadros & 0x0F) / 4 (la 0x31 solo con la cosa 0 o la 1) donde estaba (p04:8C4A)
 C 0xB3FE a_p04_82fd: p04:82FD con el banco 4 en 0x8000
 C 0xB401 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
-C 0xB40E lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 C 0xB414 suma_a_hl: HL = HL + A
-C 0xB417 lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xB43B lee lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 C 0xB444 a_p04_8c4a: p04:8C4A con el banco 4 en 0x8000
 C 0xB451 a_p04_9ca1: p04:9CA1 con el banco 4 en 0x8000
 C 0xB45F a_p04_8326: p04:8326 con el banco 4 en 0x8000
 C 0xB462 a_p04_82fd: p04:82FD con el banco 4 en 0x8000
-C 0xB4BA sonido_48: pide el sonido 0x48
-C 0xB4BD sonido_4e: pide el sonido 0x4E
+C 0xB46C resta_a_d800: p07:B502; el byte 0x10 (su vida) menos C (no baja de 0); a 0, p07:B4C0; si queda: el sonido (p07:B4A3), el byte 0x16 = 0 y el 0x17 = C * 4 (al menos 0x0A); el tipo 9, el byte 0x13 = 0xFD
+C 0xB472 d800_tipo_5: el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
 C 0xB4C6 suma_a_hl: HL = HL + A
 C 0xB4D5 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB4DB borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -321,42 +2123,70 @@ C 0xB530 suma_a_hl: HL = HL + A
 C 0xB556 suma_a_hl: HL = HL + A
 C 0xB569 a_p12_6e6c_b_7: a_p12_6e6c y deja el banco 7
 C 0xB59E a_p03_b1be: p03:B1BE con el banco 3 en 0xA000
+C 0xB5A1 recupera_hl_de_bc: 
 C 0xB5AA a_p12_6e6c_b_7: a_p12_6e6c y deja el banco 7
 C 0xB5CC lee la zona
 C 0xB5D3 lee la sala de la zona
+C 0xB5E6 lee con el, otros choques de Snake con los actores (p07:AD1E)
+C 0xB5F2 caja_segun_dibujo: la caja del dibujo de Snake (p07:B62E); desde el 0x0C, ninguna
+C 0xB5F5 lee con el, otros choques de Snake con los actores (p07:AD1E)
 C 0xB624 lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xB62B despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB649 sitio_de_snake: L = la Y, H = la X de Snake; Z
+C 0xB650 sitio_de_snake: L = la Y, H = la X de Snake; Z
 C 0xB656 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xB662 sitio_de_snake: L = la Y, H = la X de Snake; Z
+C 0xB669 sitio_de_snake: L = la Y, H = la X de Snake; Z
 C 0xB670 lee la zona
 C 0xB677 lee la sala de la zona
+C 0xB690 caja_b_segun_dibujo: la caja del dibujo de Snake (p07:B6A5); desde el 0x0C, ninguna
+C 0xB694 lee lo que baja la caja de Snake en los choques (p07:B5FE)
 C 0xB69B lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xB6A2 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB6BD lee la Y de Snake
 C 0xB6C3 lee la X de Snake
+C 0xB6D0 sin_caja: NZ: sin caja
+C 0xB6D3 caja_c_segun_dibujo: la caja del dibujo de Snake (p07:B6E9); desde el 0x0C, ninguna
+C 0xB6D7 lee lo que baja la caja de Snake en los choques (p07:B5FE)
 C 0xB6DE lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
+C 0xB6E3 sin_caja: NZ: sin caja
 C 0xB6E6 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB701 sitio_de_snake: L = la Y, H = la X de Snake; Z
+C 0xB708 sitio_de_snake: L = la Y, H = la X de Snake; Z
 C 0xB712 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB71A suma_a_hl: HL = HL + A
-C 0xB720 lee la Y de Snake
-C 0xB725 lee la X de Snake
 C 0xB737 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xB78B sin_caja: NZ: sin caja
+C 0xB794 sin_caja: NZ: sin caja
 C 0xB797 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB79E lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB7BA sin_caja: NZ: sin caja
+C 0xB7C4 sin_caja: NZ: sin caja
 C 0xB7C9 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB7D7 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xB7E2 sin_caja: NZ: sin caja
 C 0xB7E5 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0xB804 apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
+C 0xB80C sin_caja: NZ: sin caja
 C 0xB811 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB818 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xB81F lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB82B lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB832 lee la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xB84E sin_caja: NZ: sin caja
+C 0xB856 sin_caja: NZ: sin caja
 C 0xB859 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xB862 suma_a_hl: HL = HL + A
 C 0xB86D lee la Y de Snake
 C 0xB872 lee la X de Snake
+C 0xB889 lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
+C 0xB88D sin_caja: NZ: sin caja
+C 0xB894 sin_caja: NZ: sin caja
 C 0xB898 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB8BB lee la Y de Snake
 C 0xB8BF lee la X de Snake
 C 0xB8C5 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+C 0xB8DC caja_nz: NZ: sin caja
 C 0xB90A lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xB930 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xB938 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -367,22 +2197,47 @@ C 0xB9D0 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBA4F suma_a_hl: HL = HL + A
 C 0xBA79 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBB44 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xBB4F sitio_toca_df80: acarreo si toca alguna de las 8 fichas de 0xDF80 de esta sala (p07:BDEF)
 C 0xBB55 apunta a 8 fichas de 16 bytes que mueve p11:B494
+C 0xBB5C caja_cc00: la caja de la ficha de 0xCC00 activa y en esta sala: en (Y + 0x0C, X + 4), 8 x 0x10 (acarreo)
+C 0xBB62 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBB71 apunta a 16 fichas de 8 bytes que mueve p11:B66E
+C 0xBB78 caja_cc80_b: la caja de la ficha de 0xCC80 activa y en esta sala: en (Y + 0x0C, X + 4), 8 x 0x10
+C 0xBB7E se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
+C 0xBB8D apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
+C 0xBB94 caja_d760_b: la caja de la ficha 0xD760 activa y en esta sala: en (Y + 0x22, X + 9), 0x0A x 0x23
+C 0xBB9A se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBBA9 apunta a 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
+C 0xBBB0 caja_df80_b: la caja de la ficha de 0xDF80 activa y en esta sala: en (Y + 0x10, X + 8), 0x0A x 0x12
+C 0xBBB6 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBBC5 apunta a las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]
+C 0xBBCC caja_cosa: la caja de la cosa de 0xD7C0 (si hay): en (Y + 0x10, X + 8), 0x0A x 0x12
+C 0xBBD2 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
+C 0xBBE1 apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+C 0xBBEE caja_e070: la caja de la ficha de 0xE070: en (Y + 0x20, X + 0x10), 0x10 x 0x20
+C 0xBBF4 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBC03 lee la zona
 C 0xBC0A lee la sala de la zona
+C 0xBC19 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
+C 0xBC1C lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
+C 0xBC29 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
+C 0xBC2C lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
+C 0xBC31 caja_entrada: en el otro juego de registros, la caja de la entrada de p07:AA83 de esta sala (como p07:A543; la sala 0xD0 no vale): en (Y + 0x20, X + 0x10), 0x12 x 0x20 (acarreo)
+C 0xBC35 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBC3E lee la zona
 C 0xBC4E lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBC55 lee la sala de la zona
 C 0xBC61 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBC6A lee la sala de la zona
+C 0xBC95 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xBCD1 lee la zona
 C 0xBCD8 lee la sala de la zona
 C 0xBCE9 suma_a_hl: HL = HL + A
+C 0xBCF0 palabra_hl: HL = la palabra de HL
 C 0xBD08 lee la zona
-C 0xBD18 suma_a_hl: HL = HL + A
+C 0xBD0F cajas_de_la_sala: B = cuantas y HL' = sus sitios: la sala 0x17 2 (p07:BD62), la 0x13 2 (p07:BD6C), la 0x12 4 (p07:BD66), la 0x0D 4 (p07:BD5E), la 0x0E 4 (p07:BD70); Z si es una de ellas
+C 0xBD1B palabra_hl: HL = la palabra de HL
+C 0xBD27 cajas_de_la_sala: B = cuantas y HL' = sus sitios: la sala 0x17 2 (p07:BD62), la 0x13 2 (p07:BD6C), la 0x12 4 (p07:BD66), la 0x0D 4 (p07:BD5E), la 0x0E 4 (p07:BD70); Z si es una de ellas
 C 0xBD36 lee la sala de la zona
 C 0xBD7E lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xBD86 lee la columna de la sala en la zona (uno mas al salir por la derecha)
@@ -395,16 +2250,22 @@ C 0xBDFD lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xBE40 lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xBE46 lee la sala de la zona
 C 0xBE5D apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
+C 0xBE70 tipo_que_entra: los tipos 1, 2 y 6 se miran (p07:BE9F); los demas, no
 C 0xBE8E lee la X de Snake
 C 0xBE94 lee la Y de Snake
+C 0xBE98 dentro_de_la_forma: acarreo si (B = X, C = Y) cae dentro de la forma de la ficha: por la fila (0x0F - (Y de la ficha - C) / 8), una franja de X de p07:BF2C (filas 0-0x0B) o dos de p07:BF4C (las demas)
 C 0xBE9C a_p03_ac02: p03:AC02 con el banco 3 en 0xA000
 C 0xBEB7 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBEC5 suma_a_hl: HL = HL + A
 C 0xBEDD lee 8 fichas de 8 bytes [tipo][dibujo][Y][X][fila][columna][espera][grafico] que suenan 0x14 en la sala y 0x15 al lado
+C 0xBF0C una_de_dos: 
 C 0xBF11 sonido_48: pide el sonido 0x48
+C 0xBF5E toca_e230_b: 
 C 0xBF74 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBF7A bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xBF82 p12:7F25
+C 0xBF8E se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0xBFAA lee la zona
 C 0xBFB1 lee la sala de la zona
+C 0xBFC0 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 # --- fin de las anotaciones de anota.py ---

@@ -3273,7 +3273,7 @@ llegan_por_bf5b:		; p15:BF5B y el actor nuevo
 	call a_p15_bf5b_guarda		;96e0   ; a_p15_bf5b_guarda: p15:BF5B guardando el banco de 0xA000
 	jp actor_nuevo		;96e3   ; actor_nuevo: C = 0
 hay_d500_en_2:		; Z si alguna de las 8 fichas de 0xD500 (16 bytes) tiene el byte 1 en 2
-	ld hl,0d500h		;96e6
+	ld hl,0d500h		;96e6   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld b,008h		;96e9
 L_96EB:
 	ld a,(hl)			;96eb   ; la ficha en uso?
@@ -3793,7 +3793,7 @@ esquina_hacia:		; la esquina siguiente hacia 0xD41C por el eje mas largo (p06:B2
 	push af			;9a7c
 	jp 041a3h		;9a7d
 lanzado_cada_cuadro:		; sin 0xD445, las 6 fichas de lo que lanzan los actores: p06:A7E9, p14:BA36, p04:9C82 y p06:A979
-	ld a,(0d445h)		;9a80
+	ld a,(0d445h)		;9a80   ; lee 1 mientras las 6 fichas de 0xD460 son las de p06:B2D6 (sin choques, p07:AD5C)
 	and a			;9a83
 	ret nz			;9a84
 	ld ix,0d460h		;9a85   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)

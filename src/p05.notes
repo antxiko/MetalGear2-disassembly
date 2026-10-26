@@ -953,6 +953,7 @@ C 0xAF8A llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAF8D paso_siguiente_c: el paso siguiente
 C 0xAF90 el paso del actor = 0x20
 C 0xAF98 lee la sala de la zona
+C 0xAFA0 guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xAFB8 sala_de_snake: 0x1B = hacia donde esta la sala de Snake (1-4; 0 la misma)
 C 0xAFBD lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xAFE0 salta_por_tabla: salta a la palabra A de la tabla de HL
@@ -1425,6 +1426,8 @@ C 0xBD3B lee el paso del actor
 C 0xBD46 lee la sala de la zona
 C 0xBD4C lee el paso del actor
 C 0xBD52 salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xBD85 guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+C 0xBD88 guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xBD97 la espera del actor = 0x10
 C 0xBD9B el dibujo del actor (bit 0: el paso) = 0x04
 C 0xBDA2 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
@@ -1493,6 +1496,7 @@ C 0xBF2E guarda la X del actor
 C 0xBF35 guarda el dibujo del actor (bit 0: el paso)
 C 0xBF45 paso_siguiente_h: 
 C 0xBF4F la espera del actor = 0x18
+C 0xBF55 guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xBF62 paso_siguiente_h: 
 C 0xBF68 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xBF6B apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -1505,6 +1509,7 @@ C 0xBF8D rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
 C 0xBF90 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 C 0xBF96 mosaico_en_la_otra: con los juegos 6-7, el mosaico de la ficha en la otra pagina y 0xD88B = 0xFF
 C 0xBF99 paso_siguiente_h: 
+C 0xBF9D guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xBFAD guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0xBFB2 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBFB5 paso_siguiente_h: 
@@ -1521,5 +1526,6 @@ C 0xBFE8 paso_siguiente_h:
 C 0xBFEB lee la espera del actor
 C 0xBFF1 baja la espera del actor
 C 0xBFF5 sonido_05: pide el sonido 0x05
+C 0xBFFA guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xBFFD bandera_y_b14e: 
 # --- fin de las anotaciones de anota.py ---

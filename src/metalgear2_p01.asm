@@ -658,7 +658,7 @@ borra_cc00_d760:		; 0xCC80-0xCCFF, 0xCC00-0xCC7F y 0xD760-0xD76F a cero
 	ld hl,0cc00h		;63f4   ; apunta a 8 fichas de 16 bytes que mueve p11:B494
 	ld bc,0007fh		;63f7
 	call 04236h		;63fa   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	ld hl,0d760h		;63fd
+	ld hl,0d760h		;63fd   ; apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 	ld bc,0000fh		;6400
 	jp 04236h		;6403   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 de_ix_mas_6:		; DE = IX + 6
@@ -678,7 +678,7 @@ L_6421:
 	jp 041d2h		;6421   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p07_bb10:		; p07:BB10 con el banco 7 en 0xA000
 	call 041adh		;6424   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bb10h		;6427
+	call 0bb10h		;6427   ; sitio_ocupado: acarreo si la caja de (H, L, D, E) toca algo de la sala (p02:9071, al dejar una cosa): las cosas de 0xD7C0, las fichas de 0xCC00 y 0xCC80, 0xD760, cajas fijas de algunas salas, 0xD8C0, las entradas de p07:AA83, las fichas de 0xD500, las de 0xE070 (fuera de las salas especiales) y las de 0xDF80
 	jr L_6421		;642a
 vida_que_se_va:		; con 0xCB4B (y sin 0xCB3C), la vida baja un punto cada 16 cuadros (0xCB4E)
 	ld a,(0cb4bh)		;642c   ; lee con el puesto, la vida baja un punto cada 16 cuadros
@@ -2692,7 +2692,7 @@ mosaico_be74:		; el mosaico en rachas de p37:BE74 (0x14 x 0x0E) en X = 0x28, Y =
 	jr L_71DA		;71c0
 mosaico_de_d8cd:		; el mosaico 0xD8CD + 3 de p37:BF3E (1 x 2) en X = 0x58, Y = 0x20
 	call 04158h		;71c2   ; bancos_36_37: pone el 36 en 0x8000, el 37 en 0xA000 (con su copia en 0xC381-0xC383)
-	ld a,(0d8cdh)		;71c5
+	ld a,(0d8cdh)		;71c5   ; lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 	add a,003h		;71c8
 	add a,a			;71ca
 	ld hl,0bf3eh		;71cb
@@ -3129,7 +3129,7 @@ tecla_f5:		; si se puede (p06:AA49)
 	ld a,(0ca77h)		;74d3   ; con 0xCA77, 0xD8C2 = 5 y 0xD88A = 0xFF tampoco
 	and a			;74d6
 	jr z,L_74E5		;74d7
-	ld a,(0d8c2h)		;74d9
+	ld a,(0d8c2h)		;74d9   ; lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 	cp 005h		;74dc
 	jr nz,L_74E5		;74de
 	ld a,(0d88ah)		;74e0
@@ -3204,7 +3204,7 @@ paso_7:		; el paso 7: p08:AB7D y p12:7DDC hasta que 0xD434 se pone a 0
 	call 040f0h		;7575   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 05dabh		;7578   ; a_p12_7ddc: p12:7DDC con el banco 12 en 0x6000
 	call sprites_a_vram_turnos		;757b   ; sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
-	ld a,(0d434h)		;757e
+	ld a,(0d434h)		;757e   ; lee 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 	and a			;7581
 	ret nz			;7582
 	jp L_73AB		;7583
@@ -3485,7 +3485,7 @@ L_77DE:
 L_77EA:
 	call 05f5fh		;77ea   ; a_p12_6d78: p12:6D78 con el banco 12 en 0x6000
 	call 041b0h		;77ed   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ab44h		;77f0
+	call 0ab44h		;77f0   ; numeros_de_fuera: sin 0xD8C0, en las zonas 1-6, fila 3 columna 7: los numeros de las fichas 0 y 1 de 0xDC80 (p07:AB66)
 	call 041a0h		;77f3   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a4e8h		;77f6   ; sonido_5e_de_fondo: sin 0xD8C0 ni sala especial, en la zona 6 (salvo las salas 7 y 0x10) y en la 8 (salas 0x0A-0x0F): cada 16 cuadros, en los tiempos 0, 1, 4, 9, 0x0A y 0x0B de 16, el sonido 0x5E
 	call 04142h		;77f9   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3518,7 +3518,7 @@ L_77EA:
 	call 040f0h		;7847   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 08bf1h		;784a
 	call 041b0h		;784d   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ac38h		;7850   ; p07:AC38
+	call 0ac38h		;7850   ; choques_cada_cuadro: sin salir de la sala, los choques de cada cuadro: Snake con los actores, con lo que lanzan y con las fichas de 0xD800, 0xDF80, 0xCC80, 0xD4C0 y 0xD760; lo que lanza Snake con los actores y las fichas
 	call 041a0h		;7853   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a000h		;7856   ; golpe_a_d800: con la ficha 0xD800 de tipo 1 (filas 7-8 de la zona, paso 3 o mas, 0xD816) y lo lanzado por Snake de tipo 5 en el paso 3: si su casilla 0xCAEB cae en la sala de la ficha a menos de 0x40, lo quita, 0xCAEA = 1 y 8 menos a 0xD810 (a 0, el paso 0x20; si no, 0xD8B7 = 8 y el sonido 0x48)
 	call 040f0h		;7859   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3616,15 +3616,15 @@ L_7914:
 	or a			;794e
 	jr nz,L_7972		;794f
 	call 041b0h		;7951   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ad57h		;7954
-	call 0ae57h		;7957
-	call 0b037h		;795a
-	call 0af64h		;795d
-	call 0af39h		;7960   ; p07:AF39
-	call 0b309h		;7963   ; p07:B309
-	call 0aff7h		;7966
-	call 0b338h		;7969   ; p07:B338
-	call 0be40h		;796c   ; p07:BE40
+	call 0ad57h		;7954   ; snake_con_lanzado: sin 0xCA8D ni 0xD445: la caja de Snake contra lo que lanzan los actores (p07:BA3A): el dano de p07:B53D y lo lanzado se acaba (p04:9CA1)
+	call 0ae57h		;7957   ; snake_con_d800: la caja de Snake contra las 4 fichas de 0xD800 (p07:B97A): las que tocan (salvo el tipo 9) hacen 4 de dano
+	call 0b037h		;795a   ; snake_con_cc80: sin 0xE1D0: la caja de Snake contra las fichas de 0xCC80 (p07:B7BF): en el estado 2 o el 0x0B, se coge (p07:B06A); si no, p07:B563
+	call 0af64h		;795d   ; snake_con_df80: la caja de Snake (p07:B6CC) contra las 8 fichas de 0xDF80 de esta sala (p07:B790): 0x12 de dano
+	call 0af39h		;7960   ; cb44_con_d800: en la zona 0x12: la caja de 0xCB44 (p07:B84A) contra las fichas de 0xD800: 6 de dano a la ficha
+	call 0b309h		;7963   ; snake_con_d4c0: la caja de Snake contra las 2 fichas de 0xD4C0 (p07:BA1D): 0x18 de dano y p14:AB01
+	call 0aff7h		;7966   ; df80_con_d800: cada ficha de 0xDF80 contra las de 0xD800 (p07:B991): dano 3 a la ficha (6 sin el bit 7 de su byte 7)
+	call 0b338h		;7969   ; snake_con_d820: en la sala 2, con la ficha 0xD820 de tipo 9 en los dibujos 8-0x0B: si su caja (p07:BA71) toca a Snake, 4 de dano y, sin 0xCB54, 0xCB54 = 1 y 0xCB56 = 9
+	call 0be40h		;796c   ; choques_d800_tipo_2: con la ficha 0xD800 de tipo 2 en la sala 8, con 0xD816 y por debajo del paso 0x0A: Snake dentro de su forma va al estado 0x14 (p07:BE8E), la ficha 0 de 0xDF80 le quita vida (p07:BED8) y lo lanzado por Snake de tipos 1-2 y 6 que entra en ella se acaba
 	call 040f0h		;796f   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_7972:
 	call 0bc4bh		;7972   ; coge_cosas: salvo con 0xCB21 = 2 o saliendo: las cosas de 0xD7C0 que toca Snake se cogen
@@ -4303,7 +4303,7 @@ DATA_7DDC:
 cosas_fijas_de_la_sala:		; lo fijo de la sala (p01:7E0D), p07:A4EB y p11:A20D
 	call lo_fijo		;7de2   ; lo_fijo: p07:AB44, el mosaico de la zona 0x0A (p01:7E22), lo pisado (p01:7E7E), los mosaicos de la sala (p01:7E3C), p06:AAC8 y p06:AB21
 	call 041adh		;7de5   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a4ebh		;7de8   ; p07:A4EB
+	call 0a4ebh		;7de8   ; d8c1_al_pintar: con 0xCB21 = 2 solo fuera de la sala especial 0x2A y sin 0xCB62; desde el paso 1 (en el 1, p07:A5D7) p07:A8D1
 	call 041d2h		;7deb   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a20dh		;7dee
 	jp 040f0h		;7df1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)

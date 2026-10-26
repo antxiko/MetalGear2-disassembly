@@ -2090,6 +2090,7 @@ C 0x55C9 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el
 C 0x55D7 sala_de_ca50: 0xCA4B = la sala de la fila y la columna de 0xCA50-0xCA51
 C 0x55DD bits_de_la_zona: 0xCA75 = el byte de la zona en p56:A713; A = 0x5D en la sala especial 2
 C 0x55E9 sala_banco_15: p15:A005 con el banco 15
+C 0x55ED guarda con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0x55F0 cosas_fijas_en_la_otra: lo mismo en la otra pagina
 C 0x55F3 borra_cb80: 
 C 0x55FC a_p12_6e3a: p12:6E3A con el banco 12 en 0x6000
@@ -2188,6 +2189,7 @@ C 0x5972 sala_de_lista_a_e500: la sala de la ficha IX de la lista HL, con los bl
 C 0x5975 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5984 bancos_de_mapa: 24-25-26 y los bancos del mapa de la zona (p00:545C)
 C 0x59BB prepara_la_zona: C = la zona (o la de antes): las zonas 0x0B-0x10 no rehacen la pantalla
+C 0x59CD guarda cuantas cosas al azar de p07:B2E9 se han dado (hasta 3)
 C 0x59DD apunta a las banderas de la sala (se borran al cambiar de sala, p00:59DD)
 C 0x59E3 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x59E9 esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
@@ -2266,7 +2268,7 @@ C 0x5D85 bancos_6_12: el 6 en 0xA000 y el 12 en 0x6000
 C 0x5D88 p12:61F8
 C 0x5D8D bancos_6_12: el 6 en 0xA000 y el 12 en 0x6000
 C 0x5D95 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5D98 p07:A4A6
+C 0x5D98 pantalla_d8c0: sin sprites, las paginas 0 y 1 a cero, p06:AB91, el marcador, la paleta de p56:BBF2, el mosaico de p37:BE74, p07:A83A, sin 0xD8A0 p07:A8C3, el numero 0xD8CD, la pagina a la vista; sin el bit 7 de 0xD7D5, la ficha 0xE248 a cero; y los sprites encendidos
 C 0x5D9D bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5DA0 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5DA3 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
@@ -2330,6 +2332,7 @@ C 0x5EDA lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x5EE5 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0x5EEA a_p12_6e4b: p12:6E4B con el banco 12 en 0x6000
 C 0x5EED a_p12_6e4f: p12:6E4F con el banco 12 en 0x6000
+C 0x5EF0 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0x5EF4 a_p07_a4a6: p07:A4A6 con el banco 7 en 0xA000
 C 0x5EFB mapa_96bf_en_la_otra: p01:708E con la pagina de dibujar cambiada un momento
 C 0x5F01 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)

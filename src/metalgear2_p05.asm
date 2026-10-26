@@ -2285,7 +2285,7 @@ especial_29_paso_11:		; el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
 	cp 002h		;af9b
 	ret nz			;af9d
 	ld a,002h		;af9e
-	ld (0d500h),a		;afa0
+	ld (0d500h),a		;afa0   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ret			;afa3
 actor_de_d8a7:		; con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
 	ld a,(0ca77h)		;afa4   ; con 0xCA77, sin musica
@@ -4090,8 +4090,8 @@ DATA_resto_BD58:
 
 sala_5_paso_0:		; 0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
 	xor a			;bd84
-	ld (0e070h),a		;bd85
-	ld (0d500h),a		;bd88
+	ld (0e070h),a		;bd85   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
+	ld (0d500h),a		;bd88   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld (0d510h),a		;bd8b
 	inc a			;bd8e
 	ld (0cb3ch),a		;bd8f
@@ -4319,7 +4319,7 @@ sala_5_suelta:		; sin eje, 0x18 cuadros, 0xD500 = 2, 0xD510 = 0x0D, el bit 7 de 
 	ld (ix+016h),a		;bf4c
 	ld (ix+00eh),018h		;bf4f   ; la espera del actor = 0x18
 	ld a,002h		;bf53
-	ld (0d500h),a		;bf55
+	ld (0d500h),a		;bf55   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld a,00dh		;bf58
 	ld (0d510h),a		;bf5a
 	ld hl,0d7d6h		;bf5d
@@ -4354,7 +4354,7 @@ sala_5_fin:		; al acabar la espera: el sonido 0x93, la musica de la zona, sin sp
 	jp paso_siguiente_h		;bf99   ; paso_siguiente_h:
 sala_5_snake_baja:		; 0xE070 = 0; con el bit 5 de 0xD7D9, el bit 4, Snake hacia abajo en el estado 0x17
 	xor a			;bf9c
-	ld (0e070h),a		;bf9d
+	ld (0e070h),a		;bf9d   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	ld a,(0d7d9h)		;bfa0
 	and 020h		;bfa3
 	ret z			;bfa5
@@ -4396,5 +4396,5 @@ sala_5_espera_y_sonido:		; tras la espera, el sonido 5; despues 0xE070 = 1 y su 
 	jp 06b12h		;bff5   ; sonido_05: pide el sonido 0x05
 L_BFF8:
 	ld a,001h		;bff8
-	ld (0e070h),a		;bffa
+	ld (0e070h),a		;bffa   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	jp 08c65h		;bffd   ; bandera_y_b14e:

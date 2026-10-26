@@ -901,7 +901,7 @@ L_AA5E:
 	ld a,(0ca4bh)		;aa64   ; lee la sala de la zona
 	cp 008h		;aa67
 	ret nz			;aa69
-	ld ix,0d4c0h		;aa6a
+	ld ix,0d4c0h		;aa6a   ; apunta a 2 fichas de 16 bytes; tocan a Snake con 0x18 de dano (p07:B309)
 	ld b,002h		;aa6e
 L_AA70:
 	push bc			;aa70
@@ -2986,7 +2986,7 @@ L_B931:
 	ld a,(0ca5fh)		;b93c   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;b93f
 	ret z			;b940
-	ld iy,0d500h		;b941
+	ld iy,0d500h		;b941   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld b,008h		;b945
 L_B947:
 	ld a,(iy+000h)		;b947

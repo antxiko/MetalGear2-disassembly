@@ -376,7 +376,7 @@ DATA_resto_A202:
 
 
 L_A20D:
-	ld a,(0d8c0h)		;a20d
+	ld a,(0d8c0h)		;a20d   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;a210
 	ret nz			;a211
 	ld a,(0ca4ah)		;a212   ; lee la zona
@@ -474,7 +474,7 @@ DATA_resto_A26F:
 L_A389:
 	xor a			;a389
 	ld (0dfe8h),a		;a38a
-	ld (0e060h),a		;a38d
+	ld (0e060h),a		;a38d   ; guarda 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	ld a,(0ca4ah)		;a390   ; lee la zona
 	cp 006h		;a393
 	ret nz			;a395
@@ -508,7 +508,7 @@ L_A3C4:
 	call L_A446		;a3cc
 	call L_A497		;a3cf
 	call L_A4AE		;a3d2
-	ld a,(0e060h)		;a3d5
+	ld a,(0e060h)		;a3d5   ; lee 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	or a			;a3d8
 	ret z			;a3d9
 	call L_A4F0		;a3da
@@ -530,7 +530,7 @@ DATA_tabla_A3E6:
 
 
 L_A3EC:
-	ld a,(0e060h)		;a3ec
+	ld a,(0e060h)		;a3ec   ; lee 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	or a			;a3ef
 	ret z			;a3f0
 	ld a,(0e067h)		;a3f1
@@ -656,7 +656,7 @@ DATA_resto_A4A6:
 
 
 L_A4AE:
-	ld a,(0e060h)		;a4ae
+	ld a,(0e060h)		;a4ae   ; lee 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	or a			;a4b1
 	ret nz			;a4b2
 	ld a,(0dfe9h)		;a4b3
@@ -665,7 +665,7 @@ L_A4AE:
 	ld a,(0cb03h)		;a4b8   ; lee la Y de Snake
 	cp 078h		;a4bb
 	ret c			;a4bd
-	ld de,0e060h		;a4be
+	ld de,0e060h		;a4be   ; apunta a 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	ld hl,0a4e5h		;a4c1
 	ld bc,0000bh		;a4c4
 	ldir		;a4c7
@@ -760,7 +760,7 @@ L_A540:
 	dec (hl)			;a543
 	ret nz			;a544
 	xor a			;a545
-	ld (0e060h),a		;a546
+	ld (0e060h),a		;a546   ; guarda 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	ret			;a549
 L_A54A:
 	call L_A55E		;a54a
@@ -795,7 +795,7 @@ L_A577:
 	cp 018h		;a580
 	ret nc			;a582
 L_A583:
-	ld a,(0e060h)		;a583
+	ld a,(0e060h)		;a583   ; lee 1 con la ficha de 0xE063/0xE065 en la sala (p07:B29A; se coge)
 	or a			;a586
 	jr z,L_A59D		;a587
 	ld a,(0ca4ah)		;a589   ; lee la zona
@@ -1534,7 +1534,7 @@ L_AAE9:
 	ld (0d752h),a		;ab0b
 	ld a,(0cb03h)		;ab0e   ; lee la Y de Snake
 	ld b,a			;ab11
-	ld a,(0cb43h)		;ab12
+	ld a,(0cb43h)		;ab12   ; lee lo que baja la caja de Snake en los choques (p07:B5FE)
 	add a,b			;ab15
 	sub 008h		;ab16
 	and 0f8h		;ab18
@@ -1747,7 +1747,7 @@ L_AC8B:
 	cp 008h		;ac9d
 	jp z,06c77h		;ac9f   ; sonido_5c: pide el sonido 0x5C
 L_ACA2:
-	ld a,(0dff8h)		;aca2
+	ld a,(0dff8h)		;aca2   ; lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	or a			;aca5
 	ret nz			;aca6
 	ld b,007h		;aca7
@@ -1910,7 +1910,7 @@ L_ADCE:
 	ld a,(0cb0eh)		;adce   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	cp 003h		;add1
 	jp nc,06c77h		;add3   ; sonido_5c: pide el sonido 0x5C
-	ld ix,0d760h		;add6
+	ld ix,0d760h		;add6   ; apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 	ld a,(ix+000h)		;adda
 	or a			;addd
 	ret nz			;adde
@@ -1957,7 +1957,7 @@ L_ADF0:
 	inc a			;ae35
 	ld (ix+007h),a		;ae36
 	ld b,003h		;ae39
-	ld a,(0d8c0h)		;ae3b
+	ld a,(0d8c0h)		;ae3b   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;ae3e
 	jr nz,L_AE52		;ae3f
 	dec b			;ae41
@@ -2075,7 +2075,7 @@ L_AEF8:
 	ld h,(ix+003h)		;aefb
 	ret			;aefe
 L_AEFF:
-	ld ix,0d760h		;aeff
+	ld ix,0d760h		;aeff   ; apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 	ld a,(ix+000h)		;af03
 	or a			;af06
 	jr z,L_AF1B		;af07
@@ -2119,7 +2119,7 @@ L_AF39:
 	and a			;af45
 	ret			;af46
 L_AF47:
-	ld ix,0d760h		;af47
+	ld ix,0d760h		;af47   ; apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 	ld a,(ix+000h)		;af4b
 	or a			;af4e
 	ret z			;af4f
@@ -2162,7 +2162,7 @@ L_AF80:
 	ld (0cb29h),a		;af98
 	ld a,002h		;af9b
 	ld (0cb28h),a		;af9d
-	ld (0ca8dh),a		;afa0
+	ld (0ca8dh),a		;afa0   ; guarda con el, otros choques de Snake con los actores (p07:AD1E)
 	ret			;afa3
 L_AFA4:
 	sub 020h		;afa4
@@ -2171,18 +2171,18 @@ L_AFA4:
 	ld (0cb29h),a		;afaa
 	ld a,001h		;afad
 	ld (0cb28h),a		;afaf
-	ld (0ca8dh),a		;afb2
+	ld (0ca8dh),a		;afb2   ; guarda con el, otros choques de Snake con los actores (p07:AD1E)
 	ret			;afb5
 L_AFB6:
 	xor a			;afb6
-	ld (0ca8dh),a		;afb7
+	ld (0ca8dh),a		;afb7   ; guarda con el, otros choques de Snake con los actores (p07:AD1E)
 	ld (0cb28h),a		;afba
 	ld a,020h		;afbd
 	ld (0cb29h),a		;afbf
 	ret			;afc2
 L_AFC3:
 	ld b,003h		;afc3
-	ld a,(0d8c0h)		;afc5
+	ld a,(0d8c0h)		;afc5   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;afc8
 	jr nz,L_AFDC		;afc9
 	dec b			;afcb
@@ -2240,7 +2240,7 @@ L_B004:
 	ld (ix+00fh),a		;b033
 	ld a,(0cb03h)		;b036   ; lee la Y de Snake
 	ld b,a			;b039
-	ld a,(0cb43h)		;b03a
+	ld a,(0cb43h)		;b03a   ; lee lo que baja la caja de Snake en los choques (p07:B5FE)
 	add a,b			;b03d
 	sub 028h		;b03e
 	ld (ix+003h),a		;b040
@@ -2809,7 +2809,7 @@ L_B40A:
 	ret			;b41a
 L_B41B:
 	ld b,003h		;b41b
-	ld a,(0d8c0h)		;b41d
+	ld a,(0d8c0h)		;b41d   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;b420
 	jr nz,L_B434		;b421
 	dec b			;b423
@@ -2946,7 +2946,7 @@ L_B4DF:
 	ret			;b4f2
 L_B4F3:
 	ld b,003h		;b4f3
-	ld a,(0d8c0h)		;b4f5
+	ld a,(0d8c0h)		;b4f5   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;b4f8
 	jr nz,L_B50C		;b4f9
 	dec b			;b4fb
@@ -3104,7 +3104,7 @@ L_B5A2:
 	or a			;b625
 	jr nz,L_B637		;b626
 	dec b			;b628
-	ld a,(0d8c0h)		;b629
+	ld a,(0d8c0h)		;b629   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;b62c
 	jr nz,L_B637		;b62d
 	dec b			;b62f
@@ -3407,7 +3407,7 @@ L_B876:
 	pop hl			;b883
 	ret			;b884
 L_B885:
-	ld hl,0dff8h		;b885
+	ld hl,0dff8h		;b885   ; apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	ld (hl),001h		;b888
 	inc hl			;b88a
 	ld (hl),000h		;b88b
@@ -3456,11 +3456,11 @@ L_B8C2:
 	ld a,(0ca41h)		;b8c2   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	or a			;b8c5
 	jr z,L_B8CE		;b8c6
-	ld hl,0dff8h		;b8c8
+	ld hl,0dff8h		;b8c8   ; apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	ld (hl),000h		;b8cb
 	ret			;b8cd
 L_B8CE:
-	ld hl,0dff8h		;b8ce
+	ld hl,0dff8h		;b8ce   ; apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	ld a,(hl)			;b8d1
 	or a			;b8d2
 	ret z			;b8d3
@@ -3468,7 +3468,7 @@ L_B8CE:
 	jr $+97		;b8d7
 L_B8D9:
 	call L_B8F1		;b8d9
-	ld hl,0dff8h		;b8dc
+	ld hl,0dff8h		;b8dc   ; apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	ld a,(hl)			;b8df
 	or a			;b8e0
 	ret z			;b8e1
@@ -3495,7 +3495,7 @@ L_B8F1:
 	cp 0c0h		;b8fe
 	ret c			;b900
 L_B901:
-	ld hl,0dff8h		;b901
+	ld hl,0dff8h		;b901   ; apunta a con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	ld (hl),000h		;b904
 	ret			;b906
 L_B907:
@@ -3547,7 +3547,7 @@ L_B938:
 	ld (hl),0e0h		;b93e
 	ld bc,0000bh		;b940
 	ldir		;b943
-	ld a,(0dff8h)		;b945
+	ld a,(0dff8h)		;b945   ; lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	or a			;b948
 	ret z			;b949
 	call L_B95A		;b94a
@@ -4213,7 +4213,7 @@ L_BD70:
 	ld a,(0cb03h)		;bd84   ; lee la Y de Snake
 	add a,(hl)			;bd87
 	ld e,a			;bd88
-	ld a,(0cb43h)		;bd89
+	ld a,(0cb43h)		;bd89   ; lee lo que baja la caja de Snake en los choques (p07:B5FE)
 	add a,e			;bd8c
 	ld e,a			;bd8d
 	inc hl			;bd8e
@@ -4279,13 +4279,13 @@ L_BDFB:
 	djnz L_BDED		;be00
 	ret			;be02
 L_BE03:
-	ld a,(0d760h)		;be03
+	ld a,(0d760h)		;be03   ; lee una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 	or a			;be06
 	ret z			;be07
 	cp c			;be08
 	ret nz			;be09
 	xor a			;be0a
-	ld (0d760h),a		;be0b
+	ld (0d760h),a		;be0b   ; guarda una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 	ret			;be0e
 L_BE0F:
 	ld hl,0cb7ch		;be0f

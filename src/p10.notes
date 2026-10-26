@@ -40,11 +40,14 @@ F 0xBCFD 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0xA004 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xA00A lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xA01E lee la zona
 C 0xA028 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA02D lee la sala de la zona
 C 0xA03D suma_a_hl: HL = HL + A
 C 0xA067 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
+C 0xA06C lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
+C 0xA071 lee con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0xA079 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA08B despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA0B0 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -85,12 +88,16 @@ C 0xA427 a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
 C 0xA42F a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
 C 0xA440 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA445 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA477 apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xA47D borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xA483 apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xA486 lee la zona
 C 0xA496 lee la zona
 C 0xA49D lee la sala de la zona
+C 0xA4C9 apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xA4E4 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA4EE copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA4F1 apunta a 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xA527 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 C 0xA52B sonido_45: pide el sonido 0x45
 C 0xA542 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -169,6 +176,7 @@ C 0xAC27 lee la X de Snake
 C 0xAC48 lanza_6_e0: tipo 6 con el desplazamiento 0x00E0
 C 0xAC5F azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAC77 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xACB0 apunta a 2 fichas de 16 bytes; tocan a Snake con 0x18 de dano (p07:B309)
 C 0xACBC suma_a_hl: HL = HL + A
 C 0xACCA borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xACE7 sonido_1d: pide el sonido 0x1D
@@ -270,6 +278,7 @@ C 0xB48C lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 C 0xB48F despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB4B1 lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xB4B7 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xB4CB lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xB4D1 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB4D7 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xB4E3 lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -294,6 +303,7 @@ C 0xB5DE lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xB5E5 lee la sala de la zona
 C 0xB5EF lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xB5F6 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xB603 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xB60A lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0xB617 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 C 0xB623 lee la zona

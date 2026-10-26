@@ -173,11 +173,15 @@ C 0xAAD0 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAB30 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xAB39 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xAB58 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xAB7D lee el actor de 0xD434 (16 bits)
+C 0xAB81 lee 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 C 0xAB85 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAB9C mensaje_de_ix: el mensaje de la ficha IX (del banco 50) arriba o abajo segun Snake
+C 0xAB9F apunta a 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 C 0xABA4 mensaje_cada_cuadro_bancos_8: 
 C 0xABAA lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xABAF llama_7a27_1_bancos_8: 
+C 0xABB9 guarda 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 C 0xABC0 lee la Y de Snake
 C 0xABCD lee la X de Snake
 C 0xABE5 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna

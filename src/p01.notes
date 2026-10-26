@@ -1252,6 +1252,7 @@ C 0x63EB apunta a 16 fichas de 8 bytes que mueve p11:B66E
 C 0x63F1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x63F4 apunta a 8 fichas de 16 bytes que mueve p11:B494
 C 0x63FA borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x63FD apunta a una ficha de 16 bytes [sitio][..][Y][X][fila][columna]; la toca Snake en p07:B1E0
 C 0x6403 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x640B suma_a_de: DE = DE + A
 C 0x640E bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1259,6 +1260,7 @@ C 0x6411 conversacion_8008:
 C 0x641E guarda el paso del estado de la partida
 C 0x6421 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x6424 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x6427 sitio_ocupado: acarreo si la caja de (H, L, D, E) toca algo de la sala (p02:9071, al dejar una cosa): las cosas de 0xD7C0, las fichas de 0xCC00 y 0xCC80, 0xD760, cajas fijas de algunas salas, 0xD8C0, las entradas de p07:AA83, las fichas de 0xD500, las de 0xE070 (fuera de las salas especiales) y las de 0xDF80
 C 0x642C lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0x6446 guarda una espera de 16 bits que baja en la interrupcion
 C 0x645D barras_de_vida: la barra de vida y, con 0xCA5F, p04:9889
@@ -1639,6 +1641,7 @@ C 0x71B7 mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con
 C 0x71BA bancos_1_2_6: pone el 1 en 0x6000, el 2 en 0x8000, el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x71BD mosaico_a_dd4d: el mosaico de 0xE2C0 (0x14 filas de 0x0E) a 0xDD4D en filas de 0x18; 0xDEF8-0xDF3F al 0x45 y dos 0x45 en 0xDEAB, 0xDEC3, 0xDEDB y 0xDEF3
 C 0x71C2 bancos_36_37: pone el 36 en 0x8000, el 37 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x71C5 lee el numero de la entrada en la que esta (sin el 0; lo pinta p01:71C2)
 C 0x71CE suma_a_hl: HL = HL + A
 C 0x71D7 mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
 C 0x71DA bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1707,6 +1710,7 @@ C 0x7490 a_p06_aa49: p06:AA49 con el banco 6 en 0xA000
 C 0x74B0 lee el numero de la llamada
 C 0x74C2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x74CA a_p06_aa49: p06:AA49 con el banco 6 en 0xA000
+C 0x74D9 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0x74ED sala_de_al_lado: p01:7BAA
 C 0x74F1 guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x74F7 a_p10_aed6: p10:AED6 con el banco 10 en 0xA000
@@ -1736,6 +1740,7 @@ C 0x7572 p08:AB7D
 C 0x7575 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7578 a_p12_7ddc: p12:7DDC con el banco 12 en 0x6000
 C 0x757B sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
+C 0x757E lee 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 C 0x7586 llama_6055: 
 C 0x7595 borra_marcador_abajo: en la pagina de dibujar
 C 0x7598 barras_llenas: 0x20 en las tres barras: la de vida, la de la derecha y la de 0xCA54
@@ -1829,6 +1834,7 @@ C 0x77D4 lee la zona
 C 0x77E4 quita_el_rotulo: con 0xCAC7 = 2 una tecla o un disparo recien pulsados lo quitan; si no, tambien con un disparo apretado
 C 0x77EA a_p12_6d78: p12:6D78 con el banco 12 en 0x6000
 C 0x77ED bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x77F0 numeros_de_fuera: sin 0xD8C0, en las zonas 1-6, fila 3 columna 7: los numeros de las fichas 0 y 1 de 0xDC80 (p07:AB66)
 C 0x77F3 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x77F6 sonido_5e_de_fondo: sin 0xD8C0 ni sala especial, en la zona 6 (salvo las salas 7 y 0x10) y en la 8 (salas 0x0A-0x0F): cada 16 cuadros, en los tiempos 0, 1, 4, 9, 0x0A y 0x0B de 16, el sonido 0x5E
 C 0x77F9 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1855,7 +1861,7 @@ C 0x7841 mira_salir_de_la_sala: en la zona 4 sala 9, o con alerta: los actores q
 C 0x7844 acuden_al_ruido: al acabar la cuenta de 0xD446 (4 al disparar, p03:AF12), sin alerta 2: los actores van a donde estaba Snake (0xD41C)
 C 0x7847 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x784D bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7850 p07:AC38
+C 0x7850 choques_cada_cuadro: sin salir de la sala, los choques de cada cuadro: Snake con los actores, con lo que lanzan y con las fichas de 0xD800, 0xDF80, 0xCC80, 0xD4C0 y 0xD760; lo que lanza Snake con los actores y las fichas
 C 0x7853 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7856 golpe_a_d800: con la ficha 0xD800 de tipo 1 (filas 7-8 de la zona, paso 3 o mas, 0xD816) y lo lanzado por Snake de tipo 5 en el paso 3: si su casilla 0xCAEB cae en la sala de la ficha a menos de 0x40, lo quita, 0xCAEA = 1 y 8 menos a 0xD810 (a 0, el paso 0x20; si no, 0xD8B7 = 8 y el sonido 0x48)
 C 0x7859 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1921,10 +1927,15 @@ C 0x793F bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (co
 C 0x7945 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7948 sprites_df80: las fichas de 0xDF80 sin dibujo de fondo son sprites (desde el 8, 0xDC20, colores en 0xDA80)
 C 0x7951 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7960 p07:AF39
-C 0x7963 p07:B309
-C 0x7969 p07:B338
-C 0x796C p07:BE40
+C 0x7954 snake_con_lanzado: sin 0xCA8D ni 0xD445: la caja de Snake contra lo que lanzan los actores (p07:BA3A): el dano de p07:B53D y lo lanzado se acaba (p04:9CA1)
+C 0x7957 snake_con_d800: la caja de Snake contra las 4 fichas de 0xD800 (p07:B97A): las que tocan (salvo el tipo 9) hacen 4 de dano
+C 0x795A snake_con_cc80: sin 0xE1D0: la caja de Snake contra las fichas de 0xCC80 (p07:B7BF): en el estado 2 o el 0x0B, se coge (p07:B06A); si no, p07:B563
+C 0x795D snake_con_df80: la caja de Snake (p07:B6CC) contra las 8 fichas de 0xDF80 de esta sala (p07:B790): 0x12 de dano
+C 0x7960 cb44_con_d800: en la zona 0x12: la caja de 0xCB44 (p07:B84A) contra las fichas de 0xD800: 6 de dano a la ficha
+C 0x7963 snake_con_d4c0: la caja de Snake contra las 2 fichas de 0xD4C0 (p07:BA1D): 0x18 de dano y p14:AB01
+C 0x7966 df80_con_d800: cada ficha de 0xDF80 contra las de 0xD800 (p07:B991): dano 3 a la ficha (6 sin el bit 7 de su byte 7)
+C 0x7969 snake_con_d820: en la sala 2, con la ficha 0xD820 de tipo 9 en los dibujos 8-0x0B: si su caja (p07:BA71) toca a Snake, 4 de dano y, sin 0xCB54, 0xCB54 = 1 y 0xCB56 = 9
+C 0x796C choques_d800_tipo_2: con la ficha 0xD800 de tipo 2 en la sala 8, con 0xD816 y por debajo del paso 0x0A: Snake dentro de su forma va al estado 0x14 (p07:BE8E), la ficha 0 de 0xDF80 le quita vida (p07:BED8) y lo lanzado por Snake de tipos 1-2 y 6 que entra en ella se acaba
 C 0x796F bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7972 coge_cosas: salvo con 0xCB21 = 2 o saliendo: las cosas de 0xD7C0 que toca Snake se cogen
 C 0x7975 llamada_cada_cuadro: sin llamada (0xE1E8 = 0), nada
@@ -2112,7 +2123,7 @@ C 0x7D7F copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 C 0x7DD2 suma_a_hl: HL = HL + A
 C 0x7DE2 lo_fijo: p07:AB44, el mosaico de la zona 0x0A (p01:7E22), lo pisado (p01:7E7E), los mosaicos de la sala (p01:7E3C), p06:AAC8 y p06:AB21
 C 0x7DE5 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7DE8 p07:A4EB
+C 0x7DE8 d8c1_al_pintar: con 0xCB21 = 2 solo fuera de la sala especial 0x2A y sin 0xCB62; desde el paso 1 (en el 1, p07:A5D7) p07:A8D1
 C 0x7DEB bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7DF1 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7DF4 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)

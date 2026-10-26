@@ -739,7 +739,7 @@ DATA_resto_A4BA:
 
 
 sonido_5e_de_fondo:		; sin 0xD8C0 ni sala especial, en la zona 6 (salvo las salas 7 y 0x10) y en la 8 (salas 0x0A-0x0F): cada 16 cuadros, en los tiempos 0, 1, 4, 9, 0x0A y 0x0B de 16, el sonido 0x5E
-	ld a,(0d8c0h)		;a4e8
+	ld a,(0d8c0h)		;a4e8   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;a4eb
 	ret nz			;a4ec   ; con 0xD8C0, nada
 	ld a,(0ca76h)		;a4ed   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -1599,10 +1599,10 @@ mira_d883:
 	or a			;aa70
 	jr z,no_se_puede		;aa71   ; ...o 0xD68C; sin ninguno, no se puede
 mira_d8c1:
-	ld a,(0d8c1h)		;aa73
+	ld a,(0d8c1h)		;aa73   ; lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
 	cp 013h		;aa76
 	jr z,no_se_puede		;aa78   ; 0xD8C1 = 0x13: no se puede
-	ld a,(0d8c2h)		;aa7a
+	ld a,(0d8c2h)		;aa7a   ; lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 	cp 005h		;aa7d
 	jr nz,mira_rotulos		;aa7f   ; 0xD8C2 = 5...
 	ld a,(0cb5fh)		;aa81
@@ -1649,13 +1649,13 @@ no_se_puede:
 	and a			;aac6
 	ret			;aac7
 mosaico_de_d7e2:		; sin 0xD8C0, con el bit 5 de 0xD7E2 y 0xD8C2 distinto de 5: en la zona 6 sala 0x23 el mosaico de p06:AB1D (forma 3); en la 0x0B sala 7 y la 0x0D sala 3, el de p06:AB19 (forma 1); los dos de 2 x 2 en (0x28, 0x88)
-	ld a,(0d8c0h)		;aac8
+	ld a,(0d8c0h)		;aac8   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;aacb
 	ret nz			;aacc   ; con 0xD8C0, nada
 	ld a,(0d7e2h)		;aacd
 	bit 5,a		;aad0
 	ret z			;aad2   ; sin el bit 5 de 0xD7E2, nada
-	ld a,(0d8c2h)		;aad3
+	ld a,(0d8c2h)		;aad3   ; lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 	cp 005h		;aad6
 	ret z			;aad8   ; con 0xD8C2 = 5, nada
 	call sala_del_mosaico		;aad9   ; sala_del_mosaico: Z en la zona 0x0B sala 7 y en la 0x0D sala 3; en la 6 sala 0x23 pinta p06:AB1D y NZ
@@ -2835,7 +2835,7 @@ seis_lanzados_1:		; 0xD460-0xD4BF a cero, 0xD445 = 1, las 6 fichas de tipo 1 con
 	ld bc,0005fh		;b2d9   ; 0x60 bytes
 	call 04236h		;b2dc   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,001h		;b2df   ; 0xD445 = 1: lo lanzado no se mueve como siempre
-	ld (0d445h),a		;b2e1
+	ld (0d445h),a		;b2e1   ; guarda 1 mientras las 6 fichas de 0xD460 son las de p06:B2D6 (sin choques, p07:AD5C)
 	ld de,0d460h		;b2e4   ; apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 	ld hl,0b30bh		;b2e7   ; los sitios de p06:B30B
 	ld b,006h		;b2ea   ; 6 fichas

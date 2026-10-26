@@ -1458,6 +1458,7 @@ C 0x96CE lee la sala de la zona
 C 0x96D6 lee la sala de la zona
 C 0x96E0 a_p15_bf5b_guarda: p15:BF5B guardando el banco de 0xA000
 C 0x96E3 actor_nuevo: C = 0
+C 0x96E6 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0x96F7 suma_a_hl: HL = HL + A
 C 0x9707 apunta a el mapa de la sala: 24 x 24 caracteres
 C 0x9712 hueco_zona_1: en la zona 1 columna 5 filas 2-4, los 12 caracteres de 0xDF48 a 0x81
@@ -1563,6 +1564,7 @@ C 0x9A6C primer_bit: C = el primer bit a uno de A (0-3)
 C 0x9A70 lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 C 0x9A75 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9A78 avanza_hasta_choque_en: p06:B267 con la Y (L) entre 8 y 0xB7
+C 0x9A80 lee 1 mientras las 6 fichas de 0xD460 son las de p06:B2D6 (sin choques, p07:AD5C)
 C 0x9A85 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0x9A8C lee el tipo de lo lanzado
 C 0x9A92 a_p06_a7e9_guarda: p06:A7E9 guardando el banco de 0xA000

@@ -48,11 +48,14 @@ F 0xBF89 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0xA008 lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
+C 0xA00D apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xA027 suma_a_hl: HL = HL + A
+C 0xA04C apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xA052 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA055 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA061 lee la zona
 C 0xA064 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA067 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xA06E lee la sala de la zona
 C 0xA089 lee la zona
 C 0xA0A1 lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -78,6 +81,7 @@ C 0xA2CB linea_horizontal_guarda: p00:467C guardando AF, HL, DE y BC
 C 0xA2F1 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xA2F4 lee la zona
 C 0xA31B lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xA320 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xA36C despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA399 lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xA3A7 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -184,6 +188,7 @@ C 0xAAEA guarda 1: la pantalla partida en la linea 0xB4 (arriba con desplazamien
 C 0xAAF3 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xAAFF guarda la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xAB05 guarda la columna de la sala en la zona (uno mas al salir por la derecha)
+C 0xAB16 guarda con 1, lo de 0xD8C2 se acaba (p07:A03A)
 C 0xAB19 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAB23 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAB31 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -196,6 +201,7 @@ C 0xAB55 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAB5A borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xAB60 mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 C 0xAB63 lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
+C 0xAB70 guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 C 0xAB7E a_p12_69e0: p12:69E0 con el banco 12 en 0x6000
 C 0xAB81 a_p10_bce4: p10:BCE4 con el banco 10 en 0xA000
 C 0xAB84 entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15

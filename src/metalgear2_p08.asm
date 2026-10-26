@@ -1605,8 +1605,8 @@ L_AB74:
 	ld (ix+001h),000h		;ab78
 	ret			;ab7c
 L_AB7D:
-	ld ix,(0d435h)		;ab7d
-	ld a,(0d434h)		;ab81
+	ld ix,(0d435h)		;ab7d   ; lee el actor de 0xD434 (16 bits)
+	ld a,(0d434h)		;ab81   ; lee 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 	dec a			;ab84
 	call 0424dh		;ab85   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -1630,7 +1630,7 @@ L_AB8E:
 	call nz,L_ABBD		;ab99
 	call 06211h		;ab9c   ; mensaje_de_ix: el mensaje de la ficha IX (del banco 50) arriba o abajo segun Snake
 L_AB9F:
-	ld hl,0d434h		;ab9f
+	ld hl,0d434h		;ab9f   ; apunta a 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 	inc (hl)			;aba2
 	ret			;aba3
 L_ABA4:
@@ -1645,7 +1645,7 @@ L_ABAA:
 	ld a,(ix+015h)		;abb2
 	ld (ix+00dh),a		;abb5
 	xor a			;abb8
-	ld (0d434h),a		;abb9
+	ld (0d434h),a		;abb9   ; guarda 1 cuando un actor 0x10-0x16 toca a Snake (p07:AD0E)
 	ret			;abbc
 L_ABBD:
 	ld bc,00202h		;abbd

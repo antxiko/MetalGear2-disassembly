@@ -1424,6 +1424,7 @@ C 0x895B guarda la Y de Snake
 C 0x8963 guarda la X de Snake
 C 0x8971 borra_df80_y_cb80: 0xDFF8 = 0
 C 0x897C limpia_sprites_y_d300: 
+C 0x8983 guarda con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 C 0x898C borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x8995 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x89C3 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
@@ -1443,14 +1444,14 @@ C 0x8A91 borra_caf1: 0xCAF1 = 0xD443 = 0xCAF6 = 0
 C 0x8ABE bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8AC1 p10:BC27
 C 0x8AC6 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AC9 p07:A000
+C 0x8AC9 borra_d8c0: 0xD8C0-0xD8CD a cero
 C 0x8ACC bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8ACF bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AD2 p07:A009
+C 0x8AD2 d8c1_cada_cuadro: p07:A03A y el paso 0xD8C1 (p07:A012, 20 pasos)
 C 0x8AD7 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8ADA p07:A985
+C 0x8ADA dc80_de_p57: las 10 fichas de 8 bytes de p57:8000 a 0xDC80
 C 0x8ADF bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AE2 p07:A996
+C 0x8AE2 fichas_dc80: cada 0x20 cuadros, las fichas de 0xDC80 (la de tipo 0x0A solo con 0xD8C2 = 0x0A) cambian de entrada (p07:A9C9) y de numero (p07:A9F9)
 C 0x8AE7 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8AEA a_p06_a387: p06:A387 con el banco 6 en 0xA000
 C 0x8AEF bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1497,7 +1498,7 @@ C 0x8B93 p11:A000
 C 0x8B98 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B9B p11:A117
 C 0x8BA0 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BA3 p07:AB44
+C 0x8BA3 numeros_de_fuera: sin 0xD8C0, en las zonas 1-6, fila 3 columna 7: los numeros de las fichas 0 y 1 de 0xDC80 (p07:AB66)
 C 0x8BA8 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BAB p11:B9C1
 C 0x8BB0 bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1505,14 +1506,15 @@ C 0x8BB3 p11:BA03
 C 0x8BB8 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BBB p10:BFBC
 C 0x8BC0 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8BC3 se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 C 0x8BC8 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BCB p07:AED1
+C 0x8BCB delante_con_actores: la caja de delante de Snake (p07:B70F) contra cada actor: salvo el 0x0A, los de tipo menor de 0x10 reciben el golpe (p07:B3DA); los 0x10-0x11 hacen 4 de dano a Snake
 C 0x8BD0 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BD3 p07:AF0D
+C 0x8BD3 delante_con_d800: la caja de delante de Snake contra las fichas de 0xD800 (salvo el tipo 0x0A): 1 de dano a la ficha
 C 0x8BD8 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BDB p07:B6CC
+C 0x8BDB caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 C 0x8BE0 bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8BE3 p07:B5CC
+C 0x8BE3 caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 C 0x8BE8 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BEB p11:BDBD
 C 0x8BEE bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1714,9 +1716,9 @@ C 0x8F98 gasta_una: la cosa A una menos; con 1 y 2, nada mas; si se acaba, fuera
 C 0x8F9D bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8FA0 llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 C 0x8FA5 bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8FA8 p07:BF5C
+C 0x8FA8 toca_e230_o_fijas: acarreo si la caja de (H, L, D, E) toca la ficha 0xE230, la caja de la zona 0x0C sala 6 o alguna de las de p12:7F25
 C 0x8FAD bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8FB0 p07:BB10
+C 0x8FB0 sitio_ocupado: acarreo si la caja de (H, L, D, E) toca algo de la sala (p02:9071, al dejar una cosa): las cosas de 0xD7C0, las fichas de 0xCC00 y 0xCC80, 0xD760, cajas fijas de algunas salas, 0xD8C0, las entradas de p07:AA83, las fichas de 0xD500, las de 0xE070 (fuera de las salas especiales) y las de 0xDF80
 C 0x8FB3 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8FB6 apunta a las cosas dejadas: 0x23 en 0xD770, 0x29 en 0xD775, la de la especial 0x29 en 0xD77A
 C 0x8FBE llena_bloque: pone A en BC + 1 bytes desde HL
@@ -1955,6 +1957,7 @@ C 0x996F lee la X de Snake
 C 0x9976 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x997A es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 C 0x997D cuatro_hacia_abajo: acarreo si (H, L) y los 3 puntos de 8 en 8 hacia abajo son solidos o estan fuera
+C 0x9988 apunta a con el, otros choques de Snake con los actores (p07:AD1E)
 C 0x999C lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x99A4 busca_zona_0b: solo yendo arriba o abajo
 C 0x99A7 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)

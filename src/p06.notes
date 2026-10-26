@@ -1343,6 +1343,7 @@ C 0xA457 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA461 lee la zona
 C 0xA468 lee la sala de la zona
 C 0xA4A4 mosaico_forma_a: el mosaico de HL en (D, E) con la forma A (0, 1 o 2) de la franja 2
+C 0xA4E8 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 C 0xA4ED lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA4F2 sin_sonido_5e: acarreo (sin el sonido) salvo en la zona 6 (no en las salas 7 y 0x10) y en la 8 salas 0x0A-0x0F
 C 0xA51C sonido_5e: pide el sonido 0x5E
@@ -1413,10 +1414,14 @@ C 0xA9B9 sprite_en_su_sitio: el sprite de HL: la Y + D, la X + E y el patron C
 C 0xAA22 apunta a los 22 sprites que se reparten los actores (1 = ocupado)
 C 0xAA26 suma_a_hl: HL = HL + A
 C 0xAA33 sprite_de_lanzado: HL = el sprite (byte 0x0E) desde el 10 (0xDC28)
+C 0xAA73 lee el paso de lo de 0xD8C2 (20 pasos, p07:A012)
+C 0xAA7A lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xAA87 lee 1 mientras se ve el rotulo de la cosa cogida
 C 0xAA96 lee la direccion en la que se mira la sala de al lado (estado 0x0E)
 C 0xAA9B lee 1 en pausa (F1)
 C 0xAAA0 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xAAC8 lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
+C 0xAAD3 lee la entrada de p07:AA83 junto a la que esta Snake (su numero, p07:A543)
 C 0xAAD9 sala_del_mosaico: Z en la zona 0x0B sala 7 y en la 0x0D sala 3; en la 6 sala 0x23 pinta p06:AB1D y NZ
 C 0xAAE3 mosaico_AB19: un mosaico de 2 x 2 caracteres, un byte cada uno
 C 0xAAE6 mosaico_f2_b1: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 1 (p00:512C)
@@ -1505,6 +1510,7 @@ C 0xB256 avanza_hasta_choque: (H, L) avanza de 2 en 2 en la direccion A (p06:B2C
 C 0xB26E lee la Y y la X a las que acuden los actores (16 bits)
 C 0xB2D6 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB2DC borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0xB2E1 guarda 1 mientras las 6 fichas de 0xD460 son las de p06:B2D6 (sin choques, p07:AD5C)
 C 0xB2E4 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB2FD suma_a_de: DE = DE + A
 C 0xB308 rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)

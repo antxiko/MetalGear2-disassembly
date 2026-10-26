@@ -31,7 +31,7 @@ L_A008:
 	ld a,(0ca1ch)		;a008   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;a00b
 	ret nz			;a00c
-	ld ix,0d500h		;a00d
+	ld ix,0d500h		;a00d   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld b,008h		;a011
 L_A013:
 	push bc			;a013
@@ -66,7 +66,7 @@ L_A040:
 L_A049:
 	call L_A1E2		;a049
 L_A04C:
-	ld hl,0d500h		;a04c
+	ld hl,0d500h		;a04c   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld bc,0007fh		;a04f
 	call 04236h		;a052   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,(0ca76h)		;a055   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -77,7 +77,7 @@ L_A04C:
 	ld a,(0ca4ah)		;a061   ; lee la zona
 L_A064:
 	call 043f6h		;a064   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld ix,0d500h		;a067
+	ld ix,0d500h		;a067   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 L_A06B:
 	ld a,(hl)			;a06b
 	inc a			;a06c
@@ -477,7 +477,7 @@ L_A316:
 	ld a,(0ca41h)		;a31b   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	and a			;a31e
 	ret nz			;a31f
-	ld ix,0d500h		;a320
+	ld ix,0d500h		;a320   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 	ld bc,00800h		;a324
 L_A327:
 	ld a,(ix+000h)		;a327
@@ -1721,7 +1721,7 @@ L_AAF6:
 	pop hl			;ab12
 	dec hl			;ab13
 	ld a,001h		;ab14
-	ld (0d8ceh),a		;ab16
+	ld (0d8ceh),a		;ab16   ; guarda con 1, lo de 0xD8C2 se acaba (p07:A03A)
 	ld (0cb14h),a		;ab19   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 	ld d,(ix+000h)		;ab1c
 	ld (ix+000h),000h		;ab1f
@@ -1761,7 +1761,7 @@ L_AB4F:
 	ld (0d44ch),a		;ab67
 	ld (0d44dh),a		;ab6a
 	ld (0d44eh),a		;ab6d
-	ld (0e070h),a		;ab70
+	ld (0e070h),a		;ab70   ; guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
 	ld (0e078h),a		;ab73
 	pop bc			;ab76
 	call L_ABB9		;ab77

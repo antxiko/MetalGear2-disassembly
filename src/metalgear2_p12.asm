@@ -3269,7 +3269,7 @@ L_7688:
 	cp 002h		;769a
 	ret nc			;769c
 	xor a			;769d
-	ld (0cb43h),a		;769e
+	ld (0cb43h),a		;769e   ; guarda lo que baja la caja de Snake en los choques (p07:B5FE)
 	call 04198h		;76a1   ; bancos_63: pone el 63 en 0xA000 (con su copia en 0xC381-0xC383)
 	call L_76C5		;76a4
 	call L_7DA0		;76a7
@@ -4074,7 +4074,7 @@ L_7C25:
 	cp 001h		;7c2a
 	ret nz			;7c2c
 	ld a,00bh		;7c2d
-	ld (0cb43h),a		;7c2f
+	ld (0cb43h),a		;7c2f   ; guarda lo que baja la caja de Snake en los choques (p07:B5FE)
 	ld hl,0dc00h		;7c32   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld de,0dc08h		;7c35
 	ld a,(hl)			;7c38
@@ -4110,10 +4110,10 @@ L_7C5E:
 	ld b,a			;7c66
 	ld a,020h		;7c67
 	sub b			;7c69
-	ld (0cb43h),a		;7c6a
+	ld (0cb43h),a		;7c6a   ; guarda lo que baja la caja de Snake en los choques (p07:B5FE)
 	ret			;7c6d
 L_7C6E:
-	ld a,(0cb43h)		;7c6e
+	ld a,(0cb43h)		;7c6e   ; lee lo que baja la caja de Snake en los choques (p07:B5FE)
 	ld c,a			;7c71
 L_7C72:
 	ld hl,0dc00h		;7c72   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
@@ -4286,7 +4286,7 @@ L_7D7B:
 	or a			;7d7e
 	ret z			;7d7f
 	ld a,010h		;7d80
-	ld (0cb43h),a		;7d82
+	ld (0cb43h),a		;7d82   ; guarda lo que baja la caja de Snake en los choques (p07:B5FE)
 	ld bc,00210h		;7d85
 	ld a,(0cb16h)		;7d88   ; lee 1 mientras Snake se da la vuelta
 	or a			;7d8b

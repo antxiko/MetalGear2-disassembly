@@ -101,6 +101,7 @@ C 0xA758 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00
 C 0xA763 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0xAA5E lee la zona
 C 0xAA64 lee la sala de la zona
+C 0xAA6A apunta a 2 fichas de 16 bytes; tocan a Snake con 0x18 de dano (p07:B309)
 C 0xAA91 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAA9C lee la Y de Snake
 C 0xAAA5 lee la X de Snake
@@ -303,6 +304,7 @@ C 0xB921 suma_a_hl: HL = HL + A
 C 0xB92C pinta_actor_bancos_14: 
 C 0xB934 apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xB93C lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xB941 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
 C 0xB96D suma_a_hl: HL = HL + A
 C 0xB971 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xB9DC lee la sala especial (0 = ninguna; indice de p24:64B6)

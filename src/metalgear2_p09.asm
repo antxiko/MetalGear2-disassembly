@@ -4175,7 +4175,7 @@ L_BF42:
 	ld a,(0ca5fh)		;bf63   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;bf66
 	jr nz,L_BF86		;bf67
-	ld a,(0d8c0h)		;bf69
+	ld a,(0d8c0h)		;bf69   ; lee 1 con Snake dentro de lo de 0xD8C2 (p07:A40D; 0 al salir, p07:A69A)
 	or a			;bf6c
 	jr nz,L_BF86		;bf6d
 	ld a,(0d790h)		;bf6f

@@ -1411,7 +1411,7 @@ L_8957:
 	jp 052d2h		;897f   ; y otra vez en la sala
 borra_df80_y_cb80:		; 0xDFF8 = 0
 	xor a			;8982
-	ld (0dff8h),a		;8983
+	ld (0dff8h),a		;8983   ; guarda con el, la caja de 0xDFFD/0xDFFE choca (p07:B149)
 	ld hl,0df80h		;8986   ; 0xDF80-0xDFBF a cero
 	ld bc,0003fh		;8989
 	call 04236h		;898c   ; borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -1582,20 +1582,20 @@ a_p10_bc27:		; p10:BC27 con el banco 10 en 0xA000
 	jr L_8ACC		;8ac4
 a_p07_a000:		; p07:A000 con el banco 7 en 0xA000
 	call 041b0h		;8ac6   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a000h		;8ac9   ; p07:A000
+	call 0a000h		;8ac9   ; borra_d8c0: 0xD8C0-0xD8CD a cero
 L_8ACC:
 	jp 040f0h		;8acc   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p07_a009:		; p07:A009 con el banco 7 en 0xA000
 	call 041b0h		;8acf   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a009h		;8ad2   ; p07:A009
+	call 0a009h		;8ad2   ; d8c1_cada_cuadro: p07:A03A y el paso 0xD8C1 (p07:A012, 20 pasos)
 	jr L_8B4D		;8ad5
 a_p07_a985:		; p07:A985 con el banco 7 en 0xA000
 	call 041b0h		;8ad7   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a985h		;8ada   ; p07:A985
+	call 0a985h		;8ada   ; dc80_de_p57: las 10 fichas de 8 bytes de p57:8000 a 0xDC80
 	jr L_8B4D		;8add
 a_p07_a996:		; p07:A996 con el banco 7 en 0xA000
 	call 041b0h		;8adf   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a996h		;8ae2   ; p07:A996
+	call 0a996h		;8ae2   ; fichas_dc80: cada 0x20 cuadros, las fichas de 0xDC80 (la de tipo 0x0A solo con 0xD8C2 = 0x0A) cambian de entrada (p07:A9C9) y de numero (p07:A9F9)
 	jr L_8B4D		;8ae5
 L_8AE7:
 	call 041b0h		;8ae7   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1692,7 +1692,7 @@ a_p11_a117:		; p11:A117 con el banco 11 en 0xA000
 	jr L_8B4D		;8b9e
 a_p07_ab44:		; p07:AB44 con el banco 7 en 0xA000
 	call 041b0h		;8ba0   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ab44h		;8ba3   ; p07:AB44
+	call 0ab44h		;8ba3   ; numeros_de_fuera: sin 0xD8C0, en las zonas 1-6, fila 3 columna 7: los numeros de las fichas 0 y 1 de 0xDC80 (p07:AB66)
 	jr L_8B4D		;8ba6
 a_p11_b9c1:		; p11:B9C1 con el banco 11 en 0xA000
 	call 041d2h		;8ba8   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1708,23 +1708,23 @@ a_p10_bfbc:		; p10:BFBC con el banco 10 en 0xA000
 	jr L_8B4D		;8bbe
 a_p07_b5af:		; p07:B5AF con el banco 7 en 0xA000
 	call 041b0h		;8bc0   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b5afh		;8bc3
+	call 0b5afh		;8bc3   ; se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 	jr L_8B4D		;8bc6
 a_p07_aed1:		; p07:AED1 con el banco 7 en 0xA000
 	call 041adh		;8bc8   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aed1h		;8bcb   ; p07:AED1
+	call 0aed1h		;8bcb   ; delante_con_actores: la caja de delante de Snake (p07:B70F) contra cada actor: salvo el 0x0A, los de tipo menor de 0x10 reciben el golpe (p07:B3DA); los 0x10-0x11 hacen 4 de dano a Snake
 	jr L_8BEE		;8bce
 a_p07_af0d:		; p07:AF0D con el banco 7 en 0xA000
 	call 041adh		;8bd0   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0af0dh		;8bd3   ; p07:AF0D
+	call 0af0dh		;8bd3   ; delante_con_d800: la caja de delante de Snake contra las fichas de 0xD800 (salvo el tipo 0x0A): 1 de dano a la ficha
 	jr L_8BEE		;8bd6
 a_p07_b6cc:		; p07:B6CC con el banco 7 en 0xA000
 	call 041adh		;8bd8   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b6cch		;8bdb   ; p07:B6CC
+	call 0b6cch		;8bdb   ; caja_de_snake_c: sin 0xCB32, la caja del dibujo de Snake (p07:B6E9) bajada 0xCB43
 	jr L_8BEE		;8bde
 a_p07_b5cc:		; p07:B5CC con el banco 7 en 0xA000
 	call 041adh		;8be0   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b5cch		;8be3   ; p07:B5CC
+	call 0b5cch		;8be3   ; caja_de_snake: la caja de Snake segun su dibujo (p07:B624) bajada 0xCB43 y con 0xCB28 (p07:B608); NZ sin caja: con 0xCB32 (salvo en la zona 0x0A salas 0x0B, 0x0C, 0x10 y 0x11 o con 0xCA8D); con 0xCA8D, la caja sin mas
 	jr L_8BEE		;8be6
 a_p11_bdbd:		; p11:BDBD con el banco 11 en 0xA000
 	call 041d5h		;8be8   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2253,11 +2253,11 @@ a_p03_b108:		; p03:B108 con el banco 3 en 0xA000
 	jr L_8F60		;8fa3
 a_p07_bf5c:		; p07:BF5C con el banco 7 en 0xA000
 	call 041b0h		;8fa5   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bf5ch		;8fa8   ; p07:BF5C
+	call 0bf5ch		;8fa8   ; toca_e230_o_fijas: acarreo si la caja de (H, L, D, E) toca la ficha 0xE230, la caja de la zona 0x0C sala 6 o alguna de las de p12:7F25
 	jr L_8F60		;8fab
 a_p07_bb10:		; p07:BB10 con el banco 7 en 0xA000
 	call 041b0h		;8fad   ; bancos_7: pone el 7 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bb10h		;8fb0   ; p07:BB10
+	call 0bb10h		;8fb0   ; sitio_ocupado: acarreo si la caja de (H, L, D, E) toca algo de la sala (p02:9071, al dejar una cosa): las cosas de 0xD7C0, las fichas de 0xCC00 y 0xCC80, 0xD760, cajas fijas de algunas salas, 0xD8C0, las entradas de p07:AA83, las fichas de 0xD500, las de 0xE070 (fuera de las salas especiales) y las de 0xDF80
 	jp 040f0h		;8fb3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 prepara_d770:		; la tabla de 0xD770 (16 bytes) a 0xFF, con 0x20, 0x22, 0xA4 y 0x21 en sus sitios, y 0xD780-0xD783 a 0xFF
 	ld hl,0d770h		;8fb6   ; apunta a las cosas dejadas: 0x23 en 0xD770, 0x29 en 0xD775, la de la especial 0x29 en 0xD77A
@@ -3839,7 +3839,7 @@ DATA_resto_9980:
 
 
 zonas_de_estado_0b:		; con 0xCA8D puesto, solo con 0xCB29 = 0x20 (y lo borra)
-	ld hl,0ca8dh		;9988
+	ld hl,0ca8dh		;9988   ; apunta a con el, otros choques de Snake con los actores (p07:AD1E)
 	ld a,(hl)			;998b   ; con 0xCA8D...
 	or a			;998c
 	jr z,L_9997		;998d
