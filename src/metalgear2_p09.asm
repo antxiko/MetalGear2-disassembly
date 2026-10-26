@@ -831,7 +831,7 @@ L_A606:
 	ld a,(0ca03h)		;a606   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;a609
 	ret c			;a60a
-	call 08cb3h		;a60b
+	call 08cb3h		;a60b   ; p02:8CB3
 	ld b,060h		;a60e
 	ld hl,0cb03h		;a610   ; apunta a la Y de Snake
 	ld a,(hl)			;a613
@@ -845,7 +845,7 @@ L_A61E:
 	ld a,(0ca03h)		;a61e   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;a621
 	ret c			;a622
-	call 08cb3h		;a623
+	call 08cb3h		;a623   ; p02:8CB3
 	ld b,020h		;a626
 	ld hl,0cb05h		;a628   ; apunta a la X de Snake
 	ld a,(hl)			;a62b
@@ -898,7 +898,7 @@ L_A66D:
 	ld d,a			;a680
 	call 046ffh		;a681   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	call 06b12h		;a684   ; sonido_05: pide el sonido 0x05
-	call 08e81h		;a687
+	call 08e81h		;a687   ; p02:8E81
 	ld hl,06b41h		;a68a
 	ld (0ca19h),hl		;a68d   ; guarda la musica pendiente: la rutina que la pide (16 bits)
 	ld hl,0ca18h		;a690   ; apunta a la espera hasta poner la musica pendiente
@@ -928,7 +928,7 @@ L_A6BA:
 	ld a,(0ca03h)		;a6bf   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;a6c2
 	ret c			;a6c3
-	call 08cb3h		;a6c4
+	call 08cb3h		;a6c4   ; p02:8CB3
 	ld a,(0cb03h)		;a6c7   ; lee la Y de Snake
 	cp 03eh		;a6ca
 	ret nc			;a6cc
@@ -974,7 +974,7 @@ L_A714:
 	ld a,(0ca03h)		;a71a   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;a71d
 	ret nz			;a71f
-	call 08cb3h		;a720
+	call 08cb3h		;a720   ; p02:8CB3
 	ld a,(0cb05h)		;a723   ; lee la X de Snake
 	cp 051h		;a726
 	ret nc			;a728
@@ -1026,9 +1026,9 @@ L_A77B:
 L_A78C:
 	call 08ccbh		;a78c   ; paleta_b914_b_9: paleta_b914 y deja el banco 9
 	xor a			;a78f
-	call 08e2eh		;a790
+	call 08e2eh		;a790   ; p02:8E2E
 	ld a,009h		;a793
-	call 08e2eh		;a795
+	call 08e2eh		;a795   ; p02:8E2E
 	xor a			;a798
 	ld b,a			;a799
 	ld de,01018h		;a79a
@@ -1060,7 +1060,7 @@ L_A7D3:
 	ld a,001h		;a7d7
 	call 08e26h		;a7d9   ; a_p03_b866: p03:B866 con el banco 3 en 0xA000
 	call 08ce8h		;a7dc   ; a_p03_b65d: p03:B65D con el banco 3 en 0xA000
-	call 08c29h		;a7df
+	call 08c29h		;a7df   ; p02:8C29
 	call L_A754		;a7e2
 	call L_A7EB		;a7e5
 	jp L_A6CD		;a7e8
@@ -1116,7 +1116,7 @@ L_A848:
 	ld (0caa0h),a		;a854   ; guarda cuantos siguen a Snake por su rastro (1-4)
 	call 098bfh		;a857   ; estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 	call 08cf0h		;a85a   ; dibujos_de_sala_b_9: dibujos_de_sala y deja el banco 9
-	call 08e81h		;a85d
+	call 08e81h		;a85d   ; p02:8E81
 	jp 06be8h		;a860   ; orden_sonido_f6: la orden 0xF6 al sonido
 L_A863:
 	ld a,(0e041h)		;a863
@@ -1168,9 +1168,9 @@ L_A8AD:
 L_A8B5:
 	call 08ccbh		;a8b5   ; paleta_b914_b_9: paleta_b914 y deja el banco 9
 	xor a			;a8b8
-	call 08e2eh		;a8b9
+	call 08e2eh		;a8b9   ; p02:8E2E
 	ld a,009h		;a8bc
-	call 08e2eh		;a8be
+	call 08e2eh		;a8be   ; p02:8E2E
 	xor a			;a8c1
 	ld b,a			;a8c2
 	ld de,01018h		;a8c3
@@ -1241,7 +1241,7 @@ L_A94E:
 	xor a			;a951
 	ld (0e040h),a		;a952
 	call 06b12h		;a955   ; sonido_05: pide el sonido 0x05
-	call 08e81h		;a958
+	call 08e81h		;a958   ; p02:8E81
 	ld hl,0ca18h		;a95b   ; apunta a la espera hasta poner la musica pendiente
 	ld (hl),0ffh		;a95e
 	ret			;a960
@@ -1503,7 +1503,7 @@ L_AB75:
 	ret c			;ab79
 	ld hl,0cae4h		;ab7a
 	ld (hl),03ch		;ab7d
-	call 08cb3h		;ab7f
+	call 08cb3h		;ab7f   ; p02:8CB3
 	ld a,(0cb05h)		;ab82   ; lee la X de Snake
 	cp 088h		;ab85
 	ret c			;ab87
@@ -1532,9 +1532,9 @@ L_ABB3:
 	ld (0e249h),a		;abba
 	call 08ccbh		;abbd   ; paleta_b914_b_9: paleta_b914 y deja el banco 9
 	xor a			;abc0
-	call 08e2eh		;abc1
+	call 08e2eh		;abc1   ; p02:8E2E
 	ld a,009h		;abc4
-	call 08e2eh		;abc6
+	call 08e2eh		;abc6   ; p02:8E2E
 	xor a			;abc9
 	ld (0d4ech),a		;abca
 	ld b,a			;abcd
@@ -1573,7 +1573,7 @@ L_AC07:
 	ld a,001h		;ac0b
 	call 08e26h		;ac0d   ; a_p03_b866: p03:B866 con el banco 3 en 0xA000
 	call 08ce8h		;ac10   ; a_p03_b65d: p03:B65D con el banco 3 en 0xA000
-	call 08c29h		;ac13
+	call 08c29h		;ac13   ; p02:8C29
 	call L_A7EB		;ac16
 	xor a			;ac19
 	ld (0cab6h),a		;ac1a
@@ -1725,9 +1725,9 @@ L_AD37:
 	call L_A89A		;ad37
 	call 08ccbh		;ad3a   ; paleta_b914_b_9: paleta_b914 y deja el banco 9
 	xor a			;ad3d
-	call 08e2eh		;ad3e
+	call 08e2eh		;ad3e   ; p02:8E2E
 	ld a,008h		;ad41
-	call 08e2eh		;ad43
+	call 08e2eh		;ad43   ; p02:8E2E
 	xor a			;ad46
 	ld b,a			;ad47
 	ld de,01018h		;ad48
@@ -1747,7 +1747,7 @@ L_AD64:
 	ld a,001h		;ad68
 	call 08e26h		;ad6a   ; a_p03_b866: p03:B866 con el banco 3 en 0xA000
 	call 08ce8h		;ad6d   ; a_p03_b65d: p03:B65D con el banco 3 en 0xA000
-	call 08c29h		;ad70
+	call 08c29h		;ad70   ; p02:8C29
 	call 08d1dh		;ad73   ; p02:8D1D
 	call 08547h		;ad76   ; mosaico_ae3b_b_bancos_9:
 	call 07129h		;ad79   ; mosaico_b9d8_f7: el mosaico de p45:B9D8 con la forma 7 de la franja 3
@@ -1767,7 +1767,7 @@ L_AD9A:
 	ld a,(0ca03h)		;ad9a   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;ad9d
 	ret c			;ad9e
-	call 08cb3h		;ad9f
+	call 08cb3h		;ad9f   ; p02:8CB3
 	ld a,(0cb05h)		;ada2   ; lee la X de Snake
 	cp 074h		;ada5
 	ret nc			;ada7
@@ -1778,7 +1778,7 @@ L_ADB0:
 	ld a,(0ca03h)		;adb0   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;adb3
 	ret c			;adb4
-	call 08cb3h		;adb5
+	call 08cb3h		;adb5   ; p02:8CB3
 	ld a,(0cb03h)		;adb8   ; lee la Y de Snake
 	cp 080h		;adbb
 	ret nc			;adbd
@@ -1799,7 +1799,7 @@ L_ADC7:
 	ld hl,0d7dah		;addf
 	set 0,(hl)		;ade2
 	call 098bfh		;ade4   ; estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
-	jp 08e81h		;ade7
+	jp 08e81h		;ade7   ; p02:8E81
 L_ADEA:
 	ld a,(0ca42h)		;adea   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld b,a			;aded
@@ -2012,9 +2012,9 @@ L_AFBA:
 L_AFBF:
 	call 08ccbh		;afbf   ; paleta_b914_b_9: paleta_b914 y deja el banco 9
 	xor a			;afc2
-	call 08e2eh		;afc3
+	call 08e2eh		;afc3   ; p02:8E2E
 	ld a,004h		;afc6
-	call 08e2eh		;afc8
+	call 08e2eh		;afc8   ; p02:8E2E
 	xor a			;afcb
 	ld b,a			;afcc
 	ld de,01018h		;afcd
@@ -2270,9 +2270,9 @@ L_B1A2:
 L_B1B7:
 	call 08ccbh		;b1b7   ; paleta_b914_b_9: paleta_b914 y deja el banco 9
 	xor a			;b1ba
-	call 08e2eh		;b1bb
+	call 08e2eh		;b1bb   ; p02:8E2E
 	ld a,004h		;b1be
-	call 08e2eh		;b1c0
+	call 08e2eh		;b1c0   ; p02:8E2E
 	xor a			;b1c3
 	ld b,a			;b1c4
 	ld de,01018h		;b1c5
@@ -2565,7 +2565,7 @@ L_B3C4:
 	jr L_B3F5		;b3e7
 L_B3E9:
 	ld (0cb0eh),a		;b3e9   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	call 08cb3h		;b3ec
+	call 08cb3h		;b3ec   ; p02:8CB3
 	ld a,(0cb03h)		;b3ef   ; lee la Y de Snake
 	cp 059h		;b3f2
 	ret nc			;b3f4
@@ -2581,14 +2581,14 @@ L_B3FB:
 	jr nc,L_B415		;b404
 	inc a			;b406
 	ld (0cb0eh),a		;b407   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	call 08cb3h		;b40a
+	call 08cb3h		;b40a   ; p02:8CB3
 	ld a,(0cb05h)		;b40d   ; lee la X de Snake
 	cp 050h		;b410
 	ret c			;b412
 	jr L_B421		;b413
 L_B415:
 	ld (0cb0eh),a		;b415   ; guarda la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	call 08cb3h		;b418
+	call 08cb3h		;b418   ; p02:8CB3
 	ld a,(0cb05h)		;b41b   ; lee la X de Snake
 	cp 051h		;b41e
 	ret nc			;b420
@@ -2992,7 +2992,7 @@ L_B75F:
 	ld a,00bh		;b764
 	jp z,08e2eh		;b766   ; p02:8E2E
 	xor a			;b769
-	jp 08e2eh		;b76a
+	jp 08e2eh		;b76a   ; p02:8E2E
 L_B76D:
 	ld a,(0ca97h)		;b76d   ; lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 	or a			;b770
@@ -3412,7 +3412,7 @@ L_BA47:
 	ld (hl),001h		;ba4e
 	inc a			;ba50
 	push af			;ba51
-	call 08e2eh		;ba52
+	call 08e2eh		;ba52   ; p02:8E2E
 	pop af			;ba55
 	ld de,09018h		;ba56
 	ld b,001h		;ba59
@@ -3500,8 +3500,8 @@ L_BAC1:
 L_BAF4:
 	ld a,(0ca5fh)		;baf4   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	or a			;baf7
-	jp nz,08c24h		;baf8
-	jp 08e81h		;bafb
+	jp nz,08c24h		;baf8   ; p02:8C24
+	jp 08e81h		;bafb   ; p02:8E81
 L_BAFE:
 	call 06b12h		;bafe   ; sonido_05: pide el sonido 0x05
 	call L_BAF4		;bb01

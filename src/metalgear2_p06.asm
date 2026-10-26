@@ -1379,11 +1379,11 @@ lanza_el_3:		; lo lanzado de tipo 3 (IY) desde el actor IX: el sonido 0x0E, dos 
 	ld (iy+005h),a		;a914
 	ld a,007h		;a917   ; el color 7 al sprite C...
 	push bc			;a919
-	call 09c5bh		;a91a
+	call 09c5bh		;a91a   ; color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
 	pop bc			;a91d
 	inc c			;a91e   ; ...y el 0x48 al siguiente
 	ld a,048h		;a91f
-	jp 09c5bh		;a921
+	jp 09c5bh		;a921   ; color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
 lanza_el_7:		; lo lanzado de tipo 7 (IY): el sonido 0x43, el sprite C (color 7), 6 cuadros, en (H, L) de 0xD8E6
 	call 06c2bh		;a924   ; sonido_43: pide el sonido 0x43
 	ld (hl),001h		;a927   ; su sprite ocupado
@@ -1394,7 +1394,7 @@ lanza_el_7:		; lo lanzado de tipo 7 (IY): el sonido 0x43, el sprite C (color 7),
 	ld (iy+003h),h		;a937
 	ld (iy+005h),l		;a93a
 	ld a,007h		;a93d   ; ...y el color 7
-	jp 09c5bh		;a93f
+	jp 09c5bh		;a93f   ; color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
 desplazamiento_de_4:		; 0xD43C = el desplazamiento de p06:A952 segun el dibujo del actor ((byte 0x0D / 2) & 3)
 	ld a,(ix+00dh)		;a942
 	rrca			;a945   ; (dibujo / 2) & 3
@@ -2076,7 +2076,7 @@ DATA_resto_AD5A_AD92:
 
 error_de_disco:		; p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	push bc			;ad94
-	call 065c1h		;ad95
+	call 065c1h		;ad95   ; p12:65C1
 	pop bc			;ad98
 mensaje_de_error:		; el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
 	ld a,c			;ad99

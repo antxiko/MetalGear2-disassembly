@@ -34,9 +34,9 @@ actor_0a_espera:		; al acabar la espera: 0xD441 = 0; en esta sala, sus sprites y
 	ret nz			;a004
 	xor a			;a005
 	ld (0d441h),a		;a006
-	call 08100h		;a009
+	call 08100h		;a009   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_A016		;a00c
-	call 08153h		;a00e
+	call 08153h		;a00e   ; pinta_actor: sus sprites (p04:81C5) con el banco 8
 	ld a,0ffh		;a011
 	ld (0d514h),a		;a013
 L_A016:
@@ -81,9 +81,9 @@ L_A05E:
 espera_aviso_y_3:		; al acabar la espera: el aviso 0x8B, la direccion 3 y el paso siguiente
 	dec (ix+00eh)		;a062   ; baja la espera del actor
 	ret nz			;a065
-	call 09d25h		;a066
+	call 09d25h		;a066   ; aviso_8b_20:
 	ld a,003h		;a069
-	call 08e25h		;a06b
+	call 08e25h		;a06b   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 	jp paso_siguiente		;a06e   ; paso_siguiente: el paso siguiente del actor
 espera_y_paso_20:		; al acabar la espera: otra de 16, el paso 0x20 y el aviso 0x8B
 	dec (ix+00eh)		;a071   ; baja la espera del actor
@@ -96,7 +96,7 @@ hasta_x_98:		; anda hasta X = 0x98 y la direccion 0
 	call hasta_x_b		;a082   ; hasta_x_b: desde la X de B, el paso siguiente (sin acarreo); antes, anda (acarreo)
 	ret c			;a085
 	xor a			;a086
-	jp 08e25h		;a087
+	jp 08e25h		;a087   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 hasta_x_b:		; desde la X de B, el paso siguiente (sin acarreo); antes, anda (acarreo)
 	ld a,(ix+005h)		;a08a   ; lee la X del actor
 	cp b			;a08d
@@ -111,7 +111,7 @@ L_A095:
 hasta_y_2a:		; hasta Y = 0x2A anda; despues la direccion 3 y el paso siguiente
 	ld a,(ix+003h)		;a09a   ; lee la Y del actor
 	cp 02ah		;a09d
-	jp nc,0900bh		;a09f
+	jp nc,0900bh		;a09f   ; p04:900B
 	ld a,003h		;a0a2
 	call 08e25h		;a0a4   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 	jp paso_siguiente		;a0a7   ; paso_siguiente: el paso siguiente del actor
@@ -135,7 +135,7 @@ e1c0_a_2:		; al acabar la espera: 0xE1C0 = 2, la fase al menos 8 (y la musica), 
 	jr nc,L_A0D5		;a0cb
 	ld a,008h		;a0cd
 	ld (0ca22h),a		;a0cf   ; guarda la fase de la partida (indice de las listas de p06:B40C)
-	call 07a12h		;a0d2
+	call 07a12h		;a0d2   ; p01:7A12
 L_A0D5:
 	call 06c33h		;a0d5   ; sonido_46: pide el sonido 0x46
 	jp paso_siguiente		;a0d8   ; paso_siguiente: el paso siguiente del actor
@@ -143,7 +143,7 @@ espera_mas:		; la espera uno mas y p04:9E51
 	inc (ix+00eh)		;a0db   ; sube la espera del actor
 	jp 09e51h		;a0de   ; mira_cada_16: cada 16 cuadros, p06:B5E2
 hasta_y_30:		; anda; por encima de Y = 0x30, la direccion 2 y el paso 7
-	call 0900bh		;a0e1
+	call 0900bh		;a0e1   ; p04:900B
 	ld a,(ix+003h)		;a0e4   ; lee la Y del actor
 	cp 030h		;a0e7
 	ret nc			;a0e9
@@ -158,7 +158,7 @@ tipo_2_en_la_sala:		; fuera de 0xD430 = 2, el tipo 2 en esta sala: parado (la di
 	ld a,(ix+000h)		;a0f5   ; lee el tipo del actor (0 = libre)
 	cp 002h		;a0f8
 	jr nz,sin_acarreo		;a0fa
-	call 08100h		;a0fc
+	call 08100h		;a0fc   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,sin_acarreo		;a0ff
 	ld a,(ix+007h)		;a101   ; lee la velocidad del actor en Y (alta)
 	and a			;a104
@@ -169,14 +169,14 @@ L_A10A:
 direccion_y_paso:		; la direccion B, el paso C y acarreo
 	ld a,b			;a10d
 	push bc			;a10e
-	call 08e25h		;a10f
+	call 08e25h		;a10f   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 	pop bc			;a112
 	ld (ix+001h),c		;a113   ; guarda el paso del actor
 	scf			;a116
 	ret			;a117
 hasta_columna_5:		; anda; en la columna 5 por debajo de X = 0x90, la direccion 0 y el paso 0x1B
-	call 0900bh		;a118
-	call 080e6h		;a11b
+	call 0900bh		;a118   ; p04:900B
+	call 080e6h		;a11b   ; a_p14_b88f_guarda: p14:B88F guardando el banco de 0xA000
 	ld a,(ix+00bh)		;a11e   ; lee la columna de la sala del actor
 	cp 005h		;a121
 	ret nz			;a123
@@ -186,7 +186,7 @@ hasta_columna_5:		; anda; en la columna 5 por debajo de X = 0x90, la direccion 0
 	ld bc,0001bh		;a12a
 	jr direccion_y_paso		;a12d
 se_va_por_arriba:		; anda; por encima de Y = 0x18, fuera, 0xD430 = 1 y 0xD431 = 0x40
-	call 0900bh		;a12f
+	call 0900bh		;a12f   ; p04:900B
 	ld a,(ix+003h)		;a132   ; lee la Y del actor
 	cp 018h		;a135
 	ret nc			;a137
@@ -196,10 +196,10 @@ se_va_por_arriba:		; anda; por encima de Y = 0x18, fuera, 0xD430 = 1 y 0xD431 = 
 	ld (0d430h),a		;a13d
 	ld a,040h		;a140
 	ld (0d431h),a		;a142
-	call 08273h		;a145
-	jp 080f3h		;a148
+	call 08273h		;a145   ; lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
+	jp 080f3h		;a148   ; a_p14_ba17_guarda: p14:BA17 guardando el banco de 0xA000
 hasta_x_70:		; anda; por debajo de X = 0x70, el paso 0x17 con el dibujo 2 y la direccion 1
-	call 0900bh		;a14b
+	call 0900bh		;a14b   ; p04:900B
 	ld a,(ix+005h)		;a14e   ; lee la X del actor
 	cp 070h		;a151
 	ret nc			;a153
@@ -207,9 +207,9 @@ hasta_x_70:		; anda; por debajo de X = 0x70, el paso 0x17 con el dibujo 2 y la d
 dibujo_2_dir_1:
 	ld (ix+00dh),002h		;a158   ; el dibujo del actor (bit 0: el paso) = 0x02
 	ld a,001h		;a15c
-	jp 08e25h		;a15e
+	jp 08e25h		;a15e   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 hasta_x_48:		; anda; por debajo de X = 0x48: parado, 0xCAC9 = 1, la espera de 8 y, en esta sala, el sonido 0x46 y p08:A13B
-	call 0900bh		;a161
+	call 0900bh		;a161   ; p04:900B
 	ld a,(ix+005h)		;a164   ; lee la X del actor
 	cp 048h		;a167
 	ret nc			;a169
@@ -223,7 +223,7 @@ parado_con_bandera:
 	ld (hl),a			;a178
 	ld a,008h		;a179
 	ld (ix+01ch),a		;a17b
-	call 08100h		;a17e
+	call 08100h		;a17e   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;a181
 	call 06c33h		;a182   ; sonido_46: pide el sonido 0x46
 	jp 08da8h		;a185   ; a_p08_a13b: p08:A13B con el banco 8 en 0xA000
@@ -231,27 +231,27 @@ hasta_y_b0_16:		; anda; desde Y = 0xB0, el paso 0x16, el dibujo 4 y la direccion
 	ld de,01604h		;a188
 	ld c,002h		;a18b
 hasta_y_b0:
-	call 0900bh		;a18d
+	call 0900bh		;a18d   ; p04:900B
 	ld a,(ix+003h)		;a190   ; lee la Y del actor
 	cp 0b0h		;a193
 	ret c			;a195
 	ld (ix+001h),d		;a196   ; guarda el paso del actor
 	ld (ix+00dh),e		;a199   ; guarda el dibujo del actor (bit 0: el paso)
 	ld a,c			;a19c
-	jp 08e25h		;a19d
+	jp 08e25h		;a19d   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 hasta_y_b0_1a:		; como p05:A188 con el paso 0x1A, el dibujo 6 y la direccion 3
 	ld de,01a06h		;a1a0
 	ld c,003h		;a1a3
 	jr hasta_y_b0		;a1a5
 hasta_x_50:		; anda; por debajo de X = 0x50, el dibujo 2, la direccion 1 y el paso siguiente
-	call 0900bh		;a1a7
+	call 0900bh		;a1a7   ; p04:900B
 	ld a,(ix+005h)		;a1aa   ; lee la X del actor
 	cp 050h		;a1ad
 	ret nc			;a1af
 	call dibujo_2_dir_1		;a1b0   ; dibujo_2_dir_1:
 	jp paso_siguiente		;a1b3   ; paso_siguiente: el paso siguiente del actor
 hasta_x_b0:		; anda; desde X = 0xB0, parado con 0xCACA = 1
-	call 0900bh		;a1b6
+	call 0900bh		;a1b6   ; p04:900B
 	ld a,(ix+005h)		;a1b9   ; lee la X del actor
 	cp 0b0h		;a1bc
 	ret c			;a1be
@@ -263,7 +263,7 @@ bandera_d529_o_d599:		; al acabar la espera, sin 0xD521: 0xD529 = 1 en esta sala
 	ld a,(0d521h)		;a1c9
 	and a			;a1cc
 	jr nz,L_A1DE		;a1cd
-	call 08100h		;a1cf
+	call 08100h		;a1cf   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ld a,001h		;a1d2
 	jr nz,L_A1DB		;a1d4
 	ld (0d529h),a		;a1d6
@@ -283,7 +283,7 @@ actor_19_tipo_18:		; al acabar la espera: el actor 19 (0xD2C0) a cero
 	ld ix,0d2c0h		;a1f4
 	ld (ix+000h),018h		;a1f8   ; el tipo del actor (0 = libre) = 0x18
 	ld (ix+010h),0ffh		;a1fc
-	call 08153h		;a200
+	call 08153h		;a200   ; pinta_actor: sus sprites (p04:81C5) con el banco 8
 	pop ix		;a203
 	ld (ix+00eh),008h		;a205   ; 8 cuadros y el paso siguiente
 	jp paso_siguiente		;a209   ; paso_siguiente: el paso siguiente del actor
@@ -295,7 +295,7 @@ quita_el_19:		; al acabar la espera: el paso 4, 0xD521 = 0xD529 = 0xD599 = 0 y, 
 	ld (0d521h),a		;a214
 	ld (0d529h),a		;a217
 	ld (0d599h),a		;a21a
-	call 08100h		;a21d
+	call 08100h		;a21d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;a220
 	ld hl,04840h		;a221   ; de X = 0x48, Y = 0x40...
 	ld de,02840h		;a224   ; ...a X = 0x28, Y = 0x40...
@@ -317,7 +317,7 @@ quita_el_19_b:		; el actor 19 libre, sin sprites, y el paso siguiente
 	push ix		;a23f
 	ld ix,0d2c0h		;a241
 	ld (ix+000h),000h		;a245   ; el tipo del actor (0 = libre) = 0x00
-	call 0834ch		;a249
+	call 0834ch		;a249   ; quita_actor: sus sprites libres y fuera; el 0x13 apunta en 0xD4F8, el 0x0B con alerta 0xCA67 = 0
 	pop ix		;a24c
 	jr paso_siguiente		;a24e
 sigue_el_tramo:		; p05:A0EE; los tipos 8 y 9 en su sitio; si no ha llegado, anda; si ha llegado, el paso siguiente
@@ -327,9 +327,9 @@ sigue_el_tramo:		; p05:A0EE; los tipos 8 y 9 en su sitio; si no ha llegado, anda
 	ret z			;a257
 	call 09f22h		;a258   ; llega_a_b4: el tipo 9 en la fila 1 columna 7: al llegar a Y = 0xB4, el paso 0x28 y (en la sala 4 o la especial 0x18) la bandera de 0xD509
 	ret z			;a25b
-	call 08e82h		;a25c
+	call 08e82h		;a25c   ; llega_al_destino: en la sala del destino, acarreo si aun no ha llegado al punto (segun hacia donde va)
 	jp c,paso_siguiente		;a25f   ; paso_siguiente: el paso siguiente del actor
-	jp 0900bh		;a262
+	jp 0900bh		;a262   ; p04:900B
 parada_si:		; con el byte 0x1A, parado 0x80 cuadros con el dibujo de antes; si no, el paso 4
 	ld a,(ix+01ah)		;a265
 	and a			;a268
@@ -371,9 +371,9 @@ L_A2AA:
 actor_en_alerta_1:		; la alerta 1: los pasos 0x25 y 0x26 (lanzar), los demas por p05:A2BD
 	ld a,(ix+001h)		;a2ad   ; lee el paso del actor
 	cp 025h		;a2b0
-	jp z,09e9ah		;a2b2
+	jp z,09e9ah		;a2b2   ; aviso_y_espera: el aviso 5, 0x20 cuadros (byte 0x1C) y p05:A27B
 	cp 026h		;a2b5
-	jp z,09ea4h		;a2b7
+	jp z,09ea4h		;a2b7   ; lanza_cada_4: durante 0x1C cuadros, cada 4 lanza hacia Snake; al acabar, lo de antes y el aviso 6
 	call 0424dh		;a2ba   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
@@ -404,7 +404,7 @@ L_A2EB:
 	dec a			;a2eb
 busca_en_direccion:		; la direccion A a 0x1D, su velocidad...
 	ld (ix+01dh),a		;a2ec
-	call 08e25h		;a2ef
+	call 08e25h		;a2ef   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 	push ix		;a2f2   ; ...y una espera al azar: 0x20-0x5F o 0x18-0x37 segun el actor
 	pop hl			;a2f4
 	ld a,l			;a2f5
@@ -424,12 +424,12 @@ busca_paso_1:		; con 0xD42A, el aviso y el paso 3
 	jr nz,aviso_y_paso_3		;a30d
 	call al_borde		;a30f   ; al borde (p05:A45D), chocando de frente o cerca de los que llegan: otra direccion
 	jr nc,L_A33E		;a312
-	call 09038h		;a314
+	call 09038h		;a314   ; choca_de_frente: A = los choques (C) en su eje: 3 vertical, 0x0C horizontal
 	jr nz,L_A33E		;a317
 	call cerca_de_los_que_llegan		;a319   ; cerca_de_los_que_llegan: con la alerta 1 contando, acarreo si los actores 20 y 21 estan juntos (a menos de 0x10 en Y y 0x0C en X)
 	jr c,L_A33E		;a31c
 	dec (ix+00eh)		;a31e   ; la espera; mientras, anda
-	jp nz,0900bh		;a321
+	jp nz,0900bh		;a321   ; p04:900B
 	inc (ix+00fh)		;a324   ; cada 4 vueltas, parado 0xC0 cuadros
 	ld a,(ix+00fh)		;a327
 	and 003h		;a32a
@@ -466,7 +466,7 @@ aviso_y_paso_3:		; el aviso 0x82, el paso 3 y una direccion al azar
 	ld (ix+001h),003h		;a36a   ; el paso del actor = 0x03
 	call 04256h		;a36e   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 003h		;a371
-	jp 08e25h		;a373
+	jp 08e25h		;a373   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 
 ; ----------------------------------------------------------------------
 ; DATOS sin identificar  0xa376..0xa3c0  (74 bytes)
@@ -627,16 +627,16 @@ busca_paso_2:		; con 0xD42A, el aviso; la espera mirando (p06:B5E2 cada 16); al 
 	ld a,(ix+00eh)		;a487   ; lee la espera del actor
 	and 00fh		;a48a
 	ret nz			;a48c
-	jp 08f0dh		;a48d
+	jp 08f0dh		;a48d   ; a_p06_b5e2: p06:B5E2 con el banco 6 en 0xA000
 busca_paso_3:		; la espera mirando; al acabar, el paso 1 y otra direccion
 	dec (ix+00eh)		;a490   ; baja la espera del actor
-	jp nz,09e51h		;a493
+	jp nz,09e51h		;a493   ; mira_cada_16: cada 16 cuadros, p06:B5E2
 L_A496:
 	ld (ix+001h),001h		;a496   ; el paso del actor = 0x01
 	jp gira_al_otro_eje		;a49a   ; gira_al_otro_eje: al otro eje, al azar segun el actor
 anda_hasta_chocar:		; sin chocar de frente, anda; si choca, el paso siguiente y gira
 	call 09038h		;a49d   ; choca_de_frente: A = los choques (C) en su eje: 3 vertical, 0x0C horizontal
-	jp z,0900bh		;a4a0
+	jp z,0900bh		;a4a0   ; p04:900B
 	call paso_siguiente		;a4a3   ; paso_siguiente: el paso siguiente del actor
 	jp gira_izquierda		;a4a6   ; gira_izquierda: gira a la izquierda (p05:A5E2) hasta una direccion libre
 busca_por_el_pasillo:		; la direccion de ahora (0-3) con sus bits de lado (D) y de frente (E) y su tabla (p05:A59B)
@@ -673,11 +673,11 @@ L_A4CF:
 	jr nz,L_A4F4		;a4e1
 L_A4E3:
 	push de			;a4e3   ; ...si no hay salida, mira de frente: libre, anda; si no, gira
-	call 090c8h		;a4e4
+	call 090c8h		;a4e4   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	pop de			;a4e7
 	ld a,e			;a4e8
 	and c			;a4e9
-	jp z,0900bh		;a4ea
+	jp z,0900bh		;a4ea   ; p04:900B
 	xor a			;a4ed
 	ld (ix+02ah),a		;a4ee
 	jp gira_izquierda		;a4f1   ; gira_izquierda: gira a la izquierda (p05:A5E2) hasta una direccion libre
@@ -694,7 +694,7 @@ L_A4F4:
 L_A509:
 	ld a,(ix+02ah)		;a509
 	cp b			;a50c
-	jp nc,0900bh		;a50d
+	jp nc,0900bh		;a50d   ; p04:900B
 	ld h,(ix+005h)		;a510   ; recorre la linea hasta el borde: dos puntos a los lados
 	ld l,(ix+003h)		;a513   ; lee la Y del actor
 	ld a,(ix+00ch)		;a516
@@ -781,7 +781,7 @@ L_A590:
 	djnz L_A590		;a591
 	jr c,gira_izquierda		;a593
 	ld a,(ix+01dh)		;a595   ; su velocidad
-	jp 08e25h		;a598
+	jp 08e25h		;a598   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_A59B: lo apuntan con el banco puesto p05:A4D3 (0xA59B); el
@@ -851,15 +851,15 @@ DATA_resto_A5E2:
 
 
 vuelve_al_camino:		; p04:9DCE: con acarreo, el paso 0x0A
-	call 09dceh		;a5ea
+	call 09dceh		;a5ea   ; p04:9DCE
 	ret nc			;a5ed
 	ld (ix+001h),00ah		;a5ee   ; el paso del actor = 0x0A
 	ret			;a5f2
 actor_de_a5f3:		; fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
-	call 08100h		;a5f3
-	jp nz,086a4h		;a5f6
+	call 08100h		;a5f3   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+	jp nz,086a4h		;a5f6   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;a5f9
-	call 086d5h		;a5fc
+	call 086d5h		;a5fc   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld a,(ix+001h)		;a5ff   ; lee el paso del actor
 	ld hl,0a614h		;a602
 	call 0424eh		;a605   ; salta_por_tabla: salta a la palabra A de la tabla de HL
@@ -867,7 +867,7 @@ actor_de_a5f3:		; fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; lo
 	ld a,(ix+001h)		;a60b   ; desde el paso 6, la musica del actor
 	cp 006h		;a60e
 	ret c			;a610
-	jp 08671h		;a611
+	jp 08671h		;a611   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_A614: lo apuntan con el banco puesto p05:A602 (0xA614); el
@@ -888,7 +888,7 @@ paso_siguiente_b:		; el paso siguiente
 	inc (ix+001h)		;a638   ; sube el paso del actor
 	ret			;a63b
 espera_a_snake:		; con Snake en Y 0x50-0x7F, X 0x78-0x7F: el bit 7 de 0xD7D1, 0xCB3C = 1, 0x20 cuadros y la musica 0xA6
-	call 08079h		;a63c
+	call 08079h		;a63c   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld a,l			;a63f
 	sub 050h		;a640
 	cp 030h		;a642
@@ -903,7 +903,7 @@ espera_a_snake:		; con Snake en Y 0x50-0x7F, X 0x78-0x7F: el bit 7 de 0xD7D1, 0x
 	ld (0cb3ch),a		;a652
 	ld (ix+00eh),020h		;a655   ; la espera del actor = 0x20
 	call paso_siguiente_b		;a659   ; paso_siguiente_b: el paso siguiente
-	jp 086c2h		;a65c
+	jp 086c2h		;a65c   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 mensaje_10:		; al acabar la espera, el mensaje 0x10 del banco 50
 	dec (ix+00eh)		;a65f   ; baja la espera del actor
 	ret nz			;a662
@@ -1002,7 +1002,7 @@ fin_del_mensaje_y_musica:		; al acabar el mensaje, la musica del actor
 	ld c,000h		;a6fb
 	call fin_del_mensaje		;a6fd   ; fin_del_mensaje: al acabar el mensaje (Z): el byte 0x1C = 0, la espera C, p01:7A27 y el paso siguiente (acarreo)
 	ret nc			;a700
-	jp 08685h		;a701
+	jp 08685h		;a701   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 actor_suelto:		; 0xCB3C = 0, los bytes 0x11, 0x0E, 0x0D a 0, el 0x16 a 1 y el paso siguiente
 	xor a			;a704
 	ld (0cb3ch),a		;a705
@@ -1154,7 +1154,7 @@ para_y_gira:		; guarda el dibujo (0x1B), p05:A8D2, 0x0C cuadros, sin eje, guarda
 	ld (ix+001h),c		;a7ff   ; guarda el paso del actor
 	ret			;a802
 anda_en_recuadro:		; el paso del dibujo, y fuera del recuadro (Y 0x20-0xBF, X 8-0xB7) o chocando: da la vuelta
-	call 086deh		;a803
+	call 086deh		;a803   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	ld (ix+00fh),000h		;a806
 	dec (ix+00eh)		;a80a   ; baja la espera del actor
 	ret z			;a80d
@@ -1166,7 +1166,7 @@ anda_en_recuadro:		; el paso del dibujo, y fuera del recuadro (Y 0x20-0xBF, X 8-
 	sub 008h		;a81a
 	cp 0b0h		;a81c
 	jr nc,L_A82F		;a81e
-	call 090c8h		;a820
+	call 090c8h		;a820   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	ld a,(ix+00ch)		;a823
 	rra			;a826
 	ld a,003h		;a827
@@ -1178,9 +1178,9 @@ L_A82D:
 L_A82F:
 	ld (ix+00eh),000h		;a82f   ; la espera del actor = 0x00
 	ld (ix+00fh),001h		;a833
-	call 0808bh		;a837
+	call 0808bh		;a837   ; da_la_vuelta_al_actor: las dos velocidades del actor cambiadas de signo
 	ld a,003h		;a83a
-	jp 08085h		;a83c
+	jp 08085h		;a83c   ; llama_ba36_a:
 gira_a_snake_x:		; hacia Snake en X (p05:A875) con una espera de 8-15
 	call dibujo_hacia_x		;a83f   ; dibujo_hacia_x: el dibujo de lado o del otro eje, al azar, sin chocar
 	jr L_A847		;a842
@@ -1335,7 +1335,7 @@ lanza_cada_4_b:		; la espera; cada 4 cuadros (en el 2), lanza el 5; al acabar, e
 L_A92A:
 	ld a,(ix+01ah)		;a92a
 	ld (ix+001h),a		;a92d   ; guarda el paso del actor
-	call 090c8h		;a930
+	call 090c8h		;a930   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	ld a,(ix+00fh)		;a933
 	and a			;a936
 	jp z,gira_a_snake_y		;a937   ; gira_a_snake_y: hacia Snake en Y (p05:A894) con una espera de 8-15
@@ -1368,7 +1368,7 @@ L_A968:
 	ld b,004h		;a978
 L_A97A:
 	ld (ix+00dh),b		;a97a   ; guarda el dibujo del actor (bit 0: el paso)
-	jp 08097h		;a97d
+	jp 08097h		;a97d   ; pon_velocidad_x: la velocidad en X = DE
 L_A980:
 	ld (ix+00ch),001h		;a980   ; en vertical: hacia arriba si esta abajo
 	ld b,002h		;a984
@@ -1379,10 +1379,10 @@ L_A980:
 	ld b,000h		;a990
 L_A992:
 	ld (ix+00dh),b		;a992   ; guarda el dibujo del actor (bit 0: el paso)
-	jp 080a7h		;a995
+	jp 080a7h		;a995   ; pon_velocidad_y: la velocidad en Y = DE
 llega_a_escena:		; anda; al acabar, parado con el dibujo 0x10, en su sitio (p05:A9B9), el sonido 0x93 y la musica de p01:6C37
 	dec (ix+00eh)		;a998   ; baja la espera del actor
-	jp nz,086deh		;a99b
+	jp nz,086deh		;a99b   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	xor a			;a99e
 	ld (ix+00ch),a		;a99f
 	ld (ix+00eh),020h		;a9a2   ; la espera del actor = 0x20
@@ -1506,7 +1506,7 @@ d8a0_cuenta:		; la espera de 0xD8A1; cada 16, el paso siguiente y p11:A000
 	ld (hl),010h		;aa5d
 	dec hl			;aa5f
 	inc (hl)			;aa60
-	jp 08b90h		;aa61   ; a_p11_a000: p11:A000 con el banco 11 en 0xA000
+	jp 08b90h		;aa61   ; vida_al_acabar: los tipos con 0 en p04:8BAA suben el nivel de Snake (y el sonido 0x4D); todos llenan la vida
 d8a0_deja_cosa:		; al acabar la espera: 0xD8A0 = 0, la cosa 0x28 en (0x70, 0x60), 0xD4EB = 1 y el sonido 0x42
 	ex de,hl			;aa64
 	inc hl			;aa65
@@ -1527,7 +1527,7 @@ d8a0_quita_0b:		; el paso siguiente, 0x10 cuadros y fuera la ficha 0xD800 de tip
 	ld (hl),010h		;aa7e
 	ld ix,0d800h		;aa80   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld (ix+000h),00bh		;aa84   ; el tipo de la ficha de 0xD800 = 0x0B
-	call 08c65h		;aa88
+	call 08c65h		;aa88   ; bandera_y_b14e:
 	ld (ix+000h),000h		;aa8b   ; el tipo de la ficha de 0xD800 = 0x00
 	ret			;aa8f
 d8a0_cuatro_0b:		; el paso siguiente, 0x40 cuadros, las 4 fichas de 0xD800 de tipo 0x0B desde p05:AAEF y el bit 5 de 0xD7D6
@@ -1589,7 +1589,7 @@ DATA_resto_AAEF:
 
 escena_d8ac:		; con 0xC693, el sonido 0x84; los pasos de 0xD8AC (p05:AB08)
 	ld hl,06bcch		;aafb
-	call 086d5h		;aafe
+	call 086d5h		;aafe   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld de,0d8ach		;ab01
 	ld a,(de)			;ab04
 	call 0424dh		;ab05   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -1685,7 +1685,7 @@ escena_d8ac_7:		; 0xD8A0 = 3, 0xCB3C = 0, la ficha 0xD800 de tipo 0x0B y su musi
 	ld a,00bh		;ab89
 	ld (0d800h),a		;ab8b   ; guarda 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 	ld ix,0d800h		;ab8e   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
-	jp 08685h		;ab92
+	jp 08685h		;ab92   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 escena_d8ac_8:		; p14:AF96: sin ninguno, 0xD8A0 = 4; cada 4 cuadros, las fichas de 0xD800 paradas en el lado de Snake se ponen en marcha
 	push de			;ab95
 	call quedan_fichas		;ab96   ; quedan_fichas: p14:AF96: C = cuantas quedan; con 0, 0xD8A0 = 4 y Z
@@ -1796,20 +1796,20 @@ L_AC17:
 actor_de_la_especial_29:		; solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
 	ld a,(0ca76h)		;ac1f   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 029h		;ac22
-	jp nz,086a4h		;ac24
+	jp nz,086a4h		;ac24   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;ac27
-	call 086d5h		;ac2a
+	call 086d5h		;ac2a   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld a,(ix+001h)		;ac2d   ; lee el paso del actor
 	ld hl,0ac48h		;ac30
 	call 0424eh		;ac33   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	call 08082h		;ac36
+	call 08082h		;ac36   ; llama_ba36: p14:BA36 con el byte 0x0C del actor
 	ld a,(0ca4bh)		;ac39   ; desde la sala 2 y en los pasos 0-0x0E, la musica del actor
 	cp 002h		;ac3c
 	ret c			;ac3e
 	ld a,(ix+001h)		;ac3f   ; lee el paso del actor
 	cp 00fh		;ac42
 	ret nc			;ac44
-	jp 08671h		;ac45
+	jp 08671h		;ac45   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_AC48: lo apuntan con el banco puesto p05:AC30 (0xAC48); el
@@ -1836,12 +1836,12 @@ especial_29_paso_0:		; desde la sala 2: 0xCB3C = 1, la direccion 2, el bit 0 de 
 	call pon_direccion		;ac7a   ; pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
 	ld hl,0d7d1h		;ac7d
 	set 0,(hl)		;ac80
-	call 086c2h		;ac82
+	call 086c2h		;ac82   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 	jp paso_siguiente_c		;ac85   ; paso_siguiente_c: el paso siguiente
 anda_y_suena:		; cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
-	call 086deh		;ac88
+	call 086deh		;ac88   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	ret nz			;ac8b
-	call 08100h		;ac8c
+	call 08100h		;ac8c   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jp z,06c63h		;ac8f   ; sonido_51: pide el sonido 0x51
 	jp 06c67h		;ac92   ; sonido_52: pide el sonido 0x52
 especial_29_paso_1:		; anda hasta la columna 7, X = 0x64, y gira a la direccion 1
@@ -1944,7 +1944,7 @@ especial_29_paso_9:		; al acabar el mensaje: p01:7A27, la musica, y la tercera b
 	call 06247h		;ad52   ; mensaje_cada_cuadro_bancos_5:
 	ret nz			;ad55
 	call 079c7h		;ad56   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
-	call 08685h		;ad59
+	call 08685h		;ad59   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 	xor a			;ad5c
 	ld (0cac8h),a		;ad5d
 	inc a			;ad60
@@ -2252,7 +2252,7 @@ especial_29_paso_e:		; el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xCAE0 = 2,
 	ld (ix+005h),060h		;af52   ; la X del actor = 0x60
 	jp paso_siguiente_c		;af56   ; paso_siguiente_c: el paso siguiente
 especial_29_paso_f:		; con Snake cerca (0x20 en X, 0x50 en Y): 0xCB3C = 1, la musica de p01:6BAC y el mensaje 0x610
-	call 08100h		;af59
+	call 08100h		;af59   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;af5c
 	ld a,(0cb05h)		;af5d   ; lee la X de Snake
 	sub (ix+005h)		;af60   ; le resta la X del actor
@@ -2290,7 +2290,7 @@ especial_29_paso_11:		; el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
 actor_de_d8a7:		; con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
 	ld a,(0ca77h)		;afa4   ; con 0xCA77, sin musica
 	and a			;afa7
-	jp nz,086a4h		;afa8
+	jp nz,086a4h		;afa8   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,0d8a7h		;afab   ; 0xD8A7...
 	ld a,(hl)			;afae
 	and a			;afaf
@@ -2320,18 +2320,18 @@ L_AFDA:
 	ld a,(ix+001h)		;afda   ; por su paso (p05:B032)
 	ld hl,0b032h		;afdd
 	call 0424eh		;afe0   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	call 08082h		;afe3
+	call 08082h		;afe3   ; llama_ba36: p14:BA36 con el byte 0x0C del actor
 L_AFE6:
 	ld a,(ix+001h)		;afe6   ; en los pasos 3-6, su musica
 	sub 003h		;afe9
 	cp 004h		;afeb
-	call c,08671h		;afed
+	call c,08671h		;afed   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 	ld a,(ix+001h)		;aff0   ; desde el paso 9, o sin la cuenta de 0x18, los sprites 10-13 fuera
 	cp 009h		;aff3
-	jp nc,08728h		;aff5
+	jp nc,08728h		;aff5   ; esconde_sprites_10_13: los sprites 10-13 fuera
 	ld a,(ix+018h)		;aff8
 	and a			;affb
-	jp z,08728h		;affc
+	jp z,08728h		;affc   ; esconde_sprites_10_13: los sprites 10-13 fuera
 	call dibujo_de_la_cuenta		;afff   ; el dibujo de la cuenta...
 	dec (ix+018h)		;b002   ; ...que baja; al acabar, lo de antes (p05:B00B)
 	call z,fin_de_la_cuenta		;b005   ; fin_de_la_cuenta: 8 cuadros en 0x1F, el byte 0x16 = 0, el eje (0x15) y el dibujo (0x1D) de antes
@@ -2400,7 +2400,7 @@ d8a7_paso_2:		; 0xE25A = 0xCB3C = 0 y la musica del actor
 	xor a			;b080
 	ld (0e25ah),a		;b081
 	ld (0cb3ch),a		;b084
-	call 08685h		;b087
+	call 08685h		;b087   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 	jp paso_siguiente_d		;b08a   ; paso_siguiente_d: el paso siguiente
 d8a7_paso_3:		; una cuenta al azar (p05:B0CB), 16 cuadros, la sala de Snake; en ella, una direccion al azar; si no, hacia ella
 	call cuenta_al_azar		;b08d   ; cuenta_al_azar: 0x1E = 0x30-0x6F al azar
@@ -2478,7 +2478,7 @@ d8a7_paso_4:		; la cuenta; en la sala de Snake anda en el recuadro y, tras 0x1C,
 	call anda_en_recuadro_b		;b10b   ; anda_en_recuadro_b: anda; el 5 sin el paso del dibujo; dentro del recuadro, gira hacia Snake al chocar o al acabar la espera
 	dec (ix+01ch)		;b10e
 	ret nz			;b111
-	call 08100h		;b112
+	call 08100h		;b112   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jp nz,al_paso_3		;b115   ; al_paso_3: el paso 3, el eje 3 y una cuenta al azar
 	ld (ix+00ch),000h		;b118
 	ld (ix+01ch),018h		;b11c
@@ -2501,7 +2501,7 @@ L_B137:
 	sub 008h		;b143
 	cp 0b0h		;b145
 	jr nc,L_B159		;b147
-	call 090c8h		;b149
+	call 090c8h		;b149   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	ld a,c			;b14c
 	and a			;b14d
 	jp nz,gira_a_snake_y		;b14e   ; gira_a_snake_y: hacia Snake en Y (p05:A894) con una espera de 8-15
@@ -2617,7 +2617,7 @@ L_B213:
 	ld hl,0d8a3h		;b213
 	ld (hl),001h		;b216
 	push hl			;b218
-	call 090c8h		;b219
+	call 090c8h		;b219   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	pop hl			;b21c
 	ld (hl),000h		;b21d
 	ld a,c			;b21f   ; sin choque, nada
@@ -2696,7 +2696,7 @@ cuenta_1c_al_azar:		; el byte 0x1C = 0x10-0x2F al azar
 	ld (ix+01ch),a		;b2a4
 	ret			;b2a7
 guarda_snake_en_18:		; los bytes 0x18-0x19 = la Y y la X de Snake
-	call 08079h		;b2a8
+	call 08079h		;b2a8   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld (ix+018h),l		;b2ab
 	ld (ix+019h),h		;b2ae
 	ret			;b2b1
@@ -2704,14 +2704,14 @@ actor_de_las_salas_4_5:		; en las filas y columnas 4-5 (si no, sin musica): con 
 	call en_4_5		;b2b2   ; en_4_5: acarreo con la fila y la columna de Snake entre 4 y 5
 	jp nc,086a4h		;b2b5   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;b2b8
-	call 086d5h		;b2bb
+	call 086d5h		;b2bb   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld a,(ix+001h)		;b2be   ; lee el paso del actor
 	ld hl,0b2e8h		;b2c1
 	call 0424eh		;b2c4   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	call 08082h		;b2c7
+	call 08082h		;b2c7   ; llama_ba36: p14:BA36 con el byte 0x0C del actor
 	jp 08671h		;b2ca   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 sprites_si_14:		; los sprites 10-13 fuera y, sin el byte 0x14, los suyos
-	call 08728h		;b2cd
+	call 08728h		;b2cd   ; esconde_sprites_10_13: los sprites 10-13 fuera
 	ld a,(ix+014h)		;b2d0
 	and a			;b2d3
 	jp z,0873ch		;b2d4   ; p04:873C
@@ -2747,7 +2747,7 @@ salas_4_5_paso_0:		; 0xCB3C = 1, el dibujo 8, el bit 1 de 0xD7D6, hacia abajo y 
 	set 1,(hl)		;b304
 	ld (ix+00ch),a		;b306
 	ld (ix+007h),002h		;b309   ; la velocidad del actor en Y (alta) = 0x02
-	call 086c2h		;b30d
+	call 086c2h		;b30d   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 paso_siguiente_e:		; el paso siguiente
 	inc (ix+001h)		;b310   ; sube el paso del actor
 	ret			;b313
@@ -2793,7 +2793,7 @@ salas_4_5_paso_3:		; el byte 0x16 = 1, su velocidad, el eje 1, el paso siguiente
 	ld (ix+00ch),001h		;b367
 	call paso_siguiente_e		;b36b   ; paso_siguiente_e: el paso siguiente
 	call 05955h		;b36e   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
-	call 08685h		;b371
+	call 08685h		;b371   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 espera_al_azar:		; una espera de 0x10-0x1F (4-0x13 el 0x0A)
 	ld a,(ix+000h)		;b374   ; lee el tipo del actor (0 = libre)
 	cp 00ah		;b377
@@ -2848,7 +2848,7 @@ para_sin_14:
 	ld (ix+014h),a		;b3de
 	jr para_con_dibujo_8		;b3e1
 suena_1e:		; en esta sala, sin el byte 0x14, el sonido 0x1E cada 4 cuadros
-	call 08100h		;b3e3
+	call 08100h		;b3e3   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b3e6
 	ld a,(ix+014h)		;b3e7
 	and a			;b3ea
@@ -2937,12 +2937,12 @@ snake_a_menos_de_60:		; acarreo con Snake en esta sala a menos de 0x60 en Y y en
 	dec (ix+01bh)		;b472
 	jr L_B49A		;b475
 L_B477:
-	call 08100h		;b477
+	call 08100h		;b477   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_B49A		;b47a
 	ld a,(0cb31h)		;b47c   ; lee 1 en el estado 2 de Snake
 	and a			;b47f
 	ret nz			;b480
-	call 08079h		;b481
+	call 08079h		;b481   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld a,l			;b484
 	sub (ix+003h)		;b485   ; le resta la Y del actor
 	jr nc,L_B48C		;b488
@@ -3025,10 +3025,10 @@ direccion_por_angulo:		; B = el cuarto del angulo hacia Snake: 3 (0xE0-0x1F), 1 
 angulo_a_snake:		; el angulo del actor a Snake (p02:86C3)
 	ld d,(ix+005h)		;b4f8   ; lee la X del actor
 	ld e,(ix+003h)		;b4fb   ; lee la Y del actor
-	call 08079h		;b4fe
+	call 08079h		;b4fe   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	jp 079d1h		;b501   ; a_p02_86c3: angulo_hacia (p02:86C3) con el banco 2
 salas_4_5_paso_5:		; fuera de la sala, el paso 4; la espera; cerca de Snake mira y lanza el 8 cada 4; si no, 0x20 cuadros y el paso siguiente
-	call 08100h		;b504
+	call 08100h		;b504   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,al_paso_4_y_gira		;b507
 	dec (ix+00eh)		;b509   ; baja la espera del actor
 	jr z,cuenta_1b_10		;b50c
@@ -3051,7 +3051,7 @@ cuenta_1b_10:		; 0x10 cuadros en 0x1B y el paso 4
 	ld (ix+01bh),010h		;b52f
 	jr al_paso_4_y_gira		;b533
 salas_4_5_paso_6:		; la espera lanzando; al acabar o fuera, el paso 4
-	call 08100h		;b535
+	call 08100h		;b535   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,al_paso_4_y_gira		;b538
 	dec (ix+00eh)		;b53a   ; baja la espera del actor
 	jr nz,lanza_8_cada_4		;b53d
@@ -3071,14 +3071,14 @@ salas_4_5_paso_7:		; al acabar la espera, el eje 3 y el dibujo de antes
 	ld (ix+014h),001h		;b55e
 	ret			;b562
 suena_68:		; en esta sala, el sonido 0x68
-	call 08100h		;b563
+	call 08100h		;b563   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b566
 	jp 06cd2h		;b567   ; sonido_68: pide el sonido 0x68
 sprites_desde_paso_5:		; desde el paso 5, sus sprites
 	ld a,(ix+001h)		;b56a   ; lee el paso del actor
 	cp 005h		;b56d
 	ret c			;b56f
-	jp 08739h		;b570
+	jp 08739h		;b570   ; sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
 actor_de_d8a9:		; con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
 	ld a,(0d8a9h)		;b573
 	and a			;b576
@@ -3172,7 +3172,7 @@ d8a9_en_sala_6:		; en la sala 6: el dibujo 4, 0xCB3C = 1, el byte 0x16 = 1, el b
 	call 06bd0h		;b62f   ; sonido_a6: pide el sonido 0xA6 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jr paso_siguiente_f		;b632
 d8a9_anda:		; anda; al acabar la espera, parado con el dibujo 2 otros 0x20
-	call 086deh		;b634
+	call 086deh		;b634   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	dec (ix+00eh)		;b637   ; baja la espera del actor
 	ret nz			;b63a
 	ld (ix+00ch),000h		;b63b
@@ -3234,12 +3234,12 @@ d8a9_fin_mensajes:		; p03:B8AC; al acabar el mensaje, quita los mosaicos, la sal
 	call 05955h		;b6c9   ; sala_de_zona_a_e500: la sala de la ficha IX a 0xE500, de una lista y unos bloques que dependen de la zona
 	call espera_al_azar		;b6cc   ; espera_al_azar: una espera de 0x10-0x1F (4-0x13 el 0x0A)
 	call velocidad_del_dibujo		;b6cf   ; velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
-	call 08685h		;b6d2
+	call 08685h		;b6d2   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 	jp paso_siguiente_f		;b6d5   ; paso_siguiente_f: el paso siguiente
 d8a9_busca:		; si no ve a Snake delante (p05:B73D), el paso siguiente; si no, anda y, al chocar o acabar la espera, gira hacia Snake
 	call ve_delante		;b6d8   ; ve_delante: en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
 	jp nc,sin_eje_y_paso		;b6db   ; sin_eje_y_paso:
-	call 086deh		;b6de
+	call 086deh		;b6de   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	call choques_con_d8a3		;b6e1   ; choques_con_d8a3: los choques del actor con 0xD8A3 = 1 mientras
 	ld a,(ix+00dh)		;b6e4   ; lee el dibujo del actor (bit 0: el paso)
 	rrca			;b6e7
@@ -3257,7 +3257,7 @@ L_B6EC:
 	jp L_B347		;b6fd
 L_B700:
 	call gira_hacia_snake		;b700   ; gira_hacia_snake: la direccion hacia Snake, una espera y su velocidad
-	call 08100h		;b703
+	call 08100h		;b703   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b706
 	inc (ix+00fh)		;b707   ; cada 4 giros, parado 0x20 cuadros mirando (el paso 0x0A)
 	ld a,(ix+00fh)		;b70a
@@ -3284,7 +3284,7 @@ sin_eje_y_paso:
 	ld (ix+00ch),000h		;b736
 	jp paso_siguiente_f		;b73a   ; paso_siguiente_f: el paso siguiente
 ve_delante:		; en esta sala, acarreo si Snake no esta en la direccion de su dibujo (p05:B751); fuera, acarreo
-	call 08100h		;b73d
+	call 08100h		;b73d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_B74F		;b740
 	ld a,(ix+00dh)		;b742   ; lee el dibujo del actor (bit 0: el paso)
 	ld hl,0b751h		;b745
@@ -3332,7 +3332,7 @@ L_B781:
 	ld a,(0ca03h)		;b786   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	and 003h		;b789
 	ret nz			;b78b
-	jp 09b0dh		;b78c
+	jp 09b0dh		;b78c   ; lanza_8: p06:A942, su desplazamiento en 0xD43C y lo lanzado de tipo 8
 vuelve_al_paso_de_antes:
 	ld (ix+00ch),003h		;b78f
 	dec (ix+001h)		;b793   ; baja el paso del actor
@@ -3410,7 +3410,7 @@ L_B82C:
 	push ix		;b82c
 	call 0506eh		;b82e   ; sprites_de_858d: p36:858D...
 	pop ix		;b831
-	call 090c8h		;b833
+	call 090c8h		;b833   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	call direccion_libre_azar		;b836   ; direccion_libre_azar: una direccion al azar sin choque (C), con su velocidad de p05:B87A
 	ld (ix+00ch),003h		;b839
 	ld (ix+00dh),014h		;b83d
@@ -3462,22 +3462,22 @@ DATA_resto_B87A:
 
 
 rebota:		; anda; al borde (Y 0x18-0xBB, X 0x0C-0xB3) da la vuelta; al chocar, otra direccion libre; a 0x60 y al acabar, el aviso 0x8C
-	call 086deh		;b882
+	call 086deh		;b882   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	ld a,(ix+007h)		;b885   ; lee la velocidad del actor en Y (alta)
 	and a			;b888
 	jr z,L_B897		;b889
 	ld a,(ix+003h)		;b88b   ; lee la Y del actor
 	sub 018h		;b88e
 	cp 0a4h		;b890
-	jp nc,0809eh		;b892
+	jp nc,0809eh		;b892   ; vuelve_en_y: la velocidad en Y cambiada de signo
 	jr L_B8A1		;b895
 L_B897:
 	ld a,(ix+005h)		;b897   ; lee la X del actor
 	sub 00ch		;b89a
 	cp 0a8h		;b89c
-	jp nc,0808eh		;b89e
+	jp nc,0808eh		;b89e   ; vuelve_en_x: la velocidad en X cambiada de signo
 L_B8A1:
-	call 090c8h		;b8a1
+	call 090c8h		;b8a1   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	ld a,(ix+007h)		;b8a4   ; lee la velocidad del actor en Y (alta)
 	and a			;b8a7
 	jr z,L_B8B5		;b8a8
@@ -3506,7 +3506,7 @@ L_B8C1:
 	call direccion_libre_azar		;b8cc   ; direccion_libre_azar: una direccion al azar sin choque (C), con su velocidad de p05:B87A
 	jr L_B8D4		;b8cf
 L_B8D1:
-	call 0808bh		;b8d1
+	call 0808bh		;b8d1   ; da_la_vuelta_al_actor: las dos velocidades del actor cambiadas de signo
 L_B8D4:
 	dec (ix+00eh)		;b8d4   ; baja la espera del actor
 	ld a,(ix+00eh)		;b8d7   ; lee la espera del actor
@@ -3514,7 +3514,7 @@ L_B8D4:
 	jp z,09d2fh		;b8dc   ; aviso_8c_30:
 	and a			;b8df
 	ret nz			;b8e0
-	call 09d2fh		;b8e1
+	call 09d2fh		;b8e1   ; aviso_8c_30:
 	ld (ix+00ch),000h		;b8e4
 	jr dibujo_16_y_40		;b8e8
 parpadea_dibujo:		; cada 8 cuadros cambia el paso del dibujo; al acabar, p05:B8FF
@@ -3553,7 +3553,7 @@ actor_de_d8aa:		; con 0xD8AA, sus pasos (p05:B934)
 	ld a,(ix+001h)		;b928   ; lee el paso del actor
 	ld hl,0b934h		;b92b
 	call 0424eh		;b92e   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	jp 08082h		;b931
+	jp 08082h		;b931   ; llama_ba36: p14:BA36 con el byte 0x0C del actor
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B934: lo apuntan con el banco puesto p05:B92B (0xB934); el
@@ -3594,7 +3594,7 @@ d8aa_paso_2:		; al acabar el mensaje: 0xD509 = 0xCB3C = 1, hacia abajo y el paso
 	jp paso_siguiente_g		;b98d   ; paso_siguiente_g: el paso siguiente
 d8aa_paso_3:		; el borde, anda y cambia de sala; en la fila 2 desde Y = 0x5E, hacia la izquierda
 	call borde_con_d88c		;b990   ; borde_con_d88c: con 0xD88C a 0xFF, R#7 = 0x0F; si no, cada 8 cuadros R#7 = 0x0A (parpadea)
-	call 086deh		;b993
+	call 086deh		;b993   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	call cambia_de_sala_b		;b996   ; cambia_de_sala_b: a la sala de al lado si sale (p05:AE6B)
 	ld a,(ix+00ah)		;b999   ; lee la fila de la sala del actor
 	cp 002h		;b99c
@@ -3694,7 +3694,7 @@ d8aa_paso_9:		; al acabar el mensaje: 0xCB3C = 0, su musica, p03:B108, el paso s
 	ld (0cb3ch),a		;ba5c
 	ld (ix+011h),a		;ba5f
 	ld (ix+00fh),a		;ba62
-	call 08685h		;ba65
+	call 08685h		;ba65   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 	call 07a70h		;ba68   ; a_p03_b108: p03:B108 con el banco 3 en 0xA000
 	call paso_siguiente_g		;ba6b   ; paso_siguiente_g: el paso siguiente
 hacia_snake_0:		; hacia Snake (A = 0) con su velocidad
@@ -3724,7 +3724,7 @@ L_BA87:
 d8aa_paso_a:		; si choca, hacia Snake; cerca en su eje (0x0C y 6), parado 0x18 cuadros y el paso siguiente; cerca del eje de Snake, hacia el
 	call dando_la_vuelta_17		;ba90   ; dando_la_vuelta_17: con el byte 0x17: el paso 0x0C, una cuenta al azar y la direccion contraria (Z si no)
 	ret nz			;ba93
-	call 090c8h		;ba94
+	call 090c8h		;ba94   ; choques_del_actor: C = por donde choca el actor (bits 0-3), con los puntos de p04:915C (o p04:9164 desde 0xD800)
 	ld a,(ix+007h)		;ba97   ; lee la velocidad del actor en Y (alta)
 	and a			;ba9a
 	ld a,003h		;ba9b
@@ -3733,7 +3733,7 @@ d8aa_paso_a:		; si choca, hacia Snake; cerca en su eje (0x0C y 6), parado 0x18 c
 L_BAA1:
 	and c			;baa1
 	jr nz,hacia_snake_0		;baa2
-	call 086deh		;baa4
+	call 086deh		;baa4   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	call de_y_hl_con_snake		;baa7   ; de_y_hl_con_snake: D = la Y de Snake, H = su X, E = la Y del actor, L = su X
 	ld a,(ix+007h)		;baaa   ; lee la velocidad del actor en Y (alta)
 	and a			;baad
@@ -3781,7 +3781,7 @@ L_BAE3:
 	ld (ix+00eh),018h		;baea   ; la espera del actor = 0x18
 	jp paso_siguiente_g		;baee   ; paso_siguiente_g: el paso siguiente
 de_y_hl_con_snake:		; D = la Y de Snake, H = su X, E = la Y del actor, L = su X
-	call 08079h		;baf1
+	call 08079h		;baf1   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld d,l			;baf4
 	ld l,(ix+005h)		;baf5   ; lee la X del actor
 	ld e,(ix+003h)		;baf8   ; lee la Y del actor
@@ -3841,7 +3841,7 @@ L_BB54:
 	call cuenta_0f_azar		;bb5d   ; cuenta_0f_azar: el byte 0x0F = 1-4 al azar
 	jp paso_siguiente_g		;bb60   ; paso_siguiente_g: el paso siguiente
 d8aa_paso_c:		; anda en el pasillo central (p05:BB8E); fuera, el giro de p05:BB83 hasta acabar la cuenta, y el paso 0x0A
-	call 086deh		;bb63
+	call 086deh		;bb63   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	call en_el_pasillo		;bb66   ; en_el_pasillo: acarreo en el pasillo: en vertical Y 0x58-0x87, en horizontal X 0x48-0x77
 	ret c			;bb69
 	dec (ix+00fh)		;bb6a
@@ -4041,7 +4041,7 @@ mosaico_de_13_5:		; en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p1
 	ld (0ca4ch),hl		;bd07   ; guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 	ld hl,07435h		;bd0a
 	ld de,08418h		;bd0d
-	call 0741bh		;bd10
+	call 0741bh		;bd10   ; p12:741B
 	ld a,(0d821h)		;bd13
 	cp 00fh		;bd16
 	push ix		;bd18
@@ -4058,12 +4058,12 @@ mosaico_de_la_ficha:		; el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 d
 	ld e,a			;bd31
 	ld hl,0743dh		;bd32
 	ld bc,00402h		;bd35
-	jp 0741eh		;bd38
+	jp 0741eh		;bd38   ; p12:741E
 sprites_hasta_paso_0f:		; hasta el paso 0x0F, sus sprites; desde el, fuera
 	ld a,(ix+001h)		;bd3b   ; lee el paso del actor
 	cp 00fh		;bd3e
-	jp nc,08728h		;bd40
-	jp 08739h		;bd43
+	jp nc,08728h		;bd40   ; esconde_sprites_10_13: los sprites 10-13 fuera
+	jp 08739h		;bd43   ; sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
 actor_de_la_sala_5:		; en la sala 5, sus pasos (p05:BD58)
 	ld a,(0ca4bh)		;bd46   ; lee la sala de la zona
 	cp 005h		;bd49
@@ -4071,7 +4071,7 @@ actor_de_la_sala_5:		; en la sala 5, sus pasos (p05:BD58)
 	ld a,(ix+001h)		;bd4c   ; lee el paso del actor
 	ld hl,0bd58h		;bd4f
 	call 0424eh		;bd52   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	jp 08082h		;bd55
+	jp 08082h		;bd55   ; llama_ba36: p14:BA36 con el byte 0x0C del actor
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_BD58: lo apuntan con el banco puesto p05:BD4F (0xBD58); el
@@ -4216,14 +4216,14 @@ sala_5_paso_b:		; al acabar el mensaje: 0x20 cuadros, Snake en el estado 0x17 ha
 	ld a,002h		;be8a
 	call snake_hacia_a		;be8c   ; snake_hacia_a: la direccion de Snake = A y el paso siguiente
 	call 06b12h		;be8f   ; sonido_05: pide el sonido 0x05
-	jp 08685h		;be92
+	jp 08685h		;be92   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 anda_d8ab:		; con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, hasta X = 0x70, y para
 	ld a,(0d8abh)		;be95
 	and a			;be98
 	ret z			;be99
 	dec a			;be9a
 	jr nz,L_BEB1		;be9b
-	call 086deh		;be9d
+	call 086deh		;be9d   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	ld a,(ix+003h)		;bea0   ; lee la Y del actor
 	cp 050h		;bea3
 	ret c			;bea5
@@ -4232,7 +4232,7 @@ anda_d8ab:		; con 0xD8AB = 1 baja hasta Y = 0x50 y gira a la izquierda; con 2, h
 	ld (ix+00dh),004h		;beaa   ; el dibujo del actor (bit 0: el paso) = 0x04
 	jp velocidad_del_dibujo		;beae   ; velocidad_del_dibujo: la velocidad de la direccion del dibujo (p05:A7AD por el tipo)
 L_BEB1:
-	call 086deh		;beb1
+	call 086deh		;beb1   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
 	ld a,(ix+005h)		;beb4   ; lee la X del actor
 	cp 070h		;beb7
 	ret nc			;beb9
@@ -4286,7 +4286,7 @@ L_BF19:
 	ld hl,0bf37h		;bf1d
 	call 043f6h		;bf20   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ex de,hl			;bf23
-	call 08079h		;bf24
+	call 08079h		;bf24   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld a,e			;bf27
 	add a,l			;bf28
 	ld (ix+003h),a		;bf29   ; guarda la Y del actor
@@ -4310,7 +4310,7 @@ DATA_BF39:
 
 
 paso_si_en_sala:		; en esta sala, el paso siguiente
-	call 08100h		;bf41
+	call 08100h		;bf41   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;bf44
 	jp paso_siguiente_h		;bf45   ; paso_siguiente_h:
 sala_5_suelta:		; sin eje, 0x18 cuadros, 0xD500 = 2, 0xD510 = 0x0D, el bit 7 de 0xD7D6 y el paso siguiente
@@ -4349,7 +4349,7 @@ sala_5_fin:		; al acabar la espera: el sonido 0x93, la musica de la zona, sin sp
 	call 06c1bh		;bf8a   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	call 07a88h		;bf8d   ; rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
 	call 07c85h		;bf90   ; pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
-	call 08728h		;bf93
+	call 08728h		;bf93   ; esconde_sprites_10_13: los sprites 10-13 fuera
 	call mosaico_en_la_otra		;bf96   ; mosaico_en_la_otra: con los juegos 6-7, el mosaico de la ficha en la otra pagina y 0xD88B = 0xFF
 	jp paso_siguiente_h		;bf99   ; paso_siguiente_h:
 sala_5_snake_baja:		; 0xE070 = 0; con el bit 5 de 0xD7D9, el bit 4, Snake hacia abajo en el estado 0x17

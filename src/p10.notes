@@ -171,6 +171,7 @@ C 0xABA5 mensaje_cada_cuadro_bancos_10:
 C 0xABA9 llama_7a27_1_bancos_10: 
 C 0xABB9 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xABCE sonido_05: pide el sonido 0x05
+C 0xABD1 por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 C 0xAC23 lee la Y de Snake
 C 0xAC27 lee la X de Snake
 C 0xAC48 lanza_6_e0: tipo 6 con el desplazamiento 0x00E0
@@ -231,6 +232,8 @@ C 0xB15E copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 C 0xB167 borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 C 0xB17A borra_bloque_pagina: p00:46FF en la pagina en la que se dibuja (0xCA42)
 C 0xB182 rachas_b2d5: p37:B2D5 y 4 patrones de sprite en espejo de 0xF800 a 0xF890
+C 0xB185 p02:8ECD
+C 0xB18E p02:8ED2
 C 0xB191 lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 C 0xB1CB lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB1DC sonido_11: pide el sonido 0x11

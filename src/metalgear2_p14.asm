@@ -712,7 +712,7 @@ L_A65C:
 	ret nz			;a667
 	ld b,00fh		;a668
 	ld hl,0f69eh		;a66a
-	call 09135h		;a66d
+	call 09135h		;a66d   ; p13:9135
 	scf			;a670
 	ret			;a671
 L_A672:
@@ -910,7 +910,7 @@ L_AA70:
 	jr z,L_AA85		;aa75
 	call L_AA8E		;aa77
 	ld a,003h		;aa7a
-	call 08085h		;aa7c
+	call 08085h		;aa7c   ; llama_ba36_a:
 	call L_AAEB		;aa7f
 	call L_AB41		;aa82
 L_AA85:
@@ -1087,19 +1087,19 @@ DATA_resto_AB96:
 L_AB9E:
 	ld a,(0ca77h)		;ab9e
 	and a			;aba1
-	jp nz,086a4h		;aba2
+	jp nz,086a4h		;aba2   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;aba5
-	call 086d5h		;aba8
+	call 086d5h		;aba8   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld a,(ix+001h)		;abab
 	ld hl,0abc5h		;abae
 	call 0424eh		;abb1   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	ld a,(ix+00ch)		;abb4
-	call 08085h		;abb7
+	call 08085h		;abb7   ; llama_ba36_a:
 	ld a,(ix+001h)		;abba
 	sub 005h		;abbd
 	cp 004h		;abbf
 	ret nc			;abc1
-	jp 08671h		;abc2
+	jp 08671h		;abc2   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_ABC5: lo apuntan con el banco puesto p14:ABAE (0xABC5); el
@@ -1128,7 +1128,7 @@ L_ABD7:
 L_ABEE:
 	dec (ix+00eh)		;abee
 	ret nz			;abf1
-	call 086c2h		;abf2
+	call 086c2h		;abf2   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 	ld de,00a80h		;abf5
 	call 061c0h		;abf8   ; mensaje_de_50_con_ventana: p01:61CE y los bancos 4, 5 y 14
 L_ABFB:
@@ -1141,8 +1141,8 @@ L_ABFF:
 	jr L_ABFB		;ac06
 L_AC08:
 	call L_ACAA		;ac08
-	call 0902eh		;ac0b
-	call 08107h		;ac0e
+	call 0902eh		;ac0b   ; p04:902E
+	call 08107h		;ac0e   ; en_esta_columna: Z si el actor esta en la columna de ahora
 	ret nz			;ac11
 	ld a,(ix+005h)		;ac12
 	cp 060h		;ac15
@@ -1191,11 +1191,11 @@ L_AC6B:
 	inc (ix+011h)		;ac71
 	ld a,(ix+011h)		;ac74
 	and 003h		;ac77
-	call z,0902eh		;ac79
+	call z,0902eh		;ac79   ; p04:902E
 	ld a,(ix+00eh)		;ac7c
 	and a			;ac7f
 	jr nz,L_AC87		;ac80
-	call 08107h		;ac82
+	call 08107h		;ac82   ; en_esta_columna: Z si el actor esta en la columna de ahora
 	jr z,L_AC8E		;ac85
 L_AC87:
 	dec (ix+00eh)		;ac87
@@ -1235,7 +1235,7 @@ L_ACC4:
 	ret c			;acd0
 L_ACD1:
 	ld (ix+00eh),010h		;acd1
-	call 0808eh		;acd5
+	call 0808eh		;acd5   ; vuelve_en_x: la velocidad en X cambiada de signo
 L_ACD8:
 	ld a,(ix+009h)		;acd8
 	rla			;acdb
@@ -1286,7 +1286,7 @@ L_AD28:
 	ld hl,0ad38h		;ad2c
 	call 0424eh		;ad2f   ; salta_por_tabla: salta a la palabra A de la tabla de HL
 	ld a,(ix+00ch)		;ad32
-	jp 08085h		;ad35
+	jp 08085h		;ad35   ; llama_ba36_a:
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_AD38: lo apuntan con el banco puesto p14:AD2C (0xAD38); el
@@ -1436,14 +1436,14 @@ L_AE4B:
 	sub 050h		;ae55
 	cp 058h		;ae57
 	ret c			;ae59
-	call 0809eh		;ae5a
+	call 0809eh		;ae5a   ; vuelve_en_y: la velocidad en Y cambiada de signo
 	jr L_AE6A		;ae5d
 L_AE5F:
 	ld a,(ix+005h)		;ae5f
 	sub 038h		;ae62
 	cp 050h		;ae64
 	ret c			;ae66
-	call 0808eh		;ae67
+	call 0808eh		;ae67   ; vuelve_en_x: la velocidad en X cambiada de signo
 L_AE6A:
 	ld a,(ix+00dh)		;ae6a
 	rra			;ae6d
@@ -1514,7 +1514,7 @@ L_AEEE:
 	and a			;aef7
 	scf			;aef8
 	ret nz			;aef9
-	call 08079h		;aefa
+	call 08079h		;aefa   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld a,l			;aefd
 	sub (ix+003h)		;aefe
 	sub 0e0h		;af01
@@ -1974,7 +1974,7 @@ L_B247:
 	ld a,(ix+000h)		;b247   ; lee el tipo del actor (0 = libre)
 	and a			;b24a
 	jr z,L_B253		;b24b
-	call 08100h		;b24d
+	call 08100h		;b24d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_B253		;b250
 	inc c			;b252
 L_B253:
@@ -2077,7 +2077,7 @@ L_B2E8:
 	ld (ix+00ch),000h		;b2e8
 	call 0806fh		;b2ec   ; se_ve_el_actor_si: p14:B9DC guardando HL, DE y BC
 	jr c,L_B2F6		;b2ef
-	call 08100h		;b2f1
+	call 08100h		;b2f1   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr z,L_B2FB		;b2f4
 L_B2F6:
 	set 7,(ix+000h)		;b2f6
@@ -2096,13 +2096,13 @@ L_B2FB:
 L_B317:
 	ret			;b317
 L_B318:
-	call 08100h		;b318
+	call 08100h		;b318   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ld a,004h		;b31b
 	jr nz,L_B320		;b31d
 	inc a			;b31f
 L_B320:
 	ld (ix+001h),a		;b320
-	call 08100h		;b323
+	call 08100h		;b323   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b326
 	ld hl,0d416h		;b327   ; apunta a cuantos actores han llegado con la alerta
 	inc (hl)			;b32a
@@ -2117,7 +2117,7 @@ L_B32C:
 	ld a,(ix+00dh)		;b33b
 	ld (ix+017h),a		;b33e
 	ld (ix+001h),003h		;b341
-	call 08100h		;b345
+	call 08100h		;b345   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b348
 	call 08273h		;b349   ; lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
 	call 080f3h		;b34c   ; a_p14_ba17_guarda: p14:BA17 guardando el banco de 0xA000
@@ -2151,7 +2151,7 @@ L_B37D:
 	ld a,(ix+000h)		;b37d   ; lee el tipo del actor (0 = libre)
 	cp 015h		;b380
 	jr nz,L_B391		;b382
-	call 08100h		;b384
+	call 08100h		;b384   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_B391		;b387
 	ld a,(ix+001h)		;b389   ; lee el paso del actor
 	cp 003h		;b38c
@@ -2220,7 +2220,7 @@ L_B403:
 	call L_B284		;b409
 	ld a,003h		;b40c
 	ld (0ca5fh),a		;b40e   ; guarda la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
-	call 09814h		;b411
+	call 09814h		;b411   ; marcador_de_alerta_bancos_14:
 	pop bc			;b414
 	pop de			;b415
 	pop hl			;b416
@@ -2935,7 +2935,7 @@ L_B8EC:
 	ld (ix+002h),000h		;b8f0
 	inc (ix+00ah)		;b8f4
 L_B8F7:
-	call 08273h		;b8f7
+	call 08273h		;b8f7   ; lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
 	ld a,(de)			;b8fa
 	and a			;b8fb
 	jr z,L_B927		;b8fc
@@ -2970,7 +2970,7 @@ L_B90F:
 	ld (hl),0e0h		;b924
 	ret			;b926
 L_B927:
-	call 08100h		;b927
+	call 08100h		;b927   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_B92F		;b92a
 	call 081bfh		;b92c   ; pinta_actor_bancos_14:
 L_B92F:
@@ -3614,7 +3614,7 @@ L_BD1E:
 	ld (0c3a1h),a		;bd23
 	ld hl,03074h		;bd26
 	ld bc,06010h		;bd29
-	call 0603ch		;bd2c
+	call 0603ch		;bd2c   ; p12:603C
 	ld hl,0bd35h		;bd2f
 	jp 04918h		;bd32   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 

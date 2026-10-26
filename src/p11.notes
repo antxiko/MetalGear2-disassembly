@@ -195,7 +195,10 @@ C 0xA963 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA96D a_p03_b289: p03:B289 con el banco 3 en 0xA000
 C 0xA971 a_p03_b3a6: p03:B3A6 con el banco 3 en 0xA000
 C 0xA97D lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xA9A0 p02:8F5D
+C 0xA9A6 p02:8F4E
 C 0xA9B9 a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
+C 0xA9EA p02:8F5D
 C 0xAA00 a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
 C 0xAA15 sonido_0d: pide el sonido 0x0D
 C 0xAA18 sonido_3a: pide el sonido 0x3A
@@ -207,8 +210,10 @@ C 0xAA87 lee la sala de la zona
 C 0xAA8C sonido_5c: pide el sonido 0x5C
 C 0xAAA4 p02:8F5D
 C 0xAAAA lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
+C 0xAAB0 p02:8F4E
 C 0xAAB3 sonido_21: pide el sonido 0x21
 C 0xAAB6 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
+C 0xAAD1 p02:8F53
 C 0xAADA lee la zona
 C 0xAAE1 lee la sala de la zona
 C 0xAAE6 sonido_5c: pide el sonido 0x5C
@@ -462,6 +467,7 @@ C 0xBC75 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta
 C 0xBC85 a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
 C 0xBC88 sonido_26: pide el sonido 0x26
 C 0xBCB1 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+C 0xBCBB p02:8F0E
 C 0xBCC2 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBCCE copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xBCD1 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)

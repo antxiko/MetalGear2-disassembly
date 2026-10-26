@@ -1418,6 +1418,7 @@ C 0x890A limpia_sprites_y_d300:
 C 0x8913 copia_marcador: sin 0xCA5F, el marcador de una pagina a la otra
 C 0x8916 a_p12_6ab3: p12:6AB3 con el banco 12 en 0x6000
 C 0x891A bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x891D p10:A0D3
 C 0x8920 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8928 lee 1 si Snake ha chocado en este cuadro
 C 0x895B guarda la Y de Snake
@@ -1486,7 +1487,9 @@ C 0x8B5B p09:A1A1
 C 0x8B60 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B63 p11:B23F
 C 0x8B68 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8B6B p11:BD31
 C 0x8B70 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8B73 p14:B712
 C 0x8B78 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B7B p10:A65E
 C 0x8B80 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1519,6 +1522,8 @@ C 0x8BE8 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BEB p11:BDBD
 C 0x8BEE bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BF1 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8BF4 p10:BED4
+C 0x8BF7 p10:BC59
 C 0x8BFC bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8BFF cuentas_de_snake: el suelo de la zona 7 (p06:A710), la cuenta de 0xCB54 y, con 0xCB4B, cada 4 cuadros el bit 0 de 0xCB4D
 C 0x8C04 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1590,6 +1595,7 @@ C 0x8D56 rehace_marcador: el marcador: lineas, marco y barra de vida
 C 0x8D5B cambia_de_zona: pasa a la zona A
 C 0x8D60 musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x8D65 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D68 p11:BDBD
 C 0x8D6D bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8D70 p10:B9E5
 C 0x8D75 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1603,9 +1609,11 @@ C 0x8D90 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x8D93 suma_7: suma 7 a la cosa 1 (B = 1, C = 7)
 C 0x8D98 cambia_de_zona: pasa a la zona A
 C 0x8D9D bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DA0 p11:AEE4
 C 0x8DA5 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DA8 suma_una: la cosa A: la tiene y una mas
 C 0x8DAD bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DB0 p10:BFBC
 C 0x8DB5 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DB8 algo_en_la_sala_de: en la zona 0x0C: p03:B1FD
 C 0x8DBD bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1617,6 +1625,7 @@ C 0x8DCE pon_cb3d: salvo en el estado 0x14: 0xCB3D = 1 y 0xCB3E = 16 (si no esta
 C 0x8DD3 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DD6 lleva_cosa: desde la 0x32, solo el rotulo y 0xCAC7 = 1
 C 0x8DDB bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DDE p11:BDBD
 C 0x8DE3 cambia_de_zona: pasa a la zona A
 C 0x8DE8 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DEB rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
@@ -1655,6 +1664,7 @@ C 0x8E91 p11:BE0F
 C 0x8E96 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E99 p11:BE6B
 C 0x8E9E bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8EA1 p11:BE94
 C 0x8EA6 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8EA9 p11:BEA2
 C 0x8EAE bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1686,6 +1696,7 @@ C 0x8F19 es_solido: p01:7F3D guardando HL
 C 0x8F1E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8F21 algo_en_la_sala_de: en la zona 0x0C: p03:B1FD
 C 0x8F26 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8F29 p03:B1F5
 C 0x8F2E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8F31 pinta_ficha: el dibujo de la ficha (16 x 16 desde X = 0x68 + dibujo * 16, Y = 0xB0 de la pagina 3, TIMP)
 C 0x8F36 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1803,6 +1814,7 @@ C 0x930C p10:AFF3
 C 0x9311 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9314 p10:B172
 C 0x9319 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x931C p10:B3E5
 C 0x9321 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x9324 p10:B8C4
 C 0x9329 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)

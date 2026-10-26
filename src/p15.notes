@@ -164,6 +164,7 @@ C 0xA9F5 apunta a la zona
 C 0xA9FC cambia_de_zona_b_1_2_15: cambia_de_zona y deja los bancos 1, 2 y 15
 C 0xAA03 copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
 C 0xAA0B borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+C 0xAA0E p02:8D4B
 C 0xAA16 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
 C 0xAA19 lee la zona
 C 0xAA28 lee la sala de la zona
@@ -199,6 +200,7 @@ C 0xAB41 guarda 1 en el estado 2 de Snake
 C 0xAB45 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAB55 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAB5A borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+C 0xAB5D p02:8D4B
 C 0xAB60 mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 C 0xAB63 lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
 C 0xAB70 guarda 2 fichas de 8 bytes [activa][..][Y][X] (cajas en p07:BE2D)
@@ -207,6 +209,7 @@ C 0xAB81 a_p10_bce4: p10:BCE4 con el banco 10 en 0xA000
 C 0xAB84 entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
 C 0xAB87 a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
 C 0xAB8A lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xABA1 p02:8D60
 C 0xABA7 guarda otra espera de 16 bits que baja en la interrupcion
 C 0xABB0 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xABB6 sonido_35: pide el sonido 0x35
@@ -233,6 +236,7 @@ C 0xAC67 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC6C p02:8D3C
 C 0xAC70 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC73 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+C 0xAC76 p02:8D4B
 C 0xAC7D apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xAC83 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0xAC97 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
@@ -247,16 +251,24 @@ C 0xACDB entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los 
 C 0xACE1 lee la zona
 C 0xACE7 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xACEE suma_a_de: DE = DE + A
+C 0xB815 esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
 C 0xB81E palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xB86D llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xB870 lee la fila de la sala en la zona (uno mas al salir por arriba)
+C 0xB87A esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
+C 0xB87D en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xB887 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xB8A7 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xB8D1 suma_a_de: DE = DE + A
 C 0xB8E0 suma_a_hl: HL = HL + A
 C 0xB8E5 suma_a_de: DE = DE + A
+C 0xB8EF acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
+C 0xB8F5 si_c693: con 0xC693, lo borra y salta a HL
 C 0xB8FE salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0xB90D llama_ba36_a: 
+C 0xB916 musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 C 0xB925 lee la sala de la zona
+C 0xB92D en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xB94A sprites_de_6860: 
 C 0xB95D pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 C 0xB96C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -273,10 +285,14 @@ C 0xBA4E copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0xBA6F salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xBA8A palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBB33 lee la sala de la zona
+C 0xBB39 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xBB3C sonido_36: pide el sonido 0x36
 C 0xBB3F sonido_37: pide el sonido 0x37
+C 0xBB58 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+C 0xBB67 y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 C 0xBB78 apunta_con_b_bancos_15: 
 C 0xBB99 azar: A = un numero al azar (0xCA03 rotado mas R)
+C 0xBBA4 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xBBE0 lanza_7: lo lanzado de tipo 7
 C 0xBCB4 lee la zona
 C 0xBCBA lee la sala de la zona
@@ -298,6 +314,8 @@ C 0xBD9F copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBDB3 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBDB8 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0xBDD5 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xBDEE en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+C 0xBDFD en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xBE05 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBE0F lee la sala de la zona
 C 0xBE22 lee la zona

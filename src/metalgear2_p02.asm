@@ -1355,7 +1355,7 @@ entra_en_sitio:		; con 0xCB21 = 0x0A no
 	call 05dbbh		;8916   ; a_p12_6ab3: p12:6AB3 con el banco 12 en 0x6000
 	pop af			;8919   ; el sitio
 	call 041cdh		;891a   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a0d3h		;891d
+	call 0a0d3h		;891d   ; p10:A0D3
 	call 040f0h		;8920   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call cosas_del_sitio		;8923   ; p02:902A
 	scf			;8926   ; con acarreo: ha entrado
@@ -1664,11 +1664,11 @@ a_p11_b23f:		; p11:B23F con el banco 11 en 0xA000
 	jr L_8B4D		;8b66
 a_p11_bd31:		; p11:BD31 con el banco 11 en 0xA000
 	call 041d5h		;8b68   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bd31h		;8b6b
+	call 0bd31h		;8b6b   ; p11:BD31
 	jr L_8B4D		;8b6e
 a_p14_b712:		; p14:B712 con el banco 14 en 0xA000
 	call 041efh		;8b70   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b712h		;8b73
+	call 0b712h		;8b73   ; p14:B712
 	jr L_8B4D		;8b76
 a_p10_a65e:		; p10:A65E con el banco 10 en 0xA000
 	call 041cdh		;8b78   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1733,8 +1733,8 @@ L_8BEE:
 	jp 040f0h		;8bee   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 L_8BF1:
 	call 041cdh		;8bf1   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bed4h		;8bf4
-	call 0bc59h		;8bf7
+	call 0bed4h		;8bf4   ; p10:BED4
+	call 0bc59h		;8bf7   ; p10:BC59
 	jr L_8BEE		;8bfa
 a_p06_a6f9:		; p06:A6F9 con el banco 6 en 0xA000
 	call 041a0h		;8bfc   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1930,7 +1930,7 @@ L_8D60:
 	jr L_8D53		;8d63
 a_p11_bdbd_2:		; p11:BDBD con el banco 11 en 0xA000
 	call 041d5h		;8d65   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bdbdh		;8d68
+	call 0bdbdh		;8d68   ; p11:BDBD
 	jr L_8D53		;8d6b
 a_p10_b9e5:		; p10:B9E5 con el banco 10 en 0xA000
 	call 041cdh		;8d6d   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1960,7 +1960,7 @@ cambia_de_zona_b_1_2_7:		; cambia_de_zona y deja los bancos 1, 2 y 7
 	jr L_8DC3		;8d9b
 a_p11_aee4_2:		; p11:AEE4 con el banco 11 en 0xA000
 	call 041d5h		;8d9d   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aee4h		;8da0
+	call 0aee4h		;8da0   ; p11:AEE4
 	jr L_8DC3		;8da3
 a_p03_be51:		; p03:BE51 con el banco 3 en 0xA000
 	call 040f0h		;8da5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1968,7 +1968,7 @@ a_p03_be51:		; p03:BE51 con el banco 3 en 0xA000
 	jr L_8DC3		;8dab
 a_p10_bfbc_2:		; p10:BFBC con el banco 10 en 0xA000
 	call 041cdh		;8dad   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bfbch		;8db0
+	call 0bfbch		;8db0   ; p10:BFBC
 	jr L_8DC3		;8db3
 a_p03_b1be:		; p03:B1BE con el banco 3 en 0xA000
 	call 040f0h		;8db5   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1992,7 +1992,7 @@ a_p03_bd82:		; p03:BD82 con el banco 3 en 0xA000
 	jr L_8DC3		;8dd9
 a_p11_bdbd_3:		; p11:BDBD con el banco 11 en 0xA000
 	call 041d5h		;8ddb   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bdbdh		;8dde
+	call 0bdbdh		;8dde   ; p11:BDBD
 	jr L_8DC3		;8de1
 cambia_de_zona_b_1_2_8:		; cambia_de_zona y deja los bancos 1, 2 y 8
 	call 059a7h		;8de3   ; cambia_de_zona: pasa a la zona A
@@ -2097,7 +2097,7 @@ a_p11_be6b:		; p11:BE6B con el banco 11 en 0xA000
 	jr L_8E6C		;8e9c
 a_p11_be94:		; p11:BE94 con el banco 11 en 0xA000
 	call 041d5h		;8e9e   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0be94h		;8ea1
+	call 0be94h		;8ea1   ; p11:BE94
 	jr L_8E6C		;8ea4
 a_p11_bea2:		; p11:BEA2 con el banco 11 en 0xA000
 	call 041d5h		;8ea6   ; bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2186,7 +2186,7 @@ a_p03_b1be_2:		; p03:B1BE con el banco 3 en 0xA000
 	jr L_8F60		;8f24
 a_p03_b1f5:		; p03:B1F5 con el banco 3 en 0xA000
 	call 040f0h		;8f26   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b1f5h		;8f29
+	call 0b1f5h		;8f29   ; p03:B1F5
 	jr L_8F60		;8f2c
 a_p03_b3a6:		; p03:B3A6 con el banco 3 en 0xA000
 	call 040f0h		;8f2e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2837,7 +2837,7 @@ a_p10_b172:		; p10:B172 con el banco 10 en 0xA000
 	jr L_92FE		;9317
 a_p10_b3e5:		; p10:B3E5 con el banco 10 en 0xA000
 	call 041cah		;9319   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b3e5h		;931c
+	call 0b3e5h		;931c   ; p10:B3E5
 	jr L_92FE		;931f
 a_p10_b8c4:		; p10:B8C4 con el banco 10 en 0xA000
 	call 041cah		;9321   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)

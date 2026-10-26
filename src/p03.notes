@@ -1457,6 +1457,7 @@ C 0xAB16 rachas_9638: las rachas de p37:9638 a la VRAM de 0x1E280 y una franja d
 C 0xAB19 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xAB1D rachas_b34a_bancos_3: 
 C 0xAB20 lee la fila y la columna de la sala desde la que se mira (16 bits)
+C 0xAB2B p02:9430
 C 0xAB2E lee la Y de Snake
 C 0xAB37 guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
 C 0xAB3A estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
@@ -1503,6 +1504,7 @@ C 0xAC8E lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3
 C 0xAC94 apunta a la Y de Snake
 C 0xACA5 guarda una espera de 16 bits que baja en la interrupcion
 C 0xACA8 apunta a el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+C 0xACAE p02:9430
 C 0xACB1 lee la Y de Snake
 C 0xACBB guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
 C 0xACC2 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
@@ -1520,6 +1522,7 @@ C 0xAD20 guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el
 C 0xAD25 guarda la X de Snake: la parte fraccionaria (0xCB04-0xCB05 en 8.8) y el byte siguiente (16 bits)
 C 0xAD2D guarda la Y de Snake: la parte fraccionaria (0xCB02-0xCB03 en 8.8) y el byte siguiente (16 bits)
 C 0xAD44 pon_cb28: 0xCB28 = B, 0xCB29 = C
+C 0xAD4C p02:9430
 C 0xAD52 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
 C 0xAD55 estado_que_toca: el estado que toca (p02:98F0) a 0xCB00
 C 0xAD5D estado_que_toca: el estado que toca (p02:98F0) a 0xCB00

@@ -1738,7 +1738,7 @@ L_ABA5:
 	ld (ix+016h),a		;abc8
 	call L_AAF6		;abcb
 	call 06b12h		;abce   ; sonido_05: pide el sonido 0x05
-	jp 08685h		;abd1
+	jp 08685h		;abd1   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 L_ABD4:
 	call L_ABE6		;abd4
 	ret c			;abd7
@@ -2505,10 +2505,10 @@ L_B17D:
 	ret z			;b181
 	jp 085feh		;b182   ; rachas_b2d5: p37:B2D5 y 4 patrones de sprite en espejo de 0xF800 a 0xF890
 L_B185:
-	call 08ecdh		;b185
+	call 08ecdh		;b185   ; p02:8ECD
 	call L_BA51		;b188
 	call L_B191		;b18b
-	jp 08ed2h		;b18e
+	jp 08ed2h		;b18e   ; p02:8ED2
 L_B191:
 	ld a,(0ca09h)		;b191   ; lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 	and 01fh		;b194

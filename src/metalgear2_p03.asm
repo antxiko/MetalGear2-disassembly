@@ -1589,7 +1589,7 @@ sala_mas_bc:		; C = la fila de 0xCA70 + C, B = la columna de 0xCA71 + B
 	ld b,a			;ab29
 	ret			;ab2a
 estado_0f:		; el estado 0x0F: se mueve y, desde Y = 0x78, la Y se queda alli y el estado que toca
-	call 09430h		;ab2b
+	call 09430h		;ab2b   ; p02:9430
 	ld a,(0cb03h)		;ab2e   ; lee la Y de Snake
 	ld h,078h		;ab31
 	cp h			;ab33
@@ -1813,7 +1813,7 @@ estado_14_paso_2:		; a los 0x10 cuadros, 0x90 de espera y el estado 0x1C
 	ld (hl),01ch		;acab
 	ret			;acad
 estado_15:		; el estado 0x15: se mueve; por encima de Y = 0xB8, la Y alli, el estado que toca y se guarda en 0xC700
-	call 09430h		;acae
+	call 09430h		;acae   ; p02:9430
 	ld a,(0cb03h)		;acb1   ; lee la Y de Snake
 	cp 0b8h		;acb4
 	jr nc,L_ACC8		;acb6
@@ -1895,7 +1895,7 @@ estado_17:		; el estado 0x17: sin 0xCB42, se mueve (p02:9430); con el, lo borra,
 	ld hl,0cb42h		;ad47
 	ld a,(hl)			;ad4a
 	or a			;ad4b
-	jp z,09430h		;ad4c
+	jp z,09430h		;ad4c   ; p02:9430
 	xor a			;ad4f
 	ld (hl),a			;ad50
 	inc a			;ad51

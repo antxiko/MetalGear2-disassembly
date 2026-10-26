@@ -870,6 +870,7 @@ C 0x8326 lee el tipo del actor (0 = libre)
 C 0x832A sonido_0f: pide el sonido 0x0F
 C 0x832D quita_actor: sus sprites libres y fuera; el 0x13 apunta en 0xD4F8, el 0x0B con alerta 0xCA67 = 0
 C 0x8330 tras_la_caida: con menos de 4 que siguen y p04:96BA sin acarreo: con la alerta 2 cuenta (p04:930D), con 3 se acaba (p04:9306)
+C 0x8349 p01:7A12
 C 0x834C lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
 C 0x834F lee el tipo del actor (0 = libre)
 C 0x8353 quita_actor_si: 
@@ -883,7 +884,7 @@ C 0x83B5 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0x83B9 el dibujo del actor (bit 0: el paso) = 0x05
 C 0x83BD lee la copia del banco de 0xA000
 C 0x83C1 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x83C7 p08:AEBF
+C 0x83C7 pinta_0a_si: 
 C 0x83D0 lee las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0x83D5 ve_lo_lanzado: con lo lanzado 8, sin 0xD44F y sin alerta: el actor que lo tiene delante y lo ve, 0xD44F = 1 y p04:9CFE
 C 0x83F8 lee el paso del actor
@@ -949,6 +950,7 @@ C 0x8685 lee el tipo del actor (0 = libre)
 C 0x868B byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 C 0x868E despachador: salta a la palabra A de la tabla que va detras del call
 C 0x86A4 apunta a 1 mientras suena la musica de un actor
+C 0x86AC p01:7A12
 C 0x86AF lee el tipo del actor (0 = libre)
 C 0x86B4 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x86B9 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -973,7 +975,9 @@ C 0x8748 patrones_del_dibujo: HL = los patrones del dibujo del tipo (p56:AB35, o
 C 0x874B sprites_desde_10: los sprites desde el 10 (0xDC28)
 C 0x874E colores_desde_daa0: los colores desde 0xDAA0
 C 0x8751 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8754 p14:AF96
 C 0x8759 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x875C p14:AE76
 C 0x8764 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x876B apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x87BE bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1017,6 +1021,7 @@ C 0x8912 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L
 C 0x8929 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x892C bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8933 p10:AB7D
+C 0x893A p10:AB7D
 C 0x893D bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8940 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x8944 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
@@ -1181,7 +1186,7 @@ C 0x8D99 lee la zona
 C 0x8D9F palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x8DA5 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x8DA8 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8DAB p08:A13B
+C 0x8DAB a_oscuras: en las zonas 3-4: con 0xCB21 = 3, la paleta de p56:BCCF; si no, la pagina a cero, el bit 3 de 0xD7E1 y el caracter 0x53 de la sala en un sitio (zona 3: (0x88, 0x28) en la especial 0x0C, (0x48, 0x88) en la sala 0, (0xA8, 0x88) en la 0x10; zona 4: (0x10, 0x48) en la sala 0x0E)
 C 0x8DB0 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DB3 la_ronda: HL = la ronda del actor: la palabra del byte 0x11 en la tabla de la zona de p08:B050
 C 0x8DBB byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
@@ -1512,6 +1517,7 @@ C 0x98AB p15:BF98
 C 0x98AE vuelve_banco_a000_b: el banco de 0xA000 de antes
 C 0x98B1 lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 C 0x98B6 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x98B9 p15:BFBF
 C 0x98C0 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x98D7 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0x98FB bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
@@ -1659,12 +1665,14 @@ C 0x9E14 guarda el paso del actor
 C 0x9E17 vuelve_a_la_esquina: hacia la esquina de los bytes 0x26-0x27
 C 0x9E20 ha_llegado: acarreo si aun no ha llegado al punto D (vertical) o E (horizontal), segun hacia donde va
 C 0x9E2A la espera del actor = 0x7F
+C 0x9E2E paso_siguiente: el paso siguiente del actor
 C 0x9E31 d44f_de_1_a_2: Z si 0xD44F era 1 (y pasa a 2)
 C 0x9E36 baja la espera del actor
 C 0x9E41 lados_de_hl: 
 C 0x9E44 eje_hacia_hl: 
 C 0x9E48 primer_bit: C = el primer bit a uno de A (0-3)
 C 0x9E4B a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
+C 0x9E4E paso_siguiente: el paso siguiente del actor
 C 0x9E51 lee la espera del actor
 C 0x9E57 a_p06_b5e2: p06:B5E2 con el banco 6 en 0xA000
 C 0x9E60 ha_llegado: acarreo si aun no ha llegado al punto D (vertical) o E (horizontal), segun hacia donde va
@@ -1717,6 +1725,7 @@ C 0x9FA7 baja la espera del actor
 C 0x9FAB la espera del actor = 0xC0
 C 0x9FB7 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0x9FBA suelta_sprites: los 4 primeros sprites del actor (bytes 0x2E-0x31) libres y fuera
+C 0x9FBD paso_siguiente: el paso siguiente del actor
 C 0x9FC3 suelta_sprite: el sprite A: libre en 0xD400 y fuera (Y = 0xE0)
 C 0x9FC9 suelta_sprite: el sprite A: libre en 0xD400 y fuera (Y = 0xE0)
 C 0x9FCF suelta_sprite: el sprite A: libre en 0xD400 y fuera (Y = 0xE0)
@@ -1726,4 +1735,5 @@ C 0x9FE5 suma_a_hl: HL = HL + A
 C 0x9FEE baja la espera del actor
 C 0x9FF2 la espera del actor = 0x08
 C 0x9FF6 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+C 0x9FF9 paso_siguiente: el paso siguiente del actor
 # --- fin de las anotaciones de anota.py ---

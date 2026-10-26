@@ -271,7 +271,7 @@ L_61A8:
 	ld a,0ffh		;61c0
 	call 04237h		;61c2   ; llena_bloque: pone A en BC + 1 bytes desde HL
 	call 041efh		;61c5   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bba7h		;61c8
+	call 0bba7h		;61c8   ; p14:BBA7
 	jp 041a0h		;61cb   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 L_61CE:
 	ld a,(hl)			;61ce
@@ -702,7 +702,7 @@ L_64C9:
 	call 0f37dh		;64d5
 	ld c,001h		;64d8
 	inc a			;64da
-	jp z,0ad94h		;64db
+	jp z,0ad94h		;64db   ; error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	ret			;64de
 L_64DF:
 	ld de,(0c390h)		;64df
@@ -710,7 +710,7 @@ L_64DF:
 	call 0f37dh		;64e5
 	ld c,005h		;64e8
 	inc a			;64ea
-	jp z,0ad94h		;64eb
+	jp z,0ad94h		;64eb   ; error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	ret			;64ee
 L_64EF:
 	ld de,(0c390h)		;64ef
@@ -799,7 +799,7 @@ L_6567:
 	call 0f37dh		;656d
 	ld c,004h		;6570
 	or a			;6572
-	jp nz,0ad94h		;6573
+	jp nz,0ad94h		;6573   ; error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	ret			;6576
 L_6577:
 	ld a,(0c39fh)		;6577
@@ -810,7 +810,7 @@ L_6577:
 	call 0f37dh		;6583
 	ld c,000h		;6586
 	or a			;6588
-	jp nz,0ad94h		;6589
+	jp nz,0ad94h		;6589   ; error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	ret			;658c
 L_658D:
 	ld a,(0c386h)		;658d   ; lee el slot de la RAM de 0x8000 (p01:7243)
@@ -965,7 +965,7 @@ L_66D4:
 	ld (08000h),a		;66df
 	pop bc			;66e2
 	ld de,(0c390h)		;66e3
-	call 08000h		;66e7
+	call 08000h		;66e7   ; p02:8000
 	push af			;66ea
 	ld a,(0c399h)		;66eb   ; lee el slot del cartucho para ENASLT
 	ld h,080h		;66ee
@@ -1143,7 +1143,7 @@ L_688C:
 L_68B4:
 	ld hl,(0ca50h)		;68b4   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 	ld a,b			;68b7
-	call 08e75h		;68b8
+	call 08e75h		;68b8   ; nibbles: E = el nibble alto de A, D = el bajo
 	ex de,hl			;68bb
 	ld a,(0ca4ah)		;68bc   ; lee la zona
 	cp 00ch		;68bf
@@ -1304,7 +1304,7 @@ L_69BD:
 	ld a,(0c383h)		;69bd   ; lee la copia del banco de 0xA000
 	push af			;69c0
 	call 041bdh		;69c1   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ad58h		;69c4   ; p08:AD58
+	call 0ad58h		;69c4   ; empiezan_los_15: los actores de tipo 0x15 en el paso 0 toman su sitio (p08:AD78)
 	pop af			;69c7
 	push af			;69c8
 	jp 041a3h		;69c9
@@ -1438,7 +1438,7 @@ L_6AB3:
 L_6AC0:
 	ld a,(hl)			;6ac0
 	inc a			;6ac1
-	jp z,0818bh		;6ac2
+	jp z,0818bh		;6ac2   ; pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
 	call L_6948		;6ac5
 	ld (ix+01bh),002h		;6ac8
 	inc hl			;6acc
@@ -4351,7 +4351,7 @@ L_7DE2:
 L_7DF4:
 	call L_7E35		;7df4
 	jr c,L_7E2C		;7df7
-	call 08100h		;7df9
+	call 08100h		;7df9   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_7E2C		;7dfc
 	ld a,c			;7dfe
 	ld hl,0a808h		;7dff
@@ -4378,7 +4378,7 @@ L_7E20:
 	djnz L_7E20		;7e21
 L_7E23:
 	call 0423eh		;7e23   ; suma_a_hl: HL = HL + A
-	call 08273h		;7e26
+	call 08273h		;7e26   ; lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
 	call L_7E4B		;7e29
 L_7E2C:
 	ld bc,00040h		;7e2c

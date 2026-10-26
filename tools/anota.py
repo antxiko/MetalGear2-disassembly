@@ -99,9 +99,40 @@ def medidas():
             m = re.match(r"^0x[0-9A-Fa-f]+\s+#\s+p(\d\d):([0-9A-Fa-f]{4}) (?:call|jp|jr)", ln)
             if m:
                 fuera.setdefault((int(m.group(1)), int(m.group(2), 16)), set()).add(mm)
+    for k, v in medidas_de_la_traza().items():
+        fuera.setdefault(k, set()).update(v)
     # una llamada que el trazador vio ir a dos bancos (el banco 0 corre con
     # cualquiera en las ventanas) no se sabe a cual va: fuera
     return {k: v.pop() for k, v in fuera.items() if len(v) == 1}
+
+
+def medidas_de_la_traza():
+    """(banco, pc) -> {bancos de destino} de TODAS las llamadas y saltos del
+    trazado de cartucho entero (los .entries solo guardan la primera razon de
+    cada entrada). El trazado tarda; se guarda en work/medidas_traza.json y se
+    rehace cuando cambia algo de lo que lo hace."""
+    import json
+    cache = os.path.join(RAIZ, "work", "medidas_traza.json")
+    fuentes = [os.path.join(RAIZ, "tools", "bancos.py")] + glob.glob(
+        os.path.join(RAIZ, "src", "*.entries")) + [
+        os.path.join(RAIZ, "src", n) for n in ("semillas.txt", "sitios.txt", "datos.txt", "tablas.txt")]
+    nueva = max(os.path.getmtime(f) for f in fuentes if os.path.exists(f))
+    if os.path.exists(cache) and os.path.getmtime(cache) >= nueva:
+        return {tuple(int(x, 16) for x in k.split(":")): set(v)
+                for k, v in json.load(open(cache, encoding="utf-8")).items()}
+    import bloques
+    t = bloques.trazador()
+    sale = {}
+    for d, b, pc, s, *_ in t.llamadas:
+        if d is None or not 0x6000 <= d < 0xC000 or s is None:
+            continue
+        bd = s[(d - 0x6000) >> 13]
+        if bd is not None and bd != b:
+            sale.setdefault((b, pc), set()).add(bd)
+    os.makedirs(os.path.dirname(cache), exist_ok=True)
+    json.dump({"%x:%x" % k: sorted(v) for k, v in sale.items()},
+              open(cache, "w", encoding="utf-8"))
+    return sale
 
 
 def a_mano(b):

@@ -1353,9 +1353,9 @@ L_A993:
 	ld (0d752h),a		;a995
 	ld (ix+000h),001h		;a998
 	ld (ix+001h),000h		;a99c
-	call 08f5dh		;a9a0
+	call 08f5dh		;a9a0   ; p02:8F5D
 	ld hl,0bedch		;a9a3
-	call 08f4eh		;a9a6
+	call 08f4eh		;a9a6   ; p02:8F4E
 	ld a,(ix+003h)		;a9a9
 	ld (ix+00ah),a		;a9ac
 	ld a,(ix+005h)		;a9af
@@ -1389,7 +1389,7 @@ L_A9DD:
 	ld (0d752h),a		;a9df
 	ld (ix+000h),002h		;a9e2
 	ld (ix+001h),000h		;a9e6
-	call 08f5dh		;a9ea
+	call 08f5dh		;a9ea   ; p02:8F5D
 	call L_AA1B		;a9ed
 	ld a,(ix+003h)		;a9f0
 	ld (ix+00ah),a		;a9f3
@@ -1486,7 +1486,7 @@ L_AA8F:
 	ld hl,0becch		;aaa7
 	ld a,(0cb0eh)		;aaaa   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ld (ix+00bh),a		;aaad
-	call 08f4eh		;aab0
+	call 08f4eh		;aab0   ; p02:8F4E
 	jp 06a7fh		;aab3   ; sonido_21: pide el sonido 0x21
 L_AAB6:
 	ld a,(0ca07h)		;aab6   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
@@ -1506,7 +1506,7 @@ L_AACA:
 	ld a,b			;aaca
 	ld (ix+00bh),a		;aacb
 	ld hl,0becch		;aace
-	call 08f53h		;aad1
+	call 08f53h		;aad1   ; p02:8F53
 	ld a,001h		;aad4
 	ld (0cacfh),a		;aad6
 	ret			;aad9
@@ -4098,7 +4098,7 @@ L_BCB1:
 	ret nz			;bcb6
 	push hl			;bcb7
 	ld hl,0d8a4h		;bcb8
-	call 08f0eh		;bcbb
+	call 08f0eh		;bcbb   ; p02:8F0E
 	pop hl			;bcbe
 	ld de,0d8a4h		;bcbf
 	ld a,(0ca42h)		;bcc2   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)

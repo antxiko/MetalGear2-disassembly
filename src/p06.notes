@@ -1401,7 +1401,10 @@ C 0xA8C1 sonido_14: pide el sonido 0x14
 C 0xA8C4 cuenta_y_parpadeo: un cuadro menos al byte 0x0C (Z al acabar); cada 2, el bit 0 del byte 0x0F cambia (NZ)
 C 0xA8E5 a_p06_aa18_guarda: p06:AA18 guardando el banco de 0xA000
 C 0xA8E8 sonido_0e: pide el sonido 0x0E
+C 0xA91A color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
+C 0xA921 color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
 C 0xA924 sonido_43: pide el sonido 0x43
+C 0xA93F color_de_sprite: las 16 lineas de colores del sprite C (0xDAA0 + C * 16) con el color A
 C 0xA94B palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA962 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA981 sprite_de_1: el tipo 1, patron 0xE0, sobre su actor: segun el dibujo (byte 0x0D & 3), Y - 0x20 y X - 0x10, Y - 0x20 y X + 8, o Y - 0x28 y X - 4; fuera de la pantalla, Y = 0xE0
@@ -1459,6 +1462,7 @@ C 0xAD3F lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAD4B copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xAD65 p12:65C1
 C 0xAD8F mensaje_de_error: el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
+C 0xAD95 p12:65C1
 C 0xAD9D palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xADA6 letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 C 0xADA9 p12:65C6

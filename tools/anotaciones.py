@@ -373,7 +373,9 @@ FICHAS = ((CARGAS_CANAL, {16: ((0x4369, 0x4C19),)}, CAMPOS_CANAL),
           (CARGAS_D800, {4: ((0x86ED, 0x8D7E),), 5: ((0xBD26, 0xBD3B),)}, CAMPOS_D800),
           (CARGAS_LANZADO, {4: ((0x9A80, 0x9AA9), (0x9C82, 0x9CD5))}, CAMPOS_LANZADO),
           (CARGAS_ACTOR, {4: ((0x8000, 0x86ED), (0x8D7E, 0x9A80), (0x9AA9, 0x9C82), (0x9CD5, 0xA000)),
-                          5: ((0xA000, 0xBD26), (0xBD3B, 0xC000))}, CAMPOS_ACTOR))
+                          5: ((0xA000, 0xBD26), (0xBD3B, 0xC000)),
+                # banco 8: los tipos 3, 0x0A-0x0C y 0x10-0x18 (p04:8148); fuera p08:A0E6-A1D6
+                8: ((0xA000, 0xA0E6), (0xA1D6, 0xBC53))}, CAMPOS_ACTOR))
 
 
 def _rutinas_txt():

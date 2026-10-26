@@ -508,7 +508,7 @@ cae_el_actor:		; el sonido 0x0F, fuera (p04:834C) y p04:92F4; el tipo 3 ademas q
 	ld a,(ix+019h)		;8343
 	cp 005h		;8346
 	ret z			;8348
-	jp 07a12h		;8349
+	jp 07a12h		;8349   ; p01:7A12
 quita_actor:		; sus sprites libres y fuera; el 0x13 apunta en 0xD4F8, el 0x0B con alerta 0xCA67 = 0
 	call lista_de_sprites		;834c   ; lista_de_sprites: DE = IX + 0x2E: la lista de sprites del actor
 	ld a,(ix+000h)		;834f   ; lee el tipo del actor (0 = libre)
@@ -578,7 +578,7 @@ el_0a_se_va:		; en esta sala: el dibujo 5 y p08:AEBF
 	push af			;83c0
 	call 041bdh		;83c1   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld de,00001h		;83c4
-	call 0aebfh		;83c7   ; p08:AEBF
+	call 0aebfh		;83c7   ; pinta_0a_si:
 	pop af			;83ca
 	push af			;83cb
 	jp 041a3h		;83cc
@@ -1024,7 +1024,7 @@ acaba_musica_del_actor:		; con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1
 	and a			;86a8
 	ret z			;86a9
 	ld (hl),000h		;86aa
-	call 07a12h		;86ac
+	call 07a12h		;86ac   ; p01:7A12
 	ld a,(ix+000h)		;86af   ; lee el tipo del actor (0 = libre)
 	cp 001h		;86b2
 	jp z,041f7h		;86b4   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1114,11 +1114,11 @@ L_873C:
 	jp colores_desde_daa0		;874e   ; colores_desde_daa0: los colores desde 0xDAA0
 a_p14_af96:		; p14:AF96 con el banco 14 en 0xA000
 	call 041efh		;8751   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0af96h		;8754
+	call 0af96h		;8754   ; p14:AF96
 	jr L_87BE		;8757
 a_p14_ae76:		; p14:AE76 con el banco 14 en 0xA000
 	call 041efh		;8759   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ae76h		;875c
+	call 0ae76h		;875c   ; p14:AE76
 	jr L_87BE		;875f
 sprites_desde_10:		; los sprites desde el 10 (0xDC28)
 	ld de,0dc28h		;8761
@@ -1385,7 +1385,7 @@ L_8915:
 	pop af			;8936
 	dec a			;8937
 	and 003h		;8938
-	call 0ab7dh		;893a
+	call 0ab7dh		;893a   ; p10:AB7D
 	jp 04142h		;893d   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 d800_en_esta_sala:		; IX = 0xD800: Z si esta en esta sala
 	ld ix,0d800h		;8940   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
@@ -1946,7 +1946,7 @@ la_ronda:		; HL = la ronda del actor: la palabra del byte 0x11 en la tabla de la
 	jp 043f6h		;8da5   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 a_p08_a13b:		; p08:A13B con el banco 8 en 0xA000
 	call 041bdh		;8da8   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a13bh		;8dab   ; p08:A13B
+	call 0a13bh		;8dab   ; a_oscuras: en las zonas 3-4: con 0xCB21 = 3, la paleta de p56:BCCF; si no, la pagina a cero, el bit 3 de 0xD7E1 y el caracter 0x53 de la sala en un sitio (zona 3: (0x88, 0x28) en la especial 0x0C, (0x48, 0x88) en la sala 0, (0xA8, 0x88) en la 0x10; zona 4: (0x10, 0x48) en la sala 0x0E)
 	jr L_8DDB		;8dae
 sigue_la_ronda:		; el tramo siguiente de la ronda (byte 0x0F); 0xFF vuelve al principio; con el bit 7, una parada
 	call 041bdh		;8db0   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3545,7 +3545,7 @@ a_p15_bfbf_guarda:		; p15:BFBF guardando los bancos de 0x8000 y 0xA000
 	ld bc,(0c382h)		;98b1   ; lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 	push bc			;98b5
 	call 041f7h		;98b6   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bfbfh		;98b9
+	call 0bfbfh		;98b9   ; p15:BFBF
 	jr L_98AE		;98bc
 tres_rotulos:		; 3 rectangulos de 0x18 x 8 de la pagina 3 (Y = 0x70) en los sitios de la lista HL
 	ld b,003h		;98be
@@ -4278,7 +4278,7 @@ L_9E1A:
 	jp c,L_900B		;9e23
 	ld (ix+00ch),000h		;9e26
 	ld (ix+00eh),07fh		;9e2a   ; la espera del actor = 0x7F
-	jp 0a27bh		;9e2e
+	jp 0a27bh		;9e2e   ; paso_siguiente: el paso siguiente del actor
 camino_paso_3:		; espera mirando (p06:B5E2 cada 16 cuadros); al acabar, de vuelta
 	call d44f_de_1_a_2		;9e31   ; d44f_de_1_a_2: Z si 0xD44F era 1 (y pasa a 2)
 	jr z,vuelve_a_la_esquina		;9e34
@@ -4293,7 +4293,7 @@ gira_hacia:		; la direccion hacia (H, L) por el eje mas largo, con su velocidad
 	and b			;9e47
 	call primer_bit		;9e48   ; primer_bit: C = el primer bit a uno de A (0-3)
 	call a_p06_b592_b_4_5		;9e4b   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
-	jp 0a27bh		;9e4e
+	jp 0a27bh		;9e4e   ; paso_siguiente: el paso siguiente del actor
 mira_cada_16:		; cada 16 cuadros, p06:B5E2
 	ld a,(ix+00eh)		;9e51   ; lee la espera del actor
 	and 00fh		;9e54
@@ -4465,7 +4465,7 @@ espera_c0:		; al acabar la espera: otra de 0xC0, 0xD514 = 0, 0xD441 = 1, sin spr
 	ld (0d441h),a		;9fb4
 	call en_esta_sala		;9fb7   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	call z,suelta_sprites		;9fba   ; suelta_sprites: los 4 primeros sprites del actor (bytes 0x2E-0x31) libres y fuera
-	jp 0a27bh		;9fbd
+	jp 0a27bh		;9fbd   ; paso_siguiente: el paso siguiente del actor
 suelta_sprites:		; los 4 primeros sprites del actor (bytes 0x2E-0x31) libres y fuera
 	ld a,(ix+02eh)		;9fc0
 	call suelta_sprite		;9fc3   ; suelta_sprite: el sprite A: libre en 0xD400 y fuera (Y = 0xE0)
@@ -4494,7 +4494,7 @@ espera_y_d519:		; al acabar la espera (8 cuadros), en esta sala, 0xD519 = 1
 	ret nz			;9ff1
 	ld (ix+00eh),008h		;9ff2   ; la espera del actor = 0x08
 	call en_esta_sala		;9ff6   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-	jp nz,0a27bh		;9ff9
+	jp nz,0a27bh		;9ff9   ; paso_siguiente: el paso siguiente del actor
 	ld (hl),001h		;9ffc
 
 ; ----------------------------------------------------------------------

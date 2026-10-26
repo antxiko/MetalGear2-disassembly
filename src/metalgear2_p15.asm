@@ -1584,7 +1584,7 @@ L_AA08:
 	call L_ABB9		;aa08
 L_AA0B:
 	call 07baah		;aa0b   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
-	call 08d4bh		;aa0e
+	call 08d4bh		;aa0e   ; p02:8D4B
 	pop bc			;aa11
 	pop af			;aa12
 	call L_AAA2		;aa13
@@ -1754,7 +1754,7 @@ L_AB4F:
 	push de			;ab58
 	push bc			;ab59
 	call 07baah		;ab5a   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
-	call 08d4bh		;ab5d
+	call 08d4bh		;ab5d   ; p02:8D4B
 	call 08d50h		;ab60   ; mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 	call 08d46h		;ab63   ; lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
 	xor a			;ab66
@@ -1783,7 +1783,7 @@ L_AB4F:
 L_AB9C:
 	ld a,001h		;ab9c
 	ld (0d4e2h),a		;ab9e
-	jp 08d60h		;aba1
+	jp 08d60h		;aba1   ; p02:8D60
 L_ABA4:
 	ld hl,0012ch		;aba4
 	ld (0caf7h),hl		;aba7   ; guarda otra espera de 16 bits que baja en la interrupcion
@@ -1889,7 +1889,7 @@ L_AC5E:
 	xor a			;ac6f
 	ld (0ca76h),a		;ac70   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	call 07baah		;ac73   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
-	call 08d4bh		;ac76
+	call 08d4bh		;ac76   ; p02:8D4B
 	pop bc			;ac79
 	call L_ABB9		;ac7a
 	ld hl,0d300h		;ac7d   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
@@ -2174,7 +2174,7 @@ L_B80D:
 	cp 004h		;b80d
 	jp nc,L_B870		;b80f
 	ld bc,00040h		;b812
-	call 0872bh		;b815
+	call 0872bh		;b815   ; esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
 	ld a,(ix+00dh)		;b818
 	ld hl,0bc0ah		;b81b
 	call 043f6h		;b81e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
@@ -2241,8 +2241,8 @@ L_B870:
 	sub 007h		;b873
 	cp 002h		;b875
 	ld bc,0001fh		;b877
-	call c,0872bh		;b87a
-	call 08100h		;b87d
+	call c,0872bh		;b87a   ; esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
+	call 08100h		;b87d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b880
 	ld a,(ix+00dh)		;b881
 	ld hl,0bc40h		;b884
@@ -2304,9 +2304,9 @@ L_B8DC:
 	ret			;b8eb
 L_B8EC:
 	call L_B925		;b8ec
-	jp nc,086a4h		;b8ef
+	jp nc,086a4h		;b8ef   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06aeeh		;b8f2
-	call 086d5h		;b8f5
+	call 086d5h		;b8f5   ; si_c693: con 0xC693, lo borra y salta a HL
 	ld a,(ix+001h)		;b8f8
 	ld hl,0b919h		;b8fb
 	call 0424eh		;b8fe   ; salta_por_tabla: salta a la palabra A de la tabla de HL
@@ -2315,11 +2315,11 @@ L_B8EC:
 	ret c			;b906
 	call L_B925		;b907
 	ld a,(ix+00ch)		;b90a
-	call 08085h		;b90d
+	call 08085h		;b90d   ; llama_ba36_a:
 	ld a,(ix+001h)		;b910
 	cp 004h		;b913
 	ret c			;b915
-	jp 08671h		;b916
+	jp 08671h		;b916   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B919: lo apuntan con el banco puesto p15:B8FB (0xB919); el
@@ -2340,7 +2340,7 @@ L_B925:
 	cp 004h		;b92a
 	ret			;b92c
 L_B92D:
-	call 08100h		;b92d
+	call 08100h		;b92d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;b930
 	ld hl,0d7d2h		;b931
 	set 3,(hl)		;b934
@@ -2613,7 +2613,7 @@ L_BB33:
 	ld a,(0ca4bh)		;bb33   ; lee la sala de la zona
 	cp 010h		;bb36
 	ret c			;bb38
-	call 08100h		;bb39
+	call 08100h		;bb39   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jp z,06af2h		;bb3c   ; sonido_36: pide el sonido 0x36
 	jp 06c13h		;bb3f   ; sonido_37: pide el sonido 0x37
 L_BB42:
@@ -2631,13 +2631,13 @@ L_BB51:
 L_BB54:
 	dec (ix+01fh)		;bb54
 	ret nz			;bb57
-	call 08100h		;bb58
+	call 08100h		;bb58   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_BB99		;bb5b
 	ld a,(ix+00fh)		;bb5d
 	and a			;bb60
 	jr nz,L_BB99		;bb61
 	ld (ix+00fh),00ch		;bb63
-	call 08079h		;bb67
+	call 08079h		;bb67   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
 	ld a,l			;bb6a
 	sub 010h		;bb6b
 	ld l,a			;bb6d
@@ -2663,7 +2663,7 @@ L_BB99:
 	ld (ix+01fh),a		;bba0
 	ret			;bba3
 L_BBA4:
-	call 08100h		;bba4
+	call 08100h		;bba4   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr z,L_BBAD		;bba7
 	ld (ix+00fh),000h		;bba9
 L_BBAD:
@@ -2873,7 +2873,7 @@ DATA_tabla_BDD8:
 
 
 L_BDEE:
-	call 08100h		;bdee
+	call 08100h		;bdee   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_BE0C		;bdf1
 	ld a,(ix+001h)		;bdf3
 	cp 002h		;bdf6
@@ -2881,7 +2881,7 @@ L_BDEE:
 	ret c			;bdfa
 	jr L_BE1F		;bdfb
 L_BDFD:
-	call 08100h		;bdfd
+	call 08100h		;bdfd   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jr nz,L_BE0C		;be00
 L_BE02:
 	ld c,002h		;be02
