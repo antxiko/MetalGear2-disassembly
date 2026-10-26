@@ -457,6 +457,9 @@ C 0x90F3 ...mas (H, L)
 C 0x90F7 solido?
 C 0x90FD si: su bit
 C 0x9102 sin acarreo
+D 0x815B 0x818B punteros_815B  tabla de 24 punteros (0x9D39, 0x9D39, 0xA1F2...) que no lee ninguna rutina del listado: ninguna instruccion carga su direccion
+D 0x8699 0x86A4 tipo_por_actor_8699  los bytes de los tipos de actor 1-0x0B de la tabla que lee p04:8688 (A = el byte de 0x8698 + el tipo): el indice del despachador de p04:868E
+D 0x8BAB 0x8BB6 nivel_por_tipo_8BAB  los bytes de los tipos 1-0x0B de la tabla que lee p04:8B93 (0x8BAA + el tipo de la ficha de 0xD800): con 0, acabar con el sube el nivel de Snake
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8691 0x8699 tabla_8691  4 destinos del despachador p00:424D (call en p04:868E, el indice en A): 6B69, 6B6D, 6B71, 6C0B; lo leen p04:868E (8 bytes)
@@ -1550,6 +1553,9 @@ C 0x9950 alguien_ve_a_snake: salvo en el estado 0x14 o desde el 0x1B de Snake: 0
 C 0x9955 lee la copia del banco de 0xA000
 C 0x9959 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x995C alerta_sin_musica: 0xD4F4 = 0xD41E (o 0xD449 en una especial) y la alerta
+C 0x9967 lee la copia del banco de 0xA000
+C 0x996B bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x996E actores_en_alerta: 0xD416 y 0xD451 a cero, lo lanzado (p14:B269) y cada actor activo a la alerta (p14:B2AB)
 C 0x9976 lee la copia del banco de 0xA000
 C 0x997A bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x997D dibujo_del_15: el dibujo (0x28 + su dibujo * 16, 0xB0), 16 x 16, en su sitio (X - 8, Y - 0x0F) con la operacion 0xC8 (0xD8 en la pagina 1)
@@ -1650,6 +1656,8 @@ C 0x9CC2 lee la Y de lo lanzado
 C 0x9CCB lee la X de lo lanzado
 C 0x9CD5 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x9CD8 aviso_d458: el aviso de 0xD458 ([que y bits][cuenta][Y][X][fila][columna]): la primera vez, guarda lo de debajo y lo pinta (p12:74F4); despues cuenta y al acabar, 0xCA28 = 0, la ficha libre y, en la sala del aviso, lo de debajo de vuelta (p12:74CB)
+C 0x9CDD bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+C 0x9CE0 quita_aviso: 0xCA28 = 0, 0xD458 libre y, en la misma sala, lo de debajo de vuelta: el 1, 0x10 x 0x10 desde (0xC0, 0x80); los otros por p12:7579
 C 0x9CE3 bancos_1: pone el 1 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x9CE6 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0x9CE9 aviso_1: el aviso 1 (quitando el de antes) sobre el actor IX: 0xCA28 = 1, la cuenta 0x10, la Y - 0x28 (o 0) y la X + 4 (o - 0x14 desde 0x80), con la sala de Snake

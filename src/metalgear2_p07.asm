@@ -2813,8 +2813,10 @@ nada_b520:
 	ret			;b520
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb521..0xb52c  (11 bytes)
-DATA_B521:
+; DATOS paso_vencido_B521: los pasos de los tipos 1-0x0B de la ficha de 0xD800
+;   que lee p07:B4C0 (0xB520 + el tipo) al vencerla
+;   0xb521..0xb52c  (11 bytes)
+DATA_paso_vencido_B521:
 	defb 000h,000h,00dh,00fh,020h,020h,020h,00fh,010h,00ch,006h	; b521  ....   ....
 
 ; ======================================================================
@@ -2831,8 +2833,10 @@ nada_b534:
 	ret			;b534
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb535..0xb53d  (8 bytes)
-DATA_B535:
+; DATOS dano_por_tipo_B535: el dano de los tipos 1-8 de lo lanzado por Snake
+;   que lee p07:B52D (0xB534 + el tipo)
+;   0xb535..0xb53d  (8 bytes)
+DATA_dano_por_tipo_B535:
 	defb 002h,002h,004h,000h,004h,004h,000h,000h	; b535  ........
 
 ; ======================================================================
@@ -2859,8 +2863,10 @@ nada_b55a:
 	ret			;b55a
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb55b..0xb563  (8 bytes)
-DATA_B55B:
+; DATOS dano_por_actor_B55B: el dano de lo lanzado por los actores de tipo 1-8
+;   que lee p07:B553 (0xB55A + el tipo)
+;   0xb55b..0xb563  (8 bytes)
+DATA_dano_por_actor_B55B:
 	defb 000h,000h,012h,006h,006h,006h,018h,00ah	; b55b  ........
 
 ; ======================================================================
@@ -4379,8 +4385,11 @@ toca_bfbf:
 	jp se_tocan		;bfc0   ; se_tocan: acarreo si se tocan las dos cajas: la de (H, L) con D y E y la del otro juego de registros (|X - X'| < D + D'; en Y, por debajo menos que E y por encima menos que E')
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbfc3..0xc000  (61 bytes)
-DATA_BFC3:
+; DATOS restos_finales_BFC3: 61 bytes al final del banco detras del ultimo
+;   bloque que se lee (resto_BF2C): ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0xbfc3..0xc000  (61 bytes)
+DATA_restos_finales_BFC3:
 	defb 0b5h,000h,080h,000h,042h,000h,000h,000h,0beh,0ffh,080h,0ffh,04bh,0ffh,023h,0ffh	; bfc3  ....B.......K.#.
 	defb 009h,0ffh,000h,0ffh,009h,0ffh,023h,0ffh,04bh,0ffh,080h,0ffh,0beh,0ffh,000h,000h	; bfd3  ......#.K.......
 	defb 042h,000h,080h,000h,0b5h,000h,0ddh,000h,0f7h,000h,000h,001h,0f7h,000h,0ddh,000h	; bfe3  B...............

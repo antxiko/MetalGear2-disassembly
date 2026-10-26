@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xBFF4 0xC000 restos_finales_BFF4  12 bytes al final del banco detras del ultimo bloque que se lee (bloques_B9C4): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA994 bloques_9EE4_cola  168 bloques de 4 x 4 caracteres (16 bytes cada uno, p00:58EF; las salas usan hasta el 167) (sigue del banco 25); se solapan 2 bloques: (bloques_9EE4_cola A000-A994); lo leen p00:58F8 (2452 bytes)
 F 0xA000 16

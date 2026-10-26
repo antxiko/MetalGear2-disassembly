@@ -2634,8 +2634,11 @@ DATA_partitura_B733:
 	defb 090h,090h,0feh,004h,0f5h,0e9h,00ch,0d0h,0b0h,000h,000h,000h,020h,000h,000h	; b743  ............ ..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb752..0xb81e  (204 bytes)
-DATA_B752:
+; DATOS partituras_B752: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xb752..0xb81e  (204 bytes)
+DATA_partituras_B752:
 	defb 000h,0a0h,0a0h,000h,000h,0e9h,002h,0d0h,053h,0d1h,083h,083h,073h,063h,063h,0fbh	; b752  ........S...scc.
 	defb 003h,0e9h,00ch,0d0h,0b0h,000h,000h,000h,020h,000h,000h,000h,0a0h,000h,020h,000h	; b762  ........ ..... .
 	defb 000h,0d1h,090h,090h,090h,0d0h,0b0h,000h,000h,000h,020h,000h,000h,000h,0a0h,0a0h	; b772  .......... .....
@@ -2785,8 +2788,11 @@ DATA_partitura_B8D2:
 	defb 00bh,071h,0d2h,07dh	; b8d2
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb8d6..0xb95d  (135 bytes)
-DATA_B8D6:
+; DATOS partituras_B8D6: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xb8d6..0xb95d  (135 bytes)
+DATA_partituras_B8D6:
 	defb 030h,050h,00dh,0d3h,0a0h,0d2h,000h,03ch,000h,0d3h,0a0h,0d2h,000h,0d3h,057h,0eah	; b8d6  0P.....<......W.
 	defb 005h,0e9h,006h,0d4h,050h,070h,080h,0a0h,0d3h,000h,010h,030h,050h,070h,080h,0a0h	; b8e6  ....Pp.....0Pp..
 	defb 0d2h,000h,010h,030h,0eah,008h,0e9h,00ch,0d2h,050h,07dh,050h,070h,0ach,0a0h,080h	; b8f6  ...0.....P}Pp...
@@ -2876,8 +2882,11 @@ DATA_partitura_B9EE:
 	defb 0dbh,003h,0d4h,05eh	; b9ee
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb9f2..0xba4c  (90 bytes)
-DATA_B9F2:
+; DATOS partituras_B9F2: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xb9f2..0xba4c  (90 bytes)
+DATA_partituras_B9F2:
 	defb 030h,057h,0d3h,057h,0d4h,05fh,051h,0d3h,001h,051h,071h,081h,075h,0d4h,05eh,030h	; b9f2  0W.W._Q..Qq.u.^0
 	defb 057h,0d3h,054h,0d4h,0a0h,080h,070h,055h,0a0h,0d3h,000h,056h,0d4h,030h,05fh,0feh	; ba02  W.T...pU...V.0_.
 	defb 001h,0e9h,00ch,0eah,00bh,0ebh,009h,01bh,0b1h,0dbh,003h,0f5h,0d4h,031h,081h,0d3h	; ba12  .............1..
@@ -2965,8 +2974,11 @@ DATA_partitura_BAE9:
 	defb 0dbh,003h,0d5h,05eh	; bb09
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbb0d..0xbb69  (92 bytes)
-DATA_BB0D:
+; DATOS partituras_BB0D: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xbb0d..0xbb69  (92 bytes)
+DATA_partituras_BB0D:
 	defb 030h,057h,0d4h,057h,0d5h,05fh,051h,0d4h,001h,051h,071h,0a1h,085h,0d5h,05eh,030h	; bb0d  0W.W._Q..Qq...^0
 	defb 057h,0d4h,054h,0d5h,0a0h,080h,070h,055h,0a0h,0d4h,000h,056h,0d5h,030h,05fh,0feh	; bb1d  W.T...pU...V.0_.
 	defb 001h,0e9h,00ch,0f8h,050h,0eah,00fh,0ebh,009h,03bh,0b1h,0dbh,003h,0f5h,0d5h,031h	; bb2d  ....P..........1
@@ -3045,8 +3057,11 @@ DATA_partitura_BBF4:
 	defb 001h,0f0h,00eh,071h,0d2h,07dh	; bbf4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbbfa..0xbc4c  (82 bytes)
-DATA_BBFA:
+; DATOS partituras_BBFA: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xbbfa..0xbc4c  (82 bytes)
+DATA_partituras_BBFA:
 	defb 030h,050h,00dh,0d3h,0a0h,0d2h,000h,03ch,000h,0d3h,0a0h,0d2h,000h,0d3h,057h,0eah	; bbfa  0P.....<......W.
 	defb 00ch,0e9h,006h,0d4h,050h,070h,080h,0a0h,0d3h,000h,010h,030h,050h,070h,080h,0a0h	; bc0a  ....Pp.....0Pp..
 	defb 0d2h,000h,010h,030h,0eah,00dh,0e9h,00ch,0d2h,050h,07dh,050h,070h,0ach,0a0h,080h	; bc1a  ...0.....P}Pp...
@@ -3126,8 +3141,11 @@ DATA_partitura_BCE7:
 	defb 0d2h,07dh	; bce7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbce9..0xbd38  (79 bytes)
-DATA_BCE9:
+; DATOS partituras_BCE9: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xbce9..0xbd38  (79 bytes)
+DATA_partituras_BCE9:
 	defb 030h,050h,00dh,0d3h,0a0h,0d2h,000h,03ch,000h,0d3h,0a0h,0d2h,000h,0d3h,057h,0eah	; bce9  0P.....<......W.
 	defb 006h,0e9h,006h,0d4h,050h,070h,080h,0a0h,0d3h,000h,010h,030h,050h,070h,080h,0a0h	; bcf9  ....Pp.....0Pp..
 	defb 0d2h,000h,010h,030h,0eah,007h,0e9h,00ch,0d2h,050h,07dh,050h,070h,0ach,0a0h,080h	; bd09  ...0.....P}Pp...
@@ -3230,8 +3248,11 @@ DATA_partitura_BDED:
 	defb 0eah,009h,0ebh,009h,03bh,0b1h,0dbh,001h,0d3h,053h,0d2h,053h	; bded  .........S.S
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbdf9..0xbe6a  (113 bytes)
-DATA_BDF9:
+; DATOS partituras_BDF9: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xbdf9..0xbe6a  (113 bytes)
+DATA_partituras_BDF9:
 	defb 0d3h,053h,0d2h,073h,0d3h,053h,0d2h,053h,0a3h,073h,0d3h,053h,0d2h,053h,0d3h,053h	; bdf9  .S.s.S.S.s.S.S.S
 	defb 0d2h,073h,0d3h,053h,0d2h,053h,0a7h,0d3h,053h,0d2h,053h,0d3h,053h,0d2h,073h,0d3h	; be09  .s.S.S..S.S.S.s.
 	defb 053h,0d2h,053h,0a3h,073h,0d3h,053h,0d2h,053h,0d3h,053h,0d2h,073h,0d3h,053h,0d2h	; be19  S.S.s.S.S.S.s.S.
@@ -3319,8 +3340,11 @@ DATA_partitura_BEF2:
 	defb 073h	; bef2
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbef3..0xbf41  (78 bytes)
-DATA_BEF3:
+; DATOS partituras_BEF3: 1 partitura entera (de la primera nota a su 0xFF o
+;   salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con
+;   tools/partituras.py
+;   0xbef3..0xbf41  (78 bytes)
+DATA_partituras_BEF3:
 	defb 003h,0a3h,003h,073h,087h,003h,073h,003h,0a3h,003h,073h,087h,003h,073h,003h,0a3h	; bef3  ...s..s...s..s..
 	defb 003h,073h,087h,003h,073h,003h,0a3h,003h,073h,083h,051h,0feh,001h,0e9h,00ch,0f8h	; bf03  .s..s...s.Q.....
 	defb 015h,0eah,00bh,0ebh,009h,03bh,0b1h,0dbh,001h,0f5h,0d3h,055h,039h,0c1h,0eah,009h	; bf13  ...........U9...
@@ -3408,6 +3432,9 @@ DATA_partitura_BFA0:
 	defb 00bh,072h,0f5h,0d3h,035h,039h,03fh,035h,035h,033h,03fh,0fbh,002h,0fah	; bff0  .r..59?553?...
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbffe..0xc000  (2 bytes)
-DATA_BFFE:
+; DATOS restos_finales_BFFE: 2 bytes al final del banco, detras de la ultima
+;   partitura: no los lee ni el codigo ni ninguno de los sonidos tocados con
+;   tools/partituras.py
+;   0xbffe..0xc000  (2 bytes)
+DATA_restos_finales_BFFE:
 	defb 07bh,00ch	; bffe

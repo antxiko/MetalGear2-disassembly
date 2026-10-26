@@ -938,6 +938,8 @@ C 0xBF11 ...la copia se queda en 0x7F (cabecera 0xFF)...
 C 0xBF17 ...y el ultimo byte pasa a racha de 1 (0x81, byte)
 C 0xBF1E el 0 del final
 C 0xBF21 la cuenta 0x81
+D 0xB97C 0xB991 forma_por_tipo_B97C  la forma de los tipos de puerta 1-0x15 (0xD500) que lee p14:B96A (0xB97B + el tipo): el indice del despachador de p14:B971
+D 0xBF93 0xC000 restos_finales_BF93  109 bytes al final del banco detras del ultimo bloque que se lee (resto_BDF7): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA19C 0xA1A6 tabla_A19C  5 destinos del despachador p00:424D (call en p14:A199, el indice en A): A1A6, A1B8, A1DA, A1E6, A208; lo leen p14:A199 (10 bytes)

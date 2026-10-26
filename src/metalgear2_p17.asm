@@ -21,8 +21,10 @@ DATA_sonido_6000:
 	defb 000h,07fh	; 6030
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6032..0x60b2  (128 bytes)
-DATA_6032:
+; DATOS ondas_6032: 128 bytes de ondas del SCC de 32 muestras (las 58, 59, 60,
+;   61 de la tabla p16:583E) que no carga ningun sonido tocado
+;   0x6032..0x60b2  (128 bytes)
+DATA_ondas_6032:
 	defb 000h,07fh,07ah,072h,06ah,060h,052h,042h,030h,010h,0f0h,0c0h,0a8h,098h,08ah,084h	; 6032  ..zrj`RB0.......
 	defb 080h,07fh,000h,080h,060h,000h,080h,030h,0e0h,080h,000h,0c0h,080h,0d0h,0b0h,080h	; 6042  ....`..0........
 	defb 080h,000h,07fh,07dh,07ah,077h,075h,072h,070h,000h,080h,082h,085h,087h,08ah,08ch	; 6052  ...}zwurp.......
@@ -44,8 +46,10 @@ DATA_sonido_60B2:
 	defb 0a0h,0b8h,0e0h,010h,030h,044h,05ah,06ah,078h,07fh,080h,080h,080h,080h,080h,080h	; 60e2  ....0DZjx.......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x60f2..0x6112  (32 bytes)
-DATA_60F2:
+; DATOS ondas_60F2: 32 bytes de ondas del SCC de 32 muestras (las 64 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x60f2..0x6112  (32 bytes)
+DATA_ondas_60F2:
 	defb 080h,080h,080h,080h,07fh,080h,090h,0c0h,0e8h,010h,030h,010h,0e8h,0c0h,090h,080h	; 60f2  ..........0.....
 	defb 07fh,080h,07fh,080h,07fh,080h,040h,080h,010h,080h,0d0h,080h,0a0h,080h,080h,080h	; 6102  ......@.........
 
@@ -63,8 +67,10 @@ DATA_sonido_6112:
 	defb 000h,0f0h,0e0h,0d4h,0c8h,0bch,0b0h,0a8h,0a0h,0b0h,0c0h,0cch,0d8h,0e4h,0f0h,0f8h	; 6162  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6172..0x61b2  (64 bytes)
-DATA_6172:
+; DATOS ondas_6172: 64 bytes de ondas del SCC de 32 muestras (las 68, 69 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x6172..0x61b2  (64 bytes)
+DATA_ondas_6172:
 	defb 080h,060h,050h,024h,00ch,018h,000h,0d0h,0dah,0e0h,0c4h,0c0h,0c0h,0bah,0e6h,0f0h	; 6172  .`P$............
 	defb 0e6h,0c4h,0b0h,0bah,0dah,0e0h,0d0h,0dah,0c4h,0bah,0c4h,0bah,092h,090h,0a0h,090h	; 6182  ................
 	defb 080h,0b0h,0f0h,005h,0bah,0c0h,030h,013h,0d0h,0b0h,050h,0f4h,010h,040h,05ch,060h	; 6192  ......0...P..@\`
@@ -93,8 +99,10 @@ DATA_sonido_61B2:
 	defb 010h,008h,006h,000h,0fah,0f5h,0f2h,0f5h,00ch,002h,0fch,0f5h,0e5h,0dah,0d0h,09ah	; 6282  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6292..0x62b2  (32 bytes)
-DATA_6292:
+; DATOS ondas_6292: 32 bytes de ondas del SCC de 32 muestras (las 77 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x6292..0x62b2  (32 bytes)
+DATA_ondas_6292:
 	defb 000h,068h,040h,004h,000h,026h,040h,0f5h,010h,040h,020h,0d0h,0f0h,000h,0c0h,080h	; 6292  .h@..&@..@ .....
 	defb 0d0h,030h,0c0h,0a0h,0b0h,0c0h,080h,0d0h,0f0h,040h,010h,0c0h,0d4h,000h,0c0h,0e0h	; 62a2  .0.......@......
 
@@ -108,8 +116,10 @@ DATA_sonido_62B2:
 	defb 070h,070h,080h,07fh,080h,080h,0c0h,000h,020h,034h,040h,034h,020h,000h,0c0h,080h	; 62c2  pp...... 4@4 ...
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62d2..0x62f2  (32 bytes)
-DATA_62D2:
+; DATOS ondas_62D2: 32 bytes de ondas del SCC de 32 muestras (las 79 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x62d2..0x62f2  (32 bytes)
+DATA_ondas_62D2:
 	defb 040h,070h,040h,018h,048h,050h,0e8h,0c8h,0e8h,000h,000h,0c8h,0d8h,0e0h,0c0h,096h	; 62d2  @p@.HP..........
 	defb 0c0h,018h,0c0h,0b0h,0b4h,0b0h,098h,088h,060h,07fh,060h,018h,030h,050h,030h,038h	; 62e2  ........`.`.0P08
 
@@ -132,8 +142,10 @@ DATA_sonido_62F2:
 	defb 0c4h,0c0h,0c0h,004h,0e8h,030h,018h,070h,03ch,040h,040h,0feh,013h,0e0h,0a0h,090h	; 6382  .....0.p<@@.....
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6392..0x63f2  (96 bytes)
-DATA_6392:
+; DATOS ondas_6392: 96 bytes de ondas del SCC de 32 muestras (las 85, 86, 87
+;   de la tabla p16:583E) que no carga ningun sonido tocado
+;   0x6392..0x63f2  (96 bytes)
+DATA_ondas_6392:
 	defb 080h,0a0h,0c0h,0cch,0c0h,0bch,0c0h,0c4h,0e0h,024h,0f0h,058h,04ch,04ah,03ch,050h	; 6392  .........$.XLJ<P
 	defb 07fh,060h,040h,030h,040h,046h,040h,046h,03ch,020h,0c6h,0f2h,0a4h,0b4h,0b6h,0a0h	; 63a2  .`@0@F@F< ......
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,040h,07fh,07fh,07fh,040h,000h,000h,000h	; 63b2  ........@...@...
@@ -168,8 +180,10 @@ DATA_sonido_6432:
 	defb 03ah,064h	; 6432
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6434..0x643a  (6 bytes)
-DATA_6434:
+; DATOS envolventes_sin_uso_6434: las entradas 2-4 de la tabla de envolventes
+;   p17:6430 (todas a 0x6476): ningun sonido tocado las pide
+;   0x6434..0x643a  (6 bytes)
+DATA_envolventes_sin_uso_6434:
 	defb 076h,064h,076h,064h,076h,064h	; 6434
 
 ; ----------------------------------------------------------------------
@@ -202,8 +216,10 @@ DATA_sonido_6477:
 	defb 0f6h,064h	; 6487
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6489..0x648b  (2 bytes)
-DATA_6489:
+; DATOS vibratos_sin_uso_6489: las entradas 10-10 de la tabla de vibratos
+;   p17:6475: ningun sonido tocado las pide
+;   0x6489..0x648b  (2 bytes)
+DATA_vibratos_sin_uso_6489:
 	defb 001h,065h	; 6489
 
 ; ----------------------------------------------------------------------
@@ -215,8 +231,10 @@ DATA_sonido_648B:
 	defb 00dh,065h	; 648b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x648d..0x648f  (2 bytes)
-DATA_648D:
+; DATOS vibratos_sin_uso_648D: las entradas 12-12 de la tabla de vibratos
+;   p17:6475: ningun sonido tocado las pide
+;   0x648d..0x648f  (2 bytes)
+DATA_vibratos_sin_uso_648D:
 	defb 019h,065h	; 648d
 
 ; ----------------------------------------------------------------------
@@ -228,8 +246,10 @@ DATA_sonido_648F:
 	defb 025h,065h,039h,065h,051h,065h	; 648f
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6495..0x6499  (4 bytes)
-DATA_6495:
+; DATOS vibratos_sin_uso_6495: las entradas 16-17 de la tabla de vibratos
+;   p17:6475: ningun sonido tocado las pide
+;   0x6495..0x6499  (4 bytes)
+DATA_vibratos_sin_uso_6495:
 	defb 05fh,065h,06bh,065h	; 6495
 
 ; ----------------------------------------------------------------------
@@ -242,8 +262,11 @@ DATA_sonido_6499:
 	defb 0e0h	; 64a9
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64aa..0x64ab  (1 bytes)
-DATA_64AA:
+; DATOS fin_de_vibrato_64AA: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64aa..0x64ab  (1 bytes)
+DATA_fin_de_vibrato_64AA:
 	defb 0ffh	; 64aa
 
 ; ----------------------------------------------------------------------
@@ -255,8 +278,11 @@ DATA_sonido_64AB:
 	defb 0f5h,010h,011h,012h,011h,010h,01fh,01eh,01fh,0fbh,0e0h	; 64ab  ...........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64b6..0x64b7  (1 bytes)
-DATA_64B6:
+; DATOS fin_de_vibrato_64B6: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64b6..0x64b7  (1 bytes)
+DATA_fin_de_vibrato_64B6:
 	defb 0ffh	; 64b6
 
 ; ----------------------------------------------------------------------
@@ -268,8 +294,11 @@ DATA_sonido_64B7:
 	defb 0f5h,041h,04eh,042h,04dh,0fbh,0e0h	; 64b7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64be..0x64bf  (1 bytes)
-DATA_64BE:
+; DATOS fin_de_vibrato_64BE: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64be..0x64bf  (1 bytes)
+DATA_fin_de_vibrato_64BE:
 	defb 0ffh	; 64be
 
 ; ----------------------------------------------------------------------
@@ -281,8 +310,11 @@ DATA_sonido_64BF:
 	defb 0f5h,051h,05eh,052h,05dh,0fbh,0e0h	; 64bf
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64c6..0x64c7  (1 bytes)
-DATA_64C6:
+; DATOS fin_de_vibrato_64C6: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64c6..0x64c7  (1 bytes)
+DATA_fin_de_vibrato_64C6:
 	defb 0ffh	; 64c6
 
 ; ----------------------------------------------------------------------
@@ -294,8 +326,11 @@ DATA_sonido_64C7:
 	defb 0f5h,04fh,040h,04eh,041h,04dh,042h,04eh,041h,0fbh,0e0h	; 64c7  .O@NAMBNA..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64d2..0x64d3  (1 bytes)
-DATA_64D2:
+; DATOS fin_de_vibrato_64D2: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64d2..0x64d3  (1 bytes)
+DATA_fin_de_vibrato_64D2:
 	defb 0ffh	; 64d2
 
 ; ----------------------------------------------------------------------
@@ -307,8 +342,11 @@ DATA_sonido_64D3:
 	defb 0f5h,05fh,050h,05eh,051h,05dh,052h,05eh,051h,0fbh,0e0h	; 64d3  ._P^Q]R^Q..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64de..0x64df  (1 bytes)
-DATA_64DE:
+; DATOS fin_de_vibrato_64DE: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64de..0x64df  (1 bytes)
+DATA_fin_de_vibrato_64DE:
 	defb 0ffh	; 64de
 
 ; ----------------------------------------------------------------------
@@ -320,8 +358,11 @@ DATA_sonido_64DF:
 	defb 0f5h,011h,022h,011h,020h,01fh,02eh,01fh,020h,0fbh,0e0h	; 64df  ..". ... ..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64ea..0x64eb  (1 bytes)
-DATA_64EA:
+; DATOS fin_de_vibrato_64EA: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64ea..0x64eb  (1 bytes)
+DATA_fin_de_vibrato_64EA:
 	defb 0ffh	; 64ea
 
 ; ----------------------------------------------------------------------
@@ -333,8 +374,11 @@ DATA_sonido_64EB:
 	defb 0f5h,011h,012h,011h,010h,01fh,01fh,010h,0fbh,0a0h	; 64eb  ..........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64f5..0x64f6  (1 bytes)
-DATA_64F5:
+; DATOS fin_de_vibrato_64F5: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xA0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x64f5..0x64f6  (1 bytes)
+DATA_fin_de_vibrato_64F5:
 	defb 0ffh	; 64f5
 
 ; ----------------------------------------------------------------------
@@ -346,8 +390,12 @@ DATA_sonido_64F6:
 	defb 0f5h,02fh,02eh,02fh,020h,021h,022h,021h,0fbh,0e0h	; 64f6  ././ !"!..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6500..0x650d  (13 bytes)
-DATA_6500:
+; DATOS fin_de_vibrato_6500: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin;
+;   y detras 12 bytes de otra serie de vibrato que no usa ningun sonido tocado
+;   0x6500..0x650d  (13 bytes)
+DATA_fin_de_vibrato_6500:
 	defb 0ffh,0f5h,012h,024h,012h,020h,01eh,02ch,01eh,020h,0fbh,0e0h,0ffh	; 6500  ...$. .,. ...
 
 ; ----------------------------------------------------------------------
@@ -359,8 +407,12 @@ DATA_sonido_650D:
 	defb 0f5h,020h,02fh,02eh,02fh,020h,021h,022h,021h,0fbh,0e0h	; 650d  . /./ !"!..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6518..0x6525  (13 bytes)
-DATA_6518:
+; DATOS fin_de_vibrato_6518: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin;
+;   y detras 12 bytes de otra serie de vibrato que no usa ningun sonido tocado
+;   0x6518..0x6525  (13 bytes)
+DATA_fin_de_vibrato_6518:
 	defb 0ffh,0f5h,030h,03fh,03eh,03fh,030h,031h,032h,031h,0fbh,0e0h,0ffh	; 6518  ..0?>?0121...
 
 ; ----------------------------------------------------------------------
@@ -373,8 +425,11 @@ DATA_sonido_6525:
 	defb 021h,0fbh,0e0h	; 6535
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6538..0x6539  (1 bytes)
-DATA_6538:
+; DATOS fin_de_vibrato_6538: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x6538..0x6539  (1 bytes)
+DATA_fin_de_vibrato_6538:
 	defb 0ffh	; 6538
 
 ; ----------------------------------------------------------------------
@@ -387,8 +442,11 @@ DATA_sonido_6539:
 	defb 01fh,010h,011h,012h,011h,0fbh,0e0h	; 6549
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6550..0x6551  (1 bytes)
-DATA_6550:
+; DATOS fin_de_vibrato_6550: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x6550..0x6551  (1 bytes)
+DATA_fin_de_vibrato_6550:
 	defb 0ffh	; 6550
 
 ; ----------------------------------------------------------------------
@@ -400,8 +458,12 @@ DATA_sonido_6551:
 	defb 0f5h,010h,01fh,01eh,01dh,01eh,01fh,010h,011h,012h,011h,0fbh,0e0h	; 6551  .............
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x655e..0x6587  (41 bytes)
-DATA_655E:
+; DATOS fin_de_vibrato_655E: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin;
+;   y detras 40 bytes de otra serie de vibrato que no usa ningun sonido tocado
+;   0x655e..0x6587  (41 bytes)
+DATA_fin_de_vibrato_655E:
 	defb 0ffh,0f5h,040h,04fh,04eh,04fh,040h,041h,042h,041h,0fbh,0e0h,0ffh,030h,03fh,03eh	; 655e  ..@ONO@ABA...0?>
 	defb 03fh,030h,031h,032h,031h,030h,02fh,02eh,02fh,020h,021h,022h,021h,0f5h,010h,01fh	; 656e  ?01210/./ !"!...
 	defb 01eh,01fh,010h,011h,012h,011h,0fbh,0e0h,0ffh	; 657e  .........
@@ -415,8 +477,11 @@ DATA_sonido_6587:
 	defb 0f5h,020h,02eh,02dh,02eh,020h,022h,024h,022h,0fbh,0e0h	; 6587  . .-. "$"..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6592..0x6593  (1 bytes)
-DATA_6592:
+; DATOS fin_de_vibrato_6592: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x6592..0x6593  (1 bytes)
+DATA_fin_de_vibrato_6592:
 	defb 0ffh	; 6592
 
 ; ----------------------------------------------------------------------
@@ -428,8 +493,11 @@ DATA_sonido_6593:
 	defb 0f5h,010h,01eh,01dh,01eh,010h,012h,014h,012h,0fbh,0e0h	; 6593  ...........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x659e..0x659f  (1 bytes)
-DATA_659E:
+; DATOS fin_de_vibrato_659E: el 0xFF que cierra la serie de vibrato anterior,
+;   detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el
+;   byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+;   0x659e..0x659f  (1 bytes)
+DATA_fin_de_vibrato_659E:
 	defb 0ffh	; 659e
 
 ; ----------------------------------------------------------------------

@@ -4487,6 +4487,11 @@ p12 0x658D ram_en_8000  la RAM de 0xC386 en la pagina 2 (ENASLT)
 p12 0x6595 cambia_9600_dd00  con la RAM en la pagina 2, cambia 0x1680 bytes de 0x9600 con los de 0xDD00; 0xF1C0 = 0, DISKVE (0xF323) = 0xAD5A y los slots primarios del arranque (0xC388)
 p12 0x65C1 ram_de_vuelta  deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
 p12 0x65C6 htimi_256  256 veces el H.TIMI que habia al arrancar (copiado en 0xC39A)
+p12 0x65D0 mira_ficheros_de_partida  SIN USO (ninguna instruccion la llama; desensamblada por semilla): busca en el disco los 3 ficheros de partida con el BDOS (0x1A la DTA en 0xC3D5, 0x11 busca el primero) y pone en 0xC395 el bit de cada uno que esta (1, 2 y 4)
+p12 0x65D3 mira_fichero  
+p12 0x660C pon_bit_de_fichero  a 0xC395
+p12 0x6612 fichero_siguiente  
+p12 0x6616 borra_fcb_y_dta  la DTA de 0xC3D5 y el FCB de 0xC3B0 a cero (0x25 bytes cada uno)
 p12 0x6628 por_el_gm2  guarda o carga la partida en la SRAM del Game Master 2: sin la interrupcion de linea, H.KEYI a ret, la pila en 0xC392, la ficha de la ranura (p12:6666) y las funciones (p12:6692); H.KEYI de vuelta y R#0 = 0x16
 p12 0x6666 ficha_gm2  la ficha en 0xC3B0 (en 0xC390): el nombre de la ranura de p12:6657 (SNAK1-3), 8 ceros, y en 0xC3C1 el slot del cartucho
 p12 0x6692 funciones_gm2  guardando, la funcion 0; luego la 2, la direccion y el largo de p12:6653 (0xC700, 0x73 bytes) en 0xC3BD, la 9 (guardar) o la 8 (cargar) y la 1; 0xC3A1 = 0

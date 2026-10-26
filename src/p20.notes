@@ -1,4 +1,17 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xB2B4 0xB2CB partituras_B2B4  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB334 0xB340 partituras_B334  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB388 0xB396 partituras_B388  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB439 0xB45E partituras_B439  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB4A1 0xB4AF partituras_B4A1  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB577 0xB593 partituras_B577  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB5F2 0xB602 partituras_B5F2  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB69D 0xB6AD partituras_B69D  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB799 0xB79D partituras_B799  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB7F4 0xB80C partituras_B7F4  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xBFEB 0xC000 restos_finales_BFEB  21 bytes al final del banco, detras de la ultima partitura: no los lee ni el codigo ni ninguno de los sonidos tocados con tools/partituras.py
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA006 partitura_A000  partitura de canal que lee el motor de p16 al tocar los sonidos 0x6A, 0x6B (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
 F 0xA000 16

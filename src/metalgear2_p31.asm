@@ -47,8 +47,11 @@ DATA_salas_zona_11:
 	defb 000h,053h,054h,002h,000h,000h,000h,060h,045h,008h,021h,021h,00dh,031h,02fh,05eh,050h,03dh,002h,005h,062h,01eh,064h,061h,002h,003h,03bh,004h,005h,063h,002h,003h,015h,002h,003h,015h,002h	; a378  .ST....`E.!!.1/^P=..b.da.....c.......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa39d..0xa3c2  (37 bytes)
-DATA_A39D:
+; DATOS sala_suelta_A39D: 37 bytes entre las salas de la zona 0x11 y las de la
+;   0x19: el tamano de una sala de p00:58DD ([juego] y 6 x 6 bloques); ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0xa39d..0xa3c2  (37 bytes)
+DATA_sala_suelta_A39D:
 	defb 000h,03ch,06ch,039h,039h,05eh,03dh,070h,01eh,01dh,066h,071h,061h,06fh,077h,036h	; a39d  .<l99^=p..fqaow6
 	defb 067h,072h,074h,06fh,077h,036h,068h,073h,074h,06fh,025h,025h,06dh,025h,078h,06eh	; a3ad  grtow6hsto%%m%xn
 	defb 069h,06ah,06bh,076h,075h	; a3bd

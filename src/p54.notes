@@ -1,4 +1,9 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xBFDD 0xC000 restos_finales_BFDD  35 bytes al final del banco detras del ultimo bloque que se lee (lista_BFCD): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0xBCD5 0xBCDB bytes_BCD5  6 bytes entre los mosaicos de 2 x 1 de 0xBCD3 y 0xBCDB, como tres mosaicos mas de 2 x 1; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0xBCDD 0xBEA0 bytes_BCDD  451 bytes de numeros de caracter entre mosaico_BCDB y tabla_colores_BEA0; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA010 dibujo_A000  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0xBFCD (p00:4D92, p00:4DF5); lo leen p13:9543 (16 bytes)
 F 0xA000 8

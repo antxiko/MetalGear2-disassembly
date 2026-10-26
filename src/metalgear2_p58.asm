@@ -686,8 +686,11 @@ DATA_dibujo_BC07:
 	defb 001h,000h,000h,000h,000h,000h,000h,000h	; bc07  ........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbc0f..0xbc61  (82 bytes)
-DATA_BC0F:
+; DATOS bytes_BC0F: 82 bytes entre dibujo_BC07 y el relleno de 0xFF del final
+;   del banco; ningun lector del listado llega a ellos ni los apunta ninguna
+;   tabla declarada
+;   0xbc0f..0xbc61  (82 bytes)
+DATA_bytes_BC0F:
 	defb 033h,032h,022h,021h,01eh,0eeh,0eeh,037h,000h,089h,004h,052h,032h,022h,021h,011h	; bc0f  32"!...7...R2"!.
 	defb 0eeh,0eeh,0e0h,037h,000h,088h,047h,065h,022h,021h,011h,0eeh,0eeh,0e0h,037h,000h	; bc1f  ...7..Ge"!....7.
 	defb 088h,003h,067h,0d6h,054h,011h,01eh,0eeh,0eeh,038h,000h,087h,003h,056h,077h,062h	; bc2f  ..g.T....8...Vwb

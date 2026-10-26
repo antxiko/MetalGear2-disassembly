@@ -107,12 +107,14 @@ cb48_siguiente_b:
 	jr cb48_siguiente		;a08e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa090..0xa098  (8 bytes)
-DATA_A090:
+; DATOS sitios_estado_19: los 4 sitios [Y][X] de Snake del estado 0x19 que lee
+;   p11:A059 (0xA08E + 2 x el sitio, del 1 al 4)
+;   0xa090..0xa098  (8 bytes)
+DATA_sitios_estado_19:
 	defb 06eh,0a5h,06dh,0a3h,069h,0a1h,060h,0a1h	; a090  n.m.i.`.
 
 ; ======================================================================
-; CODIGO 0xa098..0xa1d7  (319 bytes)
+; CODIGO 0xa098..0xa202  (362 bytes)
 ; ======================================================================
 
 
@@ -237,7 +239,7 @@ caja_a26f:
 	ld c,a			;a171
 	ld a,(hl)			;a172   ; 0xFF: se acaba
 	cp 0ffh		;a173   ; 0xFF: ninguna
-	jr z,$+99		;a175
+	jr z,sin_caja		;a175
 	push hl			;a177
 	ld a,(0ca4ah)		;a178   ; lee la zona
 	cp (hl)			;a17b   ; su zona
@@ -312,17 +314,8 @@ otra_caja:
 	ld a,009h		;a1d0   ; la siguiente (9 bytes)
 	call 0423eh		;a1d2   ; suma_a_hl: HL = HL + A
 	jr caja_a26f		;a1d5
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa1d7..0xa1d8  (1 bytes)
-DATA_A1D7:
-	defb 0e1h	; a1d7
-
-; ======================================================================
-; CODIGO 0xa1d8..0xa202  (42 bytes)
-; ======================================================================
-
-
+L_A1D7:
+	pop hl			;a1d7
 sin_caja:
 	and a			;a1d8   ; sin acarreo
 	ret			;a1d9
@@ -3948,7 +3941,7 @@ ca89_hacia_b:
 	jr dibujo_de_ca89		;bbbd
 ca89_a_0:		; a 0: el bit 3 y 0x8000
 	set 3,(hl)		;bbbf
-	ld hl,08000h		;bbc1
+	ld hl,08000h		;bbc1   ; partida_8000: los 1 ultimos bytes de la instruccion de p01
 	ld (0ca8ah),hl		;bbc4   ; guarda la cuenta de 16 bits de 0xCA89
 dibujo_de_ca89:
 	ld a,(0cb21h)		;bbc7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
@@ -4560,6 +4553,9 @@ linea_a_0:
 	ret			;bff4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbff5..0xc000  (11 bytes)
-DATA_BFF5:
+; DATOS restos_finales_BFF5: 11 bytes al final del banco detras del ultimo
+;   bloque que se lee (resto_BF4F): ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0xbff5..0xc000  (11 bytes)
+DATA_restos_finales_BFF5:
 	defb 002h,001h,002h,003h,001h,003h,004h,002h,004h,005h,073h	; bff5  ..........s

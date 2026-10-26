@@ -131,6 +131,9 @@ C 0xB85C libre: esa
 C 0xB85E si no, la siguiente
 C 0xBABD a menos de B...
 C 0xBAC0 ...y a menos de C
+D 0xA7B3 0xA7C3 velocidades_A7B3  las palabras de los tipos de actor 3-0x0A de la tabla de velocidades que lee p05:A781 (0xA7AD + 2 x el tipo)
+D 0xADD1 0xADD9 bytes_ADD1  8 bytes entre el ret de p05:ADD0 y el codigo de p05:ADD9 que no lee ninguna rutina del listado ni carga ninguna instruccion
+D 0xBF39 0xBF41 desvio_por_direccion_BF39  las parejas [Y][X] de las direcciones 1-4 de Snake que lee p05:BF1D (0xBF37 + 2 x la direccion) y suma a la Y y la X de Snake
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA001 partida_A000  los 1 ultimos bytes de la instruccion de p04:9FFE (C3 7B A2), que empieza en el banco 4; lo leen p04:9FFE (1 bytes)
@@ -659,6 +662,15 @@ C 0xA367 aviso_82_20:
 C 0xA36A el paso del actor = 0x03
 C 0xA36E azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA373 a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
+C 0xA37A el paso del actor = 0x0B
+C 0xA37E lee la Y del actor
+C 0xA387 lee la X del actor
+C 0xA39F lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA3A3 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xA3AA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA3B1 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA3BA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA3BD marco: cuatro lineas: un marco de D x E desde HL
 C 0xA3C0 lee la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 C 0xA3C5 apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xA3F5 libre_en_x: B = cuantos pasos de C hay libres desde el actor (Y - 6)

@@ -3020,8 +3020,10 @@ DATA_tabla_B974:
 	defw 0b991h,0b9a5h,0b9b2h,0b9c6h	; b974  -> d500_caja d500_encima d500_debajo d500_debajo_izquierda
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb97c..0xb991  (21 bytes)
-DATA_B97C:
+; DATOS forma_por_tipo_B97C: la forma de los tipos de puerta 1-0x15 (0xD500)
+;   que lee p14:B96A (0xB97B + el tipo): el indice del despachador de p14:B971
+;   0xb97c..0xb991  (21 bytes)
+DATA_forma_por_tipo_B97C:
 	defb 000h,001h,002h,003h,000h,001h,000h,001h,000h,000h,000h,000h,000h,001h,001h,001h	; b97c  ................
 	defb 000h,000h,000h,001h,000h	; b98c
 
@@ -3964,8 +3966,11 @@ cosa_por_d88a:		; 0xD88A...
 	jr da_la_cosa		;bf91
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbf93..0xc000  (109 bytes)
-DATA_BF93:
+; DATOS restos_finales_BF93: 109 bytes al final del banco detras del ultimo
+;   bloque que se lee (resto_BDF7): ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0xbf93..0xc000  (109 bytes)
+DATA_restos_finales_BF93:
 	defb 0e0h,028h,0f5h,0f9h,026h,080h,0fbh,004h,0e0h,050h,0f5h,0f9h,026h,080h,0fbh,007h	; bf93  .(..&....P..&...
 	defb 0e0h,028h,0f5h,0f9h,026h,080h,0fbh,005h,0e0h,050h,0f5h,0f9h,026h,080h,0fbh,006h	; bfa3  .(..&....P..&...
 	defb 0e0h,028h,0f5h,0f9h,026h,080h,0fbh,002h,0e0h,050h,0f5h,0f9h,026h,080h,0fbh,006h	; bfb3  .(..&....P..&...

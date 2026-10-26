@@ -49,6 +49,7 @@
 0xAC26   # p00:53AB call
 0xACE2   # p01:78E2 call
 0xAD5C   # el gancho de errores del disco: DISKVE (0xF323) = 0xAD5A (p01:602D, p12:65B5), que guarda 0xAD5C; los errores llegan desde las llamadas al disco de p12
+0xAD92   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0xAD92
 0xAD94   # p12:64FB jp cc
 0xAE62   # p01:76A8 call
 0xAE89   # p01:770E call

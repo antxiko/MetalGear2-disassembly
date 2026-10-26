@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xA81B 0xAAD9 bytes_A81B  702 bytes entre mosaico_A818 y tabla_colores_AAD9; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA061 dibujo_9FB1_cola  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x9EB2 (p00:4D92, p00:4DF5) (sigue del banco 46); lo leen p01:6F45 (97 bytes)
 F 0xA000 16

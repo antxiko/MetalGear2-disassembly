@@ -22,8 +22,10 @@
 0x6413   # p12:6059 entrada 5 de la tabla de 0x605C (call 0x424D en 0x6059)
 0x643A   # p12:6059 entrada 7 de la tabla de 0x605C (call 0x424D en 0x6059)
 0x6458   # p12:6059 entrada 8 de la tabla de 0x605C (call 0x424D en 0x6059)
-0x65C1   # p06:AD65 call
+0x64FF   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x64FF
+0x65C1   # p06:AD95 call
 0x65C6   # p06:ADA9 call
+0x65D0   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x65D0
 0x67E1   # p00:5AB7 call
 0x685A   # p00:5341 call
 0x685F   # p04:9512 call
@@ -48,12 +50,13 @@
 0x6E70   # p00:5F8B call
 0x6EC8   # p00:5F93 call
 0x6F49   # p04:9829 call
-0x6FC4   # p04:9911 call
 0x6FFE   # p04:9838 call
+0x710A   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x710A
 0x72A1   # p00:5FBA call
 0x7462   # p00:5FD0 call
 0x746B   # p00:5FC5 call
 0x74BC   # p04:9CD8 call
+0x74CB   # p04:9CE0 call
 0x758D   # p04:9CE9 call
 0x75C3   # p04:9CF9 call
 0x7688   # p00:5DDC call
@@ -91,6 +94,7 @@
 0x7B24   # p12:7707 entrada 14 de la tabla de 0x770A (call 0x424D en 0x7707)
 0x7B2D   # p12:76C8 entrada 14 de la tabla de 0x76CB (call 0x424D en 0x76C8)
 0x7B84   # p12:7707 entrada 13 de la tabla de 0x770A (call 0x424D en 0x7707)
+0x7C53   # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7C53
 0x7DDC   # p00:5DAE call
 0x7F25   # p07:BF82 call
 0x7FA0   # p09:B4E9 call

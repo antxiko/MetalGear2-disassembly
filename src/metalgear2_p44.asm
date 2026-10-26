@@ -933,8 +933,12 @@ DATA_mosaico_951D:
 	defb 0c1h,0d8h,0c2h,0c3h	; 9531
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9535..0x95d1  (156 bytes)
-DATA_9535:
+; DATOS mosaicos_9535: 156 bytes detras de mosaico_951D que empiezan por
+;   palabras de 6 en 6 (0x954D, 0x9553, 0x9559...) que apuntan dentro de ellos
+;   mismos, como una tabla de mosaicos; ningun lector del listado llega a
+;   ellos ni los apunta ninguna tabla declarada
+;   0x9535..0x95d1  (156 bytes)
+DATA_mosaicos_9535:
 	defb 04dh,095h,053h,095h,059h,095h,05fh,095h,065h,095h,06bh,095h,071h,095h,077h,095h	; 9535  M.S.Y._.e.k.q.w.
 	defb 07dh,095h,083h,095h,089h,095h,08fh,095h,020h,008h,002h,002h,095h,095h,020h,008h	; 9545  }....... ..... .
 	defb 001h,002h,09dh,095h,020h,008h,002h,002h,0a1h,095h,020h,008h,001h,002h,0a5h,095h	; 9555  .... ..... .....
@@ -955,8 +959,11 @@ DATA_mosaico_95D1:
 	defb 097h,0a2h	; 95d3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x95d5..0x9762  (397 bytes)
-DATA_95D5:
+; DATOS bytes_95D5: 397 bytes de numeros de caracter (0xA3, 0xA4, 0x97...)
+;   como los de los mosaicos, entre mosaico_95D1 y dibujo_9762; ningun lector
+;   del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x95d5..0x9762  (397 bytes)
+DATA_bytes_95D5:
 	defb 0a3h,0a4h,097h,0a5h,0d2h,0d3h,0e0h,0e1h,0d2h,0d3h,0d6h,0d7h,0dfh,0e0h,0e1h,0e2h	; 95d5  ................
 	defb 0d3h,0d4h,0ddh,0deh,0d3h,0d7h,0dfh,0e0h,0d3h,0d4h,0d6h,0d7h,0deh,0dfh,0e0h,0e1h	; 95e5  ................
 	defb 0d4h,0d5h,0e0h,0e1h,0d2h,0d3h,0d6h,0d7h,0deh,0dfh,0e0h,0d7h,0d2h,0d3h,0e5h,0e6h	; 95f5  ................

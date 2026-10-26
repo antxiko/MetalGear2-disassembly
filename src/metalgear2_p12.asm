@@ -87,7 +87,7 @@ DATA_tabla_605C:
 	defw 06458h	; 606c  -> menu_paso_9
 
 ; ======================================================================
-; CODIGO 0x606e..0x64ff  (1169 bytes)
+; CODIGO 0x606e..0x6546  (1240 bytes)
 ; ======================================================================
 
 
@@ -720,17 +720,8 @@ cierra_fichero:		; cierra el fichero (BDOS 0x10; error 2)
 	inc a			;64fa   ; ...con 0xFF
 	jp z,0ad94h		;64fb   ; error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	ret			;64fe
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64ff..0x6502  (3 bytes)
-DATA_64FF:
-	defb 022h,090h,0c3h	; 64ff
-
-; ======================================================================
-; CODIGO 0x6502..0x6546  (68 bytes)
-; ======================================================================
-
-
+L_64FF:
+	ld (0c390h),hl		;64ff   ; guarda la ficha del disco o del Game Master 2 (0xC3B0) y el byte siguiente (16 bits)
 registro_de_1:		; en el FCB: el bloque (+0x0C) a 0, el tamano de registro (+0x0E) a 1 y el registro (+0x21) a 0
 	ld hl,(0c390h)		;6502   ; lee la ficha del disco o del Game Master 2 (0xC3B0) y el byte siguiente (16 bits)
 	ld bc,0000ch		;6505   ; +0x0C
@@ -779,9 +770,9 @@ L_6541:
 	ret			;6545
 
 ; ----------------------------------------------------------------------
-; DATOS resto_6546: lo apuntan con el banco puesto p12:6529 (0x6546); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p12:6529 (33 bytes)
+; DATOS resto_6546: lo apuntan con el banco puesto p12:6529 (0x6546), p12:65DE
+;   (0x6546); el tamano es lo que hay hasta lo siguiente, no sale de
+;   recorrerlo; lo leen p12:6529, p12:65DE (33 bytes)
 ;   0x6546..0x6567  (33 bytes)
 DATA_resto_6546:
 	defb 053h,04eh,041h,04bh,045h,031h,020h,020h,04dh,047h,032h,053h,04eh,041h,04bh,045h	; 6546  SNAKE1  MG2SNAKE
@@ -789,7 +780,7 @@ DATA_resto_6546:
 	defb 032h	; 6566
 
 ; ======================================================================
-; CODIGO 0x6567..0x65d0  (105 bytes)
+; CODIGO 0x6567..0x6653  (236 bytes)
 ; ======================================================================
 
 
@@ -852,22 +843,56 @@ L_65C8:
 	pop bc			;65cc
 	djnz L_65C8		;65cd
 	ret			;65cf
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x65d0..0x6628  (88 bytes)
-DATA_65D0:
-	defb 001h,000h,003h,0c5h,0cdh,016h,066h,0c1h,0c5h,079h,087h,087h,087h,080h,021h,046h	; 65d0  ......f..y....!F
-	defb 065h,0cdh,03eh,042h,011h,0b1h,0c3h,001h,00bh,000h,0edh,0b0h,011h,0d5h,0c3h,00eh	; 65e0  e.>B............
-	defb 01ah,0cdh,07dh,0f3h,011h,0b0h,0c3h,00eh,011h,0cdh,07dh,0f3h,0c1h,03ch,028h,012h	; 65f0  ..}.......}..<(.
-	defb 079h,016h,001h,0a7h,028h,006h,014h,03dh,028h,002h,016h,004h,021h,095h,0c3h,07eh	; 6600  y...(..=(...!..~
-	defb 0b2h,077h,00ch,010h,0beh,0c9h,021h,0d5h,0c3h,001h,024h,000h,0cdh,036h,042h,021h	; 6610  .w....!...$..6B!
-	defb 0b0h,0c3h,001h,024h,000h,0c3h,036h,042h	; 6620  ...$..6B
-
-; ======================================================================
-; CODIGO 0x6628..0x6653  (43 bytes)
-; ======================================================================
-
-
+mira_ficheros_de_partida:		; SIN USO (ninguna instruccion la llama; desensamblada por semilla): busca en el disco los 3 ficheros de partida con el BDOS (0x1A la DTA en 0xC3D5, 0x11 busca el primero) y pone en 0xC395 el bit de cada uno que esta (1, 2 y 4)
+	ld bc,00300h		;65d0   ; 3 ficheros, desde el 0
+mira_fichero:
+	push bc			;65d3
+	call borra_fcb_y_dta		;65d4   ; el FCB y la DTA a cero
+	pop bc			;65d7
+	push bc			;65d8
+	ld a,c			;65d9   ; el fichero * 8 + la cuenta...
+	add a,a			;65da
+	add a,a			;65db
+	add a,a			;65dc
+	add a,b			;65dd
+	ld hl,06546h		;65de   ; ...en la tabla de nombres de p12:6546
+	call 0423eh		;65e1   ; suma_a_hl: HL = HL + A
+	ld de,0c3b1h		;65e4   ; su nombre (8 + 3) al FCB
+	ld bc,0000bh		;65e7
+	ldir		;65ea
+	ld de,0c3d5h		;65ec   ; la DTA en 0xC3D5...
+	ld c,01ah		;65ef   ; ...BDOS 0x1A
+	call 0f37dh		;65f1
+	ld de,0c3b0h		;65f4   ; el FCB...
+	ld c,011h		;65f7   ; ...BDOS 0x11: busca el primero
+	call 0f37dh		;65f9
+	pop bc			;65fc
+	inc a			;65fd   ; 0xFF: no esta
+	jr z,fichero_siguiente		;65fe
+	ld a,c			;6600   ; el bit del fichero: 1...
+	ld d,001h		;6601
+	and a			;6603
+	jr z,pon_bit_de_fichero		;6604
+	inc d			;6606   ; ...2...
+	dec a			;6607
+	jr z,pon_bit_de_fichero		;6608
+	ld d,004h		;660a   ; ...o 4
+pon_bit_de_fichero:		; a 0xC395
+	ld hl,0c395h		;660c
+	ld a,(hl)			;660f
+	or d			;6610
+	ld (hl),a			;6611
+fichero_siguiente:
+	inc c			;6612
+	djnz mira_fichero		;6613   ; 3
+	ret			;6615
+borra_fcb_y_dta:		; la DTA de 0xC3D5 y el FCB de 0xC3B0 a cero (0x25 bytes cada uno)
+	ld hl,0c3d5h		;6616
+	ld bc,00024h		;6619
+	call 04236h		;661c   ; borra_bloque: pone a cero BC + 1 bytes desde HL
+	ld hl,0c3b0h		;661f   ; apunta a el FCB del disco (o la ficha del Game Master 2)
+	ld bc,00024h		;6622
+	jp 04236h		;6625   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 por_el_gm2:		; guarda o carga la partida en la SRAM del Game Master 2: sin la interrupcion de linea, H.KEYI a ret, la pila en 0xC392, la ficha de la ranura (p12:6666) y las funciones (p12:6692); H.KEYI de vuelta y R#0 = 0x16
 	di			;6628
 	ld bc,00600h		;6629   ; R#0 = 6
@@ -1569,7 +1594,7 @@ fichas_d800_de_la_zona:		; guarda las de 0xD800 (p12:6BE6), 0xD8A6 = 0, las 4 fi
 	ld bc,0007fh		;6baf   ; 0x80 bytes
 	call 04236h		;6bb2   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	ld a,(0ca4ah)		;6bb5   ; lee la zona
-	ld hl,06bbeh		;6bb8   ; tabla_6BBE: 19 destinos del despachador p00
+	ld hl,06bbeh		;6bb8   ; tabla_6BBE: 20 destinos del despachador p00
 	call 0424dh		;6bbb   ; despachador: salta a la palabra A de la tabla que va detras del call
 
 ; ----------------------------------------------------------------------
@@ -1631,8 +1656,10 @@ L_6C20:
 	ret			;6c20
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6c21..0x6c2c  (11 bytes)
-DATA_6C21:
+; DATOS bytes_6C21: 11 bytes entre el ret de p12:6C20 y el codigo de p12:6C2C
+;   que no lee ninguna rutina del listado ni carga ninguna instruccion
+;   0x6c21..0x6c2c  (11 bytes)
+DATA_bytes_6C21:
 	defb 004h,000h,006h,00bh,003h,005h,003h,000h,000h,000h,000h	; 6c21  ...........
 
 ; ======================================================================
@@ -2059,7 +2086,7 @@ punto_e:
 	jp 04840h		;6ec5   ; punto: orden PSET del VDP con la operacion logica de E
 fondo_del_radar:		; el recuadro en 0xEE (p12:6F41) y las 3 x 3 salas alrededor de la de Snake desde el mapa de 0xD900: sin 0xCA64, 0xCA77 ni 0xCAA9, las de menos de 0x0A (zona 0), 3 (zona 9) o 0x80 con su dibujo (p12:6F61) desde 0xCA9E (0x8000 + lo de la zona 0x0B-0x10 de p12:6F3B * 0x13)
 	call borra_radar		;6ec8   ; borra_radar: el recuadro de la otra pagina en 0xEE
-	ld hl,08000h		;6ecb
+	ld hl,08000h		;6ecb   ; partida_8000: los 1 ultimos bytes de la instruccion de p01
 	ld a,(0ca4ah)		;6ece   ; lee la zona
 	sub 00bh		;6ed1   ; las zonas 0x0B-0x10...
 	cp 006h		;6ed3
@@ -2068,7 +2095,7 @@ fondo_del_radar:		; el recuadro en 0xEE (p12:6F41) y las 3 x 3 salas alrededor d
 	call 0423eh		;6eda   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;6edd
 	call por_0x13		;6ede   ; * 0x13
-	ld de,08000h		;6ee1
+	ld de,08000h		;6ee1   ; partida_8000: los 1 ultimos bytes de la instruccion de p01
 	add hl,de			;6ee4
 radar_desde:		; los dibujos en 0xCA9E
 	ld (0ca9eh),hl		;6ee5   ; guarda los dibujos de las salas del recuadro (0x8000 + lo de la zona) y el byte siguiente (16 bits)
@@ -2322,7 +2349,7 @@ DATA_resto_704A:
 	defb 0c4h,017h,018h,006h,0c4h,01dh,006h,012h,0e4h,049h,018h,006h,0f6h,037h,006h,012h	; 704a  .........I...7..
 
 ; ======================================================================
-; CODIGO 0x705a..0x710a  (176 bytes)
+; CODIGO 0x705a..0x7435  (987 bytes)
 ; ======================================================================
 
 
@@ -2419,17 +2446,9 @@ siguiente_del_radar_ce00:		; el siguiente (0x40 bytes)
 	add ix,de		;7105
 	djnz L_70AE		;7107
 	ret			;7109
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x710a..0x710f  (5 bytes)
-DATA_710A:
-	defb 03eh,001h,032h,006h,0e2h	; 710a
-
-; ======================================================================
-; CODIGO 0x710f..0x7435  (806 bytes)
-; ======================================================================
-
-
+L_710A:
+	ld a,001h		;710a
+	ld (0e206h),a		;710c   ; guarda 1 al borrar los puntos del recuadro
 punto_de_actor:		; el punto del actor IX en su casilla: los de 0xD800 en adelante (C = 1) solo con el byte 1 por debajo de 0x20 (el tipo 1 desde el 3, 0x20 mas arriba y a la izquierda; recortados a la casilla); de color 0x0A el 3 y el 6 con el byte 1 por debajo de 3 (el 6 desde 9, nada), el 0x15 cada 4 cuadros, los otros del color de la pagina
 	ld d,(ix+005h)		;710f   ; la X...
 	ld e,(ix+003h)		;7112   ; ...y la Y
@@ -3957,7 +3976,7 @@ DATA_resto_7B60:
 	defb 0c5h,000h,0c5h,080h,0c6h,000h,0c6h,080h,0c7h,000h	; 7b60  ..........
 
 ; ======================================================================
-; CODIGO 0x7b6a..0x7c53  (233 bytes)
+; CODIGO 0x7b6a..0x7ed0  (870 bytes)
 ; ======================================================================
 
 
@@ -4086,17 +4105,11 @@ sprite_de_cb3f_1:		; con 0xCB3F = 1: 0xCB43 = 0x0B, el sprite 2 0x10 por debajo 
 	ld bc,0000fh		;7c4b
 	ld a,007h		;7c4e
 	jp 04237h		;7c50   ; llena_bloque: pone A en BC + 1 bytes desde HL
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7c53..0x7c5e  (11 bytes)
-DATA_7C53:
-	defb 021h,000h,0dch,03eh,0e0h,001h,00fh,000h,0c3h,037h,042h	; 7c53  !..>.....7B
-
-; ======================================================================
-; CODIGO 0x7c5e..0x7ed0  (626 bytes)
-; ======================================================================
-
-
+L_7C53:
+	ld hl,0dc00h		;7c53   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+	ld a,0e0h		;7c56
+	ld bc,0000fh		;7c58
+	jp 04237h		;7c5b   ; llena_bloque: pone A en BC + 1 bytes desde HL
 baja_por_cb29:		; con 0xCB37, 0xCB43 = 0x20 - 0xCB29
 	ld a,(0cb37h)		;7c5e
 	or a			;7c61
@@ -4492,8 +4505,10 @@ L_7ECF:
 	ret			;7ecf
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7ed0..0x7ed4  (4 bytes)
-DATA_7ED0:
+; DATOS temblor_7ED0: los desvios 1-4 del temblor (0xFF, 0xFE, 0xFD, 0xFF) que
+;   lee p12:7EC3 (0x7ECF + el byte 0x1F)
+;   0x7ed0..0x7ed4  (4 bytes)
+DATA_temblor_7ED0:
 	defb 0ffh,0feh,0fdh,0ffh	; 7ed0
 
 ; ======================================================================
@@ -4666,8 +4681,11 @@ alterna_byte_2:		; en los cuadros pares, el bit 0 del byte 2 de IX cambia
 	ret			;7fd3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7fd4..0x8000  (44 bytes)
-DATA_7FD4:
+; DATOS restos_finales_7FD4: 44 bytes al final del banco detras del ultimo
+;   bloque que se lee (resto_7FBE): ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0x7fd4..0x8000  (44 bytes)
+DATA_restos_finales_7FD4:
 	defb 023h,004h,007h,077h,007h,008h,044h,004h,009h,006h,002h,00ah,070h,000h,00bh,064h	; 7fd4  #..w..D.....p..d
 	defb 005h,00ch,050h,003h,00dh,002h,004h,00eh,001h,002h,00fh,000h,000h,0ffh,001h,000h	; 7fe4  ..P.............
 	defb 001h,002h,001h,002h,003h,001h,003h,004h,002h,004h,005h,073h	; 7ff4  ...........s

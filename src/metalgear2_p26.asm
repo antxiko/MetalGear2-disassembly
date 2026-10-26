@@ -549,6 +549,9 @@ DATA_bloques_B9C4:
 	defb 0a0h,03ch,02ch,080h,000h,0c0h,000h,001h,0f1h,000h,007h,0c7h,000h,03fh,0bfh,000h	; bfe4  .<,..........?..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbff4..0xc000  (12 bytes)
-DATA_BFF4:
+; DATOS restos_finales_BFF4: 12 bytes al final del banco detras del ultimo
+;   bloque que se lee (bloques_B9C4): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbff4..0xc000  (12 bytes)
+DATA_restos_finales_BFF4:
 	defb 036h,0b6h,000h,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bff4  6...........

@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xBEA9 0xC000 restos_finales_BEA9  343 bytes al final del banco detras del ultimo bloque que se lee (rachas_BD99): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA036 dibujo_9FE6_cola  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x9068 (p00:4D92, p00:4DF5) (sigue del banco 40); lo leen p00:4C0C (54 bytes)
 F 0xA000 16

@@ -1,4 +1,15 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xA89C 0xA8B6 partituras_A89C  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xAA23 0xAA42 partituras_AA23  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xABD4 0xAC42 partituras_ABD4  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xADE2 0xAE53 partituras_ADE2  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xAFB0 0xAFD1 partituras_AFB0  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB116 0xB137 partituras_B116  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB33B 0xB391 partituras_B33B  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB579 0xB5DC partituras_B579  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xBFF7 0xC000 restos_finales_BFF7  9 bytes al final del banco, detras de la ultima partitura: no los lee ni el codigo ni ninguno de los sonidos tocados con tools/partituras.py
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA006 partitura_A000  partitura de canal que lee el motor de p16 al tocar los sonidos 0x7A (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
 F 0xA000 16

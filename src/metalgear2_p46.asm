@@ -458,8 +458,11 @@ DATA_colores_8685:
 	defb 007h,089h,0cdh,0efh	; 8685
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8689..0x868d  (4 bytes)
-DATA_8689:
+; DATOS colores_8689: 4 bytes con forma de colores de dibujo entre
+;   colores_8685 y colores_868D; ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0x8689..0x868d  (4 bytes)
+DATA_colores_8689:
 	defb 007h,0afh,008h,09bh	; 8689
 
 ; ----------------------------------------------------------------------
@@ -806,8 +809,10 @@ DATA_dibujo_94AD:
 	defb 090h,060h,06ch,068h,088h,0fah,05fh,08fh,0e9h,079h,09fh,0f9h,01fh,0efh,0e9h,0ffh,00fh,009h,0ffh,00fh,00fh,0f8h,0f8h,0f8h	; 94ad  .`lh.._..y..............
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x94c5..0x94dd  (24 bytes)
-DATA_94C5:
+; DATOS ceros_94C5: 24 bytes a 0 entre dos dibujos; ningun lector del listado
+;   llega a ellos ni los apunta ninguna tabla declarada
+;   0x94c5..0x94dd  (24 bytes)
+DATA_ceros_94C5:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 94c5  ................
 	defb 000h,000h,000h,000h,000h,000h,000h,000h	; 94d5  ........
 

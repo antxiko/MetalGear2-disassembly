@@ -1124,8 +1124,11 @@ DATA_dibujo_BF32:
 	defb 00ch,000h,000h,0b8h,038h,038h,044h,044h,07ch,042h,042h,07eh,0f3h,0f2h,0feh,077h,0ceh,0feh,06dh,0dfh,0ffh,038h,0ffh,03ah	; bf7a  ....88DD|BB~...w..m..8.:
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbf92..0xc000  (110 bytes)
-DATA_BF92:
+; DATOS restos_finales_BF92: 110 bytes al final del banco detras del ultimo
+;   bloque que se lee (dibujo_BF32): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbf92..0xc000  (110 bytes)
+DATA_restos_finales_BF92:
 	defb 004h,028h,004h,036h,004h,02ah,004h,034h,008h,029h,004h,02ah,004h,035h,004h,02eh	; bf92  .(.6.*.4.).*.5..
 	defb 002h,02ch,004h,031h,0ffh,028h,004h,02dh,004h,026h,004h,034h,004h,026h,004h,028h	; bfa2  .,.1.(.-.&.4.&.(
 	defb 004h,036h,004h,02ah,004h,034h,008h,035h,004h,037h,004h,033h,004h,033h,004h,032h	; bfb2  .6.*.4.5.7.3.3.2

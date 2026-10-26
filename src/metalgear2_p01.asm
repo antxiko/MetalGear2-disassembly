@@ -24,7 +24,7 @@ sprites_a_vram:	equ 0x068c8
 l7050h:	equ 0x07050
 
 ; ======================================================================
-; CODIGO 0x6000..0x650c  (1292 bytes)
+; CODIGO 0x6000..0x6597  (1431 bytes)
 ; ======================================================================
 
 
@@ -796,18 +796,13 @@ mensaje_con_ventana:		; el mensaje de HL en su ventana, en la Y de 0xCAA1 + 4
 	ld a,(0caa1h)		;6504   ; lee la Y y la X de la ventana del mensaje (16 bits)
 	add a,004h		;6507
 	ld e,a			;6509
-	jr $+13		;650a   ; salta los datos de 0x650C
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x650c..0x6517  (11 bytes)
-DATA_650C:
-	defb 03ah,003h,0cbh,0feh,080h,01eh,020h,030h,002h,01eh,080h	; 650c  :..... 0...
-
-; ======================================================================
-; CODIGO 0x6517..0x6597  (128 bytes)
-; ======================================================================
-
-
+	jr L_6517		;650a   ; salta los datos de 0x650C
+L_650C:
+	ld a,(0cb03h)		;650c   ; lee la Y de Snake
+	cp 080h		;650f
+	ld e,020h		;6511
+	jr nc,L_6517		;6513
+	ld e,080h		;6515
 L_6517:
 	ld d,008h		;6517   ; en X = 8, 4 lineas
 	ld b,004h		;6519
@@ -900,8 +895,11 @@ letra_segun_velocidad:		; los bancos de los mensajes
 	jp 040f0h		;65ab   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x65ae..0x65b4  (6 bytes)
-DATA_65AE:
+; DATOS tabla_65AA_2_4: las entradas 2-4 de la tabla de p01:65AA (0x6698,
+;   0x66AA, 0x6683) que salta p01:65A5 con p00:424E; el trazado las sigue por
+;   las semillas de tools/tablas_hl.py
+;   0x65ae..0x65b4  (6 bytes)
+DATA_tabla_65AA_2_4:
 	defb 098h,066h,0aah,066h,083h,066h	; 65ae
 
 ; ======================================================================
@@ -2397,7 +2395,7 @@ dibujos_9eb2:		; los dibujos de p46:9EB2 en la VRAM de 0x6000
 	call 04d56h		;6f45   ; dibujos_en_6000: en la VRAM de 0x6000
 	jr L_6F53		;6f48
 rachas_a81b:		; las rachas de p47:A81B
-	ld de,0a81bh		;6f4a
+	ld de,0a81bh		;6f4a   ; bytes_A81B: 702 bytes entre mosaico_A818 y tabla_colores_AAD9
 	call 04171h		;6f4d   ; bancos_46_47: pone el 46 en 0x8000, el 47 en 0xA000 (con su copia en 0xC381-0xC383)
 rachas_otro_destino_b_1_2_9:		; rachas_otro_destino y deja los bancos 1, 2 y 9
 	call 04534h		;6f50   ; rachas_otro_destino: la orden 0x80 de las rachas: [pagina][VRAM lo hi] y sigue
@@ -2787,9 +2785,9 @@ L_7266:
 	ret			;7270
 es_ram:		; pone el slot A en 0x8000 y mira si sus 256 primeros bytes se pueden escribir
 	push af			;7271
-	ld hl,08000h		;7272
+	ld hl,08000h		;7272   ; partida_8000: los 1 ultimos bytes de la instruccion de p01
 	call 00024h		;7275   ; BIOS ENASLT - Switches to specified slot and page definitively | el slot en la pagina 2
-	ld hl,08000h		;7278
+	ld hl,08000h		;7278   ; partida_8000: los 1 ultimos bytes de la instruccion de p01
 	ld b,000h		;727b
 L_727D:
 	ld a,(hl)			;727d   ; el byte...
@@ -3428,7 +3426,7 @@ DATA_resto_7747:
 	defb 0f0h,040h	; 7787
 
 ; ======================================================================
-; CODIGO 0x7789..0x7a48  (703 bytes)
+; CODIGO 0x7789..0x7d95  (1548 bytes)
 ; ======================================================================
 
 
@@ -3738,18 +3736,9 @@ llama_7a27_1_bancos_10:
 	jr L_7A3B		;7a41
 musica_de_la_zona_bancos_15:
 	call musica_de_la_zona_si		;7a43   ; musica_de_la_zona_si: ni con 0xC697
-	jr $+5		;7a46
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7a48..0x7a4b  (3 bytes)
-DATA_7A48:
-	defb 0cdh,085h,07ch	; 7a48
-
-; ======================================================================
-; CODIGO 0x7a4b..0x7a95  (74 bytes)
-; ======================================================================
-
-
+	jr L_7A4B		;7a46
+L_7A48:
+	call pide_musica_hl		;7a48   ; pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 L_7A4B:
 	jp 041f7h		;7a4b   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 apunta_con_b_bancos_15:
@@ -3767,37 +3756,28 @@ a_p02_8475_2:		; paleta_de_la_sala (p02:8475) con el banco 2
 a_p03_a8d8:		; p03:A8D8 con el banco 3 en 0xA000
 	call 040f0h		;7a68   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a8d8h		;7a6b   ; escena_de_cb5a: Snake mirando abajo, la pantalla limpia, los dibujos de p32:70F9, la paleta de p56:B97D...
-	jr $+42		;7a6e
+	jr L_7A98		;7a6e
 a_p03_b108:		; p03:B108 con el banco 3 en 0xA000
 	call 040f0h		;7a70   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b108h		;7a73   ; llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
-	jr $+34		;7a76
+	jr L_7A98		;7a76
 a_p02_9319:		; p02:9319 con el banco 2 en 0x8000
 	call 040f0h		;7a78   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 09319h		;7a7b   ; a_p10_b3e5: p10:B3E5 con el banco 10 en 0xA000
-	jr $+26		;7a7e
+	jr L_7A98		;7a7e
 a_p02_9db1:		; p02:9DB1 con el banco 2 en 0x8000
 	call 040f0h		;7a80   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 09db1h		;7a83   ; llama_6e0d_a3c8: p01:6E0D y p06:A3C8
-	jr $+18		;7a86
+	jr L_7A98		;7a86
 rutina_de_fase_b_1_4_5:		; rutina_de_fase y deja los bancos 1, 4 y 5
 	call rutina_de_fase		;7a88   ; rutina_de_fase: HL = la rutina de la zona en la lista de la fase 0xCA22 (p06:B40C)
-	jr $+13		;7a8b
+	jr L_7A98		;7a8b
 a_p03_bb38:		; p03:BB38 con el banco 3 en 0xA000
 	call 040f0h		;7a8d   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0bb38h		;7a90   ; pinta_tercera_barra: el marco de la barra de 0xCA54...
-	jr $+5		;7a93
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7a95..0x7a98  (3 bytes)
-DATA_7A95:
-	defb 0cdh,0a7h,059h	; 7a95
-
-; ======================================================================
-; CODIGO 0x7a98..0x7b87  (239 bytes)
-; ======================================================================
-
-
+	jr L_7A98		;7a93
+L_7A95:
+	call 059a7h		;7a95   ; cambia_de_zona: pasa a la zona A
 L_7A98:
 	jp 0413fh		;7a98   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 dibujos_de_93e5_bancos_5:
@@ -3918,18 +3898,9 @@ sonido_8e_y_9955_bancos_14:
 a_p04_92eb:		; p04:92EB con el banco 4 en 0x8000
 	call 04142h		;7b7f   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 092ebh		;7b82   ; d406_si: si p06:B55A no da acarreo, (HL) = 2
-	jr $+5		;7b85
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7b87..0x7b8a  (3 bytes)
-DATA_7B87:
-	defb 0cdh,098h,07bh	; 7b87
-
-; ======================================================================
-; CODIGO 0x7b8a..0x7d95  (523 bytes)
-; ======================================================================
-
-
+	jr L_7B8A		;7b85
+L_7B87:
+	call sonido_8e_y_9955		;7b87   ; sonido_8e_y_9955: el sonido 0x8E y p04:9955
 L_7B8A:
 	jp 041c2h		;7b8a   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p15_bdb8:		; p15:BDB8 con el banco 15 en 0xA000
@@ -4260,7 +4231,7 @@ DATA_tabla_7DB8:
 	defw 07dc0h,07dc3h,07dc6h,07dc9h	; 7db8  -> L_7DC0 L_7DC3 L_7DC6 L_7DC9
 
 ; ======================================================================
-; CODIGO 0x7dc0..0x7ddc  (28 bytes)
+; CODIGO 0x7dc0..0x7fff  (575 bytes)
 ; ======================================================================
 
 
@@ -4289,17 +4260,9 @@ L_7DCA:
 	ld a,(hl)			;7dd9   ; la sala...
 	inc a			;7dda   ; ...0xFF: no hay (Z)
 	ret			;7ddb
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7ddc..0x7de2  (6 bytes)
-DATA_7DDC:
-	defb 0cdh,0e2h,07dh,0c3h,0c2h,041h	; 7ddc
-
-; ======================================================================
-; CODIGO 0x7de2..0x7fff  (541 bytes)
-; ======================================================================
-
-
+L_7DDC:
+	call cosas_fijas_de_la_sala		;7ddc   ; cosas_fijas_de_la_sala: lo fijo de la sala (p01:7E0D), p07:A4EB y p11:A20D
+	jp 041c2h		;7ddf   ; bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 cosas_fijas_de_la_sala:		; lo fijo de la sala (p01:7E0D), p07:A4EB y p11:A20D
 	call lo_fijo		;7de2   ; lo_fijo: p07:AB44, el mosaico de la zona 0x0A (p01:7E22), lo pisado (p01:7E7E), los mosaicos de la sala (p01:7E3C), p06:AAC8 y p06:AB21
 	call 041adh		;7de5   ; bancos_1_2_7: pone el 1 en 0x6000, el 2 en 0x8000, el 7 en 0xA000 (con su copia en 0xC381-0xC383)

@@ -1,4 +1,23 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xA55A 0xA56C partituras_A55A  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA57B 0xA593 partituras_A57B  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA5A5 0xA5BD partituras_A5A5  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA5CF 0xA5E7 partituras_A5CF  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA5F9 0xA617 partituras_A5F9  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA632 0xA654 partituras_A632  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA663 0xA67D partituras_A663  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA68C 0xA6A4 partituras_A68C  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA6C6 0xA75D partituras_A6C6  5 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA79B 0xA814 partituras_A79B  4 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA836 0xA915 partituras_A836  5 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xA93B 0xAA5B partituras_A93B  5 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xAA89 0xAB31 partituras_AA89  4 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xAB8B 0xAC4B partituras_AB8B  4 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xACC1 0xADB5 partituras_ACC1  4 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xAE4D 0xAF6C partituras_AE4D  5 partituras enteras (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xBF82 0xC000 restos_finales_BF82  126 bytes al final del banco, detras de la ultima partitura: no los lee ni el codigo ni ninguno de los sonidos tocados con tools/partituras.py
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA006 partitura_A000  partitura de canal que lee el motor de p16 al tocar los sonidos 0x8E (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
 F 0xA000 16

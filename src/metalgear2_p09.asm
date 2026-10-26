@@ -3923,7 +3923,7 @@ DATA_resto_BDC1:
 	defb 018h,019h,018h,013h,01bh,01bh	; bdd1
 
 ; ======================================================================
-; CODIGO 0xbdd7..0xbe50  (121 bytes)
+; CODIGO 0xbdd7..0xbfa5  (462 bytes)
 ; ======================================================================
 
 
@@ -3994,17 +3994,8 @@ onda_de_d0d0:		; sin 0xCABE, cada 2 cuadros: la columna 0xD7BC de (0xD0 + 0xD7BC
 	or 003h		;be48
 	ld bc,02001h		;be4a
 	jp 04767h		;be4d   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbe50..0xbe53  (3 bytes)
-DATA_BE50:
-	defb 0cdh,053h,0beh	; be50
-
-; ======================================================================
-; CODIGO 0xbe53..0xbfa5  (338 bytes)
-; ======================================================================
-
-
+L_BE50:
+	call mensaje_de_conversacion		;be50   ; mensaje_de_conversacion: si el mensaje de HL es de una conversacion de la lista, lo que deja hecho (p06:AEFF); y el mensaje abajo
 mensaje_de_conversacion:		; si el mensaje de HL es de una conversacion de la lista, lo que deja hecho (p06:AEFF); y el mensaje abajo
 	push hl			;be53
 	call 06383h		;be54   ; numero_de_conversacion: A = el numero de la conversacion BC en la lista de p48:800C (acarreo si esta)

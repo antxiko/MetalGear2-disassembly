@@ -28,8 +28,10 @@ DATA_zonas_juegos_bloques:
 	defw 0608ch,06078h,06092h,06094h	; 6048  -> DATA_juegos_bloques_608C DATA_juegos_bloques_6078 DATA_juegos_bloques_6092 DATA_juegos_bloques_6094
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6050..0x6052  (2 bytes)
-DATA_6050:
+; DATOS palabra_6050: una palabra (0x6096) entre dos juegos de bloques; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x6050..0x6052  (2 bytes)
+DATA_palabra_6050:
 	defb 096h,060h	; 6050
 
 ; ----------------------------------------------------------------------
@@ -75,8 +77,10 @@ DATA_juegos_bloques_606A:
 	defw 089f9h,06098h	; 606a  -> 0x89f9 DATA_bloques_6098
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x606e..0x6070  (2 bytes)
-DATA_606E:
+; DATOS palabra_606E: una palabra (0x9909) entre dos juegos de bloques; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x606e..0x6070  (2 bytes)
+DATA_palabra_606E:
 	defb 009h,099h	; 606e
 
 ; ----------------------------------------------------------------------
@@ -87,8 +91,10 @@ DATA_juegos_bloques_6070:
 	defw 09805h,09a05h,06098h	; 6070  -> 0x9805 0x9a05 DATA_bloques_6098
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6076..0x6078  (2 bytes)
-DATA_6076:
+; DATOS palabra_6076: una palabra (0xA655) entre dos juegos de bloques; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x6076..0x6078  (2 bytes)
+DATA_palabra_6076:
 	defb 055h,0a6h	; 6076
 
 ; ----------------------------------------------------------------------
@@ -120,8 +126,10 @@ DATA_juegos_bloques_6082:
 	defw 0a994h,0b334h,09ee4h	; 6082
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6088..0x608a  (2 bytes)
-DATA_6088:
+; DATOS palabra_6088: una palabra (0xB9C4) entre dos juegos de bloques; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x6088..0x608a  (2 bytes)
+DATA_palabra_6088:
 	defb 0c4h,0b9h	; 6088
 
 ; ----------------------------------------------------------------------
@@ -153,8 +161,10 @@ DATA_juegos_bloques_6094:
 	defw 0b330h	; 6094
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6096..0x6098  (2 bytes)
-DATA_6096:
+; DATOS palabra_6096: una palabra (0x6098) entre dos juegos de bloques; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x6096..0x6098  (2 bytes)
+DATA_palabra_6096:
 	defb 098h,060h	; 6096
 
 ; ----------------------------------------------------------------------
@@ -794,8 +804,12 @@ DATA_salas_zona_7:
 	defb 000h,000h,001h,001h,001h,001h,003h,000h,001h,001h,001h,001h,003h,000h,001h,001h,001h,001h,003h,000h,001h,001h,001h,001h,003h,000h,048h,04ah,04ah,04bh,003h,000h,04ch,04dh,04eh,04fh,003h	; 7ad3  ..........................HJJK..LMNO.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7af8..0x7b1c  (36 bytes)
-DATA_7AF8:
+; DATOS sala_suelta_7AF8: 36 bytes entre las salas de la zona 7 y las de la 9:
+;   el tamano de los 6 x 6 bloques de una sala de p00:58DD sin su byte de
+;   juego; ningun lector del listado llega a ellos ni los apunta ninguna tabla
+;   declarada
+;   0x7af8..0x7b1c  (36 bytes)
+DATA_sala_suelta_7AF8:
 	defb 000h,001h,000h,00ch,00fh,00ch,00bh,03ah,00ch,01ah,015h,000h,000h,00fh,039h,03bh	; 7af8  .......:......9.
 	defb 020h,000h,001h,00fh,01eh,01ch,019h,03ah,011h,02fh,01ah,012h,015h,0a7h,000h,000h	; 7b08   ......:./......
 	defb 03bh,01dh,02bh,00bh	; 7b18

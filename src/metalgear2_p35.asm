@@ -244,7 +244,7 @@ DATA_bloques_sprites:
 ; ----------------------------------------------------------------------
 ; DATOS rachas_6113: datos en rachas a la VRAM (p00:453E: n < 0x80 repite, n >
 ;   0x80 copia n & 0x7F, 0x80 cambia de destino, 0 acaba); se solapan 2
-;   bloques: (sprites_6113 6113-6517); lo leen p00:4F58, p00:4EB5 (1028 bytes)
+;   bloques: (sprites_6113 6113-6517); lo leen p00:4F58, p00:4F78 (1028 bytes)
 ;   0x6113..0x6517  (1028 bytes)
 DATA_rachas_6113:
 	defb 083h,001h,002h,002h,004h,003h,086h,0feh,0ffh,02eh,03fh,011h,00fh,003h,003h,091h	; 6113  ..........?.....

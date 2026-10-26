@@ -267,8 +267,11 @@ DATA_mapa_de_bits_9C58_cola:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h	; af90  ........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xaf98..0xaf99  (1 bytes)
-DATA_AF98:
+; DATOS byte_AF98: un byte (0x00) entre la cola del mapa de bits de 0x9C58 y
+;   rachas_AF99; ningun lector del listado llega a ellos ni los apunta ninguna
+;   tabla declarada
+;   0xaf98..0xaf99  (1 bytes)
+DATA_byte_AF98:
 	defb 000h	; af98
 
 ; ----------------------------------------------------------------------

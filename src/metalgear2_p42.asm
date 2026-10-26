@@ -48,8 +48,10 @@ DATA_lista_8000:
 	defb 0ffh	; 8096
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8097..0x80b6  (31 bytes)
-DATA_8097:
+; DATOS bytes_8097: 31 bytes entre lista_8000 y dibujo_80B6; ningun lector del
+;   listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x8097..0x80b6  (31 bytes)
+DATA_bytes_8097:
 	defb 053h,00ah,030h,0deh,082h,04fh,019h,050h,0eeh,082h,003h,000h,060h,0feh,082h,045h	; 8097  S.0..O.P....`..E
 	defb 01ah,063h,006h,083h,041h,01bh,068h,0a6h,083h,082h,01bh,069h,0c6h,083h,0ffh	; 80a7  .c..A.h....i...
 
@@ -240,8 +242,11 @@ DATA_dibujo_861E:
 	defb 000h,000h,000h,000h,0feh,000h,000h,0feh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; 862e  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x863e..0x870a  (204 bytes)
-DATA_863E:
+; DATOS bytes_863E: 204 bytes entre dibujo_861E y lista_870A que empiezan por
+;   palabras del propio banco (0x8698, 0x869A, 0x869E...); ningun lector del
+;   listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x863e..0x870a  (204 bytes)
+DATA_bytes_863E:
 	defb 098h,086h,09ah,086h,09eh,086h,0a0h,086h,0a4h,086h,0a6h,086h,0aah,086h,0aeh,086h	; 863e  ................
 	defb 0b0h,086h,0b2h,086h,0b6h,086h,0bah,086h,0beh,086h,0c0h,086h,0c2h,086h,0c4h,086h	; 864e  ................
 	defb 0c6h,086h,0c8h,086h,0cah,086h,0cch,086h,0ceh,086h,0ceh,086h,0d0h,086h,0d4h,086h	; 865e  ................

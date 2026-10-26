@@ -1,4 +1,8 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0x9535 0x95D1 mosaicos_9535  156 bytes detras de mosaico_951D que empiezan por palabras de 6 en 6 (0x954D, 0x9553, 0x9559...) que apuntan dentro de ellos mismos, como una tabla de mosaicos; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x95D5 0x9762 bytes_95D5  397 bytes de numeros de caracter (0xA3, 0xA4, 0x97...) como los de los mosaicos, entre mosaico_95D1 y dibujo_9762; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8000 0x800A tabla_colores_8000  5 punteros a colores de dibujo (los usa hasta el indice 4; p00:4DA0); lo leen p00:4DA0 (10 bytes)
 F 0x8000 w8

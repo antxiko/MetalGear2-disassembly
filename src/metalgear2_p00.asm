@@ -656,7 +656,7 @@ DATA_resto_43E3:
 	defb 020h,0f2h,0c9h	; 43f3
 
 ; ======================================================================
-; CODIGO 0x43f6..0x44d0  (218 bytes)
+; CODIGO 0x43f6..0x4c6b  (2165 bytes)
 ; ======================================================================
 
 
@@ -834,18 +834,12 @@ escribe_byte_vram:		; escribe A en la VRAM de HL (pagina 0)
 	push bc			;44cb
 	push af			;44cc
 	xor a			;44cd
-	jr $+8		;44ce   ; salta la mitad del byte que sigue: entra en p00:44D6
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x44d0..0x44d6  (6 bytes)
-DATA_44D0:
-	defb 0cdh,050h,046h,0c5h,0f5h,07ah	; 44d0
-
-; ======================================================================
-; CODIGO 0x44d6..0x491c  (1094 bytes)
-; ======================================================================
-
-
+	jr L_44D6		;44ce   ; salta la mitad del byte que sigue: entra en p00:44D6
+L_44D0:
+	call espera_vdp		;44d0   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+	push bc			;44d3
+	push af			;44d4
+	ld a,d			;44d5
 L_44D6:
 	call vram_para_escribir		;44d6   ; vram_para_escribir: pone en el VDP la direccion de escritura HL (A bit 0 = la mitad alta, R#14)
 	ld a,(00007h)		;44d9
@@ -1607,18 +1601,9 @@ L_4913:
 	ret			;4917
 letrero_con_sitio:		; [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 	ld c,0ffh		;4918   ; C = 0xFF: las letras tal cual
-	jr $+4		;491a   ; salta la entrada de 0x491C, que pone C = 0 (borra con espacios)
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x491c..0x491e  (2 bytes)
-DATA_491C:
-	defb 00eh,000h	; 491c
-
-; ======================================================================
-; CODIGO 0x491e..0x4c6b  (845 bytes)
-; ======================================================================
-
-
+	jr L_491E		;491a   ; salta la entrada de 0x491C, que pone C = 0 (borra con espacios)
+L_491C:
+	ld c,000h		;491c
 L_491E:
 	ld d,(hl)			;491e   ; D = la X
 	inc hl			;491f
@@ -1631,7 +1616,7 @@ L_4922:
 	inc b			;4925   ; 0xFF: se acabo
 	ret z			;4926
 	inc b			;4927   ; 0xFE: otra posicion (vuelve a 0x4918)
-	jr z,$-16		;4928
+	jr z,letrero_con_sitio		;4928
 	and c			;492a   ; con C = 0, la letra 0 (en blanco)
 	call letra_transparente		;492b   ; la letra, transparente, en la pagina en la que se dibuja
 	ld a,d			;492e   ; 8 puntos a la derecha
@@ -2262,7 +2247,7 @@ DATA_resto_4C77:
 	defb 003h,004h,000h,005h	; 4c87
 
 ; ======================================================================
-; CODIGO 0x4c8b..0x4d3a  (175 bytes)
+; CODIGO 0x4c8b..0x4fe2  (855 bytes)
 ; ======================================================================
 
 
@@ -2349,17 +2334,9 @@ dibujos_70f9:
 	ld hl,070f9h		;4d31   ; lista_70F9: 6 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF
 	call dibujos_en_0000		;4d34   ; en la VRAM de 0x0000
 	jp bancos_1_2_3		;4d37   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4d3a..0x4d3e  (4 bytes)
-DATA_4D3A:
-	defb 006h,080h,018h,054h	; 4d3a
-
-; ======================================================================
-; CODIGO 0x4d3e..0x4fe2  (676 bytes)
-; ======================================================================
-
-
+L_4D3A:
+	ld b,080h		;4d3a
+	jr pinta_dibujos		;4d3c
 dibujos_en_a000:		; en la VRAM de 0xA000
 	ld b,0a0h		;4d3e
 	jr pinta_dibujos		;4d40
@@ -2768,7 +2745,7 @@ DATA_resto_4FE2:
 	defb 009h,00fh,010h,013h,014h,015h,026h,02bh,02fh,030h,036h,037h,0ffh	; 4fe2  ......&+/067.
 
 ; ======================================================================
-; CODIGO 0x4fef..0x51b8  (457 bytes)
+; CODIGO 0x4fef..0x5456  (1127 bytes)
 ; ======================================================================
 
 
@@ -3052,17 +3029,10 @@ L_51B1:
 	call L_51BE		;51b1
 	pop af			;51b4
 	jp pieza_de_3_a_2		;51b5   ; pieza_de_3_a_2:
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x51b8..0x51be  (6 bytes)
-DATA_51B8:
-	defb 0f1h,006h,000h,0c3h,084h,04ah	; 51b8
-
-; ======================================================================
-; CODIGO 0x51be..0x5456  (664 bytes)
-; ======================================================================
-
-
+L_51B8:
+	pop af			;51b8
+	ld b,000h		;51b9
+	jp pieza_de_3_a_b		;51bb   ; pieza_de_3_a_b:
 L_51BE:
 	ld a,(0ca42h)		;51be   ; B = la pagina en la que se dibuja
 	ld b,a			;51c1
@@ -4340,7 +4310,7 @@ carga_sala_especial_b_1_2_3:		; carga_sala_especial y deja los bancos 1, 2 y 3
 	call carga_sala_especial		;5b9b   ; carga_sala_especial: la sala B de las de 0xCA76 (p24:64B6) con los bloques de p00:56EF
 	jp bancos_1_2_3		;5b9e   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 mapas_de_bits_de_la_zona:		; los mapas de bits de todas las salas de la zona, desde 0x8000 de la RAM
-	ld de,08000h		;5ba1
+	ld de,08000h		;5ba1   ; partida_8000: los 1 ultimos bytes de la instruccion de p01
 	ld hl,0ca4ah		;5ba4   ; en las zonas 0x0B-0x10...
 	ld a,(hl)			;5ba7
 	sub 00bh		;5ba8

@@ -1037,6 +1037,23 @@ C 0x6C9F 0xD87F + T
 C 0x6CE0 0xCA64...
 C 0x6CE6 ...o 0xCAA9
 C 0x6CE7 el bit 4 de 0xD7E1
+D 0x6C21 0x6C2C bytes_6C21  11 bytes entre el ret de p12:6C20 y el codigo de p12:6C2C que no lee ninguna rutina del listado ni carga ninguna instruccion
+D 0x7ED0 0x7ED4 temblor_7ED0  los desvios 1-4 del temblor (0xFF, 0xFE, 0xFD, 0xFF) que lee p12:7EC3 (0x7ECF + el byte 0x1F)
+D 0x7FD4 0x8000 restos_finales_7FD4  44 bytes al final del banco detras del ultimo bloque que se lee (resto_7FBE): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+C 0x65D0 3 ficheros, desde el 0
+C 0x65D4 el FCB y la DTA a cero
+C 0x65D9 el fichero * 8 + la cuenta...
+C 0x65DE ...en la tabla de nombres de p12:6546
+C 0x65E4 su nombre (8 + 3) al FCB
+C 0x65EC la DTA en 0xC3D5...
+C 0x65EF ...BDOS 0x1A
+C 0x65F4 el FCB...
+C 0x65F7 ...BDOS 0x11: busca el primero
+C 0x65FD 0xFF: no esta
+C 0x6600 el bit del fichero: 1...
+C 0x6606 ...2...
+C 0x660A ...o 4
+C 0x6613 3
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x605C 0x606E tabla_605C  9 destinos del despachador p00:424D (call en p12:6059, el indice en A): 606E, 6155, 62B4, 62F7, 63F3, 6413, 63F3, 643A, 6458; lo leen p12:6059 (18 bytes)
@@ -1051,7 +1068,7 @@ D 0x77A8 0x77B0 tabla_77A8  4 destinos del despachador p00:424D (call en p12:77A
 F 0x77A8 w4
 D 0x6050 0x6055 resto_6050  lo apuntan con el banco puesto p12:60C3 (0x6050), p12:60E3 (0x6054), p12:6133 (0x6054); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:60C3, p12:60E3, p12:6133 (5 bytes)
 F 0x6050 16
-D 0x6546 0x6567 resto_6546  lo apuntan con el banco puesto p12:6529 (0x6546); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:6529 (33 bytes)
+D 0x6546 0x6567 resto_6546  lo apuntan con el banco puesto p12:6529 (0x6546), p12:65DE (0x6546); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:6529, p12:65DE (33 bytes)
 F 0x6546 16
 D 0x6653 0x6666 resto_6653  lo apuntan con el banco puesto p12:66AA (0x6653), p12:666D (0x6657); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p12:66AA, p12:666D (19 bytes)
 F 0x6653 16
@@ -1144,6 +1161,11 @@ L 0x658D ram_en_8000 la RAM de 0xC386 en la pagina 2 (ENASLT)
 L 0x6595 cambia_9600_dd00 con la RAM en la pagina 2, cambia 0x1680 bytes de 0x9600 con los de 0xDD00; 0xF1C0 = 0, DISKVE (0xF323) = 0xAD5A y los slots primarios del arranque (0xC388)
 L 0x65C1 ram_de_vuelta deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00
 L 0x65C6 htimi_256 256 veces el H.TIMI que habia al arrancar (copiado en 0xC39A)
+L 0x65D0 mira_ficheros_de_partida SIN USO (ninguna instruccion la llama; desensamblada por semilla): busca en el disco los 3 ficheros de partida con el BDOS (0x1A la DTA en 0xC3D5, 0x11 busca el primero) y pone en 0xC395 el bit de cada uno que esta (1, 2 y 4)
+L 0x65D3 mira_fichero 
+L 0x660C pon_bit_de_fichero a 0xC395
+L 0x6612 fichero_siguiente 
+L 0x6616 borra_fcb_y_dta la DTA de 0xC3D5 y el FCB de 0xC3B0 a cero (0x25 bytes cada uno)
 L 0x6628 por_el_gm2 guarda o carga la partida en la SRAM del Game Master 2: sin la interrupcion de linea, H.KEYI a ret, la pila en 0xC392, la ficha de la ranura (p12:6666) y las funciones (p12:6692); H.KEYI de vuelta y R#0 = 0x16
 L 0x6666 ficha_gm2 la ficha en 0xC3B0 (en 0xC390): el nombre de la ranura de p12:6657 (SNAK1-3), 8 ceros, y en 0xC3C1 el slot del cartucho
 L 0x6692 funciones_gm2 guardando, la funcion 0; luego la 2, la direccion y el largo de p12:6653 (0xC700, 0x73 bytes) en 0xC3BD, la 9 (guardar) o la 8 (cargar) y la 1; 0xC3A1 = 0
@@ -1630,6 +1652,7 @@ C 0x64DF lee la ficha del disco o del Game Master 2 (0xC3B0) y el byte siguiente
 C 0x64EB error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 C 0x64EF lee la ficha del disco o del Game Master 2 (0xC3B0) y el byte siguiente (16 bits)
 C 0x64FB error_de_disco: p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
+C 0x64FF guarda la ficha del disco o del Game Master 2 (0xC3B0) y el byte siguiente (16 bits)
 C 0x6502 lee la ficha del disco o del Game Master 2 (0xC3B0) y el byte siguiente (16 bits)
 C 0x651F lee la ranura del menu de guardar (0-2: SNAKE1-3)
 C 0x652C suma_a_hl: HL = HL + A
@@ -1645,6 +1668,10 @@ C 0x6595 ram_en_8000: la RAM de 0xC386 en la pagina 2 (ENASLT)
 C 0x65BB lee el registro de slots primarios del arranque
 C 0x65C1 htimi_256: 256 veces el H.TIMI que habia al arrancar (copiado en 0xC39A)
 C 0x65C9 la copia del gancho H.TIMI del arranque (5 bytes)
+C 0x65E1 suma_a_hl: HL = HL + A
+C 0x661C borra_bloque: pone a cero BC + 1 bytes desde HL
+C 0x661F apunta a el FCB del disco (o la ficha del Game Master 2)
+C 0x6625 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6633 guarda la copia de H.KEYI mientras se usa el disco
 C 0x6666 lee la ranura del menu de guardar (0-2: SNAKE1-3)
 C 0x6670 suma_a_hl: HL = HL + A
@@ -1760,7 +1787,7 @@ C 0x6BA5 guarda_d800: por cada ficha de 0xD800 de tipo T (salvo 0 y 0x0B) con el
 C 0x6BAC apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x6BB2 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x6BB5 lee la zona
-C 0x6BB8 tabla_6BBE: 19 destinos del despachador p00
+C 0x6BB8 tabla_6BBE: 20 destinos del despachador p00
 C 0x6BBB despachador: salta a la palabra A de la tabla que va detras del call
 C 0x6BE6 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x6BFF suma_a_hl: HL = HL + A
@@ -1830,8 +1857,10 @@ C 0x6EB4 lee 1 mientras se pintan los puntos de 0xCC80 fuera de su turno
 C 0x6EB9 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x6EC5 punto: orden PSET del VDP con la operacion logica de E
 C 0x6EC8 borra_radar: el recuadro de la otra pagina en 0xEE
+C 0x6ECB partida_8000: los 1 ultimos bytes de la instruccion de p01
 C 0x6ECE lee la zona
 C 0x6EDA suma_a_hl: HL = HL + A
+C 0x6EE1 partida_8000: los 1 ultimos bytes de la instruccion de p01
 C 0x6EE5 guarda los dibujos de las salas del recuadro (0x8000 + lo de la zona) y el byte siguiente (16 bits)
 C 0x6EF6 suma_a_hl: HL = HL + A
 C 0x6F16 lee la zona
@@ -1873,6 +1902,7 @@ C 0x70CB lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0x70D9 lee el tipo del actor (0 = libre)
 C 0x70EC le resta la fila de la sala del actor
 C 0x70F7 le resta la columna de la sala del actor
+C 0x710C guarda 1 al borrar los puntos del recuadro
 C 0x711A apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
 C 0x7145 sitio_en_el_radar: HL = el punto del recuadro de (E, D): cada uno por p12:6DEF
 C 0x7166 lee 1 al borrar los puntos del recuadro
@@ -2167,6 +2197,8 @@ C 0x7C25 lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3
 C 0x7C2F guarda lo que baja la caja de Snake en los choques (p07:B5FE)
 C 0x7C32 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0x7C50 llena_bloque: pone A en BC + 1 bytes desde HL
+C 0x7C53 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
+C 0x7C5B llena_bloque: pone A en BC + 1 bytes desde HL
 C 0x7C6A guarda lo que baja la caja de Snake en los choques (p07:B5FE)
 C 0x7C6E lee lo que baja la caja de Snake en los choques (p07:B5FE)
 C 0x7C72 apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]

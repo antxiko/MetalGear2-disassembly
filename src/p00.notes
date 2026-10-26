@@ -1752,6 +1752,7 @@ C 0x44A2 vram_para_escribir: pone en el VDP la direccion de escritura HL (A bit 
 C 0x44B9 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0x44BD vram_para_leer: pone en el VDP la direccion de lectura HL (A bit 0 = la mitad alta, R#14)
 C 0x44C8 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
+C 0x44D0 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0x44D6 vram_para_escribir: pone en el VDP la direccion de escritura HL (A bit 0 = la mitad alta, R#14)
 C 0x453E espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0x4541 vram_para_escribir: pone en el VDP la direccion de escritura HL (A bit 0 = la mitad alta, R#14)
@@ -1950,6 +1951,7 @@ C 0x51A0 pieza_transparente_de_2_a_b:
 C 0x51A7 pieza_transparente_de_3_a_b: 
 C 0x51AE pieza_transparente_de_3_a_b: 
 C 0x51B5 pieza_de_3_a_2: 
+C 0x51BB pieza_de_3_a_b: 
 C 0x51CA bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x51D3 palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0x51DA rachas_a_ram: deshace las rachas de DE en HL (n < 0x80 repite, n > 0x80 copia, 0 acaba)
@@ -2251,6 +2253,7 @@ C 0x5B95 carga_sala: la sala 0xCA4B de la zona 0xCA4A: sus datos (p56:BD28), sus
 C 0x5B98 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5B9B carga_sala_especial: la sala B de las de 0xCA76 (p24:64B6) con los bloques de p00:56EF
 C 0x5B9E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x5BA1 partida_8000: los 1 ultimos bytes de la instruccion de p01
 C 0x5BB5 mapas_de_bits_de_salas: las salas de la zona (p00:5BFE)...
 C 0x5BBF lee la zona
 C 0x5BC5 suma_a_hl: HL = HL + A

@@ -730,8 +730,11 @@ DATA_rachas_BBCA:
 	defb 0ffh,00ah,000h,002h,052h,084h,022h,000h,0e9h,0edh,008h,000h,000h	; bdea  ....R."......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbdf7..0xc000  (521 bytes)
-DATA_BDF7:
+; DATOS restos_finales_BDF7: 521 bytes al final del banco detras del ultimo
+;   bloque que se lee (rachas_BBCA): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbdf7..0xc000  (521 bytes)
+DATA_restos_finales_BDF7:
 	defb 00eh,00fh,00bh,00bh,084h,007h,008h,009h,00ah,018h,019h,090h,012h,013h,018h,019h	; bdf7  ................
 	defb 010h,011h,00bh,00bh,084h,014h,015h,08ah,001h,002h,0ffh,00bh,00bh,084h,01dh,01eh	; be07  ................
 	defb 001h,002h,018h,019h,090h,001h,002h,012h,013h,001h,002h,007h,008h,001h,002h,0ffh	; be17  ................

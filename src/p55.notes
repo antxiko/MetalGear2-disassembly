@@ -1,4 +1,19 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xA2C6 0xA2C9 salto_final_A2C6  el salto final 0xFD a 0xA277 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xA39A 0xA39D salto_final_A39A  el salto final 0xFD a 0xA2C9 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xA4B2 0xA4B5 salto_final_A4B2  el salto final 0xFD a 0xA39D detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xA55D 0xA560 salto_final_A55D  el salto final 0xFD a 0xA4B5 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xA6FC 0xA6FF salto_final_A6FC  el salto final 0xFD a 0xA560 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xA843 0xA846 salto_final_A843  el salto final 0xFD a 0xA6FF detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xAC0C 0xAC0F salto_final_AC0C  el salto final 0xFD a 0xAB75 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xAD34 0xAD37 salto_final_AD34  el salto final 0xFD a 0xAC0F detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xADF9 0xADFC salto_final_ADF9  el salto final 0xFD a 0xAD37 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xAEEA 0xAEED salto_final_AEEA  el salto final 0xFD a 0xADFC detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB022 0xB025 salto_final_B022  el salto final 0xFD a 0xAEED detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB162 0xB165 salto_final_B162  el salto final 0xFD a 0xB025 detras de un bucle 0xFC de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xBFCA 0xC000 restos_finales_BFCA  54 bytes al final del banco, detras de la ultima partitura: no los lee ni el codigo ni ninguno de los sonidos tocados con tools/partituras.py
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA006 partitura_A000  partitura de canal que lee el motor de p16 al tocar los sonidos 0x6C (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
 F 0xA000 16

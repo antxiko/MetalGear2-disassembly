@@ -1998,7 +1998,7 @@ DATA_resto_AD5A:
 	defb 05ch,0adh	; ad5a
 
 ; ======================================================================
-; CODIGO 0xad5c..0xad92  (54 bytes)
+; CODIGO 0xad5c..0xadbc  (96 bytes)
 ; ======================================================================
 
 
@@ -2033,17 +2033,8 @@ error_0:
 	ld c,000h		;ad8d
 al_mensaje_de_error:
 	jp mensaje_de_error		;ad8f   ; mensaje_de_error: el mensaje C de p06:ADD7 (DISK I/O ERROR, FILE NOT FOUND, DISK FULL, NOT READY, WRITE PROTECTED...) y DISK ERROR; p12:65C6, 0xFD9A = 0xC394, 0xC3A1 = 2 y vuelta a la pila de 0xC392
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xad92..0xad94  (2 bytes)
-DATA_AD92:
-	defb 00eh,006h	; ad92
-
-; ======================================================================
-; CODIGO 0xad94..0xadbc  (40 bytes)
-; ======================================================================
-
-
+L_AD92:
+	ld c,006h		;ad92
 error_de_disco:		; p12:65C1 y el mensaje de error C; sale a la pila de 0xC392 con 0xC3A1 = 2
 	push bc			;ad94
 	call 065c1h		;ad95   ; ram_de_vuelta: deja correr el H.TIMI de la BIOS (p12:65C6) y cambia otra vez 0x9600 con 0xDD00

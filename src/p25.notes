@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0x8050 0x8074 sala_suelta_8050  36 bytes detras de las salas de la zona 0x17: el tamano de los 6 x 6 bloques de una sala de p00:58DD sin su byte de juego; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8000 0x8050 salas_zona_17_cola  6 salas de 37 bytes: [juego de bloques] y 6 x 6 bloques de 4 x 4 caracteres (p00:58DD), la zona 17 (sigue del banco 24); lo leen p00:58DD (80 bytes)
 F 0x8000 37

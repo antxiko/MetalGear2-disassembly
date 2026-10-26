@@ -896,6 +896,8 @@ C 0xBFE6 a 0
 C 0xBFE9 B lineas
 C 0xBFED la fila siguiente
 C 0xBFF2 C veces
+D 0xA090 0xA098 sitios_estado_19  los 4 sitios [Y][X] de Snake del estado 0x19 que lee p11:A059 (0xA08E + 2 x el sitio, del 1 al 4)
+D 0xBFF5 0xC000 restos_finales_BFF5  11 bytes al final del banco detras del ultimo bloque que se lee (resto_BF4F): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA006 0xA016 tabla_A006  8 destinos del despachador p00:424D (call en p11:A003, el indice en A): A016, A024, A033, A04B, A098, A0BB, A0D7, A0ED; lo leen p11:A003 (16 bytes)
@@ -2097,6 +2099,7 @@ C 0xBB9A lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 C 0xBB9F apunta a la cuenta de 8/16 cuadros de 0xCA89
 C 0xBBA6 apunta a 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 C 0xBBBA guarda la cuenta de 16 bits de 0xCA89
+C 0xBBC1 partida_8000: los 1 ultimos bytes de la instruccion de p01
 C 0xBBC4 guarda la cuenta de 16 bits de 0xCA89
 C 0xBBC7 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xBBD6 palabra_de_tabla: HL = la palabra A de la tabla de HL

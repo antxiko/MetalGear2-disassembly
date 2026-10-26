@@ -386,7 +386,7 @@ DATA_tabla_A2BD:
 	defw 08ecdh,08ed9h,09e05h,0a490h	; a2cd  -> 0x8ecd 0x8ed9 0x9e05 busca_paso_3
 
 ; ======================================================================
-; CODIGO 0xa2d5..0xa376  (161 bytes)
+; CODIGO 0xa2d5..0xa59b  (710 bytes)
 ; ======================================================================
 
 
@@ -467,21 +467,42 @@ aviso_y_paso_3:		; el aviso 0x82, el paso 3 y una direccion al azar
 	call 04256h		;a36e   ; azar: A = un numero al azar (0xCA03 rotado mas R)
 	and 003h		;a371
 	jp 08e25h		;a373   ; a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa376..0xa3c0  (74 bytes)
-DATA_A376:
-	defb 0ddh,036h,00ch,000h,0ddh,036h,001h,00bh,0ddh,07eh,003h,0d6h,030h,030h,001h,0afh	; a376  .6...6...~..00..
-	defb 06fh,0ddh,07eh,005h,0d6h,030h,026h,000h,038h,006h,026h,068h,0bch,030h,001h,067h	; a386  o.~..0&.8.&h.0.g
-	defb 022h,039h,0d4h,011h,0e0h,000h,001h,010h,058h,03ah,042h,0cah,0e5h,0cdh,067h,047h	; a396  "9......X:B...gG
-	defb 0e1h,001h,00ch,058h,03ah,042h,0cah,057h,03eh,099h,0e5h,0cdh,0ffh,046h,0e1h,011h	; a3a6  ...X:B.W>....F..
-	defb 00ch,058h,00eh,007h,03ah,042h,0cah,0c3h,0bch,046h	; a3b6  .X..:B...F
-
-; ======================================================================
-; CODIGO 0xa3c0..0xa59b  (475 bytes)
-; ======================================================================
-
-
+L_A376:
+	ld (ix+00ch),000h		;a376
+	ld (ix+001h),00bh		;a37a   ; el paso del actor = 0x0B
+	ld a,(ix+003h)		;a37e   ; lee la Y del actor
+	sub 030h		;a381
+	jr nc,L_A386		;a383
+	xor a			;a385
+L_A386:
+	ld l,a			;a386
+	ld a,(ix+005h)		;a387   ; lee la X del actor
+	sub 030h		;a38a
+	ld h,000h		;a38c
+	jr c,L_A396		;a38e
+	ld h,068h		;a390
+	cp h			;a392
+	jr nc,L_A396		;a393
+	ld h,a			;a395
+L_A396:
+	ld (0d439h),hl		;a396
+	ld de,000e0h		;a399
+	ld bc,05810h		;a39c
+	ld a,(0ca42h)		;a39f   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	push hl			;a3a2
+	call 04767h		;a3a3   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+	pop hl			;a3a6
+	ld bc,0580ch		;a3a7
+	ld a,(0ca42h)		;a3aa   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld d,a			;a3ad
+	ld a,099h		;a3ae
+	push hl			;a3b0
+	call 046ffh		;a3b1   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+	pop hl			;a3b4
+	ld de,0580ch		;a3b5
+	ld c,007h		;a3b8
+	ld a,(0ca42h)		;a3ba   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	jp 046bch		;a3bd   ; marco: cuatro lineas: un marco de D x E desde HL
 cerca_de_los_que_llegan:		; con la alerta 1 contando, acarreo si los actores 20 y 21 estan juntos (a menos de 0x10 en Y y 0x0C en X)
 	ld a,(0d42bh)		;a3c0   ; lee la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 	and a			;a3c3
@@ -1116,8 +1137,10 @@ velocidad_x_mas:
 	ret			;a7b2
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa7b3..0xa7c3  (16 bytes)
-DATA_A7B3:
+; DATOS velocidades_A7B3: las palabras de los tipos de actor 3-0x0A de la
+;   tabla de velocidades que lee p05:A781 (0xA7AD + 2 x el tipo)
+;   0xa7b3..0xa7c3  (16 bytes)
+DATA_velocidades_A7B3:
 	defb 000h,004h,000h,004h,000h,002h,000h,003h,080h,003h,080h,001h,080h,003h,080h,002h	; a7b3  ................
 
 ; ======================================================================
@@ -2008,8 +2031,10 @@ L_ADCF:
 	ret			;add0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xadd1..0xadd9  (8 bytes)
-DATA_ADD1:
+; DATOS bytes_ADD1: 8 bytes entre el ret de p05:ADD0 y el codigo de p05:ADD9
+;   que no lee ninguna rutina del listado ni carga ninguna instruccion
+;   0xadd1..0xadd9  (8 bytes)
+DATA_bytes_ADD1:
 	defb 000h,06eh,0c0h,06eh,06eh,000h,06eh,0c0h	; add1  .n.nn.n.
 
 ; ======================================================================
@@ -4300,8 +4325,11 @@ L_BF19:
 	ret			;bf38
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbf39..0xbf41  (8 bytes)
-DATA_BF39:
+; DATOS desvio_por_direccion_BF39: las parejas [Y][X] de las direcciones 1-4
+;   de Snake que lee p05:BF1D (0xBF37 + 2 x la direccion) y suma a la Y y la X
+;   de Snake
+;   0xbf39..0xbf41  (8 bytes)
+DATA_desvio_por_direccion_BF39:
 	defb 000h,0fah,0fch,000h,0feh,003h,0feh,0f6h	; bf39  ........
 
 ; ======================================================================

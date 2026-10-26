@@ -2126,6 +2126,7 @@ C 0xBE33 lee la fila de la onda (0-0x2F, p09:BE14): Y = 0x18 + esto
 C 0xBE3B lee la fila de la onda (0-0x2F, p09:BE14): Y = 0x18 + esto
 C 0xBE43 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBE4D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
+C 0xBE50 mensaje_de_conversacion: si el mensaje de HL es de una conversacion de la lista, lo que deja hecho (p06:AEFF); y el mensaje abajo
 C 0xBE54 numero_de_conversacion: A = el numero de la conversacion BC en la lista de p48:800C (acarreo si esta)
 C 0xBE59 a_p06_aeff: p06:AEFF con el banco 6 en 0xA000
 C 0xBE5D mensaje_abajo_bancos_9: 

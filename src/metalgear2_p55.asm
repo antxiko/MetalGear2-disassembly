@@ -463,8 +463,11 @@ DATA_partitura_A2C4:
 	defb 091h,0a2h	; a2c4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa2c6..0xa2c9  (3 bytes)
-DATA_A2C6:
+; DATOS salto_final_A2C6: el salto final 0xFD a 0xA277 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xa2c6..0xa2c9  (3 bytes)
+DATA_salto_final_A2C6:
 	defb 0fdh,077h,0a2h	; a2c6
 
 ; ----------------------------------------------------------------------
@@ -618,8 +621,11 @@ DATA_partitura_A33F:
 	defb 0a8h,0f9h,046h,0a8h,0f9h,046h,0a8h,0fch,002h,0f5h,0a2h	; a38f  ..F..F.....
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa39a..0xa39d  (3 bytes)
-DATA_A39A:
+; DATOS salto_final_A39A: el salto final 0xFD a 0xA2C9 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xa39a..0xa39d  (3 bytes)
+DATA_salto_final_A39A:
 	defb 0fdh,0c9h,0a2h	; a39a
 
 ; ----------------------------------------------------------------------
@@ -693,8 +699,11 @@ DATA_partitura_A490:
 	defb 0c0h,0a3h	; a4b0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa4b2..0xa4b5  (3 bytes)
-DATA_A4B2:
+; DATOS salto_final_A4B2: el salto final 0xFD a 0xA39D detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xa4b2..0xa4b5  (3 bytes)
+DATA_salto_final_A4B2:
 	defb 0fdh,09dh,0a3h	; a4b2
 
 ; ----------------------------------------------------------------------
@@ -900,8 +909,11 @@ DATA_partitura_A557:
 	defb 0fbh,004h,0fch,002h,0dch,0a4h	; a557
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa55d..0xa560  (3 bytes)
-DATA_A55D:
+; DATOS salto_final_A55D: el salto final 0xFD a 0xA4B5 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xa55d..0xa560  (3 bytes)
+DATA_salto_final_A55D:
 	defb 0fdh,0b5h,0a4h	; a55d
 
 ; ----------------------------------------------------------------------
@@ -1090,8 +1102,11 @@ DATA_partitura_A6F8:
 	defb 0fch,002h,080h,0a5h	; a6f8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa6fc..0xa6ff  (3 bytes)
-DATA_A6FC:
+; DATOS salto_final_A6FC: el salto final 0xFD a 0xA560 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xa6fc..0xa6ff  (3 bytes)
+DATA_salto_final_A6FC:
 	defb 0fdh,060h,0a5h	; a6fc
 
 ; ----------------------------------------------------------------------
@@ -1183,8 +1198,11 @@ DATA_partitura_A830:
 	defb 002h,017h,0a7h	; a840
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa843..0xa846  (3 bytes)
-DATA_A843:
+; DATOS salto_final_A843: el salto final 0xFD a 0xA6FF detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xa843..0xa846  (3 bytes)
+DATA_salto_final_A843:
 	defb 0fdh,0ffh,0a6h	; a843
 
 ; ----------------------------------------------------------------------
@@ -1574,8 +1592,11 @@ DATA_partitura_ABE3:
 	defb 0a2h,0a2h,0a1h,0a1h,0a1h,0fch,002h,096h,0abh	; ac03  .........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xac0c..0xac0f  (3 bytes)
-DATA_AC0C:
+; DATOS salto_final_AC0C: el salto final 0xFD a 0xAB75 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xac0c..0xac0f  (3 bytes)
+DATA_salto_final_AC0C:
 	defb 0fdh,075h,0abh	; ac0c
 
 ; ----------------------------------------------------------------------
@@ -1689,8 +1710,11 @@ DATA_partitura_AD33:
 	defb 0ach	; ad33
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xad34..0xad37  (3 bytes)
-DATA_AD34:
+; DATOS salto_final_AD34: el salto final 0xFD a 0xAC0F detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xad34..0xad37  (3 bytes)
+DATA_salto_final_AD34:
 	defb 0fdh,00fh,0ach	; ad34
 
 ; ----------------------------------------------------------------------
@@ -1797,8 +1821,11 @@ DATA_partitura_ADF4:
 	defb 000h,0fch,002h,061h,0adh	; adf4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xadf9..0xadfc  (3 bytes)
-DATA_ADF9:
+; DATOS salto_final_ADF9: el salto final 0xFD a 0xAD37 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xadf9..0xadfc  (3 bytes)
+DATA_salto_final_ADF9:
 	defb 0fdh,037h,0adh	; adf9
 
 ; ----------------------------------------------------------------------
@@ -1892,8 +1919,11 @@ DATA_partitura_AEC2:
 	defb 077h,0dch,0f0h,000h,0fch,002h,028h,0aeh	; aee2  w.....(.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xaeea..0xaeed  (3 bytes)
-DATA_AEEA:
+; DATOS salto_final_AEEA: el salto final 0xFD a 0xADFC detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xaeea..0xaeed  (3 bytes)
+DATA_salto_final_AEEA:
 	defb 0fdh,0fch,0adh	; aeea
 
 ; ----------------------------------------------------------------------
@@ -2021,8 +2051,11 @@ DATA_partitura_B016:
 	defb 071h,000h,031h,000h,030h,050h,0fbh,002h,0fch,002h,00bh,0afh	; b016  q.1.0P......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb022..0xb025  (3 bytes)
-DATA_B022:
+; DATOS salto_final_B022: el salto final 0xFD a 0xAEED detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xb022..0xb025  (3 bytes)
+DATA_salto_final_B022:
 	defb 0fdh,0edh,0aeh	; b022
 
 ; ----------------------------------------------------------------------
@@ -2144,8 +2177,11 @@ DATA_partitura_B159:
 	defb 011h,031h,0fbh,002h,0d8h,0fch,002h,049h,0b0h	; b159  .1.....I.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb162..0xb165  (3 bytes)
-DATA_B162:
+; DATOS salto_final_B162: el salto final 0xFD a 0xB025 detras de un bucle 0xFC
+;   de 2 vueltas: en lo tocado con tools/partituras.py (hasta 75 s o hasta que
+;   el estado se repite) no se llega a leer
+;   0xb162..0xb165  (3 bytes)
+DATA_salto_final_B162:
 	defb 0fdh,025h,0b0h	; b162
 
 ; ----------------------------------------------------------------------
@@ -3702,8 +3738,11 @@ DATA_partitura_BFA0:
 	defb 007h,003h,0d8h,09fh,09fh,09eh,0dch,0fdh,0a0h,0bfh	; bfc0  ..........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbfca..0xc000  (54 bytes)
-DATA_BFCA:
+; DATOS restos_finales_BFCA: 54 bytes al final del banco, detras de la ultima
+;   partitura: no los lee ni el codigo ni ninguno de los sonidos tocados con
+;   tools/partituras.py
+;   0xbfca..0xc000  (54 bytes)
+DATA_restos_finales_BFCA:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; bfca  ................
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,002h,022h,022h,021h,01fh	; bfda  ............""!.
 	defb 0ffh,0f1h,000h,0f1h,0f0h,000h,000h,000h,000h,000h,000h,001h,014h,0f1h,010h,000h	; bfea  ................

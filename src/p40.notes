@@ -1,4 +1,9 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0x80B0 0x80B6 bytes_80B0  6 bytes entre dos listas de dibujos (0x01 0x03 0x20 0x86 0x89 0xFF); ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x8135 0x815E bytes_8135  41 bytes entre lista_812F y dibujo_815E; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x8986 0x898E ceros_8986  8 bytes a 0 entre dos dibujos; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8000 0x80B0 lista_8000  35 fichas de dibujo de 5 bytes [tipo-cuantos][colores][sitio][puntero lo hi] y un 0xFF (p00:4D92; colores en la tabla 0x0000); lo leen p00:4C0C, p00:4C26 (176 bytes)
 F 0x8000 5

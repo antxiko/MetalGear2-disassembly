@@ -23,7 +23,7 @@
 0xA0B0   # p08:A007 entrada 6 de la tabla de 0xA00A (call 0x424D en 0xA007)
 0xA0BB   # p08:A007 entrada 13 de la tabla de 0xA00A (call 0x424D en 0xA007)
 0xA0C7   # p08:A007 entrada 12 de la tabla de 0xA00A (call 0x424D en 0xA007)
-0xA0E6   # p00:536B call
+0xA0E6   # p00:560B call
 0xA13B   # p04:8DAB call
 0xA187   # p01:7B68 call
 0xA1D6   # entrada 12 de la tabla 0x8159 en HL (p04:8142, p00:424E; banco de 0xA000 de p04:8148)

@@ -96,8 +96,12 @@ DATA_salas_zona_18:
 	defb 000h,000h,000h,000h,000h,000h,000h,077h,003h,003h,003h,003h,083h,002h,071h,089h,08ah,072h,001h,002h,087h,05fh,05dh,07ah,001h,002h,088h,05bh,059h,07bh,001h,006h,007h,075h,06ah,074h,078h	; 898a  .......w......q..r..._]z...[Y{...ujtx
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x89af..0x89f9  (74 bytes)
-DATA_89AF:
+; DATOS salas_sueltas_89AF: 74 bytes detras de las salas de la zona 0x18: el
+;   tamano de dos salas de 37 bytes de p00:58DD ([juego] y 6 x 6 bloques);
+;   ningun lector del listado llega a ellos ni los apunta ninguna tabla
+;   declarada
+;   0x89af..0x89f9  (74 bytes)
+DATA_salas_sueltas_89AF:
 	defb 000h,008h,047h,08bh,008h,047h,009h,010h,030h,08fh,010h,030h,011h,093h,013h,092h	; 89af  ..G..G..0..0....
 	defb 093h,013h,092h,008h,073h,009h,008h,073h,009h,010h,030h,011h,010h,030h,011h,018h	; 89bf  ....s..s..0..0..
 	defb 08eh,019h,018h,08eh,019h,000h,008h,047h,009h,08ch,047h,009h,010h,090h,011h,08dh	; 89cf  .......G..G.....

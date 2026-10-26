@@ -1134,6 +1134,10 @@ C 0xBF9A la Y + 0x32...
 C 0xBFA0 ...0x34 de alto
 C 0xBFA2 la X...
 C 0xBFA6 ...0x32 de ancho
+D 0xB521 0xB52C paso_vencido_B521  los pasos de los tipos 1-0x0B de la ficha de 0xD800 que lee p07:B4C0 (0xB520 + el tipo) al vencerla
+D 0xB535 0xB53D dano_por_tipo_B535  el dano de los tipos 1-8 de lo lanzado por Snake que lee p07:B52D (0xB534 + el tipo)
+D 0xB55B 0xB563 dano_por_actor_B55B  el dano de lo lanzado por los actores de tipo 1-8 que lee p07:B553 (0xB55A + el tipo)
+D 0xBFC3 0xC000 restos_finales_BFC3  61 bytes al final del banco detras del ultimo bloque que se lee (resto_BF2C): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA012 0xA03A tabla_A012  20 destinos del despachador p00:424D (call en p07:A00F, el indice en A): A054, A07B, A0B0, A0C6, A0E2, A15A, A17B, A19C, A1C1, A1D4, A276, A29D, A2C3, A2E9, A315, A329, A356, A3A9, A3CE, A3F3; lo leen p07:A00F (40 bytes)

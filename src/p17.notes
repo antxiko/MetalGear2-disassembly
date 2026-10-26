@@ -1,4 +1,31 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0x6032 0x60B2 ondas_6032  128 bytes de ondas del SCC de 32 muestras (las 58, 59, 60, 61 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x60F2 0x6112 ondas_60F2  32 bytes de ondas del SCC de 32 muestras (las 64 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x6172 0x61B2 ondas_6172  64 bytes de ondas del SCC de 32 muestras (las 68, 69 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x6292 0x62B2 ondas_6292  32 bytes de ondas del SCC de 32 muestras (las 77 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x62D2 0x62F2 ondas_62D2  32 bytes de ondas del SCC de 32 muestras (las 79 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x6392 0x63F2 ondas_6392  96 bytes de ondas del SCC de 32 muestras (las 85, 86, 87 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x6434 0x643A envolventes_sin_uso_6434  las entradas 2-4 de la tabla de envolventes p17:6430 (todas a 0x6476): ningun sonido tocado las pide
+D 0x6489 0x648B vibratos_sin_uso_6489  las entradas 10-10 de la tabla de vibratos p17:6475: ningun sonido tocado las pide
+D 0x648D 0x648F vibratos_sin_uso_648D  las entradas 12-12 de la tabla de vibratos p17:6475: ningun sonido tocado las pide
+D 0x6495 0x6499 vibratos_sin_uso_6495  las entradas 16-17 de la tabla de vibratos p17:6475: ningun sonido tocado las pide
+D 0x64AA 0x64AB fin_de_vibrato_64AA  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64B6 0x64B7 fin_de_vibrato_64B6  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64BE 0x64BF fin_de_vibrato_64BE  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64C6 0x64C7 fin_de_vibrato_64C6  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64D2 0x64D3 fin_de_vibrato_64D2  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64DE 0x64DF fin_de_vibrato_64DE  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64EA 0x64EB fin_de_vibrato_64EA  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x64F5 0x64F6 fin_de_vibrato_64F5  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xA0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x6500 0x650D fin_de_vibrato_6500  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin; y detras 12 bytes de otra serie de vibrato que no usa ningun sonido tocado
+D 0x6518 0x6525 fin_de_vibrato_6518  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin; y detras 12 bytes de otra serie de vibrato que no usa ningun sonido tocado
+D 0x6538 0x6539 fin_de_vibrato_6538  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x6550 0x6551 fin_de_vibrato_6550  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x655E 0x6587 fin_de_vibrato_655E  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin; y detras 40 bytes de otra serie de vibrato que no usa ningun sonido tocado
+D 0x6592 0x6593 fin_de_vibrato_6592  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+D 0x659E 0x659F fin_de_vibrato_659E  el 0xFF que cierra la serie de vibrato anterior, detras de 0xFB 0xE0: no se lee nunca, porque el 0xFB del vibrato sube el byte 0x24 y compara con el 0x35, que no sube (p16:4839), y repite sin fin
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x6000 0x6032 sonido_6000  datos de sonido que lee el motor de p16 al tocar los sonidos 0x48, 0xAA (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (50 bytes)
 F 0x6000 16

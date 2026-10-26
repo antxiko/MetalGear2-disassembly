@@ -809,6 +809,9 @@ C 0xA10D 0xD889 = 0xFF?
 C 0xA111 no: pide lo suyo
 C 0xA113 la 0x13...
 C 0xA118 ...no pide nada
+D 0xA1B8 0xA1E2 alto_ancho_por_tipo  el alto y el ancho [alto][ancho] de los 21 tipos de puerta que lee p15:A1A8 (0xA1B6 + 2 x el tipo)
+D 0xAC11 0xAC3B llegada_por_tipo  donde aparece Snake al llegar por cada uno de los 21 tipos de puerta, [X][Y] sumados a su sitio, que lee p15:AC00 (0xAC0F + 2 x el tipo)
+D 0xBFD7 0xC000 restos_finales_BFD7  41 bytes al final del banco detras del ultimo bloque que se lee (resto_BF89): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA1FA 0xA224 tabla_A1FA  21 destinos del despachador p00:424D (call en p15:A1F7, el indice en A): A238, A238, A26A, A2AD, A238, A238, A2BA, A238, A238, A238, A238, A238, A224, A2A4, A238, A238, A238, A238, A238, A2A4, A238; lo leen p15:A1F7 (42 bytes)

@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xBE62 0xBE63 byte_BE62  un byte (0x45) entre los datos de las salas de la zona 0x19 y los de las salas especiales; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA008 mosaico_A000  un mosaico de 2 x 4 caracteres, un byte cada uno (p00:510F; BC = 0x0204 en quien llama); lo leen p02:8328 (8 bytes)
 F 0xA000 4

@@ -1255,8 +1255,11 @@ DATA_dibujo_BDB9:
 	defb 078h,098h,000h,0ffh,0ffh,000h,0ffh,0ffh,000h,0f8h,0f8h,000h,0c8h,0f8h,010h,0f0h,0f0h,000h,0f0h,0f0h,000h,0d0h,0b0h,000h	; be61  x.......................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbe79..0xc000  (391 bytes)
-DATA_BE79:
+; DATOS restos_finales_BE79: 391 bytes al final del banco detras del ultimo
+;   bloque que se lee (dibujo_BDB9): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbe79..0xc000  (391 bytes)
+DATA_restos_finales_BE79:
 	defb 000h,0c0h,0ffh,084h,014h,018h,008h,004h,005h,000h,083h,002h,001h,001h,004h,000h	; be79  ................
 	defb 002h,0a0h,093h,090h,050h,008h,008h,004h,000h,000h,004h,00ch,088h,088h,0f0h,040h	; be89  ....P..........@
 	defb 040h,020h,030h,008h,00ch,004h,003h,002h,081h,003h,006h,001h,081h,002h,00ah,000h	; be99  @ 0.............

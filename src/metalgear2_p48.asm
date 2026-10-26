@@ -935,8 +935,11 @@ DATA_mensaje_94AF:
 	defb 019h,020h,00fh,01ch,0fbh	; 952f
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9534..0x9554  (32 bytes)
-DATA_9534:
+; DATOS mensajes_9534: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0x9534..0x9554  (32 bytes)
+DATA_mensajes_9534:
 	defb 002h,079h,08fh,0bdh,089h,060h,085h,0b3h,0a0h,086h,02bh,053h,050h,02ah,04dh,05ch	; 9534  .y...`....+SP*M\
 	defb 0e6h,0feh,027h,043h,02ch,036h,02ah,028h,0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; 9544  ..'C,6*(.... ...
 
@@ -1077,8 +1080,11 @@ DATA_mensaje_9814:
 	defb 02eh,038h,053h,060h,0feh,02bh,04dh,0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; 9824  .8S`.+M.... ...
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9833..0x986e  (59 bytes)
-DATA_9833:
+; DATOS mensajes_9833: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0x9833..0x986e  (59 bytes)
+DATA_mensajes_9833:
 	defb 002h,077h,08ah,0ebh,090h,0a6h,081h,093h,03eh,0f8h,057h,02bh,051h,04ah,044h,038h	; 9833  .w......>.W+QJD8
 	defb 04ch,0e5h,08fh,0feh,081h,09fh,0adh,0b0h,051h,03eh,02ah,071h,037h,0a2h,098h,085h	; 9843  L.......Q>*q7...
 	defb 0b1h,02ah,04bh,0a2h,0feh,098h,085h,0b1h,041h,031h,062h,048h,02ch,081h,0bch,082h	; 9853  .*K.....A1bH,...
@@ -1254,8 +1260,11 @@ DATA_mensaje_9CC7:
 	defb 0feh,0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; 9d47  ..... ...
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9d50..0x9db3  (99 bytes)
-DATA_9D50:
+; DATOS mensajes_9D50: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0x9d50..0x9db3  (99 bytes)
+DATA_mensajes_9D50:
 	defb 002h,077h,029h,059h,035h,072h,052h,0e5h,08ch,097h,0ebh,087h,02fh,052h,0e1h,0e4h	; 9d50  .w)Y5rR...../R..
 	defb 0e4h,0feh,050h,034h,030h,0e5h,086h,0d0h,0a7h,0ebh,0e6h,0feh,0c3h,0c3h,03eh,036h	; 9d60  ..P40.........>6
 	defb 04ch,03ah,026h,071h,035h,072h,071h,034h,03dh,0e6h,0fdh,0f8h,044h,0b4h,0d2h,082h	; 9d70  L:&q5rq4=...D...

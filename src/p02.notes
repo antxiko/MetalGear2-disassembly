@@ -1573,10 +1573,16 @@ C 0x8C92 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x8C95 ventana_0c: la ventana del mensaje en Y = 0x0C
 C 0x8C9A bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8C9D ventana_4c: la ventana del mensaje en Y = 0x4C
+C 0x8CA2 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CA5 p03:B601
 C 0x8CAA bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CAD quita_la_ventana: lo guardado en Y = 0xD8 otra vez en su sitio, y 0xD8A8 = 0
 C 0x8CB0 bancos_9: pone el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CB3 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CBB bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CBE barrido_cada_cuadro: el barrido de 0xE270: 1 por pasos (p03:B7A1), 2 de 4 en 4 con franjas de la otra pagina
+C 0x8CC3 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CC6 barrido_1: 0xE270 = 1: el barrido por pasos desde (E, D)
 C 0x8CCB paleta_b914: la paleta de p56:B914
 C 0x8CD0 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CD3 barrido_2: 0xE270 = 2: el barrido de la otra pagina desde (E, D), de 4 en 4
@@ -1587,6 +1593,16 @@ C 0x8CE3 e1f8_cada_cuadro: su paso (p10:A6C8) y sus sprites (p10:A72E)
 C 0x8CE8 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CEB ventana_de_bed8: la ventana a 0 y el rectangulo de X = 0xBE..., Y = 0xD8, 0x22 x 0x28 encima
 C 0x8CF0 dibujos_de_sala: con 0xCA77 puesto, p02:8578
+C 0x8CF5 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8CF8 mira_bandera: NZ si la bandera A de 0xD7D0 esta puesta
+C 0x8CFD bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D00 guarda_el_mapa: copia el mapa de la sala (0xDD00) a 0xE2C0
+C 0x8D05 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D08 vuelve_el_mapa: el mapa guardado en 0xE2C0 otra vez a 0xDD00 y lo de la sala en la otra pagina
+C 0x8D0D bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D10 carga_esta_sala: la sala 0xCA4B, normal o especial, al mapa
+C 0x8D15 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8D18 pinta_mapa_aqui: C = 1: el mapa a la pagina de dibujar
 C 0x8D1D bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8D20 pinta_mapa: pinta los 24 x 24 caracteres de 0xDD00
 C 0x8D25 mosaico_f2_b3: el mosaico de HL en (D, E), B filas de C caracteres, con la forma 2 de la franja 3 (p00:512C)
@@ -1637,6 +1653,10 @@ C 0x8DDE quita_de_sitio_c: a cero las fichas de 0xCC00, 0xCC80 y 0xD760 del siti
 C 0x8DE3 cambia_de_zona: pasa a la zona A
 C 0x8DE8 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8DEB rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
+C 0x8DF0 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DF3 ventana_0c: la ventana del mensaje en Y = 0x0C
+C 0x8DF8 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8DFB quita_la_ventana: lo guardado en Y = 0xD8 otra vez en su sitio, y 0xD8A8 = 0
 C 0x8DFE bancos_1_2_8: pone el 1 en 0x6000, el 2 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E01 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E04 barrido_2: 0xE270 = 2: el barrido de la otra pagina desde (E, D), de 4 en 4
@@ -1656,6 +1676,12 @@ C 0x8E3B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x8E3E rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 C 0x8E43 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E46 tras_la_conversacion: lo que deja hecho la conversacion A (p06:AF02; desde p09:BE53): banderas de 0xD7D0-0xD7E3, sonidos...
+C 0x8E4B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E4E pinta_cosas: las 4 cosas de 0xD7C0 que no tengan el bit 7 del numero
+C 0x8E53 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E56 suma_una: la cosa A: la tiene y una mas
+C 0x8E5B bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8E5E cc00_y_aeb2: las fichas de 0xCC00 pintadas (p11:A607) y p11:AEB2
 C 0x8E63 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E66 a_p12_6d78: p12:6D78 con el banco 12 en 0x6000
 C 0x8E69 a_p12_6ce0: p12:6CE0 con el banco 12 en 0x6000
@@ -1682,6 +1708,7 @@ C 0x8EB9 bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con 
 C 0x8EBC guarda la rutina de la musica que suena (16 bits; p00:5B50)
 C 0x8EC0 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8EC3 dibuja_los_que_siguen: p03:B4E6 y p03:B563
+C 0x8EC8 cambia_de_zona: pasa a la zona A
 C 0x8ECD cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 C 0x8ED2 sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
 C 0x8ED5 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1696,6 +1723,8 @@ C 0x8EF3 musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
 C 0x8EF8 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8EFB llama_6e0d_a3c8: p01:6E0D y p06:A3C8
 C 0x8F00 sprites_de_sala_si: con 0xE1D0 puesto no se tocan
+C 0x8F05 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
+C 0x8F08 d446_si: con 0xCA5F < 2, 0xD446 = 4
 C 0x8F0B bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8F0E bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8F11 a_p10_b3e5: p10:B3E5 con el banco 10 en 0xA000
@@ -1922,6 +1951,9 @@ C 0x9717 guarda la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda,
 C 0x971C guarda 1 si el ultimo choque fue contra la sala (p02:9756)
 C 0x9727 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x973F guarda 1 si Snake ha chocado en este cuadro
+C 0x9744 guarda 1 si el ultimo choque fue contra la sala (p02:9756)
+C 0x9748 lee 1 en el estado 2 de Snake
+C 0x974F choca_con_el_empuje: los puntos de Snake en la direccion de 0xCA8F
 C 0x9758 guarda 1 si el ultimo choque fue contra la sala (p02:9756)
 C 0x975C lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 C 0x9760 despachador: salta a la palabra A de la tabla que va detras del call
@@ -1936,6 +1968,8 @@ C 0x97D1 cabe_en_si: E = la Y + E
 C 0x97D6 lee la Y de Snake
 C 0x97E2 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x97ED choca_en_direccion: acarreo si alguno de los 3 puntos de Snake en la direccion A da con un caracter solido (p56:A30A)
+C 0x97F0 sin_fraccion: las fracciones de la Y y de la X a cero
+C 0x97F3 lee hacia donde empuja la zona (1 arriba, 2 abajo, 3 izquierda, 4 derecha; 0 nada)
 C 0x97F9 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x9804 sin_fraccion: las fracciones de la Y y de la X a cero
 C 0x9807 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)

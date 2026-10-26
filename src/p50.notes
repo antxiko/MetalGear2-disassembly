@@ -1,4 +1,11 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0x8331 0x8347 mensajes_8331  2 mensajes con el formato de p01:66C4 (letras hasta 0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el codigo
+D 0x84CB 0x84D2 mensajes_84CB  1 mensaje con el formato de p01:66C4 (letras hasta 0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el codigo
+D 0x8706 0x871F mensajes_8706  1 mensaje con el formato de p01:66C4 (letras hasta 0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el codigo
+D 0x9770 0x979A mensajes_9770  3 mensajes con el formato de p01:66C4 (letras hasta 0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el codigo
+D 0x9D2C 0x9FA9 mensajes_9D2C  19 mensajes con el formato de p01:66C4 (letras hasta 0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el codigo
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8000 0x804C cabecera_50  38 punteros del banco 50: 8000 y 8002 tablas de mensajes, 8004 los nombres, 8006 y 8008 letreros, 800A tabla de letreros, 800C-8040 secuencias (p09:A507), 8042 tabla, 8044 y 804A letreros con sitio, 8046 y 8048 tablas de letreros; lo leen p01:61E3 (76 bytes)
 F 0x8000 w8

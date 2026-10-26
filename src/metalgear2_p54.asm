@@ -710,8 +710,11 @@ DATA_mosaico_BCD3:
 	defb 001h	; bcd4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbcd5..0xbcdb  (6 bytes)
-DATA_BCD5:
+; DATOS bytes_BCD5: 6 bytes entre los mosaicos de 2 x 1 de 0xBCD3 y 0xBCDB,
+;   como tres mosaicos mas de 2 x 1; ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbcd5..0xbcdb  (6 bytes)
+DATA_bytes_BCD5:
 	defb 01dh,01fh,006h,002h,01eh,020h	; bcd5
 
 ; ----------------------------------------------------------------------
@@ -723,8 +726,11 @@ DATA_mosaico_BCDB:
 	defb 016h	; bcdc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbcdd..0xbea0  (451 bytes)
-DATA_BCDD:
+; DATOS bytes_BCDD: 451 bytes de numeros de caracter entre mosaico_BCDB y
+;   tabla_colores_BEA0; ningun lector del listado llega a ellos ni los apunta
+;   ninguna tabla declarada
+;   0xbcdd..0xbea0  (451 bytes)
+DATA_bytes_BCDD:
 	defb 007h,002h,017h,008h,012h,013h,008h,00bh,00bh,004h,018h,019h,00eh,014h,015h,00ah	; bcdd  ................
 	defb 001h,002h,008h,01ah,01ch,008h,021h,022h,0ffh,014h,015h,00ah,009h,00ah,008h,01fh	; bced  ......!"........
 	defb 020h,008h,001h,002h,008h,00bh,00ah,00eh,00ch,00dh,008h,009h,00ah,008h,001h,002h	; bcfd   ...............
@@ -997,8 +1003,11 @@ DATA_lista_BFCD:
 	defb 0ffh	; bfdc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbfdd..0xc000  (35 bytes)
-DATA_BFDD:
+; DATOS restos_finales_BFDD: 35 bytes al final del banco detras del ultimo
+;   bloque que se lee (lista_BFCD): ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0xbfdd..0xc000  (35 bytes)
+DATA_restos_finales_BFDD:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,002h,022h,022h,021h,01fh,0ffh,0f1h,000h	; bfdd  .........""!....
 	defb 0f1h,0f0h,000h,000h,000h,000h,000h,000h,001h,014h,0f1h,010h,000h,000h,000h,000h	; bfed  ................
 	defb 000h,000h,000h	; bffd

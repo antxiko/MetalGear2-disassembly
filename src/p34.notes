@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xBFF7 0xC000 relleno_BFF7  9 bytes 0xFF hasta el final del banco: relleno
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA16B dibujo_9FEB_cola  24 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x7146 (p00:4D92, p00:4DF5) (sigue del banco 33); lo leen p00:4C0C (363 bytes)
 F 0xA000 16

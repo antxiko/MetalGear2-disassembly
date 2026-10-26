@@ -676,8 +676,11 @@ DATA_sonido_45BE:
 	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h	; 45be  jd^YTOJFB?.8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x45ca..0x45cb  (1 bytes)
-DATA_45CA:
+; DATOS byte_45CA: un byte (0x35) entre la tabla de periodos de las 12 notas
+;   (p16:45BE) y el codigo de p16:45CB; ninguna lectura llega (las notas
+;   0x0C-0x0F son silencio)
+;   0x45ca..0x45cb  (1 bytes)
+DATA_byte_45CA:
 	defb 035h	; 45ca
 
 ; ======================================================================
@@ -1643,8 +1646,10 @@ DATA_sonido_4D52:
 	defb 0d0h,04dh,0d5h,04dh,0eah,04dh,0ffh,04dh,005h,04eh,00ah,04eh,012h,04eh	; 4d62  .M.M.M.M.N.N.N
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4d70..0x4d72  (2 bytes)
-DATA_4D70:
+; DATOS ordenes_sin_uso_4D70: las entradas de las ordenes 0xDF de la tabla de
+;   ordenes p16:4D52: ninguna partitura tocada (tools/partituras.py) las usa
+;   0x4d70..0x4d72  (2 bytes)
+DATA_ordenes_sin_uso_4D70:
 	defb 037h,04eh	; 4d70
 
 ; ----------------------------------------------------------------------
@@ -1657,8 +1662,11 @@ DATA_sonido_4D72:
 	defb 03ch,04eh,051h,04eh,03ch,04eh,051h,04eh,070h,04eh,09ah,04eh	; 4d72  <NQN<NQNpN.N
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4d7e..0x4d82  (4 bytes)
-DATA_4D7E:
+; DATOS ordenes_sin_uso_4D7E: las entradas de las ordenes 0xE6, 0xE7 de la
+;   tabla de ordenes p16:4D52: ninguna partitura tocada (tools/partituras.py)
+;   las usa
+;   0x4d7e..0x4d82  (4 bytes)
+DATA_ordenes_sin_uso_4D7E:
 	defb 0aah,04eh,0b6h,04eh	; 4d7e
 
 ; ----------------------------------------------------------------------
@@ -1672,8 +1680,10 @@ DATA_sonido_4D82:
 	defb 055h,04fh,08dh,04fh,0d6h,04fh,0ebh,04fh,000h,050h,019h,050h,020h,050h	; 4d92  UO.O.O.O.P.P P
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4da0..0x4da2  (2 bytes)
-DATA_4DA0:
+; DATOS ordenes_sin_uso_4DA0: las entradas de las ordenes 0xF7 de la tabla de
+;   ordenes p16:4D52: ninguna partitura tocada (tools/partituras.py) las usa
+;   0x4da0..0x4da2  (2 bytes)
+DATA_ordenes_sin_uso_4DA0:
 	defb 025h,050h	; 4da0
 
 ; ----------------------------------------------------------------------
@@ -2298,8 +2308,10 @@ DATA_sonido_51B4:
 	defb 089h,081h,088h,080h,092h,082h,090h	; 51b4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x51bb..0x51bc  (1 bytes)
-DATA_51BB:
+; DATOS mezclador_51BB: la entrada 3 (ruido y tono) de la tabla del mezclador
+;   del canal 2 (p16:51B8): ningun canal 2 suena con ruido y tono a la vez
+;   0x51bb..0x51bc  (1 bytes)
+DATA_mezclador_51BB:
 	defb 080h	; 51bb
 
 ; ----------------------------------------------------------------------
@@ -2693,8 +2705,10 @@ DATA_sonido_5486:
 	defb 0e6h,054h,0efh,054h,008h,055h,01dh,055h,032h,055h,047h,055h,060h,055h,084h,055h	; 5486  .T.T.U.U2UGU`U.U
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5496..0x5498  (2 bytes)
-DATA_5496:
+; DATOS bateria_sin_uso_5496: las entradas de las notas 8-8 de la tabla de
+;   baterias p16:5486: ninguna nota de bateria tocada las pide
+;   0x5496..0x5498  (2 bytes)
+DATA_bateria_sin_uso_5496:
 	defb 095h,055h	; 5496
 
 ; ----------------------------------------------------------------------
@@ -2706,8 +2720,10 @@ DATA_sonido_5498:
 	defb 0beh,055h,0d4h,055h,0f2h,055h,014h,056h	; 5498  .U.U.U.V
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x54a0..0x54a4  (4 bytes)
-DATA_54A0:
+; DATOS bateria_sin_uso_54A0: las entradas de las notas 1-2 de la tabla de
+;   baterias p16:549E: ninguna nota de bateria tocada las pide
+;   0x54a0..0x54a4  (4 bytes)
+DATA_bateria_sin_uso_54A0:
 	defb 035h,056h,053h,056h	; 54a0
 
 ; ----------------------------------------------------------------------
@@ -2750,8 +2766,11 @@ DATA_sonido_54E6:
 	defb 0a1h,080h,0e1h,001h,0e4h,004h,007h,006h,005h,004h,003h,002h,001h,000h,0ffh	; 5586  ...............
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5595..0x55be  (41 bytes)
-DATA_5595:
+; DATOS bateria_5595: 41 bytes de partituras de bateria (notas de 2 bytes) que
+;   no lee ninguna nota de bateria tocada; la apuntan las entradas 8 de
+;   p16:5486
+;   0x5595..0x55be  (41 bytes)
+DATA_bateria_5595:
 	defb 0e2h,001h,0e5h,00ah,000h,060h,000h,000h,0e8h,0e1h,001h,0e4h,008h,009h,0e3h,002h	; 5595  .....`..........
 	defb 0e4h,005h,070h,00eh,060h,00dh,050h,00ch,040h,00bh,030h,00ah,020h,009h,010h,008h	; 55a5  ..p.`.P.@.0. ...
 	defb 0e4h,002h,020h,00bh,010h,00ah,000h,009h,0ffh	; 55b5  .. ......
@@ -2766,8 +2785,10 @@ DATA_sonido_55BE:
 	defb 004h,003h,002h,001h	; 55ce
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x55d2..0x55d4  (2 bytes)
-DATA_55D2:
+; DATOS bateria_55D2: 2 bytes de partituras de bateria (notas de 2 bytes) que
+;   no lee ninguna nota de bateria tocada
+;   0x55d2..0x55d4  (2 bytes)
+DATA_bateria_55D2:
 	defb 000h,0ffh	; 55d2
 
 ; ----------------------------------------------------------------------
@@ -2786,8 +2807,11 @@ DATA_sonido_55D4:
 	defb 0ffh	; 5634
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5635..0x566c  (55 bytes)
-DATA_5635:
+; DATOS bateria_5635: 55 bytes de partituras de bateria (notas de 2 bytes) que
+;   no lee ninguna nota de bateria tocada; la apuntan las entradas 13, 14 de
+;   p16:5486
+;   0x5635..0x566c  (55 bytes)
+DATA_bateria_5635:
 	defb 0e2h,001h,080h,046h,0e1h,001h,0e4h,001h,009h,008h,007h,006h,005h,004h,003h,002h	; 5635  ...F............
 	defb 001h,0e1h,003h,004h,003h,002h,001h,0e1h,00ah,0e4h,000h,001h,000h,0ffh,0e2h,001h	; 5645  ................
 	defb 0a1h,02ah,091h,04ah,081h,055h,071h,060h,061h,06ah,051h,075h,041h,080h,031h,08ah	; 5655  .*.J.Uq`ajQuA.1.
@@ -2803,8 +2827,10 @@ DATA_sonido_566C:
 	defb 031h,0c0h	; 567c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x567e..0x5685  (7 bytes)
-DATA_567E:
+; DATOS bateria_567E: 7 bytes de partituras de bateria (notas de 2 bytes) que
+;   no lee ninguna nota de bateria tocada
+;   0x567e..0x5685  (7 bytes)
+DATA_bateria_567E:
 	defb 021h,0cah,011h,0d5h,001h,0e0h,0ffh	; 567e
 
 ; ----------------------------------------------------------------------
@@ -2817,8 +2843,10 @@ DATA_sonido_5685:
 	defb 042h,000h	; 5695
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5697..0x56a0  (9 bytes)
-DATA_5697:
+; DATOS bateria_5697: 9 bytes de partituras de bateria (notas de 2 bytes) que
+;   no lee ninguna nota de bateria tocada
+;   0x5697..0x56a0  (9 bytes)
+DATA_bateria_5697:
 	defb 032h,00ah,022h,015h,012h,020h,002h,030h,0ffh	; 5697  2.".. .0.
 
 ; ----------------------------------------------------------------------
@@ -2831,8 +2859,10 @@ DATA_sonido_56A0:
 	defb 052h,050h	; 56b0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x56b2..0x56bd  (11 bytes)
-DATA_56B2:
+; DATOS bateria_56B2: 11 bytes de partituras de bateria (notas de 2 bytes) que
+;   no lee ninguna nota de bateria tocada
+;   0x56b2..0x56bd  (11 bytes)
+DATA_bateria_56B2:
 	defb 042h,05ah,032h,065h,022h,070h,012h,07ah,002h,085h,0ffh	; 56b2  BZ2e"p.z...
 
 ; ----------------------------------------------------------------------
@@ -2884,8 +2914,10 @@ DATA_sonido_5842:
 	defb 032h,059h,052h,059h	; 5842
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5846..0x5848  (2 bytes)
-DATA_5846:
+; DATOS ondas_sin_uso_5846: la entrada 4 de la tabla de ondas p16:583E: ningun
+;   sonido tocado pide esas ondas
+;   0x5846..0x5848  (2 bytes)
+DATA_ondas_sin_uso_5846:
 	defb 072h,059h	; 5846
 
 ; ----------------------------------------------------------------------
@@ -2897,8 +2929,10 @@ DATA_sonido_5848:
 	defb 092h,059h	; 5848
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x584a..0x584c  (2 bytes)
-DATA_584A:
+; DATOS ondas_sin_uso_584A: la entrada 6 de la tabla de ondas p16:583E: ningun
+;   sonido tocado pide esas ondas
+;   0x584a..0x584c  (2 bytes)
+DATA_ondas_sin_uso_584A:
 	defb 0b2h,059h	; 584a
 
 ; ----------------------------------------------------------------------
@@ -2911,8 +2945,10 @@ DATA_sonido_584C:
 	defb 0d2h,059h,0f2h,059h,012h,05ah,032h,05ah,052h,05ah,072h,05ah,092h,05ah	; 584c  .Y.Y.Z2ZRZrZ.Z
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x585a..0x585e  (4 bytes)
-DATA_585A:
+; DATOS ondas_sin_uso_585A: las entradas 14-15 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x585a..0x585e  (4 bytes)
+DATA_ondas_sin_uso_585A:
 	defb 0b2h,05ah,0d2h,05ah	; 585a
 
 ; ----------------------------------------------------------------------
@@ -2924,8 +2960,10 @@ DATA_sonido_585E:
 	defb 0f2h,05ah,012h,05bh,032h,05bh	; 585e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5864..0x5866  (2 bytes)
-DATA_5864:
+; DATOS ondas_sin_uso_5864: la entrada 19 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x5864..0x5866  (2 bytes)
+DATA_ondas_sin_uso_5864:
 	defb 052h,05bh	; 5864
 
 ; ----------------------------------------------------------------------
@@ -2937,8 +2975,10 @@ DATA_sonido_5866:
 	defb 072h,05bh,092h,05bh,0b2h,05bh,0d2h,05bh	; 5866  r[.[.[.[
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x586e..0x5870  (2 bytes)
-DATA_586E:
+; DATOS ondas_sin_uso_586E: la entrada 24 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x586e..0x5870  (2 bytes)
+DATA_ondas_sin_uso_586E:
 	defb 0f2h,05bh	; 586e
 
 ; ----------------------------------------------------------------------
@@ -2950,8 +2990,10 @@ DATA_sonido_5870:
 	defb 012h,05ch,032h,05ch	; 5870
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5874..0x5876  (2 bytes)
-DATA_5874:
+; DATOS ondas_sin_uso_5874: la entrada 27 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x5874..0x5876  (2 bytes)
+DATA_ondas_sin_uso_5874:
 	defb 052h,05ch	; 5874
 
 ; ----------------------------------------------------------------------
@@ -2963,8 +3005,10 @@ DATA_sonido_5876:
 	defb 072h,05ch,092h,05ch	; 5876
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x587a..0x587e  (4 bytes)
-DATA_587A:
+; DATOS ondas_sin_uso_587A: las entradas 30-31 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x587a..0x587e  (4 bytes)
+DATA_ondas_sin_uso_587A:
 	defb 0b2h,05ch,0d2h,05ch	; 587a
 
 ; ----------------------------------------------------------------------
@@ -2976,8 +3020,10 @@ DATA_sonido_587E:
 	defb 0f2h,05ch	; 587e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5880..0x5884  (4 bytes)
-DATA_5880:
+; DATOS ondas_sin_uso_5880: las entradas 33-34 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x5880..0x5884  (4 bytes)
+DATA_ondas_sin_uso_5880:
 	defb 012h,05dh,032h,05dh	; 5880
 
 ; ----------------------------------------------------------------------
@@ -2990,8 +3036,10 @@ DATA_sonido_5884:
 	defb 052h,05dh,072h,05dh,092h,05dh,0b2h,05dh,0d2h,05dh,0f2h,05dh	; 5884  R]r].].].].]
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5890..0x5892  (2 bytes)
-DATA_5890:
+; DATOS ondas_sin_uso_5890: la entrada 41 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x5890..0x5892  (2 bytes)
+DATA_ondas_sin_uso_5890:
 	defb 012h,05eh	; 5890
 
 ; ----------------------------------------------------------------------
@@ -3003,8 +3051,10 @@ DATA_sonido_5892:
 	defb 032h,05eh	; 5892
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5894..0x58ae  (26 bytes)
-DATA_5894:
+; DATOS ondas_sin_uso_5894: las entradas 43-55 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x5894..0x58ae  (26 bytes)
+DATA_ondas_sin_uso_5894:
 	defb 052h,05eh,072h,05eh,092h,05eh,0b2h,05eh,0d2h,05eh,0f2h,05eh,012h,05fh,032h,05fh	; 5894  R^r^.^.^.^.^._2_
 	defb 052h,05fh,072h,05fh,092h,05fh,0b2h,05fh,0d2h,05fh	; 58a4  R_r_._._._
 
@@ -3017,8 +3067,10 @@ DATA_sonido_58AE:
 	defb 0f2h,05fh,012h,060h	; 58ae
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58b2..0x58ba  (8 bytes)
-DATA_58B2:
+; DATOS ondas_sin_uso_58B2: las entradas 58-61 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x58b2..0x58ba  (8 bytes)
+DATA_ondas_sin_uso_58B2:
 	defb 032h,060h,052h,060h,072h,060h,092h,060h	; 58b2  2`R`r`.`
 
 ; ----------------------------------------------------------------------
@@ -3030,8 +3082,10 @@ DATA_sonido_58BA:
 	defb 0b2h,060h,0d2h,060h	; 58ba
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58be..0x58c0  (2 bytes)
-DATA_58BE:
+; DATOS ondas_sin_uso_58BE: la entrada 64 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x58be..0x58c0  (2 bytes)
+DATA_ondas_sin_uso_58BE:
 	defb 0f2h,060h	; 58be
 
 ; ----------------------------------------------------------------------
@@ -3043,8 +3097,10 @@ DATA_sonido_58C0:
 	defb 012h,061h,032h,061h,052h,061h	; 58c0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58c6..0x58ca  (4 bytes)
-DATA_58C6:
+; DATOS ondas_sin_uso_58C6: las entradas 68-69 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x58c6..0x58ca  (4 bytes)
+DATA_ondas_sin_uso_58C6:
 	defb 072h,061h,092h,061h	; 58c6
 
 ; ----------------------------------------------------------------------
@@ -3057,8 +3113,10 @@ DATA_sonido_58CA:
 	defb 0b2h,061h,0d2h,061h,0f2h,061h,012h,062h,032h,062h,052h,062h,072h,062h	; 58ca  .a.a.a.b2bRbrb
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58d8..0x58da  (2 bytes)
-DATA_58D8:
+; DATOS ondas_sin_uso_58D8: la entrada 77 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x58d8..0x58da  (2 bytes)
+DATA_ondas_sin_uso_58D8:
 	defb 092h,062h	; 58d8
 
 ; ----------------------------------------------------------------------
@@ -3070,8 +3128,10 @@ DATA_sonido_58DA:
 	defb 0b2h,062h	; 58da
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58dc..0x58de  (2 bytes)
-DATA_58DC:
+; DATOS ondas_sin_uso_58DC: la entrada 79 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x58dc..0x58de  (2 bytes)
+DATA_ondas_sin_uso_58DC:
 	defb 0d2h,062h	; 58dc
 
 ; ----------------------------------------------------------------------
@@ -3084,8 +3144,10 @@ DATA_sonido_58DE:
 	defb 0f2h,062h,012h,063h,032h,063h,052h,063h,072h,063h	; 58de  .b.c2cRcrc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58e8..0x58ee  (6 bytes)
-DATA_58E8:
+; DATOS ondas_sin_uso_58E8: las entradas 85-87 de la tabla de ondas p16:583E:
+;   ningun sonido tocado pide esas ondas
+;   0x58e8..0x58ee  (6 bytes)
+DATA_ondas_sin_uso_58E8:
 	defb 092h,063h,0b2h,063h,0d2h,063h	; 58e8
 
 ; ----------------------------------------------------------------------
@@ -3097,8 +3159,10 @@ DATA_sonido_58EE:
 	defb 0f2h,063h	; 58ee
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x58f0..0x5906  (22 bytes)
-DATA_58F0:
+; DATOS ondas_sin_uso_58F0: las entradas 89-99 de la tabla de ondas p16:583E y
+;   el principio de la onda 0 (p16:58F2): ningun sonido tocado pide esas ondas
+;   0x58f0..0x5906  (22 bytes)
+DATA_ondas_sin_uso_58F0:
 	defb 012h,064h,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh,07fh	; 58f0  .d..............
 	defb 07fh,07fh,080h,080h,080h,080h	; 5900
 
@@ -3111,8 +3175,10 @@ DATA_sonido_5906:
 	defb 080h,080h	; 5906
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5908..0x5932  (42 bytes)
-DATA_5908:
+; DATOS ondas_5908: 42 bytes de ondas del SCC de 32 muestras (las 0, 1 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5908..0x5932  (42 bytes)
+DATA_ondas_5908:
 	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,000h,07fh,07fh,07fh,07fh,07fh,07fh	; 5908  ................
 	defb 07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h,07fh,07fh,07fh,07fh,07fh,07fh	; 5918  ................
 	defb 07fh,07fh,080h,080h,080h,080h,080h,080h,080h,080h	; 5928  ..........
@@ -3130,8 +3196,10 @@ DATA_sonido_5932:
 	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,070h,060h,050h,040h,030h,020h,010h	; 5962  .........p`P@0 .
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5972..0x5992  (32 bytes)
-DATA_5972:
+; DATOS ondas_5972: 32 bytes de ondas del SCC de 32 muestras (las 4 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5972..0x5992  (32 bytes)
+DATA_ondas_5972:
 	defb 000h,04eh,062h,06dh,075h,07ah,07dh,07eh,07fh,07eh,07dh,07ah,075h,06dh,062h,04eh	; 5972  .Nbmuz}~.~}zumbN
 	defb 000h,0b1h,09dh,092h,08ah,085h,082h,081h,080h,081h,082h,085h,08ah,092h,09dh,0b1h	; 5982  ................
 
@@ -3146,8 +3214,10 @@ DATA_sonido_5992:
 	defb 000h,0e7h,0cfh,0b9h,0a6h,096h,08bh,083h,080h,083h,08bh,096h,0a6h,0b9h,0cfh,0e7h	; 59a2  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x59b2..0x59d2  (32 bytes)
-DATA_59B2:
+; DATOS ondas_59B2: 32 bytes de ondas del SCC de 32 muestras (las 6 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x59b2..0x59d2  (32 bytes)
+DATA_ondas_59B2:
 	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h	; 59b2  ................
 	defb 000h,010h,020h,030h,040h,050h,060h,070h,07fh,070h,060h,050h,040h,030h,020h,010h	; 59c2  .. 0@P`p.p`P@0 .
 
@@ -3174,8 +3244,10 @@ DATA_sonido_59D2:
 	defb 001h,0e0h,001h,020h,001h,0f0h,001h,010h,001h,0ffh,0ffh,0ffh,0ffh,040h,040h,040h	; 5aa2  ... .........@@@
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5ab2..0x5af2  (64 bytes)
-DATA_5AB2:
+; DATOS ondas_5AB2: 64 bytes de ondas del SCC de 32 muestras (las 14, 15 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5ab2..0x5af2  (64 bytes)
+DATA_ondas_5AB2:
 	defb 078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5ab2  xph`XPH@80( ....
 	defb 078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5ac2  xph`XPH@80( ....
 	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5ad2  ................
@@ -3195,8 +3267,10 @@ DATA_sonido_5AF2:
 	defb 095h,08fh,089h,084h,081h,084h,089h,08fh,095h,09ch,0a4h,0afh,0b9h,0c3h,0d6h,0eah	; 5b42  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5b52..0x5b72  (32 bytes)
-DATA_5B52:
+; DATOS ondas_5B52: 32 bytes de ondas del SCC de 32 muestras (las 19 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5b52..0x5b72  (32 bytes)
+DATA_ondas_5B52:
 	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,080h,080h,080h,080h,080h,080h,080h	; 5b52  ................
 	defb 080h,080h,080h,080h,080h,080h,080h,080h,07fh,070h,060h,050h,040h,030h,020h,010h	; 5b62  .........p`P@0 .
 
@@ -3217,8 +3291,10 @@ DATA_sonido_5B72:
 	defb 07ch,07fh,07ch,078h,070h,060h,050h,040h,030h,020h,008h,0f0h,0d8h,0c0h,0a0h,080h	; 5be2  |.|xp`P@0 ......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5bf2..0x5c12  (32 bytes)
-DATA_5BF2:
+; DATOS ondas_5BF2: 32 bytes de ondas del SCC de 32 muestras (las 24 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5bf2..0x5c12  (32 bytes)
+DATA_ondas_5BF2:
 	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5bf2  ................
 	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c02  ................
 
@@ -3234,8 +3310,10 @@ DATA_sonido_5C12:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c42  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5c52..0x5c72  (32 bytes)
-DATA_5C52:
+; DATOS ondas_5C52: 32 bytes de ondas del SCC de 32 muestras (las 27 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5c52..0x5c72  (32 bytes)
+DATA_ondas_5C52:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,07fh,080h,07fh,080h,07fh,080h,07fh,080h	; 5c52  ................
 	defb 07fh,080h,07fh,080h,07fh,080h,07fh,080h,000h,000h,000h,000h,000h,000h,000h,000h	; 5c62  ................
 
@@ -3251,8 +3329,10 @@ DATA_sonido_5C72:
 	defb 010h,060h,000h,0e0h,0f0h,000h,0b0h,090h,0c0h,010h,0e0h,0a0h,0c0h,0f0h,0c0h,0a0h	; 5ca2  .`..............
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5cb2..0x5cf2  (64 bytes)
-DATA_5CB2:
+; DATOS ondas_5CB2: 64 bytes de ondas del SCC de 32 muestras (las 30, 31 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5cb2..0x5cf2  (64 bytes)
+DATA_ondas_5CB2:
 	defb 080h,088h,090h,098h,0a0h,0b0h,0b0h,0b8h,0c0h,0c8h,0d0h,0d8h,0e0h,0e8h,0f0h,0f8h	; 5cb2  ................
 	defb 000h,008h,010h,018h,020h,028h,030h,038h,040h,048h,050h,058h,060h,068h,070h,078h	; 5cc2  .... (08@HPX`hpx
 	defb 000h,020h,030h,040h,050h,060h,068h,070h,078h,070h,068h,060h,050h,040h,030h,020h	; 5cd2  . 0@P`hpxph`P@0
@@ -3268,8 +3348,10 @@ DATA_sonido_5CF2:
 	defb 078h,078h,078h,000h,080h,080h,000h,000h,000h,000h,078h,078h,000h,000h,080h,080h	; 5d02  xxx.......xx....
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5d12..0x5d52  (64 bytes)
-DATA_5D12:
+; DATOS ondas_5D12: 64 bytes de ondas del SCC de 32 muestras (las 33, 34 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5d12..0x5d52  (64 bytes)
+DATA_ondas_5D12:
 	defb 078h,078h,078h,078h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d12  xxxx............
 	defb 080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d22  ................
 	defb 078h,078h,078h,078h,078h,078h,078h,078h,080h,080h,080h,080h,080h,080h,080h,080h	; 5d32  xxxxxxxx........
@@ -3296,8 +3378,10 @@ DATA_sonido_5D52:
 	defb 070h,070h,070h,080h,080h,080h,070h,070h,070h,070h,080h,080h,080h,080h,080h,080h	; 5e02  ppp...pppp......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5e12..0x5e32  (32 bytes)
-DATA_5E12:
+; DATOS ondas_5E12: 32 bytes de ondas del SCC de 32 muestras (las 41 de la
+;   tabla p16:583E) que no carga ningun sonido tocado
+;   0x5e12..0x5e32  (32 bytes)
+DATA_ondas_5E12:
 	defb 0a0h,090h,090h,090h,0a0h,0a0h,0b0h,0b0h,0c0h,0c0h,0d0h,0d0h,0e0h,0e0h,0f0h,0f0h	; 5e12  ................
 	defb 000h,000h,010h,010h,020h,020h,030h,030h,040h,040h,050h,050h,060h,060h,060h,050h	; 5e22  ....  00@@PP```P
 
@@ -3311,8 +3395,11 @@ DATA_sonido_5E32:
 	defb 020h,020h,010h,080h,090h,090h,080h,080h,000h,000h,0f0h,080h,090h,090h,080h,080h	; 5e42    ..............
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5e52..0x5ff2  (416 bytes)
-DATA_5E52:
+; DATOS ondas_5E52: 416 bytes de ondas del SCC de 32 muestras (las 43, 44, 45,
+;   46, 47, 48, 49, 50, 51, 52, 53, 54, 55 de la tabla p16:583E) que no carga
+;   ningun sonido tocado
+;   0x5e52..0x5ff2  (416 bytes)
+DATA_ondas_5E52:
 	defb 000h,0f8h,0f0h,0e8h,0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h	; 5e52  ................
 	defb 080h,088h,090h,098h,0a0h,0a8h,0b0h,0b8h,0c0h,0c8h,0d0h,0d8h,0e0h,0e8h,0f0h,0f8h	; 5e62  ................
 	defb 078h,070h,068h,060h,058h,050h,040h,040h,038h,030h,028h,020h,018h,010h,008h,000h	; 5e72  xph`XP@@80( ....

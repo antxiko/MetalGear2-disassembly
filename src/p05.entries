@@ -43,6 +43,7 @@
 0xA2AD   # p04:9D48 jp cc
 0xA2D5   # p05:A2BA entrada 0 de la tabla de 0xA2BD (call 0x424D en 0xA2BA)
 0xA309   # p05:A2BA entrada 1 de la tabla de 0xA2BD (call 0x424D en 0xA2BA)
+0xA376   # codigo huerfano: 74 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xA376
 0xA47B   # p05:A2BA entrada 2 de la tabla de 0xA2BD (call 0x424D en 0xA2BA)
 0xA490   # p05:A2BA entrada 11 de la tabla de 0xA2BD (call 0x424D en 0xA2BA)
 0xA49D   # p05:A2BA entrada 3 de la tabla de 0xA2BD (call 0x424D en 0xA2BA)

@@ -1,4 +1,12 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0x6050 0x6052 palabra_6050  una palabra (0x6096) entre dos juegos de bloques; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x606E 0x6070 palabra_606E  una palabra (0x9909) entre dos juegos de bloques; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x6076 0x6078 palabra_6076  una palabra (0xA655) entre dos juegos de bloques; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x6088 0x608A palabra_6088  una palabra (0xB9C4) entre dos juegos de bloques; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x6096 0x6098 palabra_6096  una palabra (0x6098) entre dos juegos de bloques; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+D 0x7AF8 0x7B1C sala_suelta_7AF8  36 bytes entre las salas de la zona 7 y las de la 9: el tamano de los 6 x 6 bloques de una sala de p00:58DD sin su byte de juego; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x6000 0x6028 zonas_salas  20 punteros, uno por zona: las salas de la zona, de 37 bytes (p00:58C5); lo leen p00:58C8 (40 bytes)
 F 0x6000 w8

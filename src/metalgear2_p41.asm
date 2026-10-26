@@ -1036,8 +1036,11 @@ DATA_rachas_BD99:
 	defb 000h,040h,01bh,03fh,0feh,0fch,078h,010h,008h,004h,000h,083h,080h,000h,000h,000h	; be99  .@.?..x.........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbea9..0xc000  (343 bytes)
-DATA_BEA9:
+; DATOS restos_finales_BEA9: 343 bytes al final del banco detras del ultimo
+;   bloque que se lee (rachas_BD99): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbea9..0xc000  (343 bytes)
+DATA_restos_finales_BEA9:
 	defb 002h,080h,002h,040h,002h,000h,000h,02ah,029h,046h,084h,05fh,004h,0dfh,05fh,04eh	; bea9  ...@...*)F._.._N
 	defb 064h,09fh,0e7h,0a9h,0f6h,046h,079h,0cfh,0e9h,08fh,09eh,044h,01eh,0deh,05eh,05eh	; beb9  d....Fy....D..^^
 	defb 072h,0bfh,008h,068h,009h,07eh,01ch,02ah,049h,018h,008h,07fh,041h,014h,07fh,024h	; bec9  r..h.~.*I...A..$

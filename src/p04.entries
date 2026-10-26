@@ -20,8 +20,9 @@
 0x80A7   # p05:A793 call
 0x80E6   # p08:A518 call
 0x80F3   # p14:B34C call
+0x8100   # p14:B345 call
 0x8107   # p14:AC4B call
-0x818B   # p00:53F0 call
+0x818B   # p00:5647 call
 0x81BF   # p14:B92C call
 0x8273   # p14:B349 call
 0x827B   # p01:7841 call
@@ -71,7 +72,7 @@
 0x8DB0   # p04:9D59 entrada 4 de la tabla de 0x9D5C (call 0x424D en 0x9D59)
 0x8E25   # p05:A0A4 call
 0x8E2A   # p14:B3C7 jp
-0x8E40   # p06:B5D9 call
+0x8E40   # p08:ADE7 call
 0x8E65   # p08:AC7F call
 0x8E75   # p12:697B call cc
 0x8E82   # p08:AE1D call
@@ -92,7 +93,7 @@
 0x90A9   # p08:AA24 call
 0x90C8   # p08:A671 call
 0x90CE   # p06:B2C6 call
-0x917C   # p00:538A call
+0x917C   # p00:5644 call
 0x929A   # p08:A1C4 call
 0x92C0   # p01:782D call
 0x92EB   # p01:7B82 call
@@ -103,9 +104,12 @@
 0x97E1   # entrada 2 de la tabla 0x96FF en HL (p04:96A8, p00:424E)
 0x97FF   # entrada 3 de la tabla 0x96FF en HL (p04:96A8, p00:424E)
 0x9814   # p14:B211 jp
+0x984C   # p00:5512 call
+0x98FB   # p00:5515 call
 0x9949   # p01:79BF call
 0x9955   # p01:7B9E jp
 0x9961   # p14:B131 call
+0x9967   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9967
 0x9982   # p01:7844 call
 0x9A80   # p01:7877 call
 0x9AF4   # p15:BBE0 jp cc
@@ -114,6 +118,7 @@
 0x9B06   # p05:A927 jp
 0x9B0D   # p05:B7D7 jp
 0x9B19   # p05:B525 jp
+0x9B20   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9B20
 0x9B30   # p10:AC48 jp
 0x9B3B   # p14:AF19 jp cc
 0x9B40   # p05:B292 jp
@@ -121,6 +126,7 @@
 0x9CAA   # p06:A8E5 jp
 0x9CB7   # p06:AA33 call
 0x9CD5   # p01:75E2 call
+0x9CDD   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9CDD
 0x9CEE   # p01:79AE call
 0x9D03   # p06:A86A call cc
 0x9D1B   # p05:A367 call

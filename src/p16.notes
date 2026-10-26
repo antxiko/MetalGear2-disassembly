@@ -498,6 +498,47 @@ C 0x52D0 a la copia
 C 0x547E el registro
 C 0x5481 el dato E
 C 0x5482 al PSG
+D 0x45CA 0x45CB byte_45CA  un byte (0x35) entre la tabla de periodos de las 12 notas (p16:45BE) y el codigo de p16:45CB; ninguna lectura llega (las notas 0x0C-0x0F son silencio)
+D 0x4D70 0x4D72 ordenes_sin_uso_4D70  las entradas de las ordenes 0xDF de la tabla de ordenes p16:4D52: ninguna partitura tocada (tools/partituras.py) las usa
+D 0x4D7E 0x4D82 ordenes_sin_uso_4D7E  las entradas de las ordenes 0xE6, 0xE7 de la tabla de ordenes p16:4D52: ninguna partitura tocada (tools/partituras.py) las usa
+D 0x4DA0 0x4DA2 ordenes_sin_uso_4DA0  las entradas de las ordenes 0xF7 de la tabla de ordenes p16:4D52: ninguna partitura tocada (tools/partituras.py) las usa
+D 0x51BB 0x51BC mezclador_51BB  la entrada 3 (ruido y tono) de la tabla del mezclador del canal 2 (p16:51B8): ningun canal 2 suena con ruido y tono a la vez
+D 0x5496 0x5498 bateria_sin_uso_5496  las entradas de las notas 8-8 de la tabla de baterias p16:5486: ninguna nota de bateria tocada las pide
+D 0x54A0 0x54A4 bateria_sin_uso_54A0  las entradas de las notas 1-2 de la tabla de baterias p16:549E: ninguna nota de bateria tocada las pide
+D 0x5595 0x55BE bateria_5595  41 bytes de partituras de bateria (notas de 2 bytes) que no lee ninguna nota de bateria tocada; la apuntan las entradas 8 de p16:5486
+D 0x55D2 0x55D4 bateria_55D2  2 bytes de partituras de bateria (notas de 2 bytes) que no lee ninguna nota de bateria tocada
+D 0x5635 0x566C bateria_5635  55 bytes de partituras de bateria (notas de 2 bytes) que no lee ninguna nota de bateria tocada; la apuntan las entradas 13, 14 de p16:5486
+D 0x567E 0x5685 bateria_567E  7 bytes de partituras de bateria (notas de 2 bytes) que no lee ninguna nota de bateria tocada
+D 0x5697 0x56A0 bateria_5697  9 bytes de partituras de bateria (notas de 2 bytes) que no lee ninguna nota de bateria tocada
+D 0x56B2 0x56BD bateria_56B2  11 bytes de partituras de bateria (notas de 2 bytes) que no lee ninguna nota de bateria tocada
+D 0x5846 0x5848 ondas_sin_uso_5846  la entrada 4 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x584A 0x584C ondas_sin_uso_584A  la entrada 6 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x585A 0x585E ondas_sin_uso_585A  las entradas 14-15 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x5864 0x5866 ondas_sin_uso_5864  la entrada 19 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x586E 0x5870 ondas_sin_uso_586E  la entrada 24 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x5874 0x5876 ondas_sin_uso_5874  la entrada 27 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x587A 0x587E ondas_sin_uso_587A  las entradas 30-31 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x5880 0x5884 ondas_sin_uso_5880  las entradas 33-34 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x5890 0x5892 ondas_sin_uso_5890  la entrada 41 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x5894 0x58AE ondas_sin_uso_5894  las entradas 43-55 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58B2 0x58BA ondas_sin_uso_58B2  las entradas 58-61 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58BE 0x58C0 ondas_sin_uso_58BE  la entrada 64 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58C6 0x58CA ondas_sin_uso_58C6  las entradas 68-69 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58D8 0x58DA ondas_sin_uso_58D8  la entrada 77 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58DC 0x58DE ondas_sin_uso_58DC  la entrada 79 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58E8 0x58EE ondas_sin_uso_58E8  las entradas 85-87 de la tabla de ondas p16:583E: ningun sonido tocado pide esas ondas
+D 0x58F0 0x5906 ondas_sin_uso_58F0  las entradas 89-99 de la tabla de ondas p16:583E y el principio de la onda 0 (p16:58F2): ningun sonido tocado pide esas ondas
+D 0x5908 0x5932 ondas_5908  42 bytes de ondas del SCC de 32 muestras (las 0, 1 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5972 0x5992 ondas_5972  32 bytes de ondas del SCC de 32 muestras (las 4 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x59B2 0x59D2 ondas_59B2  32 bytes de ondas del SCC de 32 muestras (las 6 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5AB2 0x5AF2 ondas_5AB2  64 bytes de ondas del SCC de 32 muestras (las 14, 15 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5B52 0x5B72 ondas_5B52  32 bytes de ondas del SCC de 32 muestras (las 19 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5BF2 0x5C12 ondas_5BF2  32 bytes de ondas del SCC de 32 muestras (las 24 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5C52 0x5C72 ondas_5C52  32 bytes de ondas del SCC de 32 muestras (las 27 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5CB2 0x5CF2 ondas_5CB2  64 bytes de ondas del SCC de 32 muestras (las 30, 31 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5D12 0x5D52 ondas_5D12  64 bytes de ondas del SCC de 32 muestras (las 33, 34 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5E12 0x5E32 ondas_5E12  32 bytes de ondas del SCC de 32 muestras (las 41 de la tabla p16:583E) que no carga ningun sonido tocado
+D 0x5E52 0x5FF2 ondas_5E52  416 bytes de ondas del SCC de 32 muestras (las 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 de la tabla p16:583E) que no carga ningun sonido tocado
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x45BE 0x45CA sonido_45BE  datos de sonido que lee el motor de p16 al tocar los sonidos 0x06, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72 y 43 mas (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (12 bytes)

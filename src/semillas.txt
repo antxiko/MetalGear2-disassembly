@@ -405,4 +405,41 @@ p11 0xB9F5 1 2 11  # codigo huerfano: 6 bytes que acaban en ret; el trazado no e
 p12 0x6C74 12 2 3  # codigo huerfano: 25 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x6C74
 p12 0x7AD2 12 2 3  # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7AD2
 p15 0xB96C 1 2 15  # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xB96C
+p00 0x4D3A 1 2 3  # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4D3A
+p02 0x8CA2 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8CA2
+p02 0x8E4B 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E4B
+p02 0x8E53 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E53
+p02 0x8E5B 1 2 3  # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E5B
+p05 0xA376 1 2 5  # codigo huerfano: 74 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xA376
+p12 0x7C53 12 2 3  # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7C53
+p00 0x44D0 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x44D0
+p00 0x491C 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x491C
+p00 0x51B8 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x51B8
+p01 0x650C 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x650C
+p01 0x7A48 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7A48
+p01 0x7A95 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7A95
+p01 0x7B87 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7B87
+p01 0x7DDC 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7DDC
+p02 0x8CBB 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CBB
+p02 0x8CC3 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CC3
+p02 0x8CF5 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CF5
+p02 0x8CFD 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CFD
+p02 0x8D05 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8D05
+p02 0x8D0D 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8D0D
+p02 0x8D15 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8D15
+p02 0x8DF0 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8DF0
+p02 0x8DF8 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8DF8
+p02 0x8EC8 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8EC8
+p02 0x8F05 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8F05
+p02 0x9743 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9743
+p02 0x97F0 1 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x97F0
+p04 0x9967 1 4 5  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9967
+p04 0x9B20 1 4 5  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9B20
+p04 0x9CDD 1 4 5  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9CDD
+p06 0xAD92 12 2 6  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0xAD92
+p09 0xBE50 1 2 9  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0xBE50
+p11 0xA1D7 1 2 11  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0xA1D7
+p12 0x64FF 12 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x64FF
+p12 0x65D0 12 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x65D0
+p12 0x710A 12 2 3  # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x710A
 # --- fin del codigo huerfano ---

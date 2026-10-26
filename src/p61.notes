@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xAF98 0xAF99 byte_AF98  un byte (0x00) entre la cola del mapa de bits de 0x9C58 y rachas_AF99; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xAF98 mapa_de_bits_9C58_cola  mapa de bits de 112 filas de 44 bytes (dos puntos por byte) que p01:6ED6 copia a la VRAM, 128 bytes por fila (p00:4486) (sigue del banco 60); lo leen p01:6EB7 (3992 bytes)
 F 0xA000 16

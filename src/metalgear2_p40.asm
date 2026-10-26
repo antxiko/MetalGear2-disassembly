@@ -53,8 +53,11 @@ DATA_lista_8000:
 	defb 0ffh	; 80af
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x80b0..0x80b6  (6 bytes)
-DATA_80B0:
+; DATOS bytes_80B0: 6 bytes entre dos listas de dibujos (0x01 0x03 0x20 0x86
+;   0x89 0xFF); ningun lector del listado llega a ellos ni los apunta ninguna
+;   tabla declarada
+;   0x80b0..0x80b6  (6 bytes)
+DATA_bytes_80B0:
 	defb 001h,003h,020h,086h,089h,0ffh	; 80b0
 
 ; ----------------------------------------------------------------------
@@ -99,8 +102,10 @@ DATA_lista_812F:
 	defb 0ffh	; 8134
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8135..0x815e  (41 bytes)
-DATA_8135:
+; DATOS bytes_8135: 41 bytes entre lista_812F y dibujo_815E; ningun lector del
+;   listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x8135..0x815e  (41 bytes)
+DATA_bytes_8135:
 	defb 003h,00ch,001h,05eh,081h,001h,015h,004h,0beh,081h,003h,014h,005h,0feh,081h,043h	; 8135  ...^...........C
 	defb 014h,008h,04eh,082h,043h,000h,00ch,07eh,082h,041h,015h,00fh,096h,082h,04ah,016h	; 8145  ..N.C..~.A....J.
 	defb 010h,0b6h,082h,046h,017h,01ah,0d6h,082h,0ffh	; 8155  ...F.....
@@ -465,8 +470,10 @@ DATA_dibujo_8976:
 	defb 093h,035h,093h,035h,09bh,03dh,09bh,03dh,09bh,03dh,09bh,03dh,09bh,02dh,093h,025h	; 8976  .5.5.=.=.=.=.-.%
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8986..0x898e  (8 bytes)
-DATA_8986:
+; DATOS ceros_8986: 8 bytes a 0 entre dos dibujos; ningun lector del listado
+;   llega a ellos ni los apunta ninguna tabla declarada
+;   0x8986..0x898e  (8 bytes)
+DATA_ceros_8986:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h	; 8986  ........
 
 ; ----------------------------------------------------------------------

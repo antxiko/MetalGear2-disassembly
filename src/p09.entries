@@ -175,3 +175,4 @@
 0xBC7E   # p09:B88E entrada 10 de la tabla de 0xB891 (call 0x424D en 0xB88E)
 0xBC92   # p09:B88E entrada 11 de la tabla de 0xB891 (call 0x424D en 0xB88E)
 0xBCC4   # p09:B88E entrada 12 de la tabla de 0xB891 (call 0x424D en 0xB88E)
+0xBE50   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0xBE50

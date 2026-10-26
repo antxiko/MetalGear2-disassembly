@@ -24,20 +24,20 @@
 0x8171   # p02:80B1 entrada 3 de la tabla de 0x80B4 (call 0x424D en 0x80B1)
 0x8220   # p00:5402 call
 0x822E   # p00:5409 call
-0x823C   # p00:5319 call
+0x823C   # p00:55DD call
 0x8257   # p00:5A4E call
-0x8281   # p00:532C call
+0x8281   # p00:55FF call
 0x8290   # p00:5335 call
 0x829C   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x829C
 0x82A2   # p00:5A5F call
-0x836C   # p00:533B call
+0x836C   # p00:5602 call
 0x839F   # p00:5313 call
 0x83C6   # p00:5316 call
 0x83DC   # p00:5338 call
-0x8415   # p00:5329 call
+0x8415   # p00:55F3 call
 0x8427   # p01:7341 call
 0x846F   # p10:AF54 call
-0x8475   # p00:5365 call
+0x8475   # p00:5605 call
 0x84F4   # p08:BC8F call
 0x8511   # p03:A8F9 call
 0x8516   # p03:BB23 call
@@ -91,7 +91,7 @@
 0x8B2F   # p03:AF21 call
 0x8B37   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8B37
 0x8B3F   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8B3F
-0x8B47   # p00:5377 call
+0x8B47   # p00:561A call
 0x8B50   # p00:5829 call
 0x8B58   # p01:78D9 call
 0x8B60   # p03:AF24 jp
@@ -127,14 +127,22 @@
 0x8C8A   # p09:A2E8 jp
 0x8C92   # p09:B60C call
 0x8C9A   # p09:B16C call
+0x8CA2   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8CA2
 0x8CAA   # p09:B618 call
 0x8CB3   # p09:B3DE call
+0x8CBB   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CBB
+0x8CC3   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CC3
 0x8CCB   # p09:B736 call
 0x8CD0   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8CD0
 0x8CD8   # p09:AAE1 call
 0x8CE0   # p09:AB4D call
 0x8CE8   # p09:B1ED call
 0x8CF0   # p09:ADCA call
+0x8CF5   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CF5
+0x8CFD   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8CFD
+0x8D05   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8D05
+0x8D0D   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8D0D
+0x8D15   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8D15
 0x8D1D   # p09:AD73 call
 0x8D25   # p09:BDB7 call
 0x8D2A   # p15:AB81 call
@@ -167,6 +175,8 @@
 0x8DDB   # p07:A312 jp
 0x8DE3   # p08:BDD0 jp
 0x8DE8   # p08:BE3B call
+0x8DF0   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8DF0
+0x8DF8   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8DF8
 0x8E01   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E01
 0x8E09   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E09
 0x8E11   # p09:A041 call
@@ -177,6 +187,9 @@
 0x8E33   # p09:B0B4 call
 0x8E3B   # p09:AE1F call
 0x8E43   # p09:BE59 call
+0x8E4B   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E4B
+0x8E53   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E53
+0x8E5B   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E5B
 0x8E63   # p09:B85A jp
 0x8E6F   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8E6F
 0x8E77   # p09:B773 call
@@ -190,6 +203,7 @@
 0x8EAE   # p09:A090 jp
 0x8EB6   # p09:BF95 jp
 0x8EC0   # p10:B8BA jp cc
+0x8EC8   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8EC8
 0x8ECD   # p10:B1DF call
 0x8ED2   # p10:B201 jp
 0x8ED8   # p10:AF74 call
@@ -199,6 +213,7 @@
 0x8EF3   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x8EF3
 0x8EF8   # p14:B0CD call
 0x8F00   # p14:B83F jp
+0x8F05   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x8F05
 0x8F0E   # p11:BBF8 jp
 0x8F16   # p11:AF23 call
 0x8F1E   # p11:B1AE jp
@@ -248,9 +263,11 @@
 0x9669   # p02:9585 entrada 1 de la tabla de 0x9588 (call 0x424D en 0x9585)
 0x96DF   # p02:9585 entrada 2 de la tabla de 0x9588 (call 0x424D en 0x9585)
 0x96FD   # p02:9585 entrada 3 de la tabla de 0x9588 (call 0x424D en 0x9585)
+0x9743   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x9743
 0x976B   # p02:9760 entrada 0 de la tabla de 0x9763 (call 0x424D en 0x9760)
 0x978B   # p02:9760 entrada 2 de la tabla de 0x9763 (call 0x424D en 0x9760)
 0x97AB   # codigo huerfano: 18 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x97AB
+0x97F0   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x97F0
 0x9804   # p03:A85D call
 0x980C   # p02:97F9 entrada 0 de la tabla de 0x97FC (call 0x424D en 0x97F9)
 0x9824   # p02:97F9 entrada 1 de la tabla de 0x97FC (call 0x424D en 0x97F9)

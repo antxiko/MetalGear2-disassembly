@@ -1726,8 +1726,11 @@ DATA_letrero_B483:
 	defb 041h,026h,030h,0ffh	; b483
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb487..0xb4ad  (38 bytes)
-DATA_B487:
+; DATOS tabla_mensajes_B487: tabla de 19 punteros (0x9D2C-0x9F7D) a los
+;   mensajes de p50:9D2C-9FA8, que tampoco apunta ninguna tabla que se lea;
+;   ninguna rutina del listado lee esta tabla
+;   0xb487..0xb4ad  (38 bytes)
+DATA_tabla_mensajes_B487:
 	defb 02ch,09dh,057h,09dh,06ch,09dh,0a5h,09dh,0b5h,09dh,0f8h,09dh,004h,09eh,019h,09eh	; b487  ,.W.l...........
 	defb 054h,09eh,06ch,09eh,0a6h,09eh,0bch,09eh,0ceh,09eh,0e4h,09eh,000h,09fh,021h,09fh	; b497  T.l...........!.
 	defb 046h,09fh,068h,09fh,07dh,09fh	; b4a7
@@ -2146,8 +2149,11 @@ DATA_letrero_BE0D:
 	defb 0ffh	; be5d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbe5e..0xc000  (418 bytes)
-DATA_BE5E:
+; DATOS restos_finales_BE5E: 418 bytes al final del banco detras del ultimo
+;   bloque que se lee (letrero_BE0D): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbe5e..0xc000  (418 bytes)
+DATA_restos_finales_BE5E:
 	defb 0ffh,01dh,01eh,00eh,00fh,00fh,019h,012h,013h,018h,019h,090h,00bh,00bh,084h,023h	; be5e  ...............#
 	defb 024h,08ah,001h,002h,014h,015h,08ah,018h,019h,01fh,020h,018h,019h,0ffh,025h,020h	; be6e  $......... ...%
 	defb 018h,019h,01dh,01eh,00eh,00fh,00bh,00bh,084h,00eh,00fh,00bh,00bh,084h,012h,013h	; be7e  ................

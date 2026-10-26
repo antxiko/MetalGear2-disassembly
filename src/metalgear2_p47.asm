@@ -173,8 +173,10 @@ DATA_mosaico_A818:
 	defb 025h,026h,027h	; a818
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa81b..0xaad9  (702 bytes)
-DATA_A81B:
+; DATOS bytes_A81B: 702 bytes entre mosaico_A818 y tabla_colores_AAD9; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0xa81b..0xaad9  (702 bytes)
+DATA_bytes_A81B:
 	defb 000h,0c0h,0fbh,010h,000h,082h,002h,001h,003h,000h,002h,001h,082h,007h,003h,004h	; a81b  ................
 	defb 001h,0b1h,003h,000h,000h,007h,09fh,0fch,0f0h,0e0h,0c0h,080h,000h,080h,0c0h,080h	; a82b  ................
 	defb 0c0h,0e0h,0dch,03fh,047h,0c8h,0fah,07ch,014h,00eh,006h,00bh,007h,003h,006h,00dh	; a83b  ...?G..|........

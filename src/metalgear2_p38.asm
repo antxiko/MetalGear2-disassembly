@@ -979,8 +979,11 @@ DATA_dibujo_9B7A:
 	defb 065h,049h,0d2h,0e5h,0c9h,0d2h,065h,049h,052h,0e5h,0c9h,0d2h,0e5h,089h,092h,0e5h,089h,092h,0e5h,089h,092h,0e5h,089h,092h	; 9cfa  eI....eIR...............
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9d12..0x9d2a  (24 bytes)
-DATA_9D12:
+; DATOS bytes_9D12: 24 bytes con forma de filas de dibujo (0x00 y 0xFF) entre
+;   dibujo_9B7A y dibujo_9D2A; ningun lector del listado llega a ellos ni los
+;   apunta ninguna tabla declarada
+;   0x9d12..0x9d2a  (24 bytes)
+DATA_bytes_9D12:
 	defb 000h,000h,0ffh,0ffh,0ffh,0ffh,000h,000h,000h,0ffh,0ffh,0ffh,056h,042h,056h,000h	; 9d12  ............VBV.
 	defb 000h,000h,0ffh,0ffh,0ffh,000h,000h,0ffh	; 9d22  ........
 

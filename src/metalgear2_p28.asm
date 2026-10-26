@@ -550,6 +550,9 @@ DATA_bloques_B3B9:
 	defb 080h,080h,000h,000h,0ffh,000h,0ffh,0ffh,000h,000h,000h,000h,000h,000h,000h,000h	; bfe9  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbff9..0xc000  (7 bytes)
-DATA_BFF9:
+; DATOS restos_finales_BFF9: 7 bytes al final del banco detras del ultimo
+;   bloque que se lee; ningun lector del listado llega a ellos ni los apunta
+;   ninguna tabla declarada
+;   0xbff9..0xc000  (7 bytes)
+DATA_restos_finales_BFF9:
 	defb 000h,000h,000h,000h,0e7h,0e7h,067h	; bff9

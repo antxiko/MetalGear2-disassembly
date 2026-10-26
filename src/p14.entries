@@ -73,6 +73,7 @@
 0xB06B   # p01:75A1 call
 0xB128   # p04:9950 call
 0xB176   # p04:995C call
+0xB284   # p04:996E call
 0xB317   # p14:B2BC entrada 0 de la tabla de 0xB2BF (call 0x424D en 0xB2BC)
 0xB32C   # p14:B2BC entrada 5 de la tabla de 0xB2BF (call 0x424D en 0xB2BC)
 0xB34F   # p04:997D call
@@ -80,7 +81,7 @@
 0xB43D   # p01:79B7 call
 0xB4B9   # p00:53C0 call
 0xB558   # p01:781E call
-0xB6C3   # p00:53C3 call
+0xB6C3   # p00:563E call
 0xB761   # p01:78A9 call
 0xB842   # p04:80D0 call
 0xB88F   # p04:80EE call

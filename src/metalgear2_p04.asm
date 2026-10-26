@@ -226,8 +226,10 @@ L_8159:
 	jr L_8145		;8159
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x815b..0x818b  (48 bytes)
-DATA_815B:
+; DATOS punteros_815B: tabla de 24 punteros (0x9D39, 0x9D39, 0xA1F2...) que no
+;   lee ninguna rutina del listado: ninguna instruccion carga su direccion
+;   0x815b..0x818b  (48 bytes)
+DATA_punteros_815B:
 	defb 039h,09dh,039h,09dh,0f2h,0a1h,039h,09dh,039h,09dh,039h,09dh,039h,09dh,039h,09dh	; 815b  9.9...9.9.9.9.9.
 	defb 039h,09dh,00bh,0afh,000h,0a0h,0d6h,0a1h,000h,000h,000h,000h,000h,000h,03bh,0aah	; 816b  9...............
 	defb 03bh,0aah,0d0h,0a8h,0ech,0afh,02ah,0ach,043h,0adh,001h,0a4h,001h,0a4h,0e5h,0abh	; 817b  ......*.C.......
@@ -1009,8 +1011,11 @@ DATA_tabla_8691:
 	defw 06b69h,06b6dh,06b71h,06c0bh	; 8691
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8699..0x86a4  (11 bytes)
-DATA_8699:
+; DATOS tipo_por_actor_8699: los bytes de los tipos de actor 1-0x0B de la
+;   tabla que lee p04:8688 (A = el byte de 0x8698 + el tipo): el indice del
+;   despachador de p04:868E
+;   0x8699..0x86a4  (11 bytes)
+DATA_tipo_por_actor_8699:
 	defb 001h,001h,003h,000h,002h,003h,000h,003h,003h,000h,003h	; 8699  ...........
 
 ; ======================================================================
@@ -1701,8 +1706,11 @@ L_8BA2:
 	jp 042a2h		;8ba8   ; barras_bancos_1_4_5: p00:4288 y los bancos 1, 4 y 5
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8bab..0x8bb6  (11 bytes)
-DATA_8BAB:
+; DATOS nivel_por_tipo_8BAB: los bytes de los tipos 1-0x0B de la tabla que lee
+;   p04:8B93 (0x8BAA + el tipo de la ficha de 0xD800): con 0, acabar con el
+;   sube el nivel de Snake
+;   0x8bab..0x8bb6  (11 bytes)
+DATA_nivel_por_tipo_8BAB:
 	defb 000h,001h,000h,000h,000h,000h,000h,001h,001h,001h,000h	; 8bab  ...........
 
 ; ======================================================================
@@ -3582,7 +3590,7 @@ DATA_resto_98E0:
 	defb 043h,078h,0c8h,033h,090h,0c8h,03bh,0a8h,0c8h,043h,078h	; 98f0  Cx.3.....Cx
 
 ; ======================================================================
-; CODIGO 0x98fb..0x9967  (108 bytes)
+; CODIGO 0x98fb..0x9d5c  (1121 bytes)
 ; ======================================================================
 
 
@@ -3630,28 +3638,22 @@ alguien_ve_a_snake:		; p14:B128: la alerta (la musica 0x8C y 0xCA5F)
 	push af			;994c
 	call 041efh		;994d   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b128h		;9950   ; alguien_ve_a_snake: salvo en el estado 0x14 o desde el 0x1B de Snake: 0xD43E = 0xFF, p14:B214, 0xCAF6 = 0, 0xD4F4 = 0xD41E (o 0xD449 en una especial); el actor IX de tipo 3, 4 o 5, aparte (p14:B399, B3E3, B3F4); si no, la alerta (p14:B15C)
-	jr $+30		;9953
+	jr L_9971		;9953
 a_p14_b176_guarda:		; p14:B176 guardando el banco de 0xA000
 	ld a,(0c383h)		;9955   ; lee la copia del banco de 0xA000
 	push af			;9958
 	call 041efh		;9959   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b176h		;995c   ; alerta_sin_musica: 0xD4F4 = 0xD41E (o 0xD449 en una especial) y la alerta
-	jr $+18		;995f
+	jr L_9971		;995f
 d43e_a_ff:		; 0xD43E = 0xFF
 	ld a,0ffh		;9961
 	ld (0d43eh),a		;9963
 	ret			;9966
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9967..0x9971  (10 bytes)
-DATA_9967:
-	defb 03ah,083h,0c3h,0f5h,0cdh,0efh,041h,0cdh,084h,0b2h	; 9967  :.....A...
-
-; ======================================================================
-; CODIGO 0x9971..0x9b20  (431 bytes)
-; ======================================================================
-
-
+L_9967:
+	ld a,(0c383h)		;9967   ; lee la copia del banco de 0xA000
+	push af			;996a
+	call 041efh		;996b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
+	call 0b284h		;996e   ; actores_en_alerta: 0xD416 y 0xD451 a cero, lo lanzado (p14:B269) y cada actor activo a la alerta (p14:B2AB)
 L_9971:
 	pop af			;9971
 	push af			;9972
@@ -3855,41 +3857,34 @@ a_p06_a95a_guarda:		; p06:A95A guardando el banco de 0xA000
 	jr L_9ABF		;9af2
 lanza_7:		; lo lanzado de tipo 7
 	ld b,007h		;9af4
-	jr $+95		;9af6
+	jr lanza		;9af6
 lanza_3:		; lo lanzado de tipo 3
 	ld b,003h		;9af8
-	jr $+88		;9afa
+	jr lanza_hacia_snake		;9afa
 lanza_1_bancos_8:
 	call lanza_1_b		;9afc   ; lanza_1_b: lo lanzado de tipo 1
 	jp 041bdh		;9aff   ; bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 lanza_1_b:		; lo lanzado de tipo 1
 	ld b,001h		;9b02
-	jr $+78		;9b04
+	jr lanza_hacia_snake		;9b04
 lanza_5:		; p06:A942 y lo lanzado de tipo 5
 	call a_p06_a942_guarda		;9b06   ; a_p06_a942_guarda: p06:A942 guardando el banco de 0xA000
 	ld b,005h		;9b09
-	jr $+71		;9b0b
+	jr lanza_hacia_snake		;9b0b
 lanza_8:		; p06:A942, su desplazamiento en 0xD43C y lo lanzado de tipo 8
 	cp 00ah		;9b0d
 	call a_p06_a942_guarda		;9b0f   ; a_p06_a942_guarda: p06:A942 guardando el banco de 0xA000
 	ld (0d43ch),hl		;9b12
 	ld b,008h		;9b15
-	jr $+59		;9b17
+	jr lanza_hacia_snake		;9b17
 lanza_8_b:		; p06:A95A y lo lanzado de tipo 8
 	ld b,008h		;9b19
 	call a_p06_a95a_guarda		;9b1b   ; a_p06_a95a_guarda: p06:A95A guardando el banco de 0xA000
-	jr $+10		;9b1e
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9b20..0x9b28  (8 bytes)
-DATA_9B20:
-	defb 021h,0f0h,000h,022h,03ch,0d4h,006h,006h	; 9b20  !.."<...
-
-; ======================================================================
-; CODIGO 0x9b28..0x9cdd  (437 bytes)
-; ======================================================================
-
-
+	jr lanza_al_byte_18		;9b1e
+L_9B20:
+	ld hl,000f0h		;9b20
+	ld (0d43ch),hl		;9b23
+	ld b,006h		;9b26
 lanza_al_byte_18:		; hacia (H, L) = los bytes 0x19 y 0x18 del actor
 	ld h,(ix+019h)		;9b28
 	ld l,(ix+018h)		;9b2b
@@ -4113,18 +4108,10 @@ dentro_del_recuadro:		; el 5: fuera de Y 0x18-0xB7 o X 8-0xB7, se acaba
 a_p12_74bc:		; p12:74BC con el banco 12 en 0x6000
 	call 041ddh		;9cd5   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 	call 074bch		;9cd8   ; aviso_d458: el aviso de 0xD458 ([que y bits][cuenta][Y][X][fila][columna]): la primera vez, guarda lo de debajo y lo pinta (p12:74F4); despues cuenta y al acabar, 0xCA28 = 0, la ficha libre y, en la sala del aviso, lo de debajo de vuelta (p12:74CB)
-	jr $+8		;9cdb
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9cdd..0x9ce3  (6 bytes)
-DATA_9CDD:
-	defb 0cdh,0ddh,041h,0cdh,0cbh,074h	; 9cdd
-
-; ======================================================================
-; CODIGO 0x9ce3..0x9d5c  (121 bytes)
-; ======================================================================
-
-
+	jr vuelve_al_1		;9cdb
+L_9CDD:
+	call 041ddh		;9cdd   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
+	call 074cbh		;9ce0   ; quita_aviso: 0xCA28 = 0, 0xD458 libre y, en la misma sala, lo de debajo de vuelta: el 1, 0x10 x 0x10 desde (0xC0, 0x80); los otros por p12:7579
 vuelve_al_1:		; el banco 1 en 0x6000
 	jp 041eah		;9ce3   ; bancos_1: pone el 1 en 0x6000 (con su copia en 0xC381-0xC383)
 a_p12_758d:		; p12:758D con el banco 12 en 0x6000

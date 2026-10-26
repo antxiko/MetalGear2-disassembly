@@ -437,8 +437,11 @@ DATA_mensaje_82E3:
 	defb 0e4h,0e4h,0feh,039h,052h,03dh,02eh,038h,02ah,050h,02ah,04dh,0e1h,0ffh	; 8323  ...9R=.8*P*M..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8331..0x8347  (22 bytes)
-DATA_8331:
+; DATOS mensajes_8331: 2 mensajes con el formato de p01:66C4 (letras hasta
+;   0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee
+;   el codigo
+;   0x8331..0x8347  (22 bytes)
+DATA_mensajes_8331:
 	defb 039h,052h,03dh,02eh,038h,02ah,050h,02ah,04dh,0e1h,0ffh,039h,052h,03dh,02eh,038h	; 8331  9R=.8*P*M..9R=.8
 	defb 02ah,050h,02ah,04dh,0e1h,0ffh	; 8341
 
@@ -527,8 +530,11 @@ DATA_mensaje_848F:
 	defb 0ebh,093h,053h,03eh,0feh,026h,071h,037h,04dh,052h,05dh,0ffh	; 84bf  ..S>.&q7MR].
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x84cb..0x84d2  (7 bytes)
-DATA_84CB:
+; DATOS mensajes_84CB: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0x84cb..0x84d2  (7 bytes)
+DATA_mensajes_84CB:
 	defb 026h,071h,037h,04dh,052h,05dh,0ffh	; 84cb
 
 ; ----------------------------------------------------------------------
@@ -655,8 +661,11 @@ DATA_mensaje_86E6:
 	defb 071h,037h,087h,0feh,08ch,0a7h,051h,047h,04bh,028h,062h,026h,026h,052h,05dh,0ffh	; 86f6  q7....QGK(b&&R].
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8706..0x871f  (25 bytes)
-DATA_8706:
+; DATOS mensajes_8706: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0x8706..0x871f  (25 bytes)
+DATA_mensajes_8706:
 	defb 0dch,0f8h,06bh,060h,047h,0f8h,018h,028h,04dh,08eh,082h,0aeh,0adh,086h,0d2h,082h	; 8706  ..k`G..(M.......
 	defb 071h,037h,030h,0feh,071h,037h,04dh,0e1h,0ffh	; 8716  q70.q7M..
 
@@ -1070,8 +1079,11 @@ DATA_mensaje_92FF:
 	defb 0fbh	; 976f
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9770..0x979a  (42 bytes)
-DATA_9770:
+; DATOS mensajes_9770: 3 mensajes con el formato de p01:66C4 (letras hasta
+;   0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee
+;   el codigo
+;   0x9770..0x979a  (42 bytes)
+DATA_mensajes_9770:
 	defb 003h,0d4h,01dh,018h,00bh,015h,00fh,0e0h,0e0h,0ffh,003h,0d4h,043h,05dh,05dh,0e4h	; 9770  ............C]].
 	defb 0e4h,0e4h,043h,05dh,043h,05dh,0e4h,0e4h,0e4h,0ffh,003h,0d4h,01dh,018h,00bh,015h	; 9780  ..C]C]..........
 	defb 00fh,0e4h,0e4h,0e4h,043h,05dh,05dh,0e4h,0e4h,0ffh	; 9790  ....C]]...
@@ -1258,8 +1270,11 @@ DATA_mensaje_9D17:
 	defb 056h,039h,026h,02fh,0ffh	; 9d27
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9d2c..0x9fa9  (637 bytes)
-DATA_9D2C:
+; DATOS mensajes_9D2C: 19 mensajes con el formato de p01:66C4 (letras hasta
+;   0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee
+;   el codigo
+;   0x9d2c..0x9fa9  (637 bytes)
+DATA_mensajes_9D2C:
 	defb 077h,057h,02ch,04fh,027h,05dh,071h,034h,039h,0e5h,01dh,018h,00bh,015h,00fh,0e4h	; 9d2c  wW,O']q49.......
 	defb 0e4h,0e4h,0feh,061h,027h,05dh,0e1h,0feh,047h,027h,026h,035h,061h,0e4h,0e4h,0bfh	; 9d3c  ...a']..G'&5a...
 	defb 08fh,081h,041h,047h,061h,04bh,039h,026h,02ah,0e1h,0ffh,003h,076h,0e4h,0e4h,0e4h	; 9d4c  ..AGaK9&*...v...

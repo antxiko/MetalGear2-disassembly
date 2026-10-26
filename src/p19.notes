@@ -1,4 +1,20 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xAB3A 0xAB3B fin_tras_llamada_AB3A  el 0xFF tras la llamada 0xF9 a 0xAEC2: lo llamado acaba en su propio 0xFF (no en 0xFA) y el canal se calla alli, asi que este no se lee
+D 0xAB3E 0xAB3F fin_tras_llamada_AB3E  el 0xFF tras la llamada 0xF9 a 0xAF2E: lo llamado acaba en su propio 0xFF (no en 0xFA) y el canal se calla alli, asi que este no se lee
+D 0xAB42 0xAB43 fin_tras_llamada_AB42  el 0xFF tras la llamada 0xF9 a 0xAFC6: lo llamado acaba en su propio 0xFF (no en 0xFA) y el canal se calla alli, asi que este no se lee
+D 0xAB46 0xAB47 fin_tras_llamada_AB46  el 0xFF tras la llamada 0xF9 a 0xB0A7: lo llamado acaba en su propio 0xFF (no en 0xFA) y el canal se calla alli, asi que este no se lee
+D 0xAB4A 0xAB4B fin_tras_llamada_AB4A  el 0xFF tras la llamada 0xF9 a 0xB108: lo llamado acaba en su propio 0xFF (no en 0xFA) y el canal se calla alli, asi que este no se lee
+D 0xAB4E 0xAB4F fin_tras_llamada_AB4E  el 0xFF tras la llamada 0xF9 a 0xB1D5: lo llamado acaba en su propio 0xFF (no en 0xFA) y el canal se calla alli, asi que este no se lee
+D 0xB281 0xB288 partituras_B281  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB2CB 0xB2CE salto_final_B2CB  el salto final 0xFD a 0xB290: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB31B 0xB31E salto_final_B31B  el salto final 0xFD a 0xB2D6: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB38B 0xB38E salto_final_B38B  el salto final 0xFD a 0xB337: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB511 0xB514 salto_final_B511  el salto final 0xFD a 0xB3CD: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB643 0xB646 salto_final_B643  el salto final 0xFD a 0xB54F: en lo tocado con tools/partituras.py (hasta 75 s o hasta que el estado se repite) no se llega a leer
+D 0xB6D6 0xB6DD partituras_B6D6  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+D 0xB774 0xB77A partituras_B774  1 partitura entera (de la primera nota a su 0xFF o salto) que no lee ninguno de los sonidos 0x01-0xEF tocados con tools/partituras.py
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA006 partitura_A000  partitura de canal que lee el motor de p16 al tocar los sonidos 0x74 (lo mide tools/partituras.py ejecutandolo); lo leen p16:4392 (6 bytes)
 F 0xA000 16

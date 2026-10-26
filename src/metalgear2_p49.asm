@@ -60,8 +60,11 @@ DATA_mensaje_A13F:
 	defb 0e4h,019h,020h,00fh,01ch,0fbh	; a1af
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa1b5..0xa1cd  (24 bytes)
-DATA_A1B5:
+; DATOS mensajes_A1B5: 3 mensajes con el formato de p01:66C4 (letras hasta
+;   0xFF o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee
+;   el codigo
+;   0xa1b5..0xa1cd  (24 bytes)
+DATA_mensajes_A1B5:
 	defb 0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh,0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; a1b5  .... ....... ...
 	defb 0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; a1c5  .... ...
 
@@ -547,8 +550,11 @@ DATA_mensaje_AC80:
 	defb 081h,0a9h,038h,02ah,0e4h,0e4h,0e4h,0feh,0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; acb0  ..8*........ ...
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xacc0..0xacc8  (8 bytes)
-DATA_ACC0:
+; DATOS mensajes_ACC0: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0xacc0..0xacc8  (8 bytes)
+DATA_mensajes_ACC0:
 	defb 0e4h,0e4h,0e4h,019h,020h,00fh,01ch,0fbh	; acc0  .... ...
 
 ; ----------------------------------------------------------------------
@@ -1135,8 +1141,11 @@ DATA_mensaje_BB3C:
 	defb 002h,078h,01dh,018h,00bh,015h,00fh,0e0h,0f8h,044h,041h,052h,071h,0e0h,0e0h,0fbh	; bb3c  .x.......DARq...
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbb4c..0xbb5b  (15 bytes)
-DATA_BB4C:
+; DATOS mensajes_BB4C: 1 mensaje con el formato de p01:66C4 (letras hasta 0xFF
+;   o 0xFB) a los que no apunta ninguna de las tablas de mensajes que lee el
+;   codigo
+;   0xbb4c..0xbb5b  (15 bytes)
+DATA_mensajes_BB4C:
 	defb 078h,01dh,018h,00bh,015h,00fh,0e0h,0f8h,044h,041h,052h,071h,0e0h,0e0h,0fbh	; bb4c  x.......DARq...
 
 ; ----------------------------------------------------------------------
@@ -1350,8 +1359,11 @@ DATA_parejas_800C:
 	defb 0cfh,0bah	; bebc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbebe..0xc000  (322 bytes)
-DATA_BEBE:
+; DATOS restos_finales_BEBE: 322 bytes al final del banco detras del ultimo
+;   bloque que se lee (parejas_800C): ningun lector del listado llega a ellos
+;   ni los apunta ninguna tabla declarada
+;   0xbebe..0xc000  (322 bytes)
+DATA_restos_finales_BEBE:
 	defb 001h,002h,009h,00ah,090h,025h,020h,001h,002h,003h,004h,00fh,019h,0ffh,012h,013h	; bebe  .....% .........
 	defb 001h,002h,03fh,040h,00fh,019h,00eh,00fh,00bh,00bh,084h,012h,013h,018h,019h,090h	; bece  ..?@............
 	defb 00fh,019h,009h,00ah,00eh,00fh,001h,002h,01ah,01ch,001h,002h,0ffh,014h,015h,08ah	; bede  ................

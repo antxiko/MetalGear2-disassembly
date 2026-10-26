@@ -1,4 +1,7 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+D 0xBC0F 0xBC61 bytes_BC0F  82 bytes entre dibujo_BC07 y el relleno de 0xFF del final del banco; ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xAA98 mapa_de_bits_8098_cola  mapa de bits de 168 filas de 64 bytes (dos puntos por byte) que p01:6ED6 copia a la VRAM, 128 bytes por fila (p00:4486) (sigue del banco 57); lo leen p01:6E2F (2712 bytes)
 F 0xA000 16

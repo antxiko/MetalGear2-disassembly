@@ -58,6 +58,7 @@
 0x64E8   # p09:BBB3 jp
 0x64F4   # p09:BE5D jp
 0x64FE   # p09:A514 call
+0x650C   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x650C
 0x657F   # p09:A51D call
 0x6585   # p13:993B call
 0x65A1   # p01:6594 entrada 0 de la tabla de 0x6597 (call 0x424D en 0x6594)
@@ -78,7 +79,6 @@
 0x6A25   # p11:AA15 jp cc
 0x6A29   # p06:A8E8 call
 0x6A2D   # p04:832A call
-0x6A31   # p14:B171 call
 0x6A38   # p03:BCFA jp
 0x6A3C   # p03:A96F jp
 0x6A40   # p07:B3E9 call
@@ -131,7 +131,7 @@
 0x6B06   # p06:A199 entrada 1 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6B0A   # p06:A199 entrada 2 de la tabla de 0xA19C (call 0x424D en 0xA199)
 0x6B0E   # p06:A199 entrada 3 de la tabla de 0xA19C (call 0x424D en 0xA199)
-0x6B12   # p15:B9F4 call
+0x6B12   # p06:AF6F call
 0x6B16   # p07:B3A2 jp
 0x6B1A   # p07:A1CE call
 0x6B1E   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
@@ -162,12 +162,12 @@
 0x6B85   # destino de la lista de 0xCA22 = 7 (p06:B4DB; p01:7CE6 y jp (hl) en p01:73C7)
 0x6B89   # la musica pendiente de 0xCA19 (p02:8A2A), jp (hl) en p02:8A7A
 0x6B91   # destino de la lista de 0xCA22 = 0 (p06:B422; p01:7CE6 y jp (hl) en p01:73C7)
-0x6B95   # p05:BE46 call
+0x6B95   # p06:AF8F jp
 0x6B99   # p14:B16C call
 0x6BA0   # p02:9B9E jp
 0x6BA4   # p09:BFBE entrada 2 de la tabla de 0xBFC1 (call 0x424D en 0xBFBE)
 0x6BA8   # p11:A048 jp
-0x6BAC   # p05:A9E8 call
+0x6BAC   # p06:AF72 jp
 0x6BB0   # p09:A7AA call
 0x6BB4   # p09:B1D5 call
 0x6BB8   # p09:ABE9 call cc
@@ -179,6 +179,7 @@
 0x6BD4   # p09:AB61 call
 0x6BD8   # p03:BFE2 call
 0x6BDC   # p03:BFB3 call
+0x6BE4   # p04:94C8 call
 0x6BE8   # p05:BFE1 call
 0x6BEC   # p04:9368 jp
 0x6BF0   # codigo huerfano: 4 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6BF0
@@ -341,6 +342,7 @@
 0x7A38   # p10:AADB call
 0x7A3E   # p10:ABA9 call
 0x7A43   # p15:ACB6 jp
+0x7A48   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7A48
 0x7A4E   # p15:BB78 call
 0x7A59   # p14:AC2A call
 0x7A5F   # p08:A138 jp cc
@@ -348,8 +350,9 @@
 0x7A70   # p05:BA68 call
 0x7A78   # codigo huerfano: 8 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A78
 0x7A80   # p04:8D0B call
-0x7A88   # p04:8AC4 call
+0x7A88   # p04:94BD call
 0x7A8D   # p05:AD6F call
+0x7A95   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7A95
 0x7A9B   # p05:BC18 call
 0x7AA0   # p05:BC34 call
 0x7AA8   # p05:BC4A call
@@ -379,14 +382,15 @@
 0x7B6E   # p14:B499 jp
 0x7B76   # p14:B83C call
 0x7B7F   # p09:A1F0 call
+0x7B87   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7B87
 0x7B8D   # p09:BF42 call
 0x7BA1   # p15:AC45 jp cc
 0x7BAA   # p00:59FD call
-0x7BF1   # p00:52E4 call
+0x7BF1   # p00:5AF8 call
 0x7BF5   # p00:57FE call
-0x7C0E   # p00:5E12 call
+0x7C0E   # p02:8D00 call
 0x7C1A   # p08:A198 call
-0x7C20   # p00:5E74 call cc
+0x7C20   # p02:8D08 call
 0x7C52   # p00:5310 call
 0x7C77   # p02:8EF3 call
 0x7CAF   # p07:A487 call
@@ -397,11 +401,10 @@
 0x7DC3   # p01:7DB5 entrada 1 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
 0x7DC6   # p01:7DB5 entrada 2 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
 0x7DC9   # p01:7DB5 entrada 3 de la tabla de 0x7DB8 (call 0x424D en 0x7DB5)
-0x7DE2   # p00:5E2B call
-0x7DF4   # p00:5326 call
+0x7DDC   # entrada de codigo sin uso: instrucciones enteras que caen en codigo trazado (o acaban en un salto); ninguna instruccion del banco salta, llama o carga 0x7DDC
+0x7DF4   # p00:55F0 call
 0x7EDB   # codigo huerfano: 10 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x7EDB
 0x7EEE   # p03:A859 call
-0x7EF6   # p02:97ED jp
 0x7F37   # p04:860C jp
 0x7F69   # p06:A1B4 call
 0x7F71   # p03:B1EE call

@@ -134,8 +134,12 @@ DATA_tabla_colores_6112:
 	defw 0618ch,0618eh,06190h,06194h,06196h,06198h	; 6142
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x614e..0x6170  (34 bytes)
-DATA_614E:
+; DATOS colores_sin_uso_614E: 34 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6112 (entrada 0),
+;   tabla_colores_6112 (entrada 1), tabla_colores_6112 (entrada 2): indices
+;   que no pide ninguna lista de dibujos
+;   0x614e..0x6170  (34 bytes)
+DATA_colores_sin_uso_614E:
 	defb 014h,058h,014h,080h,014h,056h,078h,080h,014h,050h,027h,080h,012h,045h,067h,08fh	; 614e  .X...Vx..P'..Eg.
 	defb 012h,045h,067h,0cfh,012h,034h,056h,0cfh,012h,045h,078h,0cfh,012h,05fh,012h,034h	; 615e  .Eg..4V..Ex.._.4
 	defb 078h,0cfh	; 616e
@@ -148,8 +152,11 @@ DATA_colores_6170:
 	defb 045h,08fh,061h,079h	; 6170
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6174..0x6178  (4 bytes)
-DATA_6174:
+; DATOS colores_sin_uso_6174: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6112 (entrada 15): indices
+;   que no pide ninguna lista de dibujos
+;   0x6174..0x6178  (4 bytes)
+DATA_colores_sin_uso_6174:
 	defb 023h,045h,067h,08fh	; 6174
 
 ; ----------------------------------------------------------------------
@@ -160,8 +167,11 @@ DATA_colores_6178:
 	defb 014h,05fh	; 6178
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x617a..0x617c  (2 bytes)
-DATA_617A:
+; DATOS colores_sueltos_617A: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x617a..0x617c  (2 bytes)
+DATA_colores_sueltos_617A:
 	defb 026h,078h	; 617a
 
 ; ----------------------------------------------------------------------
@@ -173,8 +183,11 @@ DATA_colores_617C:
 	defb 045h,06fh	; 617c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x617e..0x6180  (2 bytes)
-DATA_617E:
+; DATOS colores_sueltos_617E: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x617e..0x6180  (2 bytes)
+DATA_colores_sueltos_617E:
 	defb 017h,0c0h	; 617e
 
 ; ----------------------------------------------------------------------
@@ -192,8 +205,11 @@ DATA_colores_6184:
 	defb 056h,07fh	; 6184
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6186..0x6188  (2 bytes)
-DATA_6186:
+; DATOS colores_sin_uso_6186: 2 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6112 (entrada 22): indices
+;   que no pide ninguna lista de dibujos
+;   0x6186..0x6188  (2 bytes)
+DATA_colores_sin_uso_6186:
 	defb 01fh,048h	; 6186
 
 ; ----------------------------------------------------------------------
@@ -204,8 +220,12 @@ DATA_colores_6188:
 	defb 056h,04fh,017h,08ch	; 6188
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x618c..0x6194  (8 bytes)
-DATA_618C:
+; DATOS colores_sin_uso_618C: 8 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6112 (entrada 24),
+;   tabla_colores_6112 (entrada 25), tabla_colores_6112 (entrada 26): indices
+;   que no pide ninguna lista de dibujos
+;   0x618c..0x6194  (8 bytes)
+DATA_colores_sin_uso_618C:
 	defb 01fh,046h,078h,0cfh,057h,08fh,0a3h,0c0h	; 618c  .Fx.W...
 
 ; ----------------------------------------------------------------------
@@ -216,8 +236,11 @@ DATA_colores_6194:
 	defb 056h	; 6194
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6195..0x6198  (3 bytes)
-DATA_6195:
+; DATOS colores_sin_uso_6195: 3 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6112 (entrada 28): indices
+;   que no pide ninguna lista de dibujos
+;   0x6195..0x6198  (3 bytes)
+DATA_colores_sin_uso_6195:
 	defb 0cfh,047h,08fh	; 6195
 
 ; ----------------------------------------------------------------------
@@ -238,8 +261,12 @@ DATA_tabla_colores_619A:
 	defw 06234h,06238h,0623ah,0623eh,06240h,06244h,06248h	; 61ca
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x61d8..0x623e  (102 bytes)
-DATA_61D8:
+; DATOS colores_sin_uso_61D8: 102 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_619A (entrada 0),
+;   tabla_colores_619A (entrada 1), tabla_colores_619A (entrada 2): indices
+;   que no pide ninguna lista de dibujos
+;   0x61d8..0x623e  (102 bytes)
+DATA_colores_sin_uso_61D8:
 	defb 04ah,062h,04eh,062h,005h,062h,052h,062h,0e6h,061h,056h,062h,058h,062h,014h,056h	; 61d8  JbNb.bRb.aVbXb.V
 	defb 07dh,0efh,04fh,015h,026h,078h,03fh,0bch,0deh,03fh,012h,045h,07ch,0cfh,018h,035h	; 61e8  }.O.&x?..?.E|..5
 	defb 06bh,045h,067h,012h,03fh,018h,04fh,035h,0bch,028h,07bh,01ch,045h,06fh,012h,045h	; 61f8  kEg.?.O5.({.Eo.E
@@ -277,8 +304,11 @@ DATA_colores_6248:
 	defb 047h,08fh	; 6248
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x624a..0x625a  (16 bytes)
-DATA_624A:
+; DATOS colores_sueltos_624A: 16 bytes con forma de colores de dibujo (dos de
+;   4 bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x624a..0x625a  (16 bytes)
+DATA_colores_sueltos_624A:
 	defb 01fh,045h,067h,0deh,00fh,014h,056h,07dh,0dfh,012h,045h,069h,025h,06fh,014h,06fh	; 624a  .Eg...V}..Ei%o.o
 
 ; ----------------------------------------------------------------------
@@ -312,8 +342,11 @@ DATA_colores_6292:
 	defb 015h,06fh,078h,0adh	; 6292
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6296..0x629a  (4 bytes)
-DATA_6296:
+; DATOS colores_sin_uso_6296: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_625A (entrada 3): indices
+;   que no pide ninguna lista de dibujos
+;   0x6296..0x629a  (4 bytes)
+DATA_colores_sin_uso_6296:
 	defb 013h,046h,078h,0cfh	; 6296
 
 ; ----------------------------------------------------------------------
@@ -331,8 +364,11 @@ DATA_colores_629E:
 	defb 01fh,02ch	; 629e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62a0..0x62a1  (1 bytes)
-DATA_62A0:
+; DATOS colores_sin_uso_62A0: 1 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_625A (entrada 6): indices
+;   que no pide ninguna lista de dibujos
+;   0x62a0..0x62a1  (1 bytes)
+DATA_colores_sin_uso_62A0:
 	defb 01bh	; 62a0
 
 ; ----------------------------------------------------------------------
@@ -343,8 +379,12 @@ DATA_colores_62A1:
 	defb 0cfh,013h	; 62a1
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62a3..0x62a8  (5 bytes)
-DATA_62A3:
+; DATOS colores_sin_uso_62A3: 5 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_625A (entrada 8),
+;   tabla_colores_625A (entrada 9): indices que no pide ninguna lista de
+;   dibujos
+;   0x62a3..0x62a8  (5 bytes)
+DATA_colores_sin_uso_62A3:
 	defb 04fh,014h,056h,015h,0cfh	; 62a3
 
 ; ----------------------------------------------------------------------
@@ -376,8 +416,11 @@ DATA_colores_62B2:
 	defb 03bh,0cfh	; 62b2
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62b4..0x62b6  (2 bytes)
-DATA_62B4:
+; DATOS colores_sueltos_62B4: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x62b4..0x62b6  (2 bytes)
+DATA_colores_sueltos_62B4:
 	defb 014h,056h	; 62b4
 
 ; ----------------------------------------------------------------------
@@ -388,8 +431,11 @@ DATA_colores_62B6:
 	defb 045h,06fh	; 62b6
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62b8..0x62bc  (4 bytes)
-DATA_62B8:
+; DATOS colores_sin_uso_62B8: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_625A (entrada 15): indices
+;   que no pide ninguna lista de dibujos
+;   0x62b8..0x62bc  (4 bytes)
+DATA_colores_sin_uso_62B8:
 	defb 045h,0cfh,016h,08bh	; 62b8
 
 ; ----------------------------------------------------------------------
@@ -400,8 +446,12 @@ DATA_colores_62BC:
 	defb 045h,08fh,016h,07ch	; 62bc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62c0..0x62d1  (17 bytes)
-DATA_62C0:
+; DATOS colores_sin_uso_62C0: 17 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_625A (entrada 17),
+;   tabla_colores_625A (entrada 18), tabla_colores_625A (entrada 19): indices
+;   que no pide ninguna lista de dibujos
+;   0x62c0..0x62d1  (17 bytes)
+DATA_colores_sin_uso_62C0:
 	defb 045h,01fh,07ah,0cdh,047h,056h,018h,0afh,056h,0cfh,056h,08fh,07ah,078h,03fh,0abh	; 62c0  E.z.GV..V.V.zx?.
 	defb 0cdh	; 62d0
 
@@ -418,7 +468,7 @@ DATA_tabla_colores_62D1:
 	defw 063dbh,063dfh,063e3h,063e7h,063ebh,063efh,063f4h,063f6h	; 6321
 	defw 063fah,063feh,06402h,06404h,06408h,0640ch,06410h,06414h	; 6331
 	defw 06418h,0641ch,0641eh,06420h,06422h,06424h,06426h,063f2h	; 6341
-	defw 06428h,0642bh,0642fh,06429h	; 6351  -> 0x6428 0x642b DATA_colores_642F DATA_colores_6429
+	defw 06428h,0642bh,0642fh,06429h	; 6351  -> DATA_colores_sin_uso_6428 DATA_colores_sin_uso_642B DATA_colores_642F DATA_colores_6429
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_6359: 4 colores de 4 bits, dos por byte, para un dibujo de 2
@@ -471,8 +521,11 @@ DATA_colores_636D:
 	defb 046h,05fh,0c3h,07bh	; 636d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6371..0x6375  (4 bytes)
-DATA_6371:
+; DATOS colores_sin_uso_6371: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 7): indices
+;   que no pide ninguna lista de dibujos
+;   0x6371..0x6375  (4 bytes)
+DATA_colores_sin_uso_6371:
 	defb 034h,057h,08bh,0cfh	; 6371
 
 ; ----------------------------------------------------------------------
@@ -490,8 +543,11 @@ DATA_colores_6379:
 	defb 014h,067h	; 6379
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x637b..0x637d  (2 bytes)
-DATA_637B:
+; DATOS colores_sueltos_637B: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x637b..0x637d  (2 bytes)
+DATA_colores_sueltos_637B:
 	defb 0cfh,053h	; 637b
 
 ; ----------------------------------------------------------------------
@@ -523,8 +579,11 @@ DATA_colores_6387:
 	defb 015h,067h	; 6387
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6389..0x638b  (2 bytes)
-DATA_6389:
+; DATOS colores_sueltos_6389: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x6389..0x638b  (2 bytes)
+DATA_colores_sueltos_6389:
 	defb 023h,04ch	; 6389
 
 ; ----------------------------------------------------------------------
@@ -549,8 +608,11 @@ DATA_colores_6393:
 	defb 014h,08fh	; 6393
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6395..0x6397  (2 bytes)
-DATA_6395:
+; DATOS colores_sueltos_6395: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x6395..0x6397  (2 bytes)
+DATA_colores_sueltos_6395:
 	defb 056h,0ceh	; 6395
 
 ; ----------------------------------------------------------------------
@@ -568,8 +630,11 @@ DATA_colores_639B:
 	defb 034h,078h	; 639b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x639d..0x639f  (2 bytes)
-DATA_639D:
+; DATOS colores_sueltos_639D: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x639d..0x639f  (2 bytes)
+DATA_colores_sueltos_639D:
 	defb 015h,06ch	; 639d
 
 ; ----------------------------------------------------------------------
@@ -615,8 +680,11 @@ DATA_colores_63AF:
 	defb 046h	; 63af
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63b0..0x63b1  (1 bytes)
-DATA_63B0:
+; DATOS colores_sueltos_63B0: 1 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x63b0..0x63b1  (1 bytes)
+DATA_colores_sueltos_63B0:
 	defb 02fh	; 63b0
 
 ; ----------------------------------------------------------------------
@@ -648,8 +716,11 @@ DATA_colores_63B9:
 	defb 018h	; 63b9
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63ba..0x63bd  (3 bytes)
-DATA_63BA:
+; DATOS colores_sueltos_63BA: 3 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x63ba..0x63bd  (3 bytes)
+DATA_colores_sueltos_63BA:
 	defb 047h,0bfh,056h	; 63ba
 
 ; ----------------------------------------------------------------------
@@ -681,8 +752,11 @@ DATA_colores_63C7:
 	defb 015h,078h	; 63c7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63c9..0x63cb  (2 bytes)
-DATA_63C9:
+; DATOS colores_sin_uso_63C9: 2 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 35): indices
+;   que no pide ninguna lista de dibujos
+;   0x63c9..0x63cb  (2 bytes)
+DATA_colores_sin_uso_63C9:
 	defb 0cfh,03bh	; 63c9
 
 ; ----------------------------------------------------------------------
@@ -707,8 +781,11 @@ DATA_colores_63D3:
 	defb 078h,0efh	; 63d3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63d5..0x63d7  (2 bytes)
-DATA_63D5:
+; DATOS colores_sueltos_63D5: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x63d5..0x63d7  (2 bytes)
+DATA_colores_sueltos_63D5:
 	defb 0bch,0d0h	; 63d5
 
 ; ----------------------------------------------------------------------
@@ -726,8 +803,11 @@ DATA_colores_63DB:
 	defb 015h,06fh	; 63db
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63dd..0x63df  (2 bytes)
-DATA_63DD:
+; DATOS colores_sueltos_63DD: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x63dd..0x63df  (2 bytes)
+DATA_colores_sueltos_63DD:
 	defb 034h,08ah	; 63dd
 
 ; ----------------------------------------------------------------------
@@ -738,8 +818,11 @@ DATA_colores_63DF:
 	defb 027h,08bh,014h,09fh	; 63df
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63e3..0x63e7  (4 bytes)
-DATA_63E3:
+; DATOS colores_sin_uso_63E3: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 42): indices
+;   que no pide ninguna lista de dibujos
+;   0x63e3..0x63e7  (4 bytes)
+DATA_colores_sin_uso_63E3:
 	defb 015h,0cfh,047h,08eh	; 63e3
 
 ; ----------------------------------------------------------------------
@@ -757,8 +840,11 @@ DATA_colores_63EB:
 	defb 046h,08fh	; 63eb
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63ed..0x63ef  (2 bytes)
-DATA_63ED:
+; DATOS colores_sueltos_63ED: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x63ed..0x63ef  (2 bytes)
+DATA_colores_sueltos_63ED:
 	defb 01bh,0ceh	; 63ed
 
 ; ----------------------------------------------------------------------
@@ -778,8 +864,11 @@ DATA_colores_63F4:
 	defb 05dh,0efh	; 63f4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63f6..0x63fa  (4 bytes)
-DATA_63F6:
+; DATOS colores_sin_uso_63F6: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 47): indices
+;   que no pide ninguna lista de dibujos
+;   0x63f6..0x63fa  (4 bytes)
+DATA_colores_sin_uso_63F6:
 	defb 034h,056h,07dh,0efh	; 63f6
 
 ; ----------------------------------------------------------------------
@@ -790,8 +879,11 @@ DATA_colores_63FA:
 	defb 024h,05bh,0cdh,0efh	; 63fa
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63fe..0x63ff  (1 bytes)
-DATA_63FE:
+; DATOS colores_sin_uso_63FE: 1 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 49): indices
+;   que no pide ninguna lista de dibujos
+;   0x63fe..0x63ff  (1 bytes)
+DATA_colores_sin_uso_63FE:
 	defb 037h	; 63fe
 
 ; ----------------------------------------------------------------------
@@ -802,8 +894,11 @@ DATA_colores_63FF:
 	defb 089h	; 63ff
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6400..0x6402  (2 bytes)
-DATA_6400:
+; DATOS colores_sueltos_6400: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x6400..0x6402  (2 bytes)
+DATA_colores_sueltos_6400:
 	defb 0ach,0efh	; 6400
 
 ; ----------------------------------------------------------------------
@@ -821,8 +916,12 @@ DATA_colores_6404:
 	defb 012h,046h,03ch,0f0h	; 6404
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6408..0x6418  (16 bytes)
-DATA_6408:
+; DATOS colores_sin_uso_6408: 16 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 52),
+;   tabla_colores_62D1 (entrada 53), tabla_colores_62D1 (entrada 54): indices
+;   que no pide ninguna lista de dibujos
+;   0x6408..0x6418  (16 bytes)
+DATA_colores_sin_uso_6408:
 	defb 0cfh,013h,047h,0abh,0cfh,0b3h,012h,06ah,0cfh,0a3h,026h,0b7h,012h,036h,0abh,0cfh	; 6408  ..G....j..&..6..
 
 ; ----------------------------------------------------------------------
@@ -833,8 +932,12 @@ DATA_colores_6418:
 	defb 045h,067h	; 6418
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x641a..0x6420  (6 bytes)
-DATA_641A:
+; DATOS colores_sin_uso_641A: 6 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 57),
+;   tabla_colores_62D1 (entrada 58): indices que no pide ninguna lista de
+;   dibujos
+;   0x641a..0x6420  (6 bytes)
+DATA_colores_sin_uso_641A:
 	defb 0abh,0cfh,015h,067h,078h,0afh	; 641a
 
 ; ----------------------------------------------------------------------
@@ -845,8 +948,12 @@ DATA_colores_6420:
 	defb 08fh	; 6420
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6421..0x6426  (5 bytes)
-DATA_6421:
+; DATOS colores_sin_uso_6421: 5 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 60),
+;   tabla_colores_62D1 (entrada 61): indices que no pide ninguna lista de
+;   dibujos
+;   0x6421..0x6426  (5 bytes)
+DATA_colores_sin_uso_6421:
 	defb 07ah,014h,057h,014h,0afh	; 6421
 
 ; ----------------------------------------------------------------------
@@ -857,8 +964,11 @@ DATA_colores_6426:
 	defb 012h,05fh	; 6426
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6428..0x6429  (1 bytes)
-DATA_6428:
+; DATOS colores_sin_uso_6428: 1 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 64): indices
+;   que no pide ninguna lista de dibujos
+;   0x6428..0x6429  (1 bytes)
+DATA_colores_sin_uso_6428:
 	defb 02fh	; 6428
 
 ; ----------------------------------------------------------------------
@@ -869,8 +979,11 @@ DATA_colores_6429:
 	defb 014h,056h	; 6429
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x642b..0x642f  (4 bytes)
-DATA_642B:
+; DATOS colores_sin_uso_642B: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 65): indices
+;   que no pide ninguna lista de dibujos
+;   0x642b..0x642f  (4 bytes)
+DATA_colores_sin_uso_642B:
 	defb 012h,045h,067h,08fh	; 642b
 
 ; ----------------------------------------------------------------------
@@ -890,8 +1003,12 @@ DATA_tabla_colores_6433:
 	defw 06486h,0648ah,0648eh,06490h,06494h	; 6453
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x645d..0x6467  (10 bytes)
-DATA_645D:
+; DATOS colores_sin_uso_645D: 10 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_62D1 (entrada 19),
+;   tabla_colores_6433 (entrada 0), tabla_colores_6433 (entrada 1): indices
+;   que no pide ninguna lista de dibujos
+;   0x645d..0x6467  (10 bytes)
+DATA_colores_sin_uso_645D:
 	defb 098h,064h,013h,06fh,045h,022h,052h,04fh,042h,0afh	; 645d  .d.oE"ROB.
 
 ; ----------------------------------------------------------------------
@@ -923,8 +1040,11 @@ DATA_colores_646D:
 	defb 015h,04fh	; 646d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x646f..0x6470  (1 bytes)
-DATA_646F:
+; DATOS colores_sin_uso_646F: 1 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6433 (entrada 9): indices
+;   que no pide ninguna lista de dibujos
+;   0x646f..0x6470  (1 bytes)
+DATA_colores_sin_uso_646F:
 	defb 02fh	; 646f
 
 ; ----------------------------------------------------------------------
@@ -956,8 +1076,11 @@ DATA_colores_647A:
 	defb 015h,067h	; 647a
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x647c..0x647e  (2 bytes)
-DATA_647C:
+; DATOS colores_sueltos_647C: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x647c..0x647e  (2 bytes)
+DATA_colores_sueltos_647C:
 	defb 04fh,0bch	; 647c
 
 ; ----------------------------------------------------------------------
@@ -968,8 +1091,11 @@ DATA_colores_647E:
 	defb 05dh,0efh	; 647e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6480..0x6482  (2 bytes)
-DATA_6480:
+; DATOS colores_sueltos_6480: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x6480..0x6482  (2 bytes)
+DATA_colores_sueltos_6480:
 	defb 014h,076h	; 6480
 
 ; ----------------------------------------------------------------------
@@ -980,8 +1106,12 @@ DATA_colores_6482:
 	defb 024h,05bh,0cdh,0efh	; 6482
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6486..0x648e  (8 bytes)
-DATA_6486:
+; DATOS colores_sin_uso_6486: 8 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6433 (entrada 16),
+;   tabla_colores_6433 (entrada 17): indices que no pide ninguna lista de
+;   dibujos
+;   0x6486..0x648e  (8 bytes)
+DATA_colores_sin_uso_6486:
 	defb 034h,057h,08bh,0cfh,046h,05fh,0c3h,07bh	; 6486  4W..F_.{
 
 ; ----------------------------------------------------------------------
@@ -1006,8 +1136,11 @@ DATA_colores_6494:
 	defb 015h,07fh,028h,0b6h	; 6494
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6498..0x649c  (4 bytes)
-DATA_6498:
+; DATOS colores_sin_uso_6498: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6433 (entrada 6): indices
+;   que no pide ninguna lista de dibujos
+;   0x6498..0x649c  (4 bytes)
+DATA_colores_sin_uso_6498:
 	defb 012h,045h,067h,0cfh	; 6498
 
 ; ----------------------------------------------------------------------
@@ -1056,8 +1189,11 @@ DATA_colores_64E4:
 	defb 012h,078h	; 64e4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64e6..0x64e8  (2 bytes)
-DATA_64E6:
+; DATOS colores_sin_uso_64E6: 2 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 5): indices
+;   que no pide ninguna lista de dibujos
+;   0x64e6..0x64e8  (2 bytes)
+DATA_colores_sin_uso_64E6:
 	defb 02ch,013h	; 64e6
 
 ; ----------------------------------------------------------------------
@@ -1068,8 +1204,11 @@ DATA_colores_64E8:
 	defb 04fh,018h	; 64e8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64ea..0x64ee  (4 bytes)
-DATA_64EA:
+; DATOS colores_sin_uso_64EA: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 6): indices
+;   que no pide ninguna lista de dibujos
+;   0x64ea..0x64ee  (4 bytes)
+DATA_colores_sin_uso_64EA:
 	defb 013h,08fh,045h,067h	; 64ea
 
 ; ----------------------------------------------------------------------
@@ -1112,8 +1251,11 @@ DATA_colores_64FB:
 	defb 01fh,05eh,034h,06ch	; 64fb
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64ff..0x6501  (2 bytes)
-DATA_64FF:
+; DATOS colores_sin_uso_64FF: 2 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 12): indices
+;   que no pide ninguna lista de dibujos
+;   0x64ff..0x6501  (2 bytes)
+DATA_colores_sin_uso_64FF:
 	defb 024h,056h	; 64ff
 
 ; ----------------------------------------------------------------------
@@ -1124,8 +1266,11 @@ DATA_colores_6501:
 	defb 028h,07fh,015h,06eh	; 6501
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6505..0x6509  (4 bytes)
-DATA_6505:
+; DATOS colores_sin_uso_6505: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 14): indices
+;   que no pide ninguna lista de dibujos
+;   0x6505..0x6509  (4 bytes)
+DATA_colores_sin_uso_6505:
 	defb 02fh,08ch,073h,0bch	; 6505
 
 ; ----------------------------------------------------------------------
@@ -1150,8 +1295,12 @@ DATA_colores_6511:
 	defb 03bh,0cfh,014h,07eh	; 6511
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6515..0x651d  (8 bytes)
-DATA_6515:
+; DATOS colores_sin_uso_6515: 8 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 18),
+;   tabla_colores_649C (entrada 19), tabla_colores_649C (entrada 20): indices
+;   que no pide ninguna lista de dibujos
+;   0x6515..0x651d  (8 bytes)
+DATA_colores_sin_uso_6515:
 	defb 034h,07ch,034h,056h,034h,06fh,017h,08ah	; 6515  4|4V4o..
 
 ; ----------------------------------------------------------------------
@@ -1169,8 +1318,11 @@ DATA_colores_6521:
 	defb 04ch,01bh	; 6521
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6523..0x6527  (4 bytes)
-DATA_6523:
+; DATOS colores_sin_uso_6523: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 24): indices
+;   que no pide ninguna lista de dibujos
+;   0x6523..0x6527  (4 bytes)
+DATA_colores_sin_uso_6523:
 	defb 023h,05fh,068h,025h	; 6523
 
 ; ----------------------------------------------------------------------
@@ -1181,8 +1333,11 @@ DATA_colores_6527:
 	defb 078h,0afh,014h,056h	; 6527
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x652b..0x652d  (2 bytes)
-DATA_652B:
+; DATOS colores_sin_uso_652B: 2 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_649C (entrada 28): indices
+;   que no pide ninguna lista de dibujos
+;   0x652b..0x652d  (2 bytes)
+DATA_colores_sin_uso_652B:
 	defb 014h,050h	; 652b
 
 ; ----------------------------------------------------------------------
@@ -1209,8 +1364,12 @@ DATA_tabla_colores_6535:
 	defw 0659ch,0659dh,0659fh,065a3h,065a5h,065a9h,0659ch,065abh	; 6555
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6565..0x657d  (24 bytes)
-DATA_6565:
+; DATOS colores_sin_uso_6565: 24 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6535 (entrada 0),
+;   tabla_colores_6535 (entrada 1), tabla_colores_6535 (entrada 2): indices
+;   que no pide ninguna lista de dibujos
+;   0x6565..0x657d  (24 bytes)
+DATA_colores_sin_uso_6565:
 	defb 0afh,065h,0b3h,065h,0b5h,065h,012h,048h,035h,06fh,012h,078h,04ah,0f5h,012h,08fh	; 6565  .e.e.e.H5o.xJ...
 	defb 013h,046h,07bh,0cfh,014h,056h,08bh,0cfh	; 6575  .F{..V..
 
@@ -1222,8 +1381,12 @@ DATA_colores_657D:
 	defb 014h,058h	; 657d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x657f..0x6598  (25 bytes)
-DATA_657F:
+; DATOS colores_sin_uso_657F: 25 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6535 (entrada 6),
+;   tabla_colores_6535 (entrada 7), tabla_colores_6535 (entrada 8): indices
+;   que no pide ninguna lista de dibujos
+;   0x657f..0x6598  (25 bytes)
+DATA_colores_sin_uso_657F:
 	defb 014h,05fh,012h,034h,0bch,0efh,02fh,023h,05bh,0f1h,04ch,034h,0bch,012h,05fh,034h	; 657f  ._.4../#[.L4.._4
 	defb 0cfh,016h,07eh,034h,07ch,028h,0abh,03bh,0cfh	; 658f  ..~4|(...
 
@@ -1235,8 +1398,12 @@ DATA_colores_6598:
 	defb 047h,08fh	; 6598
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x659a..0x659d  (3 bytes)
-DATA_659A:
+; DATOS colores_sin_uso_659A: 3 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6535 (entrada 15),
+;   tabla_colores_6535 (entrada 16), tabla_colores_6535 (entrada 22): indices
+;   que no pide ninguna lista de dibujos
+;   0x659a..0x659d  (3 bytes)
+DATA_colores_sin_uso_659A:
 	defb 048h,056h,068h	; 659a
 
 ; ----------------------------------------------------------------------
@@ -1282,8 +1449,11 @@ DATA_colores_65AB:
 	defb 012h,045h,067h,08fh	; 65ab
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x65af..0x65b7  (8 bytes)
-DATA_65AF:
+; DATOS colores_sueltos_65AF: 8 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x65af..0x65b7  (8 bytes)
+DATA_colores_sueltos_65AF:
 	defb 012h,034h,056h,0afh,014h,058h,023h,045h	; 65af  .4V..X#E
 
 ; ----------------------------------------------------------------------
@@ -1297,8 +1467,11 @@ DATA_tabla_colores_65B7:
 	defw 0663ch,06614h,0663eh,06640h,06644h	; 65e7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x65f1..0x65f3  (2 bytes)
-DATA_65F1:
+; DATOS colores_sin_uso_65F1: 2 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_65B7 (entrada 0): indices
+;   que no pide ninguna lista de dibujos
+;   0x65f1..0x65f3  (2 bytes)
+DATA_colores_sin_uso_65F1:
 	defb 014h,067h	; 65f1
 
 ; ----------------------------------------------------------------------
@@ -1309,8 +1482,12 @@ DATA_colores_65F3:
 	defb 015h,067h	; 65f3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x65f5..0x6607  (18 bytes)
-DATA_65F5:
+; DATOS colores_sin_uso_65F5: 18 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_65B7 (entrada 2),
+;   tabla_colores_65B7 (entrada 4), tabla_colores_65B7 (entrada 5): indices
+;   que no pide ninguna lista de dibujos
+;   0x65f5..0x6607  (18 bytes)
+DATA_colores_sin_uso_65F5:
 	defb 014h,056h,07ah,0bfh,03ch,0bfh,027h,08ah,045h,06fh,017h,0ach,045h,0bfh,04fh,015h	; 65f5  .Vz.<.'.Eo..E.O.
 	defb 026h,07bh	; 6605
 
@@ -1322,8 +1499,11 @@ DATA_colores_6607:
 	defb 014h,056h	; 6607
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6609..0x660b  (2 bytes)
-DATA_6609:
+; DATOS colores_sueltos_6609: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x6609..0x660b  (2 bytes)
+DATA_colores_sueltos_6609:
 	defb 03bh,0cfh	; 6609
 
 ; ----------------------------------------------------------------------
@@ -1334,8 +1514,11 @@ DATA_colores_660B:
 	defb 04fh,015h	; 660b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x660d..0x660f  (2 bytes)
-DATA_660D:
+; DATOS colores_sueltos_660D: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x660d..0x660f  (2 bytes)
+DATA_colores_sueltos_660D:
 	defb 026h,078h	; 660d
 
 ; ----------------------------------------------------------------------
@@ -1369,8 +1552,11 @@ DATA_colores_6618:
 	defb 012h,045h,067h,08fh	; 6618
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x661c..0x6620  (4 bytes)
-DATA_661C:
+; DATOS colores_sin_uso_661C: 4 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_65B7 (entrada 14): indices
+;   que no pide ninguna lista de dibujos
+;   0x661c..0x6620  (4 bytes)
+DATA_colores_sin_uso_661C:
 	defb 015h,067h,04fh,0bch	; 661c
 
 ; ----------------------------------------------------------------------
@@ -1430,8 +1616,12 @@ DATA_colores_6636:
 	defb 0cfh,013h,082h,074h	; 6636
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x663a..0x6644  (10 bytes)
-DATA_663A:
+; DATOS colores_sin_uso_663A: 10 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_65B7 (entrada 23),
+;   tabla_colores_65B7 (entrada 24), tabla_colores_65B7 (entrada 26): indices
+;   que no pide ninguna lista de dibujos
+;   0x663a..0x6644  (10 bytes)
+DATA_colores_sin_uso_663A:
 	defb 014h,0afh,014h,0adh,014h,050h,01fh,036h,07ah,0bch	; 663a  .....P.6z.
 
 ; ----------------------------------------------------------------------
@@ -1482,8 +1672,12 @@ DATA_colores_66B7:
 	defb 013h,045h,02bh,0cfh	; 66b7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66bb..0x66c4  (9 bytes)
-DATA_66BB:
+; DATOS colores_sin_uso_66BB: 9 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6648 (entrada 4),
+;   tabla_colores_6648 (entrada 5), tabla_colores_6648 (entrada 23): indices
+;   que no pide ninguna lista de dibujos
+;   0x66bb..0x66c4  (9 bytes)
+DATA_colores_sin_uso_66BB:
 	defb 028h,07bh,01ch,04fh,01fh,045h,067h,08ah,012h	; 66bb  ({.O.Eg..
 
 ; ----------------------------------------------------------------------
@@ -1494,8 +1688,11 @@ DATA_colores_66C4:
 	defb 08fh	; 66c4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66c5..0x66c6  (1 bytes)
-DATA_66C5:
+; DATOS colores_sueltos_66C5: 1 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x66c5..0x66c6  (1 bytes)
+DATA_colores_sueltos_66C5:
 	defb 037h	; 66c5
 
 ; ----------------------------------------------------------------------
@@ -1506,8 +1703,11 @@ DATA_colores_66C6:
 	defb 003h,0cfh	; 66c6
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66c8..0x66cf  (7 bytes)
-DATA_66C8:
+; DATOS colores_sin_uso_66C8: 7 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6648 (entrada 8): indices
+;   que no pide ninguna lista de dibujos
+;   0x66c8..0x66cf  (7 bytes)
+DATA_colores_sin_uso_66C8:
 	defb 013h,045h,067h,007h,08fh,03bh,0ceh	; 66c8
 
 ; ----------------------------------------------------------------------
@@ -1518,8 +1718,11 @@ DATA_colores_66CF:
 	defb 014h,056h	; 66cf
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66d1..0x66d3  (2 bytes)
-DATA_66D1:
+; DATOS colores_sueltos_66D1: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x66d1..0x66d3  (2 bytes)
+DATA_colores_sueltos_66D1:
 	defb 078h,09fh	; 66d1
 
 ; ----------------------------------------------------------------------
@@ -1544,8 +1747,11 @@ DATA_colores_66DB:
 	defb 015h,067h	; 66db
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66dd..0x66df  (2 bytes)
-DATA_66DD:
+; DATOS colores_sueltos_66DD: 2 bytes con forma de colores de dibujo (dos de 4
+;   bits por byte) entre dos listas: no los apunta ninguna entrada de las
+;   tablas de colores de p32 ni llega a ellos ningun lector del listado
+;   0x66dd..0x66df  (2 bytes)
+DATA_colores_sueltos_66DD:
 	defb 04fh,0bch	; 66dd
 
 ; ----------------------------------------------------------------------
@@ -1577,8 +1783,12 @@ DATA_colores_66E9:
 	defb 0cfh,013h,082h,074h	; 66e9
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66ed..0x66f6  (9 bytes)
-DATA_66ED:
+; DATOS colores_sin_uso_66ED: 9 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6648 (entrada 19),
+;   tabla_colores_6648 (entrada 20), tabla_colores_6648 (entrada 21): indices
+;   que no pide ninguna lista de dibujos
+;   0x66ed..0x66f6  (9 bytes)
+DATA_colores_sin_uso_66ED:
 	defb 016h,045h,0cfh,067h,0abh,01fh,046h,012h,04fh	; 66ed  .E.g..F.O
 
 ; ----------------------------------------------------------------------
@@ -1589,8 +1799,12 @@ DATA_colores_66F6:
 	defb 037h,08fh,0bch,045h	; 66f6
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x66fa..0x6707  (13 bytes)
-DATA_66FA:
+; DATOS colores_sin_uso_66FA: 13 bytes de colores de dibujo (dos colores de 4
+;   bits por byte) a los que apuntan tabla_colores_6648 (entrada 25),
+;   tabla_colores_6648 (entrada 26), tabla_colores_6648 (entrada 27): indices
+;   que no pide ninguna lista de dibujos
+;   0x66fa..0x6707  (13 bytes)
+DATA_colores_sin_uso_66FA:
 	defb 061h,015h,04fh,056h,07fh,03fh,078h,045h,061h,014h,067h,058h,0afh	; 66fa  a.OV.?xEa.gX.
 
 ; ----------------------------------------------------------------------

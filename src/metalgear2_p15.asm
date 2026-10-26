@@ -266,8 +266,10 @@ alto_y_ancho:		; el alto (byte 7) y el ancho (byte 8) de su tipo, de la tabla de
 	ret			;a1b7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa1b8..0xa1e2  (42 bytes)
-DATA_A1B8:
+; DATOS alto_ancho_por_tipo: el alto y el ancho [alto][ancho] de los 21 tipos
+;   de puerta que lee p15:A1A8 (0xA1B6 + 2 x el tipo)
+;   0xa1b8..0xa1e2  (42 bytes)
+DATA_alto_ancho_por_tipo:
 	defb 020h,018h,008h,018h,020h,008h,020h,008h,020h,030h,008h,030h,01ah,018h,008h,020h	; a1b8   ... . . 0.0...
 	defb 01eh,018h,01ch,020h,020h,018h,020h,018h,020h,018h,008h,050h,008h,028h,008h,020h	; a1c8  ...  . . ..P.(.
 	defb 020h,020h,010h,020h,020h,018h,008h,070h,01eh,019h	; a1d8    .  ..p..
@@ -1841,8 +1843,11 @@ pon_en_la_llegada:
 	ret			;ac10
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xac11..0xac3b  (42 bytes)
-DATA_AC11:
+; DATOS llegada_por_tipo: donde aparece Snake al llegar por cada uno de los 21
+;   tipos de puerta, [X][Y] sumados a su sitio, que lee p15:AC00 (0xAC0F + 2 x
+;   el tipo)
+;   0xac11..0xac3b  (42 bytes)
+DATA_llegada_por_tipo:
 	defb 00ch,024h,00ch,000h,00ch,02ch,0f4h,02ch,018h,024h,018h,000h,00ch,020h,010h,000h	; ac11  .$...,.,.$... ..
 	defb 00ch,022h,010h,024h,00ch,024h,00ch,024h,00ch,024h,028h,000h,014h,000h,010h,000h	; ac21  .".$.$.$.$(.....
 	defb 010h,020h,010h,010h,00ch,024h,038h,000h,00dh,022h	; ac31  . ...$8.."
@@ -3153,8 +3158,11 @@ L_BFD4:
 	jp 047edh		;bfd4   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbfd7..0xc000  (41 bytes)
-DATA_BFD7:
+; DATOS restos_finales_BFD7: 41 bytes al final del banco detras del ultimo
+;   bloque que se lee (resto_BF89): ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0xbfd7..0xc000  (41 bytes)
+DATA_restos_finales_BFD7:
 	defb 080h,060h,080h,07fh,080h,060h,080h,040h,080h,020h,080h,000h,080h,0e0h,080h,0c0h	; bfd7  .`...`.@. ......
 	defb 080h,0a0h,080h,0a0h,080h,0c0h,080h,0e0h,080h,000h,080h,080h,080h,080h,080h,080h	; bfe7  ................
 	defb 080h,010h,080h,080h,080h,080h,080h,080h,080h	; bff7  .........

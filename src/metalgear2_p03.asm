@@ -3198,6 +3198,7 @@ sprites_del_de_dfd8:		; por debajo de Y = 0xC0, fuera
 	jp 05d3dh		;b5fc   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 ventana_4c:		; la ventana del mensaje en Y = 0x4C
 	ld l,04ch		;b5ff
+L_B601:
 	jr guarda_lo_de_la_ventana		;b601
 ventana_0c:		; la ventana del mensaje en Y = 0x0C
 	ld l,00ch		;b603

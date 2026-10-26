@@ -54,8 +54,10 @@ DATA_colores_8070:
 	defb 006h	; 8070
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8071..0x8072  (1 bytes)
-DATA_8071:
+; DATOS byte_8071: un byte (0x13) entre colores_8070 y colores_8072; ningun
+;   lector del listado llega a ellos ni los apunta ninguna tabla declarada
+;   0x8071..0x8072  (1 bytes)
+DATA_byte_8071:
 	defb 013h	; 8071
 
 ; ----------------------------------------------------------------------

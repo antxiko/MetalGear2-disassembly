@@ -741,8 +741,11 @@ DATA_salas_datos_zona_19:
 	defb 001h,001h,001h,001h,001h,023h	; be5c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbe62..0xbe63  (1 bytes)
-DATA_BE62:
+; DATOS byte_BE62: un byte (0x45) entre los datos de las salas de la zona 0x19
+;   y los de las salas especiales; ningun lector del listado llega a ellos ni
+;   los apunta ninguna tabla declarada
+;   0xbe62..0xbe63  (1 bytes)
+DATA_byte_BE62:
 	defb 045h	; be62
 
 ; ----------------------------------------------------------------------

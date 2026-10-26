@@ -20,8 +20,12 @@ DATA_salas_zona_17_cola:
 	defb 00ch,000h,032h,000h,00ch,001h	; 804a
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8050..0x8074  (36 bytes)
-DATA_8050:
+; DATOS sala_suelta_8050: 36 bytes detras de las salas de la zona 0x17: el
+;   tamano de los 6 x 6 bloques de una sala de p00:58DD sin su byte de juego;
+;   ningun lector del listado llega a ellos ni los apunta ninguna tabla
+;   declarada
+;   0x8050..0x8074  (36 bytes)
+DATA_sala_suelta_8050:
 	defb 019h,019h,020h,01fh,019h,019h,019h,019h,020h,01fh,019h,019h,019h,019h,020h,01fh	; 8050  .. ..... ..... .
 	defb 019h,019h,019h,019h,020h,01fh,019h,019h,019h,019h,020h,01fh,019h,019h,019h,019h	; 8060  .... ..... .....
 	defb 020h,01fh,019h,019h	; 8070

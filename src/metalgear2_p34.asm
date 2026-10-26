@@ -1052,6 +1052,7 @@ DATA_dibujo_BFC7:
 	defb 07ah,05eh,0b0h,07eh,076h,0a0h,03ch,02ch,080h,000h,0c0h,000h,001h,0f1h,000h,007h,0c7h,000h,03fh,0bfh,000h,036h,0b6h,000h	; bfdf  z^.~v.<,..........?..6..
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbff7..0xc000  (9 bytes)
-DATA_BFF7:
+; DATOS relleno_BFF7: 9 bytes 0xFF hasta el final del banco: relleno
+;   0xbff7..0xc000  (9 bytes)
+DATA_relleno_BFF7:
 	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bff7  .........
