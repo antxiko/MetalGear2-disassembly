@@ -809,22 +809,22 @@ C 0x80A7 guarda la velocidad del actor en Y (alta)
 C 0x80AA guarda la velocidad del actor en Y (baja)
 C 0x80AE lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
 C 0x80B3 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x80B6 p14:BA36
+C 0x80B6 mueve_por_a: por los bits de A: el 0 la Y (bytes 2-3) + la velocidad en Y (6-7); el 1 la X (4-5) + la de X (8-9)
 C 0x80BB lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
 C 0x80C0 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x80C3 p14:B9DC
+C 0x80C3 se_ve_el_actor: acarreo si el actor IX no es de aqui: su byte 0x1B ha de ser 1 en una sala especial, 2 en un sitio de 0xCBE0, 3 con 0xCA77 y 0 si no; el 9 en las especiales (salvo la 0x18), nunca
 C 0x80C8 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
 C 0x80CD bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x80D0 p14:B842
+C 0x80D0 vista_del_actor: A = el byte del dibujo del actor IX en su tabla: el 0x15 p14:B88B, el 0x0B p14:B87E, el 0x0A p14:B885, los otros p14:B86E; el 0x10, 0xFF
 C 0x80D5 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
 C 0x80DA bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x80DD p14:B931
+C 0x80DD actor_toca_d500: con la alerta y el actor IX antes de 0xD300: acarreo si alguna ficha de 0xD500 activa en el paso 2 lo toca (p14:B967 por su tipo)
 C 0x80E6 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
 C 0x80EB bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x80EE p14:B88F
+C 0x80EE actor_cambia_de_sala: el actor IX que sale por un borde pasa a la sala de al lado (fila o columna) por el otro (el 0x14 de 2 a 0xC0 en Y y de 0 a 0xC0 en X; los otros de 0x10 a 0xC0 y de 9 a 0xB9); luego sus sprites libres (NZ) o, sin ellos, pintado si esta en esta sala
 C 0x80F3 lee la copia del banco de 0xA000 y el byte siguiente (16 bits)
 C 0x80F8 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x80FB p14:BA17
+C 0x80FB suelta_lista_de_sprites: cada sprite de la lista DE (hasta 0 o 18): fuera en 0xDC28, libre en 0xD400 y a 0 en la lista
 C 0x8100 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x8103 compara con la fila de la sala del actor
 C 0x8107 lee la columna de la sala en la zona (uno mas al salir por la derecha)
@@ -975,9 +975,9 @@ C 0x8748 patrones_del_dibujo: HL = los patrones del dibujo del tipo (p56:AB35, o
 C 0x874B sprites_desde_10: los sprites desde el 10 (0xDC28)
 C 0x874E colores_desde_daa0: los colores desde 0xDAA0
 C 0x8751 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8754 p14:AF96
+C 0x8754 cuenta_d800: C = cuantas fichas de 0xD800 estan activas (de 4)
 C 0x8759 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x875C p14:AE76
+C 0x875C d800_16_vuelve: la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
 C 0x8764 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x876B apunta a de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
 C 0x87BE bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1061,10 +1061,10 @@ C 0x8AA6 d800_de_p10: la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692
 C 0x8AAB bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8AAE p15:B8EC
 C 0x8AB3 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AB6 p14:AB9E
+C 0x8AB6 d800_tipo_11: la ficha de 0xD800 de tipo 0x11: con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
 C 0x8AB9 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8ABC bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8ABF p14:AD0F
+C 0x8ABF d800_tipo_16: la ficha de 0xD800 de tipo 0x16, con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
 C 0x8AC4 rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
 C 0x8ACD sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
 C 0x8AD0 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1132,7 +1132,7 @@ C 0x8C93 la espera de la ficha de 0xD800 = 0x60
 C 0x8C9F paso_siguiente_d800: el paso siguiente
 C 0x8CA2 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CA5 sprites_ae8c: los sprites del juego (byte 0x0F / 4) de p10:AE8C (p10:ADE0) y, cada 8 cuadros, el sonido 0x14
-C 0x8CA8 puntos_que_giran: 0x44 puntos de 2 x 2 a negro desde (0x80 + (byte 0x0E / 2 * 11) mod 0x60, 0x30), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
+C 0x8CA8 puntos_que_giran: 0x44 puntos de 2 x 2 a negro desde (0x30 + (byte 0x0E / 2 * 11) mod 0x60, 0x80), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
 C 0x8CAB bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8CAE baja la espera de la ficha de 0xD800
 C 0x8CB1 borde_segun_espera: 
@@ -1496,7 +1496,7 @@ C 0x9817 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x981D guarda el paso del parpadeo del recuadro con la alerta (0-3) y el byte siguiente (16 bits)
 C 0x9820 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0x9826 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-C 0x9829 pon_radar: el recuadro (0x17, 0xC4), 0x38 x 0x38 en el color A de la pagina D
+C 0x9829 pon_radar: el recuadro (0xC4, 0x17), 0x38 x 0x38 en el color A de la pagina D
 C 0x982C bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x982F rotulos_de_alerta: los rotulos de p04:98E0 y, segun la alerta, los de p04:98E9 o p04:98F2...
 C 0x9832 imagen_de_alerta: la imagen de la alerta (p56:A242 con la 1, p56:A2A6 con la 2) con p12:6FC4 y dos franjas a la VRAM
@@ -1536,13 +1536,13 @@ C 0x993D copia_a_vram_espera: espera al VDP (p00:4650) y copia BC bytes de HL a 
 C 0x9942 suma_a_de: DE = DE + A
 C 0x9949 lee la copia del banco de 0xA000
 C 0x994D bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x9950 p14:B128
+C 0x9950 alguien_ve_a_snake: salvo en el estado 0x14 o desde el 0x1B de Snake: 0xD43E = 0xFF, p14:B214, 0xCAF6 = 0, 0xD4F4 = 0xD41E (o 0xD449 en una especial); el actor IX de tipo 3, 4 o 5, aparte (p14:B399, B3E3, B3F4); si no, la alerta (p14:B15C)
 C 0x9955 lee la copia del banco de 0xA000
 C 0x9959 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x995C p14:B176
+C 0x995C alerta_sin_musica: 0xD4F4 = 0xD41E (o 0xD449 en una especial) y la alerta
 C 0x9976 lee la copia del banco de 0xA000
 C 0x997A bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x997D p14:B34F
+C 0x997D dibujo_del_15: el dibujo (0x28 + su dibujo * 16, 0xB0), 16 x 16, en su sitio (X - 8, Y - 0x0F) con la operacion 0xC8 (0xD8 en la pagina 1)
 C 0x9982 apunta a la cuenta hasta que los actores acuden a donde estaba Snake (4 al disparar, p03:AF12)
 C 0x998A lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0x9994 apunta a la Y y la X a las que acuden los actores (16 bits)

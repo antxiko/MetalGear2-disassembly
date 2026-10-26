@@ -2486,7 +2486,7 @@ DATA_tabla_BC64:
 ; ======================================================================
 
 
-escena_e1f0_paso_0:		; 0xE1F3 = 0xFF, 0xCAF0 = 1; con la pantalla apagada: los dibujos de p00:4D16, sin sprites, el mapa y la paleta de la escena, la pagina copiada a la otra, Snake en (0xA8, 0x60), p12:6F41, las lineas y el marcador; todo encendido y el paso siguiente
+escena_e1f0_paso_0:		; 0xE1F3 = 0xFF, 0xCAF0 = 1; con la pantalla apagada: los dibujos de p00:4D16, sin sprites, el mapa y la paleta de la escena, la pagina copiada a la otra, Snake en (0x60, 0xA8), p12:6F41, las lineas y el marcador; todo encendido y el paso siguiente
 	ld a,0ffh		;bc76
 	ld (0e1f3h),a		;bc78
 	ld hl,0caf0h		;bc7b   ; 0xCAF0 = 1

@@ -1668,7 +1668,7 @@ a_p11_bd31:		; p11:BD31 con el banco 11 en 0xA000
 	jr L_8B4D		;8b6e
 a_p14_b712:		; p14:B712 con el banco 14 en 0xA000
 	call 041efh		;8b70   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b712h		;8b73   ; p14:B712
+	call 0b712h		;8b73   ; pinta_rayas: con 0xCB21 = 1: las 8 fichas de 0xE280 activas, cada una (p14:B72F)
 	jr L_8B4D		;8b76
 a_p10_a65e:		; p10:A65E con el banco 10 en 0xA000
 	call 041cdh		;8b78   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2341,10 +2341,10 @@ cosas_de_la_especial:		; las cosas de la sala especial (p06:B719)
 	call pinta_cosas		;9059   ; pinta_cosas: las 4 cosas de 0xD7C0 que no tengan el bit 7 del numero
 	jr L_9027		;905c
 deja_cosa:		; deja la cosa C en (D, E), en puntos pares
-	ld a,d			;905e   ; la Y...
+	ld a,d			;905e   ; la X...
 	and 0feh		;905f   ; ...par
 	ld d,a			;9061
-	ld a,e			;9062   ; la X...
+	ld a,e			;9062   ; la Y...
 	and 0feh		;9063   ; ...par
 	ld e,a			;9065
 	ld a,c			;9066   ; las 0x23-0x29...
@@ -2833,7 +2833,7 @@ a_p10_aff3:		; p10:AFF3 con el banco 10 en 0xA000
 	jr L_92FE		;930f
 a_p10_b172:		; p10:B172 con el banco 10 en 0xA000
 	call 041cah		;9311   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b172h		;9314   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+	call 0b172h		;9314   ; fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 	jr L_92FE		;9317
 a_p10_b3e5:		; p10:B3E5 con el banco 10 en 0xA000
 	call 041cah		;9319   ; bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)

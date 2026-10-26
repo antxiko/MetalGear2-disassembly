@@ -700,9 +700,7 @@ C 0x9FF4 ...0xCB3E = 16
 C 0x9FF7 0xCB3D...
 C 0x9FFB ...sin el, nada
 C 0x9FFE 0xCB3E un cuadro menos
-C 0x905E la Y...
 C 0x905F ...par
-C 0x9062 la X...
 C 0x9063 ...par
 C 0x881E 0xCAB6...
 C 0x8821 ...sin el bit 0, la palabra tal cual
@@ -751,6 +749,8 @@ C 0x9CD3 el bit 5 de 0xD7D8 a uno
 C 0x82F3 una vuelta de espera
 C 0x82F5 B veces...
 C 0x82F8 ...B veces
+C 0x905E la X...
+C 0x9062 la Y...
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x800C 0x8028 tabla_800C  14 destinos del despachador p00:424D (call en p02:8009, el indice en A): A97D, A9C2, AC58, 803C, B004, AA80, B380, B574, ADC0, AC8B, AADA, B211, 803C, 803C; lo leen p02:8009 (28 bytes)
@@ -1492,7 +1492,7 @@ C 0x8B63 cb44_cada_cuadro: con 0xCB44: sin sprites 4-7, sus colores (p11:B35A); 
 C 0x8B68 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B6B parado_sin_lanzar: acarreo si Snake no avanza (0xCB0F) y no hay nada lanzado
 C 0x8B70 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8B73 p14:B712
+C 0x8B73 pinta_rayas: con 0xCB21 = 1: las 8 fichas de 0xE280 activas, cada una (p14:B72F)
 C 0x8B78 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8B7B bandera_por_cosa: segun la cosa A: la 0x17 el bit 6 de 0xD7D6; la 0x2A el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D el 5 de 0xD7D9; la 0x0C el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 fuera el 6 de 0xD7E1
 C 0x8B80 bancos_11: pone el 11 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1815,7 +1815,7 @@ C 0x9304 pantalla_f3: la pantalla de F3 (p01:750B): como la de F2 con 0xD700 de 
 C 0x9309 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x930C quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 C 0x9311 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x9314 fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+C 0x9314 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0x9319 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x931C borra_sitio_de_hl: 0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
 C 0x9321 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)

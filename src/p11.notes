@@ -558,7 +558,7 @@ C 0xA627 libre: la siguiente
 C 0xA643 su fila...
 C 0xA64A ...y columna
 C 0xA655 su sitio
-C 0xA65B el dibujo de (0xB0, 0)
+C 0xA65B el dibujo de (0, 0xB0)
 C 0xA65E 8 x 8
 C 0xA668 con la operacion 0xC8
 C 0xA673 la ficha B - 1...
@@ -611,7 +611,7 @@ C 0xA8AE fuera por abajo, nada
 C 0xA8B4 sin el byte 0x0F, nada
 C 0xA8C2 el sprite 4 al 7...
 C 0xA8CC ...el 5 al 0x48
-C 0xA8D4 a (0xF2, 0)...
+C 0xA8D4 a (0, 0xF2)...
 C 0xA8D7 ...0x80 x 1...
 C 0xA8DA ...de la pagina 1 a la 3
 C 0xA8E3 sin el, nada
@@ -761,14 +761,14 @@ C 0xAE9C la X
 C 0xAEA9 desde 0x9E: acarreo
 C 0xAEB0 desde 0xB0: acarreo
 C 0xAEB5 sin ella, nada
-C 0xAEBE 0x20 x 0x10...
+C 0xAEBE 0x10 x 0x20...
 C 0xAEC1 ...color 0x0D
-C 0xAEDB a (0xB0, 0xEE)...
-C 0xAEDE ...0x22 x 0x12
+C 0xAEDB a (0xEE, 0xB0)...
+C 0xAEDE ...0x12 x 0x22
 C 0xAEE5 tipo 0
 C 0xAEE8 0xCB52 = 0
-C 0xAEEE de (0xB0, 0xEE)...
-C 0xAEF2 ...0x22 x 0x12
+C 0xAEEE de (0xEE, 0xB0)...
+C 0xAEF2 ...0x12 x 0x22
 C 0xAF07 libre: NZ
 C 0xAF0C de otro sitio: NZ
 C 0xAF10 su fila...
@@ -1004,7 +1004,7 @@ L 0xA415 dfe9_paso_2 el sonido y 0xDFEA sube 2; desde 0xA8, el paso 0
 L 0xA427 dfe8_sala_5_8 en la zona 6 fila 5 columna 8: 0xDFEA = 0xA8 si estaba a 0, el mosaico 0 (p11:A49D) y los sprites (p11:A446)
 L 0xA442 mosaico_0_a49d 
 L 0xA446 sprites_dfea los sprites de lo de 0xDFEA: uno en Y = 0x27 (p11:A44E), 8 en columna desde 0x37 (p11:A45C), y sus colores (p11:A478)
-L 0xA44E sprite_dfea_arriba en (0x27, 0xDFEA) con el patron 0xF0 desde el sprite 10
+L 0xA44E sprite_dfea_arriba en X = 0xDFEA, Y = 0x27 con el patron 0xF0 desde el sprite 10
 L 0xA45C sprites_dfea_columna 8 parejas con el patron 0xF8 desde Y = 0x37, de 0x10 en 0x10
 L 0xA460 pareja_f8 
 L 0xA46C pareja_de_sprites los sprites C y C + 4 en (E, D)
@@ -1038,7 +1038,7 @@ L 0xA632 siguiente_cc00
 L 0xA63A cc00_aqui Z si la ficha (p11:B4F3 da Z) esta en esta sala (bytes 4-5)
 L 0xA64E pinta_ficha_cc00 
 L 0xA652 fondo_y_dibujo_cc00 
-L 0xA655 dibujo_cc00 8 x 8 de (0xB0, 0) en su sitio (bytes 2-3) con la operacion 0xC8
+L 0xA655 dibujo_cc00 8 x 8 de (0, 0xB0) en su sitio (bytes 2-3) con la operacion 0xC8
 L 0xA66D fondo_cc00 el fondo guardado (p11:A673) de la otra pagina a su sitio
 L 0xA673 sitio_del_fondo HL = su sitio, DE = (0xC0 + (B - 1 & 3) * 8, 0xB0 o 0xB8), 8 x 8
 L 0xA67E fondo_columna 
@@ -1057,7 +1057,7 @@ L 0xA747 nada_a747
 L 0xA748 sprite_cb80 el sprite de HL en su Y y X con el patron 0x18 y sus 16 colores al 7
 L 0xA762 sprites_lanzado_0b el arma 0x0B: con la ficha 0 de tipo 8, su dibujo (p11:A77C), dos sprites en su sitio (p11:A792) y los colores (p11:A8BC)
 L 0xA776 sprites_tipo_8 
-L 0xA77C dibujo_tipo_8 el dibujo (p11:A782) a (0xF2, 0) de la pagina 3 (p11:A8D4)
+L 0xA77C dibujo_tipo_8 el dibujo (p11:A782) a (0, 0xF2) de la pagina 3 (p11:A8D4)
 L 0xA782 sitio_dibujo_8 HL = (0 u 0x80 con el byte 0x0F, 0xBF + el byte 0x0B)
 L 0xA792 dos_sprites_20 los sprites 4-5 en su sitio con el patron 0x20
 L 0xA7A3 sprites_lanzado_0a el arma 0x0A: con la ficha 0 de tipo 7, colores 7 y 0x48, y los sprites con el patron 0x20
@@ -1065,7 +1065,7 @@ L 0xA7A8 sprites_lanzado_3 el arma 3: la mira (p11:A7E3) y, con la ficha 0 de ti
 L 0xA7B0 ficha_0_tipo_b 
 L 0xA7BC sprites_patron_20 los sprites 4-5 en el sitio de la ficha con el patron 0x20
 L 0xA7CD colores_7_c los colores del sprite 4 al 7 y los del 5 al C
-L 0xA7E3 mira fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en (0xCB22, 0xCB23) con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
+L 0xA7E3 mira fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en X = 0xCB23, Y = 0xCB22 con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
 L 0xA822 sin_df80 acarreo si las 8 fichas de 0xDF80 estan libres
 L 0xA82A mira_df80 
 L 0xA832 sprites_lanzado_6 el arma 6: con la ficha 0 de tipo 6, su dibujo (p11:A845), los sprites y los colores
@@ -1082,7 +1082,7 @@ L 0xA89A sprites_lanzado_5 el arma 5 (o lo lanzado de tipo 5): con 0xCAAB, a cer
 L 0xA8A4 lanzado_5 
 L 0xA8BC colores_7_48 los colores del sprite 4 al 7 y los del 5 al 0x48
 L 0xA8D1 dibujo_tipo_5 
-L 0xA8D4 dibujo_a_la_3 0x80 x 1 de HL a (0xF2, 0) de la pagina 3 (desde la 1)
+L 0xA8D4 dibujo_a_la_3 0x80 x 1 de HL a (0, 0xF2) de la pagina 3 (desde la 1)
 L 0xA8DF sitio_dibujo_5 con el byte 0x0F, HL segun el (p11:A855 o A854)
 L 0xA8EE mira_de_5 el sprite 6 en (byte 0x0C - 7, byte 0x0D - 7) (Y = 0xE0 con 0xCB21 = 2) con el patron 0x1C y color 7
 L 0xA900 x_de_la_mira 
@@ -1133,7 +1133,7 @@ L 0xACA2 arma_0a_b
 L 0xACB6 velocidad_de_3 la velocidad de p11:ACD9
 L 0xACB9 velocidad_por_direccion los 6 bytes de la direccion de Snake de HL a los bytes 6-0x0B, los 0x0C-0x0D a cero y la direccion al byte 0x0E
 L 0xAD09 lanzado_3_7_paso lo lanzado de tipo 3 y 7, desde el paso 1: si llega a la mira (p11:AD3D) se acaba; las velocidades (bytes 6-9) suben lo de los bytes 0x0A-0x0D
-L 0xAD3D llega_a_la_mira por su direccion (byte 0x0E, p11:AD44): si pasa de la mira (0xCB22, 0xCB23) se acaba
+L 0xAD3D llega_a_la_mira por su direccion (byte 0x0E, p11:AD44): si pasa de la mira (Y 0xCB22, X 0xCB23) se acaba
 L 0xAD4C mira_arriba hacia arriba: por debajo de Y = 0xC8, el 7 por p11:AD8C; los demas subiendo, al pasar de la Y de la mira
 L 0xAD65 en_la_mira se acaba (0xCB52 = 0) y, con la mira dentro (0xB8), el 7 p11:B885 en ella; los demas p03:B1BA con C = 0
 L 0xAD87 en_la_mira_7 
@@ -1152,9 +1152,9 @@ L 0xAE85 no_cabe_ae85
 L 0xAE87 d760_delante la Y y la X de la ficha: las de Snake + el desplazamiento de su direccion (p11:AEA0)
 L 0xAEA4 d760_fuera acarreo con la Y desde 0x9E o la X desde 0xB0
 L 0xAEB2 marco_d760_si con la ficha 0xD760 aqui (p11:AEFF), su marco (p11:AEB6)
-L 0xAEB6 marco_d760 su fondo guardado en (0xB0, 0xEE) (p11:AEDB) y el marco de 0x20 x 0x10, color 0x0D, en su sitio
+L 0xAEB6 marco_d760 su fondo guardado en (0xEE, 0xB0) (p11:AEDB) y el marco de 0x10 x 0x20, color 0x0D, en su sitio
 L 0xAEC9 solo_marco_d760 con la ficha aqui, solo el marco
-L 0xAEDB guarda_fondo_d760 0x22 x 0x12 de su sitio a (0xB0, 0xEE)
+L 0xAEDB guarda_fondo_d760 0x12 x 0x22 de su sitio a (0xEE, 0xB0)
 L 0xAEE4 quita_d760 la ficha 0xD760 fuera: tipo 0, 0xCB52 = 0 y el fondo de vuelta a su sitio en la otra pagina
 L 0xAEF8 sitio_d760 L = la Y, H = la X de la ficha
 L 0xAEFF d760_aqui_b Z con la ficha 0xD760 activa, del sitio de Snake (p11:AFC3) y en esta sala
@@ -1340,12 +1340,12 @@ L 0xBBC7 dibujo_de_ca89
 L 0xBBF5 borra_d8a4_c 
 L 0xBBFB ca90_empieza 0xCA90 = 1, 0xCA91-0xCA92 = 0x0600 y el bit 6 de 0xD7D7
 L 0xBC0C ca90_cada_cuadro con 0xCA90, su paso (p11:BC15, 5): al acabar cada cuenta (p11:BCA0), la siguiente y el dibujo de la cosa 0x0F (p11:BCB1)
-L 0xBC1F ca90_paso_1 al acabar la cuenta: 0x0300, el dibujo de (0x90, 0xC0) y el paso siguiente
+L 0xBC1F ca90_paso_1 al acabar la cuenta: 0x0300, el dibujo de (0xC0, 0x90) y el paso siguiente
 L 0xBC2F ca90_siguiente 
-L 0xBC34 ca90_paso_2 al acabar: 0x80, el dibujo de (0x90, 0xD0) y el paso siguiente
-L 0xBC46 ca90_paso_3 al acabar: 0x20, el dibujo de (0xA0, 0xB0), el bit 3 de 0xD7D7, fuera el 7 de 0xD7E3 y el paso siguiente
-L 0xBC62 ca90_paso_4 al acabar: 0x10, el dibujo de (0xA0, 0xC0), el paso siguiente y, con la cosa 0x0F elegida, el bit 2 de 0xD7D7, fuera el 6 de 0xD7DF, p03:AF05 y el sonido 0x26
-L 0xBC8B ca90_paso_5 al acabar: 0x100, el dibujo de (0xA0, 0xB0) y el paso de antes (se alternan)
+L 0xBC34 ca90_paso_2 al acabar: 0x80, el dibujo de (0xD0, 0x90) y el paso siguiente
+L 0xBC46 ca90_paso_3 al acabar: 0x20, el dibujo de (0xB0, 0xA0), el bit 3 de 0xD7D7, fuera el 7 de 0xD7E3 y el paso siguiente
+L 0xBC62 ca90_paso_4 al acabar: 0x10, el dibujo de (0xC0, 0xA0), el paso siguiente y, con la cosa 0x0F elegida, el bit 2 de 0xD7D7, fuera el 6 de 0xD7DF, p03:AF05 y el sonido 0x26
+L 0xBC8B ca90_paso_5 al acabar: 0x100, el dibujo de (0xB0, 0xA0) y el paso de antes (se alternan)
 L 0xBCA0 cuenta_ca91 0xCA91-0xCA92 uno menos; Z a cero
 L 0xBCAA pon_ca91 0xCA91-0xCA92 = DE
 L 0xBCB1 dibujo_de_0f con la cosa 0x0F elegida: borra el sitio de 0xD8A4 y copia ahi 16 x 16 de HL
@@ -1354,7 +1354,7 @@ L 0xBD16 sprite_4_fuera
 L 0xBD1C sprites_4_7_fuera salvo en el estado 6, los sprites 4-7 fuera
 L 0xBD31 parado_sin_lanzar acarreo si Snake no avanza (0xCB0F) y no hay nada lanzado
 L 0xBD3E mira_cb80 
-L 0xBD46 dibujo_de_ca61 el dibujo de p11:BD54 a (0xF1, 0x40) de la pagina 3, 0x40 x 1
+L 0xBD46 dibujo_de_ca61 el dibujo de p11:BD54 a (0x40, 0xF1) de la pagina 3, 0x40 x 1
 L 0xBD54 sitio_de_ca61 HL = (0 u 0x80 por el bit 0 de 0xCA61, 0xC4 o 0xC5 desde el 3), 0x40 mas con 0xCB27 = 3
 L 0xBD5E mitad_de_ca61 
 L 0xBD65 mas_40 
@@ -1374,8 +1374,8 @@ L 0xBE88 pon_patron_cb78
 L 0xBE94 sin_sprites_4_7_b los sprites 4-7 fuera
 L 0xBEA2 sprites_de_caac con los mensajes de los bancos 50-51: sin 0xCAAC, los sprites 4-7 fuera; con el, fuera y los de p11:BECB con color 7
 L 0xBECB sprites_bed4 por los cuadros / 2 & 7 (p11:BED4)
-L 0xBEE4 sprites_c810 los sprites 4-5 en (0x10, 0xC8) y (0x10, 0xD8) con el patron 0x20
-L 0xBEF4 sprites_c42e los sprites 4-5 en (0x2E, 0xC4) y (0x2E, 0xD4) con el patron 0x18
+L 0xBEE4 sprites_c810 los sprites 4-5 en (0xC8, 0x10) y (0xD8, 0x10) con el patron 0x20
+L 0xBEF4 sprites_c42e los sprites 4-5 en (0xC4, 0x2E) y (0xD4, 0x2E) con el patron 0x18
 L 0xBF04 sin_sprites_4_5 
 L 0xBF0F sprites_e1d0 los 14 sprites de la ficha 0xE1D0 (p11:BF14) y sus colores (p11:BF5D)
 L 0xBF14 sprites_de_e1d0 7 parejas desde el sprite 4: en su sitio (0xE1D2, 0xE1D3) + los de p11:BF4F, patrones desde 0x0C de 4 en 4
@@ -1482,7 +1482,7 @@ C 0xA42D lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA433 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA439 apunta a la X de lo de 0xDFE8 (no se pasa, p06:A2AA)
 C 0xA443 mosaico_a4a6: 
-C 0xA446 sprite_dfea_arriba: en (0x27, 0xDFEA) con el patron 0xF0 desde el sprite 10
+C 0xA446 sprite_dfea_arriba: en X = 0xDFEA, Y = 0x27 con el patron 0xF0 desde el sprite 10
 C 0xA449 sprites_dfea_columna: 8 parejas con el patron 0xF8 desde Y = 0x37, de 0x10 en 0x10
 C 0xA44E apunta a la X de lo de 0xDFE8 (no se pasa, p06:A2AA)
 C 0xA459 pareja_de_sprites: los sprites C y C + 4 en (E, D)
@@ -1528,7 +1528,7 @@ C 0xA607 apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][colu
 C 0xA612 pinta_ficha_cc00: 
 C 0xA61E apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][columna][cuenta] (p11:B380)
 C 0xA62B cc00_aqui: Z si la ficha (p11:B4F3 da Z) esta en esta sala (bytes 4-5)
-C 0xA62E dibujo_cc00: 8 x 8 de (0xB0, 0) en su sitio (bytes 2-3) con la operacion 0xC8
+C 0xA62E dibujo_cc00: 8 x 8 de (0, 0xB0) en su sitio (bytes 2-3) con la operacion 0xC8
 C 0xA63B sitio_cc00: Z si el byte 0 (sin el bit 7) es el sitio de Snake
 C 0xA640 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA647 lee la columna de la sala en la zona (uno mas al salir por la derecha)
@@ -1547,7 +1547,7 @@ C 0xA6B3 apunta a 8 fichas de 16 bytes del arma 7 [sitio][paso][Y][X][fila][colu
 C 0xA6BF lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xA6C7 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xA6D1 fondo_cc00: el fondo guardado (p11:A673) de la otra pagina a su sitio
-C 0xA6D5 dibujo_cc00: 8 x 8 de (0xB0, 0) en su sitio (bytes 2-3) con la operacion 0xC8
+C 0xA6D5 dibujo_cc00: 8 x 8 de (0, 0xB0) en su sitio (bytes 2-3) con la operacion 0xC8
 C 0xA6E1 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xA6EA lee 1 con una ficha de 0xCC80 puesta (p11:B59A)
 C 0xA6F1 lee 1-2: el arma 0x0C en marcha (2 con 0xCB21 = 0x1D; p11:B211)
@@ -1562,16 +1562,16 @@ C 0xA751 pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0
 C 0xA75D llena_bloque: pone A en BC + 1 bytes desde HL
 C 0xA762 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA766 lee el tipo de lo lanzado por Snake
-C 0xA76C dibujo_tipo_8: el dibujo (p11:A782) a (0xF2, 0) de la pagina 3 (p11:A8D4)
+C 0xA76C dibujo_tipo_8: el dibujo (p11:A782) a (0, 0xF2) de la pagina 3 (p11:A8D4)
 C 0xA776 dos_sprites_20: los sprites 4-5 en su sitio con el patron 0x20
 C 0xA779 colores_7_48: los colores del sprite 4 al 7 y los del 5 al 0x48
 C 0xA77C sitio_dibujo_8: HL = (0 u 0x80 con el byte 0x0F, 0xBF + el byte 0x0B)
-C 0xA77F dibujo_a_la_3: 0x80 x 1 de HL a (0xF2, 0) de la pagina 3 (desde la 1)
+C 0xA77F dibujo_a_la_3: 0x80 x 1 de HL a (0, 0xF2) de la pagina 3 (desde la 1)
 C 0xA792 lee la Y de lo lanzado por Snake
 C 0xA795 lee la X de lo lanzado por Snake
 C 0xA79D pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 C 0xA7A0 pon_sprite_mas_4: p00:5D41 con el patron C + 4
-C 0xA7AC mira: fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en (0xCB22, 0xCB23) con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
+C 0xA7AC mira: fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en X = 0xCB23, Y = 0xCB22 con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
 C 0xA7B0 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
 C 0xA7BF lee la Y de lo lanzado por Snake
 C 0xA7C2 lee la X de lo lanzado por Snake
@@ -1592,7 +1592,7 @@ C 0xA83C dibujo_tipo_6:
 C 0xA83F sprites_patron_20: los sprites 4-5 en el sitio de la ficha con el patron 0x20
 C 0xA842 colores_7_48: los colores del sprite 4 al 7 y los del 5 al 0x48
 C 0xA845 sitio_dibujo_6: HL = (0 u 0x80 segun el bit 0 del byte 0x0B, 0xC0 o 0xC1 desde 3)
-C 0xA848 dibujo_a_la_3: 0x80 x 1 de HL a (0xF2, 0) de la pagina 3 (desde la 1)
+C 0xA848 dibujo_a_la_3: 0x80 x 1 de HL a (0, 0xF2) de la pagina 3 (desde la 1)
 C 0xA85C apunta a 16 fichas de 8 bytes del arma 8 [sitio][paso][Y][X][fila][columna] (p11:B574)
 C 0xA867 sprite_cc80: en el paso 0: los sprites (p11:A87E) y los colores
 C 0xA878 sprite_cc80_b: los sprites 4-5 en su sitio (bytes 2-3) con el patron 0x20
@@ -1764,7 +1764,7 @@ C 0xAE91 lee la Y de Snake
 C 0xAE98 lee la X de Snake
 C 0xAEB2 d760_aqui_b: Z con la ficha 0xD760 activa, del sitio de Snake (p11:AFC3) y en esta sala
 C 0xAEB6 sitio_d760: L = la Y, H = la X de la ficha
-C 0xAEBA guarda_fondo_d760: 0x22 x 0x12 de su sitio a (0xB0, 0xEE)
+C 0xAEBA guarda_fondo_d760: 0x12 x 0x22 de su sitio a (0xEE, 0xB0)
 C 0xAEC3 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAEC6 marco: cuatro lineas: un marco de D x E desde HL
 C 0xAEC9 d760_aqui_b: Z con la ficha 0xD760 activa, del sitio de Snake (p11:AFC3) y en esta sala
@@ -2139,7 +2139,7 @@ C 0xBCDC lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus ch
 C 0xBCE7 parado_sin_lanzar: acarreo si Snake no avanza (0xCB0F) y no hay nada lanzado
 C 0xBCEB lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBCF6 lee 1-4: elige las rachas de p01:6F27 y la caja de p07:B889 (al azar cada 0xF0 cuadros en la mayoria de salas, p10:A0BB)
-C 0xBD02 dibujo_de_ca61: el dibujo de p11:BD54 a (0xF1, 0x40) de la pagina 3, 0x40 x 1
+C 0xBD02 dibujo_de_ca61: el dibujo de p11:BD54 a (0x40, 0xF1) de la pagina 3, 0x40 x 1
 C 0xBD1C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBD31 lee 1 si Snake ha chocado en este cuadro
 C 0xBD36 apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)

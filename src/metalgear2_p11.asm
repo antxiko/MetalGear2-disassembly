@@ -577,10 +577,10 @@ mosaico_0_a49d:
 	xor a			;a442   ; el mosaico 0
 	call mosaico_a4a6		;a443   ; mosaico_a4a6:
 sprites_dfea:		; los sprites de lo de 0xDFEA: uno en Y = 0x27 (p11:A44E), 8 en columna desde 0x37 (p11:A45C), y sus colores (p11:A478)
-	call sprite_dfea_arriba		;a446   ; sprite_dfea_arriba: en (0x27, 0xDFEA) con el patron 0xF0 desde el sprite 10
+	call sprite_dfea_arriba		;a446   ; sprite_dfea_arriba: en X = 0xDFEA, Y = 0x27 con el patron 0xF0 desde el sprite 10
 	call sprites_dfea_columna		;a449   ; sprites_dfea_columna: 8 parejas con el patron 0xF8 desde Y = 0x37, de 0x10 en 0x10
 	jr colores_dfea		;a44c
-sprite_dfea_arriba:		; en (0x27, 0xDFEA) con el patron 0xF0 desde el sprite 10
+sprite_dfea_arriba:		; en X = 0xDFEA, Y = 0x27 con el patron 0xF0 desde el sprite 10
 	ld hl,0dfeah		;a44e   ; apunta a la X de lo de 0xDFE8 (no se pasa, p06:A2AA)
 	ld d,(hl)			;a451   ; la X de 0xDFEA
 	ld e,027h		;a452   ; Y = 0x27
@@ -876,7 +876,7 @@ ficha_cc00_c:
 	jr z,siguiente_cc00		;a628
 	push bc			;a62a
 	call cc00_aqui		;a62b   ; cc00_aqui: Z si la ficha (p11:B4F3 da Z) esta en esta sala (bytes 4-5)
-	call z,dibujo_cc00		;a62e   ; dibujo_cc00: 8 x 8 de (0xB0, 0) en su sitio (bytes 2-3) con la operacion 0xC8
+	call z,dibujo_cc00		;a62e   ; dibujo_cc00: 8 x 8 de (0, 0xB0) en su sitio (bytes 2-3) con la operacion 0xC8
 	pop bc			;a631
 siguiente_cc00:
 	ld de,00010h		;a632
@@ -899,10 +899,10 @@ pinta_ficha_cc00:
 	ret nz			;a651
 fondo_y_dibujo_cc00:
 	call fondo_cc00		;a652   ; fondo_cc00: el fondo guardado (p11:A673) de la otra pagina a su sitio
-dibujo_cc00:		; 8 x 8 de (0xB0, 0) en su sitio (bytes 2-3) con la operacion 0xC8
+dibujo_cc00:		; 8 x 8 de (0, 0xB0) en su sitio (bytes 2-3) con la operacion 0xC8
 	ld e,(ix+002h)		;a655   ; su sitio
 	ld d,(ix+003h)		;a658
-	ld hl,000b0h		;a65b   ; el dibujo de (0xB0, 0)
+	ld hl,000b0h		;a65b   ; el dibujo de (0, 0xB0)
 	ld bc,00808h		;a65e   ; 8 x 8
 	ld a,(0ca42h)		;a661   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rlca			;a664
@@ -970,7 +970,7 @@ ficha_cc00_e:
 	push bc			;a6d0
 	call fondo_cc00		;a6d1   ; fondo_cc00: el fondo guardado (p11:A673) de la otra pagina a su sitio
 	pop bc			;a6d4
-	call dibujo_cc00		;a6d5   ; dibujo_cc00: 8 x 8 de (0xB0, 0) en su sitio (bytes 2-3) con la operacion 0xC8
+	call dibujo_cc00		;a6d5   ; dibujo_cc00: 8 x 8 de (0, 0xB0) en su sitio (bytes 2-3) con la operacion 0xC8
 	pop bc			;a6d8
 siguiente_cc00_c:
 	ld de,00010h		;a6d9
@@ -1054,16 +1054,16 @@ sprites_lanzado_0b:		; el arma 0x0B: con la ficha 0 de tipo 8, su dibujo (p11:A7
 	ld a,(ix+000h)		;a766   ; lee el tipo de lo lanzado por Snake
 	cp 008h		;a769   ; el tipo 8
 	ret nz			;a76b   ; otro tipo, nada
-	call dibujo_tipo_8		;a76c   ; dibujo_tipo_8: el dibujo (p11:A782) a (0xF2, 0) de la pagina 3 (p11:A8D4)
+	call dibujo_tipo_8		;a76c   ; dibujo_tipo_8: el dibujo (p11:A782) a (0, 0xF2) de la pagina 3 (p11:A8D4)
 	ld a,(ix+00bh)		;a76f
 	cp 003h		;a772
 	jr c,sprites_tipo_8		;a774
 sprites_tipo_8:
 	call dos_sprites_20		;a776   ; dos_sprites_20: los sprites 4-5 en su sitio con el patron 0x20
 	jp colores_7_48		;a779   ; colores_7_48: los colores del sprite 4 al 7 y los del 5 al 0x48
-dibujo_tipo_8:		; el dibujo (p11:A782) a (0xF2, 0) de la pagina 3 (p11:A8D4)
+dibujo_tipo_8:		; el dibujo (p11:A782) a (0, 0xF2) de la pagina 3 (p11:A8D4)
 	call sitio_dibujo_8		;a77c   ; sitio_dibujo_8: HL = (0 u 0x80 con el byte 0x0F, 0xBF + el byte 0x0B)
-	jp dibujo_a_la_3		;a77f   ; dibujo_a_la_3: 0x80 x 1 de HL a (0xF2, 0) de la pagina 3 (desde la 1)
+	jp dibujo_a_la_3		;a77f   ; dibujo_a_la_3: 0x80 x 1 de HL a (0, 0xF2) de la pagina 3 (desde la 1)
 sitio_dibujo_8:		; HL = (0 u 0x80 con el byte 0x0F, 0xBF + el byte 0x0B)
 	ld a,(ix+00bh)		;a782
 	add a,0bfh		;a785   ; + 0xBF
@@ -1087,7 +1087,7 @@ sprites_lanzado_0a:		; el arma 0x0A: con la ficha 0 de tipo 7, colores 7 y 0x48,
 sprites_lanzado_3:		; el arma 3: la mira (p11:A7E3) y, con la ficha 0 de tipo 3, colores 7 y 0x4E, y los sprites
 	ld bc,0034eh		;a7a8   ; el tipo 3, color 0x4E
 	push bc			;a7ab
-	call mira		;a7ac   ; mira: fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en (0xCB22, 0xCB23) con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
+	call mira		;a7ac   ; mira: fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en X = 0xCB23, Y = 0xCB22 con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
 	pop bc			;a7af
 ficha_0_tipo_b:
 	ld ix,0cb80h		;a7b0   ; apunta a las 6 fichas de 16 bytes de lo que lanza Snake ([tipo][..][Y 8.8][X 8.8][velocidades]...)
@@ -1114,7 +1114,7 @@ colores_7_c:		; los colores del sprite 4 al 7 y los del 5 al C
 	ld a,c			;a7dc   ; ...y C
 	ld bc,0000fh		;a7dd
 	jp 04237h		;a7e0   ; llena_bloque: pone A en BC + 1 bytes desde HL
-mira:		; fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en (0xCB22, 0xCB23) con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
+mira:		; fuera de los estados 2, 5, 0x0B y 0x0F, sin 0xCB21 = 2, sin fichas de 0xDF80 y sin nada lanzado: el sprite 6 en X = 0xCB23, Y = 0xCB22 con el patron 0x1C y color 7 (con las dos por debajo de 0xB1)
 	ld a,(0cb00h)		;a7e3   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	cp 002h		;a7e6
 	ret z			;a7e8   ; el 2...
@@ -1169,7 +1169,7 @@ sprites_lanzado_6:		; el arma 6: con la ficha 0 de tipo 6, su dibujo (p11:A845),
 	jp colores_7_48		;a842   ; colores_7_48: los colores del sprite 4 al 7 y los del 5 al 0x48
 dibujo_tipo_6:
 	call sitio_dibujo_6		;a845   ; sitio_dibujo_6: HL = (0 u 0x80 segun el bit 0 del byte 0x0B, 0xC0 o 0xC1 desde 3)
-	jp dibujo_a_la_3		;a848   ; dibujo_a_la_3: 0x80 x 1 de HL a (0xF2, 0) de la pagina 3 (desde la 1)
+	jp dibujo_a_la_3		;a848   ; dibujo_a_la_3: 0x80 x 1 de HL a (0, 0xF2) de la pagina 3 (desde la 1)
 sitio_dibujo_6:		; HL = (0 u 0x80 segun el bit 0 del byte 0x0B, 0xC0 o 0xC1 desde 3)
 	ld l,0c0h		;a84b
 	ld a,(ix+00bh)		;a84d   ; desde 3...
@@ -1244,8 +1244,8 @@ colores_7_48:		; los colores del sprite 4 al 7 y los del 5 al 0x48
 	jp 04237h		;a8ce   ; llena_bloque: pone A en BC + 1 bytes desde HL
 dibujo_tipo_5:
 	call sitio_dibujo_5		;a8d1   ; sitio_dibujo_5: con el byte 0x0F, HL segun el (p11:A855 o A854)
-dibujo_a_la_3:		; 0x80 x 1 de HL a (0xF2, 0) de la pagina 3 (desde la 1)
-	ld de,000f2h		;a8d4   ; a (0xF2, 0)...
+dibujo_a_la_3:		; 0x80 x 1 de HL a (0, 0xF2) de la pagina 3 (desde la 1)
+	ld de,000f2h		;a8d4   ; a (0, 0xF2)...
 	ld bc,08001h		;a8d7   ; ...0x80 x 1...
 	ld a,007h		;a8da   ; ...de la pagina 1 a la 3
 	jp 04767h		;a8dc   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
@@ -1810,7 +1810,7 @@ lanzado_3_7_paso:		; lo lanzado de tipo 3 y 7, desde el paso 1: si llega a la mi
 	ld (ix+008h),l		;ad36   ; guarda la velocidad en X de lo lanzado por Snake (baja)
 	ld (ix+009h),h		;ad39   ; guarda la velocidad en X de lo lanzado por Snake (alta)
 	ret			;ad3c
-llega_a_la_mira:		; por su direccion (byte 0x0E, p11:AD44): si pasa de la mira (0xCB22, 0xCB23) se acaba
+llega_a_la_mira:		; por su direccion (byte 0x0E, p11:AD44): si pasa de la mira (Y 0xCB22, X 0xCB23) se acaba
 	ld a,(ix+00eh)		;ad3d
 	dec a			;ad40   ; la direccion - 1
 	call 0424dh		;ad41   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -2032,12 +2032,12 @@ d760_fuera:		; acarreo con la Y desde 0x9E o la X desde 0xB0
 marco_d760_si:		; con la ficha 0xD760 aqui (p11:AEFF), su marco (p11:AEB6)
 	call d760_aqui_b		;aeb2   ; d760_aqui_b: Z con la ficha 0xD760 activa, del sitio de Snake (p11:AFC3) y en esta sala
 	ret nz			;aeb5   ; sin ella, nada
-marco_d760:		; su fondo guardado en (0xB0, 0xEE) (p11:AEDB) y el marco de 0x20 x 0x10, color 0x0D, en su sitio
+marco_d760:		; su fondo guardado en (0xEE, 0xB0) (p11:AEDB) y el marco de 0x10 x 0x20, color 0x0D, en su sitio
 	call sitio_d760		;aeb6   ; sitio_d760: L = la Y, H = la X de la ficha
 	push hl			;aeb9
-	call guarda_fondo_d760		;aeba   ; guarda_fondo_d760: 0x22 x 0x12 de su sitio a (0xB0, 0xEE)
+	call guarda_fondo_d760		;aeba   ; guarda_fondo_d760: 0x12 x 0x22 de su sitio a (0xEE, 0xB0)
 	pop hl			;aebd
-	ld de,01020h		;aebe   ; 0x20 x 0x10...
+	ld de,01020h		;aebe   ; 0x10 x 0x20...
 	ld c,00dh		;aec1   ; ...color 0x0D
 	ld a,(0ca42h)		;aec3   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jp 046bch		;aec6   ; marco: cuatro lineas: un marco de D x E desde HL
@@ -2049,18 +2049,18 @@ solo_marco_d760:		; con la ficha aqui, solo el marco
 	ld c,00dh		;aed3
 	ld a,(0ca42h)		;aed5   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	jp 046bch		;aed8   ; marco: cuatro lineas: un marco de D x E desde HL
-guarda_fondo_d760:		; 0x22 x 0x12 de su sitio a (0xB0, 0xEE)
-	ld de,0eeb0h		;aedb   ; a (0xB0, 0xEE)...
-	ld bc,01222h		;aede   ; ...0x22 x 0x12
+guarda_fondo_d760:		; 0x12 x 0x22 de su sitio a (0xEE, 0xB0)
+	ld de,0eeb0h		;aedb   ; a (0xEE, 0xB0)...
+	ld bc,01222h		;aede   ; ...0x12 x 0x22
 	jp 0474dh		;aee1   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 quita_d760:		; la ficha 0xD760 fuera: tipo 0, 0xCB52 = 0 y el fondo de vuelta a su sitio en la otra pagina
 	xor a			;aee4
 	ld (ix+000h),a		;aee5   ; tipo 0
 	ld (0cb52h),a		;aee8   ; 0xCB52 = 0
 	call sitio_d760		;aeeb   ; sitio_d760: L = la Y, H = la X de la ficha
-	ld de,0eeb0h		;aeee   ; de (0xB0, 0xEE)...
+	ld de,0eeb0h		;aeee   ; de (0xEE, 0xB0)...
 	ex de,hl			;aef1
-	ld bc,01222h		;aef2   ; ...0x22 x 0x12
+	ld bc,01222h		;aef2   ; ...0x12 x 0x22
 	jp 0475ah		;aef5   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 sitio_d760:		; L = la Y, H = la X de la ficha
 	ld l,(ix+002h)		;aef8
@@ -4013,7 +4013,7 @@ DATA_tabla_BC15:
 ; ======================================================================
 
 
-ca90_paso_1:		; al acabar la cuenta: 0x0300, el dibujo de (0x90, 0xC0) y el paso siguiente
+ca90_paso_1:		; al acabar la cuenta: 0x0300, el dibujo de (0xC0, 0x90) y el paso siguiente
 	call cuenta_ca91		;bc1f   ; cuenta_ca91: 0xCA91-0xCA92 uno menos; Z a cero
 	ret nz			;bc22
 	ld de,00300h		;bc23
@@ -4024,7 +4024,7 @@ ca90_siguiente:
 	ld hl,0ca90h		;bc2f   ; apunta a el paso de lo de la cosa 0x0F (1-5, p11:BC0C)
 	inc (hl)			;bc32
 	ret			;bc33
-ca90_paso_2:		; al acabar: 0x80, el dibujo de (0x90, 0xD0) y el paso siguiente
+ca90_paso_2:		; al acabar: 0x80, el dibujo de (0xD0, 0x90) y el paso siguiente
 	call cuenta_ca91		;bc34   ; cuenta_ca91: 0xCA91-0xCA92 uno menos; Z a cero
 	ret nz			;bc37
 	ld de,00080h		;bc38
@@ -4032,7 +4032,7 @@ ca90_paso_2:		; al acabar: 0x80, el dibujo de (0x90, 0xD0) y el paso siguiente
 	ld hl,0d090h		;bc3e
 	call dibujo_de_0f		;bc41   ; dibujo_de_0f: con la cosa 0x0F elegida: borra el sitio de 0xD8A4 y copia ahi 16 x 16 de HL
 	jr ca90_siguiente		;bc44
-ca90_paso_3:		; al acabar: 0x20, el dibujo de (0xA0, 0xB0), el bit 3 de 0xD7D7, fuera el 7 de 0xD7E3 y el paso siguiente
+ca90_paso_3:		; al acabar: 0x20, el dibujo de (0xB0, 0xA0), el bit 3 de 0xD7D7, fuera el 7 de 0xD7E3 y el paso siguiente
 	call cuenta_ca91		;bc46   ; cuenta_ca91: 0xCA91-0xCA92 uno menos; Z a cero
 	ret nz			;bc49
 	ld de,00020h		;bc4a
@@ -4044,7 +4044,7 @@ ca90_paso_3:		; al acabar: 0x20, el dibujo de (0xA0, 0xB0), el bit 3 de 0xD7D7, 
 	ld hl,0d7e3h		;bc5b
 	res 7,(hl)		;bc5e
 	jr ca90_siguiente		;bc60
-ca90_paso_4:		; al acabar: 0x10, el dibujo de (0xA0, 0xC0), el paso siguiente y, con la cosa 0x0F elegida, el bit 2 de 0xD7D7, fuera el 6 de 0xD7DF, p03:AF05 y el sonido 0x26
+ca90_paso_4:		; al acabar: 0x10, el dibujo de (0xC0, 0xA0), el paso siguiente y, con la cosa 0x0F elegida, el bit 2 de 0xD7D7, fuera el 6 de 0xD7DF, p03:AF05 y el sonido 0x26
 	call cuenta_ca91		;bc62   ; cuenta_ca91: 0xCA91-0xCA92 uno menos; Z a cero
 	ret nz			;bc65
 	ld de,00010h		;bc66
@@ -4061,7 +4061,7 @@ ca90_paso_4:		; al acabar: 0x10, el dibujo de (0xA0, 0xC0), el paso siguiente y,
 	res 6,(hl)		;bc83
 	call 08f70h		;bc85   ; a_p03_af05_2: p03:AF05 con el banco 3 en 0xA000
 	jp 06a93h		;bc88   ; sonido_26: pide el sonido 0x26
-ca90_paso_5:		; al acabar: 0x100, el dibujo de (0xA0, 0xB0) y el paso de antes (se alternan)
+ca90_paso_5:		; al acabar: 0x100, el dibujo de (0xB0, 0xA0) y el paso de antes (se alternan)
 	call cuenta_ca91		;bc8b   ; cuenta_ca91: 0xCA91-0xCA92 uno menos; Z a cero
 	ret nz			;bc8e
 	ld de,00100h		;bc8f
@@ -4126,7 +4126,7 @@ sombra_de_cb21_1:		; con 0xCB21 = 1 y fuera del estado 6: en el estado 0x14 o de
 	ld a,(0cb27h)		;bcfb
 	cp 002h		;bcfe
 	jr c,sprites_4_7_fuera		;bd00   ; 0xCB27 por debajo de 2
-	call dibujo_de_ca61		;bd02   ; dibujo_de_ca61: el dibujo de p11:BD54 a (0xF1, 0x40) de la pagina 3, 0x40 x 1
+	call dibujo_de_ca61		;bd02   ; dibujo_de_ca61: el dibujo de p11:BD54 a (0x40, 0xF1) de la pagina 3, 0x40 x 1
 	call sprite_de_ca61		;bd05   ; el sprite
 	ld hl,0da40h		;bd08   ; su color 7
 	ld de,0da41h		;bd0b
@@ -4164,7 +4164,7 @@ mira_cb80:
 	djnz mira_cb80		;bd42
 	scf			;bd44   ; ninguna: acarreo
 	ret			;bd45
-dibujo_de_ca61:		; el dibujo de p11:BD54 a (0xF1, 0x40) de la pagina 3, 0x40 x 1
+dibujo_de_ca61:		; el dibujo de p11:BD54 a (0x40, 0xF1) de la pagina 3, 0x40 x 1
 	call sitio_de_ca61		;bd46   ; sitio_de_ca61: HL = (0 u 0x80 por el bit 0 de 0xCA61, 0xC4 o 0xC5 desde el 3), 0x40 mas con 0xCB27 = 3
 	ld de,040f1h		;bd49
 	ld bc,04001h		;bd4c
@@ -4389,14 +4389,14 @@ DATA_tabla_BED4:
 ; ======================================================================
 
 
-sprites_c810:		; los sprites 4-5 en (0x10, 0xC8) y (0x10, 0xD8) con el patron 0x20
+sprites_c810:		; los sprites 4-5 en (0xC8, 0x10) y (0xD8, 0x10) con el patron 0x20
 	ld hl,0dc10h		;bee4
 	ld c,020h		;bee7
 	ld de,0c810h		;bee9
 	call 05d41h		;beec   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
 	ld d,0d8h		;beef
 	jp 05d3dh		;bef1   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
-sprites_c42e:		; los sprites 4-5 en (0x2E, 0xC4) y (0x2E, 0xD4) con el patron 0x18
+sprites_c42e:		; los sprites 4-5 en (0xC4, 0x2E) y (0xD4, 0x2E) con el patron 0x18
 	ld hl,0dc10h		;bef4
 	ld c,018h		;bef7
 	ld de,0c42eh		;bef9

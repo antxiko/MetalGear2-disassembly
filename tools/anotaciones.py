@@ -357,7 +357,7 @@ RAM = {
     0xD7B7: ("el mensaje que toca (16 bits)", "p01:60BB"),
     0xD7B9: ("por donde va la conversacion (16 bits)", "p01:60A5"),
     0xD7BB: ("1: la pantalla de conversacion la abre una escena (llama sola, p09:B8AB)", "p09:A8F2"),
-    0xD7BC: ("la columna de la onda (0-0x2F, p09:BE14)", "p09:BA5F"),
+    0xD7BC: ("la fila de la onda (0-0x2F, p09:BE14): Y = 0x18 + esto", "p09:BA5F"),
     0xD7BE: ("el sitio del numero en la lista 0xD7A0 (p09:BC2D)", "p09:BC30"),
     0xD7C0: ("las 4 cosas de la sala: fichas de 4 bytes [tipo][Y][X][numero]", "p02:8FDF, p02:9084"),
     0xD7D0: ("las banderas de la partida: la n en el bit 7 - n % 8 del byte n / 8 (p03:B0DC, p03:B0F6)", "p03:B0AD, p03:B0E1"),
@@ -517,6 +517,10 @@ CAMPOS_D800 = {
     0x01: "el paso de la ficha de 0xD800",
     0x03: "la Y de la ficha de 0xD800",
     0x05: "la X de la ficha de 0xD800",
+    0x06: "la velocidad de la ficha de 0xD800 en Y (baja)",
+    0x07: "la velocidad de la ficha de 0xD800 en Y (alta)",
+    0x08: "la velocidad de la ficha de 0xD800 en X (baja)",
+    0x09: "la velocidad de la ficha de 0xD800 en X (alta)",
     0x0D: "el dibujo de la ficha de 0xD800",
     0x0E: "la espera de la ficha de 0xD800",
     0x17: "la espera del parpadeo de la ficha de 0xD800",
@@ -552,7 +556,7 @@ CARGAS_SNAKE_LANZADO = tuple(0xCB80 + 0x10 * k for k in range(6))
 
 FICHAS = ((CARGAS_CANAL, {16: ((0x4369, 0x4C19),)}, CAMPOS_CANAL),
           # antes que los actores: donde las dos valen, manda la carga de IX
-          (CARGAS_D800, {4: ((0x86ED, 0x8D7E),), 5: ((0xBD26, 0xBD3B),), 10: ((0xAA78, 0xAED6),)}, CAMPOS_D800),
+          (CARGAS_D800, {4: ((0x86ED, 0x8D7E),), 5: ((0xBD26, 0xBD3B),), 10: ((0xAA78, 0xAED6),), 14: ((0xAB9E, 0xAF96),)}, CAMPOS_D800),
           (CARGAS_LANZADO, {4: ((0x9A80, 0x9AA9), (0x9C82, 0x9CD5))}, CAMPOS_LANZADO),
           (CARGAS_SNAKE_LANZADO, {11: ((0xA729, 0xA85C), (0xA88F, 0xA916), (0xA97D, 0xADC0), (0xB004, 0xB211))}, CAMPOS_SNAKE_LANZADO),
           (CARGAS_ACTOR, {4: ((0x8000, 0x86ED), (0x8D7E, 0x9A80), (0x9AA9, 0x9C82), (0x9CD5, 0xA000)),

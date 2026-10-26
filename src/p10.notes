@@ -24,7 +24,7 @@ C 0xA0F4 fuera de la especial 0x11, nada
 C 0xA0F5 1
 C 0xA0F6 0xCAB6 = 1
 C 0xA0FC su cuenta
-C 0xA100 en (0xA0, 0x90)
+C 0xA100 en (0x90, 0xA0)
 C 0xA109 0xCA8C = 0x40
 C 0xA119 solo en la zona 0x0A
 C 0xA12D las filas 3...
@@ -36,7 +36,7 @@ C 0xA159 ya con 0xCB39, nada
 C 0xA15F el bit 3 de 0xD7D5
 C 0xA161 0xCB3A = 0x1000
 C 0xA17B sin 0xCAB6, nada
-C 0xA19B en (0xA0, 0x80)
+C 0xA19B en (0x80, 0xA0)
 C 0xA1A3 por debajo de 0x20, nada
 C 0xA1A6 desde 0x23, nada
 C 0xA1BB 0x10 x 0x10
@@ -104,7 +104,7 @@ C 0xA4C3 la segunda ficha
 C 0xA4D4 libre, nada
 C 0xA4D9 por debajo del paso 2, nada
 C 0xA4DB su sitio
-C 0xA4DE de (0xA0, 0xE0)...
+C 0xA4DE de (0xE0, 0xA0)...
 C 0xA4E1 ...0x20 x 0x20
 C 0xA500 libre, nada
 C 0xA503 la otra libre, sigue
@@ -112,13 +112,13 @@ C 0xA508 la otra en el paso 1, espera
 C 0xA50E el paso 1
 C 0xA510 el 2 en adelante
 C 0xA51C su sitio...
-C 0xA521 ...a (0x90, 0xC0)...
+C 0xA521 ...a (0xC0, 0x90)...
 C 0xA524 ...0x20 x 0x20 de la otra pagina
 C 0xA52B el sonido 0x45
 C 0xA537 2 menos
 C 0xA539 a cero: el paso siguiente
 C 0xA53C de (0xE0, 0xA0)...
-C 0xA53F ...a (0x90, 0x20)
+C 0xA53F ...a (0x20, 0x90)
 C 0xA54C copia en Y
 C 0xA551 la mitad de la izquierda
 C 0xA55C la de la derecha
@@ -374,7 +374,7 @@ C 0xA1F9 aun no
 C 0xA1FD al 2
 C 0xA1FF otros 0x200
 C 0xA20A borra
-C 0xA20D (0x90, 0xB0)...
+C 0xA20D (0xB0, 0x90)...
 C 0xA219 ...(0x90, 0xC0)...
 C 0xA21E ...(0x90, 0xD0)
 C 0xA22E 16 x 16
@@ -696,7 +696,7 @@ C 0xAE09 la X + D
 C 0xAE10 el patron
 C 0xAE17 el color...
 C 0xAE1A ...16 lineas
-C 0xAE9C desde (0x80, 0x30)
+C 0xAE9C desde (0x30, 0x80)
 C 0xAEA2 la espera / 2...
 C 0xAEA4 ...11 veces...
 C 0xAEA8 ...en vuelta de 0x60
@@ -759,14 +759,14 @@ C 0xB104 2: (0x90, 0xC0)
 C 0xB108 3: (0x90, 0xD0)
 C 0xB113 de p10:B119
 C 0xB128 de p10:B130
-C 0xB13D en (0x8E, 6)...
-C 0xB145 en (0x6A, 0x88)...
+C 0xB13D en (6, 0x8E)...
+C 0xB145 en (0x88, 0x6A)...
 C 0xB148 ...0x20 x 0x30
 C 0xB14B color 7
 C 0xB154 sin ella, nada
-C 0xB158 a (0x72, 0x98)
-C 0xB164 0xC2 x 0xC0
-C 0xB172 (0x90, 8)...
+C 0xB158 a (0x98, 0x72)
+C 0xB164 0xC0 x 0xC2
+C 0xB172 (8, 0x90)...
 C 0xB175 ...0xB0 x 0x28
 C 0xB178 al color 0x99
 C 0xB181 sin 0xE1D8, nada
@@ -801,20 +801,20 @@ C 0xB324 en la ultima columna, nada
 C 0xB326 2
 C 0xB331 en la fila 0, nada
 C 0xB333 3
-C 0xB343 desde (0x1C, 0x0E)
+C 0xB343 desde (0x0E, 0x1C)
 C 0xB349 la esquina de la otra...
 C 0xB353 ...8 x 8
 C 0xB35F 1: la columna - 1
 C 0xB362 2: + 1
 C 0xB368 3: la fila - 1; 4: + 1
-C 0xB377 desde (0x1C, 0x0E)
+C 0xB377 desde (0x0E, 0x1C)
 C 0xB384 la operacion 0xC8
-C 0xB389 el cursor de (0x38, 0x50)
+C 0xB389 el cursor de (0x50, 0x38)
 C 0xB393 con 0xD8A4, nada
 C 0xB394 el sitio de 0xD874
 C 0xB3A3 X + 0x0A
 C 0xB3A7 Y - 4
-C 0xB3AB a (0x74, 0xD0)
+C 0xB3AB a (0xD0, 0x74)
 C 0xB3BB de esta pagina a la 3
 C 0xB3C5 con 0xD8A4, nada
 C 0xB3DD a 0xD8A4
@@ -953,21 +953,21 @@ L 0xA0A1 modo_0_paso_1 al acabar la cuenta, el paso siguiente y 0xCA61 = 1
 L 0xA0B0 modo_0_paso_2 con 0xCB21 = 1, 0xE1D5 = 1
 L 0xA0BB modo_2_cada_cuadro cada 0xF0 cuadros, 0xCA61 = 1-4 al azar (los cuadros / 4 con R)
 L 0xA0D3 cab6_de_la_sala p10:A10F y, sin 0xCAB6, p10:A0DB
-L 0xA0DB ca8e_de_la_sala 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0xA0, 0x90); y 0xCA8C = 0x40
+L 0xA0DB ca8e_de_la_sala 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0x90, 0xA0); y 0xCA8C = 0x40
 L 0xA108 pon_ca8e 
 L 0xA10F ca9b_de_la_sala 0xCA9B = 0; en la zona 0x0A: en las salas 0x0B, 0x0C, 0x10 y 0x11, 0xCA9B = 1; en las filas 3 y 6, 0xCB28 = 0 y 0xCB29 = 0x20
 L 0xA137 cb28_cb29_20 
 L 0xA140 ca9b_a_1 
 L 0xA143 cb39_cb3f sin el bit 2 de 0xD7D5 y con el 4, con 0xCB3F y sin 0xCB39: 0xCB39 = 1, el bit 3 de 0xD7D5 y 0xCB3A = 0x1000
 L 0xA168 cuenta_cab7 0xCAB7 = 0x1000
-L 0xA170 cab6_cuenta en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0xA0, 0x80)
+L 0xA170 cab6_cuenta en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0x80, 0xA0)
 L 0xA18A baja_cab7 
 L 0xA194 cab6_acaba 
 L 0xA19E mosaico_de_d8a4 con 0xCB21 = 0x20-0x22: borra el sitio de 0xD8A4 (p10:B3E5) y copia 0x10 x 0x10 de HL ahi (operacion 0xC8)
 L 0xA1C1 ca7b_empieza 0xCA7B = 1, 0xCA7C-0xCA7D = 0x0200 y el bit 7 de 0xD7D7
 L 0xA1D2 ca7b_cada_cuadro con 0xCA7B en 1 o 2: la cuenta de 0xCA7C-0xCA7D; al acabar, 0xCA7B uno mas (en el 1, otra cuenta de 0x200) y el mosaico de 0xD8A4 segun 0xCA7B (p10:A204); al acabar el 2, ademas la ficha 0xE1D8 (p10:A234)
 L 0xA1F0 ca7b_1 la cuenta
-L 0xA204 mosaico_de_ca7b con 0xCB21 = 0x0E: borra el sitio de 0xD8A4 y copia ahi el de (0x90, 0xB0) (0xCA7B 0-1), (0x90, 0xC0) (2) o (0x90, 0xD0) (3)
+L 0xA204 mosaico_de_ca7b con 0xCB21 = 0x0E: borra el sitio de 0xD8A4 y copia ahi el de (0xB0, 0x90) (0xCA7B 0-1), (0xC0, 0x90) (2) o (0xD0, 0x90) (3)
 L 0xA220 copia_a_d8a4 
 L 0xA234 ficha_e1d8 la ficha 0xE1D8: 1, 0x80, 0x18, 0x18; el bit 5 de 0xD7D7 y fuera el 0 de 0xD7E2
 L 0xA24D e1d8_cada_cuadro con 0xE1D8, la cuenta de 0xE1D9 (a 0, 0x80); en 3, 2 y 1, si se tiene la cosa 0x22 (0xD6BC), 0x21 (0xD6B8) o 0x20 (0xD6B4), p03:BEB7 y p03:BEB2; si se acaba, a cero y, con ella en 0xCB21, borra el sitio de 0xD8A4
@@ -992,7 +992,7 @@ L 0xA30B e1db_baja_18 0xE1DB - 1 hasta 0x18
 L 0xA30E mueve_e1db 
 L 0xA311 mueve_hasta_c (HL) + B; al llegar a C, el tramo siguiente
 L 0xA31B e1d8_sprites con 0xE1D8, sus dos sprites (p10:A325) y sus colores 0x0D y 0x4E (p10:A361)
-L 0xA325 sprites_de_e1d8 los sprites 0 y 1 en (0xE1DA, 0xE1DB) con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
+L 0xA325 sprites_de_e1d8 los sprites 0 y 1 en X = 0xE1DB, Y = 0xE1DA con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
 L 0xA33C sitio_de_e1d8 D = la X (0xE1DB), E = la Y (0xE1DA)
 L 0xA356 tiembla_x 
 L 0xA358 pon_sprites_e1d8 
@@ -1011,15 +1011,15 @@ L 0xA493 ficha_a61b
 L 0xA4A6 otra_a61b 
 L 0xA4A7 siguiente_a61b 
 L 0xA4AA pon_ficha_e070 activa...
-L 0xA4C9 pinta_fichas_e070 las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xA0, 0xE0) de la pagina 3 (o la 1) a su sitio
+L 0xA4C9 pinta_fichas_e070 las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xE0, 0xA0) de la pagina 3 (o la 1) a su sitio
 L 0xA4D2 pinta_e070 
 L 0xA4EE copia_e070 
 L 0xA4F1 fichas_e070_cada_cuadro las dos fichas de 0xE070 (la segunda espera a que la primera deje el paso 1): paso 0 con Snake cerca (p10:A5EC) guarda el fondo y el sonido 0x45; paso 1 se abre de 2 en 2 (p10:A535); paso 2 en adelante, p10:A5C2
 L 0xA4FE ficha_e070_paso 
 L 0xA509 paso_de_e070 
 L 0xA52E e070_paso_siguiente el paso de la ficha (byte 1) uno mas
-L 0xA535 e070_paso_1 el byte 4 baja 2; a cero, el paso siguiente; si no, la franja guardada en (0x90, 0x20) y las dos mitades separadas (p10:A5AE) con ese hueco; sin la luz (p10:A578), el resultado a la otra pagina
-L 0xA56C e070_a_la_otra 0x20 x 0x1F de (0x90, 0xE0) a su sitio en la otra pagina
+L 0xA535 e070_paso_1 el byte 4 baja 2; a cero, el paso siguiente; si no, la franja guardada en (0x20, 0x90) y las dos mitades separadas (p10:A5AE) con ese hueco; sin la luz (p10:A578), el resultado a la otra pagina
+L 0xA56C e070_a_la_otra 0x20 x 0x1F de (0xE0, 0x90) a su sitio en la otra pagina
 L 0xA578 sala_con_luz acarreo (salvo con 0xCB21 = 3) en la zona 4 sala 5 con 0xCACC o en la zona 3 sala 0x10 con 0xCACA
 L 0xA589 sin_luz 
 L 0xA58B zona_4_luz 
@@ -1134,7 +1134,7 @@ L 0xAD76 patrones_ad76
 L 0xADC3 sprites_ae8c los sprites del juego (byte 0x0F / 4) de p10:AE8C (p10:ADE0) y, cada 8 cuadros, el sonido 0x14
 L 0xADE0 sprites_de_ae28 los sprites 10-17 fuera y los del dibujo (byte 0x0F & 3) de p10:AE28: B sprites [dY][dX][patron][color] sumados a DE, con sus 16 colores
 L 0xAE02 sprite_ae28 
-L 0xAE9C puntos_que_giran 0x44 puntos de 2 x 2 a negro desde (0x80 + (byte 0x0E / 2 * 11) mod 0x60, 0x30), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
+L 0xAE9C puntos_que_giran 0x44 puntos de 2 x 2 a negro desde (0x30 + (byte 0x0E / 2 * 11) mod 0x60, 0x80), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
 L 0xAEA7 mod_60 
 L 0xAEAE desplaza_mod 
 L 0xAEB9 punto_negro 
@@ -1169,17 +1169,17 @@ L 0xB0D8 copia_dibujo
 L 0xB0DC dibujo_f3 el dibujo de la cosa: la 0x0E segun 0xCA7B (p10:B0F9), la 0x0F segun 0xCA90, la 0x10 segun 0xCA89, las demas de p56:A6CB; 16 x 16 a la pagina 3
 L 0xB0EE copia_16x16 
 L 0xB0F4 dibujo_0e 
-L 0xB0F9 sitio_0e HL = (0x90, 0xB0), (0x90, 0xC0) o (0x90, 0xD0) segun 0xCA7B
+L 0xB0F9 sitio_0e HL = (0xB0, 0x90), (0xC0, 0x90) o (0xD0, 0x90) segun 0xCA7B
 L 0xB10B dibujo_0f 
 L 0xB110 sitio_0f HL = el de p10:B119 por 0xCA90
 L 0xB125 dibujo_10 HL = el de p10:B130 por 0xCA89
-L 0xB13A recuadro_f2 el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
-L 0xB145 recuadro_f2_b el marco de color 7 de 0x20 x 0x30 en (0x6A, 0x88)
+L 0xB13A recuadro_f2 el fondo (p10:B16A) y el marco de color 7 en (6, 0x8E)
+L 0xB145 recuadro_f2_b el marco de color 7 de 0x20 x 0x30 en (0x88, 0x6A)
 L 0xB14B marco_7 
-L 0xB150 cosa_d634 con la cosa 0x0D (0xD634), su dibujo de (0x80, 0xE0) a (0x72, 0x98)
-L 0xB161 pagina_a_cero_f 0xC2 x 0xC0 desde (0, 0) a cero
+L 0xB150 cosa_d634 con la cosa 0x0D (0xD634), su dibujo de (0xE0, 0x80) a (0x98, 0x72)
+L 0xB161 pagina_a_cero_f 0xC0 x 0xC2 desde (0, 0) a cero
 L 0xB16A fondo_f2 el fondo al color 0x99
-L 0xB172 fondo_de_mensajes 0xB0 x 0x28 en (0x90, 8) al color 0x99
+L 0xB172 fondo_de_mensajes 0xB0 x 0x28 en (8, 0x90) al color 0x99
 L 0xB178 fondo_99 
 L 0xB17D e1d8_rachas con 0xE1D8, las rachas de p37:B2D5
 L 0xB185 f2_cada_cuadro p02:8ECD, p10:BA51, p10:B191 y p02:8ED2
@@ -1205,11 +1205,11 @@ L 0xB343 borra_cursor
 L 0xB359 mueve_cursor 0xD702 o 0xD703 uno mas o menos segun 0xD707
 L 0xB36B uno_mas_cursor 
 L 0xB36D uno_menos_cursor 
-L 0xB36F cursor_f2 el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
+L 0xB36F cursor_f2 el cursor (8 x 8 de (0x50, 0x38)) en su sitio con pasos de 0x38 x 0x10
 L 0xB374 cursor_f3 lo mismo con pasos de 0x20 x 0x10
 L 0xB377 pinta_cursor 
 L 0xB37D copia_cursor 
-L 0xB38F elegida_f2 sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
+L 0xB38F elegida_f2 sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0xD0, 0x74)
 L 0xB3B1 copia_a_la_3 
 L 0xB3C1 elegida_f3 sin 0xD8A4: el sitio de 0xD8A4 borrado y el dibujo a el
 L 0xB3E5 borra_sitio_de_hl 0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
@@ -1294,10 +1294,10 @@ L 0xB8C4 letrero_f2_0 el letrero 0 de p50:8046 (ninguno)
 L 0xB8C7 letrero_de_lo_elegido el letrero de lo elegido de p50:8046 y, para la 7, su recuadro (p10:B8D5)
 L 0xB8CC letrero_d704 
 L 0xB8CF letrero_8046 
-L 0xB8D5 recuadro_de_7 la 7: un marco en (0x94, 0x70) de 0x44 x 0x20, los letreros de p10:B919 y p10:B920 y el cursor de 0xD70A (p10:B8F8)
-L 0xB8F8 cursor_d70a borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
+L 0xB8D5 recuadro_de_7 la 7: un marco en (0x70, 0x94) de 0x44 x 0x20, los letreros de p10:B919 y p10:B920 y el cursor de 0xD70A (p10:B8F8)
+L 0xB8F8 cursor_d70a borra 8 x 0x18 en (0x74, 0x9A) (lo de (0x62, 0x9A)) y el cursor en (0x74, 0x9A) o (0x74, 0xA6) segun 0xD70A
 L 0xB916 pinta_cursor_d70a 
-L 0xB926 letrero_de_f3 el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+L 0xB926 letrero_de_f3 el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x3C, 0x94)
 L 0xB92B letrero_8048 
 L 0xB934 dibujo_14_1c 
 L 0xB957 sin_lanzados_p10 lo lanzado por Snake a cero
@@ -1313,8 +1313,8 @@ L 0xB9DA mitad_8x8
 L 0xB9E5 marcador_de_lo_elegido en el marcador: el dibujo de lo de 0xCB20 (p56:A6AF) con su cuenta en (0xE0, 0x88) y el de 0xCB21 (p56:A6CB) con la suya (0x20-0x22) en (0xE0, 0xB8)
 L 0xBA03 borra_d8a4_b 
 L 0xBA09 marcador_cb21 
-L 0xBA2A dibujo_a_d8a4 el dibujo de HL a (0xA4, 0xD8), 16 x 16
-L 0xBA32 dibujo_a_d074 el dibujo de HL a (0x74, 0xD0), 0x20 x 16 (16 x 16 en (0x74, 0xD8) desde la 3)
+L 0xBA2A dibujo_a_d8a4 el dibujo de HL a (0xD8, 0xA4), 16 x 16
+L 0xBA32 dibujo_a_d074 el dibujo de HL a (0xD0, 0x74), 0x20 x 16 (16 x 16 en (0xD8, 0x74) desde la 3)
 L 0xBA43 copia_dibujo_logica 
 L 0xBA51 sprites_cb4b_f2 con 0xCB4B: el parpadeo (p10:BAA8), sin sprites y, sobre las dos primeras cosas de la lista, la 9 con sus sprites
 L 0xBA65 cosa_cb4b 
@@ -1414,7 +1414,7 @@ C 0xA17C lee la zona
 C 0xA183 lee la sala de la zona
 C 0xA18A lee cuenta de 16 bits de 0xCAB6
 C 0xA18E guarda cuenta de 16 bits de 0xCAB6
-C 0xA198 ca8e_de_la_sala: 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0xA0, 0x90); y 0xCA8C = 0x40
+C 0xA198 ca8e_de_la_sala: 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0x90, 0xA0); y 0xCA8C = 0x40
 C 0xA19E lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA1B2 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA1BE copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
@@ -1445,7 +1445,7 @@ C 0xA2E3 apunta a la Y de la ficha 0xE1D8
 C 0xA30E apunta a la X de la ficha 0xE1D8
 C 0xA316 apunta a el tramo de la ficha de p10:A234 (0 = ninguna; 0xE1DA-0xE1DB su sitio)
 C 0xA31B lee el tramo de la ficha de p10:A234 (0 = ninguna; 0xE1DA-0xE1DB su sitio)
-C 0xA320 sprites_de_e1d8: los sprites 0 y 1 en (0xE1DA, 0xE1DB) con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
+C 0xA320 sprites_de_e1d8: los sprites 0 y 1 en X = 0xE1DB, Y = 0xE1DA con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
 C 0xA325 lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xA331 lee el tramo de la ficha de p10:A234 (0 = ninguna; 0xE1DA-0xE1DB su sitio)
 C 0xA33C lee la X de la ficha 0xE1D8
@@ -1482,7 +1482,7 @@ C 0xA42F a_p03_beb2: p03:BEB2 con el banco 3 en 0xA000
 C 0xA440 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA44B quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 C 0xA44E b172_y_b8c4: p10:B172 y p10:B8C4
-C 0xA471 fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+C 0xA471 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0xA474 letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 C 0xA477 apunta a 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 C 0xA47D borra_bloque: pone a cero BC + 1 bytes desde HL
@@ -1683,24 +1683,24 @@ C 0xAF5A esconde_sprites_vram: llena con 0xE0 128 bytes de la VRAM en 0xF600 y o
 C 0xAF65 cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 C 0xAF68 guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xAF6B cuenta_f3: las 0x20-0x22: la cuenta de 0xD638 en (0xE0, 0xB8); las demas, p10:B9B4
-C 0xAF6E letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+C 0xAF6E letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x3C, 0x94)
 C 0xAF71 e1d8_rachas: con 0xE1D8, las rachas de p37:B2D5
 C 0xAF74 sprites_a_vram_b_1_2_10: sprites_a_vram y deja los bancos 1, 2 y 10
 C 0xAF82 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0xAF85 enciende_todo: la pantalla y los sprites encendidos
-C 0xAF88 pagina_a_cero_f: 0xC2 x 0xC0 desde (0, 0) a cero
+C 0xAF88 pagina_a_cero_f: 0xC0 x 0xC2 desde (0, 0) a cero
 C 0xAF8B letrero_f2: el letrero de p50:8044
-C 0xAF8E cursor_f2: el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
+C 0xAF8E cursor_f2: el cursor (8 x 8 de (0x50, 0x38)) en su sitio con pasos de 0x38 x 0x10
 C 0xAF91 cosas_de_d600: las 13 cosas de 0xD600 que se tienen (0xD708 = su numero): su sitio, su dibujo y a la lista (p10:B02E)
-C 0xAF94 recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
-C 0xAF97 recuadro_f2_b: el marco de color 7 de 0x20 x 0x30 en (0x6A, 0x88)
-C 0xAF9A elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
-C 0xAF9D cosa_d634: con la cosa 0x0D (0xD634), su dibujo de (0x80, 0xE0) a (0x72, 0x98)
-C 0xAFA0 pagina_a_cero_f: 0xC2 x 0xC0 desde (0, 0) a cero
+C 0xAF94 recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (6, 0x8E)
+C 0xAF97 recuadro_f2_b: el marco de color 7 de 0x20 x 0x30 en (0x88, 0x6A)
+C 0xAF9A elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0xD0, 0x74)
+C 0xAF9D cosa_d634: con la cosa 0x0D (0xD634), su dibujo de (0xE0, 0x80) a (0x98, 0x72)
+C 0xAFA0 pagina_a_cero_f: 0xC0 x 0xC2 desde (0, 0) a cero
 C 0xAFA3 letrero_f3: el letrero de p50:804A
 C 0xAFA6 cursor_f3: lo mismo con pasos de 0x20 x 0x10
 C 0xAFA9 cosas_de_d638: las 0x22 cosas de 0xD638 que se tienen, igual (p10:B062)
-C 0xAFAC recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
+C 0xAFAC recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (6, 0x8E)
 C 0xAFAF elegida_f3: sin 0xD8A4: el sitio de 0xD8A4 borrado y el dibujo a el
 C 0xAFB2 apunta a el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
 C 0xAFBD apunta a el cursor de F2 guardado (columna, fila)
@@ -1738,7 +1738,7 @@ C 0xB0D9 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 C 0xB0DC lee el numero de la cosa que se pinta en F2/F3
 C 0xB0EB palabra_a6cb_d708: HL = la palabra 0xD708 - 1 de p56:A6CB (con el bit 0 de 0xCAB6, de 0x20 a 0x22 pasa a 0x24)
 C 0xB0F1 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
-C 0xB0F4 sitio_0e: HL = (0x90, 0xB0), (0x90, 0xC0) o (0x90, 0xD0) segun 0xCA7B
+C 0xB0F4 sitio_0e: HL = (0xB0, 0x90), (0xC0, 0x90) o (0xD0, 0x90) segun 0xCA7B
 C 0xB0FC lee 0-3: el paso de la cosa 0x0E (p10:A1D2)
 C 0xB10B sitio_0f: HL = el de p10:B119 por 0xCA90
 C 0xB110 lee el paso de lo de la cosa 0x0F (1-5, p11:BC0C)
@@ -1759,11 +1759,11 @@ C 0xB18B f2_paso: con una tecla de funcion, sale (p10:B44D); el cursor con el ma
 C 0xB18E p02:8ED2
 C 0xB191 lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 C 0xB19F lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
-C 0xB1A5 fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+C 0xB1A5 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0xB1A8 borra_cursor_f2: borra el cursor de su sitio (pasos de 0x38 x 0x10)
 C 0xB1AB mueve_cursor: 0xD702 o 0xD703 uno mas o menos segun 0xD707
-C 0xB1AE cursor_f2: el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
-C 0xB1B1 elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
+C 0xB1AE cursor_f2: el cursor (8 x 8 de (0x50, 0x38)) en su sitio con pasos de 0x38 x 0x10
+C 0xB1B1 elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0xD0, 0x74)
 C 0xB1B6 cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 C 0xB1B9 guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB1BC cuenta_f2: la cuenta de lo elegido de 0xD600 en (0xE0, 0x88)
@@ -1772,7 +1772,7 @@ C 0xB1C2 usa_en_f2: con 0xCB4B y el disparo 1, sobre la 9 o la 0x0B: el sonido 0
 C 0xB1C5 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB1CB lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB1D6 guarda 0-1: la opcion de la cosa 7 en F2 (p10:B8F8); en el estado 7, de 0 a 9 por 0xD709 (p13:9799)
-C 0xB1D9 cursor_d70a: borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
+C 0xB1D9 cursor_d70a: borra 8 x 0x18 en (0x74, 0x9A) (lo de (0x62, 0x9A)) y el cursor en (0x74, 0x9A) o (0x74, 0xA6) segun 0xD70A
 C 0xB1DC sonido_11: pide el sonido 0x11
 C 0xB1DF p02:8ECD
 C 0xB1E2 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
@@ -1785,7 +1785,7 @@ C 0xB201 p02:8ED2
 C 0xB204 lee lo recien pulsado de las teclas de funcion (bits como 0xCA0A)
 C 0xB20F cursor_con_el_mando: 0xD707 = 0 y, con una direccion recien pulsada que cabe (0xD702 columna hasta E, 0xD703 fila hasta D): 0xD707 = 1 arriba, 2 abajo, 3 izquierda, 4 derecha y el sonido 0x11
 C 0xB212 lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
-C 0xB218 fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+C 0xB218 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0xB21B borra_cursor_f3: lo mismo con pasos de 0x20 x 0x10
 C 0xB21E mueve_cursor: 0xD702 o 0xD703 uno mas o menos segun 0xD707
 C 0xB221 cursor_f3: lo mismo con pasos de 0x20 x 0x10
@@ -1793,7 +1793,7 @@ C 0xB224 elegida_f3: sin 0xD8A4: el sitio de 0xD8A4 borrado y el dibujo a el
 C 0xB229 cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 C 0xB22C guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB22F cuenta_f3: las 0x20-0x22: la cuenta de 0xD638 en (0xE0, 0xB8); las demas, p10:B9B4
-C 0xB232 letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+C 0xB232 letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x3C, 0x94)
 C 0xB235 usa_en_f3: con 0xCB4B y el disparo 1: la cosa elegida de 0xD638 (las 0x20-0x22 solo con la vida al maximo) se usa (p10:BB96)
 C 0xB238 lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
 C 0xB23E lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
@@ -1813,7 +1813,7 @@ C 0xB2B8 borra_sitio_de_hl: 0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
 C 0xB2BB lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB2BE quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 C 0xB2C2 guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
-C 0xB2C5 fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+C 0xB2C5 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0xB2C8 letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 C 0xB2D1 lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xB2D4 a_p03_beb7: p03:BEB7 con el banco 3 en 0xA000
@@ -2060,14 +2060,14 @@ C 0xB9D2 mitad_8x8:
 C 0xB9E0 copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 C 0xB9E5 lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 C 0xB9EF palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
-C 0xB9F2 dibujo_a_d074: el dibujo de HL a (0x74, 0xD0), 0x20 x 16 (16 x 16 en (0x74, 0xD8) desde la 3)
+C 0xB9F2 dibujo_a_d074: el dibujo de HL a (0xD0, 0x74), 0x20 x 16 (16 x 16 en (0xD8, 0x74) desde la 3)
 C 0xB9F5 lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 C 0xB9F8 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 C 0xB9FE cuenta_de_a: la cuenta (bytes 2-3) de la ficha A - 1 de HL pintada (p10:B960) y copiada de la otra pagina, 0x20 x 8
 C 0xBA06 borra_sitio_de_hl: 0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
 C 0xBA09 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xBA12 palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
-C 0xBA15 dibujo_a_d8a4: el dibujo de HL a (0xA4, 0xD8), 16 x 16
+C 0xBA15 dibujo_a_d8a4: el dibujo de HL a (0xD8, 0xA4), 16 x 16
 C 0xBA18 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xBA24 apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 C 0xBA27 cuenta_de_a: la cuenta (bytes 2-3) de la ficha A - 1 de HL pintada (p10:B960) y copiada de la otra pagina, 0x20 x 8
@@ -2125,7 +2125,7 @@ C 0xBBCA borra_sitio_de_hl: 0x18 x 0x10 en HL y 8 x 0x10 en HL - 8 al color 0x99
 C 0xBBCD lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 C 0xBBD0 quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 C 0xBBD4 guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
-C 0xBBD7 fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+C 0xBBD7 fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 C 0xBBDA letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 C 0xBBDD lee con el puesto, la vida baja un punto cada 16 cuadros
 C 0xBBE2 apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1

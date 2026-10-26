@@ -719,7 +719,7 @@ L 0xB020 colores_del_sprite los 16 colores del sprite A - 1 (0xDAA0 + 16 * (A - 
 L 0xB032 tipo_13_paso_3 la espera: los dos sprites (bytes 0x2E y 0x2F) a los colores 7 y 0x0A y, en los cuadros impares, anda; al acabar, fuera (p04:834C)
 L 0xBC53 escena_e1f0 la escena de 0xE1F0 por su paso 0xE1F1 (p08:BC64, 9 pasos) y, mientras dura, sus sprites (p08:BE09)
 L 0xBC5E escena_e1f0_paso 
-L 0xBC76 escena_e1f0_paso_0 0xE1F3 = 0xFF, 0xCAF0 = 1; con la pantalla apagada: los dibujos de p00:4D16, sin sprites, el mapa y la paleta de la escena, la pagina copiada a la otra, Snake en (0xA8, 0x60), p12:6F41, las lineas y el marcador; todo encendido y el paso siguiente
+L 0xBC76 escena_e1f0_paso_0 0xE1F3 = 0xFF, 0xCAF0 = 1; con la pantalla apagada: los dibujos de p00:4D16, sin sprites, el mapa y la paleta de la escena, la pagina copiada a la otra, Snake en (0x60, 0xA8), p12:6F41, las lineas y el marcador; todo encendido y el paso siguiente
 L 0xBCB6 e1f1_siguiente el paso siguiente de 0xE1F1
 L 0xBCBB escena_e1f0_paso_1 0xE1F3 = 0x70 y el paso siguiente
 L 0xBCC2 escena_e1f0_paso_2 guarda 0x60 x 0x10 de (0x30, 0x24) en (0x30, 0xE0), un recuadro (color 0x99, marco 7) con el letrero de p08:BD14 en (0x38, 0x28), 0x40 cuadros y el paso siguiente

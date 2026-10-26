@@ -67,16 +67,16 @@ pres_paso_3:		; espera la cuenta
 	call pres_cuenta		;80b7   ; pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 	ret nz			;80ba
 	jp pres_siguiente		;80bb   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
-pres_paso_4:		; la paleta a negro; al acabar, la pantalla limpia, la paleta a negro, el dibujo de (0x68, 0x80) de 0x40 x 0x30 en (0x40, 0xA0) y 0xCA30-0xCA31 a cero
+pres_paso_4:		; la paleta a negro; al acabar, la pantalla limpia, la paleta a negro, el dibujo de (0x80, 0x68) de 0x30 x 0x40 en (0xA0, 0x40) y 0xCA30-0xCA31 a cero
 	call a_negro_cada_4		;80be   ; a_negro_cada_4: cada 4 cuadros de la cuenta, p13:90FD
 	ret nz			;80c1   ; aun no
 	call 045fdh		;80c2   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	call paleta_negra		;80c5   ; paleta_negra: en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
 	ld hl,0e900h		;80c8   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;80cb   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-	ld hl,08068h		;80ce   ; de (0x68, 0x80)...
-	ld de,0a040h		;80d1   ; ...a (0x40, 0xA0)...
-	ld bc,03040h		;80d4   ; ...0x40 x 0x30
+	ld hl,08068h		;80ce   ; de (0x80, 0x68)...
+	ld de,0a040h		;80d1   ; ...a (0xA0, 0x40)...
+	ld bc,03040h		;80d4   ; ...0x30 x 0x40
 	call copia_de_pagina_1		;80d7   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
 	xor a			;80da
 	ld (0ca30h),a		;80db   ; guarda la cuenta de cuadros de la figura o el dibujo de la presentacion
@@ -103,7 +103,7 @@ pres_paso_7:		; los sprites de p13:8B28, el dibujo de 0xCA31 (p13:8801), cada 8 
 	ld hl,0ca30h		;8109   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
 	inc (hl)			;810c
 	call sprites_8b53		;810d   ; sprites_8b53: los 5 sprites de la fila (0xCA30 / 8 & 3) * 12 de p13:8B53 a 0xDC00 y sus colores de p13:8B83 (rachas)
-	call dibujo_de_ca31		;8110   ; dibujo_de_ca31: el dibujo de (0x38 + 0xCA31, 0xB8) de 0x10 x 0x10 en (0x70, 0xC8)
+	call dibujo_de_ca31		;8110   ; dibujo_de_ca31: el dibujo de (0xB8, 0x38 + 0xCA31) de 0x10 x 0x10 en (0xC8, 0x70)
 	ld a,(0ca30h)		;8113   ; lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 	and 007h		;8116   ; cada 8...
 	jr nz,texto_0		;8118
@@ -118,12 +118,12 @@ pon_ca31:
 texto_0:		; el texto 0
 	xor a			;8126
 	jp texto_de_ca3b		;8127   ; texto_de_ca3b: el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
-pres_paso_8:		; sin sprites, la pantalla limpia, 0xCA31 = 0x38, un marco de 0x44 x 0x6C en (0x3E, 0x0E) y la cuenta 0x100
+pres_paso_8:		; sin sprites, la pantalla limpia, 0xCA31 = 0x38, un marco de 0x6C x 0x44 en (0x0E, 0x3E) y la cuenta 0x100
 	call 04266h		;812a   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;812d   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld a,038h		;8130
 	ld (0ca31h),a		;8132   ; guarda lo que falta del dibujo que se abre en la presentacion
-	ld hl,00e3eh		;8135   ; en (0x3E, 0x0E)...
+	ld hl,00e3eh		;8135   ; en (0x0E, 0x3E)...
 	ld de,06c44h		;8138   ; ...0x44 x 0x6C...
 	ld c,006h		;813b   ; ...de color 6
 	xor a			;813d
@@ -138,7 +138,7 @@ pres_siguiente:		; 0xCA2C uno mas y 0xCA2D = 0
 	ld (hl),000h		;814d
 	ret			;814f
 pres_paso_9:		; el dibujo que crece (p13:899E); al acabar 0xCA31, 5 sprites de p13:8B9E con color 7 y 0xCA30 = 0
-	call abre_8068		;8150   ; abre_8068: con 0xCA31 (uno menos cada vez): el dibujo de (0x68, 0x40 - lo que va) de la pagina 1 en (0x40, 0x10), de 0x40 de ancho y 0x40 + lo que va de alto (hasta 0x68)
+	call abre_8068		;8150   ; abre_8068: con 0xCA31 (uno menos cada vez): el dibujo de (0x40 - lo que va, 0x68) de la pagina 1 en (0x10, 0x40), de 0x40 + lo que va de ancho (hasta 0x68) y 0x40 de alto
 	ld a,(0ca31h)		;8153   ; sin acabar, nada mas
 	and a			;8156
 	ret nz			;8157
@@ -174,24 +174,24 @@ sprites_fuera:
 texto_1:
 	ld a,001h		;8197
 	jp texto_de_ca3b		;8199   ; texto_de_ca3b: el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
-pres_paso_11:		; sin sprites, la pantalla limpia, el dibujo de (0x38, 0x80) de 0x30 x 0x38 en (0x50, 0x20), 0xCA30 = 0 y p13:8A3B
+pres_paso_11:		; sin sprites, la pantalla limpia, el dibujo de (0x80, 0x38) de 0x38 x 0x30 en (0x20, 0x50), 0xCA30 = 0 y p13:8A3B
 	call 04266h		;819c   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;819f   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
-	ld hl,08038h		;81a2   ; de (0x38, 0x80)...
-	ld de,02050h		;81a5   ; ...a (0x50, 0x20)...
-	ld bc,03830h		;81a8   ; ...0x30 x 0x38
+	ld hl,08038h		;81a2   ; de (0x80, 0x38)...
+	ld de,02050h		;81a5   ; ...a (0x20, 0x50)...
+	ld bc,03830h		;81a8   ; ...0x38 x 0x30
 	call copia_de_pagina_1		;81ab   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
 	xor a			;81ae
 	ld (0ca30h),a		;81af   ; guarda la cuenta de cuadros de la figura o el dibujo de la presentacion
-	call barras_empiezan		;81b2   ; barras_empiezan: las 20 barras [direccion][alto] de p13:8B00 a 0xE900
+	call barras_empiezan		;81b2   ; barras_empiezan: las 20 barras [direccion][largo] de p13:8B00 a 0xE900
 	jp pres_siguiente		;81b5   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 pres_paso_12:		; p13:8A4E y el texto 2
 	ld hl,0ca30h		;81b8   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
 	inc (hl)			;81bb
-	call barras_cada_cuadro		;81bc   ; barras_cada_cuadro: las 20 barras de 0xE900 suben o bajan (las 10 primeras entre 1 y 0x0F; las otras entre 1 y 0x16, cambiando de direccion en los topes) y se pintan: las de arriba en (0x64, 0x40) de color 0xCC sobre 0x10, las de abajo en (0x64, 0x26) desde 0x18
+	call barras_cada_cuadro		;81bc   ; barras_cada_cuadro: las 20 barras de 0xE900 suben o bajan (las 10 primeras entre 1 y 0x0F; las otras entre 1 y 0x16, cambiando de direccion en los topes) y se pintan como rayas de 2 de alto, una cada 2 lineas desde Y = 0x64: las 10 primeras desde X = 0x40 (su largo del color 0xCC y hasta 0x10 a 0), las otras acabando en X = 0x3E (de 0x18)
 	ld a,002h		;81bf
 	jp texto_de_ca3b		;81c1   ; texto_de_ca3b: el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
-pres_paso_13:		; la pantalla limpia, un marco de 0x44 x 0x6C en (0x46, 0x86) y 0xCA31 = 0x28
+pres_paso_13:		; la pantalla limpia, un marco de 0x6C x 0x44 en (0x86, 0x46) y 0xCA31 = 0x28
 	call 045fdh		;81c4   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,pres_paso_52		;81c7
 	ld de,06c44h		;81ca
@@ -202,7 +202,7 @@ pres_paso_13:		; la pantalla limpia, un marco de 0x44 x 0x6C en (0x46, 0x86) y 0
 	ld (0ca31h),a		;81d5   ; guarda lo que falta del dibujo que se abre en la presentacion
 	jp pres_siguiente		;81d8   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 pres_paso_14:		; el dibujo de p13:89D8; al acabar 0xCA31, 5 sprites de p13:8BBC con color 7 y 0xCA30 = 0
-	call abre_1800		;81db   ; abre_1800: con 0xCA31: el dibujo de (0x40 - lo que va, 0x18) de 0x40 x 0x68 en (0x48, 0x88)
+	call abre_1800		;81db   ; abre_1800: con 0xCA31: el dibujo de (0x18, 0x40 - lo que va) de 0x68 x 0x40 en (0x88, 0x48)
 	ld a,(0ca31h)		;81de   ; lee lo que falta del dibujo que se abre en la presentacion
 	and a			;81e1
 	ret nz			;81e2
@@ -221,7 +221,7 @@ pres_paso_14:		; el dibujo de p13:89D8; al acabar 0xCA31, 5 sprites de p13:8BBC 
 pres_paso_15:		; el dibujo de p13:8814, los 5 sprites parpadean (p13:8BBC o p13:8BCB) y el texto 3
 	ld hl,0ca30h		;8202   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
 	inc (hl)			;8205
-	call dibujo_de_ca30		;8206   ; dibujo_de_ca30: el dibujo (0xCA30 / 8 & 0x0F) de p13:882A de 0x28 x 0x20 en (0x5F, 0xC8)
+	call dibujo_de_ca30		;8206   ; dibujo_de_ca30: el dibujo (0xCA30 / 8 & 0x0F) de p13:882A de 0x20 x 0x28 en (0xC8, 0x5F)
 	ld de,0dc00h		;8209   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,005h		;820c
 	ld hl,0ca30h		;820e   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
@@ -240,7 +240,7 @@ sprites_fuera_15:
 texto_3:
 	ld a,003h		;8228
 	jp texto_de_ca3b		;822a   ; texto_de_ca3b: el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
-pres_paso_16:		; sin sprites, la pantalla limpia, un marco de 0x44 x 0x64 en (0x3E, 0x0E) y 0xCA31 = 0x20
+pres_paso_16:		; sin sprites, la pantalla limpia, un marco de 0x64 x 0x44 en (0x0E, 0x3E) y 0xCA31 = 0x20
 	call 04266h		;822d   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8230   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,00e3eh		;8233
@@ -252,7 +252,7 @@ pres_paso_16:		; sin sprites, la pantalla limpia, un marco de 0x44 x 0x64 en (0x
 	ld (0ca31h),a		;8241   ; guarda lo que falta del dibujo que se abre en la presentacion
 	jp pres_siguiente		;8244   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 pres_paso_17:		; el dibujo de p13:89C5; al acabar 0xCA31, 5 sprites de p13:8BDA con color 7
-	call baja_1000		;8247   ; baja_1000: con 0xCA31 (uno menos cada vez): el dibujo de (0x10, 0xCA31) de 0x40 x 0x60 en (0x40, 0x10)
+	call baja_1000		;8247   ; baja_1000: con 0xCA31 (uno menos cada vez): el dibujo de (0xCA31, 0x10) de 0x60 x 0x40 en (0x10, 0x40)
 	ld a,(0ca31h)		;824a   ; lee lo que falta del dibujo que se abre en la presentacion
 	and a			;824d
 	ret nz			;824e
@@ -271,7 +271,7 @@ pres_paso_17:		; el dibujo de p13:89C5; al acabar 0xCA31, 5 sprites de p13:8BDA 
 pres_paso_18:		; el dibujo de p13:884A, los 5 sprites parpadean (p13:8BDA o p13:8BE9) y el texto 4
 	ld hl,0ca30h		;826e   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
 	inc (hl)			;8271
-	call dibujo_8861		;8272   ; dibujo_8861: el dibujo (0xCA30 / 0x10 & 7) de p13:8861 de 0x20 x 0x20 en (0x50, 0x28), por p13:8811 con la A que deja p00:43F6
+	call dibujo_8861		;8272   ; dibujo_8861: el dibujo (0xCA30 / 0x10 & 7) de p13:8861 de 0x20 x 0x20 en (0x28, 0x50), por p13:8811 con la A que deja p00:43F6
 	ld de,0dc00h		;8275   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld b,005h		;8278
 	ld hl,0ca30h		;827a   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
@@ -308,7 +308,7 @@ pres_paso_21:		; la figura 0 (p13:8DAA) hasta que 0xCA30 llega a 0; la cuenta 0x
 	ret nz			;82b5
 	ld de,00020h		;82b6
 	jp pres_cuenta_y_siguiente		;82b9   ; pres_cuenta_y_siguiente: la cuenta 0xCA2E-0xCA2F = DE y el paso siguiente
-pres_paso_22:		; al acabar la cuenta: pantalla y sprites apagados, la pagina 0 borrada, el color 0x0E = 0x40, 2 sprites de p13:8C40 de color 7, el marco de p13:900C, el dibujo de (0xD0, 0x90) de 0x30 x 0x30 en (0x50, 0x30) con la operacion 0xC8, todo encendido y la cuenta 0x80
+pres_paso_22:		; al acabar la cuenta: pantalla y sprites apagados, la pagina 0 borrada, el color 0x0E = 0x40, 2 sprites de p13:8C40 de color 7, el marco de p13:900C, el dibujo de (0x90, 0xD0) de 0x30 x 0x30 en (0x30, 0x50) con la operacion 0xC8, todo encendido y la cuenta 0x80
 	call pres_cuenta		;82bc   ; pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 	ret nz			;82bf
 	call 045f1h		;82c0   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
@@ -326,10 +326,10 @@ pres_paso_22:		; al acabar la cuenta: pantalla y sprites apagados, la pagina 0 b
 	ld bc,0001fh		;82e2
 	ld (hl),007h		;82e5
 	ldir		;82e7
-	ld hl,00e3eh		;82e9   ; el marco de (0x3E, 0x0E)
-	call marco_con_rejilla		;82ec   ; marco_con_rejilla: en HL, un marco de 0x48 x 0x68 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
-	ld hl,090d0h		;82ef   ; de (0xD0, 0x90)...
-	ld de,03050h		;82f2   ; ...a (0x50, 0x30)...
+	ld hl,00e3eh		;82e9   ; el marco de (0x0E, 0x3E)
+	call marco_con_rejilla		;82ec   ; marco_con_rejilla: en HL, un marco de 0x68 x 0x48 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
+	ld hl,090d0h		;82ef   ; de (0x90, 0xD0)...
+	ld de,03050h		;82f2   ; ...a (0x30, 0x50)...
 	ld bc,03030h		;82f5   ; ...0x30 x 0x30
 	ld a,0c8h		;82f8
 	call 047edh		;82fa   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
@@ -376,7 +376,7 @@ pres_paso_26:		; al acabar la cuenta: sin sprites, p13:887E de (0xC0, 0xC0), 2 s
 	ret nz			;8351
 	call 04266h		;8352   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0c0c0h		;8355
-	call dibujo_en_5010		;8358   ; dibujo_en_5010: el dibujo de HL de 0x20 x 0x20 en (0x50, 0x10) con la operacion 0xC8
+	call dibujo_en_5010		;8358   ; dibujo_en_5010: el dibujo de HL de 0x20 x 0x20 en (0x10, 0x50) con la operacion 0xC8
 	ld b,002h		;835b
 	ld de,0dc00h		;835d   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld hl,08c61h		;8360
@@ -428,7 +428,7 @@ pres_paso_30:		; la figura 2 hasta que 0xCA30 llega a 0; la cuenta 0x20
 	ret nz			;83bf
 	ld de,00020h		;83c0
 	jp pres_cuenta_y_siguiente		;83c3   ; pres_cuenta_y_siguiente: la cuenta 0xCA2E-0xCA2F = DE y el paso siguiente
-pres_paso_31:		; al acabar la cuenta: todo apagado, la pagina 0 borrada, la paleta de p13:8F5E, el dibujo de (0, 0x80) de 0x38 x 0x58 en (0x50, 0x10), las barras 0 (en Y 0x18) y 4 (en 0x40) de p13:9D01, una raya de 0x48 en (0x50, 0x18), 6 sprites de p13:8CC8 de color 5, todo encendido y la cuenta 0x20
+pres_paso_31:		; al acabar la cuenta: todo apagado, la pagina 0 borrada, la paleta de p13:8F5E, el dibujo de (0x80, 0) de 0x58 x 0x38 en (0x10, 0x50), las barras 0 (DE = 0x1850) y 4 (DE = 0x4050) de p13:9D01, una raya de 0x48 en (0x18, 0x50), 6 sprites de p13:8CC8 de color 5, todo encendido y la cuenta 0x20
 	call pres_cuenta		;83c6   ; pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 	ret nz			;83c9
 	call 045f1h		;83ca   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
@@ -436,20 +436,20 @@ pres_paso_31:		; al acabar la cuenta: todo apagado, la pagina 0 borrada, la pale
 	call 045b9h		;83d0   ; borra_pagina_0: la pagina 0 a cero y R#23 = 0
 	ld hl,08f5eh		;83d3   ; la paleta de p13:8F5E
 	call 0463fh		;83d6   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-	ld hl,08000h		;83d9   ; de (0, 0x80)...
-	ld de,01050h		;83dc   ; ...a (0x50, 0x10)...
-	ld bc,05838h		;83df   ; ...0x38 x 0x58
+	ld hl,08000h		;83d9   ; de (0x80, 0)...
+	ld de,01050h		;83dc   ; ...a (0x10, 0x50)...
+	ld bc,05838h		;83df   ; ...0x58 x 0x38
 	ld a,001h		;83e2
 	call 04767h		;83e4   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-	ld de,01850h		;83e7   ; en (0x50, 0x18)...
+	ld de,01850h		;83e7   ; en (0x18, 0x50)...
 	xor a			;83ea   ; ...la 0
 	ld b,a			;83eb
 	call barra_de_9d01		;83ec   ; barra_de_9d01: p00:7B48 y p03:B814 (A, DE, B)
-	ld de,04050h		;83ef   ; en (0x50, 0x40)...
+	ld de,04050h		;83ef   ; en (0x40, 0x50)...
 	ld a,004h		;83f2   ; ...la 4
 	ld b,001h		;83f4
 	call barra_de_9d01		;83f6   ; barra_de_9d01: p00:7B48 y p03:B814 (A, DE, B)
-	ld hl,01850h		;83f9   ; una raya en (0x50, 0x18)...
+	ld hl,01850h		;83f9   ; una raya en (0x18, 0x50)...
 	ld b,048h		;83fc   ; ...de 0x48...
 	ld c,007h		;83fe   ; ...de color 7
 	ld a,000h		;8400
@@ -479,7 +479,7 @@ pres_paso_33:		; la cuenta, p13:90AE, p03:B8AC y el texto 6
 	call 07b55h		;843a   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld a,006h		;843d
 	jp texto_de_ca3b		;843f   ; texto_de_ca3b: el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
-pres_paso_34:		; sin sprites, la pantalla limpia, p03:B866 con 0 y con 1, la paleta de p13:8F83, un marco de 0x44 x 0x6C en (0x46, 0x86) y 0xCA31 = 0x28
+pres_paso_34:		; sin sprites, la pantalla limpia, p03:B866 con 0 y con 1, la paleta de p13:8F83, un marco de 0x6C x 0x44 en (0x86, 0x46) y 0xCA31 = 0x28
 	call 04266h		;8442   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8445   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	xor a			;8448
@@ -497,7 +497,7 @@ pres_paso_34:		; sin sprites, la pantalla limpia, p03:B866 con 0 y con 1, la pal
 	ld (0ca31h),a		;8465   ; guarda lo que falta del dibujo que se abre en la presentacion
 	jp pres_siguiente		;8468   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 pres_paso_35:		; el dibujo de p13:89F6; al acabar 0xCA31, 2 sprites de p13:8C55 de color 7
-	call abre_0000		;846b   ; abre_0000: con 0xCA31: el dibujo de (0x20 - lo que va, 0) de 0x40 x 0x40 en (0x48, 0xB0)
+	call abre_0000		;846b   ; abre_0000: con 0xCA31: el dibujo de (0, 0x20 - lo que va) de 0x40 x 0x40 en (0xB0, 0x48)
 	ld a,(0ca31h)		;846e   ; lee lo que falta del dibujo que se abre en la presentacion
 	and a			;8471
 	ret nz			;8472
@@ -554,14 +554,14 @@ pres_paso_40:		; espera la cuenta
 	call pres_cuenta		;84d9   ; pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 	ret nz			;84dc
 	jp pres_siguiente		;84dd   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
-pres_paso_41:		; sin sprites, la pantalla limpia, el marco de p13:900C en (0x46, 0x86), el dibujo de (0xA8, 0) de 0x40 x 0x50 en (0x48, 0x98) y la cuenta 0x20
+pres_paso_41:		; sin sprites, la pantalla limpia, el marco de p13:900C en (0x86, 0x46), el dibujo de (0, 0xA8) de 0x50 x 0x40 en (0x98, 0x48) y la cuenta 0x20
 	call 04266h		;84e0   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;84e3   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,pres_paso_52		;84e6
-	call marco_con_rejilla		;84e9   ; marco_con_rejilla: en HL, un marco de 0x48 x 0x68 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
-	ld hl,000a8h		;84ec   ; de (0xA8, 0)...
-	ld de,09848h		;84ef   ; ...a (0x48, 0x98)...
-	ld bc,05040h		;84f2   ; ...0x40 x 0x50
+	call marco_con_rejilla		;84e9   ; marco_con_rejilla: en HL, un marco de 0x68 x 0x48 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
+	ld hl,000a8h		;84ec   ; de (0, 0xA8)...
+	ld de,09848h		;84ef   ; ...a (0x98, 0x48)...
+	ld bc,05040h		;84f2   ; ...0x50 x 0x40
 	ld a,0c8h		;84f5
 	call 047edh		;84f7   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	ld de,00020h		;84fa
@@ -636,7 +636,7 @@ texto_8:
 	dec (hl)			;8591
 	ld a,008h		;8592
 	jp texto_de_ca3b		;8594   ; texto_de_ca3b: el texto A (0xCA3B) por el paso 0xCA2D (p13:8E38): el sitio y las letras (p13:8E88), 0x40 de espera, la primera linea cada 4 cuadros, la segunda cada 8, 256 de espera y el paso siguiente
-pres_paso_45:		; sin sprites, la pantalla limpia, un marco de 0x44 x 0x64 en (0x3E, 0x0E) y 0xCA31 = 0x28
+pres_paso_45:		; sin sprites, la pantalla limpia, un marco de 0x64 x 0x44 en (0x0E, 0x3E) y 0xCA31 = 0x28
 	call 04266h		;8597   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;859a   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,00e3eh		;859d
@@ -648,7 +648,7 @@ pres_paso_45:		; sin sprites, la pantalla limpia, un marco de 0x44 x 0x64 en (0x
 	ld (0ca31h),a		;85ab   ; guarda lo que falta del dibujo que se abre en la presentacion
 	jp pres_siguiente		;85ae   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 pres_paso_46:		; el dibujo de p13:8A14; al acabar 0xCA31, 2 sprites de p13:8BF8 de color 7
-	call abre_1030		;85b1   ; abre_1030: con 0xCA31: el dibujo de (0x30 + lo que va, 0x10) de 0x40 x 0x60 en (0x40, 0x10)
+	call abre_1030		;85b1   ; abre_1030: con 0xCA31: el dibujo de (0x10, 0x30 + lo que va) de 0x60 x 0x40 en (0x10, 0x40)
 	ld a,(0ca31h)		;85b4   ; lee lo que falta del dibujo que se abre en la presentacion
 	and a			;85b7
 	ret nz			;85b8
@@ -702,16 +702,16 @@ pres_paso_50:		; la figura 4 hasta que 0xCA30 llega a 0; la cuenta 0x20
 	ret nz			;861b
 	ld de,00020h		;861c
 	jp pres_cuenta_y_siguiente		;861f   ; pres_cuenta_y_siguiente: la cuenta 0xCA2E-0xCA2F = DE y el paso siguiente
-pres_paso_51:		; al acabar: sin sprites, la pantalla limpia, el marco de p13:900C, el dibujo de (0xA8, 0x50) de 0x28 x 0x48 en (0x48, 0x28) y la cuenta 0x20
+pres_paso_51:		; al acabar: sin sprites, la pantalla limpia, el marco de p13:900C, el dibujo de (0x50, 0xA8) de 0x48 x 0x28 en (0x28, 0x48) y la cuenta 0x20
 	call pres_cuenta		;8622   ; pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 	ret nz			;8625
 	call 04266h		;8626   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 045fdh		;8629   ; pantalla_limpia: la pantalla apagada, la pagina 0 borrada y otra vez encendida
 	ld hl,00e3eh		;862c
-	call marco_con_rejilla		;862f   ; marco_con_rejilla: en HL, un marco de 0x48 x 0x68 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
-	ld hl,050a8h		;8632   ; de (0xA8, 0x50)...
-	ld de,02848h		;8635   ; ...a (0x48, 0x28)...
-	ld bc,04828h		;8638   ; ...0x28 x 0x48
+	call marco_con_rejilla		;862f   ; marco_con_rejilla: en HL, un marco de 0x68 x 0x48 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
+	ld hl,050a8h		;8632   ; de (0x50, 0xA8)...
+	ld de,02848h		;8635   ; ...a (0x28, 0x48)...
+	ld bc,04828h		;8638   ; ...0x48 x 0x28
 	ld a,0c8h		;863b
 	call 047edh		;863d   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	ld de,00020h		;8640
@@ -757,7 +757,7 @@ pres_53_cada:
 	jr nz,pres_53_8984		;869b
 	ld (hl),000h		;869d
 pres_53_8984:
-	call dibujo_8998		;869f   ; dibujo_8998: el dibujo 0xCA30 de p13:8998 de 0x18 x 0x30 en (0x50, 0x28) de la pagina 3
+	call dibujo_8998		;869f   ; dibujo_8998: el dibujo 0xCA30 de p13:8998 de 0x30 x 0x18 en (0x28, 0x50) de la pagina 3
 pres_53_sprites:
 	ld a,(0ca2fh)		;86a2
 	cp 0ffh		;86a5
@@ -822,8 +822,8 @@ pres_paso_56:		; la cuenta; cada 16 cuadros, p13:9046 y p13:906F con 0xCA30 uno 
 	cp 009h		;8721   ; 9?
 	ld de,00080h		;8723   ; la cuenta 0x80...
 	jp z,pres_cuenta_y_siguiente		;8726   ; ...y el siguiente
-	call marco_de_ca30		;8729   ; marco_de_ca30: un marco de 0x34 x 0x44 de color 6 en el sitio 0xCA30 de p13:905D
-	call dibujo_de_ca30_b		;872c   ; dibujo_de_ca30_b: el dibujo 0xCA30 de p13:908A [destino][origen], 0x30 x 0x40 de la pagina 1
+	call marco_de_ca30		;8729   ; marco_de_ca30: un marco de 0x44 x 0x34 de color 6 en el sitio 0xCA30 de p13:905D
+	call dibujo_de_ca30_b		;872c   ; dibujo_de_ca30_b: el dibujo 0xCA30 de p13:908A [destino][origen], 0x40 x 0x30 de la pagina 1
 	ld hl,0ca30h		;872f   ; apunta a la cuenta de cuadros de la figura o el dibujo de la presentacion
 	inc (hl)			;8732
 	ret			;8733
@@ -840,7 +840,7 @@ pres_paso_59:		; la pantalla limpia, la paleta a negro y p13:8A2D
 	call paleta_negra		;8745   ; paleta_negra: en 0xE900, la paleta de 16 colores a negro ([n][0][0]) y 0xFF
 	ld hl,0e900h		;8748   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	call 0463fh		;874b   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-	call dibujo_grande		;874e   ; dibujo_grande: el dibujo de (0, 0) de la pagina 1, 0xA8 x 0x80, en (0x10, 0x40)
+	call dibujo_grande		;874e   ; dibujo_grande: el dibujo de (0, 0) de la pagina 1, 0x80 x 0xA8, en (0x40, 0x10)
 	jp pres_siguiente		;8751   ; pres_siguiente: 0xCA2C uno mas y 0xCA2D = 0
 pres_paso_60:		; la paleta hacia la de p13:9238; al llegar, 12 sprites de p13:8C6D de color 7 y la cuenta 0xFF
 	call pres_cuenta		;8754   ; pres_cuenta: 0xCA2E-0xCA2F uno menos; Z al llegar a 0
@@ -926,7 +926,7 @@ pres_cuenta:		; 0xCA2E-0xCA2F uno menos; Z al llegar a 0
 	ld a,b			;87fe
 	or c			;87ff
 	ret			;8800
-dibujo_de_ca31:		; el dibujo de (0x38 + 0xCA31, 0xB8) de 0x10 x 0x10 en (0x70, 0xC8)
+dibujo_de_ca31:		; el dibujo de (0xB8, 0x38 + 0xCA31) de 0x10 x 0x10 en (0xC8, 0x70)
 	ld a,(0ca31h)		;8801   ; lee lo que falta del dibujo que se abre en la presentacion
 	add a,038h		;8804
 	ld l,a			;8806
@@ -936,7 +936,7 @@ dibujo_de_ca31:		; el dibujo de (0x38 + 0xCA31, 0xB8) de 0x10 x 0x10 en (0x70, 0
 copia_de_pagina_1:		; copia HL a DE, C x B, de la pagina 1
 	ld a,001h		;880f
 	jp 04767h		;8811   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-dibujo_de_ca30:		; el dibujo (0xCA30 / 8 & 0x0F) de p13:882A de 0x28 x 0x20 en (0x5F, 0xC8)
+dibujo_de_ca30:		; el dibujo (0xCA30 / 8 & 0x0F) de p13:882A de 0x20 x 0x28 en (0xC8, 0x5F)
 	ld a,(0ca30h)		;8814   ; lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 	and 078h		;8817
 	rra			;8819
@@ -962,7 +962,7 @@ DATA_resto_882A:
 ; ======================================================================
 
 
-dibujo_8861:		; el dibujo (0xCA30 / 0x10 & 7) de p13:8861 de 0x20 x 0x20 en (0x50, 0x28), por p13:8811 con la A que deja p00:43F6
+dibujo_8861:		; el dibujo (0xCA30 / 0x10 & 7) de p13:8861 de 0x20 x 0x20 en (0x28, 0x50), por p13:8811 con la A que deja p00:43F6
 	ld a,(0ca30h)		;884a   ; lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 	and 070h		;884d   ; 0-7
 	rra			;884f
@@ -971,7 +971,7 @@ dibujo_8861:		; el dibujo (0xCA30 / 0x10 & 7) de p13:8861 de 0x20 x 0x20 en (0x5
 	rra			;8852
 	ld hl,08861h		;8853
 	call 043f6h		;8856   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld de,02850h		;8859   ; en (0x50, 0x28)...
+	ld de,02850h		;8859   ; en (0x28, 0x50)...
 	ld bc,02020h		;885c   ; ...0x20 x 0x20
 	jr $-80		;885f
 
@@ -995,7 +995,7 @@ dibujo_8889:		; el dibujo (0xCA30 / 4 & 0x0F) de p13:8889 (p13:887E)
 	rra			;8877
 	ld hl,08889h		;8878
 	call 043f6h		;887b   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-dibujo_en_5010:		; el dibujo de HL de 0x20 x 0x20 en (0x50, 0x10) con la operacion 0xC8
+dibujo_en_5010:		; el dibujo de HL de 0x20 x 0x20 en (0x10, 0x50) con la operacion 0xC8
 	ld de,01050h		;887e
 	ld bc,02020h		;8881
 	ld a,0c8h		;8884
@@ -1097,12 +1097,12 @@ DATA_resto_8903:
 ; ======================================================================
 
 
-dibujo_8998:		; el dibujo 0xCA30 de p13:8998 de 0x18 x 0x30 en (0x50, 0x28) de la pagina 3
+dibujo_8998:		; el dibujo 0xCA30 de p13:8998 de 0x30 x 0x18 en (0x28, 0x50) de la pagina 3
 	ld a,(0ca30h)		;8984   ; lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 	ld hl,08998h		;8987
 	call 043f6h		;898a   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld de,02850h		;898d   ; en (0x50, 0x28)...
-	ld bc,03018h		;8990   ; ...0x18 x 0x30
+	ld de,02850h		;898d   ; en (0x28, 0x50)...
+	ld bc,03018h		;8990   ; ...0x30 x 0x18
 	ld a,003h		;8993
 	jp 04767h		;8995   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 
@@ -1119,7 +1119,7 @@ DATA_resto_8998:
 ; ======================================================================
 
 
-abre_8068:		; con 0xCA31 (uno menos cada vez): el dibujo de (0x68, 0x40 - lo que va) de la pagina 1 en (0x40, 0x10), de 0x40 de ancho y 0x40 + lo que va de alto (hasta 0x68)
+abre_8068:		; con 0xCA31 (uno menos cada vez): el dibujo de (0x40 - lo que va, 0x68) de la pagina 1 en (0x10, 0x40), de 0x40 + lo que va de ancho (hasta 0x68) y 0x40 de alto
 	ld hl,0ca31h		;899e   ; apunta a lo que falta del dibujo que se abre en la presentacion
 	ld a,(hl)			;89a1
 	and a			;89a2
@@ -1145,7 +1145,7 @@ abre_8068_c:
 	ld b,a			;89bf
 	ld c,040h		;89c0
 	jp copia_de_pagina_1		;89c2   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
-baja_1000:		; con 0xCA31 (uno menos cada vez): el dibujo de (0x10, 0xCA31) de 0x40 x 0x60 en (0x40, 0x10)
+baja_1000:		; con 0xCA31 (uno menos cada vez): el dibujo de (0xCA31, 0x10) de 0x60 x 0x40 en (0x10, 0x40)
 	ld hl,0ca31h		;89c5   ; apunta a lo que falta del dibujo que se abre en la presentacion
 	ld a,(hl)			;89c8
 	and a			;89c9
@@ -1156,7 +1156,7 @@ baja_1000:		; con 0xCA31 (uno menos cada vez): el dibujo de (0x10, 0xCA31) de 0x
 	ld de,01040h		;89cf
 	ld bc,06040h		;89d2
 	jp copia_de_pagina_1		;89d5   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
-abre_1800:		; con 0xCA31: el dibujo de (0x40 - lo que va, 0x18) de 0x40 x 0x68 en (0x48, 0x88)
+abre_1800:		; con 0xCA31: el dibujo de (0x18, 0x40 - lo que va) de 0x68 x 0x40 en (0x88, 0x48)
 	ld hl,0ca31h		;89d8   ; apunta a lo que falta del dibujo que se abre en la presentacion
 	ld a,(hl)			;89db
 	and a			;89dc
@@ -1175,7 +1175,7 @@ abre_1800_b:
 	ld de,08848h		;89ed
 	ld bc,06840h		;89f0
 	jp copia_de_pagina_1		;89f3   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
-abre_0000:		; con 0xCA31: el dibujo de (0x20 - lo que va, 0) de 0x40 x 0x40 en (0x48, 0xB0)
+abre_0000:		; con 0xCA31: el dibujo de (0, 0x20 - lo que va) de 0x40 x 0x40 en (0xB0, 0x48)
 	ld hl,0ca31h		;89f6   ; apunta a lo que falta del dibujo que se abre en la presentacion
 	ld a,(hl)			;89f9
 	and a			;89fa
@@ -1194,7 +1194,7 @@ abre_0000_b:
 	ld de,0b048h		;8a0b
 	ld bc,04040h		;8a0e
 	jp copia_de_pagina_1		;8a11   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
-abre_1030:		; con 0xCA31: el dibujo de (0x30 + lo que va, 0x10) de 0x40 x 0x60 en (0x40, 0x10)
+abre_1030:		; con 0xCA31: el dibujo de (0x10, 0x30 + lo que va) de 0x60 x 0x40 en (0x10, 0x40)
 	ld hl,0ca31h		;8a14   ; apunta a lo que falta del dibujo que se abre en la presentacion
 	ld a,(hl)			;8a17
 	and a			;8a18
@@ -1209,13 +1209,13 @@ abre_1030:		; con 0xCA31: el dibujo de (0x30 + lo que va, 0x10) de 0x40 x 0x60 e
 	ld de,01040h		;8a24
 	ld bc,06040h		;8a27
 	jp copia_de_pagina_1		;8a2a   ; copia_de_pagina_1: copia HL a DE, C x B, de la pagina 1
-dibujo_grande:		; el dibujo de (0, 0) de la pagina 1, 0xA8 x 0x80, en (0x10, 0x40)
+dibujo_grande:		; el dibujo de (0, 0) de la pagina 1, 0x80 x 0xA8, en (0x40, 0x10)
 	ld hl,00000h		;8a2d
 	ld de,04010h		;8a30
 	ld bc,080a8h		;8a33
 	ld a,001h		;8a36
 	jp 04767h		;8a38   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-barras_empiezan:		; las 20 barras [direccion][alto] de p13:8B00 a 0xE900
+barras_empiezan:		; las 20 barras [direccion][largo] de p13:8B00 a 0xE900
 	ld de,08b00h		;8a3b
 	ld hl,0e900h		;8a3e   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	ld b,014h		;8a41   ; 20
@@ -1224,80 +1224,80 @@ barra_empieza:
 	ld (hl),a			;8a44
 	inc hl			;8a45
 	inc de			;8a46
-	ld a,(de)			;8a47   ; ...y el alto
+	ld a,(de)			;8a47   ; ...y el largo
 	ld (hl),a			;8a48
 	inc de			;8a49
 	inc hl			;8a4a
 	djnz barra_empieza		;8a4b   ; 20
 	ret			;8a4d
-barras_cada_cuadro:		; las 20 barras de 0xE900 suben o bajan (las 10 primeras entre 1 y 0x0F; las otras entre 1 y 0x16, cambiando de direccion en los topes) y se pintan: las de arriba en (0x64, 0x40) de color 0xCC sobre 0x10, las de abajo en (0x64, 0x26) desde 0x18
+barras_cada_cuadro:		; las 20 barras de 0xE900 suben o bajan (las 10 primeras entre 1 y 0x0F; las otras entre 1 y 0x16, cambiando de direccion en los topes) y se pintan como rayas de 2 de alto, una cada 2 lineas desde Y = 0x64: las 10 primeras desde X = 0x40 (su largo del color 0xCC y hasta 0x10 a 0), las otras acabando en X = 0x3E (de 0x18)
 	ld hl,0e900h		;8a4e   ; apunta a los caracteres de un dibujo pasados a 4 bits
 	push hl			;8a51
 	ld b,00ah		;8a52   ; 10
-barra_arriba:
+barra_1:
 	ld a,(hl)			;8a54
 	inc hl			;8a55   ; su alto
 	dec a			;8a56   ; la direccion 1...
-	jr z,barra_arriba_sube		;8a57
-	dec (hl)			;8a59   ; ...baja
+	jr z,barra_1_crece		;8a57
+	dec (hl)			;8a59   ; ...mengua
 	ld a,(hl)			;8a5a
 	cp 001h		;8a5b   ; en 1...
-	jr nz,barra_arriba_siguiente		;8a5d
+	jr nz,barra_1_siguiente		;8a5d
 	dec hl			;8a5f
 	ld (hl),001h		;8a60   ; ...cambia...
 	inc hl			;8a62
 	ld (hl),003h		;8a63   ; ...a 3
-	jr barra_arriba_siguiente		;8a65
-barra_arriba_sube:		; sube
+	jr barra_1_siguiente		;8a65
+barra_1_crece:		; crece
 	inc (hl)			;8a67
 	ld a,(hl)			;8a68
 	cp 00fh		;8a69   ; en 0x0F...
-	jr nz,barra_arriba_siguiente		;8a6b
+	jr nz,barra_1_siguiente		;8a6b
 	dec hl			;8a6d
 	ld (hl),000h		;8a6e   ; ...cambia...
 	inc hl			;8a70
 	ld (hl),00dh		;8a71   ; ...a 0x0D
-barra_arriba_siguiente:
+barra_1_siguiente:
 	inc hl			;8a73
-	djnz barra_arriba		;8a74
+	djnz barra_1		;8a74
 	ld b,00ah		;8a76   ; 10 mas
-barra_abajo:
+barra_2:
 	ld a,(hl)			;8a78
 	inc hl			;8a79
 	dec a			;8a7a   ; la direccion 1...
-	jr z,barra_abajo_sube		;8a7b
-	dec (hl)			;8a7d   ; ...baja
+	jr z,barra_2_crece		;8a7b
+	dec (hl)			;8a7d   ; ...mengua
 	ld a,(hl)			;8a7e
 	cp 001h		;8a7f   ; en 1...
-	jr nz,barra_abajo_siguiente		;8a81
+	jr nz,barra_2_siguiente		;8a81
 	dec hl			;8a83
 	ld (hl),001h		;8a84
 	inc hl			;8a86
 	ld (hl),003h		;8a87   ; ...a 3
-	jr barra_abajo_siguiente		;8a89
-barra_abajo_sube:
+	jr barra_2_siguiente		;8a89
+barra_2_crece:
 	inc (hl)			;8a8b
 	ld a,(hl)			;8a8c
 	cp 016h		;8a8d   ; en 0x16...
-	jr nz,barra_abajo_siguiente		;8a8f
+	jr nz,barra_2_siguiente		;8a8f
 	dec hl			;8a91
 	ld (hl),000h		;8a92
 	inc hl			;8a94
 	ld (hl),014h		;8a95   ; ...a 0x14
-barra_abajo_siguiente:
+barra_2_siguiente:
 	inc hl			;8a97
-	djnz barra_abajo		;8a98
+	djnz barra_2		;8a98
 	pop de			;8a9a
 	inc de			;8a9b
-	ld hl,04064h		;8a9c   ; en (0x64, 0x40)
+	ld hl,04064h		;8a9c   ; en (0x40, 0x64)
 	ld b,00ah		;8a9f   ; 10
-pinta_barra_arriba:
+pinta_barra_1:
 	push bc			;8aa1
 	push de			;8aa2
 	push hl			;8aa3
-	ld a,(de)			;8aa4   ; su alto...
+	ld a,(de)			;8aa4   ; su largo...
 	ld b,a			;8aa5
-	ld c,002h		;8aa6   ; ...2 de ancho...
+	ld c,002h		;8aa6   ; ...2 de alto...
 	ld a,0cch		;8aa8   ; ...del color 0xCC
 	ld d,000h		;8aaa
 	call 046ffh		;8aac   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -1317,22 +1317,22 @@ pinta_barra_arriba:
 	ld d,000h		;8abe
 	call 046ffh		;8ac0   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop hl			;8ac3
-	inc l			;8ac4   ; 2 a la derecha
+	inc l			;8ac4   ; 2 mas abajo
 	inc l			;8ac5
 	pop de			;8ac6
 	inc de			;8ac7
 	inc de			;8ac8
 	pop bc			;8ac9
-	djnz pinta_barra_arriba		;8aca
-	ld hl,02664h		;8acc   ; en (0x64, 0x26)
+	djnz pinta_barra_1		;8aca
+	ld hl,02664h		;8acc   ; en (0x26, 0x64)
 	ld b,00ah		;8acf
-pinta_barra_abajo:
+pinta_barra_2:
 	push bc			;8ad1
 	push de			;8ad2
 	push hl			;8ad3
 	ld a,(de)			;8ad4
 	ld b,a			;8ad5
-	ld a,018h		;8ad6   ; 0x18 - su alto...
+	ld a,018h		;8ad6   ; 0x18 - su largo...
 	sub b			;8ad8
 	ld b,a			;8ad9
 	ld c,002h		;8ada
@@ -1345,7 +1345,7 @@ pinta_barra_abajo:
 	push hl			;8ae5
 	ld a,(de)			;8ae6
 	ld b,a			;8ae7
-	ld a,018h		;8ae8   ; debajo...
+	ld a,018h		;8ae8   ; a la derecha...
 	add a,h			;8aea
 	sub b			;8aeb
 	ld h,a			;8aec
@@ -1354,13 +1354,13 @@ pinta_barra_abajo:
 	ld d,000h		;8af1
 	call 046ffh		;8af3   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop hl			;8af6
-	inc l			;8af7   ; 2 a la derecha
+	inc l			;8af7   ; 2 mas abajo
 	inc l			;8af8
 	pop de			;8af9
 	inc de			;8afa
 	inc de			;8afb
 	pop bc			;8afc
-	djnz pinta_barra_abajo		;8afd
+	djnz pinta_barra_2		;8afd
 	ret			;8aff
 
 ; ----------------------------------------------------------------------
@@ -1786,7 +1786,7 @@ DATA_resto_8F5E:
 ; ======================================================================
 
 
-marco_con_rejilla:		; en HL, un marco de 0x48 x 0x68 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
+marco_con_rejilla:		; en HL, un marco de 0x68 x 0x48 de color 6 con 8 rayas horizontales y 12 verticales cada 8 puntos
 	push hl			;900c
 	push de			;900d
 	ld de,06848h		;900e   ; 0x48 x 0x68...
@@ -1826,7 +1826,7 @@ raya_vertical:
 	pop bc			;9042
 	djnz raya_vertical		;9043
 	ret			;9045
-marco_de_ca30:		; un marco de 0x34 x 0x44 de color 6 en el sitio 0xCA30 de p13:905D
+marco_de_ca30:		; un marco de 0x44 x 0x34 de color 6 en el sitio 0xCA30 de p13:905D
 	ld a,(0ca30h)		;9046   ; lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 	add a,a			;9049
 	ld hl,0905dh		;904a   ; los sitios de p13:905D
@@ -1855,7 +1855,7 @@ DATA_resto_905D:
 ; ======================================================================
 
 
-dibujo_de_ca30_b:		; el dibujo 0xCA30 de p13:908A [destino][origen], 0x30 x 0x40 de la pagina 1
+dibujo_de_ca30_b:		; el dibujo 0xCA30 de p13:908A [destino][origen], 0x40 x 0x30 de la pagina 1
 	ld a,(0ca30h)		;906f   ; lee la cuenta de cuadros de la figura o el dibujo de la presentacion
 	add a,a			;9072
 	add a,a			;9073   ; * 4
@@ -1869,7 +1869,7 @@ dibujo_de_ca30_b:		; el dibujo 0xCA30 de p13:908A [destino][origen], 0x30 x 0x40
 	inc hl			;907f
 	ld h,(hl)			;9080
 	ld l,a			;9081
-	ld bc,04030h		;9082   ; 0x30 x 0x40
+	ld bc,04030h		;9082   ; 0x40 x 0x30
 	ld a,001h		;9085
 	jp 04767h		;9087   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 
@@ -2177,7 +2177,7 @@ DATA_resto_9218:
 ; ======================================================================
 
 
-pantalla_de_56:		; con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0x48 x 0xA8 a 0 en (0x40, 0x28) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
+pantalla_de_56:		; con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0xA8 x 0x48 a 0 en (0x28, 0x40) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
 	call 045f1h		;92d1   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call 0418eh		;92d4   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0ae95h		;92d7   ; la paleta de p56:AE95
@@ -2185,8 +2185,8 @@ pantalla_de_56:		; con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectan
 	ld b,00fh		;92dd   ; R#7 = 0x0F
 	ld c,007h		;92df
 	call 00047h		;92e1   ; BIOS WRTVDP - Writes data in the VDP-register
-	ld hl,02840h		;92e4   ; en (0x40, 0x28)...
-	ld bc,0a848h		;92e7   ; ...0x48 x 0xA8...
+	ld hl,02840h		;92e4   ; en (0x28, 0x40)...
+	ld bc,0a848h		;92e7   ; ...0xA8 x 0x48...
 	xor a			;92ea
 	ld d,003h		;92eb   ; ...de la pagina 3
 	call 046ffh		;92ed   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -2214,7 +2214,7 @@ pantalla_de_56:		; con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectan
 	inc hl			;932b   ; ...0xCA14 = 0
 	ld (hl),000h		;932c
 	ret			;932e
-pantalla_de_56_baja:		; cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x40, 0x28) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
+pantalla_de_56_baja:		; cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x28, 0x40) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
 	ld hl,0ca12h		;932f
 	dec (hl)			;9332
 	ld a,(hl)			;9333
@@ -2681,14 +2681,14 @@ borra_paginas_0_1:
 borra_pagina_0_b:
 	xor a			;962a
 	jp 0444ah		;962b   ; borra_pagina_0_negro: la pagina D entera a 0 desde (0, 0)
-rectangulos_77:		; en las paginas 0 y 1, un rectangulo de 0x58 x 0x80 del color 0x77 en (0x40, 0x40)
+rectangulos_77:		; en las paginas 0 y 1, un rectangulo de 0x80 x 0x58 del color 0x77 en (0x40, 0x40)
 	xor a			;962e
 	call rectangulo_77_a		;962f   ; rectangulo_77_a: en (0x40, 0x40)...
 rectangulo_77_1:
 	ld a,001h		;9632
 rectangulo_77_a:		; en (0x40, 0x40)...
 	ld hl,04040h		;9634
-	ld bc,08058h		;9637   ; ...0x58 x 0x80...
+	ld bc,08058h		;9637   ; ...0x80 x 0x58...
 	ld d,a			;963a
 	ld a,077h		;963b   ; ...color 0x77
 	jp 046ffh		;963d   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -2701,8 +2701,8 @@ est7_paso_3:		; p13:9EC8, p13:9DA7 y p13:9D0D; cada 4 cuadros (0xD703): R#23 = 0
 	ret nz			;964d
 	ld (hl),004h		;964e   ; cada 4
 	call r23_de_d706		;9650   ; r23_de_d706: R#23 (el desplazamiento vertical) = 0xD706, tras esperar al VDP
-	call linea_de_d706		;9653   ; linea_de_d706: la linea 0x40 + 0xD706 de la pagina 1 (desde (0, 0x40)) con YMMM
-	call linea_de_d706_b		;9656   ; linea_de_d706_b: la linea 0x40 + (0xD706, o 0xD706 - 0x58) a la 0x98 + 0xD706 de la pagina 1 con YMMM
+	call linea_de_d706		;9653   ; linea_de_d706: YMMM en la pagina 1 con HL = 0x4000 y DE = (1, 0x40 + 0xD706)
+	call linea_de_d706_b		;9656   ; linea_de_d706_b: YMMM en la pagina 1 con HL = (0x40, 0x40 + 0xD706, o 0xD706 - 0x58 pasado 0x58) y DE = (1, 0x98 + 0xD706)
 	ld hl,0d706h		;9659   ; 0xD706 uno mas
 	inc (hl)			;965c
 	ld a,(hl)			;965d
@@ -2717,7 +2717,7 @@ r23_de_d706:		; R#23 (el desplazamiento vertical) = 0xD706, tras esperar al VDP
 	ld b,a			;966e
 	ld c,017h		;966f   ; R#23
 	jp 00047h		;9671   ; BIOS WRTVDP - Writes data in the VDP-register
-linea_de_d706:		; la linea 0x40 + 0xD706 de la pagina 1 (desde (0, 0x40)) con YMMM
+linea_de_d706:		; YMMM en la pagina 1 con HL = 0x4000 y DE = (1, 0x40 + 0xD706)
 	ld a,040h		;9674
 	ld hl,0d706h		;9676   ; 0x40 + 0xD706
 	add a,(hl)			;9679
@@ -2726,7 +2726,7 @@ linea_de_d706:		; la linea 0x40 + 0xD706 de la pagina 1 (desde (0, 0x40)) con YM
 	ld d,001h		;967e
 	ld a,001h		;9680
 	jp 047abh		;9682   ; copia_en_y: orden YMMM del VDP
-linea_de_d706_b:		; la linea 0x40 + (0xD706, o 0xD706 - 0x58) a la 0x98 + 0xD706 de la pagina 1 con YMMM
+linea_de_d706_b:		; YMMM en la pagina 1 con HL = (0x40, 0x40 + 0xD706, o 0xD706 - 0x58 pasado 0x58) y DE = (1, 0x98 + 0xD706)
 	ld hl,0d706h		;9685   ; apunta a 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	ld e,(hl)			;9688   ; 0xD706
 	ld a,e			;9689
@@ -2765,8 +2765,8 @@ est7_paso_5:		; lo mismo que el 3 cada 2 cuadros; en 0x84 la orden 0xF6 al sonid
 	ret nz			;96c6
 	ld (hl),002h		;96c7
 	call r23_de_d706		;96c9   ; r23_de_d706: R#23 (el desplazamiento vertical) = 0xD706, tras esperar al VDP
-	call linea_de_d706		;96cc   ; linea_de_d706: la linea 0x40 + 0xD706 de la pagina 1 (desde (0, 0x40)) con YMMM
-	call linea_de_d706_b		;96cf   ; linea_de_d706_b: la linea 0x40 + (0xD706, o 0xD706 - 0x58) a la 0x98 + 0xD706 de la pagina 1 con YMMM
+	call linea_de_d706		;96cc   ; linea_de_d706: YMMM en la pagina 1 con HL = 0x4000 y DE = (1, 0x40 + 0xD706)
+	call linea_de_d706_b		;96cf   ; linea_de_d706_b: YMMM en la pagina 1 con HL = (0x40, 0x40 + 0xD706, o 0xD706 - 0x58 pasado 0x58) y DE = (1, 0x98 + 0xD706)
 	ld hl,0d706h		;96d2   ; 0xD706 uno mas
 	inc (hl)			;96d5
 	ld a,(hl)			;96d6
@@ -2824,15 +2824,15 @@ est7_paso_8:		; todo apagado, la pagina 0 borrada, R#23 = 0, sin sprites, la pal
 	ld (hl),080h		;973c
 	jp est7_siguiente		;973e   ; est7_siguiente: 0xD701 uno mas
 est7_paso_9:		; p13:9F4C; a los 0x80 cuadros, 4 y el paso siguiente
-	call sprites_8770		;9741   ; sprites_8770: los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+	call sprites_8770		;9741   ; sprites_8770: los sprites 2-3 en X = 0x70, Y = 0x87 con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
 	ld hl,0d703h		;9744   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;9747
 	ret nz			;9748
 	ld (hl),004h		;9749
 	jp est7_siguiente		;974b   ; est7_siguiente: 0xD701 uno mas
 est7_paso_10:		; p13:9EFD y p13:9F4C; cada 4 cuadros 0xD709 uno menos; por debajo de 0x80, 0xD70A = 0 y el paso siguiente
-	call sprites_de_d709		;974e   ; sprites_de_d709: los sprites 0-1 de color 0x0F en (0x68, 0xD709) y 0x10 a la derecha, el patron 0x50 o 0x58 cada 4 cuadros
-	call sprites_8770		;9751   ; sprites_8770: los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+	call sprites_de_d709		;974e   ; sprites_de_d709: los sprites 0-1 de color 0x0F en X = 0xD709, Y = 0x68 y 0x10 a la derecha, el patron 0x50 o 0x58 cada 4 cuadros
+	call sprites_8770		;9751   ; sprites_8770: los sprites 2-3 en X = 0x70, Y = 0x87 con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
 	ld hl,0d703h		;9754   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;9757
 	ret nz			;9758
@@ -2846,8 +2846,8 @@ est7_paso_10:		; p13:9EFD y p13:9F4C; cada 4 cuadros 0xD709 uno menos; por debaj
 	ld (hl),000h		;9766
 	jp est7_siguiente		;9768   ; est7_siguiente: 0xD701 uno mas
 est7_paso_11:		; p13:9F29 y p13:9F4C; cada 6 cuadros (0x12 desde el 6 de 0xD70A), 0xD70A por p13:9799 y, por debajo de 6, 0xD709 uno menos; desde 9, 0xD70A = 9 y el paso siguiente
-	call sprites_de_d70a		;976b   ; sprites_de_d70a: los sprites 0-1 de color 0x0F en (0x68, 0xD709) con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
-	call sprites_8770		;976e   ; sprites_8770: los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+	call sprites_de_d70a		;976b   ; sprites_de_d70a: los sprites 0-1 de color 0x0F en X = 0xD709, Y = 0x68 con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
+	call sprites_8770		;976e   ; sprites_8770: los sprites 2-3 en X = 0x70, Y = 0x87 con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
 	ld hl,0d703h		;9771   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;9774
 	ret nz			;9775
@@ -2908,29 +2908,29 @@ est7_paso_12:		; 0x80 cuadros y el paso siguiente
 	ld (hl),080h		;97c9
 	jp est7_siguiente		;97cb   ; est7_siguiente: 0xD701 uno mas
 est7_paso_13:		; p13:9F29 y p13:9F4C durante 0x80 cuadros
-	call sprites_de_d70a		;97ce   ; sprites_de_d70a: los sprites 0-1 de color 0x0F en (0x68, 0xD709) con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
-	call sprites_8770		;97d1   ; sprites_8770: los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+	call sprites_de_d70a		;97ce   ; sprites_de_d70a: los sprites 0-1 de color 0x0F en X = 0xD709, Y = 0x68 con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
+	call sprites_8770		;97d1   ; sprites_8770: los sprites 2-3 en X = 0x70, Y = 0x87 con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
 	ld hl,0d703h		;97d4   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;97d7
 	ret nz			;97d8
 	ld (hl),080h		;97d9
 	jp est7_siguiente		;97db   ; est7_siguiente: 0xD701 uno mas
-est7_paso_14:		; p13:9F4C; a los 0x80 cuadros: sin sprites, 0xD706 = 0, (0x38, 0x40) de 0x60 x 0x80 copiado a (0, 0) de la pagina 2, (0x60, 0) de 0xA0 x 0x90 a 0 en la pagina 2, 0xD70F-0xD710 = 0, el mosaico de p57:AA98 (y en 0xD711)
-	call sprites_8770		;97de   ; sprites_8770: los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+est7_paso_14:		; p13:9F4C; a los 0x80 cuadros: sin sprites, 0xD706 = 0, (0x40, 0x38) de 0x80 x 0x60 copiado a (0, 0) de la pagina 2, (0, 0x60) de 0x90 x 0xA0 a 0 en la pagina 2, 0xD70F-0xD710 = 0, el mosaico de p57:AA98 (y en 0xD711)
+	call sprites_8770		;97de   ; sprites_8770: los sprites 2-3 en X = 0x70, Y = 0x87 con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
 	ld hl,0d703h		;97e1   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;97e4
 	ret nz			;97e5
 	call 04266h		;97e6   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	ld hl,0d706h		;97e9   ; apunta a 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	ld (hl),000h		;97ec
-	ld hl,04038h		;97ee   ; de (0x38, 0x40)...
+	ld hl,04038h		;97ee   ; de (0x40, 0x38)...
 	ld de,00000h		;97f1   ; ...a (0, 0)...
-	ld bc,08060h		;97f4   ; ...0x60 x 0x80...
+	ld bc,08060h		;97f4   ; ...0x80 x 0x60...
 	ld a,008h		;97f7   ; ...a la pagina 2
 	call 04767h		;97f9   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-	ld hl,00060h		;97fc   ; (0x60, 0) de la pagina 2...
+	ld hl,00060h		;97fc   ; (0, 0x60) de la pagina 2...
 	ld d,002h		;97ff
-	ld bc,090a0h		;9801   ; ...0xA0 x 0x90 a 0
+	ld bc,090a0h		;9801   ; ...0x90 x 0xA0 a 0
 	xor a			;9804
 	call 046ffh		;9805   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	xor a			;9808
@@ -2946,30 +2946,30 @@ est7_paso_14:		; p13:9F4C; a los 0x80 cuadros: sin sprites, 0xD706 = 0, (0x38, 0
 	ld hl,0aa98h		;9816
 	call 06460h		;9819   ; mosaico_de_57: el mosaico de HL del banco 57-58 en X = 0, Y = 0xF0, 1 fila de 0x12, forma 0x0B
 	jp est7_siguiente		;981c   ; est7_siguiente: 0xD701 uno mas
-est7_paso_15:		; cada 16 cuadros el mosaico siguiente (p13:9871); cada cuadro, la otra pagina: (0x38, 0x38) de 0x60 x 0x90 a 0, el dibujo de (0, 0) de la pagina 2 encima, el de (0x90 + 0xD70F, 0) con la operacion 0x88 y esa pagina a la vista
+est7_paso_15:		; cada 16 cuadros el mosaico siguiente (p13:9871); cada cuadro, la otra pagina: (0x38, 0x38) de 0x90 x 0x60 a 0, el dibujo de (0, 0) de la pagina 2 encima en (0x40, 0x38), el de (0, 0x90 + 0xD70F) con la operacion 0x88 y esa pagina a la vista
 	ld hl,0d70fh		;981f   ; apunta a en el estado 7, la cuenta de 16 del mosaico que sube (p13:981F)
 	inc (hl)			;9822   ; la cuenta...
 	ld a,(hl)			;9823
 	and 00fh		;9824   ; ...cada 16
-	call z,mosaico_que_sube		;9826   ; mosaico_que_sube: la cuenta a 0, (0xA0, 0) de 0x60 x 0x90 a (0x90, 0) de la pagina 2 y el mosaico 0x12 mas alla de p57; con su byte a 0, 0xD703 = 0xFF, los dibujos de p54:BFCD y el paso siguiente
+	call z,mosaico_que_sube		;9826   ; mosaico_que_sube: la cuenta a 0, (0, 0xA0) de 0x90 x 0x60 a (0, 0x90) de la pagina 2 y el mosaico 0x12 mas alla de p57; con su byte a 0, 0xD703 = 0xFF, los dibujos de p54:BFCD y el paso siguiente
 	ld a,(0d710h)		;9829   ; la otra pagina
 	xor 001h		;982c
 	ld (0d710h),a		;982e   ; guarda la lista de las cosas de la pantalla de F2/F3 (0x23 sitios, p10:B099); en el estado 7, la pagina a la vista (0/1)
 	ld hl,03838h		;9831   ; (0x38, 0x38)...
-	ld bc,09060h		;9834   ; ...0x60 x 0x90 a 0
+	ld bc,09060h		;9834   ; ...0x90 x 0x60 a 0
 	ld d,a			;9837
 	push af			;9838
 	xor a			;9839
 	call 046ffh		;983a   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop af			;983d
 	ld hl,00000h		;983e   ; de (0, 0)...
-	ld de,04038h		;9841   ; ...a (0x38, 0x40)...
-	ld bc,08060h		;9844   ; ...0x60 x 0x80
+	ld de,04038h		;9841   ; ...a (0x40, 0x38)...
+	ld bc,08060h		;9844   ; ...0x80 x 0x60
 	rlca			;9847
 	rlca			;9848
 	or 002h		;9849   ; desde la pagina 2
 	call 04767h		;984b   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-	ld hl,00090h		;984e   ; de (0x90 + la cuenta, 0)...
+	ld hl,00090h		;984e   ; de (0, 0x90 + la cuenta)...
 	ld a,(0d70fh)		;9851   ; lee en el estado 7, la cuenta de 16 del mosaico que sube (p13:981F)
 	add a,l			;9854
 	ld l,a			;9855
@@ -2985,11 +2985,11 @@ est7_paso_15:		; cada 16 cuadros el mosaico siguiente (p13:9871); cada cuadro, l
 	call 04650h		;9868   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	ld a,(0d710h)		;986b   ; a la vista
 	jp 04879h		;986e   ; pon_pagina_visible: la pagina A a la vista (0xFAF5, DPPAGE de la BIOS)
-mosaico_que_sube:		; la cuenta a 0, (0xA0, 0) de 0x60 x 0x90 a (0x90, 0) de la pagina 2 y el mosaico 0x12 mas alla de p57; con su byte a 0, 0xD703 = 0xFF, los dibujos de p54:BFCD y el paso siguiente
+mosaico_que_sube:		; la cuenta a 0, (0, 0xA0) de 0x90 x 0x60 a (0, 0x90) de la pagina 2 y el mosaico 0x12 mas alla de p57; con su byte a 0, 0xD703 = 0xFF, los dibujos de p54:BFCD y el paso siguiente
 	ld (hl),000h		;9871
-	ld hl,000a0h		;9873   ; de (0xA0, 0)...
-	ld de,00090h		;9876   ; ...a (0x90, 0)...
-	ld bc,09060h		;9879   ; ...0x60 x 0x90
+	ld hl,000a0h		;9873   ; de (0, 0xA0)...
+	ld de,00090h		;9876   ; ...a (0, 0x90)...
+	ld bc,09060h		;9879   ; ...0x90 x 0x60
 	ld a,00ah		;987c   ; de la pagina 2
 	call 04767h		;987e   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld hl,(0d711h)		;9881   ; el mosaico...
@@ -3029,7 +3029,7 @@ est7_paso_17:		; el fundido 1; al acabar: todo apagado, sin sprites, las paginas
 	call 04606h		;98ce   ; enciende_todo: la pantalla y los sprites encendidos
 	ld hl,0a01dh		;98d1   ; la paleta de p13:A01D
 	call 0463fh		;98d4   ; pon_paleta_con_espera: pone la paleta de HL (p00:4642) esperando al VDP antes
-	call recuadros_bb		;98d7   ; recuadros_bb: en la pagina 1: (0x30, 0x50) de 0x40 x 0x70 del color 0xBB, (0x30, 0xC0) de 0x40 x 0x40 a 0 y el mosaico de p54:BC95
+	call recuadros_bb		;98d7   ; recuadros_bb: en la pagina 1: (0x50, 0x30) de 0x70 x 0x40 del color 0xBB, (0xC0, 0x30) de 0x40 x 0x40 a 0 y el mosaico de p54:BC95
 	xor a			;98da
 	ld hl,0d706h		;98db   ; apunta a 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	ld (hl),a			;98de
@@ -3038,13 +3038,13 @@ est7_paso_17:		; el fundido 1; al acabar: todo apagado, sin sprites, las paginas
 	xor a			;98e3
 	ld (0d703h),a		;98e4   ; guarda la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	jp est7_siguiente		;98e7   ; est7_siguiente: 0xD701 uno mas
-recuadros_bb:		; en la pagina 1: (0x30, 0x50) de 0x40 x 0x70 del color 0xBB, (0x30, 0xC0) de 0x40 x 0x40 a 0 y el mosaico de p54:BC95
+recuadros_bb:		; en la pagina 1: (0x50, 0x30) de 0x70 x 0x40 del color 0xBB, (0xC0, 0x30) de 0x40 x 0x40 a 0 y el mosaico de p54:BC95
 	ld hl,05030h		;98ea
-	ld bc,07040h		;98ed   ; ...0x40 x 0x70...
+	ld bc,07040h		;98ed   ; ...0x70 x 0x40...
 	ld a,0bbh		;98f0   ; ...color 0xBB
 	ld d,001h		;98f2
 	call 046ffh		;98f4   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-	ld hl,0c030h		;98f7   ; en (0x30, 0xC0)...
+	ld hl,0c030h		;98f7   ; en (0xC0, 0x30)...
 	ld bc,04040h		;98fa   ; ...0x40 x 0x40 a 0
 	xor a			;98fd
 	ld d,001h		;98fe
@@ -3066,7 +3066,7 @@ est7_paso_19:		; espera la cuenta
 	dec (hl)			;991d
 	ret nz			;991e
 	jp est7_siguiente		;991f   ; est7_siguiente: 0xD701 uno mas
-est7_paso_20:		; los mensajes del estado 7 por 0xD702 (p13:9928): el mensaje 0xD706 de p50:8042 abajo, hasta que acaba, 0xC0 cuadros, el siguiente; al 6, la raya de p13:99A4; al 0x13, (0xC0, 0) de 0x40 a 0 en la pagina 2, el fundido 1 de p13:A01D y el paso siguiente
+est7_paso_20:		; los mensajes del estado 7 por 0xD702 (p13:9928): el mensaje 0xD706 de p50:8042 abajo, hasta que acaba, 0xC0 cuadros, el siguiente; al 6, la raya de p13:99A4; al 0x13, (0, 0xC0) de 0x100 x 0x40 a 0 en la pagina 2, el fundido 1 de p13:A01D y el paso siguiente
 	ld a,(0d702h)		;9922   ; lee la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	call 0424dh		;9925   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -3097,7 +3097,7 @@ mensaje_hasta_acabar:
 	ld hl,0d703h		;9943   ; 0xC0 cuadros
 	ld (hl),0c0h		;9946
 	jr est7_dentro_siguiente		;9948
-mensaje_siguiente:		; a los 0xC0 cuadros, el mensaje siguiente; en el 6, p13:998A; abajo a 0 (0x28 x 0xE8 en (0x98, 8)); en el 0x13, se acaba
+mensaje_siguiente:		; a los 0xC0 cuadros, el mensaje siguiente; en el 6, p13:998A; abajo a 0 (0xE8 x 0x28 en (8, 0x98)); en el 0x13, se acaba
 	ld hl,0d703h		;994a   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;994d
 	ret nz			;994e
@@ -3108,17 +3108,17 @@ mensaje_siguiente:		; a los 0xC0 cuadros, el mensaje siguiente; en el 6, p13:998
 	ld (hl),000h		;9957
 	cp 006h		;9959   ; el 6?
 	push af			;995b
-	call z,raya_empieza		;995c   ; raya_empieza: el paso 3 de dentro (la raya), 0xD717 = 0, (0x30, 0x40) de 0x60 x 0x80 del color 0xBB en la pagina 0 y el sonido 0x3F
+	call z,raya_empieza		;995c   ; raya_empieza: el paso 3 de dentro (la raya), 0xD717 = 0, (0x40, 0x30) de 0x80 x 0x60 del color 0xBB en la pagina 0 y el sonido 0x3F
 	ld hl,00898h		;995f   ; (8, 0x98)...
-	ld bc,0e828h		;9962   ; ...0x28 x 0xE8 a 0
+	ld bc,0e828h		;9962   ; ...0xE8 x 0x28 a 0
 	xor a			;9965
 	ld d,a			;9966
 	call 046ffh		;9967   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop af			;996a
 	cp 013h		;996b   ; el 0x13?
 	ret nz			;996d
-	ld hl,000c0h		;996e   ; (0xC0, 0)...
-	ld bc,00040h		;9971   ; ...0x40 x 0x100...
+	ld hl,000c0h		;996e   ; (0, 0xC0)...
+	ld bc,00040h		;9971   ; ...0x100 x 0x40...
 	xor a			;9974
 	ld d,002h		;9975   ; ...de la pagina 2 a 0
 	call 046ffh		;9977   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -3129,18 +3129,18 @@ mensaje_siguiente:		; a los 0xC0 cuadros, el mensaje siguiente; en el 6, p13:998
 	xor a			;9985
 	ld (hl),a			;9986
 	jp est7_siguiente		;9987   ; est7_siguiente: 0xD701 uno mas
-raya_empieza:		; el paso 3 de dentro (la raya), 0xD717 = 0, (0x30, 0x40) de 0x60 x 0x80 del color 0xBB en la pagina 0 y el sonido 0x3F
+raya_empieza:		; el paso 3 de dentro (la raya), 0xD717 = 0, (0x40, 0x30) de 0x80 x 0x60 del color 0xBB en la pagina 0 y el sonido 0x3F
 	ld hl,0d702h		;998a   ; apunta a la columna del cursor en F2/F3; en el estado 7, el paso de dentro (p13:9922, p13:9A5B)
 	ld (hl),003h		;998d   ; el paso 3
 	ld hl,0d717h		;998f   ; apunta a en el estado 7, el color 7 que sube y baja (0-7) o lo que va de la raya
 	ld (hl),000h		;9992
-	ld hl,04030h		;9994   ; en (0x30, 0x40)...
-	ld bc,08060h		;9997   ; ...0x60 x 0x80...
+	ld hl,04030h		;9994   ; en (0x40, 0x30)...
+	ld bc,08060h		;9997   ; ...0x80 x 0x60...
 	ld a,0bbh		;999a   ; ...color 0xBB
 	ld d,000h		;999c
 	call 046ffh		;999e   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	jp 05f4dh		;99a1   ; sonido_3f: pide el sonido 0x3F
-raya_baja:		; 0xD717 uno mas: hasta 0x20, la linea (0x30, 0x50 + 0xD717) de la pagina 1 a (0x48, 0x20) con YMMM; luego (0x70, 0x60) de 8 x 0x48 a (0x68, 0x60) y el paso de dentro 0
+raya_baja:		; 0xD717 uno mas: hasta 0x20, YMMM con HL = (0x50, 0x30 + 0xD717) y DE = (0x20, 0x48) en la pagina 1; luego (0x60, 0x70) de 0x48 x 8 a (0x60, 0x68) y el paso de dentro 0
 	ld hl,0d717h		;99a4   ; apunta a en el estado 7, el color 7 que sube y baja (0-7) o lo que va de la raya
 	inc (hl)			;99a7
 	ld a,(hl)			;99a8
@@ -3152,10 +3152,10 @@ raya_baja:		; 0xD717 uno mas: hasta 0x20, la linea (0x30, 0x50 + 0xD717) de la p
 	ld de,02048h		;99b2
 	ld a,001h		;99b5
 	jp 047abh		;99b7   ; copia_en_y: orden YMMM del VDP
-raya_acaba:		; de (0x70, 0x60)...
+raya_acaba:		; de (0x60, 0x70)...
 	ld hl,06070h		;99ba
-	ld de,06068h		;99bd   ; ...a (0x68, 0x60)...
-	ld bc,04808h		;99c0   ; ...8 x 0x48
+	ld de,06068h		;99bd   ; ...a (0x60, 0x68)...
+	ld bc,04808h		;99c0   ; ...0x48 x 8
 	ld a,001h		;99c3
 	call 04767h		;99c5   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld hl,0d702h		;99c8   ; el paso de dentro 0
@@ -3171,7 +3171,7 @@ est7_paso_21:		; el fundido 1; al acabar, la pagina 0 borrada y 0x40 cuadros
 	ld hl,0d703h		;99db   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	ld (hl),040h		;99de
 	jp est7_siguiente		;99e0   ; est7_siguiente: 0xD701 uno mas
-est7_paso_22:		; a los 0x40 cuadros: 6, 0xD706 = 0, la forma de p54:BCD3 en (0x55, 0x70) y el sonido 0xA4
+est7_paso_22:		; a los 0x40 cuadros: 6, 0xD706 = 0, la forma de p54:BCD3 con DE = 0x7055 y el sonido 0xA4
 	ld hl,0d703h		;99e3   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;99e6
 	ret nz			;99e7
@@ -3179,8 +3179,8 @@ est7_paso_22:		; a los 0x40 cuadros: 6, 0xD706 = 0, la forma de p54:BCD3 en (0x5
 	ld hl,0d706h		;99ea   ; apunta a 1 al salir de F2/F3 (p10:B897); en el estado 7, el desplazamiento, el color o el numero de mensaje
 	ld (hl),000h		;99ed
 	ld hl,0bcd3h		;99ef   ; la forma de p54:BCD3...
-	ld de,07055h		;99f2   ; ...en (0x55, 0x70)...
-	ld bc,00204h		;99f5   ; ...2 x 4
+	ld de,07055h		;99f2   ; ...en (0x70, 0x55)...
+	ld bc,00204h		;99f5   ; ...B = 2, C = 4
 	call 0647ah		;99f8   ; mosaico_de_54_bc: forma 0x0C en la franja 3
 	call est7_siguiente		;99fb   ; est7_siguiente: 0xD701 uno mas
 	jp 06bc4h		;99fe   ; sonido_a4: pide el sonido 0xA4 (de los que tienen la partitura en un banco de musica, p16:4CE3)
@@ -3280,21 +3280,21 @@ fundido_de_d706:
 	call 043f6h		;9aa4   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ld c,001h		;9aa7   ; cada cuadro
 	jp fundido_2_empieza		;9aa9   ; fundido_2_empieza: el fundido 2 (desde negro): 0xCADA = 2, la velocidad C, la paleta de HL a 0xE900 con los colores a 0
-dibujo_0a:		; (0, 0x20) de 0x58 x 0x40 a (0x40, 0x88) de la pagina 1
+dibujo_0a:		; (0x20, 0) de 0x40 x 0x58 a (0x88, 0x40) de la pagina 1
 	ld hl,02000h		;9aac
 	ld de,08840h		;9aaf
 	ld bc,04058h		;9ab2
 	ld a,001h		;9ab5
 	call 04767h		;9ab7   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	jr fundido_de_d706		;9aba
-dibujo_0b:		; (0, 0) de 0xA8 x 0x80 a (0x10, 0x10) de la pagina 1
+dibujo_0b:		; (0, 0) de 0x80 x 0xA8 a (0x10, 0x10) de la pagina 1
 	ld hl,00000h		;9abc
 	ld de,01010h		;9abf
 	ld bc,080a8h		;9ac2
 	ld a,001h		;9ac5
 	call 04767h		;9ac7   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	jr fundido_de_d706		;9aca
-dibujo_0c:		; (0, 0xA0) de 0x70 x 0x58 a (0x30, 0x20) de la pagina 2
+dibujo_0c:		; (0xA0, 0) de 0x58 x 0x70 a (0x20, 0x30) de la pagina 2
 	ld hl,0a000h		;9acc
 	ld de,02030h		;9acf
 	ld bc,05870h		;9ad2
@@ -3339,7 +3339,7 @@ dibujo_mosaico:		; p03:B8AC; a los 0x20 cuadros, 8, el mosaico de p13:9C80 a 0xD
 	inc l			;9b23
 	ld (hl),d			;9b24
 	jp est7_dentro_siguiente		;9b25   ; est7_dentro_siguiente: 0xD702 uno mas
-mosaico_por_piezas:		; p03:B8AC; cada 8 cuadros, el mosaico de 0xD718 en 0xD71B y la X + el byte siguiente; con 0xFF, en el dibujo 7 dos veces el de p54:BE19 en (0x40, 0x38); si no, 0xFF cuadros y el siguiente
+mosaico_por_piezas:		; p03:B8AC; cada 8 cuadros, el mosaico de 0xD718 en 0xD71B y la X + el byte siguiente; con 0xFF, en el dibujo 7 dos veces el de p54:BE19 en (0x38, 0x40); si no, 0xFF cuadros y el siguiente
 	call 07b55h		;9b28   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld hl,0d703h		;9b2b   ; apunta a la fila del cursor en F2/F3; en el estado 7, la cuenta de cuadros del paso
 	dec (hl)			;9b2e
@@ -3373,7 +3373,7 @@ mosaico_acaba:
 	cp 002h		;9b60
 	jr nc,mosaico_espera		;9b62
 	ld hl,0be19h		;9b64   ; p54:BE19...
-	ld de,03840h		;9b67   ; ...en (0x40, 0x38)
+	ld de,03840h		;9b67   ; ...en (0x38, 0x40)
 	ld (0d718h),hl		;9b6a   ; guarda en el estado 7, el mosaico del banco 54 que se pinta (p13:9B28) y el byte siguiente (16 bits)
 	ld hl,0d71bh		;9b6d   ; apunta a en el estado 7, el sitio de ese mosaico (E, D)
 	ld (hl),e			;9b70
@@ -3414,7 +3414,7 @@ d706_mas:		; 0xD706 uno mas: en el 0x0A, los dibujos de p00:4CA6 y p04:8957; en 
 mapa_de_8098:
 	ld de,08000h		;9bb5
 	jp 06e2ch		;9bb8   ; mapa_de_bits_8098_en: el mapa de bits de p57:8098 (0xA8 filas de 0x40 bytes) en la VRAM de DE
-dibujo_apaga:		; p03:B8AC y el fundido 1; al acabar: todo apagado, la pagina 0 borrada, p03:B866 con 0 y 1, todo encendido; salvo en el 0x0C, el paso de dentro 0; en el 0x0C, el color 7 a negro, 0xD717 = 0 y la forma de p54:BCDB en (0x58, 0x74)
+dibujo_apaga:		; p03:B8AC y el fundido 1; al acabar: todo apagado, la pagina 0 borrada, p03:B866 con 0 y 1, todo encendido; salvo en el 0x0C, el paso de dentro 0; en el 0x0C, el color 7 a negro, 0xD717 = 0 y la forma de p54:BCDB con DE = 0x7458
 	call 07b55h		;9bbb   ; a_p03_b8ac_2: p03:B8AC con el banco 3 en 0xA000
 	ld c,001h		;9bbe
 	call fundido_1		;9bc0   ; fundido_1: con el fundido 1, cada C cuadros cada color uno menos en las tres partes y la paleta puesta; al quedar todo a 0, 0xCADA = 0; 0xCADC de 0 a 2
@@ -3441,7 +3441,7 @@ dibujo_0c_final:
 	ld hl,0d717h		;9bee   ; apunta a en el estado 7, el color 7 que sube y baja (0-7) o lo que va de la raya
 	ld (hl),000h		;9bf1
 	ld hl,0bcdbh		;9bf3   ; la forma de p54:BCDB...
-	ld de,07458h		;9bf6   ; ...en (0x58, 0x74)
+	ld de,07458h		;9bf6   ; ...en (0x74, 0x58)
 	ld bc,00203h		;9bf9
 	call 0647ah		;9bfc   ; mosaico_de_54_bc: forma 0x0C en la franja 3
 	jp est7_dentro_siguiente		;9bff   ; est7_dentro_siguiente: 0xD702 uno mas
@@ -3810,7 +3810,7 @@ sprite_9f85:		; Y...
 	ld a,00fh		;9ef5   ; ...a 0x0F
 	ld bc,0009fh		;9ef7
 	jp 04237h		;9efa   ; llena_bloque: pone A en BC + 1 bytes desde HL
-sprites_de_d709:		; los sprites 0-1 de color 0x0F en (0x68, 0xD709) y 0x10 a la derecha, el patron 0x50 o 0x58 cada 4 cuadros
+sprites_de_d709:		; los sprites 0-1 de color 0x0F en X = 0xD709, Y = 0x68 y 0x10 a la derecha, el patron 0x50 o 0x58 cada 4 cuadros
 	call colores_0_1		;9efd   ; colores_0_1: los colores de los sprites 0-1 a 0x0F
 	ld a,(0ca03h)		;9f00   ; cada 4 cuadros...
 	rra			;9f03
@@ -3834,7 +3834,7 @@ colores_0_1:		; los colores de los sprites 0-1 a 0x0F
 	ld a,00fh		;9f21
 	ld bc,0001fh		;9f23
 	jp 04237h		;9f26   ; llena_bloque: pone A en BC + 1 bytes desde HL
-sprites_de_d70a:		; los sprites 0-1 de color 0x0F en (0x68, 0xD709) con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
+sprites_de_d70a:		; los sprites 0-1 de color 0x0F en X = 0xD709, Y = 0x68 con el patron de 0xD70A (p13:9F6B) y el siguiente + 4
 	call colores_0_1		;9f29   ; colores_0_1: los colores de los sprites 0-1 a 0x0F
 	call patron_de_d70a		;9f2c   ; patron_de_d70a: C = el patron por 0xD70A: hasta 3, 0x60 + n * 8; desde 4, 0x80 + (n - 4) * 4
 	ld a,(0d709h)		;9f2f   ; la X de 0xD709
@@ -3853,7 +3853,7 @@ segundo_sprite_d70a:
 	add a,010h		;9f46
 	ld d,a			;9f48
 	jp 05d41h		;9f49   ; pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00
-sprites_8770:		; los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
+sprites_8770:		; los sprites 2-3 en X = 0x70, Y = 0x87 con el patron 0x98 o 0xA0 cada 4 cuadros y sus colores a 7
 	ld a,(0ca03h)		;9f4c   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	rra			;9f4f   ; cada 4 cuadros...
 	rra			;9f50
@@ -3862,7 +3862,7 @@ sprites_8770:		; los sprites 2-3 en (0x87, 0x70) con el patron 0x98 o 0xA0 cada 
 	ld c,0a0h		;9f55   ; ...o 0xA0
 sprites_8770_b:		; desde el sprite 2
 	ld hl,0dc08h		;9f57
-	ld de,07087h		;9f5a   ; en (0x87, 0x70)
+	ld de,07087h		;9f5a   ; en (0x70, 0x87)
 	call dos_sprites_juntos		;9f5d   ; dos_sprites_juntos: el sprite en (E, D) y el de patron + 4 0x10 a la derecha
 	ld hl,0da20h		;9f60   ; los colores...
 	ld a,007h		;9f63   ; ...a 7

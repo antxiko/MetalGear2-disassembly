@@ -35,17 +35,17 @@ menu_de_guardar:		; la pantalla del menu de guardar y cargar: 0xC3A0, 0xC38D, 0x
 	ld (0c3a2h),a		;6015   ; guarda el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
 	ld a,(0ca42h)		;6018   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	call 04452h		;601b   ; la pagina en negro
-	ld hl,01018h		;601e   ; en (0x18, 0x10)...
-	ld bc,0381ch		;6021   ; ...0x1C x 0x38
-	call pon_recuadro		;6024   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
-	ld hl,01c04h		;6027   ; en (0x04, 0x1C)...
-	ld bc,08810h		;602a   ; ...0x10 x 0x88
-	call pon_recuadro		;602d   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+	ld hl,01018h		;601e   ; en (0x10, 0x18)...
+	ld bc,0381ch		;6021   ; ...0x38 x 0x1C
+	call pon_recuadro		;6024   ; pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
+	ld hl,01c04h		;6027   ; en (0x1C, 4)...
+	ld bc,08810h		;602a   ; ...0x88 x 0x10
+	call pon_recuadro		;602d   ; pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 	ld hl,0bf74h		;6030   ; el letrero de p12:BF74
 	call 04918h		;6033   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 	call marca_c39f		;6036   ; la marca de guardar o cargar
 	jp 045c5h		;6039   ; enciende_pantalla: R#1 con el bit 6 (BL) a uno, desde la copia 0xF3E0
-pon_recuadro:		; un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+pon_recuadro:		; un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 	ld a,(0ca42h)		;603c   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;603f
 	ld a,099h		;6040   ; el color 0x99
@@ -119,9 +119,9 @@ a_las_opciones:		; el recuadro de las opciones (su alto por 0xC38B: 0x10, 0x1C o
 	jr c,L_609D		;6099
 	ld c,028h		;609b   ; con los dos, 0x28
 L_609D:
-	ld hl,05818h		;609d   ; en (0x18, 0x58)...
+	ld hl,05818h		;609d   ; en (0x58, 0x18)...
 	ld b,058h		;60a0   ; ...0x58 de ancho
-	call pon_recuadro		;60a2   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+	call pon_recuadro		;60a2   ; pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 	ld hl,0bf95h		;60a5   ; el letrero de p12:BF95
 	call 04918h		;60a8   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 	ld hl,0bfa0h		;60ab   ; el de p12:BFA0...
@@ -172,7 +172,7 @@ marca_c38d:		; la marca en la fila 0x1C + 0x0C por la opcion 0xC38D, tras borrar
 	jr borra_marcas_c38d		;60fd
 borra_marcas_c39f:
 	push de			;60ff
-	ld hl,0181ch		;6100   ; (0x1C, 0x18), 0x14 x 8
+	ld hl,0181ch		;6100   ; (0x18, 0x1C), 0x14 x 8
 	ld bc,00814h		;6103
 	ld a,(0ca42h)		;6106   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;6109
@@ -190,7 +190,7 @@ borra_marcas_c38d:		; la columna de marcas de las opciones, su alto por 0xC38B (
 	jr c,L_6121		;611d
 	ld c,020h		;611f   ; ...con los dos, 0x20
 L_6121:
-	ld hl,0601ch		;6121   ; (0x1C, 0x60)...
+	ld hl,0601ch		;6121   ; (0x60, 0x1C)...
 	ld b,008h		;6124   ; ...8 de ancho
 	ld a,(0ca42h)		;6126   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;6129
@@ -201,15 +201,15 @@ pon_marca:
 	jr dibuja_marca		;6130
 borra_marcas_c3a0:
 	push de			;6132
-	ld hl,06054h		;6133   ; (0x54, 0x60)
-	ld bc,00828h		;6136   ; (0x54, 0x60), 0x28 x 8
+	ld hl,06054h		;6133   ; (0x60, 0x54)
+	ld bc,00828h		;6136   ; 8 x 0x28
 	ld a,(0ca42h)		;6139   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld d,a			;613c
 	ld a,099h		;613d
 	call 046ffh		;613f   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 	pop de			;6142
-dibuja_marca:		; copia el dibujo de 8 x 8 de (0x38, 0x50) a DE con la operacion 0xC8, de la pagina de 0xCA42
-	ld hl,05038h		;6143   ; de (0x38, 0x50)...
+dibuja_marca:		; copia el dibujo de 8 x 8 de (0x50, 0x38) a DE con la operacion 0xC8, de la pagina de 0xCA42
+	ld hl,05038h		;6143   ; de (0x50, 0x38)...
 	ld bc,00808h		;6146   ; ...8 x 8
 	ld a,(0ca42h)		;6149   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rrca			;614c   ; la pagina de destino...
@@ -250,14 +250,14 @@ opcion_0:		; el paso 8 con 0xC3A1 = 0, el recuadro grande y, guardando, p14:BA98
 	ld (0c3a2h),a		;6189   ; guarda el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
 	xor a			;618c
 	ld (0c3a1h),a		;618d   ; sin resultado
-	ld hl,00c38h		;6190   ; en (0x38, 0x0C)...
-	ld bc,0a888h		;6193   ; ...0x88 x 0xA8
-	call pon_recuadro		;6196   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+	ld hl,00c38h		;6190   ; en (0x0C, 0x38)...
+	ld bc,0a888h		;6193   ; ...0xA8 x 0x88
+	call pon_recuadro		;6196   ; pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 	ld a,(0c39fh)		;6199   ; lee en el menu de guardar: 0 guardar, 1 cargar
 	and a			;619c
 	jr nz,opcion_0_cargar		;619d   ; cargando, aparte
 	call 041efh		;619f   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ba98h		;61a2   ; p14:BA98
+	call 0ba98h		;61a2   ; letras_de_la_partida: la opcion 0, guardando: 0xE900 y 0xC7C0 a cero, la clave 0xC7C1 de los cuadros, la partida de 0xC700 en rachas en 0xC804 (p14:BE57), su largo + 1 en 0xC7C0, la suma (p14:BB33) en 0xC7C2, la cabecera [clave][suma][largo] en 0xC800, todo cifrado (p14:BB1D), pasado a bits en 0xE900 y de 6 en 6 a 0xC900 (0xFF al final), y pintado (p14:BC7F)
 	jp 041a0h		;61a5   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 opcion_0_cargar:
 	ld hl,0e900h		;61a8   ; apunta a los caracteres de un dibujo pasados a 4 bits
@@ -271,7 +271,7 @@ opcion_0_cargar:
 	ld a,0ffh		;61c0   ; ...0xC900 a 0xFF
 	call 04237h		;61c2   ; llena_bloque: pone A en BC + 1 bytes desde HL
 	call 041efh		;61c5   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bba7h		;61c8   ; p14:BBA7
+	call 0bba7h		;61c8   ; rejilla_de_letras: 11 rayas de 0x9C de color 9 desde (0x12, 0x44), cada 0x0C mas abajo, y la de 8 de color 0x0A bajo la letra del cursor 0xC7C4 (p14:BBCE)
 	jp 041a0h		;61cb   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 c38d_menos:
 	ld a,(hl)			;61ce   ; la opcion
@@ -290,10 +290,10 @@ pon_c38d:
 	ld (hl),a			;61dd   ; guarda
 	call 05f49h		;61de   ; sonido_11: pide el sonido 0x11
 	jp marca_c38d		;61e1   ; marca_c38d: la marca en la fila 0x1C + 0x0C por la opcion 0xC38D, tras borrar la columna (p12:6112)
-letrero_de_ranuras:		; el recuadro de (0x50, 0x58), 0x30 x 0x58 y el letrero de p12:BFA7
-	ld hl,05850h		;61e4   ; en (0x50, 0x58)...
-	ld bc,05830h		;61e7   ; ...0x30 x 0x58
-	call pon_recuadro		;61ea   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+letrero_de_ranuras:		; el recuadro de (0x58, 0x50), 0x58 x 0x30 y el letrero de p12:BFA7
+	ld hl,05850h		;61e4   ; en (0x58, 0x50)...
+	ld bc,05830h		;61e7   ; ...0x58 x 0x30
+	call pon_recuadro		;61ea   ; pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 	ld hl,0bfa7h		;61ed   ; el letrero de p12:BFA7
 	jp 04918h		;61f0   ; letrero_con_sitio: [fila][columna] y letras; 0xFE otra posicion, 0xFF acaba
 guarda_si_c39f_0:		; al guardar (0xC39F = 0), p12:61F8
@@ -302,7 +302,7 @@ guarda_si_c39f_0:		; al guardar (0xC39F = 0), p12:61F8
 	ret nz			;61f7   ; cargando, nada
 partida_a_c706:		; p14:BF36 y lo de la partida a 0xC706: la fase, 0xCAA0, el nivel, 0xD430, los bits de 0xD880 y 0xD888 (p12:62A4), 0x15 bytes de banderas de 0xD7D0, 5 de 0xD7F0 y de las 48 fichas de 0xD600: si se tienen (6 bytes de bits), su cuenta (48) y la parte alta de 24 parejas; en la zona 4 sin el bit 0 de 0xD7D4, antes fuera el bit 1 de 0xD7D4, el 4 de 0xD7DE y 0xCAA0 = 0
 	call 041efh		;61f8   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bf36h		;61fb   ; p14:BF36
+	call 0bf36h		;61fb   ; cosas_por_d880: antes de guardar, por debajo de la zona 0x12: las cosas que se dan una vez por 0xD883 (bit 6 de 0xD7F4, 0xD68C), 0xD886 (bit 5, 0xD6A0), 0xD88A en la zona 0x0B (0xD69C) y 0xD882 (bit 7, 0xD688), a 0xFF: la cosa con 1 y cuenta 1
 	call 041a0h		;61fe   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca4ah)		;6201   ; lee la zona
 	cp 004h		;6204   ; la zona 4...
@@ -639,7 +639,7 @@ menu_paso_8:		; la opcion 0: guardando, espera las teclas de funcion; cargando, 
 	and a			;643d
 	jp z,menu_fuera_con_f		;643e   ; guardando, solo F1-F5
 	call 041efh		;6441   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bbech		;6444   ; p14:BBEC
+	call 0bbech		;6444   ; letras_cada_cuadro: la opcion 0, cargando: las direcciones mueven el cursor 0xC7C4; el disparo pone 0x78; con la tecla de funcion del bit 5, la comprobacion (p14:BCD3); con una tecla (p14:BDC1), su letra en el cursor (0xFF: borra la de antes, con los signos 5-0x13 y 0x19-0x1D pasados a 0x53-0x61 y 0x62-0x66) y el cursor siguiente; se pinta
 	call 041a0h		;6447   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0c3a1h)		;644a   ; lee el resultado del disco o del Game Master 2 (2 = error)
 	and a			;644d
@@ -656,12 +656,12 @@ menu_paso_9:		; con algo pulsado: 0xC7C4 y 0xC3A1 a cero, el paso 8, el recuadro
 	ld (0c3a1h),a		;6463   ; guarda el resultado del disco o del Game Master 2 (2 = error)
 	ld a,008h		;6466   ; de vuelta al paso 8
 	ld (0c3a2h),a		;6468   ; guarda el paso del menu de guardar (1-9; 0 fuera, 0xFF cargada)
-	ld hl,00c38h		;646b   ; en (0x38, 0x0C)...
-	ld bc,0a888h		;646e   ; ...0x88 x 0xA8
-	call pon_recuadro		;6471   ; pon_recuadro: un recuadro en HL (X, Y) de C x B: lleno del color 0x99 y con el marco de color 7
+	ld hl,00c38h		;646b   ; en (0x0C, 0x38)...
+	ld bc,0a888h		;646e   ; ...0xA8 x 0x88
+	call pon_recuadro		;6471   ; pon_recuadro: un recuadro en HL (X, Y) de B x C (ancho x alto): lleno del color 0x99 y con el marco de color 7
 	call 041efh		;6474   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bc7fh		;6477   ; p14:BC7F
-	call 0bba7h		;647a   ; p14:BBA7
+	call 0bc7fh		;6477   ; pinta_letras: las letras de 0xC900 (hasta 0xFF) desde (0x12, 0x3C): de 4 en 4 con 9 (0x0D entre grupos), 16 por fila, 0x0C mas abajo
+	call 0bba7h		;647a   ; rejilla_de_letras: 11 rayas de 0x9C de color 9 desde (0x12, 0x44), cada 0x0C mas abajo, y la de 8 de color 0x0A bajo la letra del cursor 0xC7C4 (p14:BBCE)
 	jp 041a0h		;647d   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 por_el_disco:		; guarda o carga la partida en el disco: sin la interrupcion de linea (R#0 = 6), H.KEYI a ret, la pila en 0xC392; la RAM de 0x9600 cambiada con 0xDD00 (p12:6595), el FCB de la ranura (p12:651F), abrir o crear (p12:64C9), registro de 1 byte (p12:6502), 0x73 bytes desde 0xC700 (p12:64BB), cerrar (p12:64EF); la RAM de vuelta (p12:65C1), H.KEYI y R#0 = 0x16
 	di			;6480   ; sin interrupciones
@@ -1445,7 +1445,7 @@ actor_del_sitio:
 	ld bc,00040h		;6acd   ; la siguiente (0x40 bytes)
 	add ix,bc		;6ad0
 	jr actor_del_sitio		;6ad2
-actor_d340:		; sin 0xC697: sin 0xD454 y sin alerta, con 0xCA67 y la ficha 0xD340 libre, cuenta 0xD420; al acabar, 0xD509 = 1, 0xD454 = 4 y la ficha a cero; con 0xD454, cuenta y al acabar el actor 0x0B en (0x20, 0xA0)
+actor_d340:		; sin 0xC697: sin 0xD454 y sin alerta, con 0xCA67 y la ficha 0xD340 libre, cuenta 0xD420; al acabar, 0xD509 = 1, 0xD454 = 4 y la ficha a cero; con 0xD454, cuenta y al acabar el actor 0x0B en X = 0xA0, Y = 0x20
 	ld a,(0c697h)		;6ad4   ; con 0xC697, nada
 	and a			;6ad7
 	ret nz			;6ad8
@@ -1797,7 +1797,7 @@ radar_con_e206:
 	call punto_de_snake		;6d33   ; punto_de_snake: salvo en el estado 0x11: el punto de Snake (su sitio, o el de antes de entrar en 0xCBE0) en la casilla del centro del recuadro: de color 0x0A cada 4 cuadros sin salir de la sala; con 0xE206, copiado de la otra pagina
 	call puntos_de_actores		;6d36   ; puntos_de_actores: los actores de 0xCE00 (0x18, o 0x14 dentro de un sitio) que no son 0, 0x13, 0x17, 0x18 ni el 8 con 0xD441, en una sala a uno o menos de la de Snake: su punto (p12:710F); en una especial, solo los del byte 0x1B = 1 (el 9, solo en la especial 0x18)
 	call puntos_de_d800		;6d39   ; puntos_de_d800: las marcas de las 3 fichas de 0xD800 (en una especial, solo la de 0xD860)
-	call puntos_de_la_columna_7		;6d3c   ; puntos_de_la_columna_7: en la columna 7: en la especial 0x2A sin el bit 7 de 0xD7D5, un punto en (0x34, 0xEC); en la 0x26 sin los bits 5 y 6 de 0xD7D3, en (0x34, 0xF3)
+	call puntos_de_la_columna_7		;6d3c   ; puntos_de_la_columna_7: en la columna 7: en la especial 0x2A sin el bit 7 de 0xD7D5, un punto en (0xEC, 0x34); en la 0x26 sin los bits 5 y 6 de 0xD7D3, en (0xF3, 0x34)
 raya_de_ca7a:		; sin 0xE206 y con 0xCA7A de 2 o mas: con 0xE203 = 1, 0xCA7A uno menos y el sonido 8 (si sigue en 2 o mas); la raya vertical de color 0x0C en la columna de 0xE203
 	ld a,(0e206h)		;6d3f   ; lee 1 al borrar los puntos del recuadro
 	and a			;6d42
@@ -2152,7 +2152,7 @@ borra_radar:		; el recuadro de la otra pagina en 0xEE
 	xor 001h		;6f44
 	ld d,a			;6f46
 	ld a,0eeh		;6f47
-pon_radar:		; el recuadro (0x17, 0xC4), 0x38 x 0x38 en el color A de la pagina D
+pon_radar:		; el recuadro (0xC4, 0x17), 0x38 x 0x38 en el color A de la pagina D
 	ld hl,0c417h		;6f49
 	ld bc,03838h		;6f4c
 	jp 046ffh		;6f4f   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
@@ -2181,7 +2181,7 @@ dibujo_de_sala:		; el dibujo A de la sala (A * 0x13 + 0xCA9E, o 0x8C00 en una es
 	ld bc,08c00h		;6f6f   ; en una especial, 0x8C00
 L_6F72:
 	add hl,bc			;6f72
-	call dibujo_a_7000		;6f73   ; dibujo_a_7000: con la RAM de 0x8000: los 0x2C x 0x0E bits de HL a puntos (p12:6FC4) en 0xEA00, y de ahi 0x12 lineas de 9 bytes a 0x7000 de la VRAM, de 0x80 en 0x80
+	call dibujo_a_7000		;6f73   ; dibujo_a_7000: con la RAM de 0x8000: los 0x2C bytes de bits de HL a puntos de color 0x0E (p12:6FC4) en 0xEA00, y de ahi 0x12 lineas de 9 bytes a 0x7000 de la VRAM, de 0x80 en 0x80
 	pop de			;6f76
 	ld a,e			;6f77
 	ld hl,06e05h		;6f78   ; su casilla...
@@ -2197,7 +2197,7 @@ L_6F8C:
 	ld a,b			;6f8c
 	ld bc,01212h		;6f8d   ; 0x12 x 0x12
 	jp 047edh		;6f90   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-dibujo_a_7000:		; con la RAM de 0x8000: los 0x2C x 0x0E bits de HL a puntos (p12:6FC4) en 0xEA00, y de ahi 0x12 lineas de 9 bytes a 0x7000 de la VRAM, de 0x80 en 0x80
+dibujo_a_7000:		; con la RAM de 0x8000: los 0x2C bytes de bits de HL a puntos de color 0x0E (p12:6FC4) en 0xEA00, y de ahi 0x12 lineas de 9 bytes a 0x7000 de la VRAM, de 0x80 en 0x80
 	push hl			;6f93
 	ld a,(0c386h)		;6f94   ; lee el slot de la RAM de 0x8000 (p01:7243)
 	ld h,080h		;6f97
@@ -2345,7 +2345,7 @@ punto_de_snake:		; salvo en el estado 0x11: el punto de Snake (su sitio, o el de
 punto_de_e204:
 	ld de,(0e204h)		;7072   ; lee la Y de Snake antes de entrar en el sitio - 0x20 y el byte siguiente (16 bits)
 	call sitio_en_el_radar		;7076   ; su punto...
-	ld de,0d72ah		;7079   ; ...en la casilla del centro (0x2A, 0xD7)
+	ld de,0d72ah		;7079   ; ...en la casilla del centro (0xD7, 0x2A)
 	add hl,de			;707c
 	ld a,(0e206h)		;707d   ; lee 1 al borrar los puntos del recuadro
 	and a			;7080
@@ -2362,7 +2362,7 @@ punto_de_e204:
 	ld a,e			;7094
 	ld e,000h		;7095
 	jp 04840h		;7097   ; punto: orden PSET del VDP con la operacion logica de E
-copia_un_punto:		; 1 x 2 de la otra pagina
+copia_un_punto:		; 2 x 1 de la otra pagina
 	ld bc,00201h		;709a
 	jp copia_de_la_otra		;709d   ; copia_de_la_otra: copia de la pagina 1 (o 4) a la misma posicion de la de 0xCA42
 puntos_de_actores:		; los actores de 0xCE00 (0x18, o 0x14 dentro de un sitio) que no son 0, 0x13, 0x17, 0x18 ni el 8 con 0xD441, en una sala a uno o menos de la de Snake: su punto (p12:710F); en una especial, solo los del byte 0x1B = 1 (el 9, solo en la especial 0x18)
@@ -2569,13 +2569,13 @@ puntos_de_d800:		; las marcas de las 3 fichas de 0xD800 (en una especial, solo l
 	ld b,001h		;71e7
 punto_d800:
 	push bc			;71e9
-	call marca_de_d800		;71ea   ; marca_de_d800: la ficha IX en una sala a uno o menos (el 5 solo con 0xCA3C; el 7 sin su byte 0x14): el 2 y el 1 por debajo de 4, una marca de 3 x 5 (el 2 en su sitio - (0x30, 0x10); el 1 en (0, 0x50)); los otros, su punto (p12:710F)
+	call marca_de_d800		;71ea   ; marca_de_d800: la ficha IX en una sala a uno o menos (el 5 solo con 0xCA3C; el 7 sin su byte 0x14): el 2 y el 1 por debajo de 4, una marca de 3 x 5 (el 2 en su sitio - (0x10, 0x30); el 1 en (0x50, 0)); los otros, su punto (p12:710F)
 	ld bc,00020h		;71ed   ; la siguiente (0x20 bytes)
 	add ix,bc		;71f0
 	pop bc			;71f2
 	djnz punto_d800		;71f3
 	ret			;71f5
-marca_de_d800:		; la ficha IX en una sala a uno o menos (el 5 solo con 0xCA3C; el 7 sin su byte 0x14): el 2 y el 1 por debajo de 4, una marca de 3 x 5 (el 2 en su sitio - (0x30, 0x10); el 1 en (0, 0x50)); los otros, su punto (p12:710F)
+marca_de_d800:		; la ficha IX en una sala a uno o menos (el 5 solo con 0xCA3C; el 7 sin su byte 0x14): el 2 y el 1 por debajo de 4, una marca de 3 x 5 (el 2 en su sitio - (0x10, 0x30); el 1 en (0x50, 0)); los otros, su punto (p12:710F)
 	ld a,(ix+000h)		;71f6
 	and a			;71f9
 	ret z			;71fa   ; libre, nada
@@ -2611,7 +2611,7 @@ marca_d800_cerca:
 	ld a,(ix+001h)		;7233
 	cp 004h		;7236   ; desde 4, su punto
 	jp nc,punto_de_actor		;7238   ; punto_de_actor: el punto del actor IX en su casilla: los de 0xD800 en adelante (C = 1) solo con el byte 1 por debajo de 0x20 (el tipo 1 desde el 3, 0x20 mas arriba y a la izquierda; recortados a la casilla); de color 0x0A el 3 y el 6 con el byte 1 por debajo de 3 (el 6 desde 9, nada), el 0x15 cada 4 cuadros, los otros del color de la pagina
-	ld de,05000h		;723b   ; en (0, 0x50)
+	ld de,05000h		;723b   ; en (0x50, 0)
 	jr pon_marca_d800		;723e
 marca_del_2:		; su X - 0x10...
 	ld a,(ix+005h)		;7240
@@ -2638,10 +2638,10 @@ raya_de_marca:
 	inc h			;7268   ; la columna siguiente
 	djnz raya_de_marca		;7269
 	ret			;726b
-copia_la_marca:		; 5 x 4 de la otra pagina
+copia_la_marca:		; 4 x 5 de la otra pagina
 	ld bc,00405h		;726c
 	jp copia_de_la_otra		;726f   ; copia_de_la_otra: copia de la pagina 1 (o 4) a la misma posicion de la de 0xCA42
-puntos_de_la_columna_7:		; en la columna 7: en la especial 0x2A sin el bit 7 de 0xD7D5, un punto en (0x34, 0xEC); en la 0x26 sin los bits 5 y 6 de 0xD7D3, en (0x34, 0xF3)
+puntos_de_la_columna_7:		; en la columna 7: en la especial 0x2A sin el bit 7 de 0xD7D5, un punto en (0xEC, 0x34); en la 0x26 sin los bits 5 y 6 de 0xD7D3, en (0xF3, 0x34)
 	ld a,(0ca51h)		;7272   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp 007h		;7275
 	ret nz			;7277
@@ -2784,11 +2784,11 @@ dibujo_a_casilla:
 	push de			;7353
 	ld a,b			;7354
 	push af			;7355
-	call z,copia_dibujo_de_casilla		;7356   ; copia_dibujo_de_casilla: salvo con 0xCB21 = 2: de (0, 0xE0) de la pagina 2 (o 0), 0x0E x 0x12
+	call z,copia_dibujo_de_casilla		;7356   ; copia_dibujo_de_casilla: salvo con 0xCB21 = 2: de (0, 0xE0) de la pagina 2 (o 0), 0x12 x 0x0E
 	pop af			;7359
 	pop de			;735a
 	xor 001h		;735b   ; la otra pagina
-copia_dibujo_de_casilla:		; salvo con 0xCB21 = 2: de (0, 0xE0) de la pagina 2 (o 0), 0x0E x 0x12
+copia_dibujo_de_casilla:		; salvo con 0xCB21 = 2: de (0, 0xE0) de la pagina 2 (o 0), 0x12 x 0x0E
 	ex af,af'			;735d
 	ld a,(0cb21h)		;735e   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 002h		;7361
@@ -2879,7 +2879,7 @@ sitio_b709:
 	sub 01fh		;73e5
 	ld e,a			;73e7
 	push de			;73e8
-	call pieza_2_x_4		;73e9   ; pieza_2_x_4: en la sala 6: 0xCA4C-0xCA4D = 0x0200 y una pieza de 2 x 4 caracteres en (E, D): la de p56:B6C1 o p56:B6C9 al azar
+	call pieza_2_x_4		;73e9   ; pieza_2_x_4: en la sala 6: 0xCA4C-0xCA4D = 0x0200 y una pieza de 2 x 4 caracteres en X = D, Y = E: la de p56:B6C1 o p56:B6C9 al azar
 	pop hl			;73ec
 	call mapa_de_la_pieza		;73ed   ; mapa_de_la_pieza: salvo con 0xCB21 = 2, en la sala 6: p12:7451
 siguiente_b709:
@@ -2897,7 +2897,7 @@ punto_sin_cb21_2:		; el punto de la pagina A salvo con 0xCB21 = 2
 	ld a,d			;73fe
 	ret z			;73ff
 	jp punto_7		;7400   ; punto_7: un punto de color 7 en la pagina A
-pieza_2_x_4:		; en la sala 6: 0xCA4C-0xCA4D = 0x0200 y una pieza de 2 x 4 caracteres en (E, D): la de p56:B6C1 o p56:B6C9 al azar
+pieza_2_x_4:		; en la sala 6: 0xCA4C-0xCA4D = 0x0200 y una pieza de 2 x 4 caracteres en X = D, Y = E: la de p56:B6C1 o p56:B6C9 al azar
 	ld a,(0ca4bh)		;7403   ; lee la sala de la zona
 	cp 006h		;7406
 	ret nz			;7408
@@ -3027,7 +3027,7 @@ aviso_d458:		; el aviso de 0xD458 ([que y bits][cuenta][Y][X][fila][columna]): l
 	dec (hl)			;74c8   ; la cuenta
 	dec hl			;74c9
 	ret nz			;74ca
-quita_aviso:		; 0xCA28 = 0, 0xD458 libre y, en la misma sala, lo de debajo de vuelta: el 1, 0x10 x 0x10 desde (0x80, 0xC0); los otros por p12:7579
+quita_aviso:		; 0xCA28 = 0, 0xD458 libre y, en la misma sala, lo de debajo de vuelta: el 1, 0x10 x 0x10 desde (0xC0, 0x80); los otros por p12:7579
 	ex af,af'			;74cb
 	xor a			;74cc
 	ld (0ca28h),a		;74cd
@@ -3052,10 +3052,10 @@ quita_aviso:		; 0xCA28 = 0, 0xD458 libre y, en la misma sala, lo de debajo de vu
 	dec a			;74e6
 	ld a,b			;74e7
 	jp nz,quita_letrero		;74e8   ; ...los otros, aparte
-	ld hl,0c080h		;74eb   ; de (0x80, 0xC0)...
+	ld hl,0c080h		;74eb   ; de (0xC0, 0x80)...
 	ld bc,01010h		;74ee   ; ...0x10 x 0x10
 	jp 0475ah		;74f1   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
-pinta_aviso:		; con el bit 6 ya pintado: el 1 guarda 0x10 x 0x10 de su sitio en (0x80, 0xC0) y pone encima el dibujo de (0xB0, 8); los otros guardan 0x5A (con el bit 7) o 0x3A x 0x10 en (0xE0, 0) y pintan un recuadro de 0x0C de alto con marco y el letrero de p12:7601
+pinta_aviso:		; con el bit 6 ya pintado: el 1 guarda 0x10 x 0x10 de su sitio en (0xC0, 0x80) y pone encima el dibujo de (8, 0xB0); los otros guardan 0x5A (con el bit 7) o 0x3A x 0x10 en (0, 0xE0) y pintan un recuadro de 0x0C de alto con marco y el letrero de p12:7601
 	set 6,(hl)		;74f4
 	ld a,(hl)			;74f6
 	ld b,a			;74f7
@@ -3069,13 +3069,13 @@ pinta_aviso:		; con el bit 6 ya pintado: el 1 guarda 0x10 x 0x10 de su sitio en 
 	jr nz,aviso_con_letrero		;7500
 	push de			;7502
 	ex de,hl			;7503
-	ld de,0c080h		;7504   ; lo de debajo a (0x80, 0xC0)
+	ld de,0c080h		;7504   ; lo de debajo a (0xC0, 0x80)
 	ld bc,01010h		;7507
 	push bc			;750a
 	call 0474dh		;750b   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	pop bc			;750e
 	pop de			;750f
-	ld hl,008b0h		;7510   ; el dibujo de (0xB0, 8)...
+	ld hl,008b0h		;7510   ; el dibujo de (8, 0xB0)...
 	ld a,(0ca42h)		;7513   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	rrca			;7516
 	rrca			;7517
@@ -3087,7 +3087,7 @@ aviso_con_letrero:
 	push de			;751f
 	push bc			;7520
 	ex de,hl			;7521
-	ld de,000e0h		;7522   ; lo de debajo a (0xE0, 0)...
+	ld de,000e0h		;7522   ; lo de debajo a (0, 0xE0)...
 	ld bc,05a10h		;7525   ; ...0x5A x 0x10
 	ld a,(0ca42h)		;7528   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	push hl			;752b
@@ -3141,7 +3141,7 @@ letra_de_aviso:
 	add a,008h		;7574
 	ld d,a			;7576
 	jr letra_de_aviso		;7577
-quita_letrero:		; lo de (0xE0, 0), 0x5A (o 0x3A) x 0x0C de vuelta a su sitio
+quita_letrero:		; lo de (0, 0xE0), 0x5A (o 0x3A) x 0x0C de vuelta a su sitio
 	rla			;7579
 	ld b,05ah		;757a   ; con el bit 7, 0x5A...
 	jr c,letrero_de_vuelta		;757c
@@ -3310,7 +3310,7 @@ dibuja_snake_b:		; salvo en el estado 4: p12:7B85; sobre lo de 0xCB3F por debajo
 	ret nc			;76f7   ; desde 2, nada
 	call 04198h		;76f8   ; bancos_63: pone el 63 en 0xA000 (con su copia en 0xC381-0xC383)
 	call dibujo_de_snake_b		;76fb   ; dibujo_de_snake_b: por el dibujo de 0xCB01 (p12:770A, 15)
-	call linea_de_cb3f_1		;76fe   ; linea_de_cb3f_1: con 0xCB3F = 1: la fila (0xF0, 0xC0) a 0 y la linea (0 o 0x40 cada 4 cuadros, 0xCA), 0x40 x 1, a (0x80, 0xF0)
+	call linea_de_cb3f_1		;76fe   ; linea_de_cb3f_1: con 0xCB3F = 1: la fila (0xC0, 0xF0) a 0 y la linea (0 o 0x40 cada 4 cuadros, 0xCA), 0x40 x 1, a (0x80, 0xF0)
 	jp 041dah		;7701   ; bancos_12_2_3: pone el 12 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 dibujo_de_snake_b:		; por el dibujo de 0xCB01 (p12:770A, 15)
 	ld a,(0cb01h)		;7704   ; lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
@@ -3331,12 +3331,12 @@ DATA_tabla_770A:
 
 
 dibujo_0:		; los sprites (p12:775D) y los patrones de p63:B1CC (p12:77B8)
-	call sprites_de_snake		;7728   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;7728   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jp patrones_de_b1cc		;772b   ; patrones_de_b1cc: la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los patrones (p12:77E2)
 colores_0:		; los colores desde 0xD0 + la direccion * 3 + el paso (p12:774E) a la tabla de colores (p12:7733)
 	ld l,0d0h		;772e   ; la linea 0xD0 + (direccion - 1) * 3 + el paso a la fila 0xF0 de la pagina 7 (p12:7733)
 	call por_direccion_y_paso		;7730   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
-colores_de_snake:		; la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+colores_de_snake:		; la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 	ld h,000h		;7733   ; en la pagina 7, la linea L a la fila 0xF0: sin 0xCB3F con YMMM; con el, 0x80 x 1 con HMMM
 	ld a,(0cb3fh)		;7735   ; lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	or a			;7738
@@ -3361,7 +3361,7 @@ por_direccion_y_paso:		; L += (la direccion - 1) * 3 + el paso
 	add a,l			;775a
 	ld l,a			;775b
 	ret			;775c
-sprites_de_snake:		; los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+sprites_de_snake:		; los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	ld a,(0cb03h)		;775d   ; lee la Y de Snake
 	sub 020h		;7760   ; la Y - 0x20
 	ld e,a			;7762
@@ -3478,7 +3478,7 @@ patrones_a_e900:
 lineas_1:		; la linea 0xDC + direccion y paso a la fila 0xF0
 	ld l,0dch		;7805
 	call por_direccion_y_paso		;7807   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
-	jp colores_de_snake		;780a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;780a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 dibujo_2:		; dandose la vuelta, como el 4; si no, los sprites (p12:7829) y los patrones de p63:B1CC
 	ld a,(0cb16h)		;780d   ; lee 1 mientras Snake se da la vuelta
 	or a			;7810
@@ -3491,14 +3491,14 @@ lineas_2:		; dandose la vuelta, como el 4; si no, la linea 0xE8 + direccion y pa
 	jp nz,lineas_4		;781e   ; lineas_4:
 	ld l,0e8h		;7821
 	call por_direccion_y_paso		;7823   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
-	jp colores_de_snake		;7826   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;7826   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 sprites_2:		; los sprites: arriba o abajo, los normales (p12:775D); a los lados, 0x10 mas abajo y 8 a la izquierda (p12:7851); dandose la vuelta, 0x18 por encima (con 0xCB17 desde 3, tambien 8 a la izquierda)
 	ld a,(0cb16h)		;7829   ; lee 1 mientras Snake se da la vuelta
 	or a			;782c
 	jr nz,sprites_2_vuelta		;782d
 	ld a,(0cb0eh)		;782f   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	cp 003h		;7832   ; arriba o abajo...
-	jp c,sprites_de_snake		;7834   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	jp c,sprites_de_snake		;7834   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jr sprites_2_lado		;7837   ; ...a los lados
 sprites_2_vuelta:
 	ld a,(0cb17h)		;7839
@@ -3538,11 +3538,11 @@ L_786A:
 	call 05d3dh		;7875   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 	jp 05d3dh		;7878   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 dibujo_3:		; los sprites y los patrones de p63:B26A por 0xCB17 (p12:789A)
-	call sprites_de_snake		;787b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;787b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jp patrones_3		;787e   ; patrones_3:
 lineas_3:		; la linea de 0xCB17 (p12:7887)
 	call linea_de_cb17		;7881   ; linea_de_cb17: L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
-	jp colores_de_snake		;7884   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;7884   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 linea_de_cb17:		; L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
 	ld a,(0cb17h)		;7887   ; hasta 0x0C...
 	cp 00dh		;788a
@@ -3566,11 +3566,11 @@ fila_b26a:		; HL = p63:B26A + (A - 9) * 2
 	add a,a			;78a8
 	jp 0423eh		;78a9   ; suma_a_hl: HL = HL + A
 dibujo_4:		; los sprites y los patrones de p63:B25A por 0xCB17 (p12:78B8)
-	call sprites_de_snake		;78ac   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;78ac   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jp patrones_4		;78af   ; patrones_4: p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
 lineas_4:
 	call linea_de_cb17		;78b2   ; linea_de_cb17: L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
-	jp colores_de_snake		;78b5   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;78b5   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 patrones_4:		; p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
 	ld a,(0cb17h)		;78b8   ; hasta 0x0C...
 	ld hl,0b25ah		;78bb   ; ...desde p63:B25A
@@ -3584,12 +3584,12 @@ patrones_4_b:
 	call 0423eh		;78c9   ; suma_a_hl: HL = HL + A
 	jp patrones_de_b282		;78cc   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
 dibujo_5:		; los sprites y los patrones de la tabla de p63:B1D2 del estado, por 0xCB17 (p12:78EB)
-	call sprites_de_snake		;78cf   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;78cf   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jp patrones_5		;78d2   ; patrones_5:
 lineas_5:		; la linea de p12:78E7 por 0xCB17
 	ld hl,078e7h		;78d5
 	call linea_de_tabla		;78d8   ; linea_de_tabla: L = el byte 0xCB17 - 1 de HL
-	jp colores_de_snake		;78db   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;78db   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 linea_de_tabla:		; L = el byte 0xCB17 - 1 de HL
 	ld a,(0cb17h)		;78de
 	dec a			;78e1
@@ -3626,7 +3626,7 @@ fila_del_estado:		; HL = la tabla del estado de Snake de HL + (A - 1) * 2
 lineas_6:		; la linea de p12:790D por 0xCB17
 	ld hl,0790dh		;7904
 	call linea_de_tabla		;7907   ; linea_de_tabla: L = el byte 0xCB17 - 1 de HL
-	jp colores_de_snake		;790a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;790a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_790D: lo apuntan con el banco puesto p12:7904 (0x790D); el
@@ -3642,11 +3642,11 @@ DATA_resto_790D:
 
 
 dibujo_7:		; los sprites y los patrones de p63:B25A por 0xCB17
-	call sprites_de_snake		;7911   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;7911   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jp patrones_7		;7914   ; patrones_7:
 lineas_7:
 	call linea_ef		;7917   ; linea_ef: L = 0xEF + 0xCB17
-	jp colores_de_snake		;791a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (0xF0, 1) con YMMM; con el, 1 x 0x80 a (0xF0, 0)
+	jp colores_de_snake		;791a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
 linea_ef:		; L = 0xEF + 0xCB17
 	ld a,(0cb17h)		;791d
 	add a,0efh		;7920
@@ -3664,7 +3664,7 @@ fila_b25a:		; HL = p63:B25A + (A - 1) * 2
 dibujo_8:		; con la direccion en 0xD8E0, los sprites y los patrones de p63:B272 (0xCB17 = 1) o p63:B26A (p12:798E)
 	ld a,(0cb0eh)		;7935   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ld (0d8e0h),a		;7938   ; guarda de paso (en p00:4D5A: 1 = el juego de dibujos solo pinta las listas 6 y 7)
-	call sprites_de_snake		;793b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;793b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jr patrones_8		;793e
 lineas_8:		; la linea de p12:7949 a la fila 0xF0 y la 0xF7 + direccion a la 0x1F0 (p12:797E)
 	call linea_8		;7940   ; linea_8: con 0xCB17 = 1: L = 0xFC (0xFD a los lados), H = 0 (direcciones impares) u 0x80; si no, H = 0 y L = 0xF7 + direccion
@@ -3724,7 +3724,7 @@ por_direccion_d8e0:		; HL += (0xD8E0 - 1) * 2
 	add a,a			;79a4
 	jp 0423eh		;79a5   ; suma_a_hl: HL = HL + A
 dibujo_9:		; los sprites y los patrones de p63:B27A por la direccion (p12:79D2)
-	call sprites_de_snake		;79a8   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;79a8   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	jr patrones_9		;79ab
 lineas_9:		; la linea de p12:79C1 a la fila 0xF0 y la (0x80, 0xD0) + direccion y paso a la 0x1F0
 	call linea_9		;79ad   ; linea_9: L = 0xFE (0xFF a los lados), H = 0 (direcciones impares) u 0x80
@@ -3916,7 +3916,7 @@ lineas_0c:		; la linea de p12:7A45 y la de p12:7AA4 por 0xCB17
 	ld a,(0cb17h)		;7b07
 	jp linea_7aa4		;7b0a   ; linea_7aa4: la linea de p12:7AA4 por (A - 1) * 6 + el paso * 2 a (0x80, 0xF0)
 dibujo_0c:		; los sprites y los patrones de p63:B242 por 0xCB17
-	call sprites_de_snake		;7b0d   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake - (0x20, 8), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
+	call sprites_de_snake		;7b0d   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	ld hl,0b242h		;7b10
 	ld a,(0cb17h)		;7b13
 	jp patrones_por_a		;7b16   ; patrones_por_a:
@@ -4045,7 +4045,7 @@ sprites_0_1:		; los sprites 0-1 en (Y - 0x10, X - 8) con los patrones 0 y 4, y e
 	inc l			;7bf7
 	ld (hl),a			;7bf8
 	ret			;7bf9
-linea_de_cb3f_1:		; con 0xCB3F = 1: la fila (0xF0, 0xC0) a 0 y la linea (0 o 0x40 cada 4 cuadros, 0xCA), 0x40 x 1, a (0x80, 0xF0)
+linea_de_cb3f_1:		; con 0xCB3F = 1: la fila (0xC0, 0xF0) a 0 y la linea (0 o 0x40 cada 4 cuadros, 0xCA), 0x40 x 1, a (0x80, 0xF0)
 	ld a,(0cb3fh)		;7bfa   ; lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	or a			;7bfd
 	ret z			;7bfe

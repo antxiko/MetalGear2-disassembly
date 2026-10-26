@@ -1984,7 +1984,7 @@ C 0x5341 vuelven_los_actores: sin la alerta: p12:685F
 C 0x5344 actores_especiales: fuera de las salas especiales: 0xD4F8-0xD4FF a cero, p12:6B42 y los de la zona 4 (p12:6A28)
 C 0x5347 a_p12_746b: p12:746B con el banco 12 en 0x6000
 C 0x534A bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x534D mosaico_de_13_5: en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x18, 0x84) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
+C 0x534D mosaico_de_13_5: en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x84, 0x18) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
 C 0x5350 bancos_8: pone el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5353 actores_0a_pintados: en la zona 4, los actores de tipo 0x0A de esta sala pintados con el dibujo 0 (p08:AEE2); en la columna 9, solo con 0xCB21 = 3 o sin 0xCACD
 C 0x5356 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2016,8 +2016,8 @@ C 0x53B4 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x53B7 llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 C 0x53BA cosas_de_la_sala: las cosas de la sala (0xD7C0) de las listas de p06 y las pinta
 C 0x53BD bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x53C0 p14:B4B9
-C 0x53C3 p14:B6C3
+C 0x53C0 recuadro_e230: 0xE230 = 0; fuera de las especiales y de los sitios, sin alerta ni 0xCB21 = 2: con la sala de Snake en la lista de p14:B4FE ([zona][sala][Y][X]), el recuadro que crece de 0xE230 en ese sitio (p14:B51B)
+C 0x53C3 rayas_de_la_sala: 0xCA68 = 0, fuera el bit 1 de 0xD7E2, las rayas de 0xE280 a cero y, sin alerta: en la zona 3 la lista de p56:A512; en la especial 0x0D p56:A533; en la 0x31 (salvo la columna 7) p56:A525 (columna 6) o p56:A52C; con ellas, el bit 1 de 0xD7E2 y se pintan (p14:B712)
 C 0x53C6 bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x53C9 p15:BCB4
 C 0x53CC bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2113,7 +2113,7 @@ C 0x5632 cc00_y_aeb2: las fichas de 0xCC00 pintadas (p11:A607) y p11:AEB2
 C 0x5635 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5638 llamada_800e: la conversacion de p48:800E; si encuentra ficha, la llamada 0 (p03:B11F)
 C 0x563B bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x563E p14:B6C3
+C 0x563E rayas_de_la_sala: 0xCA68 = 0, fuera el bit 1 de 0xD7E2, las rayas de 0xE280 a cero y, sin alerta: en la zona 3 la lista de p56:A512; en la especial 0x0D p56:A533; en la 0x31 (salvo la columna 7) p56:A525 (columna 6) o p56:A52C; con ellas, el bit 1 de 0xD7E2 y se pintan (p14:B712)
 C 0x5641 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5644 alerta_cada_cuadro: con 4 que siguen o desde la zona 0x10, p00:5A0F; en la 0x0C desde la sala 3, tambien
 C 0x5647 pinta_actores: los actores de esta sala (salvo el 0x0A): sus sprites; el 0x15 en el paso 3, p14:B34F
@@ -2324,11 +2324,11 @@ C 0x5E2B cosas_fijas_de_la_sala: lo fijo de la sala (p01:7E0D), p07:A4EB y p11:A
 C 0x5E34 lee el sitio de 0xCBE0 en el que esta Snake (0 = ninguno)
 C 0x5E3A bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E3D bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5E40 p14:B377
+C 0x5E40 dibujos_de_los_15: los actores 0x15 de esta sala en el paso 3: su dibujo (p14:B34F)
 C 0x5E43 bancos_1_2_10: pone el 1 en 0x6000, el 2 en 0x8000, el 10 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E46 pinta_fichas_e100: sin 0xCA77 y fuera del estado 0x1A (en la zona 0x10, solo con 0xCA43 = 2): las 16 fichas de 0xE100 de esta sala pintadas (p10:BE9C)
 C 0x5E49 e1c0_al_entrar: en la zona 0x0A sala 0x0E con 0xE1C0 (p10:BC27): los 8 bytes de 0xDE70 del mapa a 0xE1C8 y ahi 0x80, 0x40 x 0x18 de (0x40, 0x68) de la otra pagina a (0, 0) y las tres lineas de color 0x0E (p10:BC8A)
-C 0x5E4C pinta_fichas_e070: las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xA0, 0xE0) de la pagina 3 (o la 1) a su sitio
+C 0x5E4C pinta_fichas_e070: las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xE0, 0xA0) de la pagina 3 (o la 1) a su sitio
 C 0x5E58 bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5E5B paleta_en_la_otra: fuera el bit 3 de 0xD7E1 y p08:A0FB en la otra pagina
 C 0x5E5E actores_0a_pintados: en la zona 4, los actores de tipo 0x0A de esta sala pintados con el dibujo 0 (p08:AEE2); en la columna 9, solo con 0xCB21 = 3 o sin 0xCACD
@@ -2366,7 +2366,7 @@ C 0x5F07 bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (co
 C 0x5F0A bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5F0D actores_de_la_especial: la lista de la sala especial en p56:B326 ([sala][lista], hasta 0xFF): un actor por fila desde 0xD300 (en la 0x39, desde 0xCE00 y solo con el bit 6 de 0xD7D9) con el byte 0x1B = 1; luego p12:69BD
 C 0x5F12 bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x5F15 actor_d340: sin 0xC697: sin 0xD454 y sin alerta, con 0xCA67 y la ficha 0xD340 libre, cuenta 0xD420; al acabar, 0xD509 = 1, 0xD454 = 4 y la ficha a cero; con 0xD454, cuenta y al acabar el actor 0x0B en (0x20, 0xA0)
+C 0x5F15 actor_d340: sin 0xC697: sin 0xD454 y sin alerta, con 0xCA67 y la ficha 0xD340 libre, cuenta 0xD420; al acabar, 0xD509 = 1, 0xD454 = 4 y la ficha a cero; con 0xD454, cuenta y al acabar el actor 0x0B en X = 0xA0, Y = 0x20
 C 0x5F18 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5F1B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x5F1E sala_a_esta_segun: con 0xD8C0: p07:A4A6

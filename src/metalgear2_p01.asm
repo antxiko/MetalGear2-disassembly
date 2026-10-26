@@ -2840,12 +2840,12 @@ estado_0:		; el estado 0: el paso 0 limpia y p13:92D1, el 1 p13:932F hasta 0xCA1
 	jr nc,L_72DC		;72b7
 	call 045fdh		;72b9   ; paso 0: la pantalla limpia...
 	call 04179h		;72bc   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 092d1h		;72bf   ; pantalla_de_56: con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0x48 x 0xA8 a 0 en (0x40, 0x28) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
+	call 092d1h		;72bf   ; pantalla_de_56: con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0xA8 x 0x48 a 0 en (0x28, 0x40) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
 	call 040f0h		;72c2   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	jp L_7348		;72c5   ; ...y el paso siguiente
 L_72C8:
 	call 04179h		;72c8   ; paso 1
-	call 0932fh		;72cb   ; pantalla_de_56_baja: cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x40, 0x28) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
+	call 0932fh		;72cb   ; pantalla_de_56_baja: cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x28, 0x40) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
 	call 040f0h		;72ce   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0ca14h)		;72d1   ; hasta que 0xCA14 se pone
 	or a			;72d4
@@ -2909,7 +2909,7 @@ L_7348:
 	ret			;734c
 L_734D:
 	call 04179h		;734d   ; paso 1: p14:A196...
-	call 0a196h		;7350   ; p14:A196
+	call 0a196h		;7350   ; estado_1_paso_1: el paso 1 del estado 1 por 0xCAFB (p14:A19C): un dibujo que aparece por franjas en tres tiempos (p14:A270), el sonido 0x90, las letras de p14:A24E en (0x60, 0xA0) y 0xCAFA = 0
 	call 040f0h		;7353   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cafah)		;7356   ; ...hasta que 0xCAFA se pone
 	or a			;7359
@@ -2929,7 +2929,7 @@ estado_2:		; el estado 2: el paso 0 espera y pone 0xCAFA = 1; el 1 corre p14:A29
 	jp L_7348		;736f
 L_7372:
 	call 04179h		;7372   ; paso 1: p14:A299
-	call 0a299h		;7375   ; p14:A299
+	call 0a299h		;7375   ; estado_1_paso_1_b: el paso 1 de vuelta por 0xCAFB (p14:A29F): la paleta de p13:9258, hacia la de p13:9278 cada 2 cuadros, 0x20 de espera y 0xCAFA = 0
 	call 040f0h		;7378   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld a,(0cafah)		;737b   ; mientras 0xCAFA...
 	or a			;737e
@@ -3221,14 +3221,14 @@ sigue_la_partida:		; la partida otra vez: marcador, barras, p03:A1BB, p14:B06B, 
 	call barras_llenas		;7598   ; barras_llenas: 0x20 en las tres barras: la de vida, la de la derecha y la de 0xCA54
 	call 0a1bbh		;759b   ; snake_al_empezar: Snake al empezar: 0xCA58 = 0, las esperas a 1, el estado 0, mirando a la izquierda
 	call 041efh		;759e   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b06bh		;75a1   ; p14:B06B
+	call 0b06bh		;75a1   ; zona_al_seguir: al seguir en la zona 0x11: la zona 0x12 (tambien en 0xC700) y p14:B090; en la 0x12 con 0xD881 = 0xFF: por 0xD888 y 0xD889, a p14:B090, p14:B0BA o p14:B104
 	call 040f0h		;75a4   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call rachas_9638		;75a7   ; rachas_9638: las rachas de p37:9638 a la VRAM de 0x1E280 y una franja de la pagina 3 a la 3
 	call 09e94h		;75aa   ; empieza_la_partida: sin 0xCA97, las rachas de p37
 	call vida_por_nivel		;75ad   ; la barra de vida segun el nivel
 	call 04279h		;75b0   ; rehace_marcador: el marcador: lineas, marco y barra de vida
 	call 041efh		;75b3   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0afe1h		;75b6   ; p14:AFE1
+	call 0afe1h		;75b6   ; snake_al_seguir: al seguir la partida: 0xCAAD = 3 (0 en la zona 0 fila 1); en la zona 0 desde la fila 5, Snake en el estado 2 (paso 0, 0xCB31 = 1, marcha 1); mirando abajo; en la zona 0x13 con el bit 5 de 0xD7D9, en (0x52, 0x32) de la fila 4 columna 8, sala 5; A = la zona
 	call 040f0h		;75b9   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 059bbh		;75bc   ; p00:59BB, dentro de cambia_de_zona: prepara la zona y entra en la sala
 	ld a,001h		;75bf   ; la musica enseguida
@@ -3236,8 +3236,8 @@ sigue_la_partida:		; la partida otra vez: marcador, barras, p03:A1BB, p14:B06B, 
 	call 041a0h		;75c4   ; bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0b3c9h		;75c7   ; datos_sala_2a: en la sala especial 0x2A columna 8: 0x18 bytes de p06:B3EC a 0xD8C0 y 8 de p06:B404 a 0xDCB8
 	call 041efh		;75ca   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b06bh		;75cd   ; p14:B06B
-	call 0b03ah		;75d0   ; p14:B03A
+	call 0b06bh		;75cd   ; zona_al_seguir: al seguir en la zona 0x11: la zona 0x12 (tambien en 0xC700) y p14:B090; en la 0x12 con 0xD881 = 0xFF: por 0xD888 y 0xD889, a p14:B090, p14:B0BA o p14:B104
+	call 0b03ah		;75d0   ; fichas_al_seguir: en la zona 0x0A sala 9: 0xD418-0xD419 = 0x0C30 y 0xD41E = 4; con la ficha 0xD820 de tipo 8 y 0xD88B = 0xFF: su paso 0x11, Y 0x60, X 0x70
 	jp 040f0h		;75d3   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 paso_9:		; el paso 9: p12:74BC y p12:7DDC hasta que 0xCA28 se pone a 0
 	call cambia_tablas_de_sprites		;75d6   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
@@ -3501,8 +3501,8 @@ L_77EA:
 	call 0b2bch		;7815   ; fichas_df80: las 8 fichas de 0xDF80 en cada cuadro
 	call 0b404h		;7818   ; los_que_siguen: con 0xCAA0 = 3, p03:B4AF; si no, las tres fichas (0xE240, 0xE248, 0xDFD8) por el rastro
 	call 041efh		;781b   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b558h		;781e   ; p14:B558
-	call 0ba62h		;7821   ; p14:BA62
+	call 0b558h		;781e   ; e230_cada_cuadro: fuera de las especiales, sitios y lo de la zona 6 sala 0x10, con 0xE230: con 0xE236, el fondo; sin 0xCB21 = 2, sin 0xCA73, el paso (p14:B5A3) y si toca a Snake (p14:B648); con 0xCA73, a los 4 cuadros (0xCA74), el radio 0x30, fuera, 0xCA73 y 0xE230 a 0, el sonido 0x8E con p06:9955 y los sprites de la sala
+	call 0ba62h		;7821   ; especial_2_caf6: en la especial 2, por 0xCAF6: el 1 espera 0xCAF7, luego 0xB4 cuadros mas y la orden 0xF4 al sonido; el 2 espera y luego 0xD443 = 1 y el sonido 0x82
 	call 041b5h		;7824   ; bancos_1_4_8: pone el 1 en 0x6000, el 4 en 0x8000, el 8 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a842h		;7827   ; sala_39_cada_cuadro: en la sala especial 0x39: el sonido de los 0x12; con 0xD43B, en la sala 0 y fuera del estado 2: el bit 6 de 0xD7D9 fuera si no queda ningun actor (p08:A8BB); con 0xD44C desde 0x0B, cada 0x10 cuadros (0xD44D) entra el actor 0xD44E (hasta el 0x0B): paso 8, una fila arriba, en (0x4C, 0x60) bajando a 3, el byte 0x0C = 3, los bytes 0x20-0x21 = 0x48 y 0x30, sus sprites y una espera de 0x10-0x1F
 	call 04142h		;782a   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3549,9 +3549,9 @@ L_77EA:
 	call 08affh		;78a0   ; a_p11_a3c4: p11:A3C4 con el banco 11 en 0xA000
 	call 0bb4ch		;78a3   ; tercera_barra_cada_cuadro: sin 0xDFF0: p03:BB91
 	call 041efh		;78a6   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b761h		;78a9   ; p14:B761
+	call 0b761h		;78a9   ; rayas_cada_cuadro: con 0xCA68: con la alerta, fuera (p14:B795); si no, si tocan (p14:B7C5) y cada 0x20 cuadros (0xCA69) se borran y salen las siguientes: 0xCA6A de 0 a 3 y las piezas del byte 0xCA6B + eso (p56:A53A) a 0xE280, pintadas
 	call 041cdh		;78ac   ; bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a170h		;78af   ; cab6_cuenta: en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0xA0, 0x80)
+	call 0a170h		;78af   ; cab6_cuenta: en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0x80, 0xA0)
 	call 0a067h		;78b2   ; ca61_cada_cuadro: fuera de los sitios, de 0xD8C0 y sin 0xDFF8: por el modo 0xCAB0 (p10:A07C)
 	call 0a143h		;78b5   ; cb39_cb3f: sin el bit 2 de 0xD7D5 y con el 4, con 0xCB3F y sin 0xCB39: 0xCB39 = 1, el bit 3 de 0xD7D5 y 0xCB3A = 0x1000
 	call 0a4f1h		;78b8   ; fichas_e070_cada_cuadro: las dos fichas de 0xE070 (la segunda espera a que la primera deje el paso 1): paso 0 con Snake cerca (p10:A5EC) guarda el fondo y el sonido 0x45; paso 1 se abre de 2 en 2 (p10:A535); paso 2 en adelante, p10:A5C2
@@ -3607,7 +3607,7 @@ L_7914:
 	call 04142h		;7933   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 09a80h		;7936   ; lanzado_cada_cuadro: sin 0xD445, las 6 fichas de lo que lanzan los actores: p06:A7E9, p14:BA36, p04:9C82 y p06:A979
 	call 041efh		;7939   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0aa5eh		;793c   ; p14:AA5E
+	call 0aa5eh		;793c   ; fichas_d4c0: en la zona 0x12 sala 8: las 2 fichas de 0xD4C0 activas, su paso (p14:AA94), p06:BA36 con 3, si salen de la sala (p14:AAEB) y sus sprites (p14:AB41)
 	call 041d2h		;793f   ; bancos_1_2_11: pone el 1 en 0x6000, el 2 en 0x8000, el 11 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0a6e1h		;7942   ; disparo_cada_cuadro: fuera de los estados 9 y 0x0A: con 0xCB61, p11:A85C; sin 0xCB44, p11:A88F; lo de 0xCB20 (p11:A70F) o, sin el, con lo lanzado de tipo 5, p11:A89A, o lo de 0xCB52
 	call 040f0h		;7945   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3661,7 +3661,7 @@ L_79B1:
 	jp 040f0h		;79b1   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 a_p14_b43d:		; p14:B43D con el banco 14 en 0xA000
 	call 04179h		;79b4   ; bancos_13_14: pone el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b43dh		;79b7   ; p14:B43D
+	call 0b43dh		;79b7   ; cac9_por_sitio: con Snake mirando arriba: en la lista de p14:B4A4 ([zona][sala, 0xFF = la especial 0x0C][Y][X][n], hasta 0xFF), si Snake esta en (Y, X)-(Y + 0x14, X + 0x10), el byte n de 0xCAC9 cambia, el sonido 0x46 y p08:A187 (a 0) o p08:A13B (a 1)
 	jr L_79B1		;79ba
 a_p04_9949:		; p04:9949 con el banco 4 en 0x8000
 	call 04142h		;79bc   ; bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -3859,7 +3859,7 @@ a_p04_8c4a:		; p04:8C4A con el banco 4 en 0x8000
 a_p14_ab01:		; p14:AB01 con el banco 14 en 0xA000
 	call 0413fh		;7b09   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 041efh		;7b0c   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0ab01h		;7b0f   ; p14:AB01
+	call 0ab01h		;7b0f   ; d4c0_paso_3: el paso 3, la cuenta 0x10, sin velocidad y el sonido 0x15
 	jr L_7AF6		;7b12
 a_p13_9371:		; p13:9371 con el banco 13 en 0x8000
 	call 04176h		;7b14   ; bancos_1_13_14: pone el 1 en 0x6000, el 13 en 0x8000, el 14 en 0xA000 (con su copia en 0xC381-0xC383)

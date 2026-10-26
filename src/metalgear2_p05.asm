@@ -1507,7 +1507,7 @@ d8a0_cuenta:		; la espera de 0xD8A1; cada 16, el paso siguiente y p11:A000
 	dec hl			;aa5f
 	inc (hl)			;aa60
 	jp 08b90h		;aa61   ; vida_al_acabar: los tipos con 0 en p04:8BAA suben el nivel de Snake (y el sonido 0x4D); todos llenan la vida
-d8a0_deja_cosa:		; al acabar la espera: 0xD8A0 = 0, la cosa 0x28 en (0x70, 0x60), 0xD4EB = 1 y el sonido 0x42
+d8a0_deja_cosa:		; al acabar la espera: 0xD8A0 = 0, la cosa 0x28 en (0x60, 0x70), 0xD4EB = 1 y el sonido 0x42
 	ex de,hl			;aa64
 	inc hl			;aa65
 	dec (hl)			;aa66
@@ -3967,9 +3967,9 @@ d8aa_paso_10:		; p03:B8AC; al acabar el mensaje, la pantalla apagada, 0xCD00-0xC
 	ld bc,000ffh		;bc57
 	call 04236h		;bc5a   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	xor a			;bc5d
-	call hueco_de_mosaico		;bc5e   ; hueco_de_mosaico: en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+	call hueco_de_mosaico		;bc5e   ; hueco_de_mosaico: en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea vertical en (0xDB, 0x30)
 	ld a,001h		;bc61
-	call hueco_de_mosaico		;bc63   ; hueco_de_mosaico: en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+	call hueco_de_mosaico		;bc63   ; hueco_de_mosaico: en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea vertical en (0xDB, 0x30)
 	xor a			;bc66
 	ld (ix+00fh),a		;bc67
 	ld (0cb01h),a		;bc6a   ; guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
@@ -3991,7 +3991,7 @@ d8aa_paso_10:		; p03:B8AC; al acabar el mensaje, la pantalla apagada, 0xCD00-0xC
 	ld a,0e0h		;bc97
 	call 04237h		;bc99   ; llena_bloque: pone A en BC + 1 bytes desde HL
 	jp paso_siguiente_g		;bc9c   ; paso_siguiente_g: el paso siguiente
-hueco_de_mosaico:		; en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+hueco_de_mosaico:		; en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea vertical en (0xDB, 0x30)
 	ld d,a			;bc9f
 	push af			;bca0
 	ld hl,0dc30h		;bca1
@@ -4029,7 +4029,7 @@ d8aa_paso_12:		; al acabar la espera, 0xD8AA = 0 y el paso 0x20
 	ld (0d8aah),a		;bced
 	ld (ix+001h),020h		;bcf0   ; el paso del actor = 0x20
 	ret			;bcf4
-mosaico_de_13_5:		; en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x18, 0x84) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
+mosaico_de_13_5:		; en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x84, 0x18) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
 	ld a,(0ca4ah)		;bcf5   ; lee la zona
 	cp 013h		;bcf8
 	ret nz			;bcfa
@@ -4046,10 +4046,10 @@ mosaico_de_13_5:		; en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p1
 	cp 00fh		;bd16
 	push ix		;bd18
 	ld ix,0d820h		;bd1a
-	call nc,mosaico_de_la_ficha		;bd1e   ; mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+	call nc,mosaico_de_la_ficha		;bd1e   ; mosaico_de_la_ficha: el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 	pop ix		;bd21
 	jp 0413fh		;bd23   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
-mosaico_de_la_ficha:		; el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+mosaico_de_la_ficha:		; el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 	ld a,(ix+005h)		;bd26   ; lee la X de la ficha de 0xD800
 	sub 010h		;bd29
 	ld d,a			;bd2b
@@ -4335,7 +4335,7 @@ mosaico_en_la_otra:		; con los juegos 6-7, el mosaico de la ficha en la otra pag
 	xor 001h		;bf71
 	ld (hl),a			;bf73
 	call 041ddh		;bf74   ; bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-	call mosaico_de_la_ficha		;bf77   ; mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+	call mosaico_de_la_ficha		;bf77   ; mosaico_de_la_ficha: el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 	call 0413fh		;bf7a   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 	pop af			;bf7d
 	pop hl			;bf7e

@@ -85,7 +85,7 @@ C 0xA25D sin 0xCB21 = 2, nada
 C 0xA263 con el bit 7 de 0xD7D5, nada
 C 0xA267 libre
 C 0xA26C fuera de esa sala, nada
-C 0xA270 en (0x60, 0x10)...
+C 0xA270 en (0x10, 0x60)...
 C 0xA273 ...3 x 1
 C 0xA279 su dibujo
 C 0xA281 con el bit 7, nada
@@ -108,7 +108,7 @@ C 0xA2DE la escena 2
 C 0xA2E3 la ventana estrecha
 C 0xA2F0 con 0xCB21 = 2, nada
 C 0xA2F4 fuera de esa sala, nada
-C 0xA2F8 en (0x9D, 0x4D)...
+C 0xA2F8 en (0x4D, 0x9D)...
 C 0xA2FB ...2 x 1
 C 0xA301 su dibujo
 C 0xA308 con 0xD4F3, nada
@@ -263,7 +263,7 @@ C 0xAA70 ...0xCB5B uno mas
 C 0xAABE 0xE25B = 0
 C 0xAACD la Y del de 0xE240 - 0x10...
 C 0xAAD3 ...por debajo, sigue
-C 0xAADE en (0x50, 0x60)
+C 0xAADE en (0x60, 0x50)
 C 0xAAE4 el sonido 0x94
 C 0xAAE7 el mosaico
 C 0xAAEA la ventana en 0x4C
@@ -303,9 +303,9 @@ C 0xACB0 sube uno
 C 0xACBA el de 0xE248 sube
 C 0xACBC por encima de 0...
 C 0xACBE ...0xE249 = 0
-C 0xACCE 1 x 0xC0...
+C 0xACCE 0xC0 x 1...
 C 0xACD5 ...al color 0
-C 0xACD9 la columna siguiente
+C 0xACD9 la fila siguiente
 C 0xACDE hasta 0x60
 C 0xACF5 hasta pasar de 0
 C 0xAD1F sin 0xC692, nada
@@ -347,8 +347,8 @@ C 0xB25D sin acabar la cuenta, nada
 C 0xB25E 0xCB20 = 1
 C 0xB269 con 0xCB21 = 0x1D...
 C 0xB271 ...tambien el de 0xD8A4
-C 0xB274 de (0x80, 0)...
-C 0xB277 ...a (0x74, 0xD0)...
+C 0xB274 de (0, 0x80)...
+C 0xB277 ...a (0xD0, 0x74)...
 C 0xB27A ...0x20 x 0x10
 C 0xB286 con la operacion 0xC8
 C 0xB28B 0xDF30-0xDF33 a 0x80
@@ -496,8 +496,8 @@ C 0xBD03 la derecha...
 C 0xBD0B ...si no, uno menos
 C 0xBDFE con 0xCABE, nada
 C 0xBE03 cada 2 cuadros
-C 0xBE04 la columna 0xD7BC...
-C 0xBE0E ...2 x 0x20
+C 0xBE04 la fila 0xD7BC...
+C 0xBE0E ...0x20 x 1
 C 0xBE23 hasta 0x30
 C 0xBE7E la fila 0
 C 0xBE85 la fila 9
@@ -644,14 +644,14 @@ L 0xA239 algo_lanzado acarreo si alguna de las 6 fichas de lo que lanza Snake es
 L 0xA241 algo_lanzado_b 
 L 0xA247 ficha_lanzada 
 L 0xA24F siguiente_lanzada 
-L 0xA258 e248_con_cb21_2 con 0xCB21 = 2 y sin el bit 7 de 0xD7D5: la ficha 0xE248 libre y, en la sala especial 0x2A columna 8, en (0x60, 0x10) de 3 x 1 con su dibujo
-L 0xA27C escena_1 sin el bit 7 de 0xD7D5, en la sala especial 0x2A columna 8: la bandera 0x28, fuera el bit 3 de 0xD7DE, la ficha 0xE248 en (0x60, 0x10) con su dibujo, Snake hacia abajo, la ventana estrecha, la escena 1 y la ventana segun Snake
+L 0xA258 e248_con_cb21_2 con 0xCB21 = 2 y sin el bit 7 de 0xD7D5: la ficha 0xE248 libre y, en la sala especial 0x2A columna 8, en (0x10, 0x60) de 3 x 1 con su dibujo
+L 0xA27C escena_1 sin el bit 7 de 0xD7D5, en la sala especial 0x2A columna 8: la bandera 0x28, fuera el bit 3 de 0xD7DE, la ficha 0xE248 en (0x10, 0x60) con su dibujo, Snake hacia abajo, la ventana estrecha, la escena 1 y la ventana segun Snake
 L 0xA2B0 sala_2a_columna_8 Z en la sala especial 0x2A columna 8
 L 0xA2BC escena_2 sin el bit 6 de 0xD7D5, con dos detras (0xCAA0 = 2), en la zona 8 sala 0x0C: la bandera 0x29, Snake hacia arriba, la escena 2, la ventana estrecha y abajo
-L 0xA2EB e240_sala_18 salvo con 0xCB21 = 2: en la sala especial 0x18 columna 8 sin el bit 1 de 0xD7D4, la ficha 0xE240 en (0x9D, 0x4D) de 2 x 1 y su dibujo
+L 0xA2EB e240_sala_18 salvo con 0xCB21 = 2: en la sala especial 0x18 columna 8 sin el bit 1 de 0xD7D4, la ficha 0xE240 en (0x4D, 0x9D) de 2 x 1 y su dibujo
 L 0xA304 escena_3 sin 0xD4F3, en la sala especial 0x18 columna 8 (sin el bit 1 de 0xD7D4), con Snake en Y 0x94-0xA3 y X 0x3C-0x64: 0xD4E4 = 0, la escena 3, la direccion contraria a la de Snake en 0xE246, 0xD4F3 = 1, la ventana en 0x4C, sin lo lanzado y p09:A571
 L 0xA341 sala_18_columna_8 Z en la sala especial 0x18 columna 8 sin el bit 1 de 0xD7D4
-L 0xA353 escena_4 con el bit 6 de 0xD7D5 y sin el 4, en la zona 0x0A sala 4: las fichas 0xE240 en (0xBC, 0x64) y 0xE248 en (0xBC, 0x84) de 1 x 1, p12:6D78, Snake en (0xBC, 0x74) hacia arriba, la ventana estrecha, p12:7688, sus dibujos, la bandera 0x2B, la escena 4, la ventana arriba, sin lo lanzado y el sonido 7
+L 0xA353 escena_4 con el bit 6 de 0xD7D5 y sin el 4, en la zona 0x0A sala 4: las fichas 0xE240 en (0x64, 0xBC) y 0xE248 en (0x84, 0xBC) de 1 x 1, p12:6D78, Snake en (0x74, 0xBC) hacia arriba, la ventana estrecha, p12:7688, sus dibujos, la bandera 0x2B, la escena 4, la ventana arriba, sin lo lanzado y el sonido 7
 L 0xA3B1 escena_5 con el bit 4 de 0xD7D5 y sin el 0 de 0xD7DA, en la zona 0x0A sala 4 con Snake por encima de Y = 0xA0 y en X 0x68-0x7F: la bandera 0x57, la escena 5, 0xE246 = 3, 0xCB5B = 0, sin lo lanzado y el sonido 4
 L 0xA3F2 escena_6 sin los bits 5-6 de 0xD7D3, en la sala especial 0x26 sala 2 con Snake en Y 0x60-0x8F y X 0x50-0x6F: la bandera 0x1A, fuera el bit 3 de 0xD7E0, la escena 6, la direccion contraria en 0xDFDE, sin lo lanzado y la ventana en 0x4C
 L 0xA434 especial_26_sala_2 Z en la sala especial 0x26 sala 2
@@ -692,11 +692,11 @@ L 0xA6D8 guion_2_paso_2 las fichas 0xE240 y 0xE248 = 2, 0xE24E = 2, Snake hacia 
 L 0xA6F1 guion_2_paso_3 Snake a X = 0x50 (p09:A714); el de 0xE240 desde X = 0x70 se para mirando a la izquierda; con el de 0xE248 en Y = 0xE0, fuera y el paso siguiente
 L 0xA705 mira_e248_fuera 
 L 0xA714 snake_a_x_50 cada 4 cuadros Snake anda; al pasar de X = 0x50, en 0x50 mirando a la derecha y la orden 0xF6 al sonido
-L 0xA73C guion_2_paso_4 0x80 cuadros, 0xE241 = 0, guarda el fondo de (0x68, 0x37) en (0xC0, 0xDC), los dibujos de p45:B9E1, el mosaico de p45:B9E7, Snake de espaldas (p09:A754) y el paso siguiente
+L 0xA73C guion_2_paso_4 0x80 cuadros, 0xE241 = 0, guarda el fondo de (0x68, 0x37) en (0xDC, 0xC0), los dibujos de p45:B9E1, el mosaico de p45:B9E7, Snake de espaldas (p09:A754) y el paso siguiente
 L 0xA754 snake_dibujo_4 Snake con el dibujo 4, dandose la vuelta, y 0xCB17 = 8
-L 0xA764 fondo_de_6837 0x10 x 0x10 de (0x68, 0x37) de la otra pagina a (0xC0, 0xDC) de esta
+L 0xA764 fondo_de_6837 0x10 x 0x10 de (0x68, 0x37) de la otra pagina a (0xDC, 0xC0) de esta
 L 0xA76A fondo_a_6837 los 0x10 x 0x10 guardados de vuelta a (0x68, 0x37) en la otra pagina
-L 0xA771 sitio_6837 HL = (0x68, 0x37), DE = (0xC0, 0xDC), 0x10 x 0x10
+L 0xA771 sitio_6837 HL = (0x68, 0x37), DE = (0xDC, 0xC0), 0x10 x 0x10
 L 0xA77B guion_2_paso_5 al acabar la espera: el paso siguiente, Snake de frente (p09:A89A), la otra pagina a esta y esta en negro
 L 0xA78C guion_2_paso_6 la paleta de p56:B914, p02:8E2E con 0 y 9, los mosaicos de quien habla (0 en (0x10, 0x18) y 9 en (0x90, 0x18), p03:B814), el sonido 0x9D, la ventana segun Snake y el paso siguiente
 L 0xA7B3 guion_2_paso_7 p03:B8AC y la secuencia de p50:800E
@@ -704,7 +704,7 @@ L 0xA7BC guion_2_paso_8 p03:B8AC, p03:B65D, la ventana estrecha y el paso siguie
 L 0xA7CA guion_2_paso_9 p03:B8AC y la secuencia de p50:8012
 L 0xA7D3 guion_2_paso_10 quita los mosaicos 0 y 1 (p03:B866), p03:B65D, p02:8C29, Snake de espaldas, la pagina a la otra y el paso siguiente
 L 0xA7EB pagina_a_la_otra esta pagina entera (0xC0 x 0xC0) a la otra
-L 0xA7F6 guion_2_paso_11 la ventana estrecha, 0xE249 = 0xE24E = 1, la ficha 0xE248 = 2 en (0xBE, 0x60) y el paso siguiente
+L 0xA7F6 guion_2_paso_11 la ventana estrecha, 0xE249 = 0xE24E = 1, la ficha 0xE248 = 2 en (0x60, 0xBE) y el paso siguiente
 L 0xA811 guion_2_paso_12 cuando el de 0xE248 sube de Y = 0x60: la ficha = 1, el fondo de vuelta, Snake en el estado de 0xCB35, sin darse la vuelta, 0xCB14 = 1, 0xE241 = 1, hacia abajo, el bit 5 de 0xD7D5, la ventana y el paso siguiente
 L 0xA842 guion_2_paso_13 la secuencia de p50:8010
 L 0xA848 guion_2_paso_14 fin: quita la ventana, 0xE040 = 0, la ventana normal, tres detras (0xCAA0 = 3), el estado que toca, los dibujos de la sala, p02:8E81 y la orden 0xF6
@@ -749,7 +749,7 @@ L 0xAA69 guion_5 la escena 5: cada 8 cuadros 0xCB5B uno mas y su paso 0xE041 (p0
 L 0xAA74 guion_5_por_paso 
 L 0xAABA guion_5_paso_0 las rachas de p00:4E11 a 0xFF00, 0xE25B = 0, el sonido 0x1D y el paso siguiente
 L 0xAAC6 guion_5_paso_1 0xE25B sube 4 hasta la Y del de 0xE240 - 0x10; despues, p09:AF4C
-L 0xAAD8 guion_5_paso_2 los dibujos de p45:B9C8, las rachas de p47:A81B, p10:A6A4 en (0x50, 0x60), el sonido 0x94, el mosaico de p56:AE3B, la ventana en 0x4C y estrecha, 0xCB14 = 1, 0xE250 = 0xFC00 y 0xE252 = 0x0100
+L 0xAAD8 guion_5_paso_2 los dibujos de p45:B9C8, las rachas de p47:A81B, p10:A6A4 en (0x60, 0x50), el sonido 0x94, el mosaico de p56:AE3B, la ventana en 0x4C y estrecha, 0xCB14 = 1, 0xE250 = 0xFC00 y 0xE252 = 0x0100
 L 0xAB00 e041_siguiente_e 
 L 0xAB05 guion_5_paso_3 R#7 (el borde) parpadea 0/7 cada 4 cuadros; p10:A6C2; el de 0xE240 se mueve: su velocidad en Y sube 0x80 por cuadro (cae) y en X 0xE252; al pasar de X = 0xA8: 0xE241 = 0, Snake a la derecha, R#7 = 0, el mosaico de p45:B9D8 y el paso siguiente
 L 0xAB4D guion_5_paso_4 p10:A6C2; sin 0xE1F8, 0x80 cuadros y el paso siguiente
@@ -770,9 +770,9 @@ L 0xAC69 guion_5_paso_16 cada 4 cuadros 0xDFD0 baja uno (cambiando 0xDFD2, p09:A
 L 0xAC89 cambia_dfd2_b cada 16 cuadros el bit 0 de 0xDFD2 cambia
 L 0xAC9A guion_5_paso_17 al acabar la espera, 0xDFD3 = 1 y el paso siguiente
 L 0xACA7 guion_5_paso_18 cada 4 cuadros 0xDFD0 sube uno (pintado) y la Y del de 0xE248 tambien; al pasar de 0: 0xE249 = 0, la franja de la otra pagina (p09:ADEA) y el paso siguiente
-L 0xACC8 guion_5_paso_19 cada cuadro una columna de 1 x 0xC0 en X = 0xE044 a negro (hasta 0x60); alli, los colores de p00:4C8B, el mosaico de p56:AE59, el paso siguiente y el sonido 0x92
+L 0xACC8 guion_5_paso_19 cada cuadro una fila de 0xC0 x 1 en Y = 0xE044 a negro (hasta 0x60); alli, los colores de p00:4C8B, el mosaico de p56:AE59, el paso siguiente y el sonido 0x92
 L 0xACEE guion_5_paso_20 cada cuadro una columna de la otra pagina de vuelta (p09:AD01), de 0x60 a 0; alli, el sonido 0xA1 y el paso siguiente
-L 0xAD01 columna_de_la_otra la columna 0xE044 (1 x 0xC0) de la otra pagina a esta
+L 0xAD01 fila_de_la_otra la fila 0xE044 (0xC0 x 1) de la otra pagina a esta
 L 0xAD1A guion_5_paso_21 con 0xC692: a cero, el sonido 0x84 y el paso siguiente
 L 0xAD28 guion_5_paso_22 la secuencia de p50:802A
 L 0xAD2E guion_5_paso_23 quita la ventana, en negro y el paso siguiente
@@ -794,7 +794,7 @@ L 0xAEEA cuatro_sprites dos sprites (C y C + 4) y, 0x10 mas abajo, otros dos (C 
 L 0xAEFC patron_de_abajo 
 L 0xAF04 colores_16_23 los colores de los sprites 16-23 (0xDB00-0xDB7F)
 L 0xAF28 colores_20_23 los colores de los sprites 20-23 (0xDB40-0xDB7F)
-L 0xAF4C sprite_e25b dos sprites en (0xE25B, 0x6C) con el patron 0xE0 (0xDC28) y sus colores 8 y 0x4A
+L 0xAF4C sprite_e25b dos sprites en X = 0x6C, Y = 0xE25B con el patron 0xE0 (0xDC28) y sus colores 8 y 0x4A
 L 0xAF51 sprite_e25b_b 
 L 0xAF62 colores_8_4a los colores del sprite 10 al 8 y los del 11 al 0x4A
 L 0xAF76 guion_6 la escena 6 por su paso 0xE041 (p09:AF7C, 14 pasos)
@@ -804,7 +804,7 @@ L 0xAFBA e041_siguiente_f
 L 0xAFBF guion_6_paso_2 la paleta de p56:B914, los mosaicos de quien habla 0 y 4, el sonido 0x9E y el paso siguiente
 L 0xAFE2 guion_6_paso_3 p03:B8AC y la secuencia de p50:8034
 L 0xAFEB guion_6_paso_4 quita los mosaicos, p03:B65D, p02:8C29, la pagina a la otra y el paso siguiente
-L 0xAFFF guion_6_paso_5 p12:6D78, Snake en (0x70, 0x50) a la derecha, 0xDFDE = 3, 0xDFD9 = 1, Snake como antes, la ventana arriba y el paso siguiente
+L 0xAFFF guion_6_paso_5 p12:6D78, Snake en (0x50, 0x70) a la derecha, 0xDFDE = 3, 0xDFD9 = 1, Snake como antes, la ventana arriba y el paso siguiente
 L 0xB023 guion_6_paso_6 la secuencia de p50:8030
 L 0xB029 guion_6_paso_7 quita la ventana, 0xD690-0xD691 a 1, 0xDFDE = 0xDFD8 = 2 y el paso siguiente
 L 0xB03F guion_6_paso_8 cuando la Y de 0xDFDB llega a 0x98, 0xDFDE = 3 y el paso siguiente
@@ -835,7 +835,7 @@ L 0xB1E4 guion_7_paso_9 quita los mosaicos, p03:B65D, la conversacion de p01:63D
 L 0xB20D guion_7_paso_10 la orden 0xF6, 0xCAE4 = 0x96, 0xDFD9 = 1, Snake como antes, la ventana arriba y el paso siguiente
 L 0xB223 guion_7_paso_11 la cuenta de 0xCAE4 y la secuencia de p50:803A
 L 0xB22C guion_7_paso_12 la cuenta, quita la ventana, Snake en el estado 1 hacia arriba (tambien 0xCB35), 0xDFD8 = 3, cuatro detras (0xCAA0 = 4), 0x18 x 0x10 en (0xE0, 0x88) a 0 y el paso siguiente
-L 0xB256 guion_7_paso_13 fin, al acabar la cuenta de 0xCAE4: 0xCB20 = 1, 0x10 x 0x10 a 0x99 en el sitio de 0xD874 (y de 0xD8A4 con 0xCB21 = 0x1D), una copia de (0x80, 0) a (0x74, 0xD0) de 0x20 x 0x10, 0xDF30-0xDF33 a 0x80, el sonido 0x22, 0xE040 = 0, 0xCB55 = 1 y a cero las cosas 0, 0x2A y 0x0B (0xD600, 0xD6A8, 0xD62C)
+L 0xB256 guion_7_paso_13 fin, al acabar la cuenta de 0xCAE4: 0xCB20 = 1, 0x10 x 0x10 a 0x99 en el sitio de 0xD874 (y de 0xD8A4 con 0xCB21 = 0x1D), una copia de (0, 0x80) a (0xD0, 0x74) de 0x20 x 0x10, 0xDF30-0xDF33 a 0x80, el sonido 0x22, 0xE040 = 0, 0xCB55 = 1 y a cero las cosas 0, 0x2A y 0x0B (0xD600, 0xD6A8, 0xD62C)
 L 0xB2B4 cosa_a la ficha de HL: A y la cuenta BC
 L 0xB2BA cuadro_99 0x10 x 0x10 en HL al color 0x99
 L 0xB2C6 cuenta_cae4 con 0xCAE4, uno menos; a cero, los sonidos 5 y 0x72
@@ -855,7 +855,7 @@ L 0xB374 pon_dfde
 L 0xB378 dfd8_hacia_x_60 
 L 0xB385 pon_dfde_b 
 L 0xB389 fichas_de_b397 los 12 bytes de p09:B397 a 0xE050 (tres fichas) y sus sprites
-L 0xB3A3 guion_9_paso_4 Snake a (0x58, 0x50) (p09:B3C4), el de 0xDFD8 a (0x58, 0x60) (p09:B436), las fichas de 0xE050 (p09:B48F, B4EF, B549) y sus sprites; con los 5 bits de 0xCB7E, 0x20 cuadros y el paso siguiente
+L 0xB3A3 guion_9_paso_4 Snake a (0x50, 0x58) (p09:B3C4), el de 0xDFD8 a (0x60, 0x58) (p09:B436), las fichas de 0xE050 (p09:B48F, B4EF, B549) y sus sprites; con los 5 bits de 0xCB7E, 0x20 cuadros y el paso siguiente
 L 0xB3C4 snake_a_58_50 sin el bit 0 de 0xCB7E, cada 4 cuadros Snake anda hacia Y = 0x58 y despues hacia X = 0x50; alli, el bit 0, mirando abajo
 L 0xB3E9 snake_sube 
 L 0xB3F5 snake_en_y_58 
@@ -990,13 +990,13 @@ L 0xBD58 gira_c
 L 0xBD60 d79a_sube por debajo de 9: 0xD79B = 0xD79A y sube uno (en una escena, a 9); la primera vez (0xCB77), el sonido 0x2A
 L 0xBD77 d79a_hasta_9 
 L 0xBD7D pon_d79a 
-L 0xBD89 pinta_el_numero las dos cifras de 0xD790 en (0x48, 0x70)
-L 0xBD91 pinta_numero_entero las seis cifras de 0xD790-0xD792 desde (0x48, 0x70) hacia la izquierda
+L 0xBD89 pinta_el_numero las dos cifras de 0xD790 en (0x70, 0x48)
+L 0xBD91 pinta_numero_entero las seis cifras de 0xD790-0xD792 desde (0x70, 0x48) hacia la izquierda
 L 0xBDA0 dos_cifras las dos cifras del byte de HL
 L 0xBDA9 una_cifra la cifra A (p09:BDC1, 2 x 1) en (D, E) con p02:8D25 y 8 a la izquierda
 L 0xBDD7 rotulos_d79a con 0xD79A cambiado, los rotulos de p00:51FD
 L 0xBDEB borra_mensajes 0xB0 x 0x20 en (8, 0x98) al color 0x99
-L 0xBDFA onda_a_la_otra sin 0xCABE, cada 2 cuadros: una columna de 2 x 0x20 de (0x18 + 0xD7BC, 0x90) de esta pagina a la otra
+L 0xBDFA onda_a_la_otra sin 0xCABE, cada 2 cuadros: una fila de 0x20 x 1 de (0x90, 0x18 + 0xD7BC) de esta pagina a la otra
 L 0xBE14 d7bc_siguiente sin 0xCABE, cada 2 cuadros 0xD7BC uno mas (0-0x2F)
 L 0xBE29 onda_de_d0d0 sin 0xCABE, cada 2 cuadros: la columna 0xD7BC de (0xD0 + 0xD7BC, 0xD0) de la pagina 3 a (0x18 + 0xD7BC, 0x90)
 L 0xBE53 mensaje_de_conversacion si el mensaje de HL es de una conversacion de la lista, lo que deja hecho (p06:AEFF); y el mensaje abajo
@@ -1061,8 +1061,8 @@ C 0xA10A e1d1_siguiente: el paso siguiente de 0xE1D1
 C 0xA10D sonido_5b: pide el sonido 0x5B
 C 0xA160 sonido_7d: pide el sonido 0x7D (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xA163 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
-C 0xA168 e248_con_cb21_2: con 0xCB21 = 2 y sin el bit 7 de 0xD7D5: la ficha 0xE248 libre y, en la sala especial 0x2A columna 8, en (0x60, 0x10) de 3 x 1 con su dibujo
-C 0xA16B e240_sala_18: salvo con 0xCB21 = 2: en la sala especial 0x18 columna 8 sin el bit 1 de 0xD7D4, la ficha 0xE240 en (0x9D, 0x4D) de 2 x 1 y su dibujo
+C 0xA168 e248_con_cb21_2: con 0xCB21 = 2 y sin el bit 7 de 0xD7D5: la ficha 0xE248 libre y, en la sala especial 0x2A columna 8, en (0x10, 0x60) de 3 x 1 con su dibujo
+C 0xA16B e240_sala_18: salvo con 0xCB21 = 2: en la sala especial 0x18 columna 8 sin el bit 1 de 0xD7D4, la ficha 0xE240 en (0x4D, 0x9D) de 2 x 1 y su dibujo
 C 0xA180 especial_26_sala_2: Z en la sala especial 0x26 sala 2
 C 0xA18D pon_ficha_c: la ficha de HL: [C][1][0][E][0][D][B][0]
 C 0xA190 rachas_b3a6: 
@@ -1071,10 +1071,10 @@ C 0xA196 rachas_9638_bancos_9:
 C 0xA199 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA19D rachas_b34a_bancos_9: 
 C 0xA1A1 lee la escena en curso (1-9, 0 = ninguna; p09:A4A6, guiones en p09:A5D4)
-C 0xA1A6 escena_1: sin el bit 7 de 0xD7D5, en la sala especial 0x2A columna 8: la bandera 0x28, fuera el bit 3 de 0xD7DE, la ficha 0xE248 en (0x60, 0x10) con su dibujo, Snake hacia abajo, la ventana estrecha, la escena 1 y la ventana segun Snake
+C 0xA1A6 escena_1: sin el bit 7 de 0xD7D5, en la sala especial 0x2A columna 8: la bandera 0x28, fuera el bit 3 de 0xD7DE, la ficha 0xE248 en (0x10, 0x60) con su dibujo, Snake hacia abajo, la ventana estrecha, la escena 1 y la ventana segun Snake
 C 0xA1A9 escena_2: sin el bit 6 de 0xD7D5, con dos detras (0xCAA0 = 2), en la zona 8 sala 0x0C: la bandera 0x29, Snake hacia arriba, la escena 2, la ventana estrecha y abajo
 C 0xA1AC escena_3: sin 0xD4F3, en la sala especial 0x18 columna 8 (sin el bit 1 de 0xD7D4), con Snake en Y 0x94-0xA3 y X 0x3C-0x64: 0xD4E4 = 0, la escena 3, la direccion contraria a la de Snake en 0xE246, 0xD4F3 = 1, la ventana en 0x4C, sin lo lanzado y p09:A571
-C 0xA1AF escena_4: con el bit 6 de 0xD7D5 y sin el 4, en la zona 0x0A sala 4: las fichas 0xE240 en (0xBC, 0x64) y 0xE248 en (0xBC, 0x84) de 1 x 1, p12:6D78, Snake en (0xBC, 0x74) hacia arriba, la ventana estrecha, p12:7688, sus dibujos, la bandera 0x2B, la escena 4, la ventana arriba, sin lo lanzado y el sonido 7
+C 0xA1AF escena_4: con el bit 6 de 0xD7D5 y sin el 4, en la zona 0x0A sala 4: las fichas 0xE240 en (0x64, 0xBC) y 0xE248 en (0x84, 0xBC) de 1 x 1, p12:6D78, Snake en (0x74, 0xBC) hacia arriba, la ventana estrecha, p12:7688, sus dibujos, la bandera 0x2B, la escena 4, la ventana arriba, sin lo lanzado y el sonido 7
 C 0xA1B2 escena_5: con el bit 4 de 0xD7D5 y sin el 0 de 0xD7DA, en la zona 0x0A sala 4 con Snake por encima de Y = 0xA0 y en X 0x68-0x7F: la bandera 0x57, la escena 5, 0xE246 = 3, 0xCB5B = 0, sin lo lanzado y el sonido 4
 C 0xA1B5 escena_6: sin los bits 5-6 de 0xD7D3, en la sala especial 0x26 sala 2 con Snake en Y 0x60-0x8F y X 0x50-0x6F: la bandera 0x1A, fuera el bit 3 de 0xD7E0, la escena 6, la direccion contraria en 0xDFDE, sin lo lanzado y la ventana en 0x4C
 C 0xA1B8 escena_7: sin el bit 3 de 0xD7DA, en la zona 0x12 sala 0x0C con Snake por encima de Y = 0x91: 0xCB14 = 1, las rachas de p00:4E01 a 0xFC00, la ficha 0xDFD0 (Y = 0xBE, la X de Snake, 0, 1), la bandera 0x54, sin lo lanzado y la escena 7
@@ -1271,9 +1271,9 @@ C 0xA73C apunta a la cuenta de cuadros de la escena
 C 0xA751 e041_siguiente_b: 
 C 0xA756 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xA75B guarda 1 mientras Snake se da la vuelta
-C 0xA764 sitio_6837: HL = (0x68, 0x37), DE = (0xC0, 0xDC), 0x10 x 0x10
+C 0xA764 sitio_6837: HL = (0x68, 0x37), DE = (0xDC, 0xC0), 0x10 x 0x10
 C 0xA767 copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
-C 0xA76A sitio_6837: HL = (0x68, 0x37), DE = (0xC0, 0xDC), 0x10 x 0x10
+C 0xA76A sitio_6837: HL = (0x68, 0x37), DE = (0xDC, 0xC0), 0x10 x 0x10
 C 0xA76E copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xA77B apunta a la cuenta de cuadros de la escena
 C 0xA780 e041_siguiente_b: 
@@ -1430,7 +1430,7 @@ C 0xAA74 lee el paso de la escena en curso
 C 0xAA77 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xAABA rachas_935d_a_ff00: 
 C 0xAAC1 sonido_1d: pide el sonido 0x1D
-C 0xAAD5 sprite_e25b: dos sprites en (0xE25B, 0x6C) con el patron 0xE0 (0xDC28) y sus colores 8 y 0x4A
+C 0xAAD5 sprite_e25b: dos sprites en X = 0x6C, Y = 0xE25B con el patron 0xE0 (0xDC28) y sus colores 8 y 0x4A
 C 0xAAD8 dibujos_b9c8: los dibujos de p45:B9C8 con los colores de p45:B9B2 en la VRAM de 0x6000
 C 0xAADB rachas_a81b: las rachas de p47:A81B
 C 0xAAE1 a_p10_a6a4: p10:A6A4 con el banco 10 en 0xA000
@@ -1509,7 +1509,7 @@ C 0xACE2 colores_ae19_bancos_9:
 C 0xACE5 mosaico_ae59: 
 C 0xACE8 e041_siguiente_e: 
 C 0xACEB sonido_92: pide el sonido 0x92 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-C 0xACEE columna_de_la_otra: la columna 0xE044 (1 x 0xC0) de la otra pagina a esta
+C 0xACEE fila_de_la_otra: la fila 0xE044 (0xC0 x 1) de la otra pagina a esta
 C 0xACF1 apunta a el mensaje de la secuencia en curso (p09:A4FE)
 C 0xACFB sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 C 0xACFE e041_siguiente_e: 
@@ -1862,7 +1862,7 @@ C 0xB71C borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00
 C 0xB724 borra_9018: 0x20 x 0x30 en (0x90, 0x18) de la pagina A a cero
 C 0xB727 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xB72A borra_9018: 0x20 x 0x30 en (0x90, 0x18) de la pagina A a cero
-C 0xB730 pinta_numero_entero: las seis cifras de 0xD790-0xD792 desde (0x48, 0x70) hacia la izquierda
+C 0xB730 pinta_numero_entero: las seis cifras de 0xD790-0xD792 desde (0x70, 0x48) hacia la izquierda
 C 0xB739 marcos_de_quien_habla: los dos marcos de color 0x0D de 0x24 x 0x34 en (0x0E, 0x16) y (0x8E, 0x16)
 C 0xB73C mosaico_de_la_izquierda: el mosaico de quien habla 0 (0x0B en la escena 3) en (0x10, 0x18)
 C 0xB73F a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
@@ -1882,10 +1882,10 @@ C 0xB77F p02:8E7C
 C 0xB782 paso_de_conversacion: p09:BE60 y el paso 0xD793 (p09:B891, 13 pasos)
 C 0xB785 numero_7_o_66: p15:BDB8 (B); con el numero 7 sin nada de lo de abajo, 0xCABE = 1, una vez p09:BFB5, y 0xD79A segun 0xC58E (p09:BFA5); con el 0x66, nada; con B, 0xCA64, las salas especiales 0x2A o 2, 0xCB21 distinto de 1, alerta o 0xD8C0, 0xCABE a cero con el sonido 2 y la musica
 C 0xB788 numero_66: con el bit 3 de 0xD7E4, el 2 de 0xD7D6 y 0xCB71: con el numero 0x66, una vez (0xCB70) 0xCB72 = 1 y el sonido 0x29; con otro (salvo 7), 0xCB70 a cero y el sonido 5
-C 0xB78B pinta_el_numero: las dos cifras de 0xD790 en (0x48, 0x70)
+C 0xB78B pinta_el_numero: las dos cifras de 0xD790 en (0x70, 0x48)
 C 0xB78E rotulos_d79a: con 0xD79A cambiado, los rotulos de p00:51FD
 C 0xB791 sonido_de_d79a: sin 0xCB70 ni 0xCABE: con 0xD79A en 8, una vez (0xCB77) el sonido 0x2E; en 1, el 0x2A; en 0 y 9, 0xCB77 = 0
-C 0xB7A1 onda_a_la_otra: sin 0xCABE, cada 2 cuadros: una columna de 2 x 0x20 de (0x18 + 0xD7BC, 0x90) de esta pagina a la otra
+C 0xB7A1 onda_a_la_otra: sin 0xCABE, cada 2 cuadros: una fila de 0x20 x 1 de (0x90, 0x18 + 0xD7BC) de esta pagina a la otra
 C 0xB7A4 d7bc_siguiente: sin 0xCABE, cada 2 cuadros 0xD7BC uno mas (0-0x2F)
 C 0xB7A7 a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xB7AD lee 0-9: sube mientras el numero esta en la lista con su bit (p09:BD14)
@@ -2098,7 +2098,7 @@ C 0xBD72 apunta a 0-9: sube mientras el numero esta en la lista con su bit (p09:
 C 0xBD7E apunta a 1 tras el sonido de 0xD79A (p09:BEDF)
 C 0xBD86 sonido_2a: pide el sonido 0x2A
 C 0xBD89 apunta a el numero de la pantalla de conversacion (BCD; sube y baja con derecha e izquierda, p09:BCF2; 0xD791-0xD792 las cifras altas)
-C 0xBD91 pinta_el_numero: las dos cifras de 0xD790 en (0x48, 0x70)
+C 0xBD91 pinta_el_numero: las dos cifras de 0xD790 en (0x70, 0x48)
 C 0xBD99 dos_cifras: las dos cifras del byte de HL
 C 0xBDA1 una_cifra: la cifra A (p09:BDC1, 2 x 1) en (D, E) con p02:8D25 y 8 a la izquierda
 C 0xBDB1 suma_a_hl: HL = HL + A
@@ -2115,11 +2115,11 @@ C 0xBDFF lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xBE11 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xBE14 lee 1 con el numero 7 en su sitio (p09:BF42)
 C 0xBE19 lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xBE1E apunta a la columna de la onda (0-0x2F, p09:BE14)
+C 0xBE1E apunta a la fila de la onda (0-0x2F, p09:BE14): Y = 0x18 + esto
 C 0xBE29 lee 1 con el numero 7 en su sitio (p09:BF42)
 C 0xBE2E lee el contador de cuadros (uno mas en cada interrupcion)
-C 0xBE33 lee la columna de la onda (0-0x2F, p09:BE14)
-C 0xBE3B lee la columna de la onda (0-0x2F, p09:BE14)
+C 0xBE33 lee la fila de la onda (0-0x2F, p09:BE14): Y = 0x18 + esto
+C 0xBE3B lee la fila de la onda (0-0x2F, p09:BE14): Y = 0x18 + esto
 C 0xBE43 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBE4D copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 C 0xBE54 numero_de_conversacion: A = el numero de la conversacion BC en la lista de p48:800C (acarreo si esta)

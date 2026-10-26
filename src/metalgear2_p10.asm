@@ -170,7 +170,7 @@ cab6_de_la_sala:		; p10:A10F y, sin 0xCAB6, p10:A0DB
 	ld a,(0cab6h)		;a0d6   ; lee 1 con la cuenta de 0xCAB7 en marcha (sala especial 0x11, p10:A0F8)
 	or a			;a0d9
 	ret nz			;a0da   ; con 0xCAB6, nada mas
-ca8e_de_la_sala:		; 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0xA0, 0x90); y 0xCA8C = 0x40
+ca8e_de_la_sala:		; 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0x90, 0xA0); y 0xCA8C = 0x40
 	ld hl,0ca8eh		;a0db   ; apunta a 1-2: hacia donde va 0xCA89 (0 o 4; p10:A0DB)
 	ld (hl),000h		;a0de   ; 0xCA8E = 0
 	ld a,(0ca4ah)		;a0e0   ; lee la zona
@@ -189,7 +189,7 @@ ca8e_de_la_sala:		; 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sa
 	push bc			;a0fb
 	call cuenta_cab7		;a0fc   ; su cuenta
 	push hl			;a0ff
-	ld hl,090a0h		;a100   ; en (0xA0, 0x90)
+	ld hl,090a0h		;a100   ; en (0x90, 0xA0)
 	call mosaico_de_d8a4		;a103   ; mosaico_de_d8a4: con 0xCB21 = 0x20-0x22: borra el sitio de 0xD8A4 (p10:B3E5) y copia 0x10 x 0x10 de HL ahi (operacion 0xC8)
 	pop hl			;a106
 	pop bc			;a107
@@ -251,7 +251,7 @@ cuenta_cab7:		; 0xCAB7 = 0x1000
 	ld de,01000h		;a168
 	ld (0cab7h),de		;a16b   ; guarda cuenta de 16 bits de 0xCAB6
 	ret			;a16f
-cab6_cuenta:		; en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0xA0, 0x80)
+cab6_cuenta:		; en la sala especial 0x11, 0xCAB7 = 0x1000; con 0xCAB6 (salvo en la zona 4 sala 9), la cuenta de 0xCAB7; al acabar, 0xCAB6 = 0, p10:A0DB y p10:A19E en (0x80, 0xA0)
 	ld a,(0ca76h)		;a170   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 011h		;a173   ; la especial 0x11
 	jr z,cuenta_cab7		;a175
@@ -274,8 +274,8 @@ baja_cab7:
 cab6_acaba:
 	xor a			;a194
 	ld (0cab6h),a		;a195   ; 0xCAB6 = 0
-	call ca8e_de_la_sala		;a198   ; ca8e_de_la_sala: 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0xA0, 0x90); y 0xCA8C = 0x40
-	ld hl,080a0h		;a19b   ; en (0xA0, 0x80)
+	call ca8e_de_la_sala		;a198   ; ca8e_de_la_sala: 0xCA8E = 0; en la zona 4: en la sala 9, 0xCA8E = 2; en la sala especial 0x11, 0xCA8E = 1, 0xCAB6 = 1 con su cuenta de 0x1000 y p10:A19E en (0x90, 0xA0); y 0xCA8C = 0x40
+	ld hl,080a0h		;a19b   ; en (0x80, 0xA0)
 mosaico_de_d8a4:		; con 0xCB21 = 0x20-0x22: borra el sitio de 0xD8A4 (p10:B3E5) y copia 0x10 x 0x10 de HL ahi (operacion 0xC8)
 	ld a,(0cb21h)		;a19e   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 020h		;a1a1
@@ -336,12 +336,12 @@ ca7b_1:		; la cuenta
 	ld (hl),000h		;a1ff   ; otros 0x200
 	inc hl			;a201
 	ld (hl),002h		;a202
-mosaico_de_ca7b:		; con 0xCB21 = 0x0E: borra el sitio de 0xD8A4 y copia ahi el de (0x90, 0xB0) (0xCA7B 0-1), (0x90, 0xC0) (2) o (0x90, 0xD0) (3)
+mosaico_de_ca7b:		; con 0xCB21 = 0x0E: borra el sitio de 0xD8A4 y copia ahi el de (0xB0, 0x90) (0xCA7B 0-1), (0xC0, 0x90) (2) o (0xD0, 0x90) (3)
 	ld a,(0cb21h)		;a204   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	cp 00eh		;a207
 	ret nz			;a209   ; sin 0x0E, nada
 	call borra_d8a4		;a20a   ; borra
-	ld hl,0b090h		;a20d   ; (0x90, 0xB0)...
+	ld hl,0b090h		;a20d   ; (0xB0, 0x90)...
 	ld a,(0ca7bh)		;a210   ; lee 0-3: el paso de la cosa 0x0E (p10:A1D2)
 	or a			;a213
 	jr z,copia_a_d8a4		;a214
@@ -506,9 +506,9 @@ e1d8_sprites:		; con 0xE1D8, sus dos sprites (p10:A325) y sus colores 0x0D y 0x4
 	ld a,(0e1d8h)		;a31b   ; lee el tramo de la ficha de p10:A234 (0 = ninguna; 0xE1DA-0xE1DB su sitio)
 	or a			;a31e
 	ret z			;a31f   ; sin ficha, nada
-	call sprites_de_e1d8		;a320   ; sprites_de_e1d8: los sprites 0 y 1 en (0xE1DA, 0xE1DB) con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
+	call sprites_de_e1d8		;a320   ; sprites_de_e1d8: los sprites 0 y 1 en X = 0xE1DB, Y = 0xE1DA con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
 	jr colores_e1d8		;a323
-sprites_de_e1d8:		; los sprites 0 y 1 en (0xE1DA, 0xE1DB) con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
+sprites_de_e1d8:		; los sprites 0 y 1 en X = 0xE1DB, Y = 0xE1DA con el patron 0 u 8 cada 8 cuadros (+ 0x10 desde el tramo 9); con 0xE1DC, la X tiembla 2 a cada lado
 	ld a,(0ca03h)		;a325   ; lee el contador de cuadros (uno mas en cada interrupcion)
 	ld c,000h		;a328   ; 0...
 	rra			;a32a
@@ -690,7 +690,7 @@ e1d8_con_cosa_22:		; lo mismo con la cosa 0x22 (0xD6BC) y su sitio de 0xCA82
 	ld b,022h		;a46d   ; ...su numero
 	jr e1d8_con_cosa		;a46f
 b172_y_b8c4:		; p10:B172 y p10:B8C4
-	call fondo_de_mensajes		;a471   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+	call fondo_de_mensajes		;a471   ; fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 	jp letrero_f2_0		;a474   ; letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 fichas_e070_de_la_sala:		; 0xE070-0xE07F a cero y, de p10:A61B ([zona][sala][Y y X en nibbles], 0xFF acaba; en la zona 0x10 solo con 0xCA43 = 6), las dos fichas de esta sala: [1][0][Y * 16 + 1][X * 16][0x10]
 	ld hl,0e070h		;a477   ; apunta a 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
@@ -747,7 +747,7 @@ pon_ficha_e070:		; activa...
 	ld de,0e078h		;a4c3   ; la segunda ficha
 	inc hl			;a4c6
 	jr ficha_a61b		;a4c7
-pinta_fichas_e070:		; las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xA0, 0xE0) de la pagina 3 (o la 1) a su sitio
+pinta_fichas_e070:		; las dos fichas de 0xE070 desde el paso 2: 0x20 x 0x20 de (0xE0, 0xA0) de la pagina 3 (o la 1) a su sitio
 	ld hl,0e070h		;a4c9   ; apunta a 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 	call pinta_e070		;a4cc   ; pinta_e070:
 	ld hl,0e078h		;a4cf   ; la segunda
@@ -763,7 +763,7 @@ pinta_e070:
 	ld e,(hl)			;a4db   ; su sitio
 	inc hl			;a4dc
 	ld d,(hl)			;a4dd
-	ld hl,0e0a0h		;a4de   ; de (0xA0, 0xE0)...
+	ld hl,0e0a0h		;a4de   ; de (0xE0, 0xA0)...
 	ld bc,02020h		;a4e1   ; ...0x20 x 0x20
 	ld a,(0ca42h)		;a4e4   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	and a			;a4e7
@@ -808,7 +808,7 @@ paso_de_e070:
 	inc hl			;a51e
 	ld d,(hl)			;a51f
 	ex de,hl			;a520
-	ld de,0c090h		;a521   ; ...a (0x90, 0xC0)...
+	ld de,0c090h		;a521   ; ...a (0xC0, 0x90)...
 	ld bc,02020h		;a524   ; ...0x20 x 0x20 de la otra pagina
 	call 0474dh		;a527   ; copia_rectangulo_a_esta: p00:4767 de la otra pagina (0xCA42 ^ 1) a la de 0xCA42
 	pop hl			;a52a
@@ -820,7 +820,7 @@ e070_paso_siguiente:		; el paso de la ficha (byte 1) uno mas
 	ld l,a			;a532
 	inc (hl)			;a533   ; ...uno mas
 	ret			;a534
-e070_paso_1:		; el byte 4 baja 2; a cero, el paso siguiente; si no, la franja guardada en (0x90, 0x20) y las dos mitades separadas (p10:A5AE) con ese hueco; sin la luz (p10:A578), el resultado a la otra pagina
+e070_paso_1:		; el byte 4 baja 2; a cero, el paso siguiente; si no, la franja guardada en (0x20, 0x90) y las dos mitades separadas (p10:A5AE) con ese hueco; sin la luz (p10:A578), el resultado a la otra pagina
 	inc hl			;a535
 	inc hl			;a536
 	dec (hl)			;a537   ; 2 menos
@@ -828,7 +828,7 @@ e070_paso_1:		; el byte 4 baja 2; a cero, el paso siguiente; si no, la franja gu
 	jr z,e070_paso_siguiente_b		;a539   ; a cero: el paso siguiente
 	push hl			;a53b
 	ld hl,0e0a0h		;a53c   ; de (0xE0, 0xA0)...
-	ld de,02090h		;a53f   ; ...a (0x90, 0x20)
+	ld de,02090h		;a53f   ; ...a (0x20, 0x90)
 	ld a,(0ca42h)		;a542   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	and a			;a545   ; en la pagina 0, de la 1...
 	ld a,007h		;a546
@@ -856,7 +856,7 @@ L_A54C:
 	pop hl			;a569
 	ret c			;a56a   ; con luz, ya esta
 	dec hl			;a56b
-e070_a_la_otra:		; 0x20 x 0x1F de (0x90, 0xE0) a su sitio en la otra pagina
+e070_a_la_otra:		; 0x20 x 0x1F de (0xE0, 0x90) a su sitio en la otra pagina
 	ld d,(hl)			;a56c   ; su sitio
 	dec hl			;a56d
 	ld e,(hl)			;a56e
@@ -2091,8 +2091,8 @@ DATA_resto_AE28:
 ; ======================================================================
 
 
-puntos_que_giran:		; 0x44 puntos de 2 x 2 a negro desde (0x80 + (byte 0x0E / 2 * 11) mod 0x60, 0x30), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
-	ld hl,03080h		;ae9c   ; desde (0x80, 0x30)
+puntos_que_giran:		; 0x44 puntos de 2 x 2 a negro desde (0x30 + (byte 0x0E / 2 * 11) mod 0x60, 0x80), cada uno 2 mas abajo y 0x1B mas a la derecha (en vuelta de 0x60)
+	ld hl,03080h		;ae9c   ; desde (0x30, 0x80)
 	ld c,(ix+00eh)		;ae9f   ; lee la espera de la ficha de 0xD800
 	srl c		;aea2   ; la espera / 2...
 	ld b,00bh		;aea4   ; ...11 veces...
@@ -2189,7 +2189,7 @@ pantalla_f3:		; la pantalla de F3 (p01:750B): como la de F2 con 0xD700 de p10:AF
 	call cosa_del_cursor		;af65   ; cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 	ld (0d704h),a		;af68   ; guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 	call cuenta_f3		;af6b   ; cuenta_f3: las 0x20-0x22: la cuenta de 0xD638 en (0xE0, 0xB8); las demas, p10:B9B4
-	call letrero_de_f3		;af6e   ; letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+	call letrero_de_f3		;af6e   ; letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x3C, 0x94)
 	call e1d8_rachas		;af71   ; e1d8_rachas: con 0xE1D8, las rachas de p37:B2D5
 	call 08ed8h		;af74   ; sprites_a_vram_b_1_2_10: sprites_a_vram y deja los bancos 1, 2 y 10
 	ld hl,(0ca50h)		;af77   ; la sala...
@@ -2199,20 +2199,20 @@ pantalla_f3:		; la pantalla de F3 (p01:750B): como la de F2 con 0xD700 de p10:AF
 	call 04650h		;af82   ; espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 	jp 04606h		;af85   ; enciende_todo: la pantalla y los sprites encendidos
 lo_de_f2:		; la pantalla de F2: la pagina a cero, su letrero (p50:8044), p10:B36F, las cosas de 0xD600 (p10:B00E), los recuadros (p10:B13A, B145), p10:B38F y p10:B150
-	call pagina_a_cero_f		;af88   ; pagina_a_cero_f: 0xC2 x 0xC0 desde (0, 0) a cero
+	call pagina_a_cero_f		;af88   ; pagina_a_cero_f: 0xC0 x 0xC2 desde (0, 0) a cero
 	call letrero_f2		;af8b   ; letrero_f2: el letrero de p50:8044
-	call cursor_f2		;af8e   ; cursor_f2: el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
+	call cursor_f2		;af8e   ; cursor_f2: el cursor (8 x 8 de (0x50, 0x38)) en su sitio con pasos de 0x38 x 0x10
 	call cosas_de_d600		;af91   ; cosas_de_d600: las 13 cosas de 0xD600 que se tienen (0xD708 = su numero): su sitio, su dibujo y a la lista (p10:B02E)
-	call recuadro_f2		;af94   ; recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
-	call recuadro_f2_b		;af97   ; recuadro_f2_b: el marco de color 7 de 0x20 x 0x30 en (0x6A, 0x88)
-	call elegida_f2		;af9a   ; elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
-	jp cosa_d634		;af9d   ; cosa_d634: con la cosa 0x0D (0xD634), su dibujo de (0x80, 0xE0) a (0x72, 0x98)
+	call recuadro_f2		;af94   ; recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (6, 0x8E)
+	call recuadro_f2_b		;af97   ; recuadro_f2_b: el marco de color 7 de 0x20 x 0x30 en (0x88, 0x6A)
+	call elegida_f2		;af9a   ; elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0xD0, 0x74)
+	jp cosa_d634		;af9d   ; cosa_d634: con la cosa 0x0D (0xD634), su dibujo de (0xE0, 0x80) a (0x98, 0x72)
 lo_de_f3:		; la pantalla de F3: la pagina a cero, su letrero (p50:804A), p10:B374, las cosas de 0xD638 (p10:B042), el recuadro y p10:B3C1
-	call pagina_a_cero_f		;afa0   ; pagina_a_cero_f: 0xC2 x 0xC0 desde (0, 0) a cero
+	call pagina_a_cero_f		;afa0   ; pagina_a_cero_f: 0xC0 x 0xC2 desde (0, 0) a cero
 	call letrero_f3		;afa3   ; letrero_f3: el letrero de p50:804A
 	call cursor_f3		;afa6   ; cursor_f3: lo mismo con pasos de 0x20 x 0x10
 	call cosas_de_d638		;afa9   ; cosas_de_d638: las 0x22 cosas de 0xD638 que se tienen, igual (p10:B062)
-	call recuadro_f2		;afac   ; recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
+	call recuadro_f2		;afac   ; recuadro_f2: el fondo (p10:B16A) y el marco de color 7 en (6, 0x8E)
 	jp elegida_f3		;afaf   ; elegida_f3: sin 0xD8A4: el sitio de 0xD8A4 borrado y el dibujo a el
 d700_de_f2:		; 0xD700-0xD70A de p10:AFC2 y lo de 0xD70B (p10:AFDB)
 	ld de,0d700h		;afb2   ; apunta a el estado de la pantalla de F2/F3 (0xD700-0xD70F; p10:AFB2)
@@ -2411,9 +2411,9 @@ copia_16x16:
 	ld bc,01010h		;b0ee   ; 16 x 16
 	jp 0473bh		;b0f1   ; copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
 dibujo_0e:
-	call sitio_0e		;b0f4   ; sitio_0e: HL = (0x90, 0xB0), (0x90, 0xC0) o (0x90, 0xD0) segun 0xCA7B
+	call sitio_0e		;b0f4   ; sitio_0e: HL = (0xB0, 0x90), (0xC0, 0x90) o (0xD0, 0x90) segun 0xCA7B
 	jr copia_16x16		;b0f7
-sitio_0e:		; HL = (0x90, 0xB0), (0x90, 0xC0) o (0x90, 0xD0) segun 0xCA7B
+sitio_0e:		; HL = (0xB0, 0x90), (0xC0, 0x90) o (0xD0, 0x90) segun 0xCA7B
 	ld hl,0b090h		;b0f9
 	ld a,(0ca7bh)		;b0fc   ; lee 0-3: el paso de la cosa 0x0E (p10:A1D2)
 	or a			;b0ff   ; 0...
@@ -2466,35 +2466,35 @@ DATA_resto_B130:
 ; ======================================================================
 
 
-recuadro_f2:		; el fondo (p10:B16A) y el marco de color 7 en (0x8E, 6)
+recuadro_f2:		; el fondo (p10:B16A) y el marco de color 7 en (6, 0x8E)
 	call fondo_f2		;b13a   ; fondo_f2: el fondo al color 0x99
-	ld hl,0068eh		;b13d   ; en (0x8E, 6)...
+	ld hl,0068eh		;b13d   ; en (6, 0x8E)...
 	ld de,sitio_del_cursor		;b140
 	jr marco_7		;b143
-recuadro_f2_b:		; el marco de color 7 de 0x20 x 0x30 en (0x6A, 0x88)
-	ld hl,0886ah		;b145   ; en (0x6A, 0x88)...
+recuadro_f2_b:		; el marco de color 7 de 0x20 x 0x30 en (0x88, 0x6A)
+	ld hl,0886ah		;b145   ; en (0x88, 0x6A)...
 	ld de,03020h		;b148   ; ...0x20 x 0x30
 marco_7:
 	ld c,007h		;b14b   ; color 7
 	jp marco_b8be		;b14d   ; marco_b8be:
-cosa_d634:		; con la cosa 0x0D (0xD634), su dibujo de (0x80, 0xE0) a (0x72, 0x98)
+cosa_d634:		; con la cosa 0x0D (0xD634), su dibujo de (0xE0, 0x80) a (0x98, 0x72)
 	ld a,(0d634h)		;b150
 	or a			;b153
 	ret z			;b154   ; sin ella, nada
 	ld hl,0e080h		;b155   ; apunta a el rastro de Snake: las ultimas 16 posiciones [Y][X][direccion] (con 0xCAA0)
-	ld de,09872h		;b158   ; a (0x72, 0x98)
+	ld de,09872h		;b158   ; a (0x98, 0x72)
 	ld bc,01010h		;b15b
 	jp 0473bh		;b15e   ; copia_rectangulo_a_3: p00:4767 de la pagina 0xCA42 a la 3
-pagina_a_cero_f:		; 0xC2 x 0xC0 desde (0, 0) a cero
+pagina_a_cero_f:		; 0xC0 x 0xC2 desde (0, 0) a cero
 	ld hl,00000h		;b161
-	ld bc,0c0c2h		;b164   ; 0xC2 x 0xC0
+	ld bc,0c0c2h		;b164   ; 0xC0 x 0xC2
 	jp 046fah		;b167   ; borra_bloque_pagina_0: p00:46FF con A = 0 en la pagina en la que se dibuja
 fondo_f2:		; el fondo al color 0x99
 	ld hl,0068eh		;b16a
 	ld bc,sitio_del_cursor		;b16d
 	jr fondo_99		;b170
-fondo_de_mensajes:		; 0xB0 x 0x28 en (0x90, 8) al color 0x99
-	ld hl,00890h		;b172   ; (0x90, 8)...
+fondo_de_mensajes:		; 0xB0 x 0x28 en (8, 0x90) al color 0x99
+	ld hl,00890h		;b172   ; (8, 0x90)...
 	ld bc,0b028h		;b175   ; ...0xB0 x 0x28
 fondo_99:
 	ld a,099h		;b178   ; al color 0x99
@@ -2518,11 +2518,11 @@ f2_paso:		; con una tecla de funcion, sale (p10:B44D); el cursor con el mando (p
 	ld a,(0d707h)		;b19f   ; lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 	or a			;b1a2
 	jr z,f2_cosa_7		;b1a3   ; sin 0xD707, aparte
-	call fondo_de_mensajes		;b1a5   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+	call fondo_de_mensajes		;b1a5   ; fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 	call borra_cursor_f2		;b1a8   ; borra_cursor_f2: borra el cursor de su sitio (pasos de 0x38 x 0x10)
 	call mueve_cursor		;b1ab   ; mueve_cursor: 0xD702 o 0xD703 uno mas o menos segun 0xD707
-	call cursor_f2		;b1ae   ; cursor_f2: el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
-	call elegida_f2		;b1b1   ; elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
+	call cursor_f2		;b1ae   ; cursor_f2: el cursor (8 x 8 de (0x50, 0x38)) en su sitio con pasos de 0x38 x 0x10
+	call elegida_f2		;b1b1   ; elegida_f2: sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0xD0, 0x74)
 	ld c,007h		;b1b4   ; 7 por fila
 	call cosa_del_cursor		;b1b6   ; cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 	ld (0d704h),a		;b1b9   ; guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
@@ -2539,7 +2539,7 @@ f2_cosa_7:
 	ld a,(0d70ah)		;b1d1   ; 0xD70A cambia
 	xor 001h		;b1d4   ; 0 o 1
 	ld (0d70ah),a		;b1d6   ; guarda 0-1: la opcion de la cosa 7 en F2 (p10:B8F8); en el estado 7, de 0 a 9 por 0xD709 (p13:9799)
-	call cursor_d70a		;b1d9   ; cursor_d70a: borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
+	call cursor_d70a		;b1d9   ; cursor_d70a: borra 8 x 0x18 en (0x74, 0x9A) (lo de (0x62, 0x9A)) y el cursor en (0x74, 0x9A) o (0x74, 0xA6) segun 0xD70A
 	jp 05f49h		;b1dc   ; sonido_11: pide el sonido 0x11
 f3_cada_cuadro:		; p02:8ECD; salvo sobre la cosa 0x0D, con 0xD443 p02:8EE5; p10:BAB3, p10:B204 y, sin 0xD706, p10:A28F
 	call 08ecdh		;b1df   ; p02:8ECD
@@ -2568,7 +2568,7 @@ f3_paso:		; con una tecla de funcion, sale (p10:B57B); el cursor (p10:B2F4, 6 x 
 	ld a,(0d707h)		;b212   ; lee hacia donde se mueve el cursor (1 arriba, 2 abajo, 3 izquierda, 4 derecha; p10:B2F4)
 	or a			;b215
 	jr z,f3_usa		;b216   ; sin mover, aparte
-	call fondo_de_mensajes		;b218   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+	call fondo_de_mensajes		;b218   ; fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 	call borra_cursor_f3		;b21b   ; borra_cursor_f3: lo mismo con pasos de 0x20 x 0x10
 	call mueve_cursor		;b21e   ; mueve_cursor: 0xD702 o 0xD703 uno mas o menos segun 0xD707
 	call cursor_f3		;b221   ; cursor_f3: lo mismo con pasos de 0x20 x 0x10
@@ -2577,7 +2577,7 @@ f3_paso:		; con una tecla de funcion, sale (p10:B57B); el cursor (p10:B2F4, 6 x 
 	call cosa_del_cursor		;b229   ; cosa_del_cursor: A = la cosa de la lista 0xD710 en el cursor (fila 0xD703 * C + columna 0xD702)
 	ld (0d704h),a		;b22c   ; guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 	call cuenta_f3		;b22f   ; cuenta_f3: las 0x20-0x22: la cuenta de 0xD638 en (0xE0, 0xB8); las demas, p10:B9B4
-	jp letrero_de_f3		;b232   ; letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+	jp letrero_de_f3		;b232   ; letrero_de_f3: el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x3C, 0x94)
 f3_usa:
 	call usa_en_f3		;b235   ; usa_en_f3: con 0xCB4B y el disparo 1: la cosa elegida de 0xD638 (las 0x20-0x22 solo con la vida al maximo) se usa (p10:BB96)
 	ld a,(0ca07h)		;b238   ; lee lo recien pulsado del mando (los bits de 0xCA08 que no estaban)
@@ -2651,7 +2651,7 @@ quita_elegida:
 	call quita_de_d710		;b2be   ; quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 	xor a			;b2c1
 	ld (0d704h),a		;b2c2   ; guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
-	call fondo_de_mensajes		;b2c5   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+	call fondo_de_mensajes		;b2c5   ; fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 	jp letrero_f2_0		;b2c8   ; letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 usa_0c:		; la 0x0C, con 0xCB39: una menos y, acabada, fuera (0xD664); 0xCB39 = 0, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0 y el sonido 0x22; sin 0xCB39, el sonido 0x5C
 	ld a,(0cb39h)		;b2cb
@@ -2715,7 +2715,7 @@ borra_cursor_f2:		; borra el cursor de su sitio (pasos de 0x38 x 0x10)
 borra_cursor_f3:		; lo mismo con pasos de 0x20 x 0x10
 	ld bc,02010h		;b340
 borra_cursor:
-	ld de,00e1ch		;b343   ; desde (0x1C, 0x0E)
+	ld de,00e1ch		;b343   ; desde (0x0E, 0x1C)
 	call sitio_del_cursor		;b346   ; sitio_del_cursor: D + B * la fila (0xD703) y E + C * la columna (0xD702)
 	ld hl,00000h		;b349   ; la esquina de la otra...
 	ld a,(0ca42h)		;b34c   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -2741,13 +2741,13 @@ uno_mas_cursor:
 uno_menos_cursor:
 	dec (hl)			;b36d
 	ret			;b36e
-cursor_f2:		; el cursor (8 x 8 de (0x38, 0x50)) en su sitio con pasos de 0x38 x 0x10
+cursor_f2:		; el cursor (8 x 8 de (0x50, 0x38)) en su sitio con pasos de 0x38 x 0x10
 	ld bc,03810h		;b36f
 	jr pinta_cursor		;b372
 cursor_f3:		; lo mismo con pasos de 0x20 x 0x10
 	ld bc,02010h		;b374
 pinta_cursor:
-	ld de,00e1ch		;b377   ; desde (0x1C, 0x0E)
+	ld de,00e1ch		;b377   ; desde (0x0E, 0x1C)
 	call sitio_del_cursor		;b37a   ; sitio_del_cursor: D + B * la fila (0xD703) y E + C * la columna (0xD702)
 copia_cursor:
 	ld a,(0ca42h)		;b37d   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
@@ -2757,9 +2757,9 @@ copia_cursor:
 	rlca			;b383
 	or 0c8h		;b384   ; la operacion 0xC8
 	ld bc,00808h		;b386
-	ld hl,05038h		;b389   ; el cursor de (0x38, 0x50)
+	ld hl,05038h		;b389   ; el cursor de (0x50, 0x38)
 	jp 047edh		;b38c   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-elegida_f2:		; sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0x74, 0xD0)
+elegida_f2:		; sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido (en el cursor) a (0xD0, 0x74)
 	ld a,(0d8a4h)		;b38f
 	or a			;b392
 	ret nz			;b393   ; con 0xD8A4, nada
@@ -2774,7 +2774,7 @@ elegida_f2:		; sin 0xD8A4: el sitio de 0xD874 borrado y el dibujo de lo elegido 
 	ld a,e			;b3a7   ; Y - 4
 	sub 004h		;b3a8
 	ld l,a			;b3aa
-	ld de,0d074h		;b3ab   ; a (0x74, 0xD0)
+	ld de,0d074h		;b3ab   ; a (0xD0, 0x74)
 	ld bc,02010h		;b3ae
 copia_a_la_3:
 	push bc			;b3b1
@@ -3494,7 +3494,7 @@ letrero_d704:
 letrero_8046:
 	ld hl,08046h		;b8cf
 	jp 064c3h		;b8d2   ; letrero_a_de_50: el letrero A de la tabla de la palabra HL del banco 50, en (0x0C, 0x94)
-recuadro_de_7:		; la 7: un marco en (0x94, 0x70) de 0x44 x 0x20, los letreros de p10:B919 y p10:B920 y el cursor de 0xD70A (p10:B8F8)
+recuadro_de_7:		; la 7: un marco en (0x70, 0x94) de 0x44 x 0x20, los letreros de p10:B919 y p10:B920 y el cursor de 0xD70A (p10:B8F8)
 	ld a,(0d704h)		;b8d5   ; lee la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
 	cp 007h		;b8d8
 	ret nz			;b8da
@@ -3508,7 +3508,7 @@ recuadro_de_7:		; la 7: un marco en (0x94, 0x70) de 0x44 x 0x20, los letreros de
 	ld hl,0b920h		;b8ef
 	ld de,080a6h		;b8f2
 	call 04950h		;b8f5   ; letrero: pinta las letras de HL en DE hasta 0xFF (0xFE salta de linea)
-cursor_d70a:		; borra 8 x 0x18 en (0x9A, 0x74) y el cursor en (0x9A, 0x74) o (0xA6, 0x74) segun 0xD70A
+cursor_d70a:		; borra 8 x 0x18 en (0x74, 0x9A) (lo de (0x62, 0x9A)) y el cursor en (0x74, 0x9A) o (0x74, 0xA6) segun 0xD70A
 	ld a,(0ca42h)		;b8f8   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld b,a			;b8fb
 	rlca			;b8fc
@@ -3539,7 +3539,7 @@ DATA_resto_B919:
 ; ======================================================================
 
 
-letrero_de_f3:		; el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x94, 0x3C)
+letrero_de_f3:		; el letrero de lo elegido de p50:8048 y, para las 0x14-0x1C, su dibujo de 8 x 8 en (0x3C, 0x94)
 	call letrero_8048		;b926   ; letrero_8048:
 	jr dibujo_14_1c		;b929
 letrero_8048:
@@ -3675,7 +3675,7 @@ marcador_de_lo_elegido:		; en el marcador: el dibujo de lo de 0xCB20 (p56:A6AF) 
 	dec a			;b9eb
 	ld hl,0a6afh		;b9ec
 	call 0649ch		;b9ef   ; palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
-	call dibujo_a_d074		;b9f2   ; dibujo_a_d074: el dibujo de HL a (0x74, 0xD0), 0x20 x 16 (16 x 16 en (0x74, 0xD8) desde la 3)
+	call dibujo_a_d074		;b9f2   ; dibujo_a_d074: el dibujo de HL a (0xD0, 0x74), 0x20 x 16 (16 x 16 en (0xD8, 0x74) desde la 3)
 	ld a,(0cb20h)		;b9f5   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
 	ld hl,0d600h		;b9f8   ; apunta a lo que lleva Snake: fichas de 4 bytes [la tiene][cuenta en BCD, 2 bytes][...]; las de 0xCB20 desde la 1
 	ld de,0e088h		;b9fb
@@ -3691,7 +3691,7 @@ marcador_cb21:
 	dec a			;ba0e
 	ld hl,0a6cbh		;ba0f
 	call 0649ch		;ba12   ; palabra_de_56: HL = la palabra A de la tabla de HL del banco 56
-	call dibujo_a_d8a4		;ba15   ; dibujo_a_d8a4: el dibujo de HL a (0xA4, 0xD8), 16 x 16
+	call dibujo_a_d8a4		;ba15   ; dibujo_a_d8a4: el dibujo de HL a (0xD8, 0xA4), 16 x 16
 	ld a,(0cb21h)		;ba18   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 	ld de,0e0b8h		;ba1b
 	cp 020h		;ba1e
@@ -3700,11 +3700,11 @@ marcador_cb21:
 	ret nc			;ba23
 	ld hl,0d638h		;ba24   ; apunta a la segunda tabla de lo que lleva (fichas de 4 bytes, como 0xD600)
 	jp cuenta_de_a		;ba27   ; cuenta_de_a: la cuenta (bytes 2-3) de la ficha A - 1 de HL pintada (p10:B960) y copiada de la otra pagina, 0x20 x 8
-dibujo_a_d8a4:		; el dibujo de HL a (0xA4, 0xD8), 16 x 16
+dibujo_a_d8a4:		; el dibujo de HL a (0xD8, 0xA4), 16 x 16
 	ld de,0d8a4h		;ba2a
 	ld bc,01010h		;ba2d
 	jr copia_dibujo_logica		;ba30
-dibujo_a_d074:		; el dibujo de HL a (0x74, 0xD0), 0x20 x 16 (16 x 16 en (0x74, 0xD8) desde la 3)
+dibujo_a_d074:		; el dibujo de HL a (0xD0, 0x74), 0x20 x 16 (16 x 16 en (0xD8, 0x74) desde la 3)
 	ld de,0d074h		;ba32
 	ld bc,02010h		;ba35
 	ld a,(0cb20h)		;ba38   ; lee lo que usa el disparo 1 (0 nada; p02:8001 elige por ello)
@@ -3952,7 +3952,7 @@ quita_de_la_pantalla:		; borra su recuadro y su sitio, la cosa de la lista, 0xD7
 	call quita_de_d710		;bbd0   ; quita_de_d710: la cosa A fuera de la lista 0xD710 (0x23 sitios)
 	xor a			;bbd3
 	ld (0d704h),a		;bbd4   ; guarda la cosa en el cursor de F2/F3 (de la lista 0xD710, p10:B880)
-	call fondo_de_mensajes		;bbd7   ; fondo_de_mensajes: 0xB0 x 0x28 en (0x90, 8) al color 0x99
+	call fondo_de_mensajes		;bbd7   ; fondo_de_mensajes: 0xB0 x 0x28 en (8, 0x90) al color 0x99
 	jp letrero_f2_0		;bbda   ; letrero_f2_0: el letrero 0 de p50:8046 (ninguno)
 cb4b_sin_cosas:		; con 0xCB4B y sin ninguna de las 0x31 cosas de 0xD600: el bit 2 de 0xD7D9, fuera el 0 de 0xD7D5, 0xCB4B = 0xE1E8 = 0...
 	ld a,(0cb4bh)		;bbdd   ; lee con el puesto, la vida baja un punto cada 16 cuadros

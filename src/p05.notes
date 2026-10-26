@@ -305,7 +305,7 @@ L 0xAA26 tras_el_mensaje al acabar el mensaje, 0x10 cuadros, el dibujo siguiente
 L 0xAA36 al_paso_20 al acabar la espera, 0xCB3C = 0 y el paso 0x20
 L 0xAA43 pasos_de_d8a0 con 0xD8A0, por su paso (p05:AA4D)
 L 0xAA59 d8a0_cuenta la espera de 0xD8A1; cada 16, el paso siguiente y p11:A000
-L 0xAA64 d8a0_deja_cosa al acabar la espera: 0xD8A0 = 0, la cosa 0x28 en (0x70, 0x60), 0xD4EB = 1 y el sonido 0x42
+L 0xAA64 d8a0_deja_cosa al acabar la espera: 0xD8A0 = 0, la cosa 0x28 en (0x60, 0x70), 0xD4EB = 1 y el sonido 0x42
 L 0xAA7B d8a0_quita_0b el paso siguiente, 0x10 cuadros y fuera la ficha 0xD800 de tipo 0x0B
 L 0xAA90 d8a0_cuatro_0b el paso siguiente, 0x40 cuadros, las 4 fichas de 0xD800 de tipo 0x0B desde p05:AAEF y el bit 5 de 0xD7D6
 L 0xAAFB escena_d8ac con 0xC693, el sonido 0x84; los pasos de 0xD8AC (p05:AB08)
@@ -483,11 +483,11 @@ L 0xBBA2 d8aa_paso_d sin llamada, 0xCB3C = 1, el dibujo 0x0C, 0x20 cuadros, p03:
 L 0xBBC1 d8aa_paso_e al acabar la espera, la otra pagina entera a esta y el barrido desde (0x60, 0x60)
 L 0xBBD9 d8aa_paso_f al acabar el barrido: el sonido 0xA0, 0xD8AA = 2, sin sprites, las rachas de p43:BE79, dos sprites, dos mosaicos de quien habla (0 y 8) y el mensaje 0x1070
 L 0xBC4A d8aa_paso_10 p03:B8AC; al acabar el mensaje, la pantalla apagada, 0xCD00-0xCDFF a cero, quita los dos mosaicos y Snake quieto en el estado 0
-L 0xBC9F hueco_de_mosaico en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+L 0xBC9F hueco_de_mosaico en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea vertical en (0xDB, 0x30)
 L 0xBCB5 d8aa_paso_11 al acabar el barrido: Snake y el actor en Y = 0x68 (Snake en X = 0x70 mirando a la izquierda, el actor en 0x50), 0xD8AA = 1 y los sprites limpios
 L 0xBCE8 d8aa_paso_12 al acabar la espera, 0xD8AA = 0 y el paso 0x20
-L 0xBCF5 mosaico_de_13_5 en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x18, 0x84) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
-L 0xBD26 mosaico_de_la_ficha el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+L 0xBCF5 mosaico_de_13_5 en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x84, 0x18) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
+L 0xBD26 mosaico_de_la_ficha el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 L 0xBD3B sprites_hasta_paso_0f hasta el paso 0x0F, sus sprites; desde el, fuera
 L 0xBD46 actor_de_la_sala_5 en la sala 5, sus pasos (p05:BD58)
 L 0xBD84 sala_5_paso_0 0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
@@ -1504,8 +1504,8 @@ C 0xBC4A a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 C 0xBC4D acaba_mensaje_0: Z al acabar el mensaje, con p01:7A27 (A = 0)
 C 0xBC51 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xBC5A borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xBC5E hueco_de_mosaico: en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
-C 0xBC63 hueco_de_mosaico: en la pagina A: (0x30, 0xDC) 0x0A x 8 a 0 y una linea vertical en (0x30, 0xDB)
+C 0xBC5E hueco_de_mosaico: en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea vertical en (0xDB, 0x30)
+C 0xBC63 hueco_de_mosaico: en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea vertical en (0xDB, 0x30)
 C 0xBC6A guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xBC6D guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xBC70 guarda 1 mientras Snake se da la vuelta
@@ -1537,7 +1537,7 @@ C 0xBCFB lee la sala de la zona
 C 0xBD01 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
 C 0xBD07 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xBD10 pieza_b_x_c: B x C caracteres de HL en (E, D), de 8 en 8
-C 0xBD1E mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+C 0xBD1E mosaico_de_la_ficha: el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 C 0xBD23 bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xBD26 lee la X de la ficha de 0xD800
 C 0xBD2C lee la Y de la ficha de 0xD800
@@ -1629,7 +1629,7 @@ C 0xBF62 paso_siguiente_h:
 C 0xBF68 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xBF6B apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBF74 bancos_12: pone el 12 en 0x6000 (con su copia en 0xC381-0xC383)
-C 0xBF77 mosaico_de_la_ficha: el mosaico de p12:743D (2 x 4) en la X - 16, la Y - 16 de la ficha de IX
+C 0xBF77 mosaico_de_la_ficha: el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 C 0xBF7A bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xBF86 baja la espera del actor
 C 0xBF8A sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
