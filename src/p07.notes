@@ -2236,7 +2236,7 @@ C 0xBC4E lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBC55 lee la sala de la zona
 C 0xBC61 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBC6A lee la sala de la zona
-C 0xBC95 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xBC95 apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 C 0xBCD1 lee la zona
 C 0xBCD8 lee la sala de la zona
 C 0xBCE9 suma_a_hl: HL = HL + A

@@ -1671,6 +1671,7 @@ C 0xB030 guarda la fila de la sala en la zona (uno mas al salir por arriba) y el
 C 0xB035 guarda la sala de la zona
 C 0xB03A lee la zona
 C 0xB041 lee la sala de la zona
+C 0xB050 guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 C 0xB06B lee la zona
 C 0xB074 guarda copia de la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (6 bytes)
 C 0xB077 guarda la zona
@@ -1690,12 +1691,14 @@ C 0xB128 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus ch
 C 0xB131 d43e_a_ff: 0xD43E = 0xFF
 C 0xB134 quita_los_que_llegan: las 4 fichas de 0xD300 de tipo 0x10 o mas (salvo el 0x15) a cero
 C 0xB13B lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB13F lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 C 0xB14F actor_3_ve: el actor 3 (salvo con el byte 0x19 = 5): en la sala 0x0C, a la alerta normal con el tipo 2 o 1 (el 0x0A se queda); si no, la musica 0x8C, el byte 0x19 = 5 y, salvo en el paso 1, el byte 0x0E = 1 (en el 8, el dibujo del byte 0x15); p06:B592 con su direccion
 C 0xB154 actor_4_ve: el actor 4 sin 0xCAC9: la alerta 3 con los pasos 0x15/0x16 (dibujo 4), o 0x17 (dibujo 2) si va en Y; con 0xCAC9, la alerta normal
 C 0xB159 actor_5_ve: el actor 5 sin 0xCACA: la alerta 3 con los pasos 0x18/0x1A (dibujo 4 o 6), o 0x19 si va en Y; con 0xCACA, la alerta normal
 C 0xB15C lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xB171 sonido_8e: pide el sonido 0x8E (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 C 0xB176 lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xB17A lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 C 0xB185 actores_en_alerta: 0xD416 y 0xD451 a cero, lo lanzado (p14:B269) y cada actor activo a la alerta (p14:B2AB)
 C 0xB189 guarda la espera hasta poner la musica pendiente
 C 0xB18E guarda la musica pendiente: la rutina que la pide (16 bits)

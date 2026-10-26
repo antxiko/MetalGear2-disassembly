@@ -117,7 +117,7 @@ sala_de_al_lado:		; p01:7BAA
 	ld (0d456h),a		;80a0
 	ld (0d451h),a		;80a3
 	dec a			;80a6   ; 0xD44A = 0xFF
-	ld (0d44ah),a		;80a7
+	ld (0d44ah),a		;80a7   ; guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 	ld de,0ca50h		;80aa   ; DE apunta a la fila y la columna
 	ld a,(0ca41h)		;80ad   ; por la salida: arriba, abajo, izquierda, derecha
 	dec a			;80b0
@@ -2042,7 +2042,7 @@ L_8E2E:
 	jr $+59		;8e31
 a_p15_a316:		; p15:A316 con el banco 15 en 0xA000
 	call 041f4h		;8e33   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a316h		;8e36   ; p15:A316
+	call 0a316h		;8e36   ; puertas_cada_cuadro: sin 0xD4E9 ni salida de la sala: cada puerta activa por su tipo (p15:A368); la primera que queda abriendose o cerrandose (estado 1 o 4) va a 0xCAE8 con 0xCAE7 = 1 y se deja
 	jr $+51		;8e39
 a_p01_6fd5_2:		; p01:6FD5 con el banco 1 en 0x6000
 	call 040f0h		;8e3b   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4611,7 +4611,7 @@ empieza_la_partida:		; sin 0xCA97, las rachas de p37
 	xor a			;9ea1   ; 0xC68E = 0
 	ld (0c68eh),a		;9ea2
 	dec a			;9ea5   ; 0xD44A = 0xFF
-	ld (0d44ah),a		;9ea6
+	ld (0d44ah),a		;9ea6   ; guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 	ld hl,0d8d8h		;9ea9   ; 0xD8D8-0xD8DF a cero
 	ld bc,00007h		;9eac
 	call 04236h		;9eaf   ; borra_bloque: pone a cero BC + 1 bytes desde HL

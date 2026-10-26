@@ -1172,6 +1172,7 @@ C 0x807C suma_a_hl: HL = HL + A
 C 0x8087 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x808E suma_a_hl: HL = HL + A
 C 0x8096 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+C 0x80A7 guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 C 0x80B1 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x80D0 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0x8113 musica_de_la_zona_si: con 0xCAF6, o sin 0xC697, la musica de la zona
@@ -1646,7 +1647,7 @@ C 0x8E26 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con 
 C 0x8E29 quita_mosaico_de_quien_habla: la ficha A de 0xE260 libre y su sitio (0x20 x 0x30) a 0
 C 0x8E2E dibujos_de_93e5: la lista de dibujos A de p44:93E5 en la VRAM de 0x6000
 C 0x8E33 bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8E36 p15:A316
+C 0x8E36 puertas_cada_cuadro: sin 0xD4E9 ni salida de la sala: cada puerta activa por su tipo (p15:A368); la primera que queda abriendose o cerrandose (estado 1 o 4) va a 0xCAE8 con 0xCAE7 = 1 y se deja
 C 0x8E3B bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8E3E rachas_a_ram_de_8: las rachas de DE (banco 8) en HL
 C 0x8E43 bancos_6: pone el 6 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -2089,6 +2090,7 @@ C 0x9E91 marco_c4: p00:5F90 y las lineas de p00:439D, salvo en la zona 0x12 sala
 C 0x9E94 lee 1 si los mensajes salen de los bancos 50-51 y no de 48-49
 C 0x9E98 rachas_b007_af4c: p37:B007 y p37:AF4C, cada una con su destino
 C 0x9E9E guarda la rutina de la musica que suena (16 bits; p00:5B50)
+C 0x9EA6 guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 C 0x9EAF borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x9EB5 a_p07_a000: p07:A000 con el banco 7 en 0xA000
 C 0x9EB8 a_p07_a985: p07:A985 con el banco 7 en 0xA000

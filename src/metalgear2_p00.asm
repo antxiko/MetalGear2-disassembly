@@ -3312,7 +3312,7 @@ L_5310:
 	call 0b4b9h		;53c0   ; recuadro_e230: 0xE230 = 0; fuera de las especiales y de los sitios, sin alerta ni 0xCB21 = 2: con la sala de Snake en la lista de p14:B4FE ([zona][sala][Y][X]), el recuadro que crece de 0xE230 en ese sitio (p14:B51B)
 	call 0b6c3h		;53c3   ; rayas_de_la_sala: 0xCA68 = 0, fuera el bit 1 de 0xD7E2, las rayas de 0xE280 a cero y, sin alerta: en la zona 3 la lista de p56:A512; en la especial 0x0D p56:A533; en la 0x31 (salvo la columna 7) p56:A525 (columna 6) o p56:A52C; con ellas, el bit 1 de 0xD7E2 y se pintan (p14:B712)
 	call bancos_1_2_15		;53c6   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bcb4h		;53c9   ; p15:BCB4
+	call 0bcb4h		;53c9   ; mapa_zona_7: en la zona 7, las salas 2, 3, 4, 8 y 9: trozos de mapa copiados a 0xDD00 (p01:62A5, B filas de C caracteres en (D, E))
 	call bancos_1_2_3		;53cc   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 08b07h		;53cf   ; a_p11_a389: p11:A389 con el banco 11 en 0xA000
 	call guarda_la_entrada		;53d2   ; guarda por donde se ha entrado (p00:53FF)
@@ -3770,7 +3770,7 @@ L_576B:
 	call pinta_mapa		;576b   ; el mapa a la otra pagina
 sala_banco_15:		; p15:A005 con el banco 15
 	call bancos_15		;576e   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a005h		;5771   ; p15:A005
+	call 0a005h		;5771   ; puertas_de_la_sala: baja las cuentas de 0xD580 (p15:A1E2), carga las puertas de la sala y las pinta
 	jp bancos_1_2_3		;5774   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 sala_zona_12_otra_vez:		; en la zona 0x12, las salas 2 (con 0xD888) y 3 (con 0xD881) se pintan otra vez
 	ld a,(0ca4ah)		;5777   ; lee la zona
@@ -3884,7 +3884,7 @@ L_57FE:
 	ld (hl),a			;583b
 	call L_5FA0		;583c
 	call bancos_15		;583f   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a000h		;5842   ; p15:A000
+	call 0a000h		;5842   ; puertas_sin_cuentas: carga las puertas de la sala (p15:A04C) y las pinta (p15:A008), sin bajar las cuentas de 0xD580
 	call bancos_12_4_56		;5845   ; bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call a_p12_746b		;5848   ; a_p12_746b: p12:746B con el banco 12 en 0x6000
 	call bancos_1_4_5		;584b   ; bancos_1_4_5: pone el 1 en 0x6000, el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -4185,7 +4185,7 @@ prepara_la_zona:		; C = la zona (o la de antes): las zonas 0x0B-0x10 no rehacen 
 L_5A6F:
 	call rachas_de_zona_a_e740		;5a6f   ; las rachas de la zona a 0xE740
 	call bancos_15		;5a72   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0a2ebh		;5a75   ; p15:A2EB
+	call 0a2ebh		;5a75   ; abre_las_fijas: 0xD580 a cero y las que estan siempre abiertas (0xFF): zona 2 las 4 y 1, zona 3 las 4 y 0x25, zona 5 las 0x0E y 0x1B
 	call bancos_1_2_3		;5a78   ; bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 prepara_la_zona_sin_pantalla:		; p02:804E: la lista de p30 de la zona a 0xD900
 	call 0804eh		;5a7b   ; lista_de_zona_a_d900: 0xD900-0xD9FF a 0xFF y la lista de p30 de la zona (o de la especial)
@@ -4196,7 +4196,7 @@ prepara_la_zona_sin_pantalla:		; p02:804E: la lista de p30 de la zona a 0xD900
 	ld (0cacch),a		;5a89
 	ld (0cacdh),a		;5a8c
 	ld a,0ffh		;5a8f   ; 0xD44A = 0xFF
-	ld (0d44ah),a		;5a91
+	ld (0d44ah),a		;5a91   ; guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 	ld a,(0ca4ah)		;5a94   ; en la zona 1...
 	ld b,a			;5a97
 	dec a			;5a98

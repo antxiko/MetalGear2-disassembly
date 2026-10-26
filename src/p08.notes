@@ -1197,6 +1197,7 @@ C 0xBDD4 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xBDE1 guarda la Y de Snake
 C 0xBDE6 guarda la X de Snake
 C 0xBDEB cambia_de_zona_b_1_2_8: cambia_de_zona y deja los bancos 1, 2 y 8
+C 0xBDF6 guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 C 0xBDFA lee el contador de cuadros (uno mas en cada interrupcion)
 C 0xBE09 sprites_de_e1f3: desde el sprite 8 (0xDC40): dos en (0xE1F3 - 0x20, 0x58) con los patrones 0x58 y 0x5C, y dos 0x10 mas abajo con 0x60 y 0x64 (u 0x68 y 0x6C con 0xDFD2)
 C 0xBE1B pon_sprite: [E][D][C] en (HL): la Y, la X y el patron de un sprite de 0xDC00

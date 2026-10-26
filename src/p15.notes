@@ -1,4 +1,815 @@
 
+# --- A MANO: comentarios, nombres y bloques ---
+C 0xA000 cargar
+C 0xA003 y pintar
+C 0xA00C con la pantalla partida, nada
+C 0xA011 8 fichas
+C 0xA014 el tipo: 0, libre
+C 0xA01A el estado 2...
+C 0xA021 ...o su cuenta en 0xD580 (por su numero)
+C 0xA02C sin cuenta: cerrada
+C 0xA031 ...y el estado 2
+C 0xA038 pintada cerrada
+C 0xA046 8
+C 0xA04C las 8 fichas a cero
+C 0xA055 sala especial...
+C 0xA059 ...su lista de p15:B1FE
+C 0xA05E si no, la de la zona en p15:AD0C
+C 0xA067 desde la primera ficha
+C 0xA06C 0xFF: se acaba
+C 0xA06E solo las de esta sala
+C 0xA076 desde el tipo
+C 0xA07A el tipo al byte 0...
+C 0xA07C ...el byte 1 (estado) se salta...
+C 0xA07D ...Y, X, lo que pide y el numero a los bytes 2-5
+C 0xA085 su alto y su ancho
+C 0xA089 en la zona 8, la de numero 0...
+C 0xA096 ...sin el bit 0 de 0xD7DA...
+C 0xA09D ...entra en el estado 2
+C 0xA0BE ...con el bit 0 de 0xD7DA...
+C 0xA0C5 ...o con 0xD441: no piden nada
+C 0xA0EC ...0x13...
+C 0xA0F0 ...0x12
+C 0xA12E acarreo: no se pinta
+C 0xA12F tipo 3 o 4
+C 0xA138 tipo 3: las X de p15:A16D
+C 0xA13D tipo 4: las de p15:A174
+C 0xA143 D = su X de 8 en 8
+C 0xA149 7 piezas
+C 0xA14E de (X de la lista, 0x78)...
+C 0xA151 ...8 x 8
+C 0xA154 en la otra pagina...
+C 0xA15D ...con la operacion 0xC8
+C 0xA165 la X siguiente de la lista
+C 0xA166 8 mas abajo
+C 0xA16A 7
+C 0xA17E con lo elegido 3, se pinta
+C 0xA189 la zona 3...
+C 0xA18D ...o la 4...
+C 0xA190 ...sala 0x0E...
+C 0xA195 ...con 0xCACD: acarreo
+C 0xA19F ...con 0xCAC9: acarreo
+C 0xA1A8 por su tipo...
+C 0xA1B1 ...el alto...
+C 0xA1B4 ...y el ancho
+C 0xA1E5 0x80 cuentas
+C 0xA1E9 0, nada
+C 0xA1EC 0xFF, nada
+C 0xA1EE uno menos
+C 0xA22A la otra pagina...
+C 0xA22D ...su sitio a DE
+C 0xA236 la pagina de antes
+C 0xA238 C = el alto, B = el ancho
+C 0xA244 B = el ancho / 8
+C 0xA24D A = el alto - 8
+C 0xA25B la otra pagina
+C 0xA25E color 0xFF
+C 0xA26A de 1 en 1 hacia la derecha
+C 0xA279 color 0x0F
+C 0xA27B 8 rayas
+C 0xA280 su largo de p15:A2A5
+C 0xA28A en la otra pagina
+C 0xA295 la X + E
+C 0xA298 las dos primeras a la misma Y...
+C 0xA29D ...las demas, 4 mas abajo
+C 0xA2AD de 1 en 1 hacia la izquierda
+C 0xA2BA desde la X + 3
+C 0xA2C1 0x11 de largo, color 0x0F
+C 0xA2C4 4 rayas
+C 0xA2C6 en la otra pagina
+C 0xA2CE una mas abajo...
+C 0xA2CF ...una a la izquierda...
+C 0xA2D0 ...2 mas larga
+C 0xA2D5 C = el alto - 3...
+C 0xA2DB ...B = el ancho
+C 0xA2E1 desde la Y + 3
+C 0xA2E5 a 0xFF
+C 0xA2E8 y sus casillas
+C 0xA2EB las 0x80 cuentas a 0
+C 0xA2F4 zona 2: la 4 y la 1
+C 0xA301 zona 3: la 4 y la 0x25
+C 0xA308 zona 5: la 0x0E y la 0x1B
+C 0xA310 las demas, ninguna
+C 0xA31A con 0xD4E9, nada
+C 0xA31F saliendo de la sala, nada
+C 0xA324 8 fichas
+C 0xA330 por su tipo
+C 0xA336 en el estado 1...
+C 0xA33C ...o 4: se queda
+C 0xA345 8
+C 0xA34D ...y la ficha en 0xCAE8
+C 0xA358 por su tipo
+C 0xA35B en el estado 1...
+C 0xA360 ...o 4, sigue
+C 0xA363 si no, 0xCAE7 = 0
+C 0xA39D con 0xCB4B, no
+C 0xA39E C = lo que pide
+C 0xA3A2 nada: se abre
+C 0xA3AC ...de 0 a 0x0B, si no, no
+C 0xA3AF 0x11-0x13: de tres en tres
+C 0xA3B3 0x14-0x1C: 1-9...
+C 0xA3B5 ...justo lo que pide: acarreo
+C 0xA3C1 ...acarreo si da 0-2: lo que pide es 3n+1 a 3n+3
+C 0xA3D5 Snake no entra: nada
+C 0xA3D6 en la zona 4, la 0x1A...
+C 0xA3DF ...en las demas, la 4
+C 0xA3E5 las demas se abren
+C 0xA3E7 con lo elegido 0x10...
+C 0xA3ED ...y 0xCA89 = 4 en la zona 4...
+C 0xA3F6 ...o 0 en las demas
+C 0xA3FD con 0: fuera el bit 0 de 0xD7DD
+C 0xA40C ...y el estado siguiente
+C 0xA416 el sonido 0x46
+C 0xA42F Snake no entra: nada
+C 0xA430 la cuenta 0x14
+C 0xA434 se abre
+C 0xA437 desde su sitio...
+C 0xA43A ...alto x ancho...
+C 0xA440 ...a (0xC8, 0xD8)
+C 0xA44B con el byte 9: acarreo
+C 0xA451 en el estado 2 de Snake, no
+C 0xA456 sin lo que pide, no
+C 0xA45A sin empujar hacia arriba, no
+C 0xA461 0x0A de fondo...
+C 0xA46A ...0x0E en el tipo 0x0A
+C 0xA46C la Y de Snake - Y - alto
+C 0xA475 el ancho - 8
+C 0xA47B la X de Snake - X - 4
+C 0xA486 con 0xC697, espera
+C 0xA488 2 * el paso
+C 0xA48D hasta el ancho: se acaba
+C 0xA493 uno mas
+C 0xA496 en el estado 4 (cerrando)...
+C 0xA49E ...0x18 - eso
+C 0xA4A3 0: nada
+C 0xA4A4 a (X + eso, Y)...
+C 0xA4AA ...del ancho - eso...
+C 0xA4B1 ...por el alto...
+C 0xA4B4 ...desde (0xC6, 0xD8)
+C 0xA4B7 la pagina de dibujar (bits 4-5), operacion 0
+C 0xA4C3 0x0B...
+C 0xA4CA ...0x0C...
+C 0xA4CE ...o 0x13...
+C 0xA4D2 ...sin alerta
+C 0xA4DD ...el paso 0...
+C 0xA4E1 ...su dibujo...
+C 0xA4E4 ...el estado 4...
+C 0xA4E8 ...y su cuenta de 0xD580 a 0
+C 0xA4FB ...dentro: la Y de Snake - Y - (alto - 8) por debajo de 0x0A...
+C 0xA509 ...y la X de Snake - X por debajo del ancho
+C 0xA511 el estado siguiente
+C 0xA514 B = la direccion, C = el bit del mando
+C 0xA51A otra direccion: NZ
+C 0xA51C el mando
+C 0xA522 Z
+C 0xA53A tipo 0x0B: p27:92B9
+C 0xA544 tipo 0x0C: p27:92C9
+C 0xA54B los demas: p15:A572
+C 0xA551 las paginas 2
+C 0xA556 desde (0xC0, 0xD8)
+C 0xA55D ...a DE
+C 0xA560 8 a la derecha
+C 0xA569 la fila siguiente, 8 mas abajo
+C 0xA56F los bancos 1, 2 y 15
+C 0xA594 dentro?
+C 0xA598 su cuenta
+C 0xA5B3 con el byte 9, se abre
+C 0xA5B9 en el estado 2 de Snake, no
+C 0xA5C6 su cuenta
+C 0xA5CC el paso y el byte 9 a 0
+C 0xA5D3 borra lo guardado
+C 0xA5D6 el estado siguiente
+C 0xA5D9 el sonido 0x16
+C 0xA5E9 su Y - la de Snake
+C 0xA5F2 el ancho - 8
+C 0xA5F8 la X de Snake - X - 4
+C 0xA603 hasta el ancho...
+C 0xA608 ...2 mas
+C 0xA615 C = el alto
+C 0xA618 con la pantalla partida, la pagina 1
+C 0xA620 si no, la de dibujar
+C 0xA628 B = el ancho / 8
+C 0xA631 desde su Y
+C 0xA63C la Y de Snake - 2 - Y
+C 0xA646 la X de Snake - X
+C 0xA64E el estado siguiente
+C 0xA663 con el byte 9, se abre
+C 0xA669 en el estado 2 de Snake, no
+C 0xA66A sin empujar hacia la izquierda, no
+C 0xA66E sin lo que pide, no
+C 0xA675 la Y de Snake - Y - 0x20
+C 0xA67E la X de Snake - X - 0x0C
+C 0xA68A 6 columnas...
+C 0xA68C ...a (0xC8, 0xD8)...
+C 0xA68F ...desde la X + 1
+C 0xA693 de la pagina de dibujar
+C 0xA69E 1 x 0x20
+C 0xA6A8 la siguiente: una a la derecha...
+C 0xA6AA ...4 mas abajo
+C 0xA6AE 6
+C 0xA6B1 2 * el paso
+C 0xA6B6 hasta 0x20
+C 0xA6BA uno mas
+C 0xA6BD a la X + 1...
+C 0xA6C2 ...y la Y + 2 * paso
+C 0xA6C4 desde (0xC8, 0xD6)
+C 0xA6C7 6 columnas
+C 0xA6CC 1 de ancho...
+C 0xA6CE ...0x20 - 2 * paso de alto
+C 0xA6D8 la siguiente: una a la derecha...
+C 0xA6DA ...4 mas abajo
+C 0xA6DE 6
+C 0xA6EB la X + A...
+C 0xA6ED ...la Y + 0x20
+C 0xA6F1 su casilla
+C 0xA6F4 3
+C 0xA6F8 la fila siguiente (0x18 casillas)
+C 0xA6FD 3
+C 0xA709 la Y de Snake - Y - 0x20
+C 0xA712 la X de Snake - X
+C 0xA719 el estado siguiente
+C 0xA72E con el byte 9, se abre
+C 0xA734 en el estado 2 de Snake, no
+C 0xA735 sin empujar hacia la derecha, no
+C 0xA739 sin lo que pide, no
+C 0xA740 la Y de Snake - Y - 0x20
+C 0xA749 la X de Snake - X + 0x10
+C 0xA755 desde la X - 1
+C 0xA759 de la pagina de dibujar
+C 0xA760 6 columnas a (0xC8, 0xD8)
+C 0xA769 1 x 0x20
+C 0xA773 la siguiente: una a la izquierda...
+C 0xA775 ...4 mas abajo
+C 0xA779 6
+C 0xA77C 2 * el paso
+C 0xA781 hasta 0x20
+C 0xA785 uno mas
+C 0xA788 a la X - 1...
+C 0xA78D ...y la Y + 2 * paso
+C 0xA78F desde (0xC8, 0xD6)
+C 0xA797 1 de ancho...
+C 0xA799 ...0x20 - 2 * paso de alto
+C 0xA7A3 la siguiente: una a la izquierda...
+C 0xA7A5 ...4 mas abajo
+C 0xA7BF la Y de Snake - Y - 0x20
+C 0xA7C8 la X de Snake - X + 0x0C
+C 0xA7D1 el estado siguiente
+C 0xA7EC B = el ancho / 2
+C 0xA7F1 C = el alto
+C 0xA7F6 la izquierda a (0xC8, 0xD8)
+C 0xA7FE la X + el ancho / 2...
+C 0xA801 ...a (0xE8, 0xD8)
+C 0xA807 C = el ancho / 2
+C 0xA80D B = 2 * el paso
+C 0xA812 hasta la mitad
+C 0xA815 uno mas
+C 0xA818 la Y de lo guardado 0xD8...
+C 0xA81A ...el alto...
+C 0xA81D ...a su Y
+C 0xA820 la izquierda desde la X 0xCA
+C 0xA822 el alto y la Y de lo guardado
+C 0xA825 la X de la izquierda guardada
+C 0xA828 su X
+C 0xA82D la derecha a la X + C + B...
+C 0xA831 ...desde la X 0xE6...
+C 0xA83A ...y la Y guardada
+C 0xA83E la copia
+C 0xA843 la izquierda desde la Y guardada...
+C 0xA847 ...y la X guardada + B
+C 0xA84F ...y el alto
+C 0xA85F B = el ancho / 8
+C 0xA868 A = el alto - 4
+C 0xA873 cerrando (estado 4)...
+C 0xA87A ...el tipo 0x13...
+C 0xA881 ...o 0x0B-0x0C: el estado 0
+C 0xA890 la Y + A - 8
+C 0xA894 su casilla
+C 0xA899 la fila...
+C 0xA89E ...y la de debajo (0x18 casillas)
+C 0xA8AB ...0xCB3C = 0
+C 0xA8B5 ...0x80
+C 0xA8B9 si no, 0
+C 0xA8BC B casillas
+C 0xA8D1 con el byte 9, se abre
+C 0xA8D8 en el estado 2 de Snake, no
+C 0xA8D9 sin empujar hacia abajo, no
+C 0xA8DD sin lo que pide, no
+C 0xA8E4 su Y - la de Snake
+C 0xA8ED el ancho - 0x10
+C 0xA8F3 la X de Snake - X - 8
+C 0xA8FB se abre
+C 0xA8FE B = el ancho / 2
+C 0xA903 hasta la mitad
+C 0xA90A 2 mas
+C 0xA910 el medio - el paso...
+C 0xA914 ...+ su X
+C 0xA919 2 * paso de ancho
+C 0xA938 C = el ancho / 2
+C 0xA93E B = el paso
+C 0xA942 hasta la mitad
+C 0xA946 uno mas
+C 0xA94A los bordes
+C 0xA94E la Y + 3
+C 0xA954 el alto - 3
+C 0xA95A la Y guardada 0xDB
+C 0xA95C la X 0xC9
+C 0xA966 a (X + 3, Y)...
+C 0xA96B ...desde (0xCC + el paso, 0xD8)
+C 0xA971 8 de largo
+C 0xA973 3 lineas
+C 0xA978 una mas larga...
+C 0xA979 ...una a la izquierda...
+C 0xA97A ...una mas abajo
+C 0xA97D 3
+C 0xA982 a (X + C + paso, Y)...
+C 0xA987 ...desde (0xE7, 0xD8)
+C 0xA98A 8 - el paso de largo
+C 0xA98E 3 lineas
+C 0xA993 una mas larga...
+C 0xA994 ...una mas abajo
+C 0xA997 3
+C 0xA99B 0: nada
+C 0xA99D desde 0x80: nada
+C 0xA9A2 1 de alto
+C 0xA9AF 0xD4F1 = 1
+C 0xA9B3 los sprites fuera
+C 0xA9B6 la tabla de la zona...
+C 0xA9BF ...+ su numero * 3
+C 0xA9CA los bits 7-6: como
+C 0xA9CF DE = el byte de la fila y la columna
+C 0xA9DF 16 bytes...
+C 0xA9E2 ...a 0xE0
+C 0xA9E7 a la VRAM
+C 0xA9ED la fila, la columna y la puerta de llegada
+C 0xA9F2 la zona...
+C 0xA9F8 ...es la misma?
+C 0xA9FC otra zona
+C 0xAA00 Snake en la puerta de llegada
+C 0xAA03 copia en 0xC700
+C 0xAA13 A = el tipo cruzado
+C 0xAA16 la sala nueva
+C 0xAA19 zona 0x0C...
+C 0xAA20 ...0x0D...
+C 0xAA24 ...4
+C 0xAA28 sala 9
+C 0xAA2F sala 0x11: 0, 0
+C 0xAA36 sala 6
+C 0xAA3A sala 0x16: 0, 1
+C 0xAA41 sala 7: 1, 0 (con p15:AA8C)
+C 0xAA55 sin alerta...
+C 0xAA59 ...la musica de la zona
+C 0xAA63 sin alerta, nada
+C 0xAA73 sala 3: el sonido 0x8C
+C 0xAA90 con 0xD694: NZ
+C 0xAA95 con 0xD67C: NZ
+C 0xAA99 bit 4...
+C 0xAA9D ...Z
+C 0xAAA3 con 0xD881 = 0xFF, nada
+C 0xAAA8 solo en la zona 0x12
+C 0xAAAE tipo 5...
+C 0xAAB3 ...o 6
+C 0xAAB6 todo apagado
+C 0xAAB9 la pantalla partida...
+C 0xAABD ...guardada en 0xCA1D...
+C 0xAAC0 ...y a 0, con 0xD8A4
+C 0xAAC5 la franja de abajo en las dos paginas
+C 0xAACD el marcador
+C 0xAAD3 R#0 = 6: sin la interrupcion de linea
+C 0xAAD9 R#23 = 0
+C 0xAAE4 ...la pagina 1...
+C 0xAAE7 ...la pantalla partida de vuelta
+C 0xAAED R#0 = 0x16: con la interrupcion de linea
+C 0xAAF3 todo apagado
+C 0xAAF8 la fila...
+C 0xAB02 ...y la columna
+C 0xAB08 la puerta de llegada...
+C 0xAB0E ...con su cuenta
+C 0xAB16 0xD8CE = 1
+C 0xAB1C D = el tipo cruzado...
+C 0xAB1F ...y la ficha libre
+C 0xAB23 Snake en el estado 2...
+C 0xAB2A ...o 0x0B
+C 0xAB37 fuera la marcha, la vuelta y el estado 2
+C 0xAB45 el paso de andar 1
+C 0xAB48 0xCB29 = 0x20
+C 0xAB52 la sala especial
+C 0xAB66 0xD44C-0xD44E a 0...
+C 0xAB70 ...y las dos fichas de 0xE070 libres
+C 0xAB77 Snake en la puerta de llegada
+C 0xAB7B lo de la alerta
+C 0xAB8A la sala especial 2...
+C 0xAB91 ...0x26...
+C 0xAB95 ...0x31 o 0x39
+C 0xABAA ...con 0xCAF6 = 1
+C 0xABBD la zona 0x12...
+C 0xABC1 ...fila 2...
+C 0xABC9 ...columna 8
+C 0xABCE Y = 0x60
+C 0xABD3 X = 0x70
+C 0xABE2 ...o de la zona
+C 0xABE9 desde el byte 5 (su numero)
+C 0xABEF la de numero B
+C 0xABF2 la siguiente (6 bytes)
+C 0xABFB E = su X
+C 0xABFD D = su Y
+C 0xABFF su tipo...
+C 0xAC00 ...lo suyo de p15:AC11
+C 0xAC06 la Y + H
+C 0xAC0B la X + L
+C 0xAC3F sin alerta, nada
+C 0xAC57 el tipo 0x0C
+C 0xAC61 la zona
+C 0xAC67 la sala especial de antes
+C 0xAC6F sin sala especial
+C 0xAC7A Snake en la llegada
+C 0xAC7D las 4 fichas de 0xD300 a 0
+C 0xAC86 con 0xD820 = 8...
+C 0xAC8D ...0xD823 = 0x80...
+C 0xAC92 ...y 0xD825 = 0x78
+C 0xACA2 la sala especial de antes: 2...
+C 0xACA7 ...0x31...
+C 0xACAB ...0x39
+C 0xACC1 0xCAF6 = 3: 0xC690 = 0xD443 = 0 y p02:8D60
+C 0xACDF con el bit 7, nada
+C 0xACE1 la lista de la zona
+C 0xACEA su cuenta en 0xD580
+C 0xACF2 0xFF: no esta
+C 0xACF6 es esta?
+C 0xACFF con el bit 7...
+C 0xAD00 ...0xFF...
+C 0xAD04 ...si no, 4
+C 0xA02E pintada abierta...
+C 0xA035 el estado 0
+C 0xA064 HL = la lista
+C 0xA0B7 las de tipo 0x0C...
+C 0xA0CB lo que pide: nada
+C 0xA0E5 zona 0x0E...
+C 0xA11A lo que pide: nada
+C 0xA11E la ficha siguiente
+C 0xA140 E = su Y
+C 0xA19C sala 0...
+C 0xA1A6 sin acarreo
+C 0xA2A1 8 rayas
+C 0xA311 las dos a 0xFF
+C 0xA327 el tipo: 0, libre
+C 0xA340 la ficha siguiente
+C 0xA348 0xCAE7 = 1...
+C 0xA3A7 lo elegido - 0x11...
+C 0xA3BA sin acarreo
+C 0xA4D8 la cuenta: a 0...
+C 0xA524 NZ
+C 0xA54E 4 filas de 4
+C 0xA55C la pieza...
+C 0xA624 color 0
+C 0xA687 se abre
+C 0xA6F6 libre
+C 0xA752 se abre
+C 0xA84C C - B de ancho...
+C 0xA86D desde su sitio + A
+C 0xA887 un estado mas
+C 0xA88B el estado 0
+C 0xA8A6 con el byte 9...
+C 0xA8B0 en el estado 4...
+C 0xAA0B fuera lo de la sala
+C 0xAA85 con p15:AA8C: 0, 0
+C 0xAA9F NZ
+C 0xAADF 0xD8A4 = 1...
+C 0xABA4 la espera de 0x12C...
+C 0xAC97 la sala
+C 0xB803 los pasos 0-1, nada
+C 0xB806 el paso 2...
+C 0xB808 ...con el byte 0x1F, nada
+C 0xB812 los sprites desde el 10 fuera
+C 0xB818 su lista por el byte 0x0D
+C 0xB822 D' = el byte 0x0F - 0x28 (a la Y)...
+C 0xB828 ...E' = 0xC0 (a la X)...
+C 0xB82A ...C' = 0x80 (la Y maxima)
+C 0xB82D los sprites...
+C 0xB830 ...y recortados
+C 0xB838 ...B = cuantos
+C 0xB840 ...desde C', fuera
+C 0xB848 la X + el byte 5 + E'...
+C 0xB84F ...desde 0xB0...
+C 0xB854 ...la Y 0xE0
+C 0xB859 la X
+C 0xB85C el patron
+C 0xB85E se salta el cuarto byte
+C 0xB860 el patron siguiente (4 mas)
+C 0xB864 B sprites
+C 0xB870 en las filas 7-8...
+C 0xB877 ...8 sprites fuera
+C 0xB87D fuera de su sala, nada
+C 0xB881 su lista de p15:BC40...
+C 0xB88B ...sin sumar nada...
+C 0xB88E ...hasta la Y 0xC0
+C 0xB894 con el byte 0x18...
+C 0xB898 ...los patrones de p15:BCA0...
+C 0xB89D ...o de p15:BCAA
+C 0xB8A1 las posiciones de p15:BBFA por el byte 0x0D
+C 0xB8AE desde el sprite 14
+C 0xB8B4 color 0x0F
+C 0xB8BC sus colores
+C 0xB8BF 8 sprites
+C 0xB8C4 la Y entre 0xB0 y 0xBF?
+C 0xB8CB C = las lineas que pasan de 0xC0
+C 0xB8CD desde la linea 0x0F - C...
+C 0xB8D4 ...a 0
+C 0xB8DA C + 1 bytes a 0: el ultimo es la linea 0 del sprite siguiente
+C 0xB8DE el sprite siguiente (4 bytes)...
+C 0xB8E3 ...y sus colores (16)
+C 0xB8E9 8
+C 0xB8EC fuera de las salas 0x10-0x13...
+C 0xB8EF ...fuera su musica
+C 0xB8F2 con 0xC693, p00:6AEE
+C 0xB8F8 por su paso
+C 0xB901 desde el paso 4...
+C 0xB907 ...en las salas 0x10-0x13...
+C 0xB90A ...p06:BA36 con el byte 0x0C
+C 0xB910 desde el paso 4...
+C 0xB916 ...su musica
+C 0xB92D fuera de su sala, nada
+C 0xB931 el bit 3 de 0xD7D2
+C 0xB936 0xCB3C = 1
+C 0xB93B de la Y 0...
+C 0xB93D ...0x60 de alto
+C 0xB942 el dibujo 0...
+C 0xB946 ...y el byte 0x0F = 0x60
+C 0xB94A los sprites
+C 0xB94D el color 7
+C 0xB952 la espera 0x10
+C 0xB959 la espera
+C 0xB95D la musica 0xA6
+C 0xB964 la espera 0x14
+C 0xB96C en la pagina 0...
+C 0xB970 ...la operacion 0x48...
+C 0xB974 ...en la 1, 0x18
+C 0xB979 a (0x48, 0)
+C 0xB97F la espera
+C 0xB98E desde 0x40...
+C 0xB994 ...el paso siguiente
+C 0xB997 desde 0x50...
+C 0xB99C ...cada 2...
+C 0xB9A0 ...si no, cada 1
+C 0xB9A4 el byte 0x0F uno menos
+C 0xB9AA la linea de su Y...
+C 0xB9AD ...desde la X 0...
+C 0xB9AF ...a la X 0x48...
+C 0xB9B1 ...0x30 x 1
+C 0xB9B8 a 0: se acaba
+C 0xB9BA de la Y 0x60 - el byte 0x0F
+C 0xB9C1 a (0x48, 0)
+C 0xB9C4 desde la X 0x30
+C 0xB9C6 0x30 de ancho
+C 0xB9CF los sprites de p35:670E
+C 0xB9E2 el byte 0x16 = 1
+C 0xB9E6 el byte 7 = 4
+C 0xB9EA el byte 0x0C = 3
+C 0xB9EE la espera al azar
+C 0xB9F1 el sonido 0x77...
+C 0xB9F4 ...y el 5
+C 0xB9FB las piezas
+C 0xB9FF uno mas
+C 0xBA05 cada C + 1...
+C 0xBA07 ...el dibujo uno mas...
+C 0xBA0B ...hasta 2
+C 0xBA14 por el bit 3...
+C 0xBA19 ...las X 0x20 y 0x38...
+C 0xBA1E ...o 0x50 y 0x58
+C 0xBA22 la primera a la Y 0x18
+C 0xBA28 la segunda...
+C 0xBA29 ...a la Y 0x30
+C 0xBA2D ...8 x 8
+C 0xBA30 en el paso 2, p15:BA45
+C 0xBA37 a la X 0x40...
+C 0xBA39 ...de la pagina 2 a la otra
+C 0xBA47 ...de la pagina 2 a la de dibujar
+C 0xBA51 el sonido
+C 0xBA54 el borde
+C 0xBA57 los disparos
+C 0xBA5A el paso de sala
+C 0xBA5D el tramo
+C 0xBA60 B = el byte 3
+C 0xBA63 C = el byte 5
+C 0xBA66 D = la fila (byte 0x0A)
+C 0xBA69 E = la columna (byte 0x0B)
+C 0xBA6F se acaba el tramo?
+C 0xBA72 si, el siguiente
+C 0xBA75 el byte 0x18...
+C 0xBA78 ...de 0 a 1 y vuelta
+C 0xBA7E el tramo...
+C 0xBA81 ...uno mas, de 0 a 7
+C 0xBA87 sus velocidades
+C 0xBA8D el byte 9...
+C 0xBA90 ...y el 7
+C 0xBAB4 0x40 en la fila 7
+C 0xBAB8 D distinta: no
+C 0xBABC B desde L...
+C 0xBABD ...acarreo
+C 0xBAC9 la columna...
+C 0xBACA ...y el byte 5
+C 0xBAD8 D distinta: no
+C 0xBADC B por debajo de L: acarreo
+C 0xBAF4 con el byte 7, p15:BB15
+C 0xBAF7 el byte 5 de 0xC0 a 0xFF?
+C 0xBAFF el byte 9 negativo?
+C 0xBB05 la columna uno mas...
+C 0xBB08 ...y el byte 5 a 0
+C 0xBB10 ...y el byte 5 a 0xC0
+C 0xBB1D el byte 7 negativo?
+C 0xBB23 la fila uno menos...
+C 0xBB26 ...y el byte 3 a 0
+C 0xBB2E ...y el byte 3 a 0xC0
+C 0xBB36 por debajo de la 0x10, nada
+C 0xBB39 en su sala, el 0x36
+C 0xBB3F si no, el 0x37
+C 0xBB47 sin la cuenta, nada
+C 0xBB48 uno menos
+C 0xBB4A R#7 = 0x0F...
+C 0xBB4F ...o 7
+C 0xBB54 la espera
+C 0xBB5D con un disparo, nada
+C 0xBB63 0x0C cuadros
+C 0xBB67 hacia Snake...
+C 0xBB6A ...16 mas arriba
+C 0xBB6E desde su X...
+C 0xBB71 ...y su Y
+C 0xBB78 los pasos...
+C 0xBB7B ...a los bytes 0x1E-0x1B
+C 0xBB87 la X (16 bits)...
+C 0xBB8D ...a 0xD8B5
+C 0xBB90 la Y (16 bits)...
+C 0xBB96 ...a 0xD8B3
+C 0xBB9C 0-7...
+C 0xBB9E ...+ 4
+C 0xBBA9 fuera: sin disparo
+C 0xBBB1 sin disparo, p15:BB54
+C 0xBBB3 uno menos
+C 0xBBB6 el paso en X por lo que lleva...
+C 0xBBBF ...+ la X de salida
+C 0xBBC5 el paso en Y por lo que lleva...
+C 0xBBCE ...+ la Y de salida
+C 0xBBD3 L = la X, H = la Y
+C 0xBBD4 dentro de 8-0xAF...
+C 0xBBE0 ...lo lanzado de tipo 7
+C 0xBBE8 lo que lleva: 0x0C - el byte 0x0F
+C 0xBBF1 * 2
+C 0xBBF6 B veces mas
+C 0xBCB7 solo la zona 7
+C 0xBCBA sala 2...
+C 0xBCC1 ...3...
+C 0xBCC5 ...4...
+C 0xBCCA ...8...
+C 0xBCCF ...9
+C 0xBCD8 ...2 filas de 6
+C 0xBCDE (0x50, 0x30)
+C 0xBCE4 (0x90, 0x40)
+C 0xBCEA (0x30, 0x50)...
+C 0xBCED ...6 filas de 2
+C 0xBCF3 (0x40, 0x70)
+C 0xBCF9 (0x80, 0x30)...
+C 0xBCFC ...8 filas de 2
+C 0xBD02 (0x50, 0x90)...
+C 0xBD05 ...2 filas de 0x0E
+C 0xBD0D ...2 filas de 6
+C 0xBD13 (0x90, 0x60)
+C 0xBD19 (0x90, 0)...
+C 0xBD1C ...4 filas de 2
+C 0xBD22 (0x90, 0x70)
+C 0xBD28 (0x30, 0x20)...
+C 0xBD2B ...6 filas de 2
+C 0xBD31 (0x40, 0x20)...
+C 0xBD34 ...2 filas de 0x0C
+C 0xBD3A (0, 0x90)...
+C 0xBD3D ...2 filas de 0x18
+C 0xBD46 ...2 filas de 6
+C 0xBD4C (0, 0x60)
+C 0xBD52 (0x30, 0x60)...
+C 0xBD55 ...6 filas de 2
+C 0xBD5B (0x60, 0x50)
+C 0xBD61 (0x90, 0x30)
+C 0xBD67 (0x40, 0)...
+C 0xBD6A ...8 filas de 4
+C 0xBD70 (0x70, 0x50)...
+C 0xBD73 ...2 filas de 4
+C 0xBD79 2 filas de 2...
+C 0xBD7C ...en (0, 0x90)
+C 0xBD84 ...2 filas de 6
+C 0xBD8A (0x60, 0x80)
+C 0xBD90 8 filas de 2...
+C 0xBD93 ...en (0x90, 0x80)
+C 0xBD99 (0x20, 0x40)...
+C 0xBD9C ...4 filas de 4
+C 0xBDA2 (0x20, 0x80)...
+C 0xBDA5 ...4 filas de 8
+C 0xBDBC 4 fichas
+C 0xBDC1 algo: se deja
+C 0xBDC5 la ficha siguiente (0x20 bytes)
+C 0xBDCA 4
+C 0xBDD2 libre: 0
+C 0xBDF1 fuera de su sala: 0
+C 0xBDF3 en los pasos 0-1...
+C 0xBDF8 ...1
+C 0xBE12 las salas 0x10-0x13
+C 0xBE1C ...1
+C 0xBE32 1
+C 0xBE38 la fila 4-5...
+C 0xBE3F ...la columna 4-5
+C 0xBE48 por el nivel...
+C 0xBE4B ...la palabra de la tabla de 0xBE54...
+C 0xBE51 ...a la cuenta; sin ret: sigue por la tabla
+C 0xBE54 nivel 0: 0x0078 (tambien ld a,b)
+C 0xBE56 nivel 1: 0x0078
+C 0xBE58 nivel 2: 0x0090 (sub b: A = 0 y Z)
+C 0xBE5A nivel 3: 0x00A0 (and b: sigue Z)
+C 0xBE5C nivel 4: 0x00A0
+C 0xBE5E nivel 5: 0x00A0
+C 0xBE60 nivel 6: 0x00C8 (ret z: aqui vuelve)
+C 0xBE62 nivel 7: 0x00C8
+C 0xBE68 con 0xCA77, nada
+C 0xBE6D en una sala especial, nada
+C 0xBE6E la lista
+C 0xBE74 0xFF: se acaba
+C 0xBE77 la zona...
+C 0xBE7E ...la sala...
+C 0xBE85 ...0xD418 - el byte 2 por debajo de 0x10...
+C 0xBE8E ...y 0xD419 - el byte 3 por debajo de 0x20: acarreo
+C 0xBEDA con 4 que siguen a Snake, no
+C 0xBEE2 sin alerta, no
+C 0xBEE4 HL = 0xD7DA (aqui no se lee)
+C 0xBEE7 el bit 3 de la alerta: no
+C 0xBEEA con 0xD444...
+C 0xBEF0 ...o 0xCA77 = 2
+C 0xBF00 una ocupada: NZ
+C 0xBF01 la siguiente (0x40 bytes)
+C 0xBF06 4
+C 0xBF08 todas libres: Z
+C 0xBF0D la ficha...
+C 0xBF11 ...a cero
+C 0xBF18 el tipo 1
+C 0xBF1C la Y = D
+C 0xBF1F la X = E
+C 0xBF22 la fila...
+C 0xBF29 ...y la columna de la sala
+C 0xBF2C el byte 0x10 = 3
+C 0xBF30 el paso y los bytes 0x1C y 0x1F a 0
+C 0xBF3A el byte 0x1B = C
+C 0xBF3D con C = 0, 0xD41E
+C 0xBF44 con 1, 0xD449
+C 0xBF4A con 2, 0
+C 0xBF4F con mas, 2
+C 0xBF5F (fila - 2) * 2...
+C 0xBF64 ...+ columna - 5
+C 0xBF69 desde 3...
+C 0xBF6D ...en la zona 0x0C, 4
+C 0xBF80 D = la Y
+C 0xBF82 E = la X
+C 0xBF84 y 0xD41E
+C 0xBFAD las decenas...
+C 0xBFB3 ...en (0xCF, 0x40)
+C 0xBFBA las unidades...
+C 0xBFBC ...en (0xD5, 0x40)
+C 0xBFC7 ...8 x 8
+C 0xBFCA en la pagina 0, la operacion 0xC8...
+C 0xBFD2 ...en la 1, 0xD8
+C 0xB80D desde el paso 4, p15:B870
+C 0xB836 C = el primer patron...
+C 0xB83A la Y + el byte 3 + D'...
+C 0xB968 un paso mas
+C 0xB989 el dibujo cada 4
+C 0xB9CB 0xCB3C = 0
+C 0xBA2B desde la Y 0x70...
+C 0xBA45 a la X 0x58...
+C 0xBABF sin acarreo
+C 0xBB0D la columna uno menos...
+C 0xBB15 el byte 3 de 0xC0 a 0xFF?
+C 0xBB2B la fila uno mas...
+C 0xBBE3 sin disparo
+C 0xBCD5 (0x30, 0x40)...
+C 0xBD0A (0, 0x40)...
+C 0xBD43 (0x60, 0x30)...
+C 0xBD81 (0x40, 0x50)...
+C 0xBE02 2
+C 0xBE0C 0
+C 0xBE18 en el paso 0...
+C 0xBE1F 3
+C 0xBE95 el siguiente (4 bytes)
+C 0xBE9C sin acarreo
+C 0xBEF6 4 fichas de 0xD300
+C 0xBF0A NZ
+C 0xBF53 (el byte - 1) * 2
+C 0xBF77 * 3
+C 0xBF9A las decenas a B
+C 0xA0F6 0xD885 = 0xFF?
+C 0xA0FA no: pide lo suyo
+C 0xA0FE 0xD884 = 0xFF?
+C 0xA102 no: pide lo suyo
+C 0xA104 la 0 y la 1...
+C 0xA10B ...no piden nada
+C 0xA10D 0xD889 = 0xFF?
+C 0xA111 no: pide lo suyo
+C 0xA113 la 0x13...
+C 0xA118 ...no pide nada
+
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA1FA 0xA224 tabla_A1FA  21 destinos del despachador p00:424D (call en p15:A1F7, el indice en A): A238, A238, A26A, A2AD, A238, A238, A2BA, A238, A238, A238, A238, A238, A224, A2A4, A238, A238, A238, A238, A238, A2A4, A238; lo leen p15:A1F7 (42 bytes)
 F 0xA1FA w8
@@ -47,132 +858,423 @@ F 0xBF89 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xA000 puertas_sin_cuentas carga las puertas de la sala (p15:A04C) y las pinta (p15:A008), sin bajar las cuentas de 0xD580
+L 0xA005 puertas_de_la_sala baja las cuentas de 0xD580 (p15:A1E2), carga las puertas de la sala y las pinta
+L 0xA008 pinta_puertas con la pantalla partida, nada; cada ficha activa de 0xD500: en el estado 2 o con su cuenta de 0xD580, abierta (p15:A1F3, estado 2); si no, estado 0 y cerrada (p15:A12B)
+L 0xA013 puerta_al_pintar 
+L 0xA02E puerta_ya_abierta pintada abierta y en el estado 2
+L 0xA035 puerta_cerrada_al_entrar el estado 0 y pintada cerrada
+L 0xA03D pon_estado_puerta 
+L 0xA040 puerta_siguiente la ficha siguiente (16 bytes)
+L 0xA049 cuentas_y_puertas baja las cuentas de 0xD580 y carga las puertas (p15:A04C)
+L 0xA04C carga_puertas 0xD500 a cero y las puertas de la sala de la lista de la zona (p15:AD0C) o de la sala especial (p15:B1FE): 6 bytes [sala][tipo][Y][X][pide][numero], 0xFF al final; cada una con su alto y ancho (p15:A1A8) y los casos de algunas zonas
+L 0xA064 lista_de_puertas HL = la lista; desde la primera ficha
+L 0xA06B puerta_de_la_lista 
+L 0xA0A1 puerta_sala_18 en la sala especial 0x18, la de numero 0x1C con el bit 0 de 0xD7DA: no pide nada
+L 0xA0B7 puerta_tipo_0c las de tipo 0x0C con el bit 0 de 0xD7DA o con 0xD441 no piden nada
+L 0xA0CB puerta_no_pide lo que pide (byte 4) a 0
+L 0xA0CF puerta_sala_29 en la sala especial 0x29, sala 2, con 0xD4F2: la ficha libre
+L 0xA0E5 puerta_por_zona las zonas 0x0E, 0x13 y 0x12
+L 0xA0F6 puerta_zona_0e con 0xD885 = 0xFF, no pide nada
+L 0xA0FE puerta_zona_13 con 0xD884 = 0xFF, las de numero 0 y 1 no piden nada
+L 0xA10D puerta_zona_12 con 0xD889 = 0xFF, la de numero 0x13 no pide nada
+L 0xA11A puerta_sin_pedir lo que pide (byte 4) a 0
+L 0xA11E ficha_d500_siguiente la ficha siguiente (16 bytes)
+L 0xA123 puerta_lista_siguiente la siguiente de la lista (6 bytes)
+L 0xA12B pinta_puerta_cerrada salvo p15:A17B, las de tipo 3 y 4: 7 piezas de 8 x 8 en columna (X de p15:A16D o p15:A174, Y = 0x78) desde su sitio con la X de 8 en 8, en la otra pagina con la operacion 0xC8
+L 0xA140 piezas_de_puerta DE = (X de 8 en 8, Y) y 7 piezas
+L 0xA14B pieza_de_puerta 
+L 0xA17B puerta_no_se_pinta acarreo (no se pinta): en la zona 3 sala 0 con 0xCAC9, en la zona 4 sala 0x0E con 0xCACD; con lo elegido 3, nunca
+L 0xA19C zona_3_sala_0 en la zona 3, la sala 0 con 0xCAC9: acarreo
+L 0xA1A6 puerta_se_pinta sin acarreo: se pinta
+L 0xA1A8 alto_y_ancho el alto (byte 7) y el ancho (byte 8) de su tipo, de la tabla de p15:A1B8
+L 0xA1E2 baja_cuentas_d580 las 0x80 cuentas de 0xD580 uno menos (las de 0 y las de 0xFF no)
+L 0xA1E7 cuenta_d580 
+L 0xA1EF cuenta_d580_siguiente 
+L 0xA1F3 pinta_puerta_abierta por su tipo (tabla p15:A1FA)
+L 0xA224 pinta_abierta_0d las 4 filas de 3 piezas (p01:7D66) en su sitio, con la pagina de dibujar cambiada a la otra mientras
+L 0xA238 pinta_abierta su rectangulo (alto x ancho) a 0xFF en la otra pagina (p15:A255) y sus casillas del mapa libres (p15:A241)
+L 0xA241 casillas_de_puerta las casillas del mapa de la puerta (p15:A890): ancho / 8 desde la Y + el alto - 0x10
+L 0xA255 puerta_a_ff BC desde su sitio a 0xFF en la otra pagina
+L 0xA258 rellena_otra_ff BC desde HL a 0xFF en la otra pagina (p00:46FF)
+L 0xA263 sitio_de_puerta HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+L 0xA26A pinta_abierta_3 las 8 rayas hacia la derecha (p15:A276, E = 1) y sus casillas del mapa desde su X (p15:A6EB)
+L 0xA276 rayas_de_a2a5 8 rayas verticales de color 0x0F en la otra pagina desde su sitio, con los largos de p15:A2A5 (del ultimo al primero), cada una E mas a la X y, desde la tercera, 4 mas abajo
+L 0xA27D raya_de_a2a5 
+L 0xA2A1 raya_siguiente_a2a5 la raya siguiente, hasta 8
+L 0xA2A4 tipo_sin_nada nada (los tipos 0x0E y 0x14)
+L 0xA2AD pinta_abierta_4 las 8 rayas hacia la izquierda (E = -1) y sus casillas desde la X - 1
+L 0xA2BA pinta_abierta_7 4 rayas horizontales de color 0x0F desde (X + 3, Y), de 0x11 y 2 mas cada una, una mas abajo y una a la izquierda; luego (alto - 3) x ancho desde (X, Y + 3) a 0xFF y sus casillas
+L 0xA2CB raya_tipo_7 
+L 0xA2EB abre_las_fijas 0xD580 a cero y las que estan siempre abiertas (0xFF): zona 2 las 4 y 1, zona 3 las 4 y 0x25, zona 5 las 0x0E y 0x1B
+L 0xA311 abre_dos las cuentas de HL y DE a 0xFF
+L 0xA316 puertas_cada_cuadro sin 0xD4E9 ni salida de la sala: cada puerta activa por su tipo (p15:A368); la primera que queda abriendose o cerrandose (estado 1 o 4) va a 0xCAE8 con 0xCAE7 = 1 y se deja
+L 0xA327 puerta_cada_cuadro la ficha por su tipo; si queda en el estado 1 o 4, se deja
+L 0xA340 puerta_siguiente_cuadro la ficha siguiente (16 bytes), hasta 8
+L 0xA348 puerta_en_marcha 0xCAE7 = 1 y la ficha en 0xCAE8
+L 0xA354 sigue_puerta_en_marcha la puerta de 0xCAE8 por su tipo (p15:A368); fuera del estado 1 o 4, 0xCAE7 = 0
+L 0xA368 puerta_por_tipo salta por su tipo (tabla p15:A36F)
+L 0xA399 lo_que_pide acarreo si se abre: sin 0xCB4B y sin nada que pedir (byte 4 = 0) o con lo elegido (0xCB21) que sirve: 0x11, 0x12 y 0x13 abren las 1-3, 4-6 y 7-9; 0x14-0x1C, una de la 1 a la 9
+L 0xA3A7 mira_lo_elegido con lo elegido 0x11-0x1C
+L 0xA3BA no_sirve sin acarreo: no se abre
+L 0xA3BC sirve_de_tres (n + 1) * 3 - lo que pide...
+L 0xA3C4 tipo_0d por su estado (tabla p15:A3CA)
+L 0xA3D2 tipo_0d_cerrada si Snake entra (p15:A44B): la de numero 0x1A en la zona 4 (4 en las demas) pide lo elegido 0x10 con 0xCA89 = 4 (0 fuera de la zona 4, y entonces fuera el bit 0 de 0xD7DD); se abre: su cuenta (p15:ACDE) y el estado siguiente (p15:A887)
+L 0xA3E1 tipo_0d_numero 
+L 0xA3F8 tipo_0d_mira_ca89 
+L 0xA406 tipo_0d_abre su cuenta en 0xD580...
+L 0xA40F tipo_0d_abierta las 4 filas de 3 piezas (p01:7D66) en su sitio, el sonido 0x46 y sus casillas (p15:A85F)
+L 0xA41C tipo_1 por su estado (tabla p15:A422): los tipos 1, 9-0x0C, 0x13 y 0x15
+L 0xA42C tipo_1_cerrada si Snake entra (p15:A44B): la cuenta de 0x14 (byte 0x0A), se abre (p15:A5C6) y su rectangulo se guarda en (0xC8, 0xD8) de la pagina 0
+L 0xA443 copia_a_la_0 BC de HL a DE, de la pagina de dibujar a la 0 (p00:4767)
+L 0xA44B snake_entra acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
+L 0xA483 cerrando_tipo_1 sin 0xC697, el paso (p15:A488)
+L 0xA488 desliza_tipo_1 un paso mas (byte 6, de 2 en 2 hasta el ancho; luego p15:A85F): lo guardado en (0xC6, 0xD8) se pinta con la operacion 0 corrido 2 * paso (0x18 - eso cerrando, estado 4), del ancho que queda
+L 0xA4C3 abierta_tipo_1 los tipos 0x0B y 0x0C (y el 0x13 sin alerta) bajan la cuenta del byte 0x0A: a 0, se cierran (paso 0, su dibujo de p15:A537, estado 4, su cuenta de 0xD580 a 0); si no, con Snake empujando dentro de la caja, el estado siguiente (pasa)
+L 0xA4D8 cuenta_tipo_1 la cuenta del byte 0x0A: a 0, se cierra
+L 0xA4F4 pasa_tipo_1 empujando hacia arriba...
+L 0xA514 empuja_arriba Z si Snake va hacia arriba (0xCB0E = 1) con el mando hacia arriba (bit 0)
+L 0xA517 empuja_hacia Z si Snake va hacia B con el bit C del mando
+L 0xA524 no_empuja NZ: no empuja
+L 0xA528 empuja_abajo hacia abajo (2, bit 1)
+L 0xA52D empuja_izquierda hacia la izquierda (3, bit 2)
+L 0xA532 empuja_derecha hacia la derecha (4, bit 3)
+L 0xA537 dibujo_tipo_1 con el banco 27: su dibujo de 4 x 4 piezas (p27:92B9 el tipo 0x0B, p27:92C9 el 0x0C, p15:A572 los demas) en (0xC0, 0xD8) de la pagina 0 por p00:4A19; vuelve a los bancos 1, 2 y 15
+L 0xA54E dibujo_de_4x4 4 filas de 4 piezas desde (0xC0, 0xD8)
+L 0xA559 fila_de_dibujo 
+L 0xA55C pieza_de_dibujo una pieza a DE y 8 a la derecha
+L 0xA582 tipo_0e por su estado (tabla p15:A588): los tipos 0x0E y 0x14
+L 0xA590 tipo_0e_cerrada empujando hacia abajo dentro de la caja de abajo (p15:A5E6): su cuenta (p15:ACDE) y el estado siguiente
+L 0xA5A1 tipo_2 por su estado (tabla p15:A5A7): los tipos 2, 0x0F y 0x10
+L 0xA5AF tipo_2_cerrada con el byte 9, se abre; si no, sin el estado 2 de Snake, empujando hacia abajo, con lo que pide y dentro de la caja de abajo
+L 0xA5C6 se_abre su cuenta en 0xD580 (p15:ACDE), el paso y el byte 9 a 0, el rectangulo de (0xC0, 0xD4) de la pagina 0 a 0 (p15:A5DC), el estado siguiente y el sonido 0x16
+L 0xA5DC borra_lo_guardado 0x40 x 0x2C desde (0xC0, 0xD4) de la pagina 0 a 0
+L 0xA5E6 caja_de_abajo acarreo si Snake esta bajo la puerta: su sitio - la Y de Snake por debajo de 8 y la X de Snake - X - 4 por debajo del ancho - 8
+L 0xA600 abre_tipo_2 el paso de 2 en 2 hasta el ancho (luego p15:A628): ancho del paso por alto a 0 desde su sitio
+L 0xA614 hueco_a_0 B (ancho) x el alto desde HL a 0 en la pagina de dibujar (la 1 con la pantalla partida)
+L 0xA624 rectangulo_a_0 BC desde HL a 0 en la pagina D
+L 0xA628 abierta_tipo_2 sus casillas libres (p15:A86D, desde su Y) y el estado siguiente
+L 0xA635 pasa_tipo_2 empujando hacia abajo dentro de la caja (la Y de Snake - 2 - Y por debajo del alto, la X de Snake - X por debajo del ancho): el estado siguiente
+L 0xA651 tipo_3 por su estado (tabla p15:A657)
+L 0xA65F tipo_3_cerrada con el byte 9, se abre; si no, sin el estado 2 de Snake, empujando hacia la izquierda, con lo que pide y dentro (la Y de Snake - Y - 0x20 por debajo de 0x20, la X de Snake - X - 0x0C por debajo de 8): se abre y sus 6 columnas de 1 x 0x20 (cada una 4 mas abajo) se guardan en (0xC8, 0xD8)
+L 0xA687 abre_tipo_3 se abre y guarda sus 6 columnas
+L 0xA69A columna_tipo_3 
+L 0xA6B1 baja_tipo_3 un paso (byte 6, hasta 0x10; luego p15:A6E1): las 6 columnas guardadas de (0xC8, 0xD6), 2 * paso mas abajo y otro tanto mas cortas
+L 0xA6C9 columna_baja_3 
+L 0xA6E1 acaba_tipo_3 sus casillas libres desde su X (p15:A6EB) y el estado siguiente
+L 0xA6EB casillas_de_lado 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+L 0xA6F6 casilla_de_lado una casilla a 0 y la fila siguiente
+L 0xA702 pasa_tipo_3 empujando hacia la izquierda dentro (la Y de Snake - Y - 0x20 por debajo de 0x20, la X de Snake - X por debajo de 0x0F): el estado siguiente
+L 0xA71C tipo_4 por su estado (tabla p15:A722): el de p15:A651 de espejo
+L 0xA72A tipo_4_cerrada como p15:A65F empujando hacia la derecha: la X de Snake - X + 0x10 por debajo de 8; las 6 columnas desde la X - 1 hacia la izquierda
+L 0xA752 abre_tipo_4 se abre y guarda sus 6 columnas hacia la izquierda
+L 0xA765 columna_tipo_4 
+L 0xA77C baja_tipo_4 un paso como p15:A6B1, desde la X - 1 hacia la izquierda
+L 0xA794 columna_baja_4 
+L 0xA7AC acaba_tipo_4 sus casillas libres desde la X - 1 y el estado siguiente
+L 0xA7B8 pasa_tipo_4 empujando hacia la derecha dentro (la Y de Snake - Y - 0x20 por debajo de 0x20, la X de Snake - X + 0x0C por debajo de 8): el estado siguiente
+L 0xA7D4 tipo_5 por su estado (tabla p15:A7DA): los tipos 5, 0x11 y 0x12
+L 0xA7E2 tipo_5_cerrada si Snake entra (p15:A44B): se abre y guarda sus mitades (p15:A7E9)
+L 0xA7E9 guarda_mitades la mitad izquierda (ancho / 2 x alto) a (0xC8, 0xD8) y la derecha a (0xE8, 0xD8), de la pagina de dibujar a la 0
+L 0xA807 abre_tipo_5 un paso (byte 6, 2 * paso hasta el ancho / 2; luego p15:A85F): las dos mitades guardadas se apartan 2 * paso (p15:A822)
+L 0xA822 mitades_apartadas las dos mitades guardadas apartadas B (C la mitad): la derecha desde (0xE6, L) a la X + C + B, la izquierda desde (A + B, L) a la X, cada una de C - B de ancho y H de alto (H, L y A pasan por 0xD8E0-0xD8E2)
+L 0xA84C mitad_apartada B = C - B de ancho, C = el alto (0xD8E0); la copia
+L 0xA853 copia_a_la_de_dibujar B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
+L 0xA85F casillas_y_estado sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
+L 0xA86D casillas_y_estado_a las casillas desde su sitio + A y el estado
+L 0xA887 estado_siguiente el estado siguiente (byte 1 + 1)
+L 0xA88B estado_0 vuelve al estado 0
+L 0xA890 casillas_de_puerta_a B casillas en dos filas del mapa desde (H, L + A - 8): 0x80 (cerradas) en el estado 4, 0 en los demas; con el byte 9, 0xCB3C = 0
+L 0xA8A6 byte_9_y_cb3c con el byte 9, 0xCB3C = 0
+L 0xA8B0 fila_de_casillas B casillas: 0x80 en el estado 4, si no 0
+L 0xA8BF tipo_6 por su estado (tabla p15:A8C5): los tipos 6 y 8
+L 0xA8CD tipo_6_cerrada con el byte 9, se abre; si no, sin el estado 2 de Snake, empujando hacia abajo, con lo que pide y debajo (su Y - la de Snake por debajo de 8, la X de Snake - X - 8 por debajo del ancho - 0x10)
+L 0xA8FE abre_tipo_6 un paso (byte 6, de 2 en 2 hasta el ancho / 2; luego p15:A628): el hueco de 2 * paso a 0 desde el medio - el paso
+L 0xA920 tipo_7 por su estado (tabla p15:A926)
+L 0xA92E tipo_7_cerrada si Snake entra (p15:A44B): se abre y guarda sus mitades (p15:A7E9)
+L 0xA938 abre_tipo_7 un paso (byte 6, hasta el ancho / 2; luego p15:A85F): sus bordes (p15:A961) y las mitades apartadas (p15:A822) desde (Y + 3) con el alto - 3, la izquierda desde la X 0xC9
+L 0xA961 bordes_tipo_7 dos bordes en diagonal de 3 lineas de 1 de alto: desde (0xCC + paso, 0xD8) a (X + 3, Y), cada linea una a la izquierda y una mas abajo y una mas larga (desde 8); y desde (0xE7, 0xD8) a (X + C + paso, Y), de 8 - paso y una mas larga cada linea
+L 0xA975 borde_izquierdo_7 
+L 0xA990 borde_derecho_7 
+L 0xA99A linea_de_borde B x 1 de HL a DE (p15:A853); con B = 0 o desde 0x80, nada
+L 0xA9AB cruza_puerta el estado 3 de todas: Snake cruza la puerta: 0xD444 = 0, 0xD4F1 = 1, sprites fuera (p15:A9DC) y adonde lleva su numero en la tabla de la zona (p15:B4B5, 3 bytes [como y donde][fila y columna][puerta de llegada]): por los bits 7-6 del primero (tabla p15:A9D4) 0 una sala de una zona, 1 una sala especial, 2 de la sala especial a una zona, 3 otra sala sin cambiar de zona
+L 0xA9DC sprites_fuera los 16 primeros bytes de la copia de los atributos (4 sprites) a 0xE0, a la VRAM, y las tablas cambiadas
+L 0xA9ED a_otra_sala la sala de la fila y la columna (p15:AAF6); si la zona (bits 5-0) es otra, cambia de zona y copia en 0xC700; Snake en la puerta de llegada (p15:ABB9); la sala nueva, lo del tipo cruzado en la zona 0x12 (p15:AAA2) y lo de algunas salas de las zonas 4, 0x0C y 0x0D (la musica, p04:924C con la alerta, el sonido 0x8C)
+L 0xAA08 misma_zona Snake en la puerta de llegada
+L 0xAA0B sala_nueva fuera lo de la sala, la sala nueva y lo de cada zona
+L 0xAA4D pon_d4e4_d4e2 0xD4E4 = B, 0xD4E2 = C y, sin alerta, la musica de la zona
+L 0xAA5C enciende_al_llegar la pantalla y los sprites encendidos
+L 0xAA5F llega_con_alerta con la alerta: fuera los sprites y 0xD300, y p04:924C
+L 0xAA6C llega_zona_0c sala 6: con la alerta, p15:AA5F
+L 0xAA7C llega_zona_0d sala 2: con la alerta, p15:AA5F
+L 0xAA85 llega_zona_4_sala_6 con p15:AA8C, 0xD4E4 = 0xD4E2 = 0
+L 0xAA8C mira_d7d4 Z con 0xD694 = 0, 0xD67C = 0 y el bit 4 de 0xD7D4
+L 0xAA9F sin_d7d4 NZ: sin el bit 4 de 0xD7D4
+L 0xAAA2 tipo_cruzado_12 en la zona 0x12 sin 0xD881 = 0xFF: por el tipo 6, la pantalla sin partir (0xCA1C a 0xCA1D), el marcador rehecho, p10:B9E5, R#0 = 6 y R#23 = 0; por el tipo 5, 0xD8A4 = 1, la pagina 1, 0xCA1C de vuelta y R#0 = 0x16
+L 0xAADF tipo_cruzado_5 por el tipo 5: 0xD8A4 = 1, la pagina 1, la pantalla partida de vuelta y R#0 = 0x16
+L 0xAAF6 fila_columna_llegada de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
+L 0xAB2E snake_a_su_estado el estado de 0xCB35 y su dibujo
+L 0xAB4F a_sala_especial la sala especial de los bits 5-0 (0xCA76): fuera lo de la sala, sus mapas de bits, las lineas 0xC3, Snake en la puerta de llegada (p15:ABB9), lo de la alerta (p15:AC3B), la sala; en la 2, la espera 0x12C con 0xCAF6 = 1; en la 0x26 por la columna 7, el sonido 0x35; en las 0x31 y 0x39, 0xD4E2 = 1 y p02:8D60
+L 0xAB9C sala_31_o_39 0xD4E2 = 1 y p02:8D60
+L 0xABA4 sala_especial_2 la espera de 0x12C con 0xCAF6 = 1
+L 0xABB0 sala_especial_26 por la columna 7, el sonido 0x35
+L 0xABB9 snake_en_la_llegada Snake en la puerta de numero B de la lista de la sala especial o de la zona: su Y y su X + lo de su tipo (p15:AC11, [X][Y]); en la zona 0x12, la sala (2, 8) lo pone en (0x70, 0x60)
+L 0xABD9 busca_la_llegada la lista de la sala especial...
+L 0xABEE puerta_de_llegada 
+L 0xABF9 pon_en_la_llegada 
+L 0xAC3B alerta_al_llegar con la alerta, en las salas especiales 2, 0x29, 0x2D y 0x31 o por una puerta de tipo 0x0C (D): p04:924C
+L 0xAC5E a_una_zona de la sala especial a la zona de los bits 5-0: p02:8D3C, sin sala especial, fuera lo de la sala, Snake en la llegada, 0xD300 a cero, la sala, p12:67E1, p11:BDBD; al salir de la 2, por 0xCAF6 (2 la orden 0xF3, 3 p02:8D60); de la 0x39, 0xD43B = 0; de las 0x31 y 0x39, 0xD4E2 = 0 y la musica de la zona
+L 0xAC97 entra_en_la_zona la sala nueva y lo de la sala especial de la que sale
+L 0xACB2 sale_de_31_o_39 0xD4E2 = 0 y la musica de la zona
+L 0xACB9 sale_de_la_2 0xCAF6 = 2: la orden 0xF3
+L 0xACCD otra_sala_misma la sala de la fila y la columna sin cambiar de zona: fuera lo de la sala, Snake en la llegada y la sala (p02:8D41)
+L 0xACDE cuenta_de_puerta la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+L 0xACF1 busca_cuenta 
+L 0xACFE cuenta_de_lista 
+L 0xAD08 cuenta_1 fuera de la lista, 1
+L 0xB800 sprites_d800_tipo_1 los sprites de la ficha de 0xD800 de tipo 1 (IX): en los pasos 2-3 (el 2 sin el byte 0x1F), los 16 sprites desde el 10 fuera y los de la lista p15:BC0A por su dibujo (byte 0x0D) desde la Y + el byte 0x0F - 0x28 y la X + 0xC0; desde el paso 4, en su sala, la lista p15:BC40 y la de p15:BBFA con el color 0x0F; recortados por encima de 0xC0 (p15:B8B9)
+L 0xB80D sprites_tipo_1_a en los pasos 2-3: los sprites desde el 10 fuera y los de su lista
+L 0xB833 sprites_de_lista desde el sprite 10 (0xDC28) los de la lista de HL: [patron][cuantos] y por cada uno [Y][X] sumados a los bytes 3 y 5 de la ficha + D' y E'; con la Y desde C' o la X desde 0xB0, la Y 0xE0 (fuera); el patron de 4 en 4
+L 0xB836 sprites_de_lista_de C = el primer patron, B = cuantos y los sprites
+L 0xB83A sprite_de_lista un sprite: Y, X y patron
+L 0xB867 colores_daa0 los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
+L 0xB870 sprites_tipo_1_b desde el paso 4: en las filas 7-8, los 8 sprites desde el 10 fuera; en su sala, la lista de p15:BC40 por el byte 0x0D, la de p15:BBFA desde el sprite 14 con los patrones de p15:BCA0 o p15:BCAA (byte 0x18) y el color 0x0F
+L 0xB8A0 sprites_tipo_1_c 
+L 0xB8B9 recorta_sprites de los 8 sprites desde el 10: con la Y entre 0xB0 y 0xBF, las lineas que pasan de 0xC0 a color 0 en 0xDAA0 (no tapan el marcador)
+L 0xB8C1 recorta_sprite 
+L 0xB8DC recorta_siguiente 
+L 0xB8EC d800_tipo_0c la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
+L 0xB925 salas_10_a_13 acarreo en las salas 0x10-0x13
+L 0xB92D tipo_0c_paso_0 en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
+L 0xB959 tipo_0c_paso_1 la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
+L 0xB968 paso_siguiente_0c el paso siguiente (byte 1 + 1)
+L 0xB96C copia_0c_48 de (0x30, L) 0x30 x C a (0x48, 0) por p00:47ED, con A = 0x48 en la pagina 0 y 0x18 en la 1
+L 0xB976 copia_0c_48_a 0x30 de ancho, desde la X 0x30
+L 0xB97F tipo_0c_paso_2 tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
+L 0xB989 tipo_0c_piezas las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
+L 0xB997 tipo_0c_paso_3 las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+L 0xB9A1 tipo_0c_baja 
+L 0xB9C1 copia_0c_a_48 de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
+L 0xB9CB tipo_0c_arriba 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+L 0xB9D5 tipo_0c_paso_4 los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
+L 0xB9FA dos_piezas las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
+L 0xBA10 pon_dibujo_0c 
+L 0xBA14 dos_piezas_a por el bit 3 del byte 0x0E, las piezas de 8 x 8 de (0x20, 0x70) y (0x38, 0x70) o de (0x50, 0x70) y (0x58, 0x70) a las Y 0x18 y 0x30
+L 0xBA2B pieza_0c una pieza de 8 x 8 de (H, 0x70) a (0x40, E) de la otra pagina, o a (0x58, E) de esta en el paso 2
+L 0xBA45 pieza_0c_aqui a (0x58, E) de la pagina de dibujar
+L 0xBA51 tipo_0c_paso_5 su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
+L 0xBA7E tramo_siguiente el tramo siguiente (0-7) y sus velocidades de p15:BA94: el byte 7 y el 9
+L 0xBAB4 tramo_0 acarreo con la fila 7 y el byte 3 desde 0x40
+L 0xBAB7 llega_desde acarreo con D = H y B desde L
+L 0xBABF no_llega sin acarreo: no llega
+L 0xBAC1 tramo_1 la fila 7 y el byte 3 desde 0x80
+L 0xBAC6 tramo_2 la columna 8 y el byte 5 desde 0x40
+L 0xBACD tramo_3 la columna 8 y el byte 5 desde 0x80
+L 0xBAD4 tramo_4 la fila 8 y el byte 3 por debajo de 0x80
+L 0xBAD7 llega_antes acarreo con D = H y B por debajo de L
+L 0xBADE tramo_5 la fila 8 y el byte 3 por debajo de 0x40
+L 0xBAE3 tramo_6 la columna 7 y el byte 5 por debajo de 0x80
+L 0xBAEA tramo_7 la columna 7 y el byte 5 por debajo de 0x40
+L 0xBAF1 paso_de_sala_0c con el byte 7 a 0, el byte 5 de 0xC0 a 0xFF pasa de columna (byte 0x0B; uno mas y 0 con el byte 9 positivo, uno menos y 0xC0 con el negativo); si no, el byte 3 pasa de fila (byte 0x0A; uno menos y 0 con el byte 7 positivo, uno mas y 0xC0 con el negativo)
+L 0xBB0D columna_menos la columna uno menos y el byte 5 a 0xC0
+L 0xBB15 paso_de_fila_0c el byte 3 de 0xC0 a 0xFF pasa de fila
+L 0xBB2B fila_mas la fila uno mas y el byte 3 a 0xC0
+L 0xBB33 sonido_0c en las salas desde la 0x10: el sonido 0x36 en su sala, el 0x37 fuera
+L 0xBB42 borde_d8b7 con 0xD8B7: uno menos y el color del borde (R#7) 0x0F con la cuenta impar, 7 con la par
+L 0xBB51 pon_borde 
+L 0xBB54 dispara_0c la espera del byte 0x1F; a 0, en su sala y sin disparo: el disparo dura 0x0C (byte 0x0F), los pasos hacia Snake (16 por encima) en los bytes 0x1B-0x1E (p01:7A4E) y su sitio en 0xD8B3-0xD8B6; otra espera al azar
+L 0xBB99 espera_al_azar el byte 0x1F = 4-0x0B al azar
+L 0xBBA4 disparo_0c fuera de su sala, sin disparo; sin el, p15:BB54; con el, uno menos y el disparo en su sitio + los pasos por lo que lleva (p15:BBE8): dentro de 8-0xAF, lo lanzado de tipo 7 (p02:9AF4); si no, se acaba
+L 0xBBAD disparo_0c_a 
+L 0xBBE3 se_acaba_disparo el byte 0x0F a 0: sin disparo
+L 0xBBE8 por_lo_que_lleva HL = HL * 2 * (0x0D - el byte 0x0F); con 0x0C, HL
+L 0xBBF5 suma_veces 
+L 0xBCB4 mapa_zona_7 en la zona 7, las salas 2, 3, 4, 8 y 9: trozos de mapa copiados a 0xDD00 (p01:62A5, B filas de C caracteres en (D, E))
+L 0xBCD5 mapa_zona_7_sala_2 la sala 2: 8 trozos
+L 0xBD0A mapa_zona_7_sala_3 la sala 3: 8 trozos
+L 0xBD40 copia_trozo B filas de C en (D, E)
+L 0xBD43 mapa_zona_7_sala_4 la sala 4: 9 trozos
+L 0xBD81 mapa_zona_7_sala_8 la sala 8: 5 trozos
+L 0xBDAA mapa_zona_7_sala_9 (0, 0x20), 2 filas de 4
+L 0xBDB2 copia_trozo_guarda p01:62A5 guardando BC
+L 0xBDB8 mira_alerta_d800 de las 4 fichas de 0xD800, la primera que da algo por su tipo (p15:BDCE): B = 0 nada, 1 se acaba la alerta, 2 o 3 (p04:9278)
+L 0xBDBE mira_ficha_d800 
+L 0xBDCC b_de_bdb8 B = C
+L 0xBDCE por_tipo_d800 C por su tipo (tabla p15:BDD8; libre, 0)
+L 0xBDEE d800_mira_3 el tipo 3: en su sala, 1 en los pasos 0-1 y 3 desde el 2; fuera, 0
+L 0xBDFD d800_mira_2 los tipos 2, 8, 9 y 0x0A: en su sala, 2; fuera, 0
+L 0xBE02 da_2 C = 2
+L 0xBE05 d800_mira_4 el tipo 4: en la sala especial 0x29, 2; si no, 0
+L 0xBE0C da_0 C = 0
+L 0xBE0F d800_mira_1 el tipo 1: en las salas 0x10-0x13, 1 en el paso 0 y 3 en los demas; si no, 0
+L 0xBE18 da_1_o_3 1 en el paso 0, 3 en los demas
+L 0xBE1F da_3 C = 3
+L 0xBE22 d800_mira_5 el tipo 5: en la zona 0x0E, 2; si no, 0
+L 0xBE2B d800_mira_6 el tipo 6: en la zona 0x0E, 1; si no, 0
+L 0xBE35 d800_mira_7 el tipo 7: en las filas 4-5 y columnas 4-5, 1 en el paso 0 y 3 en los demas; si no, 0
+L 0xBE48 cuenta_alerta_1 la cuenta de la alerta 1 (0xD42B) por el nivel de Snake: la palabra de 0xBE54 (0x78, 0x78, 0x90, 0xA0, 0xA0, 0xA0, 0xC8, 0xC8); la rutina no lleva ret y sigue por esa tabla como instrucciones: sub b deja Z y el ret z del byte 0xC8 vuelve
+L 0xBE54 tabla_alerta_1 tabla de 8 palabras (la cuenta por nivel) que tambien se ejecuta: ld a,b / nop / ld a,b / nop / sub b (Z) / ... / ret z
+L 0xBE64 sitio_de_d418 sin 0xCA77 ni sala especial: acarreo si 0xD418-0xD419 cae cerca (16 en el primero, 0x20 en el segundo) de un sitio de la lista de p15:BE9E de esta zona y sala ([zona][sala][..][..], 0xFF al final)
+L 0xBE71 sitio_de_lista 
+L 0xBE95 sitio_siguiente el sitio siguiente de la lista (4 bytes)
+L 0xBE9C ningun_sitio sin acarreo: ninguno
+L 0xBED7 se_acaba_alerta Z si se acaba la alerta: con 0xCAA0 por debajo de 4, con la alerta sin su bit 3 y con 0xD444 (o 0xCA77 = 2), las 4 fichas de 0xD300 libres
+L 0xBEF6 d300_libres Z si las 4 fichas de 0xD300 estan libres
+L 0xBEFC d300_libre 
+L 0xBF0A no_se_acaba NZ: no se acaba
+L 0xBF0D actor_de_alerta la ficha de IX (0x40 bytes) a cero y un actor de tipo 1 en (X = E, Y = D) de esta sala: el byte 0x10 = 3, el 0x1B = C y su direccion (byte 0x0D): con C = 0 (0xD41E - 1) * 2, con 1 (0xD449 - 1) * 2, con 2 0, con mas 2
+L 0xBF53 direccion_de la direccion: (el byte de HL - 1) * 2
+L 0xBF57 pon_direccion 
+L 0xBF5B llegada_de_alerta por la sala ((fila - 2) * 2 + columna - 5; desde 3, 4 en la zona 0x0C), 3 bytes de p15:BF89: D = la Y, E = la X y 0xD41E
+L 0xBF77 llegada_n los 3 bytes de la entrada A de p15:BF89
+L 0xBF98 numero_a_cifras A (0-99) en dos cifras de 8 x 8 de (0x68 + 8 * cifra, 0x68): las decenas en (0xCF, 0x40) y las unidades en (0xD5, 0x40), con la operacion 0xC8 (0xD8 en la pagina 1)
+L 0xBF9A cuenta_decenas B = las decenas, A = las unidades
+L 0xBFA3 en_bcd las decenas al nibble alto
+L 0xBFBF cifra_8x8 la cifra A de (0x68 + 8 * A, 0x68)...
+C 0xA005 cuentas_y_puertas: baja las cuentas de 0xD580 y carga las puertas (p15:A04C)
 C 0xA008 lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
-C 0xA00D apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xA00D apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
+C 0xA024 apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 C 0xA027 suma_a_hl: HL = HL + A
-C 0xA04C apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xA049 baja_cuentas_d580: las 0x80 cuentas de 0xD580 uno menos (las de 0 y las de 0xFF no)
 C 0xA052 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xA055 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA061 lee la zona
-C 0xA064 palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xA067 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
-C 0xA06E lee la sala de la zona
-C 0xA089 lee la zona
+C 0xA072 puerta_lista_siguiente: la siguiente de la lista (6 bytes)
 C 0xA0A1 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xA0D4 lee la sala de la zona
-C 0xA0E5 lee la zona
 C 0xA125 suma_a_hl: HL = HL + A
-C 0xA154 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA128 puerta_de_la_lista: 
+C 0xA12B puerta_no_se_pinta: acarreo (no se pinta): en la zona 3 sala 0 con 0xCAC9, en la zona 4 sala 0x0E con 0xCACD; con lo elegido 3, nunca
 C 0xA15F copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 C 0xA17B lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA182 lee la sala de la zona
 C 0xA186 lee la zona
 C 0xA1AE palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xA1E2 apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 C 0xA1F7 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA224 apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA231 copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
+C 0xA23E puerta_a_ff: BC desde su sitio a 0xFF en la otra pagina
+C 0xA241 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA252 casillas_de_puerta_a: B casillas en dos filas del mapa desde (H, L + A - 8): 0x80 (cerradas) en el estado 4, 0 en los demas; con el byte 9, 0xCB3C = 0
+C 0xA255 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA258 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA260 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
+C 0xA26C rayas_de_a2a5: 8 rayas verticales de color 0x0F en la otra pagina desde su sitio, con los largos de p15:A2A5 (del ultimo al primero), cada una E mas a la X y, desde la tercera, 4 mas abajo
+C 0xA26F sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA273 casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+C 0xA276 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA285 suma_a_de: DE = DE + A
-C 0xA28A lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA28F linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
-C 0xA2C6 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA2AF rayas_de_a2a5: 8 rayas verticales de color 0x0F en la otra pagina desde su sitio, con los largos de p15:A2A5 (del ultimo al primero), cada una E mas a la X y, desde la tercera, 4 mas abajo
+C 0xA2B2 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA2B7 casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
 C 0xA2CB linea_horizontal_guarda: p00:467C guardando AF, HL, DE y BC
+C 0xA2DE sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA2F1 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xA2F4 lee la zona
 C 0xA31B lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xA320 apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xA320 apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
+C 0xA34A guarda 1 mientras una puerta se abre o se cierra (p15:A348; p01:75F6)
+C 0xA350 guarda la ficha de 0xD500 de la puerta que se mueve (p15:A350) y el byte siguiente (16 bits)
+C 0xA354 lee la ficha de 0xD500 de la puerta que se mueve (p15:A350) y el byte siguiente (16 bits)
+C 0xA364 guarda 1 mientras una puerta se abre o se cierra (p15:A348; p01:75F6)
 C 0xA36C despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA399 lee con el puesto, la vida baja un punto cada 16 cuadros
-C 0xA3A7 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
 C 0xA3C7 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA3D6 lee la zona
-C 0xA3E7 lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
-C 0xA3ED lee la zona
+C 0xA3D2 snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
 C 0xA3F8 lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
+C 0xA409 cuenta_de_puerta: la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+C 0xA40F sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA413 copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
-C 0xA416 sonido_46: pide el sonido 0x46
+C 0xA419 casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
 C 0xA41F despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA42C snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
 C 0xA443 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA448 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xA451 lee 1 en el estado 2 de Snake
-C 0xA46C lee la Y de Snake
-C 0xA47B lee la X de Snake
-C 0xA4B7 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA45E sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA490 casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
 C 0xA4C0 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-C 0xA4D2 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+C 0xA4EB apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 C 0xA4EE suma_a_hl: HL = HL + A
+C 0xA4F4 empuja_arriba: Z si Snake va hacia arriba (0xCB0E = 1) con el mando hacia arriba (bit 0)
+C 0xA4F8 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA501 lee la Y de Snake
-C 0xA509 lee la X de Snake
 C 0xA517 lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-C 0xA51C lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
 C 0xA537 bancos_27: pone el 27 en 0x8000 (con su copia en 0xC381-0xC383)
 C 0xA553 guarda las paginas de la copia de una letra o pieza (bits 0-1 origen, 2-3 destino)
-C 0xA55D p00:4A19
-C 0xA56F bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0xA585 despachador: salta a la palabra A de la tabla que va detras del call
+C 0xA590 empuja_abajo: hacia abajo (2, bit 1)
+C 0xA59B cuenta_de_puerta: la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+C 0xA59E estado_siguiente: el estado siguiente (byte 1 + 1)
 C 0xA5A4 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA5B5 lee 1 en el estado 2 de Snake
-C 0xA5D9 sonido_16: pide el sonido 0x16
-C 0xA5E9 lee la Y de Snake
-C 0xA5F8 lee la X de Snake
-C 0xA618 lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
-C 0xA620 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA5BA empuja_abajo: hacia abajo (2, bit 1)
+C 0xA5BE lo_que_pide: acarreo si se abre: sin 0xCB4B y sin nada que pedir (byte 4 = 0) o con lo elegido (0xCB21) que sirve: 0x11, 0x12 y 0x13 abren las 1-3, 4-6 y 7-9; 0x14-0x1C, una de la 1 a la 9
+C 0xA5C2 caja_de_abajo: acarreo si Snake esta bajo la puerta: su sitio - la Y de Snake por debajo de 8 y la X de Snake - X - 4 por debajo del ancho - 8
+C 0xA5C9 cuenta_de_puerta: la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+C 0xA5E6 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA60E sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA625 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-C 0xA63C lee la Y de Snake
-C 0xA646 lee la X de Snake
+C 0xA632 casillas_y_estado_a: las casillas desde su sitio + A y el estado
+C 0xA635 empuja_abajo: hacia abajo (2, bit 1)
+C 0xA639 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA654 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA665 lee 1 en el estado 2 de Snake
-C 0xA675 lee la Y de Snake
-C 0xA67E lee la X de Snake
-C 0xA693 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA672 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA6A1 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-C 0xA6F1 punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
+C 0xA6D2 copia_a_la_de_dibujar: B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
+C 0xA6E1 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA6E5 casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+C 0xA6E8 estado_siguiente: el estado siguiente (byte 1 + 1)
 C 0xA6FA suma_a_hl: HL = HL + A
-C 0xA709 lee la Y de Snake
-C 0xA712 lee la X de Snake
+C 0xA6FF byte_9_y_cb3c: con el byte 9, 0xCB3C = 0
+C 0xA702 empuja_izquierda: hacia la izquierda (3, bit 2)
+C 0xA706 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA71F despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA730 lee 1 en el estado 2 de Snake
-C 0xA740 lee la Y de Snake
-C 0xA749 lee la X de Snake
-C 0xA759 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xA73D sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA76C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-C 0xA7BF lee la Y de Snake
-C 0xA7C8 lee la X de Snake
+C 0xA79D copia_a_la_de_dibujar: B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
+C 0xA7AC sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA7B2 casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+C 0xA7B5 estado_siguiente: el estado siguiente (byte 1 + 1)
+C 0xA7B8 empuja_derecha: hacia la derecha (4, bit 3)
+C 0xA7BC sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 C 0xA7D7 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA822 guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
-C 0xA825 guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
-C 0xA831 lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
-C 0xA83A lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
-C 0xA843 lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
-C 0xA847 lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
-C 0xA84F lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+C 0xA7E2 snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
+C 0xA7E6 se_abre: su cuenta en 0xD580 (p15:ACDE), el paso y el byte 9 a 0, el rectangulo de (0xC0, 0xD4) de la pagina 0 a 0 (p15:A5DC), el estado siguiente y el sonido 0x16
+C 0xA7E9 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA7F9 copia_a_la_0: BC de HL a DE, de la pagina de dibujar a la 0 (p00:4767)
+C 0xA804 copia_a_la_0: BC de HL a DE, de la pagina de dibujar a la 0 (p00:4767)
 C 0xA853 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xA85C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-C 0xA894 punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
+C 0xA870 casillas_de_puerta_a: B casillas en dos filas del mapa desde (H, L + A - 8): 0x80 (cerradas) en el estado 4, 0 en los demas; con el byte 9, 0xCB3C = 0
 C 0xA8A0 suma_a_hl: HL = HL + A
+C 0xA8A3 fila_de_casillas: B casillas: 0x80 en el estado 4, si no 0
 C 0xA8C2 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA8D4 lee 1 en el estado 2 de Snake
-C 0xA8E4 lee la Y de Snake
-C 0xA8F3 lee la X de Snake
+C 0xA8E1 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA907 abierta_tipo_2: sus casillas libres (p15:A86D, desde su Y) y el estado siguiente
+C 0xA91D hueco_a_0: B (ancho) x el alto desde HL a 0 en la pagina de dibujar (la 1 con la pantalla partida)
 C 0xA923 despachador: salta a la palabra A de la tabla que va detras del call
-C 0xA9B6 lee la zona
+C 0xA92E snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
+C 0xA932 se_abre: su cuenta en 0xD580 (p15:ACDE), el paso y el byte 9 a 0, el rectangulo de (0xC0, 0xD4) de la pagina 0 a 0 (p15:A5DC), el estado siguiente y el sonido 0x16
+C 0xA935 guarda_mitades: la mitad izquierda (ancho / 2 x alto) a (0xC8, 0xD8) y la derecha a (0xE8, 0xD8), de la pagina de dibujar a la 0
+C 0xA943 casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
+C 0xA95E mitades_apartadas: las dos mitades guardadas apartadas B (C la mitad): la derecha desde (0xE6, L) a la X + C + B, la izquierda desde (A + B, L) a la X, cada una de C - B de ancho y H de alto (H, L y A pasan por 0xD8E0-0xD8E2)
+C 0xA962 sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+C 0xA975 linea_de_borde: B x 1 de HL a DE (p15:A853); con B = 0 o desde 0x80, nada
+C 0xA990 linea_de_borde: B x 1 de HL a DE (p15:A853); con B = 0 o desde 0x80, nada
+C 0xA9A4 copia_a_la_de_dibujar: B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
 C 0xA9BC palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xA9D1 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA9DC apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 C 0xA9E4 llena_bloque: pone A en BC + 1 bytes desde HL
-C 0xA9E7 sprites_a_vram_bancos_15: 
 C 0xA9EA cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 C 0xA9F5 apunta a la zona
-C 0xA9FC cambia_de_zona_b_1_2_15: cambia_de_zona y deja los bancos 1, 2 y 15
-C 0xAA03 copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
-C 0xAA0B borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+C 0xAA08 snake_en_la_llegada: Snake en la puerta de numero B de la lista de la sala especial o de la zona: su Y y su X + lo de su tipo (p15:AC11, [X][Y]); en la zona 0x12, la sala (2, 8) lo pone en (0x70, 0x60)
 C 0xAA0E p02:8D4B
-C 0xAA16 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
-C 0xAA19 lee la zona
-C 0xAA28 lee la sala de la zona
-C 0xAA55 lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
-C 0xAA59 musica_de_la_zona_bancos_15: 
+C 0xAA48 mira_d7d4: Z con 0xD694 = 0, 0xD67C = 0 y el bit 4 de 0xD7D4
 C 0xAA5C enciende_todo: la pantalla y los sprites encendidos
 C 0xAA5F lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 C 0xAA64 limpia_sprites_y_d300: 
@@ -180,44 +1282,33 @@ C 0xAA67 a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAA6C lee la sala de la zona
 C 0xAA77 sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 C 0xAA7C lee la sala de la zona
-C 0xAAA8 lee la zona
-C 0xAAB6 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-C 0xAAB9 apunta a 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
-C 0xAAC5 borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
 C 0xAACA borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
-C 0xAACD rehace_marcador_b_1_2_15: rehace_marcador y deja los bancos 1, 2 y 15
 C 0xAAD0 a_p10_b9e5: p10:B9E5 con el banco 10 en 0xA000
-C 0xAAE4 guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xAAEA guarda 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
-C 0xAAF3 apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 C 0xAAFF guarda la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xAB05 guarda la columna de la sala en la zona (uno mas al salir por la derecha)
-C 0xAB16 guarda con 1, lo de 0xD8C2 se acaba (p07:A03A)
+C 0xAB0A guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 C 0xAB19 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
-C 0xAB23 lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAB31 guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0xAB34 guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 C 0xAB3B guarda la marcha de Snake: el indice de las velocidades de p02:9520
 C 0xAB3E guarda 1 mientras Snake se da la vuelta
 C 0xAB41 guarda 1 en el estado 2 de Snake
-C 0xAB45 guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
+C 0xAB4F fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
 C 0xAB55 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAB5A borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xAB5D p02:8D4B
 C 0xAB60 mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 C 0xAB63 lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
-C 0xAB70 guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
 C 0xAB7E a_p12_69e0: p12:69E0 con el banco 12 en 0x6000
 C 0xAB81 a_p10_bce4: p10:BCE4 con el banco 10 en 0xA000
 C 0xAB84 entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
 C 0xAB87 a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
-C 0xAB8A lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xABA1 p02:8D60
 C 0xABA7 guarda otra espera de 16 bits que baja en la interrupcion
 C 0xABB0 lee la columna de la sala en la zona (uno mas al salir por la derecha)
 C 0xABB6 sonido_35: pide el sonido 0x35
 C 0xABB9 lee la zona
-C 0xABC1 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xABD0 guarda la Y de Snake
 C 0xABD5 guarda la X de Snake
 C 0xABD9 lee la sala especial (0 = ninguna; indice de p24:64B6)
@@ -234,88 +1325,96 @@ C 0xAC4A a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAC4F a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAC54 a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 C 0xAC5B a_p04_924c_3: p04:924C con el banco 4 en 0x8000
+C 0xAC5E fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
 C 0xAC64 guarda la zona
-C 0xAC67 lee la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC6C p02:8D3C
 C 0xAC70 guarda la sala especial (0 = ninguna; indice de p24:64B6)
 C 0xAC73 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xAC76 p02:8D4B
-C 0xAC7D apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xAC83 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xAC97 entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
 C 0xAC9A a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
 C 0xAC9F a_p11_bdbd_2: p11:BDBD con el banco 11 en 0xA000
 C 0xACB6 musica_de_la_zona_bancos_15: 
 C 0xACBE orden_sonido_f3: la orden 0xF3 al sonido
 C 0xACCA p02:8D60
+C 0xACCD fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
 C 0xACD1 borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 C 0xACD4 p02:8D4B
+C 0xACD8 snake_en_la_llegada: Snake en la puerta de numero B de la lista de la sala especial o de la zona: su Y y su X + lo de su tipo (p15:AC11, [X][Y]); en la zona 0x12, la sala (2, 8) lo pone en (0x70, 0x60)
 C 0xACDB entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
-C 0xACE1 lee la zona
 C 0xACE7 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xACEB apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 C 0xACEE suma_a_de: DE = DE + A
+C 0xB80F sprites_tipo_1_b: desde el paso 4: en las filas 7-8, los 8 sprites desde el 10 fuera; en su sala, la lista de p15:BC40 por el byte 0x0D, la de p15:BBFA desde el sprite 14 con los patrones de p15:BCA0 o p15:BCAA (byte 0x18) y el color 0x0F
 C 0xB815 esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
 C 0xB81E palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xB86D llena_bloque: pone A en BC + 1 bytes desde HL
-C 0xB870 lee la fila de la sala en la zona (uno mas al salir por arriba)
 C 0xB87A esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
-C 0xB87D en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xB887 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB891 sprites_de_lista: desde el sprite 10 (0xDC28) los de la lista de HL: [patron][cuantos] y por cada uno [Y][X] sumados a los bytes 3 y 5 de la ficha + D' y E'; con la Y desde C' o la X desde 0xB0, la Y 0xE0 (fuera); el patron de 4 en 4
 C 0xB8A7 palabra_de_tabla: HL = la palabra A de la tabla de HL
+C 0xB8B1 sprites_de_lista_de: C = el primer patron, B = cuantos y los sprites
+C 0xB8B6 colores_daa0: los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
 C 0xB8D1 suma_a_de: DE = DE + A
 C 0xB8E0 suma_a_hl: HL = HL + A
 C 0xB8E5 suma_a_de: DE = DE + A
-C 0xB8EF acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 C 0xB8F5 si_c693: con 0xC693, lo borra y salta a HL
 C 0xB8FE salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xB90D llama_ba36_a: 
-C 0xB916 musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
 C 0xB925 lee la sala de la zona
-C 0xB92D en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-C 0xB94A sprites_de_6860: 
-C 0xB95D pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
-C 0xB96C lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB93F copia_0c_a_48: de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
+C 0xB94F colores_daa0: los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
+C 0xB956 paso_siguiente_0c: el paso siguiente (byte 1 + 1)
 C 0xB97C copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
+C 0xB98B dos_piezas: las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
+C 0xB9A1 dos_piezas: las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
 C 0xB9B4 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 C 0xB9C8 copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
-C 0xB9CF sprites_de_670e: p35:670E a 0xFA00
-C 0xB9F1 sonido_77: pide el sonido 0x77 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-C 0xB9F4 sonido_05: pide el sonido 0x05
-C 0xBA39 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xB9D2 paso_siguiente_0c: el paso siguiente (byte 1 + 1)
+C 0xB9F7 paso_siguiente_0c: el paso siguiente (byte 1 + 1)
+C 0xBA24 pieza_0c: una pieza de 8 x 8 de (H, 0x70) a (0x40, E) de la otra pagina, o a (0x58, E) de esta en el paso 2
 C 0xBA42 copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xBA47 lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 C 0xBA4E copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-C 0xBA6F salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xBA8A palabra_de_tabla: HL = la palabra A de la tabla de HL
 C 0xBB33 lee la sala de la zona
-C 0xBB39 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xBB3C sonido_36: pide el sonido 0x36
-C 0xBB3F sonido_37: pide el sonido 0x37
+C 0xBB42 apunta a la cuenta del borde que parpadea, R#7 = 0x0F / 7 (p15:BB42)
 C 0xBB58 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-C 0xBB67 y_x_de_snake_en_hl: L = la Y, H = la X de Snake
-C 0xBB78 apunta_con_b_bancos_15: 
 C 0xBB99 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xBBA4 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-C 0xBBE0 lanza_7: lo lanzado de tipo 7
+C 0xBBBC por_lo_que_lleva: HL = HL * 2 * (0x0D - el byte 0x0F); con 0x0C, HL
+C 0xBBCB por_lo_que_lleva: HL = HL * 2 * (0x0D - el byte 0x0F); con 0x0C, HL
 C 0xBCB4 lee la zona
-C 0xBCBA lee la sala de la zona
+C 0xBCC7 mapa_zona_7_sala_4: la sala 4: 9 trozos
+C 0xBCCC mapa_zona_7_sala_8: la sala 8: 5 trozos
+C 0xBCD1 mapa_zona_7_sala_9: (0, 0x20), 2 filas de 4
+C 0xBCDB copia_trozo_guarda: p01:62A5 guardando BC
+C 0xBCE1 copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBCE7 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBCF0 copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBCF6 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBCFF copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD10 copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBD16 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD1F copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBD25 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD2E copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD37 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD40 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD49 copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBD4F copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD58 copia_trozo_guarda: p01:62A5 guardando BC
+C 0xBD5E copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBD64 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD6D copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD76 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
+C 0xBD87 copia_trozo_guarda: p01:62A5 guardando BC
 C 0xBD8D copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD96 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBD9F copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBDB3 copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 C 0xBDB8 apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
+C 0xBDBE por_tipo_d800: C por su tipo (tabla p15:BDD8; libre, 0)
 C 0xBDD5 despachador: salta a la palabra A de la tabla que va detras del call
 C 0xBDEE en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xBDFD en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
@@ -324,22 +1423,16 @@ C 0xBE0F lee la sala de la zona
 C 0xBE22 lee la zona
 C 0xBE2B lee la zona
 C 0xBE35 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-C 0xBE48 lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
 C 0xBE4E palabra_de_tabla: HL = la palabra A de la tabla de HL
-C 0xBE51 guarda la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
 C 0xBE69 lee la sala especial (0 = ninguna; indice de p24:64B6)
-C 0xBE77 lee la zona
-C 0xBE7E lee la sala de la zona
 C 0xBE97 suma_a_de: DE = DE + A
 C 0xBED7 lee cuantos siguen a Snake por su rastro (1-4)
 C 0xBEDE lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
-C 0xBEF6 apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
 C 0xBEFC lee el tipo del actor (0 = libre)
 C 0xBF14 borra_bloque: pone a cero BC + 1 bytes desde HL
-C 0xBF22 lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
 C 0xBF5B lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-C 0xBF6D lee la zona
 C 0xBF7D suma_a_hl: HL = HL + A
-C 0xBFCA lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+C 0xBF85 guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
+C 0xBFB6 cifra_8x8: la cifra A de (0x68 + 8 * A, 0x68)...
 C 0xBFD4 copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 # --- fin de las anotaciones de anota.py ---

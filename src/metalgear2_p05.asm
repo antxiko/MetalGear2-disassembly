@@ -397,7 +397,7 @@ busca_paso_0:		; buscar: el paso siguiente, la direccion de la entrada (0xD41E o
 	ld (ix+02ah),a		;a2dc
 	ld a,(0ca76h)		;a2df   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;a2e2
-	ld a,(0d41eh)		;a2e3
+	ld a,(0d41eh)		;a2e3   ; lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	jr z,L_A2EB		;a2e6
 	ld a,(0d449h)		;a2e8
 L_A2EB:
@@ -2285,7 +2285,7 @@ especial_29_paso_11:		; el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
 	cp 002h		;af9b
 	ret nz			;af9d
 	ld a,002h		;af9e
-	ld (0d500h),a		;afa0   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+	ld (0d500h),a		;afa0   ; guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 	ret			;afa3
 actor_de_d8a7:		; con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
 	ld a,(0ca77h)		;afa4   ; con 0xCA77, sin musica
@@ -4091,7 +4091,7 @@ DATA_resto_BD58:
 sala_5_paso_0:		; 0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
 	xor a			;bd84
 	ld (0e070h),a		;bd85   ; guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
-	ld (0d500h),a		;bd88   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+	ld (0d500h),a		;bd88   ; guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 	ld (0d510h),a		;bd8b
 	inc a			;bd8e
 	ld (0cb3ch),a		;bd8f
@@ -4319,7 +4319,7 @@ sala_5_suelta:		; sin eje, 0x18 cuadros, 0xD500 = 2, 0xD510 = 0x0D, el bit 7 de 
 	ld (ix+016h),a		;bf4c
 	ld (ix+00eh),018h		;bf4f   ; la espera del actor = 0x18
 	ld a,002h		;bf53
-	ld (0d500h),a		;bf55   ; guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+	ld (0d500h),a		;bf55   ; guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 	ld a,00dh		;bf58
 	ld (0d510h),a		;bf5a
 	ld hl,0d7d6h		;bf5d

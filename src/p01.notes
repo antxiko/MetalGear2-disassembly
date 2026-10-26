@@ -1796,9 +1796,10 @@ C 0x75FC espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
 C 0x75FF lee el contador de cuadros (uno mas en cada interrupcion)
 C 0x7604 sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
 C 0x7607 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x760A p15:A354
+C 0x760A sigue_puerta_en_marcha: la puerta de 0xCAE8 por su tipo (p15:A368); fuera del estado 1 o 4, 0xCAE7 = 0
 C 0x760D bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7610 sprites_a_vram_turnos: los sprites a la VRAM, cambiando el orden cada cuadro para que no desaparezcan
+C 0x7613 lee 1 mientras una puerta se abre o se cierra (p15:A348; p01:75F6)
 C 0x761B cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
 C 0x761E a_p12_76e9: p12:76E9 con el banco 12 en 0x6000
 C 0x7621 espera_vdp: espera a que el VDP acabe la orden en curso (S#2 bit 0)
@@ -1864,7 +1865,7 @@ C 0x77F9 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381
 C 0x77FC pasos_de_d8a0: con 0xD8A0, por su paso (p05:AA4D)
 C 0x77FF fichas_d800: las 4 fichas de 0x20 bytes de 0xD800 (o la de 0xD860 en las especiales)
 C 0x7802 bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7805 p15:A316
+C 0x7805 puertas_cada_cuadro: sin 0xD4E9 ni salida de la sala: cada puerta activa por su tipo (p15:A368); la primera que queda abriendose o cerrandose (estado 1 o 4) va a 0xCAE8 con 0xCAE7 = 1 y se deja
 C 0x7808 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x780B snake_cada_cuadro: Snake en cada cuadro: su estado y lo que le pasa
 C 0x7812 fichas_de_cada_cuadro: las fichas de 0xCB80, 0xCC00 y 0xCC80, p11:AF47 y p11:B23F
@@ -1942,7 +1943,7 @@ C 0x7914 a_p12_6d78: p12:6D78 con el banco 12 en 0x6000
 C 0x7917 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x791A fichas_d800: las 4 fichas de 0x20 bytes de 0xD800 (o la de 0xD860 en las especiales)
 C 0x791D bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7920 p15:A316
+C 0x7920 puertas_cada_cuadro: sin 0xD4E9 ni salida de la sala: cada puerta activa por su tipo (p15:A368); la primera que queda abriendose o cerrandose (estado 1 o 4) va a 0xCAE8 con 0xCAE7 = 1 y se deja
 C 0x7923 bancos_1_2_3: pone el 1 en 0x6000, el 2 en 0x8000, el 3 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7926 snake_cada_cuadro: Snake en cada cuadro: su estado y lo que le pasa
 C 0x792D fichas_de_cada_cuadro: las fichas de 0xCB80, 0xCC00 y 0xCC80, p11:AF47 y p11:B23F
@@ -2105,7 +2106,7 @@ C 0x7B82 d406_si: si p06:B55A no da acarreo, (HL) = 2
 C 0x7B8A bancos_1_2_9: pone el 1 en 0x6000, el 2 en 0x8000, el 9 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B8D bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B90 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x7B93 p15:BDB8
+C 0x7B93 mira_alerta_d800: de las 4 fichas de 0xD800, la primera que da algo por su tipo (p15:BDCE): B = 0 nada, 1 se acaba la alerta, 2 o 3 (p04:9278)
 C 0x7B98 sonido_8e: pide el sonido 0x8E (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
 C 0x7B9B bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x7B9E a_p14_b176_guarda: p14:B176 guardando el banco de 0xA000

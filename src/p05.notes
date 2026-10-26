@@ -643,6 +643,7 @@ C 0xA2B7 lanza_cada_4: durante 0x1C cuadros, cada 4 lanza hacia Snake; al acabar
 C 0xA2BA despachador: salta a la palabra A de la tabla que va detras del call
 C 0xA2D5 paso_siguiente: el paso siguiente del actor
 C 0xA2DF lee la sala especial (0 = ninguna; indice de p24:64B6)
+C 0xA2E3 lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 C 0xA2EF a_p06_b592_b_4_5: a_p06_b592 y deja los bancos 4 y 5
 C 0xA300 azar: A = un numero al azar (0xCA03 rotado mas R)
 C 0xA305 guarda la espera del actor
@@ -1026,7 +1027,7 @@ C 0xAF8A llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 C 0xAF8D paso_siguiente_c: el paso siguiente
 C 0xAF90 el paso del actor = 0x20
 C 0xAF98 lee la sala de la zona
-C 0xAFA0 guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xAFA0 guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 C 0xAFA8 acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 C 0xAFB8 sala_de_snake: 0x1B = hacia donde esta la sala de Snake (1-4; 0 la misma)
 C 0xAFBD lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -1550,7 +1551,7 @@ C 0xBD4C lee el paso del actor
 C 0xBD52 salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0xBD55 llama_ba36: p14:BA36 con el byte 0x0C del actor
 C 0xBD85 guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
-C 0xBD88 guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xBD88 guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 C 0xBD97 la espera del actor = 0x10
 C 0xBD9B el dibujo del actor (bit 0: el paso) = 0x04
 C 0xBDA2 pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
@@ -1624,7 +1625,7 @@ C 0xBF35 guarda el dibujo del actor (bit 0: el paso)
 C 0xBF41 en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 C 0xBF45 paso_siguiente_h: 
 C 0xBF4F la espera del actor = 0x18
-C 0xBF55 guarda 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+C 0xBF55 guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 C 0xBF62 paso_siguiente_h: 
 C 0xBF68 guarda los 4 bits altos del byte de la sala (p56:BD28) y el byte siguiente (16 bits)
 C 0xBF6B apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)

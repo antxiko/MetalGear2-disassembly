@@ -1704,7 +1704,7 @@ fichas_al_seguir:		; en la zona 0x0A sala 9: 0xD418-0xD419 = 0x0C30 y 0xD41E = 4
 	ld hl,00c30h		;b048   ; 0x0C30...
 	ld (0d418h),hl		;b04b
 	ld a,004h		;b04e   ; ...y 4
-	ld (0d41eh),a		;b050
+	ld (0d41eh),a		;b050   ; guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 d820_al_seguir:
 	ld hl,0d820h		;b053
 	ld a,(hl)			;b056   ; el tipo 8?
@@ -1823,7 +1823,7 @@ alguien_ve_a_snake:		; salvo en el estado 0x14 o desde el 0x1B de Snake: 0xD43E 
 	ld (0caf6h),a		;b138   ; 0xCAF6 = 0
 	ld a,(0ca76h)		;b13b   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;b13e   ; en una especial, 0xD449
-	ld a,(0d41eh)		;b13f
+	ld a,(0d41eh)		;b13f   ; lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	jr z,pon_d4f4		;b142
 	ld a,(0d449h)		;b144
 pon_d4f4:
@@ -1852,7 +1852,7 @@ alerta_8e:		; la musica 0x8E
 alerta_sin_musica:		; 0xD4F4 = 0xD41E (o 0xD449 en una especial) y la alerta
 	ld a,(0ca76h)		;b176   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;b179
-	ld a,(0d41eh)		;b17a
+	ld a,(0d41eh)		;b17a   ; lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	jr z,pon_d4f4_b		;b17d
 	ld a,(0d449h)		;b17f
 pon_d4f4_b:

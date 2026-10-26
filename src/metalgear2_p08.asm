@@ -2696,7 +2696,7 @@ a_la_zona_0a:		; sin sala especial
 	ld hl,00c30h		;bdee   ; 0xD418 = 0x0C30
 	ld (0d418h),hl		;bdf1
 	ld a,004h		;bdf4   ; 0xD41E = 4
-	ld (0d41eh),a		;bdf6
+	ld (0d41eh),a		;bdf6   ; guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	ret			;bdf9
 cambia_dfd2:		; cada 8 cuadros, el bit 0 de 0xDFD2 cambia
 	ld a,(0ca03h)		;bdfa   ; lee el contador de cuadros (uno mas en cada interrupcion)

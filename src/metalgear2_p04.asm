@@ -1578,7 +1578,7 @@ a_p10_aa78:		; p10:AA78 con el banco 10 en 0xA000
 	jr L_8AB9		;8aa9
 a_p15_b8ec:		; p15:B8EC con el banco 15 en 0xA000
 	call 041f7h		;8aab   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b8ech		;8aae   ; p15:B8EC
+	call 0b8ech		;8aae   ; d800_tipo_0c: la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
 	jr L_8AB9		;8ab1
 a_p14_ab9e:		; p14:AB9E con el banco 14 en 0xA000
 	call 041efh		;8ab3   ; bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1599,7 +1599,7 @@ sprites_de_la_ficha_si:		; sin 0xCA77, los sprites de la ficha
 	jp sprites_de_la_ficha		;8acd   ; sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
 a_p15_b800:		; p15:B800 con el banco 15 en 0xA000
 	call 041f7h		;8ad0   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0b800h		;8ad3   ; p15:B800
+	call 0b800h		;8ad3   ; sprites_d800_tipo_1: los sprites de la ficha de 0xD800 de tipo 1 (IX): en los pasos 2-3 (el 2 sin el byte 0x1F), los 16 sprites desde el 10 fuera y los de la lista p15:BC0A por su dibujo (byte 0x0D) desde la Y + el byte 0x0F - 0x28 y la X + 0xC0; desde el paso 4, en su sala, la lista p15:BC40 y la de p15:BBFA con el color 0x0F; recortados por encima de 0xC0 (p15:B8B9)
 	jr L_8AB9		;8ad6
 
 ; ----------------------------------------------------------------------
@@ -2673,7 +2673,7 @@ a_p15_bdb8_guarda:		; p15:BDB8 guardando el banco de 0xA000
 	ld a,(0c383h)		;928b   ; lee la copia del banco de 0xA000
 	push af			;928e
 	call 041f7h		;928f   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bdb8h		;9292   ; p15:BDB8
+	call 0bdb8h		;9292   ; mira_alerta_d800: de las 4 fichas de 0xD800, la primera que da algo por su tipo (p15:BDCE): B = 0 nada, 1 se acaba la alerta, 2 o 3 (p04:9278)
 vuelve_banco_a000_b:		; el banco de 0xA000 de antes
 	pop af			;9295
 L_9296:
@@ -2692,13 +2692,13 @@ a_p15_be48_guarda:		; p15:BE48 guardando el banco de 0xA000
 	ld a,(0c383h)		;92a8   ; lee la copia del banco de 0xA000
 	push af			;92ab
 	call 041f7h		;92ac   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0be48h		;92af   ; p15:BE48
+	call 0be48h		;92af   ; cuenta_alerta_1: la cuenta de la alerta 1 (0xD42B) por el nivel de Snake: la palabra de 0xBE54 (0x78, 0x78, 0x90, 0xA0, 0xA0, 0xA0, 0xC8, 0xC8); la rutina no lleva ret y sigue por esa tabla como instrucciones: sub b deja Z y el ret z del byte 0xC8 vuelve
 	jr vuelve_banco_a000_b		;92b2
 a_p15_be64_guarda:		; p15:BE64 guardando el banco de 0xA000
 	ld a,(0c383h)		;92b4   ; lee la copia del banco de 0xA000
 	push af			;92b7
 	call 041f7h		;92b8   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0be64h		;92bb   ; p15:BE64
+	call 0be64h		;92bb   ; sitio_de_d418: sin 0xCA77 ni sala especial: acarreo si 0xD418-0xD419 cae cerca (16 en el primero, 0x20 en el segundo) de un sitio de la lista de p15:BE9E de esta zona y sala ([zona][sala][..][..], 0xFF al final)
 	jr L_92A4		;92be
 mira_bed7:		; si p15:BED7 da Z, se acaba la alerta
 	call a_p15_bed7_guarda		;92c0   ; a_p15_bed7_guarda: p15:BED7 guardando el banco de 0xA000
@@ -2708,19 +2708,19 @@ a_p15_bed7_guarda:		; p15:BED7 guardando el banco de 0xA000
 	ld a,(0c383h)		;92c7   ; lee la copia del banco de 0xA000
 	push af			;92ca
 	call 041f7h		;92cb   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bed7h		;92ce   ; p15:BED7
+	call 0bed7h		;92ce   ; se_acaba_alerta: Z si se acaba la alerta: con 0xCAA0 por debajo de 4, con la alerta sin su bit 3 y con 0xD444 (o 0xCA77 = 2), las 4 fichas de 0xD300 libres
 	jr L_92A4		;92d1
 a_p15_bf5b_guarda:		; p15:BF5B guardando el banco de 0xA000
 	ld a,(0c383h)		;92d3   ; lee la copia del banco de 0xA000
 	push af			;92d6
 	call 041f7h		;92d7   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bf5bh		;92da   ; p15:BF5B
+	call 0bf5bh		;92da   ; llegada_de_alerta: por la sala ((fila - 2) * 2 + columna - 5; desde 3, 4 en la zona 0x0C), 3 bytes de p15:BF89: D = la Y, E = la X y 0xD41E
 	jr vuelve_banco_a000_b		;92dd
 a_p15_bf0d_guarda:		; p15:BF0D guardando el banco de 0xA000
 	ld a,(0c383h)		;92df   ; lee la copia del banco de 0xA000
 	push af			;92e2
 	call 041f7h		;92e3   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bf0dh		;92e6   ; p15:BF0D
+	call 0bf0dh		;92e6   ; actor_de_alerta: la ficha de IX (0x40 bytes) a cero y un actor de tipo 1 en (X = E, Y = D) de esta sala: el byte 0x10 = 3, el 0x1B = C y su direccion (byte 0x0D): con C = 0 (0xD41E - 1) * 2, con 1 (0xD449 - 1) * 2, con 2 0, con mas 2
 	jr vuelve_banco_a000_b		;92e9
 d406_si:		; si p06:B55A no da acarreo, (HL) = 2
 	push hl			;92eb
@@ -2766,7 +2766,7 @@ L_9322:
 	ret c			;932e
 	ld a,(0ca76h)		;932f   ; la entrada que vale: 0xD41E (0xD449 en las especiales) = 0xD4F4
 	and a			;9332
-	ld hl,0d41eh		;9333
+	ld hl,0d41eh		;9333   ; apunta a la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	jr z,L_933B		;9336
 	ld hl,0d449h		;9338
 L_933B:
@@ -2860,7 +2860,7 @@ L_93DA:
 	call 07f3dh		;93e9   ; es_solido_si: acarreo si el caracter del mapa en (H = X, L = Y) llega al umbral de 0xCA4E (0xCA4F desde 0x81)
 	jp c,acaba_alerta_si		;93ec   ; acaba_alerta_si: si p06:B55A no da acarreo, se acaba la alerta
 	ld de,(0d418h)		;93ef
-	ld a,(0d41eh)		;93f3
+	ld a,(0d41eh)		;93f3   ; lee la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	ld b,a			;93f6
 	ld c,000h		;93f7
 L_93F9:
@@ -2893,10 +2893,10 @@ L_9418:
 	call guarda_d428		;9418   ; ...la sala en 0xD428 y un actor nuevo (p04:9786)
 	jp actor_nuevo_c		;941b   ; actor_nuevo_c: 0xD416 y 0xD426 uno mas y, en la primera libre de las 4 fichas de 0xD300, p15:BF0D y sus sprites
 sala_de_d44a:		; con 0xD44A distinto de 0xFF, A = su byte en 0xD580 (Z si 0); si no, NZ
-	ld a,(0d44ah)		;941e
+	ld a,(0d44ah)		;941e   ; lee el numero de la puerta por la que llega Snake (p15:AB0A)
 	cp 0ffh		;9421
 	jp z,L_942E		;9423
-	ld hl,0d580h		;9426
+	ld hl,0d580h		;9426   ; apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 	call 04248h		;9429   ; byte_de_tabla: A = el byte A de la tabla de HL (y HL apunta a el)
 	and a			;942c
 	ret			;942d
@@ -3016,7 +3016,7 @@ L_94FD:
 	xor a			;9504   ; 0xD444 = 0, 0xD44A = 0xFF, p04:9518 y p12:685F
 	ld (0d444h),a		;9505
 	dec a			;9508
-	ld (0d44ah),a		;9509
+	ld (0d44ah),a		;9509   ; guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 	call quita_los_de_d300		;950c   ; quita_los_de_d300: los 4 actores de 0xD300 (los que llegan con la alerta) de tipo menor de 0x10, fuera
 	call 04188h		;950f   ; bancos_12_4_56: pone el 12 en 0x6000, el 4 en 0x8000, el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	call 0685fh		;9512   ; rellena_actores: salvo en el estado 0x11 de Snake o en las zonas 8 y 0x0F: de las 0xD424 primeras fichas de 0xCE00, las libres se rellenan con su fila de p56:B086 (p12:688C) si su sala esta lejos
@@ -3273,7 +3273,7 @@ llegan_por_bf5b:		; p15:BF5B y el actor nuevo
 	call a_p15_bf5b_guarda		;96e0   ; a_p15_bf5b_guarda: p15:BF5B guardando el banco de 0xA000
 	jp actor_nuevo		;96e3   ; actor_nuevo: C = 0
 hay_d500_en_2:		; Z si alguna de las 8 fichas de 0xD500 (16 bytes) tiene el byte 1 en 2
-	ld hl,0d500h		;96e6   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+	ld hl,0d500h		;96e6   ; apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 	ld b,008h		;96e9
 L_96EB:
 	ld a,(hl)			;96eb   ; la ficha en uso?
@@ -3313,7 +3313,7 @@ llegan_por_arriba:		; por arriba: la primera fila del mapa a 0xDF40 y un hueco a
 	ld de,01200h		;9715   ; X variable, Y = 0x12; la entrada 2
 	ld a,002h		;9718
 busca_hueco:		; 0xD41E = A; cuenta los huecos de la fila de 0xDF40 (al menos 2)...
-	ld (0d41eh),a		;971a
+	ld (0d41eh),a		;971a   ; guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	ld hl,0df40h		;971d
 	ld bc,01800h		;9720
 L_9723:
@@ -3538,14 +3538,14 @@ numero_en_ventana:		; el hueco de X = 0xCE, Y = 0x3F (0x10 x 8) al color 15 y el
 	ld bc,(0c382h)		;98a3   ; lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 	push bc			;98a7
 	call 041f7h		;98a8   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bf98h		;98ab   ; p15:BF98
+	call 0bf98h		;98ab   ; numero_a_cifras: A (0-99) en dos cifras de 8 x 8 de (0x68 + 8 * cifra, 0x68): las decenas en (0xCF, 0x40) y las unidades en (0xD5, 0x40), con la operacion 0xC8 (0xD8 en la pagina 1)
 L_98AE:
 	jp vuelve_banco_a000_b		;98ae   ; vuelve_banco_a000_b: el banco de 0xA000 de antes
 a_p15_bfbf_guarda:		; p15:BFBF guardando los bancos de 0x8000 y 0xA000
 	ld bc,(0c382h)		;98b1   ; lee la copia del banco de 0x8000 y el byte siguiente (16 bits)
 	push bc			;98b5
 	call 041f7h		;98b6   ; bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-	call 0bfbfh		;98b9   ; p15:BFBF
+	call 0bfbfh		;98b9   ; cifra_8x8: la cifra A de (0x68 + 8 * A, 0x68)...
 	jr L_98AE		;98bc
 tres_rotulos:		; 3 rectangulos de 0x18 x 8 de la pagina 3 (Y = 0x70) en los sitios de la lista HL
 	ld b,003h		;98be

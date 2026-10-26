@@ -3914,7 +3914,7 @@ siguiente_entrada:
 	and a			;bc93
 	ret			;bc94
 toca_d500:		; acarreo si toca alguna de las 8 fichas activas de 0xD500: su caja de (byte 8 / 2) de ancho desde su X + eso, y del alto de p07:BCC5 desde su Y + eso
-	ld ix,0d500h		;bc95   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+	ld ix,0d500h		;bc95   ; apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 	ld b,008h		;bc99   ; 8 fichas
 ficha_d500:
 	ld a,(ix+000h)		;bc9b

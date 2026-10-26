@@ -9,216 +9,208 @@
 	org 0x0a000
 
 
-; ----------------------------------------------------------------------
-; Direcciones que solo aparecen como VALOR -en un `ld`, no en
-; un salto-: son punteros que el codigo se pasa o numeros que
-; casualmente coinciden con una direccion. No hay nada que
-; trazar en ellas; el equ existe para que el listado ensamble.
-; ----------------------------------------------------------------------
-lbe54h:	equ 0x0be54
-
 ; ======================================================================
 ; CODIGO 0xa000..0xa16d  (365 bytes)
 ; ======================================================================
 
 
-L_A000:
-	call L_A04C		;a000
-	jr L_A008		;a003
-L_A005:
-	call L_A049		;a005
-L_A008:
+puertas_sin_cuentas:		; carga las puertas de la sala (p15:A04C) y las pinta (p15:A008), sin bajar las cuentas de 0xD580
+	call carga_puertas		;a000   ; cargar
+	jr pinta_puertas		;a003   ; y pintar
+puertas_de_la_sala:		; baja las cuentas de 0xD580 (p15:A1E2), carga las puertas de la sala y las pinta
+	call cuentas_y_puertas		;a005   ; cuentas_y_puertas: baja las cuentas de 0xD580 y carga las puertas (p15:A04C)
+pinta_puertas:		; con la pantalla partida, nada; cada ficha activa de 0xD500: en el estado 2 o con su cuenta de 0xD580, abierta (p15:A1F3, estado 2); si no, estado 0 y cerrada (p15:A12B)
 	ld a,(0ca1ch)		;a008   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
 	and a			;a00b
-	ret nz			;a00c
-	ld ix,0d500h		;a00d   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
-	ld b,008h		;a011
-L_A013:
+	ret nz			;a00c   ; con la pantalla partida, nada
+	ld ix,0d500h		;a00d   ; apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
+	ld b,008h		;a011   ; 8 fichas
+puerta_al_pintar:
 	push bc			;a013
-	ld a,(ix+000h)		;a014
+	ld a,(ix+000h)		;a014   ; el tipo: 0, libre
 	and a			;a017
-	jr z,L_A035		;a018
-	ld a,(ix+001h)		;a01a
+	jr z,puerta_cerrada_al_entrar		;a018
+	ld a,(ix+001h)		;a01a   ; el estado 2...
 	cp 002h		;a01d
-	jr z,L_A02E		;a01f
-	ld a,(ix+005h)		;a021
-	ld hl,0d580h		;a024
+	jr z,puerta_ya_abierta		;a01f
+	ld a,(ix+005h)		;a021   ; ...o su cuenta en 0xD580 (por su numero)
+	ld hl,0d580h		;a024   ; apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 	call 0423eh		;a027   ; suma_a_hl: HL = HL + A
 	ld a,(hl)			;a02a
 	and a			;a02b
-	jr z,L_A035		;a02c
-L_A02E:
-	call L_A1F3		;a02e
-	ld a,002h		;a031
-	jr L_A03D		;a033
-L_A035:
-	ld (ix+001h),a		;a035
-	call L_A12B		;a038
-	jr L_A040		;a03b
-L_A03D:
+	jr z,puerta_cerrada_al_entrar		;a02c   ; sin cuenta: cerrada
+puerta_ya_abierta:		; pintada abierta y en el estado 2
+	call pinta_puerta_abierta		;a02e   ; pintada abierta...
+	ld a,002h		;a031   ; ...y el estado 2
+	jr pon_estado_puerta		;a033
+puerta_cerrada_al_entrar:		; el estado 0 y pintada cerrada
+	ld (ix+001h),a		;a035   ; el estado 0
+	call pinta_puerta_cerrada		;a038   ; pintada cerrada
+	jr puerta_siguiente		;a03b
+pon_estado_puerta:
 	ld (ix+001h),a		;a03d
-L_A040:
+puerta_siguiente:		; la ficha siguiente (16 bytes)
 	ld bc,00010h		;a040
 	add ix,bc		;a043
 	pop bc			;a045
-	djnz L_A013		;a046
+	djnz puerta_al_pintar		;a046   ; 8
 	ret			;a048
-L_A049:
-	call L_A1E2		;a049
-L_A04C:
-	ld hl,0d500h		;a04c   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
+cuentas_y_puertas:		; baja las cuentas de 0xD580 y carga las puertas (p15:A04C)
+	call baja_cuentas_d580		;a049   ; baja_cuentas_d580: las 0x80 cuentas de 0xD580 uno menos (las de 0 y las de 0xFF no)
+carga_puertas:		; 0xD500 a cero y las puertas de la sala de la lista de la zona (p15:AD0C) o de la sala especial (p15:B1FE): 6 bytes [sala][tipo][Y][X][pide][numero], 0xFF al final; cada una con su alto y ancho (p15:A1A8) y los casos de algunas zonas
+	ld hl,0d500h		;a04c   ; las 8 fichas a cero
 	ld bc,0007fh		;a04f
 	call 04236h		;a052   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	ld a,(0ca76h)		;a055   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
+	ld a,(0ca76h)		;a055   ; sala especial...
 	and a			;a058
-	ld hl,0b1feh		;a059
-	jr nz,L_A064		;a05c
-	ld hl,0ad0ch		;a05e
+	ld hl,0b1feh		;a059   ; ...su lista de p15:B1FE
+	jr nz,lista_de_puertas		;a05c
+	ld hl,0ad0ch		;a05e   ; si no, la de la zona en p15:AD0C
 	ld a,(0ca4ah)		;a061   ; lee la zona
-L_A064:
-	call 043f6h		;a064   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld ix,0d500h		;a067   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
-L_A06B:
+lista_de_puertas:		; HL = la lista; desde la primera ficha
+	call 043f6h		;a064   ; HL = la lista
+	ld ix,0d500h		;a067   ; desde la primera ficha
+puerta_de_la_lista:
 	ld a,(hl)			;a06b
-	inc a			;a06c
+	inc a			;a06c   ; 0xFF: se acaba
 	ret z			;a06d
-	ld a,(0ca4bh)		;a06e   ; lee la sala de la zona
+	ld a,(0ca4bh)		;a06e   ; solo las de esta sala
 	cp (hl)			;a071
-	jp nz,L_A123		;a072
+	jp nz,puerta_lista_siguiente		;a072   ; puerta_lista_siguiente: la siguiente de la lista (6 bytes)
 	push hl			;a075
-	inc hl			;a076
+	inc hl			;a076   ; desde el tipo
 	push ix		;a077
 	pop de			;a079
-	ldi		;a07a
-	inc de			;a07c
-	ldi		;a07d
+	ldi		;a07a   ; el tipo al byte 0...
+	inc de			;a07c   ; ...el byte 1 (estado) se salta...
+	ldi		;a07d   ; ...Y, X, lo que pide y el numero a los bytes 2-5
 	ldi		;a07f
 	ldi		;a081
 	ldi		;a083
-	call L_A1A8		;a085
+	call alto_y_ancho		;a085   ; su alto y su ancho
 	pop hl			;a088
-	ld a,(0ca4ah)		;a089   ; lee la zona
+	ld a,(0ca4ah)		;a089   ; en la zona 8, la de numero 0...
 	cp 008h		;a08c
-	jr nz,L_A0A1		;a08e
+	jr nz,puerta_sala_18		;a08e
 	ld a,(ix+005h)		;a090
 	and a			;a093
-	jr nz,L_A0A1		;a094
-	ld a,(0d7dah)		;a096
+	jr nz,puerta_sala_18		;a094
+	ld a,(0d7dah)		;a096   ; ...sin el bit 0 de 0xD7DA...
 	and 001h		;a099
-	jr nz,L_A0A1		;a09b
-	ld (ix+001h),002h		;a09d
-L_A0A1:
+	jr nz,puerta_sala_18		;a09b
+	ld (ix+001h),002h		;a09d   ; ...entra en el estado 2
+puerta_sala_18:		; en la sala especial 0x18, la de numero 0x1C con el bit 0 de 0xD7DA: no pide nada
 	ld a,(0ca76h)		;a0a1   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	ld b,a			;a0a4
 	cp 018h		;a0a5
-	jr nz,L_A0B7		;a0a7
+	jr nz,puerta_tipo_0c		;a0a7
 	ld a,(ix+005h)		;a0a9
 	cp 01ch		;a0ac
-	jr nz,L_A0B7		;a0ae
+	jr nz,puerta_tipo_0c		;a0ae
 	ld a,(0d7dah)		;a0b0
 	and 001h		;a0b3
-	jr nz,L_A0CB		;a0b5
-L_A0B7:
-	ld a,(ix+000h)		;a0b7
+	jr nz,puerta_no_pide		;a0b5
+puerta_tipo_0c:		; las de tipo 0x0C con el bit 0 de 0xD7DA o con 0xD441 no piden nada
+	ld a,(ix+000h)		;a0b7   ; las de tipo 0x0C...
 	cp 00ch		;a0ba
-	jr nz,L_A0CF		;a0bc
-	ld a,(0d7dah)		;a0be
+	jr nz,puerta_sala_29		;a0bc
+	ld a,(0d7dah)		;a0be   ; ...con el bit 0 de 0xD7DA...
 	and 001h		;a0c1
-	jr nz,L_A0CB		;a0c3
-	ld a,(0d441h)		;a0c5
+	jr nz,puerta_no_pide		;a0c3
+	ld a,(0d441h)		;a0c5   ; ...o con 0xD441: no piden nada
 	and a			;a0c8
-	jr z,L_A0CF		;a0c9
-L_A0CB:
-	ld (ix+004h),000h		;a0cb
-L_A0CF:
+	jr z,puerta_sala_29		;a0c9
+puerta_no_pide:		; lo que pide (byte 4) a 0
+	ld (ix+004h),000h		;a0cb   ; lo que pide: nada
+puerta_sala_29:		; en la sala especial 0x29, sala 2, con 0xD4F2: la ficha libre
 	ld a,b			;a0cf
 	cp 029h		;a0d0
-	jr nz,L_A0E5		;a0d2
+	jr nz,puerta_por_zona		;a0d2
 	ld a,(0ca4bh)		;a0d4   ; lee la sala de la zona
 	cp 002h		;a0d7
-	jr nz,L_A0E5		;a0d9
+	jr nz,puerta_por_zona		;a0d9
 	ld a,(0d4f2h)		;a0db
 	and a			;a0de
-	jr z,L_A0E5		;a0df
+	jr z,puerta_por_zona		;a0df
 	ld (ix+000h),000h		;a0e1
-L_A0E5:
-	ld a,(0ca4ah)		;a0e5   ; lee la zona
+puerta_por_zona:		; las zonas 0x0E, 0x13 y 0x12
+	ld a,(0ca4ah)		;a0e5   ; zona 0x0E...
 	cp 00eh		;a0e8
-	jr z,L_A0F6		;a0ea
-	cp 013h		;a0ec
-	jr z,L_A0FE		;a0ee
-	cp 012h		;a0f0
-	jr z,L_A10D		;a0f2
-	jr L_A11E		;a0f4
-L_A0F6:
-	ld a,(0d885h)		;a0f6
+	jr z,puerta_zona_0e		;a0ea
+	cp 013h		;a0ec   ; ...0x13...
+	jr z,puerta_zona_13		;a0ee
+	cp 012h		;a0f0   ; ...0x12
+	jr z,puerta_zona_12		;a0f2
+	jr ficha_d500_siguiente		;a0f4
+puerta_zona_0e:		; con 0xD885 = 0xFF, no pide nada
+	ld a,(0d885h)		;a0f6   ; 0xD885 = 0xFF?
 	inc a			;a0f9
-	jr nz,L_A11E		;a0fa
-	jr L_A11A		;a0fc
-L_A0FE:
-	ld a,(0d884h)		;a0fe
+	jr nz,ficha_d500_siguiente		;a0fa   ; no: pide lo suyo
+	jr puerta_sin_pedir		;a0fc
+puerta_zona_13:		; con 0xD884 = 0xFF, las de numero 0 y 1 no piden nada
+	ld a,(0d884h)		;a0fe   ; 0xD884 = 0xFF?
 	inc a			;a101
-	jr nz,L_A11E		;a102
-	ld a,(ix+005h)		;a104
+	jr nz,ficha_d500_siguiente		;a102   ; no: pide lo suyo
+	ld a,(ix+005h)		;a104   ; la 0 y la 1...
 	cp 002h		;a107
-	jr nc,L_A11E		;a109
-	jr L_A11A		;a10b
-L_A10D:
-	ld a,(0d889h)		;a10d
+	jr nc,ficha_d500_siguiente		;a109
+	jr puerta_sin_pedir		;a10b   ; ...no piden nada
+puerta_zona_12:		; con 0xD889 = 0xFF, la de numero 0x13 no pide nada
+	ld a,(0d889h)		;a10d   ; 0xD889 = 0xFF?
 	inc a			;a110
-	jr nz,L_A11E		;a111
-	ld a,(ix+005h)		;a113
+	jr nz,ficha_d500_siguiente		;a111   ; no: pide lo suyo
+	ld a,(ix+005h)		;a113   ; la 0x13...
 	cp 013h		;a116
-	jr nz,L_A11E		;a118
-L_A11A:
-	ld (ix+004h),000h		;a11a
-L_A11E:
-	ld de,00010h		;a11e
+	jr nz,ficha_d500_siguiente		;a118   ; ...no pide nada
+puerta_sin_pedir:		; lo que pide (byte 4) a 0
+	ld (ix+004h),000h		;a11a   ; lo que pide: nada
+ficha_d500_siguiente:		; la ficha siguiente (16 bytes)
+	ld de,00010h		;a11e   ; la ficha siguiente
 	add ix,de		;a121
-L_A123:
+puerta_lista_siguiente:		; la siguiente de la lista (6 bytes)
 	ld a,006h		;a123
 	call 0423eh		;a125   ; suma_a_hl: HL = HL + A
-	jp L_A06B		;a128
-L_A12B:
-	call L_A17B		;a12b
-	ret c			;a12e
-	ld a,(ix+000h)		;a12f
+	jp puerta_de_la_lista		;a128   ; puerta_de_la_lista:
+pinta_puerta_cerrada:		; salvo p15:A17B, las de tipo 3 y 4: 7 piezas de 8 x 8 en columna (X de p15:A16D o p15:A174, Y = 0x78) desde su sitio con la X de 8 en 8, en la otra pagina con la operacion 0xC8
+	call puerta_no_se_pinta		;a12b   ; puerta_no_se_pinta: acarreo (no se pinta): en la zona 3 sala 0 con 0xCAC9, en la zona 4 sala 0x0E con 0xCACD; con lo elegido 3, nunca
+	ret c			;a12e   ; acarreo: no se pinta
+	ld a,(ix+000h)		;a12f   ; tipo 3 o 4
 	sub 003h		;a132
 	cp 002h		;a134
 	ret nc			;a136
 	and a			;a137
-	ld hl,0a16dh		;a138
-	jr z,L_A140		;a13b
-	ld hl,0a174h		;a13d
-L_A140:
-	ld e,(ix+002h)		;a140
-	ld a,(ix+003h)		;a143
+	ld hl,0a16dh		;a138   ; tipo 3: las X de p15:A16D
+	jr z,piezas_de_puerta		;a13b
+	ld hl,0a174h		;a13d   ; tipo 4: las de p15:A174
+piezas_de_puerta:		; DE = (X de 8 en 8, Y) y 7 piezas
+	ld e,(ix+002h)		;a140   ; E = su Y
+	ld a,(ix+003h)		;a143   ; D = su X de 8 en 8
 	and 0f8h		;a146
 	ld d,a			;a148
-	ld b,007h		;a149
-L_A14B:
+	ld b,007h		;a149   ; 7 piezas
+pieza_de_puerta:
 	push hl			;a14b
 	push de			;a14c
 	push bc			;a14d
-	ld h,(hl)			;a14e
+	ld h,(hl)			;a14e   ; de (X de la lista, 0x78)...
 	ld l,078h		;a14f
-	ld bc,00808h		;a151
-	ld a,(0ca42h)		;a154   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld bc,00808h		;a151   ; ...8 x 8
+	ld a,(0ca42h)		;a154   ; en la otra pagina...
 	xor 001h		;a157
 	rlca			;a159
 	rlca			;a15a
 	rlca			;a15b
 	rlca			;a15c
-	or 0c8h		;a15d
+	or 0c8h		;a15d   ; ...con la operacion 0xC8
 	call 047edh		;a15f   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	pop bc			;a162
 	pop de			;a163
 	pop hl			;a164
-	inc hl			;a165
-	ld a,e			;a166
+	inc hl			;a165   ; la X siguiente de la lista
+	ld a,e			;a166   ; 8 mas abajo
 	add a,008h		;a167
 	ld e,a			;a169
-	djnz L_A14B		;a16a
+	djnz pieza_de_puerta		;a16a   ; 7
 	ret			;a16c
 
 ; ----------------------------------------------------------------------
@@ -234,43 +226,43 @@ DATA_resto_A16D:
 ; ======================================================================
 
 
-L_A17B:
+puerta_no_se_pinta:		; acarreo (no se pinta): en la zona 3 sala 0 con 0xCAC9, en la zona 4 sala 0x0E con 0xCACD; con lo elegido 3, nunca
 	ld a,(0cb21h)		;a17b   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
-	cp 003h		;a17e
-	jr z,L_A1A6		;a180
+	cp 003h		;a17e   ; con lo elegido 3, se pinta
+	jr z,puerta_se_pinta		;a180
 	ld a,(0ca4bh)		;a182   ; lee la sala de la zona
 	ld b,a			;a185
 	ld a,(0ca4ah)		;a186   ; lee la zona
-	sub 003h		;a189
-	jr z,L_A19C		;a18b
-	dec a			;a18d
-	jr nz,L_A1A6		;a18e
-	ld a,b			;a190
+	sub 003h		;a189   ; la zona 3...
+	jr z,zona_3_sala_0		;a18b
+	dec a			;a18d   ; ...o la 4...
+	jr nz,puerta_se_pinta		;a18e
+	ld a,b			;a190   ; ...sala 0x0E...
 	cp 00eh		;a191
-	jr nz,L_A1A6		;a193
-	ld a,(0cacdh)		;a195
+	jr nz,puerta_se_pinta		;a193
+	ld a,(0cacdh)		;a195   ; ...con 0xCACD: acarreo
 	and a			;a198
 	ret z			;a199
 	scf			;a19a
 	ret			;a19b
-L_A19C:
-	ld a,b			;a19c
+zona_3_sala_0:		; en la zona 3, la sala 0 con 0xCAC9: acarreo
+	ld a,b			;a19c   ; sala 0...
 	and a			;a19d
 	ret nz			;a19e
-	ld a,(0cac9h)		;a19f
+	ld a,(0cac9h)		;a19f   ; ...con 0xCAC9: acarreo
 	and a			;a1a2
 	ret z			;a1a3
 	scf			;a1a4
 	ret			;a1a5
-L_A1A6:
-	or a			;a1a6
+puerta_se_pinta:		; sin acarreo: se pinta
+	or a			;a1a6   ; sin acarreo
 	ret			;a1a7
-L_A1A8:
-	ld a,(ix+000h)		;a1a8
+alto_y_ancho:		; el alto (byte 7) y el ancho (byte 8) de su tipo, de la tabla de p15:A1B8
+	ld a,(ix+000h)		;a1a8   ; por su tipo...
 	ld hl,0a1b6h		;a1ab
 	call 043f6h		;a1ae   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld (ix+007h),l		;a1b1
-	ld (ix+008h),h		;a1b4
+	ld (ix+007h),l		;a1b1   ; ...el alto...
+	ld (ix+008h),h		;a1b4   ; ...y el ancho
 	ret			;a1b7
 
 ; ----------------------------------------------------------------------
@@ -285,21 +277,21 @@ DATA_A1B8:
 ; ======================================================================
 
 
-L_A1E2:
-	ld hl,0d580h		;a1e2
-	ld b,080h		;a1e5
-L_A1E7:
+baja_cuentas_d580:		; las 0x80 cuentas de 0xD580 uno menos (las de 0 y las de 0xFF no)
+	ld hl,0d580h		;a1e2   ; apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
+	ld b,080h		;a1e5   ; 0x80 cuentas
+cuenta_d580:
 	ld a,(hl)			;a1e7
 	and a			;a1e8
-	jr z,L_A1EF		;a1e9
+	jr z,cuenta_d580_siguiente		;a1e9   ; 0, nada
 	inc a			;a1eb
-	jr z,L_A1EF		;a1ec
-	dec (hl)			;a1ee
-L_A1EF:
+	jr z,cuenta_d580_siguiente		;a1ec   ; 0xFF, nada
+	dec (hl)			;a1ee   ; uno menos
+cuenta_d580_siguiente:
 	inc hl			;a1ef
-	djnz L_A1E7		;a1f0
+	djnz cuenta_d580		;a1f0
 	ret			;a1f2
-L_A1F3:
+pinta_puerta_abierta:		; por su tipo (tabla p15:A1FA)
 	ld a,(ix+000h)		;a1f3
 	dec a			;a1f6
 	call 0424dh		;a1f7   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -320,87 +312,87 @@ DATA_tabla_A1FA:
 ; ======================================================================
 
 
-L_A224:
+pinta_abierta_0d:		; las 4 filas de 3 piezas (p01:7D66) en su sitio, con la pagina de dibujar cambiada a la otra mientras
 	ld hl,0ca42h		;a224   ; apunta a la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	ld a,(hl)			;a227
 	push hl			;a228
 	push af			;a229
-	xor 001h		;a22a
+	xor 001h		;a22a   ; la otra pagina...
 	ld (hl),a			;a22c
-	call L_A263		;a22d
+	call sitio_de_puerta		;a22d   ; ...su sitio a DE
 	ex de,hl			;a230
 	call 07d66h		;a231   ; copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
 	pop af			;a234
 	pop hl			;a235
-	ld (hl),a			;a236
+	ld (hl),a			;a236   ; la pagina de antes
 	ret			;a237
-L_A238:
-	ld c,(ix+007h)		;a238
+pinta_abierta:		; su rectangulo (alto x ancho) a 0xFF en la otra pagina (p15:A255) y sus casillas del mapa libres (p15:A241)
+	ld c,(ix+007h)		;a238   ; C = el alto, B = el ancho
 	ld b,(ix+008h)		;a23b
-	call L_A255		;a23e
-L_A241:
-	call L_A263		;a241
-	ld a,(ix+008h)		;a244
+	call puerta_a_ff		;a23e   ; puerta_a_ff: BC desde su sitio a 0xFF en la otra pagina
+casillas_de_puerta:		; las casillas del mapa de la puerta (p15:A890): ancho / 8 desde la Y + el alto - 0x10
+	call sitio_de_puerta		;a241   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(ix+008h)		;a244   ; B = el ancho / 8
 	rrca			;a247
 	rrca			;a248
 	rrca			;a249
 	and 01fh		;a24a
 	ld b,a			;a24c
-	ld a,(ix+007h)		;a24d
+	ld a,(ix+007h)		;a24d   ; A = el alto - 8
 	sub 008h		;a250
-	jp L_A890		;a252
-L_A255:
-	call L_A263		;a255
-L_A258:
+	jp casillas_de_puerta_a		;a252   ; casillas_de_puerta_a: B casillas en dos filas del mapa desde (H, L + A - 8): 0x80 (cerradas) en el estado 4, 0 en los demas; con el byte 9, 0xCB3C = 0
+puerta_a_ff:		; BC desde su sitio a 0xFF en la otra pagina
+	call sitio_de_puerta		;a255   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+rellena_otra_ff:		; BC desde HL a 0xFF en la otra pagina (p00:46FF)
 	ld a,(0ca42h)		;a258   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	xor 001h		;a25b
+	xor 001h		;a25b   ; la otra pagina
 	ld d,a			;a25d
-	ld a,0ffh		;a25e
+	ld a,0ffh		;a25e   ; color 0xFF
 	jp 046ffh		;a260   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-L_A263:
+sitio_de_puerta:		; HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	ld l,(ix+002h)		;a263
 	ld h,(ix+003h)		;a266
 	ret			;a269
-L_A26A:
-	ld e,001h		;a26a
-	call L_A276		;a26c
-	call L_A263		;a26f
+pinta_abierta_3:		; las 8 rayas hacia la derecha (p15:A276, E = 1) y sus casillas del mapa desde su X (p15:A6EB)
+	ld e,001h		;a26a   ; de 1 en 1 hacia la derecha
+	call rayas_de_a2a5		;a26c   ; rayas_de_a2a5: 8 rayas verticales de color 0x0F en la otra pagina desde su sitio, con los largos de p15:A2A5 (del ultimo al primero), cada una E mas a la X y, desde la tercera, 4 mas abajo
+	call sitio_de_puerta		;a26f   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	xor a			;a272
-	jp L_A6EB		;a273
-L_A276:
-	call L_A263		;a276
-	ld c,00fh		;a279
-	ld d,008h		;a27b
-L_A27D:
+	jp casillas_de_lado		;a273   ; casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+rayas_de_a2a5:		; 8 rayas verticales de color 0x0F en la otra pagina desde su sitio, con los largos de p15:A2A5 (del ultimo al primero), cada una E mas a la X y, desde la tercera, 4 mas abajo
+	call sitio_de_puerta		;a276   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld c,00fh		;a279   ; color 0x0F
+	ld d,008h		;a27b   ; 8 rayas
+raya_de_a2a5:
 	push hl			;a27d
 	push de			;a27e
 	push bc			;a27f
-	ld a,d			;a280
+	ld a,d			;a280   ; su largo de p15:A2A5
 	dec a			;a281
 	ld de,0a2a5h		;a282
 	call 04243h		;a285   ; suma_a_de: DE = DE + A
 	ld a,(de)			;a288
 	ld b,a			;a289
-	ld a,(0ca42h)		;a28a   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld a,(0ca42h)		;a28a   ; en la otra pagina
 	xor 001h		;a28d
 	call 04680h		;a28f   ; linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
 	pop bc			;a292
 	pop de			;a293
 	pop hl			;a294
-	ld a,h			;a295
+	ld a,h			;a295   ; la X + E
 	add a,e			;a296
 	ld h,a			;a297
-	ld a,d			;a298
+	ld a,d			;a298   ; las dos primeras a la misma Y...
 	cp 007h		;a299
-	jr nc,L_A2A1		;a29b
-	inc l			;a29d
+	jr nc,raya_siguiente_a2a5		;a29b
+	inc l			;a29d   ; ...las demas, 4 mas abajo
 	inc l			;a29e
 	inc l			;a29f
 	inc l			;a2a0
-L_A2A1:
-	dec d			;a2a1
-	jr nz,L_A27D		;a2a2
-L_A2A4:
+raya_siguiente_a2a5:		; la raya siguiente, hasta 8
+	dec d			;a2a1   ; 8 rayas
+	jr nz,raya_de_a2a5		;a2a2
+tipo_sin_nada:		; nada (los tipos 0x0E y 0x14)
 	ret			;a2a4
 
 ; ----------------------------------------------------------------------
@@ -416,107 +408,107 @@ DATA_resto_A2A5:
 ; ======================================================================
 
 
-L_A2AD:
-	ld e,0ffh		;a2ad
-	call L_A276		;a2af
-	call L_A263		;a2b2
+pinta_abierta_4:		; las 8 rayas hacia la izquierda (E = -1) y sus casillas desde la X - 1
+	ld e,0ffh		;a2ad   ; de 1 en 1 hacia la izquierda
+	call rayas_de_a2a5		;a2af   ; rayas_de_a2a5: 8 rayas verticales de color 0x0F en la otra pagina desde su sitio, con los largos de p15:A2A5 (del ultimo al primero), cada una E mas a la X y, desde la tercera, 4 mas abajo
+	call sitio_de_puerta		;a2b2   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	ld a,0ffh		;a2b5
-	jp L_A6EB		;a2b7
-L_A2BA:
-	call L_A263		;a2ba
+	jp casillas_de_lado		;a2b7   ; casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+pinta_abierta_7:		; 4 rayas horizontales de color 0x0F desde (X + 3, Y), de 0x11 y 2 mas cada una, una mas abajo y una a la izquierda; luego (alto - 3) x ancho desde (X, Y + 3) a 0xFF y sus casillas
+	call sitio_de_puerta		;a2ba   ; desde la X + 3
 	ld a,h			;a2bd
 	add a,003h		;a2be
 	ld h,a			;a2c0
-	ld bc,0110fh		;a2c1
-	ld d,004h		;a2c4
-	ld a,(0ca42h)		;a2c6   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld bc,0110fh		;a2c1   ; 0x11 de largo, color 0x0F
+	ld d,004h		;a2c4   ; 4 rayas
+	ld a,(0ca42h)		;a2c6   ; en la otra pagina
 	xor 001h		;a2c9
-L_A2CB:
+raya_tipo_7:
 	call 046e6h		;a2cb   ; linea_horizontal_guarda: p00:467C guardando AF, HL, DE y BC
-	inc l			;a2ce
-	dec h			;a2cf
-	inc b			;a2d0
+	inc l			;a2ce   ; una mas abajo...
+	dec h			;a2cf   ; ...una a la izquierda...
+	inc b			;a2d0   ; ...2 mas larga
 	inc b			;a2d1
 	dec d			;a2d2
-	jr nz,L_A2CB		;a2d3
-	ld a,(ix+007h)		;a2d5
+	jr nz,raya_tipo_7		;a2d3
+	ld a,(ix+007h)		;a2d5   ; C = el alto - 3...
 	sub 003h		;a2d8
 	ld c,a			;a2da
-	ld b,(ix+008h)		;a2db
-	call L_A263		;a2de
-	ld a,l			;a2e1
+	ld b,(ix+008h)		;a2db   ; ...B = el ancho
+	call sitio_de_puerta		;a2de   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,l			;a2e1   ; desde la Y + 3
 	add a,003h		;a2e2
 	ld l,a			;a2e4
-	call L_A258		;a2e5
-	jp L_A241		;a2e8
-L_A2EB:
-	ld hl,0d580h		;a2eb
+	call rellena_otra_ff		;a2e5   ; a 0xFF
+	jp casillas_de_puerta		;a2e8   ; y sus casillas
+abre_las_fijas:		; 0xD580 a cero y las que estan siempre abiertas (0xFF): zona 2 las 4 y 1, zona 3 las 4 y 0x25, zona 5 las 0x0E y 0x1B
+	ld hl,0d580h		;a2eb   ; las 0x80 cuentas a 0
 	ld bc,0007fh		;a2ee
 	call 04236h		;a2f1   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	ld a,(0ca4ah)		;a2f4   ; lee la zona
+	ld a,(0ca4ah)		;a2f4   ; zona 2: la 4 y la 1
 	cp 002h		;a2f7
 	ld hl,0d584h		;a2f9
 	ld de,0d581h		;a2fc
-	jr z,L_A311		;a2ff
-	cp 003h		;a301
+	jr z,abre_dos		;a2ff
+	cp 003h		;a301   ; zona 3: la 4 y la 0x25
 	ld de,0d5a5h		;a303
-	jr z,L_A311		;a306
-	cp 005h		;a308
+	jr z,abre_dos		;a306
+	cp 005h		;a308   ; zona 5: la 0x0E y la 0x1B
 	ld hl,0d58eh		;a30a
 	ld de,0d59bh		;a30d
-	ret nz			;a310
-L_A311:
-	ld a,0ffh		;a311
+	ret nz			;a310   ; las demas, ninguna
+abre_dos:		; las cuentas de HL y DE a 0xFF
+	ld a,0ffh		;a311   ; las dos a 0xFF
 	ld (hl),a			;a313
 	ld (de),a			;a314
 	ret			;a315
-L_A316:
+puertas_cada_cuadro:		; sin 0xD4E9 ni salida de la sala: cada puerta activa por su tipo (p15:A368); la primera que queda abriendose o cerrandose (estado 1 o 4) va a 0xCAE8 con 0xCAE7 = 1 y se deja
 	ld a,(0d4e9h)		;a316
 	and a			;a319
-	ret nz			;a31a
+	ret nz			;a31a   ; con 0xD4E9, nada
 	ld a,(0ca41h)		;a31b   ; lee la salida de la sala (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	and a			;a31e
-	ret nz			;a31f
-	ld ix,0d500h		;a320   ; apunta a 8 fichas de 16 bytes [activa][..][Y][X][..][..][..][alto][ancho * 2] (p07:BC95)
-	ld bc,00800h		;a324
-L_A327:
-	ld a,(ix+000h)		;a327
+	ret nz			;a31f   ; saliendo de la sala, nada
+	ld ix,0d500h		;a320   ; apunta a 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
+	ld bc,00800h		;a324   ; 8 fichas
+puerta_cada_cuadro:		; la ficha por su tipo; si queda en el estado 1 o 4, se deja
+	ld a,(ix+000h)		;a327   ; el tipo: 0, libre
 	and a			;a32a
-	jr z,L_A340		;a32b
+	jr z,puerta_siguiente_cuadro		;a32b
 	push bc			;a32d
 	push ix		;a32e
-	call L_A368		;a330
+	call puerta_por_tipo		;a330   ; por su tipo
 	pop ix		;a333
 	pop bc			;a335
-	ld a,(ix+001h)		;a336
+	ld a,(ix+001h)		;a336   ; en el estado 1...
 	dec a			;a339
-	jr z,L_A348		;a33a
-	cp 003h		;a33c
-	jr z,L_A348		;a33e
-L_A340:
-	ld de,00010h		;a340
+	jr z,puerta_en_marcha		;a33a
+	cp 003h		;a33c   ; ...o 4: se queda
+	jr z,puerta_en_marcha		;a33e
+puerta_siguiente_cuadro:		; la ficha siguiente (16 bytes), hasta 8
+	ld de,00010h		;a340   ; la ficha siguiente
 	add ix,de		;a343
-	djnz L_A327		;a345
+	djnz puerta_cada_cuadro		;a345   ; 8
 	ret			;a347
-L_A348:
-	ld a,001h		;a348
-	ld (0cae7h),a		;a34a
-	push ix		;a34d
+puerta_en_marcha:		; 0xCAE7 = 1 y la ficha en 0xCAE8
+	ld a,001h		;a348   ; 0xCAE7 = 1...
+	ld (0cae7h),a		;a34a   ; guarda 1 mientras una puerta se abre o se cierra (p15:A348; p01:75F6)
+	push ix		;a34d   ; ...y la ficha en 0xCAE8
 	pop hl			;a34f
-	ld (0cae8h),hl		;a350
+	ld (0cae8h),hl		;a350   ; guarda la ficha de 0xD500 de la puerta que se mueve (p15:A350) y el byte siguiente (16 bits)
 	ret			;a353
-L_A354:
-	ld ix,(0cae8h)		;a354
-	call L_A368		;a358
-	ld a,(ix+001h)		;a35b
+sigue_puerta_en_marcha:		; la puerta de 0xCAE8 por su tipo (p15:A368); fuera del estado 1 o 4, 0xCAE7 = 0
+	ld ix,(0cae8h)		;a354   ; lee la ficha de 0xD500 de la puerta que se mueve (p15:A350) y el byte siguiente (16 bits)
+	call puerta_por_tipo		;a358   ; por su tipo
+	ld a,(ix+001h)		;a35b   ; en el estado 1...
 	dec a			;a35e
 	ret z			;a35f
-	cp 003h		;a360
+	cp 003h		;a360   ; ...o 4, sigue
 	ret z			;a362
-	xor a			;a363
-	ld (0cae7h),a		;a364
+	xor a			;a363   ; si no, 0xCAE7 = 0
+	ld (0cae7h),a		;a364   ; guarda 1 mientras una puerta se abre o se cierra (p15:A348; p01:75F6)
 	ret			;a367
-L_A368:
+puerta_por_tipo:		; salta por su tipo (tabla p15:A36F)
 	ld a,(ix+000h)		;a368
 	dec a			;a36b
 	call 0424dh		;a36c   ; despachador: salta a la palabra A de la tabla que va detras del call
@@ -537,40 +529,40 @@ DATA_tabla_A36F:
 ; ======================================================================
 
 
-L_A399:
+lo_que_pide:		; acarreo si se abre: sin 0xCB4B y sin nada que pedir (byte 4 = 0) o con lo elegido (0xCB21) que sirve: 0x11, 0x12 y 0x13 abren las 1-3, 4-6 y 7-9; 0x14-0x1C, una de la 1 a la 9
 	ld a,(0cb4bh)		;a399   ; lee con el puesto, la vida baja un punto cada 16 cuadros
 	and a			;a39c
-	ret nz			;a39d
-	ld a,(ix+004h)		;a39e
+	ret nz			;a39d   ; con 0xCB4B, no
+	ld a,(ix+004h)		;a39e   ; C = lo que pide
 	ld c,a			;a3a1
-	and a			;a3a2
-	jr nz,L_A3A7		;a3a3
+	and a			;a3a2   ; nada: se abre
+	jr nz,mira_lo_elegido		;a3a3
 	scf			;a3a5
 	ret			;a3a6
-L_A3A7:
-	ld a,(0cb21h)		;a3a7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+mira_lo_elegido:		; con lo elegido 0x11-0x1C
+	ld a,(0cb21h)		;a3a7   ; lo elegido - 0x11...
 	sub 011h		;a3aa
-	cp 00ch		;a3ac
+	cp 00ch		;a3ac   ; ...de 0 a 0x0B, si no, no
 	ret nc			;a3ae
-	cp 003h		;a3af
-	jr c,L_A3BC		;a3b1
-	sub 002h		;a3b3
-	cp c			;a3b5
-	jr nz,L_A3BA		;a3b6
+	cp 003h		;a3af   ; 0x11-0x13: de tres en tres
+	jr c,sirve_de_tres		;a3b1
+	sub 002h		;a3b3   ; 0x14-0x1C: 1-9...
+	cp c			;a3b5   ; ...justo lo que pide: acarreo
+	jr nz,no_sirve		;a3b6
 	scf			;a3b8
 	ret			;a3b9
-L_A3BA:
-	or a			;a3ba
+no_sirve:		; sin acarreo: no se abre
+	or a			;a3ba   ; sin acarreo
 	ret			;a3bb
-L_A3BC:
+sirve_de_tres:		; (n + 1) * 3 - lo que pide...
 	inc a			;a3bc
 	ld b,a			;a3bd
 	add a,a			;a3be
 	add a,b			;a3bf
 	sub c			;a3c0
-	cp 003h		;a3c1
+	cp 003h		;a3c1   ; ...acarreo si da 0-2: lo que pide es 3n+1 a 3n+3
 	ret			;a3c3
-L_A3C4:
+tipo_0d:		; por su estado (tabla p15:A3CA)
 	ld a,(ix+001h)		;a3c4
 	call 0424dh		;a3c7   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -579,53 +571,53 @@ L_A3C4:
 ;   indice en A): A3D2, A40F, A4F4, A9AB; lo leen p15:A3C7 (8 bytes)
 ;   0xa3ca..0xa3d2  (8 bytes)
 DATA_tabla_A3CA:
-	defw 0a3d2h,0a40fh,0a4f4h,0a9abh	; a3ca  -> L_A3D2 L_A40F L_A4F4 L_A9AB
+	defw 0a3d2h,0a40fh,0a4f4h,0a9abh	; a3ca  -> tipo_0d_cerrada tipo_0d_abierta pasa_tipo_1 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa3d2..0xa422  (80 bytes)
 ; ======================================================================
 
 
-L_A3D2:
-	call L_A44B		;a3d2
-	ret nc			;a3d5
-	ld a,(0ca4ah)		;a3d6   ; lee la zona
+tipo_0d_cerrada:		; si Snake entra (p15:A44B): la de numero 0x1A en la zona 4 (4 en las demas) pide lo elegido 0x10 con 0xCA89 = 4 (0 fuera de la zona 4, y entonces fuera el bit 0 de 0xD7DD); se abre: su cuenta (p15:ACDE) y el estado siguiente (p15:A887)
+	call snake_entra		;a3d2   ; snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
+	ret nc			;a3d5   ; Snake no entra: nada
+	ld a,(0ca4ah)		;a3d6   ; en la zona 4, la 0x1A...
 	ld b,01ah		;a3d9
 	cp 004h		;a3db
-	jr z,L_A3E1		;a3dd
-	ld b,004h		;a3df
-L_A3E1:
+	jr z,tipo_0d_numero		;a3dd
+	ld b,004h		;a3df   ; ...en las demas, la 4
+tipo_0d_numero:
 	ld a,(ix+005h)		;a3e1
 	cp b			;a3e4
-	jr nz,L_A406		;a3e5
-	ld a,(0cb21h)		;a3e7   ; lee lo elegido de la segunda tabla (0xCB21; las 0x20-0x22 llevan cuenta)
+	jr nz,tipo_0d_abre		;a3e5   ; las demas se abren
+	ld a,(0cb21h)		;a3e7   ; con lo elegido 0x10...
 	cp 010h		;a3ea
 	ret nz			;a3ec
-	ld a,(0ca4ah)		;a3ed   ; lee la zona
+	ld a,(0ca4ah)		;a3ed   ; ...y 0xCA89 = 4 en la zona 4...
 	cp 004h		;a3f0
 	ld b,004h		;a3f2
-	jr z,L_A3F8		;a3f4
-	ld b,000h		;a3f6
-L_A3F8:
+	jr z,tipo_0d_mira_ca89		;a3f4
+	ld b,000h		;a3f6   ; ...o 0 en las demas
+tipo_0d_mira_ca89:
 	ld a,(0ca89h)		;a3f8   ; lee 0-4: lo de la cosa 0x10 (p11:BB49; su dibujo en p11:BBEB)
 	cp b			;a3fb
 	ret nz			;a3fc
-	ld a,b			;a3fd
+	ld a,b			;a3fd   ; con 0: fuera el bit 0 de 0xD7DD
 	and a			;a3fe
-	jr nz,L_A406		;a3ff
+	jr nz,tipo_0d_abre		;a3ff
 	ld hl,0d7ddh		;a401
 	res 0,(hl)		;a404
-L_A406:
+tipo_0d_abre:		; su cuenta en 0xD580...
 	ld a,(ix+005h)		;a406
-	call L_ACDE		;a409
-	jp L_A887		;a40c
-L_A40F:
-	call L_A263		;a40f
+	call cuenta_de_puerta		;a409   ; cuenta_de_puerta: la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+	jp estado_siguiente		;a40c   ; ...y el estado siguiente
+tipo_0d_abierta:		; las 4 filas de 3 piezas (p01:7D66) en su sitio, el sonido 0x46 y sus casillas (p15:A85F)
+	call sitio_de_puerta		;a40f   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	ex de,hl			;a412
 	call 07d66h		;a413   ; copia_7d95_a_3: 4 filas de 3 caracteres de 8 x 8 de la pagina de dibujar (X de la lista de p01:7D95, Y = 0x78; 0xFF: X = 0, Y = 0x60) a la pagina 3
-	call 06c33h		;a416   ; sonido_46: pide el sonido 0x46
-	jp L_A85F		;a419
-L_A41C:
+	call 06c33h		;a416   ; el sonido 0x46
+	jp casillas_y_estado		;a419   ; casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
+tipo_1:		; por su estado (tabla p15:A422): los tipos 1, 9-0x0C, 0x13 y 0x15
 	ld a,(ix+001h)		;a41c
 	call 0424dh		;a41f   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -641,116 +633,116 @@ DATA_tabla_A422:
 ; ======================================================================
 
 
-L_A42C:
-	call L_A44B		;a42c
-	ret nc			;a42f
-	ld (ix+00ah),014h		;a430
-	call L_A5C6		;a434
-	call L_A263		;a437
-	ld c,(ix+007h)		;a43a
+tipo_1_cerrada:		; si Snake entra (p15:A44B): la cuenta de 0x14 (byte 0x0A), se abre (p15:A5C6) y su rectangulo se guarda en (0xC8, 0xD8) de la pagina 0
+	call snake_entra		;a42c   ; snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
+	ret nc			;a42f   ; Snake no entra: nada
+	ld (ix+00ah),014h		;a430   ; la cuenta 0x14
+	call se_abre		;a434   ; se abre
+	call sitio_de_puerta		;a437   ; desde su sitio...
+	ld c,(ix+007h)		;a43a   ; ...alto x ancho...
 	ld b,(ix+008h)		;a43d
-	ld de,0c8d8h		;a440
-L_A443:
+	ld de,0c8d8h		;a440   ; ...a (0xC8, 0xD8)
+copia_a_la_0:		; BC de HL a DE, de la pagina de dibujar a la 0 (p00:4767)
 	ld a,(0ca42h)		;a443   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	and 003h		;a446
 	jp 04767h		;a448   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-L_A44B:
-	ld a,(ix+009h)		;a44b
+snake_entra:		; acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
+	ld a,(ix+009h)		;a44b   ; con el byte 9: acarreo
 	and a			;a44e
 	scf			;a44f
 	ret nz			;a450
-	ld a,(0cb31h)		;a451   ; lee 1 en el estado 2 de Snake
+	ld a,(0cb31h)		;a451   ; en el estado 2 de Snake, no
 	and a			;a454
 	ret nz			;a455
-	call L_A399		;a456
+	call lo_que_pide		;a456   ; sin lo que pide, no
 	ret nc			;a459
-	call L_A514		;a45a
+	call empuja_arriba		;a45a   ; sin empujar hacia arriba, no
 	ret nz			;a45d
-	call L_A263		;a45e
-	ld a,(ix+000h)		;a461
+	call sitio_de_puerta		;a45e   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(ix+000h)		;a461   ; 0x0A de fondo...
 	cp 00ah		;a464
 	ld b,00ah		;a466
 	jr nz,L_A46C		;a468
-	ld b,00eh		;a46a
+	ld b,00eh		;a46a   ; ...0x0E en el tipo 0x0A
 L_A46C:
-	ld a,(0cb03h)		;a46c   ; lee la Y de Snake
+	ld a,(0cb03h)		;a46c   ; la Y de Snake - Y - alto
 	sub l			;a46f
 	sub (ix+007h)		;a470
 	cp b			;a473
 	ret nc			;a474
-	ld a,(ix+008h)		;a475
+	ld a,(ix+008h)		;a475   ; el ancho - 8
 	sub 008h		;a478
 	ld b,a			;a47a
-	ld a,(0cb05h)		;a47b   ; lee la X de Snake
+	ld a,(0cb05h)		;a47b   ; la X de Snake - X - 4
 	sub h			;a47e
 	sub 004h		;a47f
 	cp b			;a481
 	ret			;a482
-L_A483:
+cerrando_tipo_1:		; sin 0xC697, el paso (p15:A488)
 	ld a,(0c697h)		;a483
-	and a			;a486
+	and a			;a486   ; con 0xC697, espera
 	ret nz			;a487
-L_A488:
-	ld a,(ix+006h)		;a488
+desliza_tipo_1:		; un paso mas (byte 6, de 2 en 2 hasta el ancho; luego p15:A85F): lo guardado en (0xC6, 0xD8) se pinta con la operacion 0 corrido 2 * paso (0x18 - eso cerrando, estado 4), del ancho que queda
+	ld a,(ix+006h)		;a488   ; 2 * el paso
 	add a,a			;a48b
 	ld b,a			;a48c
-	cp (ix+008h)		;a48d
-	jp nc,L_A85F		;a490
-	inc (ix+006h)		;a493
-	ld a,(ix+001h)		;a496
+	cp (ix+008h)		;a48d   ; hasta el ancho: se acaba
+	jp nc,casillas_y_estado		;a490   ; casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
+	inc (ix+006h)		;a493   ; uno mas
+	ld a,(ix+001h)		;a496   ; en el estado 4 (cerrando)...
 	cp 004h		;a499
 	ld a,b			;a49b
 	jr nz,L_A4A2		;a49c
-	sub 018h		;a49e
+	sub 018h		;a49e   ; ...0x18 - eso
 	neg		;a4a0
 L_A4A2:
 	ld b,a			;a4a2
-	ret z			;a4a3
-	call L_A263		;a4a4
+	ret z			;a4a3   ; 0: nada
+	call sitio_de_puerta		;a4a4   ; a (X + eso, Y)...
 	add a,h			;a4a7
 	ld d,a			;a4a8
 	ld e,l			;a4a9
-	ld a,(ix+008h)		;a4aa
+	ld a,(ix+008h)		;a4aa   ; ...del ancho - eso...
 	sub b			;a4ad
 	ret z			;a4ae
 	ret c			;a4af
 	ld b,a			;a4b0
-	ld c,(ix+007h)		;a4b1
-	ld hl,0c6d8h		;a4b4
-	ld a,(0ca42h)		;a4b7   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld c,(ix+007h)		;a4b1   ; ...por el alto...
+	ld hl,0c6d8h		;a4b4   ; ...desde (0xC6, 0xD8)
+	ld a,(0ca42h)		;a4b7   ; la pagina de dibujar (bits 4-5), operacion 0
 	rrca			;a4ba
 	rrca			;a4bb
 	rrca			;a4bc
 	rrca			;a4bd
 	and 030h		;a4be
 	jp 047edh		;a4c0   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-L_A4C3:
-	ld a,(ix+000h)		;a4c3
+abierta_tipo_1:		; los tipos 0x0B y 0x0C (y el 0x13 sin alerta) bajan la cuenta del byte 0x0A: a 0, se cierran (paso 0, su dibujo de p15:A537, estado 4, su cuenta de 0xD580 a 0); si no, con Snake empujando dentro de la caja, el estado siguiente (pasa)
+	ld a,(ix+000h)		;a4c3   ; 0x0B...
 	cp 00bh		;a4c6
-	jr z,L_A4D8		;a4c8
-	cp 00ch		;a4ca
-	jr z,L_A4D8		;a4cc
-	cp 013h		;a4ce
-	jr nz,L_A4F4		;a4d0
-	ld a,(0ca5fh)		;a4d2   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+	jr z,cuenta_tipo_1		;a4c8
+	cp 00ch		;a4ca   ; ...0x0C...
+	jr z,cuenta_tipo_1		;a4cc
+	cp 013h		;a4ce   ; ...o 0x13...
+	jr nz,pasa_tipo_1		;a4d0
+	ld a,(0ca5fh)		;a4d2   ; ...sin alerta
 	and a			;a4d5
-	jr nz,L_A4F4		;a4d6
-L_A4D8:
-	dec (ix+00ah)		;a4d8
-	jr nz,L_A4F4		;a4db
-	ld (ix+006h),000h		;a4dd
-	call L_A537		;a4e1
-	ld (ix+001h),004h		;a4e4
-	ld a,(ix+005h)		;a4e8
-	ld hl,0d580h		;a4eb
+	jr nz,pasa_tipo_1		;a4d6
+cuenta_tipo_1:		; la cuenta del byte 0x0A: a 0, se cierra
+	dec (ix+00ah)		;a4d8   ; la cuenta: a 0...
+	jr nz,pasa_tipo_1		;a4db
+	ld (ix+006h),000h		;a4dd   ; ...el paso 0...
+	call dibujo_tipo_1		;a4e1   ; ...su dibujo...
+	ld (ix+001h),004h		;a4e4   ; ...el estado 4...
+	ld a,(ix+005h)		;a4e8   ; ...y su cuenta de 0xD580 a 0
+	ld hl,0d580h		;a4eb   ; apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 	call 0423eh		;a4ee   ; suma_a_hl: HL = HL + A
 	ld (hl),000h		;a4f1
 	ret			;a4f3
-L_A4F4:
-	call L_A514		;a4f4
+pasa_tipo_1:		; empujando hacia arriba...
+	call empuja_arriba		;a4f4   ; empuja_arriba: Z si Snake va hacia arriba (0xCB0E = 1) con el mando hacia arriba (bit 0)
 	ret nz			;a4f7
-	call L_A263		;a4f8
-	ld a,(ix+007h)		;a4fb
+	call sitio_de_puerta		;a4f8   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(ix+007h)		;a4fb   ; ...dentro: la Y de Snake - Y - (alto - 8) por debajo de 0x0A...
 	sub 008h		;a4fe
 	ld b,a			;a500
 	ld a,(0cb03h)		;a501   ; lee la Y de Snake
@@ -758,68 +750,68 @@ L_A4F4:
 	sub b			;a505
 	cp 00ah		;a506
 	ret nc			;a508
-	ld a,(0cb05h)		;a509   ; lee la X de Snake
+	ld a,(0cb05h)		;a509   ; ...y la X de Snake - X por debajo del ancho
 	sub h			;a50c
 	cp (ix+008h)		;a50d
 	ret nc			;a510
-	jp L_A887		;a511
-L_A514:
-	ld bc,00101h		;a514
-L_A517:
+	jp estado_siguiente		;a511   ; el estado siguiente
+empuja_arriba:		; Z si Snake va hacia arriba (0xCB0E = 1) con el mando hacia arriba (bit 0)
+	ld bc,00101h		;a514   ; B = la direccion, C = el bit del mando
+empuja_hacia:		; Z si Snake va hacia B con el bit C del mando
 	ld a,(0cb0eh)		;a517   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-	sub b			;a51a
+	sub b			;a51a   ; otra direccion: NZ
 	ret nz			;a51b
-	ld a,(0ca08h)		;a51c   ; lee el mando: joystick y teclado juntos (bits 0-3 las direcciones, 4-5 los disparos)
+	ld a,(0ca08h)		;a51c   ; el mando
 	and c			;a51f
-	jr z,L_A524		;a520
-	xor a			;a522
+	jr z,no_empuja		;a520
+	xor a			;a522   ; Z
 	ret			;a523
-L_A524:
-	ld a,001h		;a524
+no_empuja:		; NZ: no empuja
+	ld a,001h		;a524   ; NZ
 	and a			;a526
 	ret			;a527
-L_A528:
+empuja_abajo:		; hacia abajo (2, bit 1)
 	ld bc,00202h		;a528
-	jr L_A517		;a52b
-L_A52D:
+	jr empuja_hacia		;a52b
+empuja_izquierda:		; hacia la izquierda (3, bit 2)
 	ld bc,00304h		;a52d
-	jr L_A517		;a530
-L_A532:
+	jr empuja_hacia		;a530
+empuja_derecha:		; hacia la derecha (4, bit 3)
 	ld bc,00408h		;a532
-	jr L_A517		;a535
-L_A537:
+	jr empuja_hacia		;a535
+dibujo_tipo_1:		; con el banco 27: su dibujo de 4 x 4 piezas (p27:92B9 el tipo 0x0B, p27:92C9 el 0x0C, p15:A572 los demas) en (0xC0, 0xD8) de la pagina 0 por p00:4A19; vuelve a los bancos 1, 2 y 15
 	call 04229h		;a537   ; bancos_27: pone el 27 en 0x8000 (con su copia en 0xC381-0xC383)
-	ld a,(ix+000h)		;a53a
+	ld a,(ix+000h)		;a53a   ; tipo 0x0B: p27:92B9
 	cp 00bh		;a53d
 	ld hl,092b9h		;a53f
-	jr z,L_A54E		;a542
-	cp 00ch		;a544
+	jr z,dibujo_de_4x4		;a542
+	cp 00ch		;a544   ; tipo 0x0C: p27:92C9
 	ld hl,092c9h		;a546
-	jr z,L_A54E		;a549
-	ld hl,0a572h		;a54b
-L_A54E:
-	ld bc,00404h		;a54e
-	ld a,002h		;a551
+	jr z,dibujo_de_4x4		;a549
+	ld hl,0a572h		;a54b   ; los demas: p15:A572
+dibujo_de_4x4:		; 4 filas de 4 piezas desde (0xC0, 0xD8)
+	ld bc,00404h		;a54e   ; 4 filas de 4
+	ld a,002h		;a551   ; las paginas 2
 	ld (0ca1bh),a		;a553   ; guarda las paginas de la copia de una letra o pieza (bits 0-1 origen, 2-3 destino)
-	ld de,0c0d8h		;a556
-L_A559:
+	ld de,0c0d8h		;a556   ; desde (0xC0, 0xD8)
+fila_de_dibujo:
 	push de			;a559
 	ld c,004h		;a55a
-L_A55C:
-	ld a,(hl)			;a55c
-	call 04a19h		;a55d   ; p00:4A19
-	ld a,d			;a560
+pieza_de_dibujo:		; una pieza a DE y 8 a la derecha
+	ld a,(hl)			;a55c   ; la pieza...
+	call 04a19h		;a55d   ; ...a DE
+	ld a,d			;a560   ; 8 a la derecha
 	add a,008h		;a561
 	ld d,a			;a563
 	inc hl			;a564
 	dec c			;a565
-	jr nz,L_A55C		;a566
+	jr nz,pieza_de_dibujo		;a566
 	pop de			;a568
-	ld a,e			;a569
+	ld a,e			;a569   ; la fila siguiente, 8 mas abajo
 	add a,008h		;a56a
 	ld e,a			;a56c
-	djnz L_A559		;a56d
-	jp 041f4h		;a56f   ; bancos_1_2_15: pone el 1 en 0x6000, el 2 en 0x8000, el 15 en 0xA000 (con su copia en 0xC381-0xC383)
+	djnz fila_de_dibujo		;a56d
+	jp 041f4h		;a56f   ; los bancos 1, 2 y 15
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_A572: lo apuntan con el banco puesto p15:A54B (0xA572); el
@@ -834,7 +826,7 @@ DATA_resto_A572:
 ; ======================================================================
 
 
-L_A582:
+tipo_0e:		; por su estado (tabla p15:A588): los tipos 0x0E y 0x14
 	ld a,(ix+001h)		;a582
 	call 0424dh		;a585   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -843,22 +835,22 @@ L_A582:
 ;   indice en A): A590, A628, A635, A9AB; lo leen p15:A585 (8 bytes)
 ;   0xa588..0xa590  (8 bytes)
 DATA_tabla_A588:
-	defw 0a590h,0a628h,0a635h,0a9abh	; a588  -> L_A590 L_A628 L_A635 L_A9AB
+	defw 0a590h,0a628h,0a635h,0a9abh	; a588  -> tipo_0e_cerrada abierta_tipo_2 pasa_tipo_2 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa590..0xa5a7  (23 bytes)
 ; ======================================================================
 
 
-L_A590:
-	call L_A528		;a590
+tipo_0e_cerrada:		; empujando hacia abajo dentro de la caja de abajo (p15:A5E6): su cuenta (p15:ACDE) y el estado siguiente
+	call empuja_abajo		;a590   ; empuja_abajo: hacia abajo (2, bit 1)
 	ret nz			;a593
-	call L_A5E6		;a594
+	call caja_de_abajo		;a594   ; dentro?
 	ret nc			;a597
-	ld a,(ix+005h)		;a598
-	call L_ACDE		;a59b
-	jp L_A887		;a59e
-L_A5A1:
+	ld a,(ix+005h)		;a598   ; su cuenta
+	call cuenta_de_puerta		;a59b   ; cuenta_de_puerta: la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+	jp estado_siguiente		;a59e   ; estado_siguiente: el estado siguiente (byte 1 + 1)
+tipo_2:		; por su estado (tabla p15:A5A7): los tipos 2, 0x0F y 0x10
 	ld a,(ix+001h)		;a5a1
 	call 0424dh		;a5a4   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -867,99 +859,99 @@ L_A5A1:
 ;   indice en A): A5AF, A600, A635, A9AB; lo leen p15:A5A4 (8 bytes)
 ;   0xa5a7..0xa5af  (8 bytes)
 DATA_tabla_A5A7:
-	defw 0a5afh,0a600h,0a635h,0a9abh	; a5a7  -> L_A5AF L_A600 L_A635 L_A9AB
+	defw 0a5afh,0a600h,0a635h,0a9abh	; a5a7  -> tipo_2_cerrada abre_tipo_2 pasa_tipo_2 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa5af..0xa657  (168 bytes)
 ; ======================================================================
 
 
-L_A5AF:
+tipo_2_cerrada:		; con el byte 9, se abre; si no, sin el estado 2 de Snake, empujando hacia abajo, con lo que pide y dentro de la caja de abajo
 	ld a,(ix+009h)		;a5af
 	and a			;a5b2
-	jr nz,L_A5C6		;a5b3
+	jr nz,se_abre		;a5b3   ; con el byte 9, se abre
 	ld a,(0cb31h)		;a5b5   ; lee 1 en el estado 2 de Snake
 	and a			;a5b8
-	ret nz			;a5b9
-	call L_A528		;a5ba
+	ret nz			;a5b9   ; en el estado 2 de Snake, no
+	call empuja_abajo		;a5ba   ; empuja_abajo: hacia abajo (2, bit 1)
 	ret nz			;a5bd
-	call L_A399		;a5be
+	call lo_que_pide		;a5be   ; lo_que_pide: acarreo si se abre: sin 0xCB4B y sin nada que pedir (byte 4 = 0) o con lo elegido (0xCB21) que sirve: 0x11, 0x12 y 0x13 abren las 1-3, 4-6 y 7-9; 0x14-0x1C, una de la 1 a la 9
 	ret nc			;a5c1
-	call L_A5E6		;a5c2
+	call caja_de_abajo		;a5c2   ; caja_de_abajo: acarreo si Snake esta bajo la puerta: su sitio - la Y de Snake por debajo de 8 y la X de Snake - X - 4 por debajo del ancho - 8
 	ret nc			;a5c5
-L_A5C6:
-	ld a,(ix+005h)		;a5c6
-	call L_ACDE		;a5c9
-	xor a			;a5cc
+se_abre:		; su cuenta en 0xD580 (p15:ACDE), el paso y el byte 9 a 0, el rectangulo de (0xC0, 0xD4) de la pagina 0 a 0 (p15:A5DC), el estado siguiente y el sonido 0x16
+	ld a,(ix+005h)		;a5c6   ; su cuenta
+	call cuenta_de_puerta		;a5c9   ; cuenta_de_puerta: la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
+	xor a			;a5cc   ; el paso y el byte 9 a 0
 	ld (ix+006h),a		;a5cd
 	ld (ix+009h),a		;a5d0
-	call L_A5DC		;a5d3
-	call L_A887		;a5d6
-	jp 06a4ch		;a5d9   ; sonido_16: pide el sonido 0x16
-L_A5DC:
+	call borra_lo_guardado		;a5d3   ; borra lo guardado
+	call estado_siguiente		;a5d6   ; el estado siguiente
+	jp 06a4ch		;a5d9   ; el sonido 0x16
+borra_lo_guardado:		; 0x40 x 0x2C desde (0xC0, 0xD4) de la pagina 0 a 0
 	ld hl,0c0d4h		;a5dc
 	ld bc,0402ch		;a5df
 	ld d,000h		;a5e2
-	jr L_A624		;a5e4
-L_A5E6:
-	call L_A263		;a5e6
-	ld a,(0cb03h)		;a5e9   ; lee la Y de Snake
+	jr rectangulo_a_0		;a5e4
+caja_de_abajo:		; acarreo si Snake esta bajo la puerta: su sitio - la Y de Snake por debajo de 8 y la X de Snake - X - 4 por debajo del ancho - 8
+	call sitio_de_puerta		;a5e6   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a5e9   ; su Y - la de Snake
 	sub l			;a5ec
 	neg		;a5ed
 	cp 008h		;a5ef
 	ret nc			;a5f1
-	ld a,(ix+008h)		;a5f2
+	ld a,(ix+008h)		;a5f2   ; el ancho - 8
 	sub 008h		;a5f5
 	ld b,a			;a5f7
-	ld a,(0cb05h)		;a5f8   ; lee la X de Snake
+	ld a,(0cb05h)		;a5f8   ; la X de Snake - X - 4
 	sub h			;a5fb
 	sub 004h		;a5fc
 	cp b			;a5fe
 	ret			;a5ff
-L_A600:
+abre_tipo_2:		; el paso de 2 en 2 hasta el ancho (luego p15:A628): ancho del paso por alto a 0 desde su sitio
 	ld a,(ix+006h)		;a600
-	cp (ix+008h)		;a603
-	jr nc,L_A628		;a606
-	inc (ix+006h)		;a608
+	cp (ix+008h)		;a603   ; hasta el ancho...
+	jr nc,abierta_tipo_2		;a606
+	inc (ix+006h)		;a608   ; ...2 mas
 	inc (ix+006h)		;a60b
-	call L_A263		;a60e
+	call sitio_de_puerta		;a60e   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	ld a,(ix+006h)		;a611
-L_A614:
+hueco_a_0:		; B (ancho) x el alto desde HL a 0 en la pagina de dibujar (la 1 con la pantalla partida)
 	ld b,a			;a614
-	ld c,(ix+007h)		;a615
-	ld a,(0ca1ch)		;a618   ; lee 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
+	ld c,(ix+007h)		;a615   ; C = el alto
+	ld a,(0ca1ch)		;a618   ; con la pantalla partida, la pagina 1
 	and a			;a61b
 	ld d,001h		;a61c
-	jr nz,L_A624		;a61e
-	ld a,(0ca42h)		;a620   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	jr nz,rectangulo_a_0		;a61e
+	ld a,(0ca42h)		;a620   ; si no, la de dibujar
 	ld d,a			;a623
-L_A624:
-	xor a			;a624
+rectangulo_a_0:		; BC desde HL a 0 en la pagina D
+	xor a			;a624   ; color 0
 	jp 046ffh		;a625   ; borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
-L_A628:
-	ld a,(ix+008h)		;a628
+abierta_tipo_2:		; sus casillas libres (p15:A86D, desde su Y) y el estado siguiente
+	ld a,(ix+008h)		;a628   ; B = el ancho / 8
 	rrca			;a62b
 	rrca			;a62c
 	rrca			;a62d
 	and 01fh		;a62e
 	ld b,a			;a630
-	xor a			;a631
-	jp L_A86D		;a632
-L_A635:
-	call L_A528		;a635
+	xor a			;a631   ; desde su Y
+	jp casillas_y_estado_a		;a632   ; casillas_y_estado_a: las casillas desde su sitio + A y el estado
+pasa_tipo_2:		; empujando hacia abajo dentro de la caja (la Y de Snake - 2 - Y por debajo del alto, la X de Snake - X por debajo del ancho): el estado siguiente
+	call empuja_abajo		;a635   ; empuja_abajo: hacia abajo (2, bit 1)
 	ret nz			;a638
-	call L_A263		;a639
-	ld a,(0cb03h)		;a63c   ; lee la Y de Snake
+	call sitio_de_puerta		;a639   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a63c   ; la Y de Snake - 2 - Y
 	sub 002h		;a63f
 	sub l			;a641
 	cp (ix+007h)		;a642
 	ret nc			;a645
-	ld a,(0cb05h)		;a646   ; lee la X de Snake
+	ld a,(0cb05h)		;a646   ; la X de Snake - X
 	sub h			;a649
 	cp (ix+008h)		;a64a
 	ret nc			;a64d
-	jp L_A887		;a64e
-L_A651:
+	jp estado_siguiente		;a64e   ; el estado siguiente
+tipo_3:		; por su estado (tabla p15:A657)
 	ld a,(ix+001h)		;a651
 	call 0424dh		;a654   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -968,132 +960,132 @@ L_A651:
 ;   indice en A): A65F, A6B1, A702, A9AB; lo leen p15:A654 (8 bytes)
 ;   0xa657..0xa65f  (8 bytes)
 DATA_tabla_A657:
-	defw 0a65fh,0a6b1h,0a702h,0a9abh	; a657  -> L_A65F L_A6B1 L_A702 L_A9AB
+	defw 0a65fh,0a6b1h,0a702h,0a9abh	; a657  -> tipo_3_cerrada baja_tipo_3 pasa_tipo_3 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa65f..0xa722  (195 bytes)
 ; ======================================================================
 
 
-L_A65F:
+tipo_3_cerrada:		; con el byte 9, se abre; si no, sin el estado 2 de Snake, empujando hacia la izquierda, con lo que pide y dentro (la Y de Snake - Y - 0x20 por debajo de 0x20, la X de Snake - X - 0x0C por debajo de 8): se abre y sus 6 columnas de 1 x 0x20 (cada una 4 mas abajo) se guardan en (0xC8, 0xD8)
 	ld a,(ix+009h)		;a65f
 	and a			;a662
-	jr nz,L_A687		;a663
+	jr nz,abre_tipo_3		;a663   ; con el byte 9, se abre
 	ld a,(0cb31h)		;a665   ; lee 1 en el estado 2 de Snake
 	and a			;a668
-	ret nz			;a669
-	call L_A52D		;a66a
+	ret nz			;a669   ; en el estado 2 de Snake, no
+	call empuja_izquierda		;a66a   ; sin empujar hacia la izquierda, no
 	ret nz			;a66d
-	call L_A399		;a66e
+	call lo_que_pide		;a66e   ; sin lo que pide, no
 	ret nc			;a671
-	call L_A263		;a672
-	ld a,(0cb03h)		;a675   ; lee la Y de Snake
+	call sitio_de_puerta		;a672   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a675   ; la Y de Snake - Y - 0x20
 	sub l			;a678
 	sub 020h		;a679
 	cp 020h		;a67b
 	ret nc			;a67d
-	ld a,(0cb05h)		;a67e   ; lee la X de Snake
+	ld a,(0cb05h)		;a67e   ; la X de Snake - X - 0x0C
 	sub h			;a681
 	sub 00ch		;a682
 	cp 008h		;a684
 	ret nc			;a686
-L_A687:
-	call L_A5C6		;a687
-	ld b,006h		;a68a
-	ld de,0c8d8h		;a68c
-	call L_A263		;a68f
+abre_tipo_3:		; se abre y guarda sus 6 columnas
+	call se_abre		;a687   ; se abre
+	ld b,006h		;a68a   ; 6 columnas...
+	ld de,0c8d8h		;a68c   ; ...a (0xC8, 0xD8)...
+	call sitio_de_puerta		;a68f   ; ...desde la X + 1
 	inc h			;a692
-	ld a,(0ca42h)		;a693   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld a,(0ca42h)		;a693   ; de la pagina de dibujar
 	and 003h		;a696
 	rrca			;a698
 	rrca			;a699
-L_A69A:
+columna_tipo_3:
 	push af			;a69a
 	push bc			;a69b
 	push de			;a69c
 	push hl			;a69d
-	ld bc,00120h		;a69e
+	ld bc,00120h		;a69e   ; 1 x 0x20
 	call 047edh		;a6a1   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	pop hl			;a6a4
 	pop de			;a6a5
 	pop bc			;a6a6
 	pop af			;a6a7
-	inc d			;a6a8
+	inc d			;a6a8   ; la siguiente: una a la derecha...
 	inc h			;a6a9
-	inc l			;a6aa
+	inc l			;a6aa   ; ...4 mas abajo
 	inc l			;a6ab
 	inc l			;a6ac
 	inc l			;a6ad
-	djnz L_A69A		;a6ae
+	djnz columna_tipo_3		;a6ae   ; 6
 	ret			;a6b0
-L_A6B1:
-	ld a,(ix+006h)		;a6b1
+baja_tipo_3:		; un paso (byte 6, hasta 0x10; luego p15:A6E1): las 6 columnas guardadas de (0xC8, 0xD6), 2 * paso mas abajo y otro tanto mas cortas
+	ld a,(ix+006h)		;a6b1   ; 2 * el paso
 	add a,a			;a6b4
 	ld c,a			;a6b5
-	cp 020h		;a6b6
-	jr nc,L_A6E1		;a6b8
-	inc (ix+006h)		;a6ba
-	call L_A263		;a6bd
+	cp 020h		;a6b6   ; hasta 0x20
+	jr nc,acaba_tipo_3		;a6b8
+	inc (ix+006h)		;a6ba   ; uno mas
+	call sitio_de_puerta		;a6bd   ; a la X + 1...
 	ld d,h			;a6c0
 	inc d			;a6c1
-	add a,l			;a6c2
+	add a,l			;a6c2   ; ...y la Y + 2 * paso
 	ld e,a			;a6c3
-	ld hl,0c8d6h		;a6c4
-	ld b,006h		;a6c7
-L_A6C9:
+	ld hl,0c8d6h		;a6c4   ; desde (0xC8, 0xD6)
+	ld b,006h		;a6c7   ; 6 columnas
+columna_baja_3:
 	push bc			;a6c9
 	push de			;a6ca
 	push hl			;a6cb
-	ld b,001h		;a6cc
-	ld a,020h		;a6ce
+	ld b,001h		;a6cc   ; 1 de ancho...
+	ld a,020h		;a6ce   ; ...0x20 - 2 * paso de alto
 	sub c			;a6d0
 	ld c,a			;a6d1
-	call L_A853		;a6d2
+	call copia_a_la_de_dibujar		;a6d2   ; copia_a_la_de_dibujar: B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
 	pop hl			;a6d5
 	pop de			;a6d6
 	pop bc			;a6d7
-	inc h			;a6d8
+	inc h			;a6d8   ; la siguiente: una a la derecha...
 	inc d			;a6d9
-	inc e			;a6da
+	inc e			;a6da   ; ...4 mas abajo
 	inc e			;a6db
 	inc e			;a6dc
 	inc e			;a6dd
-	djnz L_A6C9		;a6de
+	djnz columna_baja_3		;a6de   ; 6
 	ret			;a6e0
-L_A6E1:
-	call L_A263		;a6e1
+acaba_tipo_3:		; sus casillas libres desde su X (p15:A6EB) y el estado siguiente
+	call sitio_de_puerta		;a6e1   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	xor a			;a6e4
-	call L_A6EB		;a6e5
-	jp L_A887		;a6e8
-L_A6EB:
-	add a,h			;a6eb
+	call casillas_de_lado		;a6e5   ; casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+	jp estado_siguiente		;a6e8   ; estado_siguiente: el estado siguiente (byte 1 + 1)
+casillas_de_lado:		; 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+	add a,h			;a6eb   ; la X + A...
 	ld h,a			;a6ec
-	ld a,l			;a6ed
+	ld a,l			;a6ed   ; ...la Y + 0x20
 	add a,020h		;a6ee
 	ld l,a			;a6f0
-	call 04411h		;a6f1   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
-	ld b,003h		;a6f4
-L_A6F6:
-	ld (hl),000h		;a6f6
-	ld a,018h		;a6f8
+	call 04411h		;a6f1   ; su casilla
+	ld b,003h		;a6f4   ; 3
+casilla_de_lado:		; una casilla a 0 y la fila siguiente
+	ld (hl),000h		;a6f6   ; libre
+	ld a,018h		;a6f8   ; la fila siguiente (0x18 casillas)
 	call 0423eh		;a6fa   ; suma_a_hl: HL = HL + A
-	djnz L_A6F6		;a6fd
-	jp L_A8A6		;a6ff
-L_A702:
-	call L_A52D		;a702
+	djnz casilla_de_lado		;a6fd   ; 3
+	jp byte_9_y_cb3c		;a6ff   ; byte_9_y_cb3c: con el byte 9, 0xCB3C = 0
+pasa_tipo_3:		; empujando hacia la izquierda dentro (la Y de Snake - Y - 0x20 por debajo de 0x20, la X de Snake - X por debajo de 0x0F): el estado siguiente
+	call empuja_izquierda		;a702   ; empuja_izquierda: hacia la izquierda (3, bit 2)
 	ret nz			;a705
-	call L_A263		;a706
-	ld a,(0cb03h)		;a709   ; lee la Y de Snake
+	call sitio_de_puerta		;a706   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a709   ; la Y de Snake - Y - 0x20
 	sub l			;a70c
 	sub 020h		;a70d
 	cp 020h		;a70f
 	ret nc			;a711
-	ld a,(0cb05h)		;a712   ; lee la X de Snake
+	ld a,(0cb05h)		;a712   ; la X de Snake - X
 	sub h			;a715
 	cp 00fh		;a716
 	ret nc			;a718
-	jp L_A887		;a719
-L_A71C:
+	jp estado_siguiente		;a719   ; el estado siguiente
+tipo_4:		; por su estado (tabla p15:A722): el de p15:A651 de espejo
 	ld a,(ix+001h)		;a71c
 	call 0424dh		;a71f   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -1102,120 +1094,120 @@ L_A71C:
 ;   indice en A): A72A, A77C, A7B8, A9AB; lo leen p15:A71F (8 bytes)
 ;   0xa722..0xa72a  (8 bytes)
 DATA_tabla_A722:
-	defw 0a72ah,0a77ch,0a7b8h,0a9abh	; a722  -> L_A72A L_A77C L_A7B8 L_A9AB
+	defw 0a72ah,0a77ch,0a7b8h,0a9abh	; a722  -> tipo_4_cerrada baja_tipo_4 pasa_tipo_4 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa72a..0xa7da  (176 bytes)
 ; ======================================================================
 
 
-L_A72A:
+tipo_4_cerrada:		; como p15:A65F empujando hacia la derecha: la X de Snake - X + 0x10 por debajo de 8; las 6 columnas desde la X - 1 hacia la izquierda
 	ld a,(ix+009h)		;a72a
 	and a			;a72d
-	jr nz,L_A752		;a72e
+	jr nz,abre_tipo_4		;a72e   ; con el byte 9, se abre
 	ld a,(0cb31h)		;a730   ; lee 1 en el estado 2 de Snake
 	and a			;a733
-	ret nz			;a734
-	call L_A532		;a735
+	ret nz			;a734   ; en el estado 2 de Snake, no
+	call empuja_derecha		;a735   ; sin empujar hacia la derecha, no
 	ret nz			;a738
-	call L_A399		;a739
+	call lo_que_pide		;a739   ; sin lo que pide, no
 	ret nc			;a73c
-	call L_A263		;a73d
-	ld a,(0cb03h)		;a740   ; lee la Y de Snake
+	call sitio_de_puerta		;a73d   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a740   ; la Y de Snake - Y - 0x20
 	sub l			;a743
 	sub 020h		;a744
 	cp 020h		;a746
 	ret nc			;a748
-	ld a,(0cb05h)		;a749   ; lee la X de Snake
+	ld a,(0cb05h)		;a749   ; la X de Snake - X + 0x10
 	sub h			;a74c
 	add a,010h		;a74d
 	cp 008h		;a74f
 	ret nc			;a751
-L_A752:
-	call L_A5C6		;a752
-	call L_A263		;a755
+abre_tipo_4:		; se abre y guarda sus 6 columnas hacia la izquierda
+	call se_abre		;a752   ; se abre
+	call sitio_de_puerta		;a755   ; desde la X - 1
 	dec h			;a758
-	ld a,(0ca42h)		;a759   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld a,(0ca42h)		;a759   ; de la pagina de dibujar
 	and 003h		;a75c
 	rrca			;a75e
 	rrca			;a75f
-	ld b,006h		;a760
+	ld b,006h		;a760   ; 6 columnas a (0xC8, 0xD8)
 	ld de,0c8d8h		;a762
-L_A765:
+columna_tipo_4:
 	push af			;a765
 	push bc			;a766
 	push de			;a767
 	push hl			;a768
-	ld bc,00120h		;a769
+	ld bc,00120h		;a769   ; 1 x 0x20
 	call 047edh		;a76c   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 	pop hl			;a76f
 	pop de			;a770
 	pop bc			;a771
 	pop af			;a772
-	inc d			;a773
+	inc d			;a773   ; la siguiente: una a la izquierda...
 	dec h			;a774
-	inc l			;a775
+	inc l			;a775   ; ...4 mas abajo
 	inc l			;a776
 	inc l			;a777
 	inc l			;a778
-	djnz L_A765		;a779
+	djnz columna_tipo_4		;a779   ; 6
 	ret			;a77b
-L_A77C:
-	ld a,(ix+006h)		;a77c
+baja_tipo_4:		; un paso como p15:A6B1, desde la X - 1 hacia la izquierda
+	ld a,(ix+006h)		;a77c   ; 2 * el paso
 	add a,a			;a77f
 	ld c,a			;a780
-	cp 020h		;a781
-	jr nc,L_A7AC		;a783
-	inc (ix+006h)		;a785
-	call L_A263		;a788
+	cp 020h		;a781   ; hasta 0x20
+	jr nc,acaba_tipo_4		;a783
+	inc (ix+006h)		;a785   ; uno mas
+	call sitio_de_puerta		;a788   ; a la X - 1...
 	ld d,h			;a78b
 	dec d			;a78c
-	add a,l			;a78d
+	add a,l			;a78d   ; ...y la Y + 2 * paso
 	ld e,a			;a78e
-	ld hl,0c8d6h		;a78f
+	ld hl,0c8d6h		;a78f   ; desde (0xC8, 0xD6)
 	ld b,006h		;a792
-L_A794:
+columna_baja_4:
 	push bc			;a794
 	push de			;a795
 	push hl			;a796
-	ld b,001h		;a797
-	ld a,020h		;a799
+	ld b,001h		;a797   ; 1 de ancho...
+	ld a,020h		;a799   ; ...0x20 - 2 * paso de alto
 	sub c			;a79b
 	ld c,a			;a79c
-	call L_A853		;a79d
+	call copia_a_la_de_dibujar		;a79d   ; copia_a_la_de_dibujar: B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
 	pop hl			;a7a0
 	pop de			;a7a1
 	pop bc			;a7a2
-	inc h			;a7a3
+	inc h			;a7a3   ; la siguiente: una a la izquierda...
 	dec d			;a7a4
-	inc e			;a7a5
+	inc e			;a7a5   ; ...4 mas abajo
 	inc e			;a7a6
 	inc e			;a7a7
 	inc e			;a7a8
-	djnz L_A794		;a7a9
+	djnz columna_baja_4		;a7a9
 	ret			;a7ab
-L_A7AC:
-	call L_A263		;a7ac
+acaba_tipo_4:		; sus casillas libres desde la X - 1 y el estado siguiente
+	call sitio_de_puerta		;a7ac   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	dec h			;a7af
 	ld a,0ffh		;a7b0
-	call L_A6EB		;a7b2
-	jp L_A887		;a7b5
-L_A7B8:
-	call L_A532		;a7b8
+	call casillas_de_lado		;a7b2   ; casillas_de_lado: 3 casillas en columna del mapa a 0 desde (X + A, Y + 0x20); con el byte 9, 0xCB3C = 0 (p15:A8A6)
+	jp estado_siguiente		;a7b5   ; estado_siguiente: el estado siguiente (byte 1 + 1)
+pasa_tipo_4:		; empujando hacia la derecha dentro (la Y de Snake - Y - 0x20 por debajo de 0x20, la X de Snake - X + 0x0C por debajo de 8): el estado siguiente
+	call empuja_derecha		;a7b8   ; empuja_derecha: hacia la derecha (4, bit 3)
 	ret nz			;a7bb
-	call L_A263		;a7bc
-	ld a,(0cb03h)		;a7bf   ; lee la Y de Snake
+	call sitio_de_puerta		;a7bc   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a7bf   ; la Y de Snake - Y - 0x20
 	sub l			;a7c2
 	sub 020h		;a7c3
 	cp 020h		;a7c5
 	ret nc			;a7c7
-	ld a,(0cb05h)		;a7c8   ; lee la X de Snake
+	ld a,(0cb05h)		;a7c8   ; la X de Snake - X + 0x0C
 	sub h			;a7cb
 	add a,00ch		;a7cc
 	cp 008h		;a7ce
 	ret nc			;a7d0
-	jp L_A887		;a7d1
-L_A7D4:
+	jp estado_siguiente		;a7d1   ; el estado siguiente
+tipo_5:		; por su estado (tabla p15:A7DA): los tipos 5, 0x11 y 0x12
 	ld a,(ix+001h)		;a7d4
 	call 0424dh		;a7d7   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -1224,80 +1216,80 @@ L_A7D4:
 ;   indice en A): A7E2, A807, A4F4, A9AB; lo leen p15:A7D7 (8 bytes)
 ;   0xa7da..0xa7e2  (8 bytes)
 DATA_tabla_A7DA:
-	defw 0a7e2h,0a807h,0a4f4h,0a9abh	; a7da  -> L_A7E2 L_A807 L_A4F4 L_A9AB
+	defw 0a7e2h,0a807h,0a4f4h,0a9abh	; a7da  -> tipo_5_cerrada abre_tipo_5 pasa_tipo_1 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa7e2..0xa8c5  (227 bytes)
 ; ======================================================================
 
 
-L_A7E2:
-	call L_A44B		;a7e2
+tipo_5_cerrada:		; si Snake entra (p15:A44B): se abre y guarda sus mitades (p15:A7E9)
+	call snake_entra		;a7e2   ; snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
 	ret nc			;a7e5
-	call L_A5C6		;a7e6
-L_A7E9:
-	call L_A263		;a7e9
-	ld b,(ix+008h)		;a7ec
+	call se_abre		;a7e6   ; se_abre: su cuenta en 0xD580 (p15:ACDE), el paso y el byte 9 a 0, el rectangulo de (0xC0, 0xD4) de la pagina 0 a 0 (p15:A5DC), el estado siguiente y el sonido 0x16
+guarda_mitades:		; la mitad izquierda (ancho / 2 x alto) a (0xC8, 0xD8) y la derecha a (0xE8, 0xD8), de la pagina de dibujar a la 0
+	call sitio_de_puerta		;a7e9   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld b,(ix+008h)		;a7ec   ; B = el ancho / 2
 	srl b		;a7ef
-	ld c,(ix+007h)		;a7f1
+	ld c,(ix+007h)		;a7f1   ; C = el alto
 	push hl			;a7f4
 	push bc			;a7f5
-	ld de,0c8d8h		;a7f6
-	call L_A443		;a7f9
+	ld de,0c8d8h		;a7f6   ; la izquierda a (0xC8, 0xD8)
+	call copia_a_la_0		;a7f9   ; copia_a_la_0: BC de HL a DE, de la pagina de dibujar a la 0 (p00:4767)
 	pop bc			;a7fc
 	pop hl			;a7fd
-	ld a,h			;a7fe
+	ld a,h			;a7fe   ; la X + el ancho / 2...
 	add a,b			;a7ff
 	ld h,a			;a800
-	ld de,0e8d8h		;a801
-	jp L_A443		;a804
-L_A807:
-	ld a,(ix+008h)		;a807
+	ld de,0e8d8h		;a801   ; ...a (0xE8, 0xD8)
+	jp copia_a_la_0		;a804   ; copia_a_la_0: BC de HL a DE, de la pagina de dibujar a la 0 (p00:4767)
+abre_tipo_5:		; un paso (byte 6, 2 * paso hasta el ancho / 2; luego p15:A85F): las dos mitades guardadas se apartan 2 * paso (p15:A822)
+	ld a,(ix+008h)		;a807   ; C = el ancho / 2
 	srl a		;a80a
 	ld c,a			;a80c
-	ld a,(ix+006h)		;a80d
+	ld a,(ix+006h)		;a80d   ; B = 2 * el paso
 	add a,a			;a810
 	ld b,a			;a811
-	cp c			;a812
-	jr nc,L_A85F		;a813
-	inc (ix+006h)		;a815
-	ld h,0d8h		;a818
-	ld l,(ix+007h)		;a81a
-	ld e,(ix+002h)		;a81d
-	ld a,0cah		;a820
-L_A822:
-	ld (0d8e0h),hl		;a822   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha y el byte siguiente (16 bits)
-	ld (0d8e2h),a		;a825   ; guarda de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
-	ld d,(ix+003h)		;a828
+	cp c			;a812   ; hasta la mitad
+	jr nc,casillas_y_estado		;a813
+	inc (ix+006h)		;a815   ; uno mas
+	ld h,0d8h		;a818   ; la Y de lo guardado 0xD8...
+	ld l,(ix+007h)		;a81a   ; ...el alto...
+	ld e,(ix+002h)		;a81d   ; ...a su Y
+	ld a,0cah		;a820   ; la izquierda desde la X 0xCA
+mitades_apartadas:		; las dos mitades guardadas apartadas B (C la mitad): la derecha desde (0xE6, L) a la X + C + B, la izquierda desde (A + B, L) a la X, cada una de C - B de ancho y H de alto (H, L y A pasan por 0xD8E0-0xD8E2)
+	ld (0d8e0h),hl		;a822   ; el alto y la Y de lo guardado
+	ld (0d8e2h),a		;a825   ; la X de la izquierda guardada
+	ld d,(ix+003h)		;a828   ; su X
 	push de			;a82b
 	push bc			;a82c
-	ld a,d			;a82d
+	ld a,d			;a82d   ; la derecha a la X + C + B...
 	add a,c			;a82e
 	add a,b			;a82f
 	ld d,a			;a830
-	ld a,(0d8e2h)		;a831   ; lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+	ld a,(0d8e2h)		;a831   ; ...desde la X 0xE6...
 	rra			;a834
 	ld h,0e6h		;a835
 	jr nc,L_A83A		;a837
 	inc h			;a839
 L_A83A:
-	ld a,(0d8e1h)		;a83a   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
+	ld a,(0d8e1h)		;a83a   ; ...y la Y guardada
 	ld l,a			;a83d
-	call L_A84C		;a83e
+	call mitad_apartada		;a83e   ; la copia
 	pop bc			;a841
 	pop de			;a842
-	ld a,(0d8e1h)		;a843   ; lee de paso (p14:BE73, con 0xD8E2): donde va la cabecera de la racha
+	ld a,(0d8e1h)		;a843   ; la izquierda desde la Y guardada...
 	ld l,a			;a846
-	ld a,(0d8e2h)		;a847   ; lee de paso (en p01:62B5: 0 copia con ldir, 1 caracter a caracter)
+	ld a,(0d8e2h)		;a847   ; ...y la X guardada + B
 	add a,b			;a84a
 	ld h,a			;a84b
-L_A84C:
-	ld a,c			;a84c
+mitad_apartada:		; B = C - B de ancho, C = el alto (0xD8E0); la copia
+	ld a,c			;a84c   ; C - B de ancho...
 	sub b			;a84d
 	ld b,a			;a84e
-	ld a,(0d8e0h)		;a84f   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
+	ld a,(0d8e0h)		;a84f   ; ...y el alto
 	ld c,a			;a852
-L_A853:
+copia_a_la_de_dibujar:		; B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
 	ld a,(0ca42h)		;a853   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
 	and 003h		;a856
 	rlca			;a858
@@ -1305,65 +1297,65 @@ L_A853:
 	rlca			;a85a
 	rlca			;a85b
 	jp 047edh		;a85c   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-L_A85F:
-	ld a,(ix+008h)		;a85f
+casillas_y_estado:		; sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
+	ld a,(ix+008h)		;a85f   ; B = el ancho / 8
 	rrca			;a862
 	rrca			;a863
 	rrca			;a864
 	and 01fh		;a865
 	ld b,a			;a867
-	ld a,(ix+007h)		;a868
+	ld a,(ix+007h)		;a868   ; A = el alto - 4
 	sub 004h		;a86b
-L_A86D:
-	call L_A263		;a86d
-	call L_A890		;a870
-	ld a,(ix+001h)		;a873
+casillas_y_estado_a:		; las casillas desde su sitio + A y el estado
+	call sitio_de_puerta		;a86d   ; desde su sitio + A
+	call casillas_de_puerta_a		;a870   ; casillas_de_puerta_a: B casillas en dos filas del mapa desde (H, L + A - 8): 0x80 (cerradas) en el estado 4, 0 en los demas; con el byte 9, 0xCB3C = 0
+	ld a,(ix+001h)		;a873   ; cerrando (estado 4)...
 	cp 004h		;a876
-	jr nz,L_A887		;a878
-	ld a,(ix+000h)		;a87a
+	jr nz,estado_siguiente		;a878
+	ld a,(ix+000h)		;a87a   ; ...el tipo 0x13...
 	cp 013h		;a87d
-	jr z,L_A88B		;a87f
-	sub 00bh		;a881
+	jr z,estado_0		;a87f
+	sub 00bh		;a881   ; ...o 0x0B-0x0C: el estado 0
 	cp 002h		;a883
-	jr c,L_A88B		;a885
-L_A887:
-	inc (ix+001h)		;a887
+	jr c,estado_0		;a885
+estado_siguiente:		; el estado siguiente (byte 1 + 1)
+	inc (ix+001h)		;a887   ; un estado mas
 	ret			;a88a
-L_A88B:
-	ld (ix+001h),000h		;a88b
+estado_0:		; vuelve al estado 0
+	ld (ix+001h),000h		;a88b   ; el estado 0
 	ret			;a88f
-L_A890:
-	add a,l			;a890
+casillas_de_puerta_a:		; B casillas en dos filas del mapa desde (H, L + A - 8): 0x80 (cerradas) en el estado 4, 0 en los demas; con el byte 9, 0xCB3C = 0
+	add a,l			;a890   ; la Y + A - 8
 	sub 008h		;a891
 	ld l,a			;a893
-	call 04411h		;a894   ; punto_a_mapa: H = X, L = Y en puntos; A = X / 8, la columna
+	call 04411h		;a894   ; su casilla
 	push hl			;a897
 	push bc			;a898
-	call L_A8B0		;a899
+	call fila_de_casillas		;a899   ; la fila...
 	pop bc			;a89c
 	pop hl			;a89d
-	ld a,018h		;a89e
+	ld a,018h		;a89e   ; ...y la de debajo (0x18 casillas)
 	call 0423eh		;a8a0   ; suma_a_hl: HL = HL + A
-	call L_A8B0		;a8a3
-L_A8A6:
-	ld a,(ix+009h)		;a8a6
+	call fila_de_casillas		;a8a3   ; fila_de_casillas: B casillas: 0x80 en el estado 4, si no 0
+byte_9_y_cb3c:		; con el byte 9, 0xCB3C = 0
+	ld a,(ix+009h)		;a8a6   ; con el byte 9...
 	and a			;a8a9
 	ret z			;a8aa
-	xor a			;a8ab
+	xor a			;a8ab   ; ...0xCB3C = 0
 	ld (0cb3ch),a		;a8ac
 	ret			;a8af
-L_A8B0:
-	ld a,(ix+001h)		;a8b0
+fila_de_casillas:		; B casillas: 0x80 en el estado 4, si no 0
+	ld a,(ix+001h)		;a8b0   ; en el estado 4...
 	cp 004h		;a8b3
-	ld a,080h		;a8b5
+	ld a,080h		;a8b5   ; ...0x80
 	jr z,L_A8BA		;a8b7
-	xor a			;a8b9
+	xor a			;a8b9   ; si no, 0
 L_A8BA:
 	ld (hl),a			;a8ba
 	inc hl			;a8bb
-	djnz L_A8B0		;a8bc
+	djnz fila_de_casillas		;a8bc   ; B casillas
 	ret			;a8be
-L_A8BF:
+tipo_6:		; por su estado (tabla p15:A8C5): los tipos 6 y 8
 	ld a,(ix+001h)		;a8bf
 	call 0424dh		;a8c2   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -1372,56 +1364,56 @@ L_A8BF:
 ;   indice en A): A8CD, A8FE, A635, A9AB; lo leen p15:A8C2 (8 bytes)
 ;   0xa8c5..0xa8cd  (8 bytes)
 DATA_tabla_A8C5:
-	defw 0a8cdh,0a8feh,0a635h,0a9abh	; a8c5  -> L_A8CD L_A8FE L_A635 L_A9AB
+	defw 0a8cdh,0a8feh,0a635h,0a9abh	; a8c5  -> tipo_6_cerrada abre_tipo_6 pasa_tipo_2 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa8cd..0xa926  (89 bytes)
 ; ======================================================================
 
 
-L_A8CD:
+tipo_6_cerrada:		; con el byte 9, se abre; si no, sin el estado 2 de Snake, empujando hacia abajo, con lo que pide y debajo (su Y - la de Snake por debajo de 8, la X de Snake - X - 8 por debajo del ancho - 0x10)
 	ld a,(ix+009h)		;a8cd
 	and a			;a8d0
-	jp nz,L_A5C6		;a8d1
+	jp nz,se_abre		;a8d1   ; con el byte 9, se abre
 	ld a,(0cb31h)		;a8d4   ; lee 1 en el estado 2 de Snake
 	and a			;a8d7
-	ret nz			;a8d8
-	call L_A528		;a8d9
+	ret nz			;a8d8   ; en el estado 2 de Snake, no
+	call empuja_abajo		;a8d9   ; sin empujar hacia abajo, no
 	ret nz			;a8dc
-	call L_A399		;a8dd
+	call lo_que_pide		;a8dd   ; sin lo que pide, no
 	ret nc			;a8e0
-	call L_A263		;a8e1
-	ld a,(0cb03h)		;a8e4   ; lee la Y de Snake
+	call sitio_de_puerta		;a8e1   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
+	ld a,(0cb03h)		;a8e4   ; su Y - la de Snake
 	sub l			;a8e7
 	neg		;a8e8
 	cp 008h		;a8ea
 	ret nc			;a8ec
-	ld a,(ix+008h)		;a8ed
+	ld a,(ix+008h)		;a8ed   ; el ancho - 0x10
 	sub 010h		;a8f0
 	ld b,a			;a8f2
-	ld a,(0cb05h)		;a8f3   ; lee la X de Snake
+	ld a,(0cb05h)		;a8f3   ; la X de Snake - X - 8
 	sub h			;a8f6
 	sub 008h		;a8f7
 	cp b			;a8f9
 	ret nc			;a8fa
-	jp L_A5C6		;a8fb
-L_A8FE:
-	ld b,(ix+008h)		;a8fe
+	jp se_abre		;a8fb   ; se abre
+abre_tipo_6:		; un paso (byte 6, de 2 en 2 hasta el ancho / 2; luego p15:A628): el hueco de 2 * paso a 0 desde el medio - el paso
+	ld b,(ix+008h)		;a8fe   ; B = el ancho / 2
 	srl b		;a901
-	ld a,(ix+006h)		;a903
+	ld a,(ix+006h)		;a903   ; hasta la mitad
 	cp b			;a906
-	jp nc,L_A628		;a907
-	inc (ix+006h)		;a90a
+	jp nc,abierta_tipo_2		;a907   ; abierta_tipo_2: sus casillas libres (p15:A86D, desde su Y) y el estado siguiente
+	inc (ix+006h)		;a90a   ; 2 mas
 	inc (ix+006h)		;a90d
-	ld a,b			;a910
+	ld a,b			;a910   ; el medio - el paso...
 	sub (ix+006h)		;a911
-	call L_A263		;a914
+	call sitio_de_puerta		;a914   ; ...+ su X
 	add a,h			;a917
 	ld h,a			;a918
-	ld a,(ix+006h)		;a919
+	ld a,(ix+006h)		;a919   ; 2 * paso de ancho
 	add a,a			;a91c
-	jp L_A614		;a91d
-L_A920:
+	jp hueco_a_0		;a91d   ; hueco_a_0: B (ancho) x el alto desde HL a 0 en la pagina de dibujar (la 1 con la pantalla partida)
+tipo_7:		; por su estado (tabla p15:A926)
 	ld a,(ix+001h)		;a920
 	call 0424dh		;a923   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -1430,107 +1422,107 @@ L_A920:
 ;   indice en A): A92E, A938, A4F4, A9AB; lo leen p15:A923 (8 bytes)
 ;   0xa926..0xa92e  (8 bytes)
 DATA_tabla_A926:
-	defw 0a92eh,0a938h,0a4f4h,0a9abh	; a926  -> L_A92E L_A938 L_A4F4 L_A9AB
+	defw 0a92eh,0a938h,0a4f4h,0a9abh	; a926  -> tipo_7_cerrada abre_tipo_7 pasa_tipo_1 cruza_puerta
 
 ; ======================================================================
 ; CODIGO 0xa92e..0xa9d4  (166 bytes)
 ; ======================================================================
 
 
-L_A92E:
-	call L_A44B		;a92e
+tipo_7_cerrada:		; si Snake entra (p15:A44B): se abre y guarda sus mitades (p15:A7E9)
+	call snake_entra		;a92e   ; snake_entra: acarreo si Snake entra por ella: con el byte 9, siempre; si no, sin el estado 2 de Snake, empujando hacia arriba (p15:A514), con lo que pide (p15:A399) y dentro de su caja: la Y de Snake - Y - alto por debajo de 0x0A (0x0E en el tipo 0x0A) y su X - X - 4 por debajo del ancho - 8
 	ret nc			;a931
-	call L_A5C6		;a932
-	jp L_A7E9		;a935
-L_A938:
-	ld a,(ix+008h)		;a938
+	call se_abre		;a932   ; se_abre: su cuenta en 0xD580 (p15:ACDE), el paso y el byte 9 a 0, el rectangulo de (0xC0, 0xD4) de la pagina 0 a 0 (p15:A5DC), el estado siguiente y el sonido 0x16
+	jp guarda_mitades		;a935   ; guarda_mitades: la mitad izquierda (ancho / 2 x alto) a (0xC8, 0xD8) y la derecha a (0xE8, 0xD8), de la pagina de dibujar a la 0
+abre_tipo_7:		; un paso (byte 6, hasta el ancho / 2; luego p15:A85F): sus bordes (p15:A961) y las mitades apartadas (p15:A822) desde (Y + 3) con el alto - 3, la izquierda desde la X 0xC9
+	ld a,(ix+008h)		;a938   ; C = el ancho / 2
 	srl a		;a93b
 	ld c,a			;a93d
-	ld a,(ix+006h)		;a93e
+	ld a,(ix+006h)		;a93e   ; B = el paso
 	ld b,a			;a941
-	cp c			;a942
-	jp nc,L_A85F		;a943
-	inc (ix+006h)		;a946
+	cp c			;a942   ; hasta la mitad
+	jp nc,casillas_y_estado		;a943   ; casillas_y_estado: sus casillas (ancho / 8 desde la Y + el alto - 0x0C, p15:A86D) y el estado siguiente; acabando de cerrar (estado 4): el estado 0 en los tipos 0x0B, 0x0C y 0x13
+	inc (ix+006h)		;a946   ; uno mas
 	push bc			;a949
-	call L_A961		;a94a
+	call bordes_tipo_7		;a94a   ; los bordes
 	pop bc			;a94d
-	ld a,(ix+002h)		;a94e
+	ld a,(ix+002h)		;a94e   ; la Y + 3
 	add a,003h		;a951
 	ld e,a			;a953
-	ld a,(ix+007h)		;a954
+	ld a,(ix+007h)		;a954   ; el alto - 3
 	sub 003h		;a957
 	ld l,a			;a959
-	ld h,0dbh		;a95a
-	ld a,0c9h		;a95c
-	jp L_A822		;a95e
-L_A961:
+	ld h,0dbh		;a95a   ; la Y guardada 0xDB
+	ld a,0c9h		;a95c   ; la X 0xC9
+	jp mitades_apartadas		;a95e   ; mitades_apartadas: las dos mitades guardadas apartadas B (C la mitad): la derecha desde (0xE6, L) a la X + C + B, la izquierda desde (A + B, L) a la X, cada una de C - B de ancho y H de alto (H, L y A pasan por 0xD8E0-0xD8E2)
+bordes_tipo_7:		; dos bordes en diagonal de 3 lineas de 1 de alto: desde (0xCC + paso, 0xD8) a (X + 3, Y), cada linea una a la izquierda y una mas abajo y una mas larga (desde 8); y desde (0xE7, 0xD8) a (X + C + paso, Y), de 8 - paso y una mas larga cada linea
 	push bc			;a961
-	call L_A263		;a962
+	call sitio_de_puerta		;a962   ; sitio_de_puerta: HL = su sitio: L = la Y (byte 2), H = la X (byte 3)
 	push hl			;a965
-	ld e,l			;a966
+	ld e,l			;a966   ; a (X + 3, Y)...
 	ld a,h			;a967
 	add a,003h		;a968
 	ld d,a			;a96a
-	ld a,0cch		;a96b
+	ld a,0cch		;a96b   ; ...desde (0xCC + el paso, 0xD8)
 	add a,b			;a96d
 	ld h,a			;a96e
 	ld l,0d8h		;a96f
-	ld b,008h		;a971
-	ld c,003h		;a973
-L_A975:
-	call L_A99A		;a975
-	inc b			;a978
-	dec h			;a979
-	inc l			;a97a
+	ld b,008h		;a971   ; 8 de largo
+	ld c,003h		;a973   ; 3 lineas
+borde_izquierdo_7:
+	call linea_de_borde		;a975   ; linea_de_borde: B x 1 de HL a DE (p15:A853); con B = 0 o desde 0x80, nada
+	inc b			;a978   ; una mas larga...
+	dec h			;a979   ; ...una a la izquierda...
+	inc l			;a97a   ; ...una mas abajo
 	dec d			;a97b
 	inc e			;a97c
-	dec c			;a97d
-	jr nz,L_A975		;a97e
+	dec c			;a97d   ; 3
+	jr nz,borde_izquierdo_7		;a97e
 	pop hl			;a980
 	pop bc			;a981
-	ld e,l			;a982
+	ld e,l			;a982   ; a (X + C + paso, Y)...
 	ld a,h			;a983
 	add a,c			;a984
 	add a,b			;a985
 	ld d,a			;a986
-	ld hl,0e7d8h		;a987
-	ld a,008h		;a98a
+	ld hl,0e7d8h		;a987   ; ...desde (0xE7, 0xD8)
+	ld a,008h		;a98a   ; 8 - el paso de largo
 	sub b			;a98c
 	ld b,a			;a98d
-	ld c,003h		;a98e
-L_A990:
-	call L_A99A		;a990
-	inc b			;a993
-	inc l			;a994
+	ld c,003h		;a98e   ; 3 lineas
+borde_derecho_7:
+	call linea_de_borde		;a990   ; linea_de_borde: B x 1 de HL a DE (p15:A853); con B = 0 o desde 0x80, nada
+	inc b			;a993   ; una mas larga...
+	inc l			;a994   ; ...una mas abajo
 	inc e			;a995
 	dec c			;a996
-	jr nz,L_A990		;a997
+	jr nz,borde_derecho_7		;a997   ; 3
 	ret			;a999
-L_A99A:
+linea_de_borde:		; B x 1 de HL a DE (p15:A853); con B = 0 o desde 0x80, nada
 	ld a,b			;a99a
-	and a			;a99b
+	and a			;a99b   ; 0: nada
 	ret z			;a99c
-	rla			;a99d
+	rla			;a99d   ; desde 0x80: nada
 	ret c			;a99e
 	push hl			;a99f
 	push de			;a9a0
 	push bc			;a9a1
-	ld c,001h		;a9a2
-	call L_A853		;a9a4
+	ld c,001h		;a9a2   ; 1 de alto
+	call copia_a_la_de_dibujar		;a9a4   ; copia_a_la_de_dibujar: B x C de HL a DE con la operacion 0 (p00:47ED), la pagina de dibujar en los bits 4-5
 	pop bc			;a9a7
 	pop de			;a9a8
 	pop hl			;a9a9
 	ret			;a9aa
-L_A9AB:
+cruza_puerta:		; el estado 3 de todas: Snake cruza la puerta: 0xD444 = 0, 0xD4F1 = 1, sprites fuera (p15:A9DC) y adonde lleva su numero en la tabla de la zona (p15:B4B5, 3 bytes [como y donde][fila y columna][puerta de llegada]): por los bits 7-6 del primero (tabla p15:A9D4) 0 una sala de una zona, 1 una sala especial, 2 de la sala especial a una zona, 3 otra sala sin cambiar de zona
 	xor a			;a9ab
 	ld (0d444h),a		;a9ac
-	inc a			;a9af
+	inc a			;a9af   ; 0xD4F1 = 1
 	ld (0d4f1h),a		;a9b0
-	call L_A9DC		;a9b3
-	ld a,(0ca4ah)		;a9b6   ; lee la zona
+	call sprites_fuera		;a9b3   ; los sprites fuera
+	ld a,(0ca4ah)		;a9b6   ; la tabla de la zona...
 	ld hl,0b4b5h		;a9b9
 	call 043f6h		;a9bc   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ex de,hl			;a9bf
+	ex de,hl			;a9bf   ; ...+ su numero * 3
 	ld l,(ix+005h)		;a9c0
 	ld h,000h		;a9c3
 	ld c,l			;a9c5
@@ -1538,11 +1530,11 @@ L_A9AB:
 	add hl,hl			;a9c7
 	add hl,bc			;a9c8
 	add hl,de			;a9c9
-	ld a,(hl)			;a9ca
+	ld a,(hl)			;a9ca   ; los bits 7-6: como
 	rlca			;a9cb
 	rlca			;a9cc
 	and 003h		;a9cd
-	inc hl			;a9cf
+	inc hl			;a9cf   ; DE = el byte de la fila y la columna
 	ex de,hl			;a9d0
 	call 0424dh		;a9d1   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -1551,204 +1543,204 @@ L_A9AB:
 ;   indice en A): A9ED, AB4F, AC5E, ACCD; lo leen p15:A9D1 (8 bytes)
 ;   0xa9d4..0xa9dc  (8 bytes)
 DATA_tabla_A9D4:
-	defw 0a9edh,0ab4fh,0ac5eh,0accdh	; a9d4  -> L_A9ED L_AB4F L_AC5E L_ACCD
+	defw 0a9edh,0ab4fh,0ac5eh,0accdh	; a9d4  -> a_otra_sala a_sala_especial a_una_zona otra_sala_misma
 
 ; ======================================================================
 ; CODIGO 0xa9dc..0xac11  (565 bytes)
 ; ======================================================================
 
 
-L_A9DC:
+sprites_fuera:		; los 16 primeros bytes de la copia de los atributos (4 sprites) a 0xE0, a la VRAM, y las tablas cambiadas
 	ld hl,0dc00h		;a9dc   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
-	ld bc,0000fh		;a9df
-	ld a,0e0h		;a9e2
+	ld bc,0000fh		;a9df   ; 16 bytes...
+	ld a,0e0h		;a9e2   ; ...a 0xE0
 	call 04237h		;a9e4   ; llena_bloque: pone A en BC + 1 bytes desde HL
-	call 067efh		;a9e7   ; sprites_a_vram_bancos_15:
+	call 067efh		;a9e7   ; a la VRAM
 	jp 067cdh		;a9ea   ; cambia_tablas_de_sprites: alterna las tablas de sprites de la VRAM: atributos en 0xF600 o 0xF200, colores en 0xF400 o 0xF000
-L_A9ED:
-	call L_AAF6		;a9ed
+a_otra_sala:		; la sala de la fila y la columna (p15:AAF6); si la zona (bits 5-0) es otra, cambia de zona y copia en 0xC700; Snake en la puerta de llegada (p15:ABB9); la sala nueva, lo del tipo cruzado en la zona 0x12 (p15:AAA2) y lo de algunas salas de las zonas 4, 0x0C y 0x0D (la musica, p04:924C con la alerta, el sonido 0x8C)
+	call fila_columna_llegada		;a9ed   ; la fila, la columna y la puerta de llegada
 	push af			;a9f0
 	push bc			;a9f1
-	ld a,(hl)			;a9f2
+	ld a,(hl)			;a9f2   ; la zona...
 	and 03fh		;a9f3
 	ld hl,0ca4ah		;a9f5   ; apunta a la zona
-	cp (hl)			;a9f8
-	jr z,L_AA08		;a9f9
+	cp (hl)			;a9f8   ; ...es la misma?
+	jr z,misma_zona		;a9f9
 	push bc			;a9fb
-	call 08d5bh		;a9fc   ; cambia_de_zona_b_1_2_15: cambia_de_zona y deja los bancos 1, 2 y 15
+	call 08d5bh		;a9fc   ; otra zona
 	pop bc			;a9ff
-	call L_ABB9		;aa00
-	call 05afeh		;aa03   ; copia_a_c700: copia en 0xC700 la zona, la sala especial, la Y y la X de Snake y 0xCA50-0xCA51 (salvo en la zona 0x10)
-	jr L_AA0B		;aa06
-L_AA08:
-	call L_ABB9		;aa08
-L_AA0B:
-	call 07baah		;aa0b   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
+	call snake_en_la_llegada		;aa00   ; Snake en la puerta de llegada
+	call 05afeh		;aa03   ; copia en 0xC700
+	jr sala_nueva		;aa06
+misma_zona:		; Snake en la puerta de llegada
+	call snake_en_la_llegada		;aa08   ; snake_en_la_llegada: Snake en la puerta de numero B de la lista de la sala especial o de la zona: su Y y su X + lo de su tipo (p15:AC11, [X][Y]); en la zona 0x12, la sala (2, 8) lo pone en (0x70, 0x60)
+sala_nueva:		; fuera lo de la sala, la sala nueva y lo de cada zona
+	call 07baah		;aa0b   ; fuera lo de la sala
 	call 08d4bh		;aa0e   ; p02:8D4B
 	pop bc			;aa11
 	pop af			;aa12
-	call L_AAA2		;aa13
-	call 08d37h		;aa16   ; entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
-	ld a,(0ca4ah)		;aa19   ; lee la zona
+	call tipo_cruzado_12		;aa13   ; A = el tipo cruzado
+	call 08d37h		;aa16   ; la sala nueva
+	ld a,(0ca4ah)		;aa19   ; zona 0x0C...
 	cp 00ch		;aa1c
-	jr z,L_AA6C		;aa1e
-	cp 00dh		;aa20
-	jr z,L_AA7C		;aa22
-	cp 004h		;aa24
-	jr nz,L_AA5C		;aa26
-	ld a,(0ca4bh)		;aa28   ; lee la sala de la zona
+	jr z,llega_zona_0c		;aa1e
+	cp 00dh		;aa20   ; ...0x0D...
+	jr z,llega_zona_0d		;aa22
+	cp 004h		;aa24   ; ...4
+	jr nz,enciende_al_llegar		;aa26
+	ld a,(0ca4bh)		;aa28   ; sala 9
 	cp 009h		;aa2b
-	jr z,L_AA5F		;aa2d
-	ld bc,00000h		;aa2f
+	jr z,llega_con_alerta		;aa2d
+	ld bc,00000h		;aa2f   ; sala 0x11: 0, 0
 	cp 011h		;aa32
-	jr z,L_AA4D		;aa34
-	cp 006h		;aa36
-	jr z,L_AA85		;aa38
-	ld bc,00001h		;aa3a
+	jr z,pon_d4e4_d4e2		;aa34
+	cp 006h		;aa36   ; sala 6
+	jr z,llega_zona_4_sala_6		;aa38
+	ld bc,00001h		;aa3a   ; sala 0x16: 0, 1
 	cp 016h		;aa3d
-	jr z,L_AA4D		;aa3f
-	ld bc,00100h		;aa41
+	jr z,pon_d4e4_d4e2		;aa3f
+	ld bc,00100h		;aa41   ; sala 7: 1, 0 (con p15:AA8C)
 	cp 007h		;aa44
-	jr nz,L_AA5C		;aa46
-	call L_AA8C		;aa48
-	jr nz,L_AA5C		;aa4b
-L_AA4D:
+	jr nz,enciende_al_llegar		;aa46
+	call mira_d7d4		;aa48   ; mira_d7d4: Z con 0xD694 = 0, 0xD67C = 0 y el bit 4 de 0xD7D4
+	jr nz,enciende_al_llegar		;aa4b
+pon_d4e4_d4e2:		; 0xD4E4 = B, 0xD4E2 = C y, sin alerta, la musica de la zona
 	ld a,b			;aa4d
 	ld (0d4e4h),a		;aa4e
 	ld a,c			;aa51
 	ld (0d4e2h),a		;aa52
-	ld a,(0ca5fh)		;aa55   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
+	ld a,(0ca5fh)		;aa55   ; sin alerta...
 	and a			;aa58
-	call z,07a43h		;aa59   ; musica_de_la_zona_bancos_15:
-L_AA5C:
+	call z,07a43h		;aa59   ; ...la musica de la zona
+enciende_al_llegar:		; la pantalla y los sprites encendidos
 	jp 04606h		;aa5c   ; enciende_todo: la pantalla y los sprites encendidos
-L_AA5F:
+llega_con_alerta:		; con la alerta: fuera los sprites y 0xD300, y p04:924C
 	ld a,(0ca5fh)		;aa5f   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;aa62
-	ret z			;aa63
+	ret z			;aa63   ; sin alerta, nada
 	call 059efh		;aa64   ; limpia_sprites_y_d300:
 	call 07ba1h		;aa67   ; a_p04_924c_3: p04:924C con el banco 4 en 0x8000
-	jr L_AA5C		;aa6a
-L_AA6C:
+	jr enciende_al_llegar		;aa6a
+llega_zona_0c:		; sala 6: con la alerta, p15:AA5F
 	ld a,(0ca4bh)		;aa6c   ; lee la sala de la zona
 	cp 006h		;aa6f
-	jr z,L_AA5F		;aa71
-	cp 003h		;aa73
-	jr nz,L_AA5C		;aa75
+	jr z,llega_con_alerta		;aa71
+	cp 003h		;aa73   ; sala 3: el sonido 0x8C
+	jr nz,enciende_al_llegar		;aa75
 	call 06b99h		;aa77   ; sonido_8c: pide el sonido 0x8C (de los que tienen la partitura en un banco de musica, p16:4CE3) (antes, L_6CDA)
-	jr L_AA5C		;aa7a
-L_AA7C:
+	jr enciende_al_llegar		;aa7a
+llega_zona_0d:		; sala 2: con la alerta, p15:AA5F
 	ld a,(0ca4bh)		;aa7c   ; lee la sala de la zona
 	cp 002h		;aa7f
-	jr nz,L_AA5C		;aa81
-	jr L_AA5F		;aa83
-L_AA85:
-	call L_AA8C		;aa85
-	jr nz,L_AA5C		;aa88
-	jr L_AA4D		;aa8a
-L_AA8C:
+	jr nz,enciende_al_llegar		;aa81
+	jr llega_con_alerta		;aa83
+llega_zona_4_sala_6:		; con p15:AA8C, 0xD4E4 = 0xD4E2 = 0
+	call mira_d7d4		;aa85   ; con p15:AA8C: 0, 0
+	jr nz,enciende_al_llegar		;aa88
+	jr pon_d4e4_d4e2		;aa8a
+mira_d7d4:		; Z con 0xD694 = 0, 0xD67C = 0 y el bit 4 de 0xD7D4
 	ld a,(0d694h)		;aa8c
 	and a			;aa8f
-	ret nz			;aa90
+	ret nz			;aa90   ; con 0xD694: NZ
 	ld a,(0d67ch)		;aa91
 	and a			;aa94
-	ret nz			;aa95
+	ret nz			;aa95   ; con 0xD67C: NZ
 	ld a,(0d7d4h)		;aa96
-	and 010h		;aa99
-	jr z,L_AA9F		;aa9b
-	xor a			;aa9d
+	and 010h		;aa99   ; bit 4...
+	jr z,sin_d7d4		;aa9b
+	xor a			;aa9d   ; ...Z
 	ret			;aa9e
-L_AA9F:
-	or 001h		;aa9f
+sin_d7d4:		; NZ: sin el bit 4 de 0xD7D4
+	or 001h		;aa9f   ; NZ
 	ret			;aaa1
-L_AAA2:
+tipo_cruzado_12:		; en la zona 0x12 sin 0xD881 = 0xFF: por el tipo 6, la pantalla sin partir (0xCA1C a 0xCA1D), el marcador rehecho, p10:B9E5, R#0 = 6 y R#23 = 0; por el tipo 5, 0xD8A4 = 1, la pagina 1, 0xCA1C de vuelta y R#0 = 0x16
 	ld b,a			;aaa2
-	ld a,(0d881h)		;aaa3
+	ld a,(0d881h)		;aaa3   ; con 0xD881 = 0xFF, nada
 	inc a			;aaa6
 	ret z			;aaa7
-	ld a,(0ca4ah)		;aaa8   ; lee la zona
+	ld a,(0ca4ah)		;aaa8   ; solo en la zona 0x12
 	cp 012h		;aaab
 	ret nz			;aaad
-	ld a,b			;aaae
+	ld a,b			;aaae   ; tipo 5...
 	cp 005h		;aaaf
-	jr z,L_AADF		;aab1
-	cp 006h		;aab3
+	jr z,tipo_cruzado_5		;aab1
+	cp 006h		;aab3   ; ...o 6
 	ret nz			;aab5
-	call 045f1h		;aab6   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-	ld hl,0ca1ch		;aab9   ; apunta a 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
+	call 045f1h		;aab6   ; todo apagado
+	ld hl,0ca1ch		;aab9   ; la pantalla partida...
 	ld a,(hl)			;aabc
-	ld (0ca1dh),a		;aabd
-	xor a			;aac0
+	ld (0ca1dh),a		;aabd   ; ...guardada en 0xCA1D...
+	xor a			;aac0   ; ...y a 0, con 0xD8A4
 	ld (0d8a4h),a		;aac1
 	ld (hl),a			;aac4
-	call 06077h		;aac5   ; borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
+	call 06077h		;aac5   ; la franja de abajo en las dos paginas
 	ld a,001h		;aac8
 	call 06077h		;aaca   ; borra_marcador_abajo_en: la franja de abajo (X = 0, Y = 0xC0, 0xE0 x 0x14) a 0 en la pagina A
-	call 08d56h		;aacd   ; rehace_marcador_b_1_2_15: rehace_marcador y deja los bancos 1, 2 y 15
+	call 08d56h		;aacd   ; el marcador
 	call 08d6dh		;aad0   ; a_p10_b9e5: p10:B9E5 con el banco 10 en 0xA000
-	ld bc,00600h		;aad3
+	ld bc,00600h		;aad3   ; R#0 = 6: sin la interrupcion de linea
 	call 00047h		;aad6   ; BIOS WRTVDP - Writes data in the VDP-register
-	ld bc,00017h		;aad9
+	ld bc,00017h		;aad9   ; R#23 = 0
 	jp 00047h		;aadc   ; BIOS WRTVDP - Writes data in the VDP-register
-L_AADF:
-	ld a,001h		;aadf
+tipo_cruzado_5:		; por el tipo 5: 0xD8A4 = 1, la pagina 1, la pantalla partida de vuelta y R#0 = 0x16
+	ld a,001h		;aadf   ; 0xD8A4 = 1...
 	ld (0d8a4h),a		;aae1
-	ld (0ca42h),a		;aae4   ; guarda la pagina de la VRAM en la que se dibuja (0/1, se alterna)
-	ld a,(0ca1dh)		;aae7
+	ld (0ca42h),a		;aae4   ; ...la pagina 1...
+	ld a,(0ca1dh)		;aae7   ; ...la pantalla partida de vuelta
 	ld (0ca1ch),a		;aaea   ; guarda 1: la pantalla partida en la linea 0xB4 (arriba con desplazamiento, abajo la pagina 1 sin sprites)
-	ld bc,01600h		;aaed
+	ld bc,01600h		;aaed   ; R#0 = 0x16: con la interrupcion de linea
 	call 00047h		;aaf0   ; BIOS WRTVDP - Writes data in the VDP-register
-	jp 045f1h		;aaf3   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
-L_AAF6:
+	jp 045f1h		;aaf3   ; todo apagado
+fila_columna_llegada:		; de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
 	ex de,hl			;aaf6
 	push hl			;aaf7
-	ld a,(hl)			;aaf8
+	ld a,(hl)			;aaf8   ; la fila...
 	rrca			;aaf9
 	rrca			;aafa
 	rrca			;aafb
 	rrca			;aafc
 	and 00fh		;aafd
 	ld (0ca50h),a		;aaff   ; guarda la fila de la sala en la zona (uno mas al salir por arriba)
-	ld a,(hl)			;ab02
+	ld a,(hl)			;ab02   ; ...y la columna
 	and 00fh		;ab03
 	ld (0ca51h),a		;ab05   ; guarda la columna de la sala en la zona (uno mas al salir por la derecha)
-	inc hl			;ab08
+	inc hl			;ab08   ; la puerta de llegada...
 	ld a,(hl)			;ab09
-	ld (0d44ah),a		;ab0a
+	ld (0d44ah),a		;ab0a   ; guarda el numero de la puerta por la que llega Snake (p15:AB0A)
 	push af			;ab0d
-	call L_ACDE		;ab0e
+	call cuenta_de_puerta		;ab0e   ; ...con su cuenta
 	pop bc			;ab11
 	pop hl			;ab12
 	dec hl			;ab13
 	ld a,001h		;ab14
-	ld (0d8ceh),a		;ab16   ; guarda con 1, lo de 0xD8C2 se acaba (p07:A03A)
+	ld (0d8ceh),a		;ab16   ; 0xD8CE = 1
 	ld (0cb14h),a		;ab19   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
-	ld d,(ix+000h)		;ab1c
-	ld (ix+000h),000h		;ab1f
-	ld a,(0cb00h)		;ab23   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
+	ld d,(ix+000h)		;ab1c   ; D = el tipo cruzado...
+	ld (ix+000h),000h		;ab1f   ; ...y la ficha libre
+	ld a,(0cb00h)		;ab23   ; Snake en el estado 2...
 	cp 002h		;ab26
-	jr z,L_AB2E		;ab28
-	cp 00bh		;ab2a
+	jr z,snake_a_su_estado		;ab28
+	cp 00bh		;ab2a   ; ...o 0x0B
 	ld a,d			;ab2c
 	ret nz			;ab2d
-L_AB2E:
+snake_a_su_estado:		; el estado de 0xCB35 y su dibujo
 	ld a,(0cb35h)		;ab2e
 	ld (0cb00h),a		;ab31   ; guarda el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 	ld (0cb01h),a		;ab34   ; guarda el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
-	xor a			;ab37
+	xor a			;ab37   ; fuera la marcha, la vuelta y el estado 2
 	ld (0cb28h),a		;ab38
 	ld (0cb0ah),a		;ab3b   ; guarda la marcha de Snake: el indice de las velocidades de p02:9520
 	ld (0cb16h),a		;ab3e   ; guarda 1 mientras Snake se da la vuelta
 	ld (0cb31h),a		;ab41   ; guarda 1 en el estado 2 de Snake
 	inc a			;ab44
-	ld (0cb14h),a		;ab45   ; guarda el dibujo del paso de andar (0, 1, 2, 1: p02:9888)
-	ld a,020h		;ab48
+	ld (0cb14h),a		;ab45   ; el paso de andar 1
+	ld a,020h		;ab48   ; 0xCB29 = 0x20
 	ld (0cb29h),a		;ab4a
 	ld a,d			;ab4d
 	ret			;ab4e
-L_AB4F:
-	call L_AAF6		;ab4f
-	ld a,(hl)			;ab52
+a_sala_especial:		; la sala especial de los bits 5-0 (0xCA76): fuera lo de la sala, sus mapas de bits, las lineas 0xC3, Snake en la puerta de llegada (p15:ABB9), lo de la alerta (p15:AC3B), la sala; en la 2, la espera 0x12C con 0xCAF6 = 1; en la 0x26 por la columna 7, el sonido 0x35; en las 0x31 y 0x39, 0xD4E2 = 1 y p02:8D60
+	call fila_columna_llegada		;ab4f   ; fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
+	ld a,(hl)			;ab52   ; la sala especial
 	and 03fh		;ab53
 	ld (0ca76h),a		;ab55   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	push de			;ab58
@@ -1757,93 +1749,93 @@ L_AB4F:
 	call 08d4bh		;ab5d   ; p02:8D4B
 	call 08d50h		;ab60   ; mapas_de_bits_especiales_b_1_2_15: mapas_de_bits_especiales y deja los bancos 1, 2 y 15
 	call 08d46h		;ab63   ; lineas_c3_en_la_otra_b_1_2_15: lineas_c3_en_la_otra y deja los bancos 1, 2 y 15
-	xor a			;ab66
+	xor a			;ab66   ; 0xD44C-0xD44E a 0...
 	ld (0d44ch),a		;ab67
 	ld (0d44dh),a		;ab6a
 	ld (0d44eh),a		;ab6d
-	ld (0e070h),a		;ab70   ; guarda 2 fichas de 8 bytes [activa][paso][Y][X][..] de p10:A61B (se abren al acercarse Snake, p10:A4F1)
+	ld (0e070h),a		;ab70   ; ...y las dos fichas de 0xE070 libres
 	ld (0e078h),a		;ab73
 	pop bc			;ab76
-	call L_ABB9		;ab77
+	call snake_en_la_llegada		;ab77   ; Snake en la puerta de llegada
 	pop de			;ab7a
-	call L_AC3B		;ab7b
+	call alerta_al_llegar		;ab7b   ; lo de la alerta
 	call 05f0ah		;ab7e   ; a_p12_69e0: p12:69E0 con el banco 12 en 0x6000
 	call 08d2ah		;ab81   ; a_p10_bce4: p10:BCE4 con el banco 10 en 0xA000
 	call 08d41h		;ab84   ; entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
 	call 05f01h		;ab87   ; a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
-	ld a,(0ca76h)		;ab8a   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
+	ld a,(0ca76h)		;ab8a   ; la sala especial 2...
 	cp 002h		;ab8d
-	jr z,L_ABA4		;ab8f
-	cp 026h		;ab91
-	jr z,L_ABB0		;ab93
-	cp 031h		;ab95
-	jr z,L_AB9C		;ab97
+	jr z,sala_especial_2		;ab8f
+	cp 026h		;ab91   ; ...0x26...
+	jr z,sala_especial_26		;ab93
+	cp 031h		;ab95   ; ...0x31 o 0x39
+	jr z,sala_31_o_39		;ab97
 	cp 039h		;ab99
 	ret nz			;ab9b
-L_AB9C:
+sala_31_o_39:		; 0xD4E2 = 1 y p02:8D60
 	ld a,001h		;ab9c
 	ld (0d4e2h),a		;ab9e
 	jp 08d60h		;aba1   ; p02:8D60
-L_ABA4:
-	ld hl,0012ch		;aba4
+sala_especial_2:		; la espera de 0x12C con 0xCAF6 = 1
+	ld hl,0012ch		;aba4   ; la espera de 0x12C...
 	ld (0caf7h),hl		;aba7   ; guarda otra espera de 16 bits que baja en la interrupcion
-	ld a,001h		;abaa
+	ld a,001h		;abaa   ; ...con 0xCAF6 = 1
 	ld (0caf6h),a		;abac
 	ret			;abaf
-L_ABB0:
+sala_especial_26:		; por la columna 7, el sonido 0x35
 	ld a,(0ca51h)		;abb0   ; lee la columna de la sala en la zona (uno mas al salir por la derecha)
 	cp 007h		;abb3
 	ret nz			;abb5
 	jp 06aeah		;abb6   ; sonido_35: pide el sonido 0x35
-L_ABB9:
+snake_en_la_llegada:		; Snake en la puerta de numero B de la lista de la sala especial o de la zona: su Y y su X + lo de su tipo (p15:AC11, [X][Y]); en la zona 0x12, la sala (2, 8) lo pone en (0x70, 0x60)
 	ld a,(0ca4ah)		;abb9   ; lee la zona
 	ld c,a			;abbc
-	cp 012h		;abbd
-	jr nz,L_ABD9		;abbf
-	ld hl,(0ca50h)		;abc1   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+	cp 012h		;abbd   ; la zona 0x12...
+	jr nz,busca_la_llegada		;abbf
+	ld hl,(0ca50h)		;abc1   ; ...fila 2...
 	ld a,l			;abc4
 	cp 002h		;abc5
-	jr nz,L_ABD9		;abc7
-	ld a,h			;abc9
+	jr nz,busca_la_llegada		;abc7
+	ld a,h			;abc9   ; ...columna 8
 	cp 008h		;abca
-	jr nz,L_ABD9		;abcc
-	ld a,060h		;abce
+	jr nz,busca_la_llegada		;abcc
+	ld a,060h		;abce   ; Y = 0x60
 	ld (0cb03h),a		;abd0   ; guarda la Y de Snake
-	ld a,070h		;abd3
+	ld a,070h		;abd3   ; X = 0x70
 	ld (0cb05h),a		;abd5   ; guarda la X de Snake
 	ret			;abd8
-L_ABD9:
+busca_la_llegada:		; la lista de la sala especial...
 	ld a,(0ca76h)		;abd9   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;abdc
 	ld hl,0b1feh		;abdd
 	jr nz,L_ABE6		;abe0
-	ld a,c			;abe2
+	ld a,c			;abe2   ; ...o de la zona
 	ld hl,0ad0ch		;abe3
 L_ABE6:
 	call 043f6h		;abe6   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld a,005h		;abe9
+	ld a,005h		;abe9   ; desde el byte 5 (su numero)
 	call 0423eh		;abeb   ; suma_a_hl: HL = HL + A
-L_ABEE:
+puerta_de_llegada:
 	ld a,(hl)			;abee
-	cp b			;abef
-	jr z,L_ABF9		;abf0
-	ld a,006h		;abf2
+	cp b			;abef   ; la de numero B
+	jr z,pon_en_la_llegada		;abf0
+	ld a,006h		;abf2   ; la siguiente (6 bytes)
 	call 0423eh		;abf4   ; suma_a_hl: HL = HL + A
-	jr L_ABEE		;abf7
-L_ABF9:
+	jr puerta_de_llegada		;abf7
+pon_en_la_llegada:
 	dec hl			;abf9
 	dec hl			;abfa
-	ld e,(hl)			;abfb
+	ld e,(hl)			;abfb   ; E = su X
 	dec hl			;abfc
-	ld d,(hl)			;abfd
+	ld d,(hl)			;abfd   ; D = su Y
 	dec hl			;abfe
-	ld a,(hl)			;abff
-	ld hl,0ac0fh		;ac00
+	ld a,(hl)			;abff   ; su tipo...
+	ld hl,0ac0fh		;ac00   ; ...lo suyo de p15:AC11
 	call 043f6h		;ac03   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld a,h			;ac06
+	ld a,h			;ac06   ; la Y + H
 	add a,d			;ac07
 	ld (0cb03h),a		;ac08   ; guarda la Y de Snake
-	ld a,l			;ac0b
+	ld a,l			;ac0b   ; la X + L
 	add a,e			;ac0c
 	ld (0cb05h),a		;ac0d   ; guarda la X de Snake
 	ret			;ac10
@@ -1860,10 +1852,10 @@ DATA_AC11:
 ; ======================================================================
 
 
-L_AC3B:
+alerta_al_llegar:		; con la alerta, en las salas especiales 2, 0x29, 0x2D y 0x31 o por una puerta de tipo 0x0C (D): p04:924C
 	ld a,(0ca5fh)		;ac3b   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;ac3e
-	ret z			;ac3f
+	ret z			;ac3f   ; sin alerta, nada
 	ld a,(0ca76h)		;ac40   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 002h		;ac43
 	jp z,07ba1h		;ac45   ; a_p04_924c_3: p04:924C con el banco 4 en 0x8000
@@ -1873,101 +1865,101 @@ L_AC3B:
 	jp z,07ba1h		;ac4f   ; a_p04_924c_3: p04:924C con el banco 4 en 0x8000
 	cp 031h		;ac52
 	jp z,07ba1h		;ac54   ; a_p04_924c_3: p04:924C con el banco 4 en 0x8000
-	ld a,d			;ac57
+	ld a,d			;ac57   ; el tipo 0x0C
 	cp 00ch		;ac58
 	ret nz			;ac5a
 	jp 07ba1h		;ac5b   ; a_p04_924c_3: p04:924C con el banco 4 en 0x8000
-L_AC5E:
-	call L_AAF6		;ac5e
-	ld a,(hl)			;ac61
+a_una_zona:		; de la sala especial a la zona de los bits 5-0: p02:8D3C, sin sala especial, fuera lo de la sala, Snake en la llegada, 0xD300 a cero, la sala, p12:67E1, p11:BDBD; al salir de la 2, por 0xCAF6 (2 la orden 0xF3, 3 p02:8D60); de la 0x39, 0xD43B = 0; de las 0x31 y 0x39, 0xD4E2 = 0 y la musica de la zona
+	call fila_columna_llegada		;ac5e   ; fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
+	ld a,(hl)			;ac61   ; la zona
 	and 03fh		;ac62
 	ld (0ca4ah),a		;ac64   ; guarda la zona
-	ld a,(0ca76h)		;ac67   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
+	ld a,(0ca76h)		;ac67   ; la sala especial de antes
 	push af			;ac6a
 	push bc			;ac6b
 	call 08d3ch		;ac6c   ; p02:8D3C
-	xor a			;ac6f
+	xor a			;ac6f   ; sin sala especial
 	ld (0ca76h),a		;ac70   ; guarda la sala especial (0 = ninguna; indice de p24:64B6)
 	call 07baah		;ac73   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	call 08d4bh		;ac76   ; p02:8D4B
 	pop bc			;ac79
-	call L_ABB9		;ac7a
-	ld hl,0d300h		;ac7d   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+	call snake_en_la_llegada		;ac7a   ; Snake en la llegada
+	ld hl,0d300h		;ac7d   ; las 4 fichas de 0xD300 a 0
 	ld bc,000ffh		;ac80
 	call 04236h		;ac83   ; borra_bloque: pone a cero BC + 1 bytes desde HL
-	ld a,(0d820h)		;ac86
+	ld a,(0d820h)		;ac86   ; con 0xD820 = 8...
 	cp 008h		;ac89
-	jr nz,L_AC97		;ac8b
-	ld a,080h		;ac8d
+	jr nz,entra_en_la_zona		;ac8b
+	ld a,080h		;ac8d   ; ...0xD823 = 0x80...
 	ld (0d823h),a		;ac8f
-	ld a,078h		;ac92
+	ld a,078h		;ac92   ; ...y 0xD825 = 0x78
 	ld (0d825h),a		;ac94
-L_AC97:
-	call 08d37h		;ac97   ; entra_en_sala_b_1_2_15: entra_en_sala y deja los bancos 1, 2 y 15
+entra_en_la_zona:		; la sala nueva y lo de la sala especial de la que sale
+	call 08d37h		;ac97   ; la sala
 	call 05f01h		;ac9a   ; a_p12_67e1: p12:67E1 con el banco 12 en 0x6000
 	ld c,004h		;ac9d
 	call 08d65h		;ac9f   ; a_p11_bdbd_2: p11:BDBD con el banco 11 en 0xA000
-	pop af			;aca2
+	pop af			;aca2   ; la sala especial de antes: 2...
 	cp 002h		;aca3
-	jr z,L_ACB9		;aca5
-	cp 031h		;aca7
-	jr z,L_ACB2		;aca9
-	cp 039h		;acab
+	jr z,sale_de_la_2		;aca5
+	cp 031h		;aca7   ; ...0x31...
+	jr z,sale_de_31_o_39		;aca9
+	cp 039h		;acab   ; ...0x39
 	ret nz			;acad
 	xor a			;acae
 	ld (0d43bh),a		;acaf
-L_ACB2:
+sale_de_31_o_39:		; 0xD4E2 = 0 y la musica de la zona
 	xor a			;acb2
 	ld (0d4e2h),a		;acb3
 	jp 07a43h		;acb6   ; musica_de_la_zona_bancos_15:
-L_ACB9:
+sale_de_la_2:		; 0xCAF6 = 2: la orden 0xF3
 	ld a,(0caf6h)		;acb9
 	dec a			;acbc
 	dec a			;acbd
 	jp z,06be0h		;acbe   ; orden_sonido_f3: la orden 0xF3 al sonido
-	dec a			;acc1
+	dec a			;acc1   ; 0xCAF6 = 3: 0xC690 = 0xD443 = 0 y p02:8D60
 	ret nz			;acc2
 	xor a			;acc3
 	ld (0c690h),a		;acc4
 	ld (0d443h),a		;acc7
 	jp 08d60h		;acca   ; p02:8D60
-L_ACCD:
-	call L_AAF6		;accd
+otra_sala_misma:		; la sala de la fila y la columna sin cambiar de zona: fuera lo de la sala, Snake en la llegada y la sala (p02:8D41)
+	call fila_columna_llegada		;accd   ; fila_columna_llegada: de DE: la fila (nibble alto) y la columna de la sala (0xCA50-0xCA51), la puerta de llegada a 0xD44A con su cuenta (p15:ACDE); 0xD8CE = 1, la ficha cruzada libre y Snake de vuelta a su estado 0xCB35 si estaba en el 2 o el 0x0B; vuelve con A = D = el tipo cruzado, B = la puerta de llegada y HL en el primer byte
 	push bc			;acd0
 	call 07baah		;acd1   ; borra_lo_de_la_sala: borra 0xD400-0xD415, las 24 fichas de 0x40 bytes desde 0xCE2E (18 bytes de cada una), 0xD460-0xD4BF y 0xD4C0-0xD4DF
 	call 08d4bh		;acd4   ; p02:8D4B
 	pop bc			;acd7
-	call L_ABB9		;acd8
+	call snake_en_la_llegada		;acd8   ; snake_en_la_llegada: Snake en la puerta de numero B de la lista de la sala especial o de la zona: su Y y su X + lo de su tipo (p15:AC11, [X][Y]); en la zona 0x12, la sala (2, 8) lo pone en (0x70, 0x60)
 	jp 08d41h		;acdb   ; entra_en_sala_especial_1_b_1_2_15: entra_en_sala_especial_1 y deja los bancos 1, 2 y 15
-L_ACDE:
+cuenta_de_puerta:		; la cuenta en 0xD580 de la puerta A (con el bit 7, nada): en la lista de la zona (p15:B153, 0xFF al final), 0xFF (siempre) si alli lleva el bit 7 o 4; fuera de la lista, 1
 	ld b,a			;acde
-	rla			;acdf
+	rla			;acdf   ; con el bit 7, nada
 	ret c			;ace0
-	ld a,(0ca4ah)		;ace1   ; lee la zona
+	ld a,(0ca4ah)		;ace1   ; la lista de la zona
 	ld hl,0b153h		;ace4
 	call 043f6h		;ace7   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld a,b			;acea
-	ld de,0d580h		;aceb
+	ld a,b			;acea   ; su cuenta en 0xD580
+	ld de,0d580h		;aceb   ; apunta a 0x80 cuentas de las puertas por su numero: 0 cerrada, 0xFF siempre abierta; si no, cuantas entradas de sala le quedan abierta (p15:ACDE, p15:A1E2)
 	call 04243h		;acee   ; suma_a_de: DE = DE + A
-L_ACF1:
+busca_cuenta:
 	ld a,(hl)			;acf1
-	cp 0ffh		;acf2
-	jr z,L_AD08		;acf4
-	and 07fh		;acf6
+	cp 0ffh		;acf2   ; 0xFF: no esta
+	jr z,cuenta_1		;acf4
+	and 07fh		;acf6   ; es esta?
 	cp b			;acf8
-	jr z,L_ACFE		;acf9
+	jr z,cuenta_de_lista		;acf9
 	inc hl			;acfb
-	jr L_ACF1		;acfc
-L_ACFE:
+	jr busca_cuenta		;acfc
+cuenta_de_lista:
 	ld a,(hl)			;acfe
-	rla			;acff
-	ld a,0ffh		;ad00
+	rla			;acff   ; con el bit 7...
+	ld a,0ffh		;ad00   ; ...0xFF...
 	jr c,L_AD06		;ad02
-	ld a,004h		;ad04
+	ld a,004h		;ad04   ; ...si no, 4
 L_AD06:
 	ld (de),a			;ad06
 	ret			;ad07
-L_AD08:
+cuenta_1:		; fuera de la lista, 1
 	ld a,001h		;ad08
 	ld (de),a			;ad0a
 	ret			;ad0b
@@ -2162,164 +2154,164 @@ DATA_resto_AD0C:
 ; ======================================================================
 
 
-L_B800:
+sprites_d800_tipo_1:		; los sprites de la ficha de 0xD800 de tipo 1 (IX): en los pasos 2-3 (el 2 sin el byte 0x1F), los 16 sprites desde el 10 fuera y los de la lista p15:BC0A por su dibujo (byte 0x0D) desde la Y + el byte 0x0F - 0x28 y la X + 0xC0; desde el paso 4, en su sala, la lista p15:BC40 y la de p15:BBFA con el color 0x0F; recortados por encima de 0xC0 (p15:B8B9)
 	ld a,(ix+001h)		;b800
-	cp 002h		;b803
+	cp 002h		;b803   ; los pasos 0-1, nada
 	ret c			;b805
-	jr nz,L_B80D		;b806
-	ld a,(ix+01fh)		;b808
+	jr nz,sprites_tipo_1_a		;b806   ; el paso 2...
+	ld a,(ix+01fh)		;b808   ; ...con el byte 0x1F, nada
 	and a			;b80b
 	ret nz			;b80c
-L_B80D:
-	cp 004h		;b80d
-	jp nc,L_B870		;b80f
-	ld bc,00040h		;b812
+sprites_tipo_1_a:		; en los pasos 2-3: los sprites desde el 10 fuera y los de su lista
+	cp 004h		;b80d   ; desde el paso 4, p15:B870
+	jp nc,sprites_tipo_1_b		;b80f   ; sprites_tipo_1_b: desde el paso 4: en las filas 7-8, los 8 sprites desde el 10 fuera; en su sala, la lista de p15:BC40 por el byte 0x0D, la de p15:BBFA desde el sprite 14 con los patrones de p15:BCA0 o p15:BCAA (byte 0x18) y el color 0x0F
+	ld bc,00040h		;b812   ; los sprites desde el 10 fuera
 	call 0872bh		;b815   ; esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
-	ld a,(ix+00dh)		;b818
+	ld a,(ix+00dh)		;b818   ; su lista por el byte 0x0D
 	ld hl,0bc0ah		;b81b
 	call 043f6h		;b81e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	exx			;b821
-	ld a,(ix+00fh)		;b822
+	ld a,(ix+00fh)		;b822   ; D' = el byte 0x0F - 0x28 (a la Y)...
 	sub 028h		;b825
 	ld d,a			;b827
-	ld e,0c0h		;b828
-	ld c,080h		;b82a
+	ld e,0c0h		;b828   ; ...E' = 0xC0 (a la X)...
+	ld c,080h		;b82a   ; ...C' = 0x80 (la Y maxima)
 	exx			;b82c
-	call L_B833		;b82d
-	jp L_B8B9		;b830
-L_B833:
+	call sprites_de_lista		;b82d   ; los sprites...
+	jp recorta_sprites		;b830   ; ...y recortados
+sprites_de_lista:		; desde el sprite 10 (0xDC28) los de la lista de HL: [patron][cuantos] y por cada uno [Y][X] sumados a los bytes 3 y 5 de la ficha + D' y E'; con la Y desde C' o la X desde 0xB0, la Y 0xE0 (fuera); el patron de 4 en 4
 	ld de,0dc28h		;b833
-L_B836:
-	ld c,(hl)			;b836
+sprites_de_lista_de:		; C = el primer patron, B = cuantos y los sprites
+	ld c,(hl)			;b836   ; C = el primer patron...
 	inc hl			;b837
-	ld b,(hl)			;b838
+	ld b,(hl)			;b838   ; ...B = cuantos
 	inc hl			;b839
-L_B83A:
-	ld a,(hl)			;b83a
+sprite_de_lista:		; un sprite: Y, X y patron
+	ld a,(hl)			;b83a   ; la Y + el byte 3 + D'...
 	add a,(ix+003h)		;b83b
 	exx			;b83e
 	add a,d			;b83f
-	cp c			;b840
+	cp c			;b840   ; ...desde C', fuera
 	exx			;b841
 	jr c,L_B846		;b842
 	ld a,0e0h		;b844
 L_B846:
 	ld (de),a			;b846
 	inc hl			;b847
-	ld a,(hl)			;b848
+	ld a,(hl)			;b848   ; la X + el byte 5 + E'...
 	add a,(ix+005h)		;b849
 	exx			;b84c
 	add a,e			;b84d
 	exx			;b84e
-	cp 0b0h		;b84f
+	cp 0b0h		;b84f   ; ...desde 0xB0...
 	jr c,L_B858		;b851
 	push af			;b853
-	ld a,0e0h		;b854
+	ld a,0e0h		;b854   ; ...la Y 0xE0
 	ld (de),a			;b856
 	pop af			;b857
 L_B858:
 	inc de			;b858
-	ld (de),a			;b859
+	ld (de),a			;b859   ; la X
 	inc hl			;b85a
 	inc de			;b85b
-	ld a,c			;b85c
+	ld a,c			;b85c   ; el patron
 	ld (de),a			;b85d
-	inc de			;b85e
+	inc de			;b85e   ; se salta el cuarto byte
 	inc de			;b85f
-	inc c			;b860
+	inc c			;b860   ; el patron siguiente (4 mas)
 	inc c			;b861
 	inc c			;b862
 	inc c			;b863
-	djnz L_B83A		;b864
+	djnz sprite_de_lista		;b864   ; B sprites
 	ret			;b866
-L_B867:
+colores_daa0:		; los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
 	ld hl,0daa0h		;b867
 	ld bc,0007fh		;b86a
 	jp 04237h		;b86d   ; llena_bloque: pone A en BC + 1 bytes desde HL
-L_B870:
-	ld a,(0ca50h)		;b870   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
+sprites_tipo_1_b:		; desde el paso 4: en las filas 7-8, los 8 sprites desde el 10 fuera; en su sala, la lista de p15:BC40 por el byte 0x0D, la de p15:BBFA desde el sprite 14 con los patrones de p15:BCA0 o p15:BCAA (byte 0x18) y el color 0x0F
+	ld a,(0ca50h)		;b870   ; en las filas 7-8...
 	sub 007h		;b873
 	cp 002h		;b875
-	ld bc,0001fh		;b877
+	ld bc,0001fh		;b877   ; ...8 sprites fuera
 	call c,0872bh		;b87a   ; esconde_desde_10: BC + 1 bytes de sprites desde el 10 fuera (Y = 0xE0)
-	call 08100h		;b87d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+	call 08100h		;b87d   ; fuera de su sala, nada
 	ret nz			;b880
-	ld a,(ix+00dh)		;b881
+	ld a,(ix+00dh)		;b881   ; su lista de p15:BC40...
 	ld hl,0bc40h		;b884
 	call 043f6h		;b887   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	exx			;b88a
-	ld de,00000h		;b88b
-	ld c,0c0h		;b88e
+	ld de,00000h		;b88b   ; ...sin sumar nada...
+	ld c,0c0h		;b88e   ; ...hasta la Y 0xC0
 	exx			;b890
-	call L_B833		;b891
-	ld a,(ix+018h)		;b894
+	call sprites_de_lista		;b891   ; sprites_de_lista: desde el sprite 10 (0xDC28) los de la lista de HL: [patron][cuantos] y por cada uno [Y][X] sumados a los bytes 3 y 5 de la ficha + D' y E'; con la Y desde C' o la X desde 0xB0, la Y 0xE0 (fuera); el patron de 4 en 4
+	ld a,(ix+018h)		;b894   ; con el byte 0x18...
 	and a			;b897
-	ld hl,0bca0h		;b898
-	jr z,L_B8A0		;b89b
-	ld hl,0bcaah		;b89d
-L_B8A0:
+	ld hl,0bca0h		;b898   ; ...los patrones de p15:BCA0...
+	jr z,sprites_tipo_1_c		;b89b
+	ld hl,0bcaah		;b89d   ; ...o de p15:BCAA
+sprites_tipo_1_c:
 	exx			;b8a0
-	ld a,(ix+00dh)		;b8a1
+	ld a,(ix+00dh)		;b8a1   ; las posiciones de p15:BBFA por el byte 0x0D
 	ld hl,0bbfah		;b8a4
 	call 043f6h		;b8a7   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ex de,hl			;b8aa
 	ld c,0c0h		;b8ab
 	exx			;b8ad
-	ld de,0dc38h		;b8ae
-	call L_B836		;b8b1
-	ld a,00fh		;b8b4
-	call L_B867		;b8b6
-L_B8B9:
+	ld de,0dc38h		;b8ae   ; desde el sprite 14
+	call sprites_de_lista_de		;b8b1   ; sprites_de_lista_de: C = el primer patron, B = cuantos y los sprites
+	ld a,00fh		;b8b4   ; color 0x0F
+	call colores_daa0		;b8b6   ; colores_daa0: los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
+recorta_sprites:		; de los 8 sprites desde el 10: con la Y entre 0xB0 y 0xBF, las lineas que pasan de 0xC0 a color 0 en 0xDAA0 (no tapan el marcador)
 	ld hl,0dc28h		;b8b9
-	ld de,0daa0h		;b8bc
-	ld b,008h		;b8bf
-L_B8C1:
+	ld de,0daa0h		;b8bc   ; sus colores
+	ld b,008h		;b8bf   ; 8 sprites
+recorta_sprite:
 	push bc			;b8c1
 	push hl			;b8c2
 	push de			;b8c3
-	ld a,(hl)			;b8c4
+	ld a,(hl)			;b8c4   ; la Y entre 0xB0 y 0xBF?
 	sub 0b0h		;b8c5
 	cp 010h		;b8c7
-	jr nc,L_B8DC		;b8c9
-	inc a			;b8cb
+	jr nc,recorta_siguiente		;b8c9
+	inc a			;b8cb   ; C = las lineas que pasan de 0xC0
 	ld c,a			;b8cc
-	sub 010h		;b8cd
+	sub 010h		;b8cd   ; desde la linea 0x0F - C...
 	neg		;b8cf
 	call 04243h		;b8d1   ; suma_a_de: DE = DE + A
-	ld h,d			;b8d4
+	ld h,d			;b8d4   ; ...a 0
 	ld l,e			;b8d5
 	inc de			;b8d6
 	ld b,000h		;b8d7
 	ld (hl),b			;b8d9
-	ldir		;b8da
-L_B8DC:
+	ldir		;b8da   ; C + 1 bytes a 0: el ultimo es la linea 0 del sprite siguiente
+recorta_siguiente:
 	pop de			;b8dc
 	pop hl			;b8dd
-	ld a,004h		;b8de
+	ld a,004h		;b8de   ; el sprite siguiente (4 bytes)...
 	call 0423eh		;b8e0   ; suma_a_hl: HL = HL + A
-	ld a,010h		;b8e3
+	ld a,010h		;b8e3   ; ...y sus colores (16)
 	call 04243h		;b8e5   ; suma_a_de: DE = DE + A
 	pop bc			;b8e8
-	djnz L_B8C1		;b8e9
+	djnz recorta_sprite		;b8e9   ; 8
 	ret			;b8eb
-L_B8EC:
-	call L_B925		;b8ec
-	jp nc,086a4h		;b8ef   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
-	ld hl,06aeeh		;b8f2
+d800_tipo_0c:		; la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
+	call salas_10_a_13		;b8ec   ; fuera de las salas 0x10-0x13...
+	jp nc,086a4h		;b8ef   ; ...fuera su musica
+	ld hl,06aeeh		;b8f2   ; con 0xC693, p00:6AEE
 	call 086d5h		;b8f5   ; si_c693: con 0xC693, lo borra y salta a HL
-	ld a,(ix+001h)		;b8f8
+	ld a,(ix+001h)		;b8f8   ; por su paso
 	ld hl,0b919h		;b8fb
 	call 0424eh		;b8fe   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	ld a,(ix+001h)		;b901
+	ld a,(ix+001h)		;b901   ; desde el paso 4...
 	cp 004h		;b904
 	ret c			;b906
-	call L_B925		;b907
-	ld a,(ix+00ch)		;b90a
+	call salas_10_a_13		;b907   ; ...en las salas 0x10-0x13...
+	ld a,(ix+00ch)		;b90a   ; ...p06:BA36 con el byte 0x0C
 	call 08085h		;b90d   ; llama_ba36_a:
-	ld a,(ix+001h)		;b910
+	ld a,(ix+001h)		;b910   ; desde el paso 4...
 	cp 004h		;b913
 	ret c			;b915
-	jp 08671h		;b916   ; musica_del_actor: la primera vez (0xCA26): ninguna pendiente y por el tipo (p04:8698)
+	jp 08671h		;b916   ; ...su musica
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_B919: lo apuntan con el banco puesto p15:B8FB (0xB919); el
@@ -2334,184 +2326,184 @@ DATA_resto_B919:
 ; ======================================================================
 
 
-L_B925:
+salas_10_a_13:		; acarreo en las salas 0x10-0x13
 	ld a,(0ca4bh)		;b925   ; lee la sala de la zona
 	sub 010h		;b928
 	cp 004h		;b92a
 	ret			;b92c
-L_B92D:
-	call 08100h		;b92d   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+tipo_0c_paso_0:		; en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
+	call 08100h		;b92d   ; fuera de su sala, nada
 	ret nz			;b930
-	ld hl,0d7d2h		;b931
+	ld hl,0d7d2h		;b931   ; el bit 3 de 0xD7D2
 	set 3,(hl)		;b934
-	ld a,001h		;b936
+	ld a,001h		;b936   ; 0xCB3C = 1
 	ld (0cb3ch),a		;b938
-	ld l,000h		;b93b
-	ld c,060h		;b93d
-	call L_B9C1		;b93f
-	xor a			;b942
+	ld l,000h		;b93b   ; de la Y 0...
+	ld c,060h		;b93d   ; ...0x60 de alto
+	call copia_0c_a_48		;b93f   ; copia_0c_a_48: de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
+	xor a			;b942   ; el dibujo 0...
 	ld (ix+00dh),a		;b943
-	ld (ix+00fh),060h		;b946
-	call 05065h		;b94a   ; sprites_de_6860:
-	ld a,007h		;b94d
-	call L_B867		;b94f
-	ld (ix+00eh),010h		;b952
-	jp L_B968		;b956
-L_B959:
-	dec (ix+00eh)		;b959
+	ld (ix+00fh),060h		;b946   ; ...y el byte 0x0F = 0x60
+	call 05065h		;b94a   ; los sprites
+	ld a,007h		;b94d   ; el color 7
+	call colores_daa0		;b94f   ; colores_daa0: los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
+	ld (ix+00eh),010h		;b952   ; la espera 0x10
+	jp paso_siguiente_0c		;b956   ; paso_siguiente_0c: el paso siguiente (byte 1 + 1)
+tipo_0c_paso_1:		; la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
+	dec (ix+00eh)		;b959   ; la espera
 	ret nz			;b95c
-	call 086c2h		;b95d   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
+	call 086c2h		;b95d   ; la musica 0xA6
 	ld (ix+00eh),000h		;b960
-	ld (ix+01fh),014h		;b964
-L_B968:
-	inc (ix+001h)		;b968
+	ld (ix+01fh),014h		;b964   ; la espera 0x14
+paso_siguiente_0c:		; el paso siguiente (byte 1 + 1)
+	inc (ix+001h)		;b968   ; un paso mas
 	ret			;b96b
-L_B96C:
-	ld a,(0ca42h)		;b96c   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+copia_0c_48:		; de (0x30, L) 0x30 x C a (0x48, 0) por p00:47ED, con A = 0x48 en la pagina 0 y 0x18 en la 1
+	ld a,(0ca42h)		;b96c   ; en la pagina 0...
 	and a			;b96f
-	ld a,048h		;b970
-	jr z,L_B976		;b972
-	ld a,018h		;b974
-L_B976:
+	ld a,048h		;b970   ; ...la operacion 0x48...
+	jr z,copia_0c_48_a		;b972
+	ld a,018h		;b974   ; ...en la 1, 0x18
+copia_0c_48_a:		; 0x30 de ancho, desde la X 0x30
 	ld b,030h		;b976
 	ld h,b			;b978
-	ld de,04800h		;b979
+	ld de,04800h		;b979   ; a (0x48, 0)
 	jp 047edh		;b97c   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-L_B97F:
-	ld a,(ix+01fh)		;b97f
+tipo_0c_paso_2:		; tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
+	ld a,(ix+01fh)		;b97f   ; la espera
 	and a			;b982
-	jr z,L_B989		;b983
+	jr z,tipo_0c_piezas		;b983
 	dec (ix+01fh)		;b985
 	ret nz			;b988
-L_B989:
-	ld c,003h		;b989
-	call L_B9FA		;b98b
-	ld a,(ix+00eh)		;b98e
+tipo_0c_piezas:		; las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
+	ld c,003h		;b989   ; el dibujo cada 4
+	call dos_piezas		;b98b   ; dos_piezas: las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
+	ld a,(ix+00eh)		;b98e   ; desde 0x40...
 	cp 040h		;b991
 	ret c			;b993
-	jp L_B968		;b994
-L_B997:
-	ld a,(ix+00fh)		;b997
+	jp paso_siguiente_0c		;b994   ; ...el paso siguiente
+tipo_0c_paso_3:		; las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+	ld a,(ix+00fh)		;b997   ; desde 0x50...
 	cp 050h		;b99a
-	ld c,001h		;b99c
-	jr nc,L_B9A1		;b99e
-	dec c			;b9a0
-L_B9A1:
-	call L_B9FA		;b9a1
-	dec (ix+00fh)		;b9a4
+	ld c,001h		;b99c   ; ...cada 2...
+	jr nc,tipo_0c_baja		;b99e
+	dec c			;b9a0   ; ...si no, cada 1
+tipo_0c_baja:
+	call dos_piezas		;b9a1   ; dos_piezas: las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
+	dec (ix+00fh)		;b9a4   ; el byte 0x0F uno menos
 	ld a,(ix+00fh)		;b9a7
-	ld l,a			;b9aa
+	ld l,a			;b9aa   ; la linea de su Y...
 	ld e,a			;b9ab
 	push af			;b9ac
-	ld h,000h		;b9ad
-	ld d,048h		;b9af
-	ld bc,03001h		;b9b1
+	ld h,000h		;b9ad   ; ...desde la X 0...
+	ld d,048h		;b9af   ; ...a la X 0x48...
+	ld bc,03001h		;b9b1   ; ...0x30 x 1
 	call 0475ah		;b9b4   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 	pop af			;b9b7
-	jr z,L_B9CB		;b9b8
-	ld c,(ix+00fh)		;b9ba
+	jr z,tipo_0c_arriba		;b9b8   ; a 0: se acaba
+	ld c,(ix+00fh)		;b9ba   ; de la Y 0x60 - el byte 0x0F
 	ld a,060h		;b9bd
 	sub c			;b9bf
 	ld l,a			;b9c0
-L_B9C1:
-	ld de,04800h		;b9c1
-	ld h,030h		;b9c4
-	ld b,030h		;b9c6
+copia_0c_a_48:		; de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
+	ld de,04800h		;b9c1   ; a (0x48, 0)
+	ld h,030h		;b9c4   ; desde la X 0x30
+	ld b,030h		;b9c6   ; 0x30 de ancho
 	jp 0475ah		;b9c8   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
-L_B9CB:
-	xor a			;b9cb
+tipo_0c_arriba:		; 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+	xor a			;b9cb   ; 0xCB3C = 0
 	ld (0cb3ch),a		;b9cc
-	call 0504ch		;b9cf   ; sprites_de_670e: p35:670E a 0xFA00
-	jp L_B968		;b9d2
-L_B9D5:
+	call 0504ch		;b9cf   ; los sprites de p35:670E
+	jp paso_siguiente_0c		;b9d2   ; paso_siguiente_0c: el paso siguiente (byte 1 + 1)
+tipo_0c_paso_4:		; los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
 	xor a			;b9d5
 	ld (ix+00fh),a		;b9d6
 	ld (ix+00dh),a		;b9d9
 	ld (ix+018h),a		;b9dc
 	ld (ix+009h),a		;b9df
-	inc a			;b9e2
+	inc a			;b9e2   ; el byte 0x16 = 1
 	ld (ix+016h),a		;b9e3
-	ld (ix+007h),004h		;b9e6
-	ld (ix+00ch),003h		;b9ea
-	call L_BB99		;b9ee
-	call 06b6dh		;b9f1   ; sonido_77: pide el sonido 0x77 (de los que tienen la partitura en un banco de musica, p16:4CE3)
-	call 06b12h		;b9f4   ; sonido_05: pide el sonido 0x05
-	jp L_B968		;b9f7
-L_B9FA:
+	ld (ix+007h),004h		;b9e6   ; el byte 7 = 4
+	ld (ix+00ch),003h		;b9ea   ; el byte 0x0C = 3
+	call espera_al_azar		;b9ee   ; la espera al azar
+	call 06b6dh		;b9f1   ; el sonido 0x77...
+	call 06b12h		;b9f4   ; ...y el 5
+	jp paso_siguiente_0c		;b9f7   ; paso_siguiente_0c: el paso siguiente (byte 1 + 1)
+dos_piezas:		; las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
 	push bc			;b9fa
-	call L_BA14		;b9fb
+	call dos_piezas_a		;b9fb   ; las piezas
 	pop bc			;b9fe
-	inc (ix+00eh)		;b9ff
+	inc (ix+00eh)		;b9ff   ; uno mas
 	ld a,(ix+00eh)		;ba02
-	and c			;ba05
+	and c			;ba05   ; cada C + 1...
 	ret nz			;ba06
-	ld a,(ix+00dh)		;ba07
+	ld a,(ix+00dh)		;ba07   ; ...el dibujo uno mas...
 	inc a			;ba0a
-	cp 003h		;ba0b
-	jr c,L_BA10		;ba0d
+	cp 003h		;ba0b   ; ...hasta 2
+	jr c,pon_dibujo_0c		;ba0d
 	xor a			;ba0f
-L_BA10:
+pon_dibujo_0c:
 	ld (ix+00dh),a		;ba10
 	ret			;ba13
-L_BA14:
-	ld a,(ix+00eh)		;ba14
+dos_piezas_a:		; por el bit 3 del byte 0x0E, las piezas de 8 x 8 de (0x20, 0x70) y (0x38, 0x70) o de (0x50, 0x70) y (0x58, 0x70) a las Y 0x18 y 0x30
+	ld a,(ix+00eh)		;ba14   ; por el bit 3...
 	and 008h		;ba17
-	ld hl,02038h		;ba19
+	ld hl,02038h		;ba19   ; ...las X 0x20 y 0x38...
 	jr z,L_BA21		;ba1c
-	ld hl,05058h		;ba1e
+	ld hl,05058h		;ba1e   ; ...o 0x50 y 0x58
 L_BA21:
 	push hl			;ba21
-	ld e,018h		;ba22
-	call L_BA2B		;ba24
+	ld e,018h		;ba22   ; la primera a la Y 0x18
+	call pieza_0c		;ba24   ; pieza_0c: una pieza de 8 x 8 de (H, 0x70) a (0x40, E) de la otra pagina, o a (0x58, E) de esta en el paso 2
 	pop hl			;ba27
-	ld h,l			;ba28
-	ld e,030h		;ba29
-L_BA2B:
-	ld l,070h		;ba2b
-	ld bc,00808h		;ba2d
-	ld a,(ix+001h)		;ba30
+	ld h,l			;ba28   ; la segunda...
+	ld e,030h		;ba29   ; ...a la Y 0x30
+pieza_0c:		; una pieza de 8 x 8 de (H, 0x70) a (0x40, E) de la otra pagina, o a (0x58, E) de esta en el paso 2
+	ld l,070h		;ba2b   ; desde la Y 0x70...
+	ld bc,00808h		;ba2d   ; ...8 x 8
+	ld a,(ix+001h)		;ba30   ; en el paso 2, p15:BA45
 	cp 002h		;ba33
-	jr z,L_BA45		;ba35
-	ld d,040h		;ba37
-	ld a,(0ca42h)		;ba39   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	jr z,pieza_0c_aqui		;ba35
+	ld d,040h		;ba37   ; a la X 0x40...
+	ld a,(0ca42h)		;ba39   ; ...de la pagina 2 a la otra
 	xor 001h		;ba3c
 	rlca			;ba3e
 	rlca			;ba3f
 	or 002h		;ba40
 	jp 04767h		;ba42   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-L_BA45:
-	ld d,058h		;ba45
-	ld a,(0ca42h)		;ba47   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+pieza_0c_aqui:		; a (0x58, E) de la pagina de dibujar
+	ld d,058h		;ba45   ; a la X 0x58...
+	ld a,(0ca42h)		;ba47   ; ...de la pagina 2 a la de dibujar
 	rlca			;ba4a
 	rlca			;ba4b
 	or 002h		;ba4c
 	jp 04767h		;ba4e   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-L_BA51:
-	call L_BB33		;ba51
-	call L_BB42		;ba54
-	call L_BBA4		;ba57
-	call L_BAF1		;ba5a
-	ld a,(ix+00dh)		;ba5d
-	ld b,(ix+003h)		;ba60
-	ld c,(ix+005h)		;ba63
-	ld d,(ix+00ah)		;ba66
-	ld e,(ix+00bh)		;ba69
+tipo_0c_paso_5:		; su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
+	call sonido_0c		;ba51   ; el sonido
+	call borde_d8b7		;ba54   ; el borde
+	call disparo_0c		;ba57   ; los disparos
+	call paso_de_sala_0c		;ba5a   ; el paso de sala
+	ld a,(ix+00dh)		;ba5d   ; el tramo
+	ld b,(ix+003h)		;ba60   ; B = el byte 3
+	ld c,(ix+005h)		;ba63   ; C = el byte 5
+	ld d,(ix+00ah)		;ba66   ; D = la fila (byte 0x0A)
+	ld e,(ix+00bh)		;ba69   ; E = la columna (byte 0x0B)
 	ld hl,0baa4h		;ba6c
-	call 0424eh		;ba6f   ; salta_por_tabla: salta a la palabra A de la tabla de HL
-	call c,L_BA7E		;ba72
-	ld a,(ix+018h)		;ba75
-	xor 001h		;ba78
+	call 0424eh		;ba6f   ; se acaba el tramo?
+	call c,tramo_siguiente		;ba72   ; si, el siguiente
+	ld a,(ix+018h)		;ba75   ; el byte 0x18...
+	xor 001h		;ba78   ; ...de 0 a 1 y vuelta
 	ld (ix+018h),a		;ba7a
 	ret			;ba7d
-L_BA7E:
-	ld a,(ix+00dh)		;ba7e
-	inc a			;ba81
+tramo_siguiente:		; el tramo siguiente (0-7) y sus velocidades de p15:BA94: el byte 7 y el 9
+	ld a,(ix+00dh)		;ba7e   ; el tramo...
+	inc a			;ba81   ; ...uno mas, de 0 a 7
 	and 007h		;ba82
 	ld (ix+00dh),a		;ba84
-	ld hl,0ba94h		;ba87
+	ld hl,0ba94h		;ba87   ; sus velocidades
 	call 043f6h		;ba8a   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld (ix+009h),h		;ba8d
-	ld (ix+007h),l		;ba90
+	ld (ix+009h),h		;ba8d   ; el byte 9...
+	ld (ix+007h),l		;ba90   ; ...y el 7
 	ret			;ba93
 
 ; ----------------------------------------------------------------------
@@ -2528,185 +2520,185 @@ DATA_resto_BA94:
 ; ======================================================================
 
 
-L_BAB4:
-	ld hl,00740h		;bab4
-L_BAB7:
+tramo_0:		; acarreo con la fila 7 y el byte 3 desde 0x40
+	ld hl,00740h		;bab4   ; 0x40 en la fila 7
+llega_desde:		; acarreo con D = H y B desde L
 	ld a,d			;bab7
-	cp h			;bab8
-	jr nz,L_BABF		;bab9
+	cp h			;bab8   ; D distinta: no
+	jr nz,no_llega		;bab9
 	ld a,b			;babb
-	cp l			;babc
-	ccf			;babd
+	cp l			;babc   ; B desde L...
+	ccf			;babd   ; ...acarreo
 	ret			;babe
-L_BABF:
-	or a			;babf
+no_llega:		; sin acarreo: no llega
+	or a			;babf   ; sin acarreo
 	ret			;bac0
-L_BAC1:
+tramo_1:		; la fila 7 y el byte 3 desde 0x80
 	ld hl,00780h		;bac1
-	jr L_BAB7		;bac4
-L_BAC6:
+	jr llega_desde		;bac4
+tramo_2:		; la columna 8 y el byte 5 desde 0x40
 	ld hl,00840h		;bac6
-	ld d,e			;bac9
-	ld b,c			;baca
-	jr L_BAB7		;bacb
-L_BACD:
+	ld d,e			;bac9   ; la columna...
+	ld b,c			;baca   ; ...y el byte 5
+	jr llega_desde		;bacb
+tramo_3:		; la columna 8 y el byte 5 desde 0x80
 	ld hl,00880h		;bacd
 	ld d,e			;bad0
 	ld b,c			;bad1
-	jr L_BAB7		;bad2
-L_BAD4:
+	jr llega_desde		;bad2
+tramo_4:		; la fila 8 y el byte 3 por debajo de 0x80
 	ld hl,00880h		;bad4
-L_BAD7:
+llega_antes:		; acarreo con D = H y B por debajo de L
 	ld a,d			;bad7
-	cp h			;bad8
-	jr nz,L_BABF		;bad9
+	cp h			;bad8   ; D distinta: no
+	jr nz,no_llega		;bad9
 	ld a,b			;badb
-	cp l			;badc
+	cp l			;badc   ; B por debajo de L: acarreo
 	ret			;badd
-L_BADE:
+tramo_5:		; la fila 8 y el byte 3 por debajo de 0x40
 	ld hl,00840h		;bade
-	jr L_BAD7		;bae1
-L_BAE3:
+	jr llega_antes		;bae1
+tramo_6:		; la columna 7 y el byte 5 por debajo de 0x80
 	ld hl,00780h		;bae3
 	ld d,e			;bae6
 	ld b,c			;bae7
-	jr L_BAD7		;bae8
-L_BAEA:
+	jr llega_antes		;bae8
+tramo_7:		; la columna 7 y el byte 5 por debajo de 0x40
 	ld hl,00740h		;baea
 	ld d,e			;baed
 	ld b,c			;baee
-	jr L_BAD7		;baef
-L_BAF1:
+	jr llega_antes		;baef
+paso_de_sala_0c:		; con el byte 7 a 0, el byte 5 de 0xC0 a 0xFF pasa de columna (byte 0x0B; uno mas y 0 con el byte 9 positivo, uno menos y 0xC0 con el negativo); si no, el byte 3 pasa de fila (byte 0x0A; uno menos y 0 con el byte 7 positivo, uno mas y 0xC0 con el negativo)
 	ld a,(ix+007h)		;baf1
-	and a			;baf4
-	jr nz,L_BB15		;baf5
-	ld a,(ix+005h)		;baf7
+	and a			;baf4   ; con el byte 7, p15:BB15
+	jr nz,paso_de_fila_0c		;baf5
+	ld a,(ix+005h)		;baf7   ; el byte 5 de 0xC0 a 0xFF?
 	sub 0c0h		;bafa
 	cp 040h		;bafc
 	ret nc			;bafe
-	ld a,(ix+009h)		;baff
+	ld a,(ix+009h)		;baff   ; el byte 9 negativo?
 	rla			;bb02
-	jr c,L_BB0D		;bb03
-	inc (ix+00bh)		;bb05
-	ld (ix+005h),000h		;bb08
+	jr c,columna_menos		;bb03
+	inc (ix+00bh)		;bb05   ; la columna uno mas...
+	ld (ix+005h),000h		;bb08   ; ...y el byte 5 a 0
 	ret			;bb0c
-L_BB0D:
-	dec (ix+00bh)		;bb0d
-	ld (ix+005h),0c0h		;bb10
+columna_menos:		; la columna uno menos y el byte 5 a 0xC0
+	dec (ix+00bh)		;bb0d   ; la columna uno menos...
+	ld (ix+005h),0c0h		;bb10   ; ...y el byte 5 a 0xC0
 	ret			;bb14
-L_BB15:
-	ld a,(ix+003h)		;bb15
+paso_de_fila_0c:		; el byte 3 de 0xC0 a 0xFF pasa de fila
+	ld a,(ix+003h)		;bb15   ; el byte 3 de 0xC0 a 0xFF?
 	sub 0c0h		;bb18
 	cp 040h		;bb1a
 	ret nc			;bb1c
-	ld a,(ix+007h)		;bb1d
+	ld a,(ix+007h)		;bb1d   ; el byte 7 negativo?
 	rla			;bb20
-	jr c,L_BB2B		;bb21
-	dec (ix+00ah)		;bb23
-	ld (ix+003h),000h		;bb26
+	jr c,fila_mas		;bb21
+	dec (ix+00ah)		;bb23   ; la fila uno menos...
+	ld (ix+003h),000h		;bb26   ; ...y el byte 3 a 0
 	ret			;bb2a
-L_BB2B:
-	inc (ix+00ah)		;bb2b
-	ld (ix+003h),0c0h		;bb2e
+fila_mas:		; la fila uno mas y el byte 3 a 0xC0
+	inc (ix+00ah)		;bb2b   ; la fila uno mas...
+	ld (ix+003h),0c0h		;bb2e   ; ...y el byte 3 a 0xC0
 	ret			;bb32
-L_BB33:
+sonido_0c:		; en las salas desde la 0x10: el sonido 0x36 en su sala, el 0x37 fuera
 	ld a,(0ca4bh)		;bb33   ; lee la sala de la zona
-	cp 010h		;bb36
+	cp 010h		;bb36   ; por debajo de la 0x10, nada
 	ret c			;bb38
-	call 08100h		;bb39   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
+	call 08100h		;bb39   ; en su sala, el 0x36
 	jp z,06af2h		;bb3c   ; sonido_36: pide el sonido 0x36
-	jp 06c13h		;bb3f   ; sonido_37: pide el sonido 0x37
-L_BB42:
-	ld hl,0d8b7h		;bb42
+	jp 06c13h		;bb3f   ; si no, el 0x37
+borde_d8b7:		; con 0xD8B7: uno menos y el color del borde (R#7) 0x0F con la cuenta impar, 7 con la par
+	ld hl,0d8b7h		;bb42   ; apunta a la cuenta del borde que parpadea, R#7 = 0x0F / 7 (p15:BB42)
 	ld a,(hl)			;bb45
 	and a			;bb46
-	ret z			;bb47
-	dec (hl)			;bb48
+	ret z			;bb47   ; sin la cuenta, nada
+	dec (hl)			;bb48   ; uno menos
 	rra			;bb49
-	ld bc,00f07h		;bb4a
-	jr c,L_BB51		;bb4d
-	ld b,007h		;bb4f
-L_BB51:
+	ld bc,00f07h		;bb4a   ; R#7 = 0x0F...
+	jr c,pon_borde		;bb4d
+	ld b,007h		;bb4f   ; ...o 7
+pon_borde:
 	jp 00047h		;bb51   ; BIOS WRTVDP - Writes data in the VDP-register
-L_BB54:
-	dec (ix+01fh)		;bb54
+dispara_0c:		; la espera del byte 0x1F; a 0, en su sala y sin disparo: el disparo dura 0x0C (byte 0x0F), los pasos hacia Snake (16 por encima) en los bytes 0x1B-0x1E (p01:7A4E) y su sitio en 0xD8B3-0xD8B6; otra espera al azar
+	dec (ix+01fh)		;bb54   ; la espera
 	ret nz			;bb57
 	call 08100h		;bb58   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-	jr nz,L_BB99		;bb5b
-	ld a,(ix+00fh)		;bb5d
+	jr nz,espera_al_azar		;bb5b
+	ld a,(ix+00fh)		;bb5d   ; con un disparo, nada
 	and a			;bb60
-	jr nz,L_BB99		;bb61
-	ld (ix+00fh),00ch		;bb63
-	call 08079h		;bb67   ; y_x_de_snake_en_hl: L = la Y, H = la X de Snake
-	ld a,l			;bb6a
+	jr nz,espera_al_azar		;bb61
+	ld (ix+00fh),00ch		;bb63   ; 0x0C cuadros
+	call 08079h		;bb67   ; hacia Snake...
+	ld a,l			;bb6a   ; ...16 mas arriba
 	sub 010h		;bb6b
 	ld l,a			;bb6d
-	ld d,(ix+005h)		;bb6e
-	ld e,(ix+003h)		;bb71
+	ld d,(ix+005h)		;bb6e   ; desde su X...
+	ld e,(ix+003h)		;bb71   ; ...y su Y
 	ld a,0f0h		;bb74
 	ld b,001h		;bb76
-	call 07a4eh		;bb78   ; apunta_con_b_bancos_15:
-	ld (ix+01eh),h		;bb7b
+	call 07a4eh		;bb78   ; los pasos...
+	ld (ix+01eh),h		;bb7b   ; ...a los bytes 0x1E-0x1B
 	ld (ix+01dh),l		;bb7e
 	ld (ix+01ch),d		;bb81
 	ld (ix+01bh),e		;bb84
-	ld h,(ix+005h)		;bb87
+	ld h,(ix+005h)		;bb87   ; la X (16 bits)...
 	ld l,(ix+004h)		;bb8a
-	ld (0d8b5h),hl		;bb8d
-	ld h,(ix+003h)		;bb90
+	ld (0d8b5h),hl		;bb8d   ; ...a 0xD8B5
+	ld h,(ix+003h)		;bb90   ; la Y (16 bits)...
 	ld l,(ix+002h)		;bb93
-	ld (0d8b3h),hl		;bb96
-L_BB99:
+	ld (0d8b3h),hl		;bb96   ; ...a 0xD8B3
+espera_al_azar:		; el byte 0x1F = 4-0x0B al azar
 	call 04256h		;bb99   ; azar: A = un numero al azar (0xCA03 rotado mas R)
-	and 007h		;bb9c
-	add a,004h		;bb9e
+	and 007h		;bb9c   ; 0-7...
+	add a,004h		;bb9e   ; ...+ 4
 	ld (ix+01fh),a		;bba0
 	ret			;bba3
-L_BBA4:
+disparo_0c:		; fuera de su sala, sin disparo; sin el, p15:BB54; con el, uno menos y el disparo en su sitio + los pasos por lo que lleva (p15:BBE8): dentro de 8-0xAF, lo lanzado de tipo 7 (p02:9AF4); si no, se acaba
 	call 08100h		;bba4   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-	jr z,L_BBAD		;bba7
-	ld (ix+00fh),000h		;bba9
-L_BBAD:
+	jr z,disparo_0c_a		;bba7
+	ld (ix+00fh),000h		;bba9   ; fuera: sin disparo
+disparo_0c_a:
 	ld a,(ix+00fh)		;bbad
 	and a			;bbb0
-	jr z,L_BB54		;bbb1
-	dec (ix+00fh)		;bbb3
-	ld h,(ix+01eh)		;bbb6
+	jr z,dispara_0c		;bbb1   ; sin disparo, p15:BB54
+	dec (ix+00fh)		;bbb3   ; uno menos
+	ld h,(ix+01eh)		;bbb6   ; el paso en X por lo que lleva...
 	ld l,(ix+01dh)		;bbb9
-	call L_BBE8		;bbbc
-	ld bc,(0d8b5h)		;bbbf
+	call por_lo_que_lleva		;bbbc   ; por_lo_que_lleva: HL = HL * 2 * (0x0D - el byte 0x0F); con 0x0C, HL
+	ld bc,(0d8b5h)		;bbbf   ; ...+ la X de salida
 	add hl,bc			;bbc3
 	ex de,hl			;bbc4
-	ld h,(ix+01ch)		;bbc5
+	ld h,(ix+01ch)		;bbc5   ; el paso en Y por lo que lleva...
 	ld l,(ix+01bh)		;bbc8
-	call L_BBE8		;bbcb
-	ld bc,(0d8b3h)		;bbce
+	call por_lo_que_lleva		;bbcb   ; por_lo_que_lleva: HL = HL * 2 * (0x0D - el byte 0x0F); con 0x0C, HL
+	ld bc,(0d8b3h)		;bbce   ; ...+ la Y de salida
 	add hl,bc			;bbd2
-	ld l,d			;bbd3
-	ld a,h			;bbd4
+	ld l,d			;bbd3   ; L = la X, H = la Y
+	ld a,h			;bbd4   ; dentro de 8-0xAF...
 	sub 008h		;bbd5
 	cp 0a8h		;bbd7
-	jr nc,L_BBE3		;bbd9
+	jr nc,se_acaba_disparo		;bbd9
 	ld a,l			;bbdb
 	sub 008h		;bbdc
 	cp 0a8h		;bbde
-	jp c,09af4h		;bbe0   ; lanza_7: lo lanzado de tipo 7
-L_BBE3:
-	ld (ix+00fh),000h		;bbe3
+	jp c,09af4h		;bbe0   ; ...lo lanzado de tipo 7
+se_acaba_disparo:		; el byte 0x0F a 0: sin disparo
+	ld (ix+00fh),000h		;bbe3   ; sin disparo
 	ret			;bbe7
-L_BBE8:
-	ld a,(ix+00fh)		;bbe8
+por_lo_que_lleva:		; HL = HL * 2 * (0x0D - el byte 0x0F); con 0x0C, HL
+	ld a,(ix+00fh)		;bbe8   ; lo que lleva: 0x0C - el byte 0x0F
 	sub 00ch		;bbeb
 	ret z			;bbed
 	neg		;bbee
 	ld b,a			;bbf0
-	add hl,hl			;bbf1
+	add hl,hl			;bbf1   ; * 2
 	push de			;bbf2
 	ld d,h			;bbf3
 	ld e,l			;bbf4
-L_BBF5:
+suma_veces:
 	add hl,de			;bbf5
-	djnz L_BBF5		;bbf6
+	djnz suma_veces		;bbf6   ; B veces mas
 	pop de			;bbf8
 	ret			;bbf9
 
@@ -2735,126 +2727,126 @@ DATA_resto_BBFA:
 ; ======================================================================
 
 
-L_BCB4:
+mapa_zona_7:		; en la zona 7, las salas 2, 3, 4, 8 y 9: trozos de mapa copiados a 0xDD00 (p01:62A5, B filas de C caracteres en (D, E))
 	ld a,(0ca4ah)		;bcb4   ; lee la zona
-	cp 007h		;bcb7
+	cp 007h		;bcb7   ; solo la zona 7
 	ret nz			;bcb9
-	ld a,(0ca4bh)		;bcba   ; lee la sala de la zona
+	ld a,(0ca4bh)		;bcba   ; sala 2...
 	cp 002h		;bcbd
-	jr z,L_BCD5		;bcbf
-	cp 003h		;bcc1
-	jr z,L_BD0A		;bcc3
-	cp 004h		;bcc5
-	jp z,L_BD43		;bcc7
-	cp 008h		;bcca
-	jp z,L_BD81		;bccc
-	cp 009h		;bccf
-	jp z,L_BDAA		;bcd1
+	jr z,mapa_zona_7_sala_2		;bcbf
+	cp 003h		;bcc1   ; ...3...
+	jr z,mapa_zona_7_sala_3		;bcc3
+	cp 004h		;bcc5   ; ...4...
+	jp z,mapa_zona_7_sala_4		;bcc7   ; mapa_zona_7_sala_4: la sala 4: 9 trozos
+	cp 008h		;bcca   ; ...8...
+	jp z,mapa_zona_7_sala_8		;bccc   ; mapa_zona_7_sala_8: la sala 8: 5 trozos
+	cp 009h		;bccf   ; ...9
+	jp z,mapa_zona_7_sala_9		;bcd1   ; mapa_zona_7_sala_9: (0, 0x20), 2 filas de 4
 	ret			;bcd4
-L_BCD5:
-	ld de,03040h		;bcd5
-	ld bc,00206h		;bcd8
-	call L_BDB2		;bcdb
-	ld de,05030h		;bcde
-	call L_BDB2		;bce1
-	ld de,09040h		;bce4
+mapa_zona_7_sala_2:		; la sala 2: 8 trozos
+	ld de,03040h		;bcd5   ; (0x30, 0x40)...
+	ld bc,00206h		;bcd8   ; ...2 filas de 6
+	call copia_trozo_guarda		;bcdb   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,05030h		;bcde   ; (0x50, 0x30)
+	call copia_trozo_guarda		;bce1   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,09040h		;bce4   ; (0x90, 0x40)
 	call 062a5h		;bce7   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,03050h		;bcea
-	ld bc,00602h		;bced
-	call L_BDB2		;bcf0
-	ld de,04070h		;bcf3
+	ld de,03050h		;bcea   ; (0x30, 0x50)...
+	ld bc,00602h		;bced   ; ...6 filas de 2
+	call copia_trozo_guarda		;bcf0   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,04070h		;bcf3   ; (0x40, 0x70)
 	call 062a5h		;bcf6   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,08030h		;bcf9
-	ld bc,00802h		;bcfc
+	ld de,08030h		;bcf9   ; (0x80, 0x30)...
+	ld bc,00802h		;bcfc   ; ...8 filas de 2
 	call 062a5h		;bcff   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,05090h		;bd02
-	ld bc,0020eh		;bd05
-	jr L_BD40		;bd08
-L_BD0A:
-	ld de,00040h		;bd0a
-	ld bc,00206h		;bd0d
-	call L_BDB2		;bd10
-	ld de,09060h		;bd13
+	ld de,05090h		;bd02   ; (0x50, 0x90)...
+	ld bc,0020eh		;bd05   ; ...2 filas de 0x0E
+	jr copia_trozo		;bd08
+mapa_zona_7_sala_3:		; la sala 3: 8 trozos
+	ld de,00040h		;bd0a   ; (0, 0x40)...
+	ld bc,00206h		;bd0d   ; ...2 filas de 6
+	call copia_trozo_guarda		;bd10   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,09060h		;bd13   ; (0x90, 0x60)
 	call 062a5h		;bd16   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,09000h		;bd19
-	ld bc,00402h		;bd1c
-	call L_BDB2		;bd1f
-	ld de,09070h		;bd22
+	ld de,09000h		;bd19   ; (0x90, 0)...
+	ld bc,00402h		;bd1c   ; ...4 filas de 2
+	call copia_trozo_guarda		;bd1f   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,09070h		;bd22   ; (0x90, 0x70)
 	call 062a5h		;bd25   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,03020h		;bd28
-	ld bc,00602h		;bd2b
+	ld de,03020h		;bd28   ; (0x30, 0x20)...
+	ld bc,00602h		;bd2b   ; ...6 filas de 2
 	call 062a5h		;bd2e   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,04020h		;bd31
-	ld bc,0020ch		;bd34
+	ld de,04020h		;bd31   ; (0x40, 0x20)...
+	ld bc,0020ch		;bd34   ; ...2 filas de 0x0C
 	call 062a5h		;bd37   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,00090h		;bd3a
-	ld bc,00218h		;bd3d
-L_BD40:
+	ld de,00090h		;bd3a   ; (0, 0x90)...
+	ld bc,00218h		;bd3d   ; ...2 filas de 0x18
+copia_trozo:		; B filas de C en (D, E)
 	jp 062a5h		;bd40   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-L_BD43:
-	ld de,06030h		;bd43
-	ld bc,00206h		;bd46
-	call L_BDB2		;bd49
-	ld de,00060h		;bd4c
+mapa_zona_7_sala_4:		; la sala 4: 9 trozos
+	ld de,06030h		;bd43   ; (0x60, 0x30)...
+	ld bc,00206h		;bd46   ; ...2 filas de 6
+	call copia_trozo_guarda		;bd49   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,00060h		;bd4c   ; (0, 0x60)
 	call 062a5h		;bd4f   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,03060h		;bd52
-	ld bc,00602h		;bd55
-	call L_BDB2		;bd58
-	ld de,06050h		;bd5b
-	call L_BDB2		;bd5e
-	ld de,09030h		;bd61
+	ld de,03060h		;bd52   ; (0x30, 0x60)...
+	ld bc,00602h		;bd55   ; ...6 filas de 2
+	call copia_trozo_guarda		;bd58   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,06050h		;bd5b   ; (0x60, 0x50)
+	call copia_trozo_guarda		;bd5e   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,09030h		;bd61   ; (0x90, 0x30)
 	call 062a5h		;bd64   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,04000h		;bd67
-	ld bc,00804h		;bd6a
+	ld de,04000h		;bd67   ; (0x40, 0)...
+	ld bc,00804h		;bd6a   ; ...8 filas de 4
 	call 062a5h		;bd6d   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,07050h		;bd70
-	ld bc,00204h		;bd73
+	ld de,07050h		;bd70   ; (0x70, 0x50)...
+	ld bc,00204h		;bd73   ; ...2 filas de 4
 	call 062a5h		;bd76   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld bc,00202h		;bd79
-	ld de,00090h		;bd7c
-	jr L_BD40		;bd7f
-L_BD81:
-	ld de,04050h		;bd81
-	ld bc,00206h		;bd84
-	call L_BDB2		;bd87
-	ld de,06080h		;bd8a
+	ld bc,00202h		;bd79   ; 2 filas de 2...
+	ld de,00090h		;bd7c   ; ...en (0, 0x90)
+	jr copia_trozo		;bd7f
+mapa_zona_7_sala_8:		; la sala 8: 5 trozos
+	ld de,04050h		;bd81   ; (0x40, 0x50)...
+	ld bc,00206h		;bd84   ; ...2 filas de 6
+	call copia_trozo_guarda		;bd87   ; copia_trozo_guarda: p01:62A5 guardando BC
+	ld de,06080h		;bd8a   ; (0x60, 0x80)
 	call 062a5h		;bd8d   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld bc,00802h		;bd90
-	ld de,09080h		;bd93
+	ld bc,00802h		;bd90   ; 8 filas de 2...
+	ld de,09080h		;bd93   ; ...en (0x90, 0x80)
 	call 062a5h		;bd96   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,02040h		;bd99
-	ld bc,00404h		;bd9c
+	ld de,02040h		;bd99   ; (0x20, 0x40)...
+	ld bc,00404h		;bd9c   ; ...4 filas de 4
 	call 062a5h		;bd9f   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
-	ld de,02080h		;bda2
-	ld bc,00408h		;bda5
-	jr L_BD40		;bda8
-L_BDAA:
+	ld de,02080h		;bda2   ; (0x20, 0x80)...
+	ld bc,00408h		;bda5   ; ...4 filas de 8
+	jr copia_trozo		;bda8
+mapa_zona_7_sala_9:		; (0, 0x20), 2 filas de 4
 	ld de,00020h		;bdaa
 	ld bc,00204h		;bdad
-	jr L_BD40		;bdb0
-L_BDB2:
+	jr copia_trozo		;bdb0
+copia_trozo_guarda:		; p01:62A5 guardando BC
 	push bc			;bdb2
 	call 062a5h		;bdb3   ; copia_al_mapa_0: p01:62B5 caracter a caracter, sin sumar
 	pop bc			;bdb6
 	ret			;bdb7
-L_BDB8:
+mira_alerta_d800:		; de las 4 fichas de 0xD800, la primera que da algo por su tipo (p15:BDCE): B = 0 nada, 1 se acaba la alerta, 2 o 3 (p04:9278)
 	ld ix,0d800h		;bdb8   ; apunta a 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
-	ld b,004h		;bdbc
-L_BDBE:
-	call L_BDCE		;bdbe
-	ld a,c			;bdc1
+	ld b,004h		;bdbc   ; 4 fichas
+mira_ficha_d800:
+	call por_tipo_d800		;bdbe   ; por_tipo_d800: C por su tipo (tabla p15:BDD8; libre, 0)
+	ld a,c			;bdc1   ; algo: se deja
 	and a			;bdc2
-	jr nz,L_BDCC		;bdc3
-	ld de,00020h		;bdc5
+	jr nz,b_de_bdb8		;bdc3
+	ld de,00020h		;bdc5   ; la ficha siguiente (0x20 bytes)
 	add ix,de		;bdc8
-	djnz L_BDBE		;bdca
-L_BDCC:
+	djnz mira_ficha_d800		;bdca   ; 4
+b_de_bdb8:		; B = C
 	ld b,c			;bdcc
 	ret			;bdcd
-L_BDCE:
+por_tipo_d800:		; C por su tipo (tabla p15:BDD8; libre, 0)
 	ld a,(ix+000h)		;bdce
 	and a			;bdd1
-	jr z,$+58		;bdd2
+	jr z,$+58		;bdd2   ; libre: 0
 	dec a			;bdd4
 	call 0424dh		;bdd5   ; despachador: salta a la palabra A de la tabla que va detras del call
 
@@ -2865,128 +2857,128 @@ L_BDCE:
 ;   0xbdd8..0xbdee  (22 bytes)
 DATA_tabla_BDD8:
 	defw 0be0fh,0bdfdh,0bdeeh,0be05h,0be22h,0be2bh,0be35h,0bdfdh	; bdd8
-	defw 0bdfdh,0bdfdh,0be0ch	; bde8  -> L_BDFD L_BDFD L_BE0C
+	defw 0bdfdh,0bdfdh,0be0ch	; bde8  -> d800_mira_2 d800_mira_2 da_0
 
 ; ======================================================================
 ; CODIGO 0xbdee..0xbe9e  (176 bytes)
 ; ======================================================================
 
 
-L_BDEE:
+d800_mira_3:		; el tipo 3: en su sala, 1 en los pasos 0-1 y 3 desde el 2; fuera, 0
 	call 08100h		;bdee   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-	jr nz,L_BE0C		;bdf1
-	ld a,(ix+001h)		;bdf3
+	jr nz,da_0		;bdf1   ; fuera de su sala: 0
+	ld a,(ix+001h)		;bdf3   ; en los pasos 0-1...
 	cp 002h		;bdf6
-	ld c,001h		;bdf8
+	ld c,001h		;bdf8   ; ...1
 	ret c			;bdfa
-	jr L_BE1F		;bdfb
-L_BDFD:
+	jr da_3		;bdfb
+d800_mira_2:		; los tipos 2, 8, 9 y 0x0A: en su sala, 2; fuera, 0
 	call 08100h		;bdfd   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
-	jr nz,L_BE0C		;be00
-L_BE02:
-	ld c,002h		;be02
+	jr nz,da_0		;be00
+da_2:		; C = 2
+	ld c,002h		;be02   ; 2
 	ret			;be04
-L_BE05:
+d800_mira_4:		; el tipo 4: en la sala especial 0x29, 2; si no, 0
 	ld a,(0ca76h)		;be05   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 029h		;be08
-	jr z,L_BE02		;be0a
-L_BE0C:
-	ld c,000h		;be0c
+	jr z,da_2		;be0a
+da_0:		; C = 0
+	ld c,000h		;be0c   ; 0
 	ret			;be0e
-L_BE0F:
+d800_mira_1:		; el tipo 1: en las salas 0x10-0x13, 1 en el paso 0 y 3 en los demas; si no, 0
 	ld a,(0ca4bh)		;be0f   ; lee la sala de la zona
-	sub 010h		;be12
+	sub 010h		;be12   ; las salas 0x10-0x13
 	cp 004h		;be14
-	jr nc,L_BE0C		;be16
-L_BE18:
-	ld a,(ix+001h)		;be18
+	jr nc,da_0		;be16
+da_1_o_3:		; 1 en el paso 0, 3 en los demas
+	ld a,(ix+001h)		;be18   ; en el paso 0...
 	and a			;be1b
-	ld c,001h		;be1c
+	ld c,001h		;be1c   ; ...1
 	ret z			;be1e
-L_BE1F:
-	ld c,003h		;be1f
+da_3:		; C = 3
+	ld c,003h		;be1f   ; 3
 	ret			;be21
-L_BE22:
+d800_mira_5:		; el tipo 5: en la zona 0x0E, 2; si no, 0
 	ld a,(0ca4ah)		;be22   ; lee la zona
 	cp 00eh		;be25
-	jr z,L_BE02		;be27
-	jr L_BE0C		;be29
-L_BE2B:
+	jr z,da_2		;be27
+	jr da_0		;be29
+d800_mira_6:		; el tipo 6: en la zona 0x0E, 1; si no, 0
 	ld a,(0ca4ah)		;be2b   ; lee la zona
 	cp 00eh		;be2e
-	jr nz,L_BE0C		;be30
-	ld c,001h		;be32
+	jr nz,da_0		;be30
+	ld c,001h		;be32   ; 1
 	ret			;be34
-L_BE35:
+d800_mira_7:		; el tipo 7: en las filas 4-5 y columnas 4-5, 1 en el paso 0 y 3 en los demas; si no, 0
 	ld hl,(0ca50h)		;be35   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-	ld a,l			;be38
+	ld a,l			;be38   ; la fila 4-5...
 	sub 004h		;be39
 	cp 002h		;be3b
-	jr nc,L_BE0C		;be3d
-	ld a,h			;be3f
+	jr nc,da_0		;be3d
+	ld a,h			;be3f   ; ...la columna 4-5
 	sub 004h		;be40
 	cp 002h		;be42
-	jr nc,L_BE0C		;be44
-	jr L_BE18		;be46
-L_BE48:
-	ld a,(0cab5h)		;be48   ; lee el nivel de Snake: la barra de vida llena mide 0x20 + 8 por nivel
-	ld hl,lbe54h		;be4b
+	jr nc,da_0		;be44
+	jr da_1_o_3		;be46
+cuenta_alerta_1:		; la cuenta de la alerta 1 (0xD42B) por el nivel de Snake: la palabra de 0xBE54 (0x78, 0x78, 0x90, 0xA0, 0xA0, 0xA0, 0xC8, 0xC8); la rutina no lleva ret y sigue por esa tabla como instrucciones: sub b deja Z y el ret z del byte 0xC8 vuelve
+	ld a,(0cab5h)		;be48   ; por el nivel...
+	ld hl,tabla_alerta_1		;be4b   ; ...la palabra de la tabla de 0xBE54...
 	call 043f6h		;be4e   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-	ld (0d42bh),hl		;be51   ; guarda la cuenta de la alerta 1 (16 bits; se ve / 8 en la ventana); a cero se acaba
-L_BE54:
-	ld a,b			;be54
+	ld (0d42bh),hl		;be51   ; ...a la cuenta; sin ret: sigue por la tabla
+tabla_alerta_1:		; tabla de 8 palabras (la cuenta por nivel) que tambien se ejecuta: ld a,b / nop / ld a,b / nop / sub b (Z) / ... / ret z
+	ld a,b			;be54   ; nivel 0: 0x0078 (tambien ld a,b)
 	nop			;be55
-	ld a,b			;be56
+	ld a,b			;be56   ; nivel 1: 0x0078
 	nop			;be57
-	sub b			;be58
+	sub b			;be58   ; nivel 2: 0x0090 (sub b: A = 0 y Z)
 	nop			;be59
-	and b			;be5a
+	and b			;be5a   ; nivel 3: 0x00A0 (and b: sigue Z)
 	nop			;be5b
-	and b			;be5c
+	and b			;be5c   ; nivel 4: 0x00A0
 	nop			;be5d
-	and b			;be5e
+	and b			;be5e   ; nivel 5: 0x00A0
 	nop			;be5f
-	ret z			;be60
+	ret z			;be60   ; nivel 6: 0x00C8 (ret z: aqui vuelve)
 	nop			;be61
-	ret z			;be62
+	ret z			;be62   ; nivel 7: 0x00C8
 	nop			;be63
-L_BE64:
+sitio_de_d418:		; sin 0xCA77 ni sala especial: acarreo si 0xD418-0xD419 cae cerca (16 en el primero, 0x20 en el segundo) de un sitio de la lista de p15:BE9E de esta zona y sala ([zona][sala][..][..], 0xFF al final)
 	ld a,(0ca77h)		;be64
 	and a			;be67
-	ret nz			;be68
+	ret nz			;be68   ; con 0xCA77, nada
 	ld a,(0ca76h)		;be69   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	and a			;be6c
-	ret nz			;be6d
-	ld de,0be9eh		;be6e
-L_BE71:
+	ret nz			;be6d   ; en una sala especial, nada
+	ld de,0be9eh		;be6e   ; la lista
+sitio_de_lista:
 	ld h,d			;be71
 	ld l,e			;be72
 	ld a,(hl)			;be73
-	inc a			;be74
-	jr z,L_BE9C		;be75
-	ld a,(0ca4ah)		;be77   ; lee la zona
+	inc a			;be74   ; 0xFF: se acaba
+	jr z,ningun_sitio		;be75
+	ld a,(0ca4ah)		;be77   ; la zona...
 	cp (hl)			;be7a
-	jr nz,L_BE95		;be7b
+	jr nz,sitio_siguiente		;be7b
 	inc hl			;be7d
-	ld a,(0ca4bh)		;be7e   ; lee la sala de la zona
+	ld a,(0ca4bh)		;be7e   ; ...la sala...
 	cp (hl)			;be81
-	jr nz,L_BE95		;be82
+	jr nz,sitio_siguiente		;be82
 	inc hl			;be84
-	ld a,(0d418h)		;be85
+	ld a,(0d418h)		;be85   ; ...0xD418 - el byte 2 por debajo de 0x10...
 	sub (hl)			;be88
 	cp 010h		;be89
-	jr nc,L_BE95		;be8b
+	jr nc,sitio_siguiente		;be8b
 	inc hl			;be8d
-	ld a,(0d419h)		;be8e
+	ld a,(0d419h)		;be8e   ; ...y 0xD419 - el byte 3 por debajo de 0x20: acarreo
 	sub (hl)			;be91
 	cp 020h		;be92
 	ret c			;be94
-L_BE95:
-	ld a,004h		;be95
+sitio_siguiente:		; el sitio siguiente de la lista (4 bytes)
+	ld a,004h		;be95   ; el siguiente (4 bytes)
 	call 04243h		;be97   ; suma_a_de: DE = DE + A
-	jr L_BE71		;be9a
-L_BE9C:
-	or a			;be9c
+	jr sitio_de_lista		;be9a
+ningun_sitio:		; sin acarreo: ninguno
+	or a			;be9c   ; sin acarreo
 	ret			;be9d
 
 ; ----------------------------------------------------------------------
@@ -3005,105 +2997,105 @@ DATA_resto_BE9E:
 ; ======================================================================
 
 
-L_BED7:
+se_acaba_alerta:		; Z si se acaba la alerta: con 0xCAA0 por debajo de 4, con la alerta sin su bit 3 y con 0xD444 (o 0xCA77 = 2), las 4 fichas de 0xD300 libres
 	ld a,(0caa0h)		;bed7   ; lee cuantos siguen a Snake por su rastro (1-4)
-	cp 004h		;beda
-	jr z,L_BF0A		;bedc
+	cp 004h		;beda   ; con 4 que siguen a Snake, no
+	jr z,no_se_acaba		;bedc
 	ld a,(0ca5fh)		;bede   ; lee la alerta: 2 cuando un actor ve a Snake (p04:8455, p14:B20B, con la musica 0x8C), 3 en ciertas salas, 1 despues (p04:9357); 0 ninguna
 	and a			;bee1
-	jr z,L_BF0A		;bee2
-	ld hl,0d7dah		;bee4
-	and 008h		;bee7
+	jr z,no_se_acaba		;bee2   ; sin alerta, no
+	ld hl,0d7dah		;bee4   ; HL = 0xD7DA (aqui no se lee)
+	and 008h		;bee7   ; el bit 3 de la alerta: no
 	ret nz			;bee9
-	ld a,(0d444h)		;beea
+	ld a,(0d444h)		;beea   ; con 0xD444...
 	and a			;beed
-	jr nz,L_BEF6		;beee
-	ld a,(0ca77h)		;bef0
+	jr nz,d300_libres		;beee
+	ld a,(0ca77h)		;bef0   ; ...o 0xCA77 = 2
 	cp 002h		;bef3
 	ret nz			;bef5
-L_BEF6:
-	ld ix,0d300h		;bef6   ; apunta a las 4 fichas de actor de los que llegan con la alerta (los actores 20-23)
+d300_libres:		; Z si las 4 fichas de 0xD300 estan libres
+	ld ix,0d300h		;bef6   ; 4 fichas de 0xD300
 	ld b,004h		;befa
-L_BEFC:
+d300_libre:
 	ld a,(ix+000h)		;befc   ; lee el tipo del actor (0 = libre)
 	and a			;beff
-	ret nz			;bf00
-	ld de,00040h		;bf01
+	ret nz			;bf00   ; una ocupada: NZ
+	ld de,00040h		;bf01   ; la siguiente (0x40 bytes)
 	add ix,de		;bf04
-	djnz L_BEFC		;bf06
-	xor a			;bf08
+	djnz d300_libre		;bf06   ; 4
+	xor a			;bf08   ; todas libres: Z
 	ret			;bf09
-L_BF0A:
-	or 001h		;bf0a
+no_se_acaba:		; NZ: no se acaba
+	or 001h		;bf0a   ; NZ
 	ret			;bf0c
-L_BF0D:
-	exx			;bf0d
+actor_de_alerta:		; la ficha de IX (0x40 bytes) a cero y un actor de tipo 1 en (X = E, Y = D) de esta sala: el byte 0x10 = 3, el 0x1B = C y su direccion (byte 0x0D): con C = 0 (0xD41E - 1) * 2, con 1 (0xD449 - 1) * 2, con 2 0, con mas 2
+	exx			;bf0d   ; la ficha...
 	push ix		;bf0e
 	pop hl			;bf10
-	ld bc,0003fh		;bf11
+	ld bc,0003fh		;bf11   ; ...a cero
 	call 04236h		;bf14   ; borra_bloque: pone a cero BC + 1 bytes desde HL
 	exx			;bf17
-	ld (ix+000h),001h		;bf18
-	ld (ix+003h),d		;bf1c
-	ld (ix+005h),e		;bf1f
-	ld de,(0ca50h)		;bf22   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
+	ld (ix+000h),001h		;bf18   ; el tipo 1
+	ld (ix+003h),d		;bf1c   ; la Y = D
+	ld (ix+005h),e		;bf1f   ; la X = E
+	ld de,(0ca50h)		;bf22   ; la fila...
 	ld (ix+00ah),e		;bf26
-	ld (ix+00bh),d		;bf29
-	ld (ix+010h),003h		;bf2c
-	xor a			;bf30
+	ld (ix+00bh),d		;bf29   ; ...y la columna de la sala
+	ld (ix+010h),003h		;bf2c   ; el byte 0x10 = 3
+	xor a			;bf30   ; el paso y los bytes 0x1C y 0x1F a 0
 	ld (ix+001h),a		;bf31
 	ld (ix+01ch),a		;bf34
 	ld (ix+01fh),a		;bf37
-	ld (ix+01bh),c		;bf3a
-	ld hl,0d41eh		;bf3d
+	ld (ix+01bh),c		;bf3a   ; el byte 0x1B = C
+	ld hl,0d41eh		;bf3d   ; con C = 0, 0xD41E
 	ld a,c			;bf40
 	and a			;bf41
-	jr z,L_BF53		;bf42
-	dec a			;bf44
+	jr z,direccion_de		;bf42
+	dec a			;bf44   ; con 1, 0xD449
 	ld hl,0d449h		;bf45
-	jr z,L_BF53		;bf48
-	dec a			;bf4a
+	jr z,direccion_de		;bf48
+	dec a			;bf4a   ; con 2, 0
 	ld c,000h		;bf4b
-	jr z,L_BF57		;bf4d
-	ld c,002h		;bf4f
-	jr L_BF57		;bf51
-L_BF53:
-	ld a,(hl)			;bf53
+	jr z,pon_direccion		;bf4d
+	ld c,002h		;bf4f   ; con mas, 2
+	jr pon_direccion		;bf51
+direccion_de:		; la direccion: (el byte de HL - 1) * 2
+	ld a,(hl)			;bf53   ; (el byte - 1) * 2
 	dec a			;bf54
 	add a,a			;bf55
 	ld c,a			;bf56
-L_BF57:
+pon_direccion:
 	ld (ix+00dh),c		;bf57
 	ret			;bf5a
-L_BF5B:
+llegada_de_alerta:		; por la sala ((fila - 2) * 2 + columna - 5; desde 3, 4 en la zona 0x0C), 3 bytes de p15:BF89: D = la Y, E = la X y 0xD41E
 	ld bc,(0ca50h)		;bf5b   ; lee la fila de la sala en la zona (uno mas al salir por arriba) y el byte siguiente (16 bits)
-	ld a,c			;bf5f
+	ld a,c			;bf5f   ; (fila - 2) * 2...
 	sub 002h		;bf60
 	add a,a			;bf62
 	ld c,a			;bf63
-	ld a,b			;bf64
+	ld a,b			;bf64   ; ...+ columna - 5
 	sub 005h		;bf65
 	add a,c			;bf67
 	ld c,a			;bf68
-	cp 003h		;bf69
-	jr c,L_BF77		;bf6b
-	ld a,(0ca4ah)		;bf6d   ; lee la zona
+	cp 003h		;bf69   ; desde 3...
+	jr c,llegada_n		;bf6b
+	ld a,(0ca4ah)		;bf6d   ; ...en la zona 0x0C, 4
 	cp 00ch		;bf70
 	ld a,c			;bf72
-	jr nz,L_BF77		;bf73
+	jr nz,llegada_n		;bf73
 	ld a,004h		;bf75
-L_BF77:
-	ld c,a			;bf77
+llegada_n:		; los 3 bytes de la entrada A de p15:BF89
+	ld c,a			;bf77   ; * 3
 	add a,a			;bf78
 	add a,c			;bf79
 	ld hl,0bf89h		;bf7a
 	call 0423eh		;bf7d   ; suma_a_hl: HL = HL + A
-	ld d,(hl)			;bf80
+	ld d,(hl)			;bf80   ; D = la Y
 	inc hl			;bf81
-	ld e,(hl)			;bf82
+	ld e,(hl)			;bf82   ; E = la X
 	inc hl			;bf83
-	ld a,(hl)			;bf84
-	ld (0d41eh),a		;bf85
+	ld a,(hl)			;bf84   ; y 0xD41E
+	ld (0d41eh),a		;bf85   ; guarda la direccion de llegada de los actores de la alerta + 1 (p15:BF85)
 	ret			;bf88
 
 ; ----------------------------------------------------------------------
@@ -3119,44 +3111,44 @@ DATA_resto_BF89:
 ; ======================================================================
 
 
-L_BF98:
+numero_a_cifras:		; A (0-99) en dos cifras de 8 x 8 de (0x68 + 8 * cifra, 0x68): las decenas en (0xCF, 0x40) y las unidades en (0xD5, 0x40), con la operacion 0xC8 (0xD8 en la pagina 1)
 	ld b,000h		;bf98
-L_BF9A:
-	cp 00ah		;bf9a
-	jr c,L_BFA3		;bf9c
+cuenta_decenas:		; B = las decenas, A = las unidades
+	cp 00ah		;bf9a   ; las decenas a B
+	jr c,en_bcd		;bf9c
 	sub 00ah		;bf9e
 	inc b			;bfa0
-	jr L_BF9A		;bfa1
-L_BFA3:
+	jr cuenta_decenas		;bfa1
+en_bcd:		; las decenas al nibble alto
 	sla b		;bfa3
 	sla b		;bfa5
 	sla b		;bfa7
 	sla b		;bfa9
 	or b			;bfab
 	push af			;bfac
-	rrca			;bfad
+	rrca			;bfad   ; las decenas...
 	rrca			;bfae
 	rrca			;bfaf
 	rrca			;bfb0
 	and 00fh		;bfb1
-	ld de,0cf40h		;bfb3
-	call L_BFBF		;bfb6
+	ld de,0cf40h		;bfb3   ; ...en (0xCF, 0x40)
+	call cifra_8x8		;bfb6   ; cifra_8x8: la cifra A de (0x68 + 8 * A, 0x68)...
 	pop af			;bfb9
-	and 00fh		;bfba
-	ld de,0d540h		;bfbc
-L_BFBF:
+	and 00fh		;bfba   ; las unidades...
+	ld de,0d540h		;bfbc   ; ...en (0xD5, 0x40)
+cifra_8x8:		; la cifra A de (0x68 + 8 * A, 0x68)...
 	add a,a			;bfbf
 	add a,a			;bfc0
 	add a,a			;bfc1
 	add a,068h		;bfc2
 	ld h,a			;bfc4
 	ld l,068h		;bfc5
-	ld bc,00808h		;bfc7
-	ld a,(0ca42h)		;bfca   ; lee la pagina de la VRAM en la que se dibuja (0/1, se alterna)
+	ld bc,00808h		;bfc7   ; ...8 x 8
+	ld a,(0ca42h)		;bfca   ; en la pagina 0, la operacion 0xC8...
 	and a			;bfcd
 	ld a,0c8h		;bfce
 	jr z,L_BFD4		;bfd0
-	ld a,0d8h		;bfd2
+	ld a,0d8h		;bfd2   ; ...en la 1, 0xD8
 L_BFD4:
 	jp 047edh		;bfd4   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
 
