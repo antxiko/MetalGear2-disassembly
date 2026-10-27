@@ -63,6 +63,7 @@ rejilla a 0xD900 (p02:804E), sus mapas de bits (p00:5CAE) y entra_en_sala_especi
 Uso: mapas.py salas [zona ...]     las salas a work/salas/zZZ_sSS.png
      mapas.py especiales           las especiales a work/salas/eEE_sSS.png
      mapas.py zonas [zona ...]     las zonas montadas a work/mapas/zona_ZZ.png
+     mapas.py montar_especiales    cada especial montada a work/mapas/especial_EE.png
 """
 import json
 import os
@@ -283,6 +284,24 @@ def monta_zonas(zonas):
         print("zona %02X: %d salas, %d x %d" % (z, len(g), ancho, alto))
 
 
+def monta_especiales():
+    """Cada especial con su rejilla (p30:BA18), la fila 1 abajo como en las
+    zonas: work/mapas/especial_EE.png."""
+    from PIL import Image
+    os.makedirs(MAPAS, exist_ok=True)
+    for e in sorted(zona_de_especial()):
+        g = rejilla(e - 1, 0xBA18)
+        filas = [c >> 4 for c in g]
+        cols = [c & 15 for c in g]
+        c0 = min(cols)
+        im = Image.new("RGB", ((max(cols) - c0 + 1) * LADO, (max(filas) - min(filas) + 1) * LADO))
+        for c, sala in g.items():
+            im.paste(Image.open(os.path.join(SALAS, "e%02X_s%02X.png" % (e, sala))),
+                     (((c & 15) - c0) * LADO, (max(filas) - (c >> 4)) * LADO))
+        im.save(os.path.join(MAPAS, "especial_%02X.png" % e))
+    print("%d especiales montadas" % len(zona_de_especial()))
+
+
 def main(argv):
     zonas = [int(a, 16) for a in argv[1:]] or list(range(N_ZONAS))
     if not argv:
@@ -293,6 +312,8 @@ def main(argv):
         pinta_especiales()
     elif argv[0] == "zonas":
         monta_zonas(zonas)
+    elif argv[0] == "montar_especiales":
+        monta_especiales()
     else:
         print(__doc__)
 
