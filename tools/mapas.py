@@ -80,6 +80,7 @@ Uso: mapas.py salas [zona ...]     las salas a work/salas/zZZ_sSS.png
      mapas.py especiales           las especiales a work/salas/eEE_sSS.png
      mapas.py zonas [zona ...]     las zonas montadas a work/mapas/zona_ZZ.png (y _spr)
      mapas.py montar_especiales    cada especial montada a work/mapas/especial_EE.png (y _spr)
+     mapas.py rotular [zona ...]   la zona con enemigos, rotulos y sus especiales: work/mapas/web_zona_ZZ.png
 """
 import copy
 import json
@@ -212,6 +213,24 @@ def actores_aqui(m):
             and m.mem[0xCE0A + 0x40 * k] == f and m.mem[0xCE0B + 0x40 * k] == c]
 
 
+def puertas_aqui(m):
+    """Las fichas de puerta de la sala (8 de 16 bytes en 0xD500, p15:A320):
+    [numero, tipo, Y, X]."""
+    return [[m.mem[0xD505 + 16 * k], m.mem[0xD500 + 16 * k], m.mem[0xD502 + 16 * k], m.mem[0xD503 + 16 * k]]
+            for k in range(8) if m.mem[0xD500 + 16 * k]]
+
+
+def destino(zona, n):
+    """Adonde lleva la puerta n de la zona (cruza_puerta, p15:A9AB): la ficha
+    de 3 bytes de p15:B4B5 [como y donde][fila y columna][puerta de llegada].
+    como 0: una sala de la zona donde; 1: la especial donde; 2: de la especial
+    a la zona donde; 3: otra sala sin cambiar de zona."""
+    p = palabra(15, 0xB4B5 + 2 * zona) + 3 * n
+    a, b = byte(15, p), byte(15, p + 1)
+    return {"como": a >> 6, "donde": a & 0x3F, "fila": b >> 4, "columna": b & 15,
+            "llegada": byte(15, p + 2)}
+
+
 def entra_en_zona(m, z):
     """La primera sala de la zona z por cambia_de_zona (p00:59A7)."""
     casilla = min(c for c, s in rejilla(z).items() if s < 0x80)
@@ -277,7 +296,8 @@ def pinta_especiales():
                 info["E%02X_%02X" % (e, sala)] = {"zona": z, "fila": casilla >> 4,
                                                   "columna": casilla & 15,
                                                   "paleta": [list(x) for x in c.vdp.pal],
-                                                  "actores": actores_aqui(c), "alerta": c.mem[0xCA5F]}
+                                                  "actores": actores_aqui(c), "alerta": c.mem[0xCA5F],
+                                                  "puertas": puertas_aqui(c)}
                 print("especial %02X (zona %02X) sala %02X" % (e, z, sala), flush=True)
         m = zona
         m.pon(0xCA76, 0)
@@ -339,7 +359,8 @@ def pinta_salas(zonas):
                 os.path.join(SALAS, "z%02X_s%02X_spr.png" % (z, sala)))
             info["%02X_%02X" % (z, sala)] = {"fila": fila, "columna": col,
                                              "paleta": [list(x) for x in c.vdp.pal],
-                                             "actores": actores_aqui(c), "alerta": c.mem[0xCA5F]}
+                                             "actores": actores_aqui(c), "alerta": c.mem[0xCA5F],
+                                             "puertas": puertas_aqui(c)}
             print("zona %02X sala %02X (%X, %X) %.1f s" % (z, sala, fila, col, time.time() - t), flush=True)
     viejo = {}
     ruta = os.path.join(SALAS, "salas.json")
@@ -387,6 +408,124 @@ def monta_especiales():
     print("%d especiales montadas" % len(zona_de_especial()))
 
 
+def rotula_zonas(zonas):
+    """La zona montada con enemigos y rotulos, como los mapas de Metal Gear
+    (METALGEAR_DISAM): el numero de cada sala en su esquina; en las puertas
+    que no se ven en el mapa, adonde llevan (Exx una especial, Zzz:ss otra
+    zona, ->ss una sala de la zona que no es vecina; Zzz en el borde, el paso
+    andando a otra zona); debajo, las especiales
+    a las que se entra desde la zona, con "Exx <- sala #puerta".
+    work/mapas/web_zona_ZZ.png."""
+    from PIL import Image, ImageDraw, ImageFont
+    info = json.load(open(os.path.join(SALAS, "salas.json")))
+    letra = ImageFont.load_default()
+    AMARILLO, VERDE, FONDO = (255, 255, 0), (80, 255, 80), (24, 24, 24)
+
+    def rotulo(d, x, y, texto, color, ancho=None, alto=None):
+        caja = d.textbbox((0, 0), texto, font=letra)
+        w, h = caja[2] - caja[0] + 4, caja[3] - caja[1] + 4
+        if ancho is not None:
+            x, y = max(0, min(x, ancho - w)), max(0, min(y, alto - h))
+        d.rectangle((x, y, x + w - 1, y + h - 1), fill=(0, 0, 0))
+        d.text((x + 2 - caja[0], y + 2 - caja[1]), texto, font=letra, fill=color)
+
+    def lleva(z, n, casilla):
+        """El rotulo de la puerta n de la zona z en la casilla, o None."""
+        t = destino(z, n)
+        if t["como"] == 1:
+            return "E%02X" % t["donde"]
+        if t["como"] == 2 or (t["como"] == 0 and t["donde"] != z):
+            zd = t["donde"]
+            sd = rejilla(zd).get(t["fila"] << 4 | t["columna"])
+            return "Z%02X:%02X" % (zd, sd) if sd is not None and sd < 0x80 else "Z%02X" % zd
+        f, c = t["fila"], t["columna"]
+        if casilla is not None and abs(f - (casilla >> 4)) + abs(c - (casilla & 15)) == 1:
+            return None
+        sd = rejilla(z).get(f << 4 | c)
+        return "->%02X" % sd if sd is not None else None
+
+    def pinta_puertas(d, ox, oy, z, puertas, casilla, salida_de=None):
+        for n, _tipo, y, x in puertas:
+            t = lleva(z, n, casilla)
+            if t and not (salida_de is not None and t.startswith("Z%02X" % salida_de)):
+                rotulo(d, ox + min(x, LADO - 1), oy + min(y, LADO - 1), t, VERDE,
+                       ox + LADO, oy + LADO)
+
+    # de donde se entra a cada especial: puertas de las salas de la zona y de
+    # sus especiales con como = 1
+    entradas = {}
+    for k, v in sorted(info.items()):
+        z = v["zona"] if k.startswith("E") else int(k[:2], 16)
+        origen = ("E%s:%s" % (k[1:3], k[4:6])) if k.startswith("E") else k[3:5]
+        for n, _t, _y, _x in v.get("puertas", []):
+            t = destino(z, n)
+            if t["como"] == 1:
+                entradas.setdefault(t["donde"], []).append((z, "%s #%d" % (origen, n)))
+    dueno = zona_de_especial()
+    for z in zonas:
+        g = {c: s for c, s in rejilla(z).items() if s < 0x80}
+        filas = [c >> 4 for c in g]
+        c0 = min(c & 15 for c in g)
+        im = Image.open(os.path.join(MAPAS, "zona_%02X_spr.png" % z)).convert("RGB")
+        d = ImageDraw.Draw(im)
+        for c, s in g.items():
+            ox, oy = ((c & 15) - c0) * LADO, (max(filas) - (c >> 4)) * LADO
+            pinta_puertas(d, ox, oy, z, info["%02X_%02X" % (z, s)].get("puertas", []), c)
+            rotulo(d, ox + 1, oy + 1, "%02X" % s, AMARILLO)
+        # los pasos andando a otra zona: casillas 0x80 + Z de la rejilla
+        # (p00:5A25), rotuladas en el borde de la sala vecina
+        for c, paso in rejilla(z).items():
+            if paso < 0x80:
+                continue
+            for df, dc, bx, by in ((1, 0, LADO // 2, 0), (-1, 0, LADO // 2, LADO - 1),
+                                   (0, 1, LADO - 1, LADO // 2), (0, -1, 0, LADO // 2)):
+                v = c - (df << 4) - dc            # la sala de la que se sale hacia c
+                if v in g:
+                    ox, oy = ((v & 15) - c0) * LADO, (max(filas) - (v >> 4)) * LADO
+                    rotulo(d, ox + bx, oy + by, "Z%02X" % (paso & 0x7F), VERDE, ox + LADO, oy + LADO)
+        # las especiales de la zona: las que tienen entrada desde ella, o, sin
+        # ninguna, las suyas por las tablas de puertas
+        mias = sorted(e for e in dueno
+                      if any(zz == z for zz, _ in entradas.get(e, []))
+                      or (not entradas.get(e) and dueno[e] == z))
+        bloques = []
+        for e in mias:
+            esp = Image.open(os.path.join(MAPAS, "especial_%02X_spr.png" % e)).convert("RGB")
+            de = ImageDraw.Draw(esp)
+            ge = rejilla(e - 1, 0xBA18)
+            fe = [c >> 4 for c in ge]
+            ce0 = min(c & 15 for c in ge)
+            for c, s in ge.items():
+                ox, oy = ((c & 15) - ce0) * LADO, (max(fe) - (c >> 4)) * LADO
+                pinta_puertas(de, ox, oy, z, info["E%02X_%02X" % (e, s)].get("puertas", []), None, z)
+                if len(ge) > 1:
+                    rotulo(de, ox + 1, oy + 1, "%02X" % s, AMARILLO)
+            texto = "E%02X <- %s" % (e, ", ".join(o for zz, o in entradas.get(e, []) if zz == z) or "?")
+            bloques.append((esp, texto))
+        if bloques:
+            ancho = max(im.width, 4 * LADO)
+            x = y = 0
+            alto_fila = 0
+            sitios = []
+            for esp, texto in bloques:
+                w, h = esp.width, esp.height + 16
+                if x and x + w > ancho:
+                    x, y = 0, y + alto_fila + 8
+                    alto_fila = 0
+                sitios.append((x, y))
+                x += w + 8
+                alto_fila = max(alto_fila, h)
+            todo = Image.new("RGB", (ancho, im.height + 20 + y + alto_fila), FONDO)
+            todo.paste(im, (0, 0))
+            dt = ImageDraw.Draw(todo)
+            for (esp, texto), (x, y) in zip(bloques, sitios):
+                rotulo(dt, x, im.height + 20 + y, texto, VERDE)
+                todo.paste(esp, (x, im.height + 20 + y + 16))
+            im = todo
+        im.save(os.path.join(MAPAS, "web_zona_%02X.png" % z))
+        print("zona %02X: %d salas, %d especiales, %d x %d" % (z, len(g), len(bloques), im.width, im.height))
+
+
 def main(argv):
     zonas = [int(a, 16) for a in argv[1:]] or list(range(N_ZONAS))
     if not argv:
@@ -399,6 +538,8 @@ def main(argv):
         monta_zonas(zonas)
     elif argv[0] == "montar_especiales":
         monta_especiales()
+    elif argv[0] == "rotular":
+        rotula_zonas(zonas)
     else:
         print(__doc__)
 
