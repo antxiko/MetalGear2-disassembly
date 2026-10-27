@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Coteja las salas de tools/mapas.py (work/salas/zZZ_sSS.png) con los
-volcados de openMSX de tools/omsx_salas.tcl (vram-zZZ_sSS.bin + vdp-...).
+"""Coteja las salas de tools/mapas.py (work/salas/zZZ_sSS.png y las especiales
+eEE_sSS.png) con los volcados de openMSX de tools/omsx_salas.tcl
+(vram-zZZ_sSS.bin o vram-eEE_sSS.bin + vdp-...).
 
 Del volcado se pinta la pagina de R#2 con su paleta, sin sprites (los
 enemigos y Snake son sprites), y se recortan los 192 x 192 puntos de la sala.
@@ -38,6 +39,8 @@ def destinos(dir_):
             if ln.strip() != "llamada acabada":
                 print(ln.strip())
             continue
+        if m.group(1) in ("P", "S"):            # puertas y salas de especiales
+            continue
         z, f, c, zz, s, ff, cc = [int(x, 16) for x in m.groups()]
         n += 1
         if (zz, s, ff, cc) != (z, rejilla(z).get(f * 16 + c), f, c):
@@ -51,7 +54,7 @@ def main(argv):
     dir_ = argv[0]
     destinos(dir_)
     total = mal = 0
-    for ruta in sorted(glob.glob(os.path.join(dir_, "vram-z*.bin"))):
+    for ruta in sorted(glob.glob(os.path.join(dir_, "vram-[ze]*.bin"))):
         et = os.path.basename(ruta)[5:-4]
         if not os.path.exists(os.path.join(RAIZ, "work", "salas", et + ".png")):
             print("%s: no es una sala de los mapas" % et)

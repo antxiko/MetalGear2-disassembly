@@ -21,6 +21,10 @@
 #     Al entrar en la zona 0xCACB-0xCACD vuelven a 1 (p00:5A84): la primera
 #     sala de cada zona se repite en la lista, para verla con la luz.
 #
+# Ordenes de la lista: "Z:F:C" una sala de la zona Z; "P:K" cruzar la puerta
+# K (hexadecimal) de la zona de ahora; "S:F:C" otra sala de la especial.
+# Las especiales se vuelcan como vram-eEE_sSS.bin.
+#
 # Variables: SALAS_SALIDA (work/omsx_salas), SALAS_LISTA ("zona:fila:col ..."
 # en hexadecimal, las casillas de destino), SALAS_DOBLE (no vacia: un segundo
 # volcado de cada sala a los 3 s, vram-zZZ_sSS_b.bin).
@@ -86,7 +90,16 @@ after time 66 llamada
 # llamadas se pasan con RETURN, la vida se rellena (0xCA53 = 0xCA52) y en el
 # game over (0xCA00 = 6) se elige CONTINUE con el espacio
 set ::listo 0
-proc espera {cmd} {
+proc espera {cmd {vueltas 0}} {
+    # tope: 20 s sin llegar al paso 0, se apunta y se sigue
+    if {$vueltas > 80} {
+        puts $::log "atascado: [format {CA00 %02X CA01 %02X CA41 %02X CA97 %02X} [debug read memory 0xCA00] [debug read memory 0xCA01] [debug read memory 0xCA41] [debug read memory 0xCA97]]"
+        flush $::log
+        poke 0xCA41 0
+        set ::listo 0
+        eval $cmd
+        return
+    }
     poke 0xCA53 [debug read memory 0xCA52]
     # sin la corriente del agua (zona 6), que saca a Snake de la sala (p02:9575)
     poke 0xCA8F 0
@@ -111,7 +124,7 @@ proc espera {cmd} {
     } else {
         set ::listo 0
     }
-    after time 0.25 [list espera $cmd]
+    after time 0.25 [list espera $cmd [expr {$vueltas + 1}]]
 }
 
 proc siguiente {} {
@@ -121,7 +134,34 @@ proc siguiente {} {
         return
     }
     set ::LISTA [lassign $::LISTA casilla]
-    lassign [split $casilla :] z fila col
+    set partes [split $casilla :]
+    foreach d {0xCAC9 0xCACA 0xCACB 0xCACC 0xCACD} { poke $d 0 }
+    poke 0xCA5F 0
+    if {[lindex $partes 0] eq "P"} {
+        # cruzar la puerta K de la zona: una ficha libre de 0xD500 (la 8,
+        # 0xD570) de tipo 1 en el estado 3, el de cruzar (p15:A9AB), con su
+        # numero; la tabla de la zona (p15:B4B5) dice adonde lleva
+        set k [expr "0x[lindex $partes 1]"]
+        poke 0xD570 1
+        poke 0xD571 3
+        poke 0xD575 $k
+        after time 0.5 [list espera [list mira P $k 0]]
+        return
+    }
+    if {[lindex $partes 0] eq "S"} {
+        # otra sala de la especial: sale por arriba como en las normales
+        set fila [expr "0x[lindex $partes 1]"]
+        set col [expr "0x[lindex $partes 2]"]
+        poke 0xCA50 [expr {($fila - 1) & 0xFF}]
+        poke 0xCA51 $col
+        poke 0xCB03 0xBF
+        poke 0xCA41 1
+        after time 0.5 [list espera [list mira S $fila $col]]
+        return
+    }
+    lassign $partes z fila col
+    # desde una especial, fuera de ella antes de saltar
+    poke 0xCA76 0
     set z [expr "0x$z"]
     set fila [expr "0x$fila"]
     set col [expr "0x$col"]
@@ -132,9 +172,6 @@ proc siguiente {} {
         poke 0xD430 [expr {$z == 7 ? 2 : 0}]
         foreach d {0xD881 0xD888} { poke $d [expr {$z == 0x12 ? 0xFF : 0}] }
     }
-    # las salas a oscuras con la luz (p08:A0FB); sin alerta
-    foreach d {0xCAC9 0xCACA 0xCACB 0xCACC 0xCACD} { poke $d 0 }
-    poke 0xCA5F 0
     if {$otra} {
         poke 0xCA50 $fila
         poke 0xCA51 [expr {($col - 1) & 0xFF}]
@@ -150,8 +187,14 @@ proc siguiente {} {
 proc mira {z fila col} {
     set zz [debug read memory 0xCA4A]
     set s [debug read memory 0xCA4B]
-    set et [format "z%02X_s%02X" $zz $s]
-    puts $::log [format "destino %02X:%X:%X -> zona %02X sala %02X fila %02X columna %02X" $z $fila $col $zz $s         [debug read memory 0xCA50] [debug read memory 0xCA51]]
+    set e [debug read memory 0xCA76]
+    if {$e} {
+        set et [format "e%02X_s%02X" $e $s]
+    } else {
+        set et [format "z%02X_s%02X" $zz $s]
+    }
+    if {[string is integer $z]} { set z [format %02X $z] }
+    puts $::log [format "destino %s:%X:%X -> zona %02X sala %02X fila %02X columna %02X especial %02X" $z $fila $col $zz $s         [debug read memory 0xCA50] [debug read memory 0xCA51] $e]
     flush $::log
     vuelca $et
     # SALAS_DOBLE: otro volcado a los 3 s (lo que cambia es animacion)
