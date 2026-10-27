@@ -36,6 +36,17 @@ emulado y aqui solo se le dice a que sala ir, como lo hace el juego:
     y ya no baja; con el, las salas 0-9 llevan la paleta de p56:B9A4 o B9B7
     (p02:84AA). Se pinta la de la primera visita (filas 1-2 con 0, la 3 con
     1, la 4 con 2), la que sale en openMSX (tools/omsx_salas.tcl).
+  - despues, 5 cuadros del bucle del juego (p01:741A): hay cosas que se
+    pintan en la pagina cada cuadro y no al entrar (el misil de la sala 0x12
+    de la zona 7); cotejado con openMSX. Si el juego deja el paso 0 o abre
+    un mensaje (0xD8A8), se deshace ese cuadro.
+  - las salas del gas (las ternas de p03:BAE8: zona 3 salas 1, 2 y 7; las
+    demas de la zona 3 con alerta): al entrar, la tercera barra pone una
+    paleta roja de p02:851E (p03:BB23) y despues la paleta parpadea
+    (p03:BC29) entre la de la sala y las rojas, con el contador 0xCA03; se
+    pinta la de la sala (p02:8475).
+  - la sala 6 de la zona 4: sus soldados salen en una de 4 colocaciones al
+    azar (p12:6A28, 0xD42D, los sitios de p56:B709).
   - el montaje: salir por arriba SUMA uno a la fila y por abajo resta
     (p02:8117, p02:814F); por la izquierda la columna uno menos (p02:8169).
     La fila 1 va abajo del todo.
@@ -113,6 +124,40 @@ def luces(m):
         m.pon(d, 0)
 
 
+CUADROS = 5                        # cuadros del bucle del juego tras entrar
+
+
+def cuadros(m, n=CUADROS):
+    """n cuadros del juego en el paso 0 (p01:741A): lo que se pinta en la
+    pagina cada cuadro y no al entrar (el rojo de la sala 7 de la zona 3, el
+    misil de la sala 0x12 de la zona 7). La sala no debe cambiar."""
+    antes = m.mem[0xCA4A], m.mem[0xCA4B], m.mem[0xCA76]
+    m.pon(0xCA00, 5)
+    m.pon(0xCA01, 0)
+    # jugando, 0xCA97 vale 0 (la partida nueva lo deja a 1 para la llamada
+    # del principio, y con el el paso 0 se para en p01:7428)
+    m.pon(0xCA97, 0)
+    m.pon(0xD8A8, 0)
+    for _ in range(n):
+        copia = bytes(m.mem), bytes(m.vdp.vram), bytes(m.vdp.r), list(m.vdp.pal)
+        m.bancos_123()
+        m.llama(0x741A)
+        if m.mem[0xCA00] != 5 or m.mem[0xCA01] or m.mem[0xD8A8]:
+            # otro paso, o un mensaje que se abre (0xD8A8, la ventana; las
+            # salas 0x10 y 0x11 de la zona 0x0A): el cuadro de antes
+            m.mem[:] = copia[0]
+            m.vdp.vram[:] = copia[1]
+            m.vdp.r[:] = copia[2]
+            m.vdp.pal = copia[3]
+            break
+    if m.mem[0xDFF0]:
+        # la tercera barra: la paleta de la sala, como paleta_parpadea
+        # (p03:BC35) con el contador en 0 (empieza_tercera_barra la deja roja)
+        m.bancos_123()
+        m.llama(0x8475)
+    assert (m.mem[0xCA4A], m.mem[0xCA4B], m.mem[0xCA76]) == antes, (antes, m.mem[0xCA4A], m.mem[0xCA4B])
+
+
 def entra_en_zona(m, z):
     """La primera sala de la zona z por cambia_de_zona (p00:59A7)."""
     casilla = min(c for c, s in rejilla(z).items() if s < 0x80)
@@ -154,6 +199,7 @@ def pinta_especiales():
                 m.bancos_123()
                 m.llama(0x55CF)                       # entra_en_sala_especial
                 assert m.mem[0xCA4B] == sala, (e, sala, m.mem[0xCA4B])
+                cuadros(m)
                 pag = (m.vdp.r[2] >> 5) & 3
                 m.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO)).save(
                     os.path.join(SALAS, "e%02X_s%02X.png" % (e, sala)))
@@ -203,6 +249,7 @@ def pinta_salas(zonas):
                 luces(m)
                 m.llama(0x52CF)                       # entra_en_sala
             assert m.mem[0xCA4A] == z and m.mem[0xCA4B] == sala, (z, sala, m.mem[0xCA4A], m.mem[0xCA4B])
+            cuadros(m)
             pag = (m.vdp.r[2] >> 5) & 3
             im = m.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO))
             nombre = "z%02X_s%02X.png" % (z, sala)
