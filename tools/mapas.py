@@ -32,6 +32,10 @@ emulado y aqui solo se le dice a que sala ir, como lo hace el juego:
     o, con las gafas (0xCB21 = 3), la paleta de p56:BCCF. Al entrar en la
     zona 0xCACB-0xCACD valen 1 (p00:5A84). Aqui se pintan con la luz: las
     banderas a cero antes de cada sala.
+  - la zona 0: al subir a la fila 3 0xCAAD pasa a 1 y a la 4 a 2 (p02:8181)
+    y ya no baja; con el, las salas 0-9 llevan la paleta de p56:B9A4 o B9B7
+    (p02:84AA). Se pinta la de la primera visita (filas 1-2 con 0, la 3 con
+    1, la 4 con 2), la que sale en openMSX (tools/omsx_salas.tcl).
   - el montaje: salir por arriba SUMA uno a la fila y por abajo resta
     (p02:8117, p02:814F); por la izquierda la columna uno menos (p02:8169).
     La fila 1 va abajo del todo.
@@ -184,6 +188,10 @@ def pinta_salas(zonas):
             m.pon(0xCA51, col)
             m.pon(0xD430, 2 if z == 7 else 0)         # el laberinto de la zona 7, abierto
             m.pon(0xD8A4, 0)
+            # la zona 0: 0xCAAD sube a 1 al llegar a la fila 3 y a 2 a la 4
+            # (p02:8181) y no baja; con el, las salas 0-9 llevan la paleta
+            # de p56:B9A4 o B9B7 (p02:84AA). La de la primera visita.
+            m.pon(0xCAAD, {3: 1, 4: 2}.get(fila, 0) if z == 0 else 0)
             for d in (0xD881, 0xD888):                # la zona 0x12 despues de sus sucesos
                 m.pon(d, 0xFF if z == 0x12 else 0)
             m.bancos_123()
