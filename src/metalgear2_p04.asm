@@ -226,8 +226,12 @@ L_8159:
 	jr L_8145		;8159
 
 ; ----------------------------------------------------------------------
-; DATOS punteros_815B: tabla de 24 punteros (0x9D39, 0x9D39, 0xA1F2...) que no
-;   lee ninguna rutina del listado: ninguna instruccion carga su direccion
+; DATOS punteros_815B: la rutina de cada tipo de actor (1-0x18) que lee
+;   lo_del_actor (p04:813F: HL = 0x8159 + el tipo * 2): p04:9D39 los 1, 2 y
+;   4-9; p08:A1F2 el 3; p08:AF0B el 0x0A, A000 el 0x0B, A1D6 el 0x0C;
+;   0x0D-0x0F ninguna; p08:AA3B los 0x10-0x11, A8D0 el 0x12, AFEC el 0x13,
+;   AC2A el 0x14, AD43 el 0x15, A401 los 0x16-0x17, ABE5 el 0x18 (el banco,
+;   banco_del_tipo p04:8148)
 ;   0x815b..0x818b  (48 bytes)
 DATA_punteros_815B:
 	defb 039h,09dh,039h,09dh,0f2h,0a1h,039h,09dh,039h,09dh,039h,09dh,039h,09dh,039h,09dh	; 815b  9.9...9.9.9.9.9.

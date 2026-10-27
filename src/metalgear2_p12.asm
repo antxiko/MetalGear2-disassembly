@@ -3344,21 +3344,21 @@ DATA_tabla_770A:
 ; ======================================================================
 
 
-dibujo_0:		; los sprites (p12:775D) y los patrones de p63:B1CC (p12:77B8)
+dibujo_0:		; los sprites (p12:775D) y los colores de p63:B1CC (p12:77B8)
 	call sprites_de_snake		;7728   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jp patrones_de_b1cc		;772b   ; patrones_de_b1cc: la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los patrones (p12:77E2)
-colores_0:		; los colores desde 0xD0 + la direccion * 3 + el paso (p12:774E) a la tabla de colores (p12:7733)
+	jp colores_de_b1cc		;772b   ; colores_de_b1cc: la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los colores (p12:77E2)
+lineas_0:		; los patrones: la linea 0xD0 + (la direccion - 1) * 3 + el paso (p12:774E) de la pagina 3 (p12:7733)
 	ld l,0d0h		;772e   ; la linea 0xD0 + (direccion - 1) * 3 + el paso a la fila 0xF0 de la pagina 7 (p12:7733)
 	call por_direccion_y_paso		;7730   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
-colores_de_snake:		; la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
+patrones_de_snake:		; los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
 	ld h,000h		;7733   ; en la pagina 7, la linea L a la fila 0xF0: sin 0xCB3F con YMMM; con el, 0x80 x 1 con HMMM
 	ld a,(0cb3fh)		;7735   ; lee en la zona 6, lo que hay bajo Snake: 1 con los caracteres 0x90-0xB3, 2 con 0xB8-0xDB (3 con 0xCAAA)
 	or a			;7738
-	jr nz,colores_de_snake_b		;7739   ; con 0xCB3F, aparte
+	jr nz,patrones_de_snake_b		;7739   ; con 0xCB3F, aparte
 	ld de,001f0h		;773b
 	ld a,007h		;773e
 	jp 047abh		;7740   ; copia_en_y: orden YMMM del VDP
-colores_de_snake_b:
+patrones_de_snake_b:
 	ld de,000f0h		;7743
 	ld bc,08001h		;7746
 	ld a,007h		;7749
@@ -3442,16 +3442,16 @@ retroceso_derecha:
 retroceso_izquierda:
 	dec d			;77b6
 	ret			;77b7
-patrones_de_b1cc:		; la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los patrones (p12:77E2)
+colores_de_b1cc:		; la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los colores (p12:77E2)
 	ld a,(0cb01h)		;77b8   ; lee el dibujo de Snake (al darse la vuelta se le suma 1, 3 o 5 segun 0xCB00)
 	ld hl,0b1cch		;77bb
 	call 043f6h		;77be   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
-patrones_por_direccion:
+colores_por_direccion:
 	ld a,(0cb0eh)		;77c1   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
-patrones_por_a:
+colores_por_a:
 	dec a			;77c4
 	call por_direccion_6		;77c5   ; por_direccion_6: HL += A * 6 + el paso * 2
-	jr patrones_de_b282		;77c8
+	jr colores_de_b282		;77c8
 por_direccion_6:		; HL += A * 6 + el paso * 2
 	add a,a			;77ca
 	ld b,a			;77cb
@@ -3462,20 +3462,20 @@ por_direccion_6:		; HL += A * 6 + el paso * 2
 	add a,a			;77d2
 	add a,b			;77d3
 	jp 0423eh		;77d4   ; suma_a_hl: HL = HL + A
-patrones_de_b620:		; como p12:77E2 con los dos de p63:B620
+colores_de_b620:		; como p12:77E2 con los dos de p63:B620
 	ld de,0e900h		;77d7   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	push hl			;77da
 	push de			;77db
 	ld a,(hl)			;77dc
 	ld hl,0b620h		;77dd
-	jr patrones_a_e900		;77e0
-patrones_de_b282:		; el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+	jr colores_a_e900		;77e0
+colores_de_b282:		; los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
 	ld de,0e900h		;77e2   ; apunta a los caracteres de un dibujo pasados a 4 bits; de paso, una paleta (p14:A5C5) o las letras en bits (p14:BD54)
 	push hl			;77e5
 	push de			;77e6
 	ld a,(hl)			;77e7
 	ld hl,0b282h		;77e8
-patrones_a_e900:
+colores_a_e900:
 	call 043f6h		;77eb   ; palabra_de_tabla: HL = la palabra A de la tabla de HL
 	ex de,hl			;77ee
 	call 051e0h		;77ef   ; las rachas
@@ -3492,20 +3492,20 @@ patrones_a_e900:
 lineas_1:		; la linea 0xDC + direccion y paso a la fila 0xF0
 	ld l,0dch		;7805
 	call por_direccion_y_paso		;7807   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
-	jp colores_de_snake		;780a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
-dibujo_2:		; dandose la vuelta, como el 4; si no, los sprites (p12:7829) y los patrones de p63:B1CC
+	jp patrones_de_snake		;780a   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
+dibujo_2:		; dandose la vuelta, como el 4; si no, los sprites (p12:7829) y los colores de p63:B1CC
 	ld a,(0cb16h)		;780d   ; lee 1 mientras Snake se da la vuelta
 	or a			;7810
-	jp nz,dibujo_4		;7811   ; dibujo_4: los sprites y los patrones de p63:B25A por 0xCB17 (p12:78B8)
+	jp nz,dibujo_4		;7811   ; dibujo_4: los sprites y los colores de p63:B25A por 0xCB17 (p12:78B8)
 	call sprites_2		;7814   ; sprites_2: los sprites: arriba o abajo, los normales (p12:775D); a los lados, 0x10 mas abajo y 8 a la izquierda (p12:7851); dandose la vuelta, 0x18 por encima (con 0xCB17 desde 3, tambien 8 a la izquierda)
-	jp patrones_de_b1cc		;7817   ; patrones_de_b1cc: la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los patrones (p12:77E2)
+	jp colores_de_b1cc		;7817   ; colores_de_b1cc: la tabla de p63:B1CC del dibujo de 0xCB01, por la direccion y el paso, y los colores (p12:77E2)
 lineas_2:		; dandose la vuelta, como el 4; si no, la linea 0xE8 + direccion y paso
 	ld a,(0cb16h)		;781a   ; lee 1 mientras Snake se da la vuelta
 	or a			;781d
 	jp nz,lineas_4		;781e   ; lineas_4:
 	ld l,0e8h		;7821
 	call por_direccion_y_paso		;7823   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
-	jp colores_de_snake		;7826   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
+	jp patrones_de_snake		;7826   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
 sprites_2:		; los sprites: arriba o abajo, los normales (p12:775D); a los lados, 0x10 mas abajo y 8 a la izquierda (p12:7851); dandose la vuelta, 0x18 por encima (con 0xCB17 desde 3, tambien 8 a la izquierda)
 	ld a,(0cb16h)		;7829   ; lee 1 mientras Snake se da la vuelta
 	or a			;782c
@@ -3551,12 +3551,12 @@ L_786A:
 	ld d,a			;7874
 	call 05d3dh		;7875   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
 	jp 05d3dh		;7878   ; pon_sprite_mas_4: p00:5D41 con el patron C + 4
-dibujo_3:		; los sprites y los patrones de p63:B26A por 0xCB17 (p12:789A)
+dibujo_3:		; los sprites y los colores de p63:B26A por 0xCB17 (p12:789A)
 	call sprites_de_snake		;787b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jp patrones_3		;787e   ; patrones_3:
+	jp colores_3		;787e   ; colores_3:
 lineas_3:		; la linea de 0xCB17 (p12:7887)
 	call linea_de_cb17		;7881   ; linea_de_cb17: L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
-	jp colores_de_snake		;7884   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
+	jp patrones_de_snake		;7884   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
 linea_de_cb17:		; L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
 	ld a,(0cb17h)		;7887   ; hasta 0x0C...
 	cp 00dh		;788a
@@ -3570,40 +3570,40 @@ linea_de_cb17_b:
 	add a,0cch		;7896   ; ...0xCC + 0xCB17 - 0x0D
 	ld l,a			;7898
 	ret			;7899
-patrones_3:
+colores_3:
 	ld a,(0cb17h)		;789a
 	call fila_b26a		;789d   ; fila_b26a: HL = p63:B26A + (A - 9) * 2
-	jp patrones_de_b282		;78a0   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+	jp colores_de_b282		;78a0   ; colores_de_b282: los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
 fila_b26a:		; HL = p63:B26A + (A - 9) * 2
 	ld hl,0b26ah		;78a3
 	sub 009h		;78a6
 	add a,a			;78a8
 	jp 0423eh		;78a9   ; suma_a_hl: HL = HL + A
-dibujo_4:		; los sprites y los patrones de p63:B25A por 0xCB17 (p12:78B8)
+dibujo_4:		; los sprites y los colores de p63:B25A por 0xCB17 (p12:78B8)
 	call sprites_de_snake		;78ac   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jp patrones_4		;78af   ; patrones_4: p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
+	jp colores_4		;78af   ; colores_4: p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
 lineas_4:
 	call linea_de_cb17		;78b2   ; linea_de_cb17: L = 0xF4 + 0xCB17 - 5 (hasta 0x0C) o 0xCC + 0xCB17 - 0x0D
-	jp colores_de_snake		;78b5   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
-patrones_4:		; p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
+	jp patrones_de_snake		;78b5   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
+colores_4:		; p63:B25A + (0xCB17 - 5) * 2 (desde 0x0D, - 4)
 	ld a,(0cb17h)		;78b8   ; hasta 0x0C...
 	ld hl,0b25ah		;78bb   ; ...desde p63:B25A
 	cp 00dh		;78be
-	jr c,patrones_4_b		;78c0
+	jr c,colores_4_b		;78c0
 	sub 00dh		;78c2   ; desde 0x0D...
 	add a,009h		;78c4   ; ...4 menos
-patrones_4_b:
+colores_4_b:
 	sub 005h		;78c6   ; - 5...
 	add a,a			;78c8   ; ...* 2
 	call 0423eh		;78c9   ; suma_a_hl: HL = HL + A
-	jp patrones_de_b282		;78cc   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
-dibujo_5:		; los sprites y los patrones de la tabla de p63:B1D2 del estado, por 0xCB17 (p12:78EB)
+	jp colores_de_b282		;78cc   ; colores_de_b282: los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
+dibujo_5:		; los sprites y los colores de la tabla de p63:B1D2 del estado, por 0xCB17 (p12:78EB)
 	call sprites_de_snake		;78cf   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jp patrones_5		;78d2   ; patrones_5:
+	jp colores_5		;78d2   ; colores_5:
 lineas_5:		; la linea de p12:78E7 por 0xCB17
 	ld hl,078e7h		;78d5
 	call linea_de_tabla		;78d8   ; linea_de_tabla: L = el byte 0xCB17 - 1 de HL
-	jp colores_de_snake		;78db   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
+	jp patrones_de_snake		;78db   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
 linea_de_tabla:		; L = el byte 0xCB17 - 1 de HL
 	ld a,(0cb17h)		;78de
 	dec a			;78e1
@@ -3624,11 +3624,11 @@ DATA_resto_78E7:
 ; ======================================================================
 
 
-patrones_5:
+colores_5:
 	ld a,(0cb17h)		;78eb
 	ld hl,0b1d2h		;78ee
 	call fila_del_estado		;78f1   ; fila_del_estado: HL = la tabla del estado de Snake de HL + (A - 1) * 2
-	jp patrones_de_b282		;78f4   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+	jp colores_de_b282		;78f4   ; colores_de_b282: los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
 fila_del_estado:		; HL = la tabla del estado de Snake de HL + (A - 1) * 2
 	ld b,a			;78f7
 	ld a,(0cb00h)		;78f8   ; lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
@@ -3640,7 +3640,7 @@ fila_del_estado:		; HL = la tabla del estado de Snake de HL + (A - 1) * 2
 lineas_6:		; la linea de p12:790D por 0xCB17
 	ld hl,0790dh		;7904
 	call linea_de_tabla		;7907   ; linea_de_tabla: L = el byte 0xCB17 - 1 de HL
-	jp colores_de_snake		;790a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
+	jp patrones_de_snake		;790a   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_790D: lo apuntan con el banco puesto p12:7904 (0x790D); el
@@ -3655,34 +3655,34 @@ DATA_resto_790D:
 ; ======================================================================
 
 
-dibujo_7:		; los sprites y los patrones de p63:B25A por 0xCB17
+dibujo_7:		; los sprites y los colores de p63:B25A por 0xCB17
 	call sprites_de_snake		;7911   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jp patrones_7		;7914   ; patrones_7:
+	jp colores_7		;7914   ; colores_7:
 lineas_7:
 	call linea_ef		;7917   ; linea_ef: L = 0xEF + 0xCB17
-	jp colores_de_snake		;791a   ; colores_de_snake: la linea L de los colores de Snake: sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0)
+	jp patrones_de_snake		;791a   ; patrones_de_snake: los 4 patrones de Snake: la linea L de la pagina 3 a la tabla de patrones de sprites (0xF800, la fila 0xF0 de la pagina 1; A = 7, de la 3 a la 1): sin 0xCB3F, a (1, 0xF0) con YMMM; con el, 0x80 x 1 a (0, 0xF0) con HMMM
 linea_ef:		; L = 0xEF + 0xCB17
 	ld a,(0cb17h)		;791d
 	add a,0efh		;7920
 	ld l,a			;7922
 	ret			;7923
-patrones_7:
+colores_7:
 	ld a,(0cb17h)		;7924
 	call fila_b25a		;7927   ; fila_b25a: HL = p63:B25A + (A - 1) * 2
-	jp patrones_de_b282		;792a   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+	jp colores_de_b282		;792a   ; colores_de_b282: los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
 fila_b25a:		; HL = p63:B25A + (A - 1) * 2
 	ld hl,0b25ah		;792d
 	dec a			;7930
 	add a,a			;7931
 	jp 0423eh		;7932   ; suma_a_hl: HL = HL + A
-dibujo_8:		; con la direccion en 0xD8E0, los sprites y los patrones de p63:B272 (0xCB17 = 1) o p63:B26A (p12:798E)
+dibujo_8:		; con la direccion en 0xD8E0, los sprites y los colores de p63:B272 (0xCB17 = 1) o p63:B26A (p12:798E)
 	ld a,(0cb0eh)		;7935   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	ld (0d8e0h),a		;7938   ; guarda de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	call sprites_de_snake		;793b   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jr patrones_8		;793e
+	jr colores_8		;793e
 lineas_8:		; la linea de p12:7949 a la fila 0xF0 y la 0xF7 + direccion a la 0x1F0 (p12:797E)
 	call linea_8		;7940   ; linea_8: con 0xCB17 = 1: L = 0xFC (0xFD a los lados), H = 0 (direcciones impares) u 0x80; si no, H = 0 y L = 0xF7 + direccion
-	call linea_a_f0		;7943   ; linea_a_f0: la linea HL de la pagina 7 a (0, 0xF0), 0x80 x 1
+	call linea_a_f0		;7943   ; linea_a_f0: la linea HL de la pagina 3 a (0, 0xF0) de la 1, 0x80 x 1: patrones de sprite
 	jp linea_8_c		;7946   ; linea_8_c: la linea (0x80, 0xF7 + direccion) a 0x1F0 con YMMM
 linea_8:		; con 0xCB17 = 1: L = 0xFC (0xFD a los lados), H = 0 (direcciones impares) u 0x80; si no, H = 0 y L = 0xF7 + direccion
 	ld a,(0cb0eh)		;7949   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
@@ -3709,7 +3709,7 @@ linea_8_b:
 	add a,0f8h		;796f
 	ld l,a			;7971
 	ret			;7972
-linea_a_f0:		; la linea HL de la pagina 7 a (0, 0xF0), 0x80 x 1
+linea_a_f0:		; la linea HL de la pagina 3 a (0, 0xF0) de la 1, 0x80 x 1: patrones de sprite
 	ld de,000f0h		;7973
 linea_a_de:
 	ld bc,08001h		;7976
@@ -3723,26 +3723,26 @@ linea_8_c:		; la linea (0x80, 0xF7 + direccion) a 0x1F0 con YMMM
 	ld de,001f0h		;7986
 	ld a,007h		;7989
 	jp 047abh		;798b   ; copia_en_y: orden YMMM del VDP
-patrones_8:
+colores_8:
 	ld a,(0cb17h)		;798e
 	ld hl,0b272h		;7991   ; 0xCB17 = 1: p63:B272...
 	dec a			;7994
-	jr z,patrones_8_b		;7995
+	jr z,colores_8_b		;7995
 	ld hl,0b26ah		;7997   ; ...si no, p63:B26A
-patrones_8_b:
+colores_8_b:
 	call por_direccion_d8e0		;799a   ; por_direccion_d8e0: HL += (0xD8E0 - 1) * 2
-	jp patrones_de_b282		;799d   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+	jp colores_de_b282		;799d   ; colores_de_b282: los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
 por_direccion_d8e0:		; HL += (0xD8E0 - 1) * 2
 	ld a,(0d8e0h)		;79a0   ; lee de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 	dec a			;79a3
 	add a,a			;79a4
 	jp 0423eh		;79a5   ; suma_a_hl: HL = HL + A
-dibujo_9:		; los sprites y los patrones de p63:B27A por la direccion (p12:79D2)
+dibujo_9:		; los sprites y los colores de p63:B27A por la direccion (p12:79D2)
 	call sprites_de_snake		;79a8   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
-	jr patrones_9		;79ab
+	jr colores_9		;79ab
 lineas_9:		; la linea de p12:79C1 a la fila 0xF0 y la (0x80, 0xD0) + direccion y paso a la 0x1F0
 	call linea_9		;79ad   ; linea_9: L = 0xFE (0xFF a los lados), H = 0 (direcciones impares) u 0x80
-	call linea_a_f0		;79b0   ; linea_a_f0: la linea HL de la pagina 7 a (0, 0xF0), 0x80 x 1
+	call linea_a_f0		;79b0   ; linea_a_f0: la linea HL de la pagina 3 a (0, 0xF0) de la 1, 0x80 x 1: patrones de sprite
 	ld hl,080d0h		;79b3
 	call por_direccion_y_paso		;79b6   ; por_direccion_y_paso: L += (la direccion - 1) * 3 + el paso
 	ld de,001f0h		;79b9
@@ -3760,10 +3760,10 @@ linea_9_h:
 	ret c			;79ce
 	ld h,080h		;79cf
 	ret			;79d1
-patrones_9:
+colores_9:
 	ld a,(0cb0eh)		;79d2   ; lee la direccion en la que va Snake (0 ninguna, 1 arriba, 2 abajo, 3 izquierda, 4 derecha)
 	call fila_b27a		;79d5   ; fila_b27a: HL = p63:B27A + (A - 1) * 2
-	jp patrones_de_b282		;79d8   ; patrones_de_b282: el primero de los dos bytes de HL de p63:B282 y el segundo de p63:B620, deshechas sus rachas en 0xE900 y 0xE920
+	jp colores_de_b282		;79d8   ; colores_de_b282: los colores de los sprites 0-3: las rachas del primero de los dos bytes de HL (p63:B282) y del segundo (p63:B620) deshechas en 0xE900 y 0xE920, 16 lineas por sprite (colores_e900 las pasa a 0xDA00)
 fila_b27a:		; HL = p63:B27A + (A - 1) * 2
 	ld hl,0b27ah		;79db
 	dec a			;79de
@@ -3775,8 +3775,8 @@ lineas_0a:		; la linea de p12:7A45 y, sin chocar, la de p12:7AA4 por direccion y
 	or a			;79e9
 	ret nz			;79ea   ; chocando, nada mas
 	jp linea_por_direccion		;79eb   ; linea_por_direccion:
-dibujo_0a:		; los patrones de p63:B242 (p12:7A79); chocando, los sprites de p12:7A25; si no, 0-1 en (Y - 0x20 + 2 o 3 por el paso, X - 7) y 2-3 0x10 mas abajo y uno a la izquierda
-	call patrones_0a		;79ee   ; patrones_0a: los patrones de p63:B242 y a cero las lineas 0-1 (y 2 fuera del paso 1) de 0xE920 y 0xE930
+dibujo_0a:		; los colores de p63:B242 (p12:7A79); chocando, los sprites de p12:7A25; si no, 0-1 en (Y - 0x20 + 2 o 3 por el paso, X - 7) y 2-3 0x10 mas abajo y uno a la izquierda
+	call colores_0a		;79ee   ; colores_0a: los colores de p63:B242 y a cero las lineas 0-1 (y 2 fuera del paso 1) de 0xE920 y 0xE930
 	ld a,(0cb0fh)		;79f1   ; lee 1 si Snake ha chocado en este cuadro
 	or a			;79f4
 	jr nz,sprites_0a_choque		;79f5   ; chocando, aparte
@@ -3833,7 +3833,7 @@ linea_0a:		; la linea (0x80 en el paso 1, si no 0; 0xC8) a la fila 0xF0
 	ld h,000h		;7a4f
 linea_a_f0_b:
 	ld de,000f0h		;7a51
-linea_de_80:		; 0x80 x 1 de HL a DE en la pagina 7
+linea_de_80:		; 0x80 x 1 de HL de la pagina 3 a DE de la 1
 	ld bc,08001h		;7a54
 	ld a,007h		;7a57
 	jp 04767h		;7a59   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
@@ -3857,9 +3857,9 @@ linea_7aa4:		; la linea de p12:7AA4 por (A - 1) * 6 + el paso * 2 a (0x80, 0xF0)
 	ld l,a			;7a73
 	ld de,080f0h		;7a74
 	jr linea_de_80		;7a77
-patrones_0a:		; los patrones de p63:B242 y a cero las lineas 0-1 (y 2 fuera del paso 1) de 0xE920 y 0xE930
+colores_0a:		; los colores de p63:B242 y a cero las lineas 0-1 (y 2 fuera del paso 1) de 0xE920 y 0xE930
 	ld hl,0b242h		;7a79
-	call patrones_por_direccion		;7a7c   ; patrones_por_direccion:
+	call colores_por_direccion		;7a7c   ; colores_por_direccion:
 	ld hl,0e920h		;7a7f
 	call lineas_a_cero		;7a82   ; lineas_a_cero:
 	ld hl,0e930h		;7a85
@@ -3875,9 +3875,11 @@ lineas_a_cero:
 	ret			;7a95
 
 ; ----------------------------------------------------------------------
-; DATOS resto_7A96: lo apuntan con el banco puesto p12:7A6A (0x7AA4); el
-;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
-;   p12:7A6A (38 bytes)
+; DATOS resto_7A96: los 14 primeros bytes son instrucciones (ld hl,0xB26A / ld
+;   a,(0xCB0E) / dec a / add a,a / call 0x423E / jp 0x77E2: los colores de
+;   p63:B26A por la direccion, como patrones_8) a las que no salta ninguna del
+;   listado; desde 0x7AA4, 12 palabras [linea][x] de la pagina 3 que lee
+;   p12:7A6A por direccion y paso (38 bytes)
 ;   0x7a96..0x7abc  (38 bytes)
 DATA_resto_7A96:
 	defb 021h,06ah,0b2h,03ah,00eh,0cbh,03dh,087h,0cdh,03eh,042h,0c3h,0e2h,077h,0d0h,080h	; 7a96  !j.:..=..>B..w..
@@ -3929,11 +3931,11 @@ lineas_0c:		; la linea de p12:7A45 y la de p12:7AA4 por 0xCB17
 	call linea_0a		;7b04   ; linea_0a: la linea (0x80 en el paso 1, si no 0; 0xC8) a la fila 0xF0
 	ld a,(0cb17h)		;7b07
 	jp linea_7aa4		;7b0a   ; linea_7aa4: la linea de p12:7AA4 por (A - 1) * 6 + el paso * 2 a (0x80, 0xF0)
-dibujo_0c:		; los sprites y los patrones de p63:B242 por 0xCB17
+dibujo_0c:		; los sprites y los colores de p63:B242 por 0xCB17
 	call sprites_de_snake		;7b0d   ; sprites_de_snake: los sprites 0-1 (y 2-3 sin 0xCB3F, 0x10 mas abajo) en el sitio de Snake (X - 8, Y - 0x20), movido un punto al disparar (p12:7789), con el patron 0 de 4 en 4
 	ld hl,0b242h		;7b10
 	ld a,(0cb17h)		;7b13
-	jp patrones_por_a		;7b16   ; patrones_por_a:
+	jp colores_por_a		;7b16   ; colores_por_a:
 dibujo_0d:		; los sprites 0-3 fuera (0x10 bytes a 0xE0)
 	ld hl,0dc00h		;7b19   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld a,0e0h		;7b1c
@@ -3941,9 +3943,9 @@ dibujo_0d:		; los sprites 0-3 fuera (0x10 bytes a 0xE0)
 	jp 04237h		;7b21   ; llena_bloque: pone A en BC + 1 bytes desde HL
 lineas_0e:		; la linea de p12:7B60 por 0xCB4A, y (0x80, 0xC7) a (0x80, 0xF0)
 	call linea_de_cb4a		;7b24   ; linea_de_cb4a: HL = la palabra 0xCB4A de p12:7B60
-	call linea_a_f0		;7b27   ; linea_a_f0: la linea HL de la pagina 7 a (0, 0xF0), 0x80 x 1
+	call linea_a_f0		;7b27   ; linea_a_f0: la linea HL de la pagina 3 a (0, 0xF0) de la 1, 0x80 x 1: patrones de sprite
 	jp linea_c7		;7b2a   ; linea_c7:
-dibujo_0e:		; los sprites 0-1 en el sitio de Snake y 2-3 0x10 mas abajo, con los patrones de p63:B1D8 por 0xCB4A (p12:77D7)
+dibujo_0e:		; los sprites 0-1 en el sitio de Snake y 2-3 0x10 mas abajo, con los colores de p63:B1D8 por 0xCB4A (p12:77D7)
 	ld hl,0dc00h		;7b2d   ; apunta a la copia de la tabla de atributos de sprites: 32 x [Y][X][patron][color]
 	ld a,(0cb03h)		;7b30   ; lee la Y de Snake
 	ld e,a			;7b33
@@ -3961,7 +3963,7 @@ dibujo_0e:		; los sprites 0-1 en el sitio de Snake y 2-3 0x10 mas abajo, con los
 	ld hl,0b1d8h		;7b4d   ; ...en p63:B1D8
 	add a,a			;7b50
 	call 0423eh		;7b51   ; suma_a_hl: HL = HL + A
-	jp patrones_de_b620		;7b54   ; patrones_de_b620: como p12:77E2 con los dos de p63:B620
+	jp colores_de_b620		;7b54   ; colores_de_b620: como p12:77E2 con los dos de p63:B620
 linea_de_cb4a:		; HL = la palabra 0xCB4A de p12:7B60
 	ld a,(0cb4ah)		;7b57   ; lee el sitio de Snake en el paso 3 del estado 0x19 (p11:A090)
 	ld hl,07b60h		;7b5a

@@ -457,7 +457,7 @@ C 0x90F3 ...mas (H, L)
 C 0x90F7 solido?
 C 0x90FD si: su bit
 C 0x9102 sin acarreo
-D 0x815B 0x818B punteros_815B  tabla de 24 punteros (0x9D39, 0x9D39, 0xA1F2...) que no lee ninguna rutina del listado: ninguna instruccion carga su direccion
+D 0x815B 0x818B punteros_815B  la rutina de cada tipo de actor (1-0x18) que lee lo_del_actor (p04:813F: HL = 0x8159 + el tipo * 2): p04:9D39 los 1, 2 y 4-9; p08:A1F2 el 3; p08:AF0B el 0x0A, A000 el 0x0B, A1D6 el 0x0C; 0x0D-0x0F ninguna; p08:AA3B los 0x10-0x11, A8D0 el 0x12, AFEC el 0x13, AC2A el 0x14, AD43 el 0x15, A401 los 0x16-0x17, ABE5 el 0x18 (el banco, banco_del_tipo p04:8148)
 D 0x8699 0x86A4 tipo_por_actor_8699  los bytes de los tipos de actor 1-0x0B de la tabla que lee p04:8688 (A = el byte de 0x8698 + el tipo): el indice del despachador de p04:868E
 D 0x8BAB 0x8BB6 nivel_por_tipo_8BAB  los bytes de los tipos 1-0x0B de la tabla que lee p04:8B93 (0x8BAA + el tipo de la ficha de 0xD800): con 0, acabar con el sube el nivel de Snake
 
