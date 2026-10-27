@@ -1462,7 +1462,7 @@ L 0xB4A3 sonido_de_d800 con la vida desde 0x18 (los tipos 6, 8 y 0x0A) o desde 8
 L 0xB4B6 compara_vida 
 L 0xB4C0 d800_vencida el paso de p07:B521 segun su tipo, el byte 0x16 = 0, el 0x17 = 4 y fuera lo lanzado (p07:B4D5)
 L 0xB4D5 fuera_lo_lanzado 0xD460-0xD4BF y 0xD4C0-0xD4DF a cero, los sprites de 0xDC68-0xDC7F fuera y, con 0xD8A4, los de 0xDC28-0xDC37
-L 0xB502 d800_tipo_5 el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
+L 0xB502 golpe_d800_tipo_5 el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
 L 0xB520 nada_b520 
 L 0xB52C dano_del_tipo C = el dano del tipo C de lo lanzado por Snake (p07:B535)
 L 0xB534 nada_b534 
@@ -2118,7 +2118,6 @@ C 0xB451 a_p04_9ca1: p04:9CA1 con el banco 4 en 0x8000
 C 0xB45F a_p04_8326: p04:8326 con el banco 4 en 0x8000
 C 0xB462 a_p04_82fd: p04:82FD con el banco 4 en 0x8000
 C 0xB46C resta_a_d800: p07:B502; el byte 0x10 (su vida) menos C (no baja de 0); a 0, p07:B4C0; si queda: el sonido (p07:B4A3), el byte 0x16 = 0 y el 0x17 = C * 4 (al menos 0x0A); el tipo 9, el byte 0x13 = 0xFD
-C 0xB472 d800_tipo_5: el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
 C 0xB4C6 suma_a_hl: HL = HL + A
 C 0xB4D5 apunta a 6 fichas de 16 bytes de lo que lanzan los actores (p04:9B55)
 C 0xB4DB borra_bloque: pone a cero BC + 1 bytes desde HL

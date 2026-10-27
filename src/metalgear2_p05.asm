@@ -876,7 +876,7 @@ vuelve_al_camino:		; p04:9DCE: con acarreo, el paso 0x0A
 	ret nc			;a5ed
 	ld (ix+001h),00ah		;a5ee   ; el paso del actor = 0x0A
 	ret			;a5f2
-actor_de_a5f3:		; fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
+d800_tipo_3:		; la ficha de 0xD800 de tipo 3 (su logica, p04:8A8D): fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
 	call 08100h		;a5f3   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jp nz,086a4h		;a5f6   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;a5f9
@@ -1816,7 +1816,7 @@ L_AC17:
 	add ix,de		;ac1a
 	djnz L_AC07		;ac1c
 	ret			;ac1e
-actor_de_la_especial_29:		; solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
+d800_tipo_4:		; la ficha de 0xD800 de tipo 4 (su logica, p04:8A8D): solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
 	ld a,(0ca76h)		;ac1f   ; lee la sala especial (0 = ninguna; indice de p24:64B6)
 	cp 029h		;ac22
 	jp nz,086a4h		;ac24   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
@@ -2312,7 +2312,7 @@ especial_29_paso_11:		; el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
 	ld a,002h		;af9e
 	ld (0d500h),a		;afa0   ; guarda 8 fichas de puerta de 16 bytes [tipo][estado][Y][X][pide][numero][paso][alto][ancho][abre][cuenta] (p15:A04C; el choque en p07:BC95)
 	ret			;afa3
-actor_de_d8a7:		; con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
+d800_tipo_5:		; la ficha de 0xD800 de tipo 5 (su logica, p04:8A8D): con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
 	ld a,(0ca77h)		;afa4   ; con 0xCA77, sin musica
 	and a			;afa7
 	jp nz,086a4h		;afa8   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
@@ -2725,7 +2725,7 @@ guarda_snake_en_18:		; los bytes 0x18-0x19 = la Y y la X de Snake
 	ld (ix+018h),l		;b2ab
 	ld (ix+019h),h		;b2ae
 	ret			;b2b1
-actor_de_las_salas_4_5:		; en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
+d800_tipo_7:		; la ficha de 0xD800 de tipo 7 (su logica, p04:8A8D): en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
 	call en_4_5		;b2b2   ; en_4_5: acarreo con la fila y la columna de Snake entre 4 y 5
 	jp nc,086a4h		;b2b5   ; acaba_musica_del_actor: con 0xCA26: lo quita, p01:7A12 y el banco del tipo (1 el 15, 2 y 6 el 10)
 	ld hl,06bcch		;b2b8
@@ -3104,7 +3104,7 @@ sprites_desde_paso_5:		; desde el paso 5, sus sprites
 	cp 005h		;b56d
 	ret c			;b56f
 	jp 08739h		;b570   ; sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
-actor_de_d8a9:		; con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
+d800_tipo_0a:		; la ficha de 0xD800 de tipo 0x0A (su logica, p04:8A8D): con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
 	ld a,(0d8a9h)		;b573
 	and a			;b576
 	ret z			;b577
@@ -3571,7 +3571,7 @@ suelta_y_paso_20:		; 0xCB3C = 0 y el paso 0x20
 	ld (0cb3ch),a		;b91b
 	ld (ix+001h),020h		;b91e   ; el paso del actor = 0x20
 	ret			;b922
-actor_de_d8aa:		; con 0xD8AA, sus pasos (p05:B934)
+d800_tipo_9:		; la ficha de 0xD800 de tipo 9 (su logica, p04:8A8D): con 0xD8AA, sus pasos (p05:B934)
 	ld a,(0d8aah)		;b923
 	and a			;b926
 	ret z			;b927
@@ -4089,7 +4089,7 @@ sprites_hasta_paso_0f:		; hasta el paso 0x0F, sus sprites; desde el, fuera
 	cp 00fh		;bd3e
 	jp nc,08728h		;bd40   ; esconde_sprites_10_13: los sprites 10-13 fuera
 	jp 08739h		;bd43   ; sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
-actor_de_la_sala_5:		; en la sala 5, sus pasos (p05:BD58)
+d800_tipo_8:		; la ficha de 0xD800 de tipo 8 (su logica, p04:8A8D): en la sala 5, sus pasos (p05:BD58)
 	ld a,(0ca4bh)		;bd46   ; lee la sala de la zona
 	cp 005h		;bd49
 	ret nz			;bd4b

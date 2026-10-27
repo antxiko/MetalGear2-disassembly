@@ -1656,10 +1656,11 @@ L_6C20:
 	ret			;6c20
 
 ; ----------------------------------------------------------------------
-; DATOS bytes_6C21: 11 bytes entre el ret de p12:6C20 y el codigo de p12:6C2C
-;   que no lee ninguna rutina del listado ni carga ninguna instruccion
+; DATOS minimo_d800: el paso minimo de cada tipo de ficha 0xD800 (1-0x0B) que
+;   guarda_d800 conserva en 0xD87F + el tipo al dejar la zona (p12:6BFC: HL =
+;   0x6C20 + el tipo): 4, 0, 6, 0x0B, 3, 5, 3 y 0 los demas
 ;   0x6c21..0x6c2c  (11 bytes)
-DATA_bytes_6C21:
+DATA_minimo_d800:
 	defb 004h,000h,006h,00bh,003h,005h,003h,000h,000h,000h,000h	; 6c21  ...........
 
 ; ======================================================================

@@ -1084,7 +1084,7 @@ DATA_resto_AB96:
 ; ======================================================================
 
 
-d800_tipo_11:		; la ficha de 0xD800 de tipo 0x11: con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
+d800_tipo_6:		; la ficha de 0xD800 de tipo 6 (su logica, p04:8A8D): con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
 	ld a,(0ca77h)		;ab9e
 	and a			;aba1
 	jp nz,086a4h		;aba2   ; con 0xCA77...
@@ -1115,7 +1115,7 @@ DATA_resto_ABC5:
 ; ======================================================================
 
 
-d800_11_paso_0:		; con Snake en su fila de sala: 0xCB3C = 1, el bit 4 de 0xD7D3, 0x1E cuadros y el paso siguiente
+d800_6_paso_0:		; con Snake en su fila de sala: 0xCB3C = 1, el bit 4 de 0xD7D3, 0x1E cuadros y el paso siguiente
 	ld a,(0ca50h)		;abd7   ; lee la fila de la sala en la zona (uno mas al salir por arriba)
 	cp (ix+00ah)		;abda   ; en otra fila, nada
 	ret nz			;abdd
@@ -1124,22 +1124,22 @@ d800_11_paso_0:		; con Snake en su fila de sala: 0xCB3C = 1, el bit 4 de 0xD7D3,
 	ld hl,0d7d3h		;abe3   ; el bit 4 de 0xD7D3
 	set 4,(hl)		;abe6
 	ld (ix+00eh),01eh		;abe8   ; 0x1E cuadros
-	jr d800_11_siguiente		;abec
-d800_11_paso_1:		; a los 0x1E cuadros: la musica 0xA6 y el mensaje 0x0A80 con ventana
+	jr d800_6_siguiente		;abec
+d800_6_paso_1:		; a los 0x1E cuadros: la musica 0xA6 y el mensaje 0x0A80 con ventana
 	dec (ix+00eh)		;abee   ; baja la espera de la ficha de 0xD800
 	ret nz			;abf1
 	call 086c2h		;abf2   ; pon_musica_a6: 0xCA26 = 1, ninguna pendiente y el sonido 0xA6
 	ld de,00a80h		;abf5   ; el mensaje 0x0A80
 	call 061c0h		;abf8   ; mensaje_de_50_con_ventana: p01:61CE y los bancos 4, 5 y 14
-d800_11_siguiente:		; el paso siguiente
+d800_6_siguiente:		; el paso siguiente
 	inc (ix+001h)		;abfb   ; sube el paso de la ficha de 0xD800
 	ret			;abfe
-d800_11_paso_2:		; el mensaje hasta que acaba; luego hacia Snake (p14:AC48)
+d800_6_paso_2:		; el mensaje hasta que acaba; luego hacia Snake (p14:AC48)
 	call 061f8h		;abff   ; mensaje_cada_cuadro_bancos_14:
 	ret nz			;ac02
 	call hacia_snake_x		;ac03   ; hacia_snake_x: la velocidad en X 0x200 hacia Snake (por la columna y la X), el byte 0x0C = 2 y el dibujo por la direccion (p14:ACD8)
-	jr d800_11_siguiente		;ac06
-d800_11_paso_3:		; entre columnas (p14:ACAA), p04:902E; en la columna de Snake desde X = 0x60: los bytes 0x0C y 0x0D a 0 y el mensaje 0x0B
+	jr d800_6_siguiente		;ac06
+d800_6_paso_3:		; entre columnas (p14:ACAA), p04:902E; en la columna de Snake desde X = 0x60: los bytes 0x0C y 0x0D a 0 y el mensaje 0x0B
 	call d800_entre_columnas		;ac08   ; d800_entre_columnas: por debajo de X = 0x10, a la columna de la izquierda en 0xB0; desde 0xB1, a la de la derecha en 0x10
 	call 0902eh		;ac0b   ; p04:902E
 	call 08107h		;ac0e   ; en otra columna, nada
@@ -1152,13 +1152,13 @@ d800_11_paso_3:		; entre columnas (p14:ACAA), p04:902E; en la columna de Snake d
 	ld (ix+00dh),a		;ac1c   ; guarda el dibujo de la ficha de 0xD800
 	ld d,00bh		;ac1f   ; el mensaje 0x0B
 	call 061c9h		;ac21   ; mensaje_de_50_bancos_14: p01:61DC y los bancos 4, 5 y 14
-	jr d800_11_siguiente		;ac24
-d800_11_paso_4:		; el mensaje hasta que acaba; luego p00:7A59
+	jr d800_6_siguiente		;ac24
+d800_6_paso_4:		; el mensaje hasta que acaba; luego p00:7A59
 	call 061f8h		;ac26   ; mensaje_cada_cuadro_bancos_14:
 	ret nz			;ac29
 	call 07a59h		;ac2a   ; llama_7a27_1_bancos_14:
-	jp d800_11_siguiente		;ac2d   ; d800_11_siguiente: el paso siguiente
-d800_11_paso_5:		; p04:8685, 0xCB3C = 0, el byte 0x11 = 0, el 0x16 = 1, 0x20 cuadros y hacia Snake
+	jp d800_6_siguiente		;ac2d   ; d800_6_siguiente: el paso siguiente
+d800_6_paso_5:		; p04:8685, 0xCB3C = 0, el byte 0x11 = 0, el 0x16 = 1, 0x20 cuadros y hacia Snake
 	call 08685h		;ac30   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
 	xor a			;ac33
 	ld (0cb3ch),a		;ac34   ; 0xCB3C = 0
@@ -1167,7 +1167,7 @@ d800_11_paso_5:		; p04:8685, 0xCB3C = 0, el byte 0x11 = 0, el 0x16 = 1, 0x20 cua
 	ld (ix+016h),a		;ac3b   ; el byte 0x16 = 1
 	ld (ix+00eh),020h		;ac3e   ; 0x20 cuadros
 	call hacia_snake_x		;ac42   ; hacia_snake_x: la velocidad en X 0x200 hacia Snake (por la columna y la X), el byte 0x0C = 2 y el dibujo por la direccion (p14:ACD8)
-	jp d800_11_siguiente		;ac45   ; d800_11_siguiente: el paso siguiente
+	jp d800_6_siguiente		;ac45   ; d800_6_siguiente: el paso siguiente
 hacia_snake_x:		; la velocidad en X 0x200 hacia Snake (por la columna y la X), el byte 0x0C = 2 y el dibujo por la direccion (p14:ACD8)
 	ld de,00200h		;ac48
 	call 08107h		;ac4b   ; en_esta_columna: Z si el actor esta en la columna de ahora
@@ -1185,7 +1185,7 @@ pon_hacia_snake:		; la velocidad en X
 	ld (ix+008h),e		;ac62   ; guarda la velocidad de la ficha de 0xD800 en X (baja)
 	ld (ix+00ch),002h		;ac65   ; el byte 0x0C = 2
 	jr dibujo_por_x		;ac69
-d800_11_paso_6:		; entre columnas, el borde (p14:ACC4), cada 4 cuadros p04:902E; con la cuenta, al acabar hacia Snake; sin ella, en su columna a menos de 8 de Snake: quieto, el dibujo 2, 4 cuadros y el siguiente
+d800_6_paso_6:		; entre columnas, el borde (p14:ACC4), cada 4 cuadros p04:902E; con la cuenta, al acabar hacia Snake; sin ella, en su columna a menos de 8 de Snake: quieto, el dibujo 2, 4 cuadros y el siguiente
 	call d800_entre_columnas		;ac6b   ; d800_entre_columnas: por debajo de X = 0x10, a la columna de la izquierda en 0xB0; desde 0xB1, a la de la derecha en 0x10
 	call d800_borde		;ac6e   ; d800_borde: en la columna 6, por debajo de X = 0x14 se da la vuelta; en las otras, desde 0xAC; al darse la vuelta, 0x10 cuadros
 	inc (ix+011h)		;ac71   ; los cuadros
@@ -1194,14 +1194,14 @@ d800_11_paso_6:		; entre columnas, el borde (p14:ACC4), cada 4 cuadros p04:902E;
 	call z,0902eh		;ac79   ; p04:902E
 	ld a,(ix+00eh)		;ac7c   ; con la cuenta, aparte
 	and a			;ac7f
-	jr nz,d800_11_cuenta		;ac80
+	jr nz,d800_6_cuenta		;ac80
 	call 08107h		;ac82   ; en su columna?
-	jr z,d800_11_cerca		;ac85
-d800_11_cuenta:
+	jr z,d800_6_cerca		;ac85
+d800_6_cuenta:
 	dec (ix+00eh)		;ac87   ; baja la espera de la ficha de 0xD800
 	ret nz			;ac8a
 	jp hacia_snake_x		;ac8b   ; al acabar, hacia Snake
-d800_11_cerca:
+d800_6_cerca:
 	ld a,(0cb05h)		;ac8e   ; lee la X de Snake
 	sub (ix+005h)		;ac91   ; la distancia en X...
 	jr nc,L_AC98		;ac94
@@ -1212,7 +1212,7 @@ L_AC98:
 	ld (ix+00ch),000h		;ac9b   ; quieto
 	ld (ix+00dh),002h		;ac9f   ; el dibujo 2
 	ld (ix+00eh),004h		;aca3   ; 4 cuadros
-	jp d800_11_siguiente		;aca7   ; d800_11_siguiente: el paso siguiente
+	jp d800_6_siguiente		;aca7   ; d800_6_siguiente: el paso siguiente
 d800_entre_columnas:		; por debajo de X = 0x10, a la columna de la izquierda en 0xB0; desde 0xB1, a la de la derecha en 0x10
 	ld a,(ix+005h)		;acaa   ; lee la X de la ficha de 0xD800
 	cp 010h		;acad
@@ -1250,21 +1250,21 @@ d800_borde_6:
 	cp 014h		;ace8   ; desde 0x14, nada
 	ret nc			;acea
 	jr d800_vuelta		;aceb
-d800_11_paso_7:		; a los 4 cuadros, el dibujo siguiente, 4 mas, lo lanzado de tipo 3 y el siguiente
+d800_6_paso_7:		; a los 4 cuadros, el dibujo siguiente, 4 mas, lo lanzado de tipo 3 y el siguiente
 	dec (ix+00eh)		;aced   ; baja la espera de la ficha de 0xD800
 	ret nz			;acf0
 	inc (ix+00dh)		;acf1   ; sube el dibujo de la ficha de 0xD800
 	ld (ix+00eh),004h		;acf4   ; la espera de la ficha de 0xD800 = 0x04
 	call 09af8h		;acf8   ; lanza
-	jp d800_11_siguiente		;acfb   ; d800_11_siguiente: el paso siguiente
-d800_11_paso_8:		; a los 4 cuadros, 8 mas, el paso 6 y hacia Snake
+	jp d800_6_siguiente		;acfb   ; d800_6_siguiente: el paso siguiente
+d800_6_paso_8:		; a los 4 cuadros, 8 mas, el paso 6 y hacia Snake
 	dec (ix+00eh)		;acfe   ; baja la espera de la ficha de 0xD800
 	ret nz			;ad01
 	ld (ix+00eh),008h		;ad02   ; la espera de la ficha de 0xD800 = 0x08
 	ld (ix+001h),006h		;ad06   ; el paso 6
 	call hacia_snake_x		;ad0a   ; hacia_snake_x: la velocidad en X 0x200 hacia Snake (por la columna y la X), el byte 0x0C = 2 y el dibujo por la direccion (p14:ACD8)
 	jr dibujo_por_x		;ad0d
-d800_tipo_16:		; la ficha de 0xD800 de tipo 0x16, con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
+d800_tipo_0b:		; la ficha de 0xD800 de tipo 0x0B (su logica, p04:8A8D), con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
 	ld a,(0d8a0h)		;ad0f
 	and a			;ad12
 	ret z			;ad13   ; sin 0xD8A0, nada
@@ -1272,15 +1272,15 @@ d800_tipo_16:		; la ficha de 0xD800 de tipo 0x16, con 0xD8A0: el byte 0x16 a 1 e
 	ld b,a			;ad17
 	ld a,(ix+017h)		;ad18   ; con el byte 0x17, 0
 	and a			;ad1b
-	jr nz,d800_16_byte_16_0		;ad1c
+	jr nz,d800_0b_byte_16_0		;ad1c
 	ld a,b			;ad1e
 	sub 003h		;ad1f   ; los pasos 3-4...
 	cp 002h		;ad21
 	ld a,001h		;ad23   ; ...1
-	jr c,d800_16_byte_16		;ad25
-d800_16_byte_16_0:
+	jr c,d800_0b_byte_16		;ad25
+d800_0b_byte_16_0:
 	xor a			;ad27
-d800_16_byte_16:
+d800_0b_byte_16:
 	ld (ix+016h),a		;ad28
 	ld a,b			;ad2b
 	ld hl,0ad38h		;ad2c   ; su paso
@@ -1301,10 +1301,10 @@ DATA_resto_AD38:
 ; ======================================================================
 
 
-d800_16_paso_0:		; el byte 0x16 = 0
+d800_0b_paso_0:		; el byte 0x16 = 0
 	ld (ix+016h),000h		;ad48
 	ret			;ad4c
-d800_16_paso_1:		; la fila del byte 0x1A de p14:AD86: la velocidad (bytes 7-9) y la espera; la aceleracion 0x80 en los bytes 0x18-0x19, el byte 0x0C = 3, el sonido 0x5A y el siguiente
+d800_0b_paso_1:		; la fila del byte 0x1A de p14:AD86: la velocidad (bytes 7-9) y la espera; la aceleracion 0x80 en los bytes 0x18-0x19, el byte 0x0C = 3, el sonido 0x5A y el siguiente
 	ld a,(ix+01ah)		;ad4d
 	add a,a			;ad50   ; * 4...
 	add a,a			;ad51
@@ -1329,7 +1329,7 @@ d800_16_paso_1:		; la fila del byte 0x1A de p14:AD86: la velocidad (bytes 7-9) y
 	ld (ix+00fh),a		;ad79
 	ld (ix+00ch),003h		;ad7c   ; el byte 0x0C = 3
 	call 06b59h		;ad80   ; el sonido 0x5A
-	jp d800_16_siguiente		;ad83   ; d800_16_siguiente: el paso siguiente
+	jp d800_0b_siguiente		;ad83   ; d800_0b_siguiente: el paso siguiente
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_AD86: lo apuntan con el banco puesto p14:AD52 (0xAD86), p14:AE9A
@@ -1344,9 +1344,9 @@ DATA_resto_AD86:
 ; ======================================================================
 
 
-d800_16_paso_2:		; la espera; mientras, la velocidad en Y + la aceleracion (p14:AD9B); al acabar, guarda la velocidad en los bytes 0x1B-0x1E, hacia Snake (p14:ADEB), la Y entre 0x4A y 0xA8, una espera al azar (0-0x1F), el sonido 0x5B y el siguiente
+d800_0b_paso_2:		; la espera; mientras, la velocidad en Y + la aceleracion (p14:AD9B); al acabar, guarda la velocidad en los bytes 0x1B-0x1E, hacia Snake (p14:ADEB), la Y entre 0x4A y 0xA8, una espera al azar (0-0x1F), el sonido 0x5B y el siguiente
 	dec (ix+00eh)		;ad96   ; baja la espera de la ficha de 0xD800
-	jr z,d800_16_guarda		;ad99
+	jr z,d800_0b_guarda		;ad99
 acelera_y:		; la velocidad en Y (bytes 6-7) + la aceleracion (bytes 0x18-0x19)
 	ld h,(ix+007h)		;ad9b   ; lee la velocidad de la ficha de 0xD800 en Y (alta)
 	ld l,(ix+006h)		;ad9e   ; lee la velocidad de la ficha de 0xD800 en Y (baja)
@@ -1356,7 +1356,7 @@ acelera_y:		; la velocidad en Y (bytes 6-7) + la aceleracion (bytes 0x18-0x19)
 	ld (ix+007h),h		;ada8   ; guarda la velocidad de la ficha de 0xD800 en Y (alta)
 	ld (ix+006h),l		;adab   ; guarda la velocidad de la ficha de 0xD800 en Y (baja)
 	ret			;adae
-d800_16_guarda:		; la velocidad a los bytes 0x1B-0x1E
+d800_0b_guarda:		; la velocidad a los bytes 0x1B-0x1E
 	ld a,(ix+006h)		;adaf   ; lee la velocidad de la ficha de 0xD800 en Y (baja)
 	ld (ix+01bh),a		;adb2
 	ld a,(ix+007h)		;adb5   ; lee la velocidad de la ficha de 0xD800 en Y (alta)
@@ -1369,20 +1369,20 @@ d800_16_guarda:		; la velocidad a los bytes 0x1B-0x1E
 	ld a,(ix+003h)		;adca   ; la Y...
 	ld b,0a8h		;adcd   ; ...hasta 0xA8...
 	cp b			;adcf
-	jr c,d800_16_y_min		;add0
+	jr c,d800_0b_y_min		;add0
 	ld a,b			;add2
-d800_16_y_min:		; ...desde 0x4A
+d800_0b_y_min:		; ...desde 0x4A
 	ld b,04ah		;add3
 	cp b			;add5
-	jr nc,d800_16_pon_y		;add6
+	jr nc,d800_0b_pon_y		;add6
 	ld a,b			;add8
-d800_16_pon_y:
+d800_0b_pon_y:
 	ld (ix+003h),a		;add9   ; guarda la Y de la ficha de 0xD800
 	call 04256h		;addc   ; una espera al azar
 	and 01fh		;addf
 	ld (ix+00eh),a		;ade1   ; guarda la espera de la ficha de 0xD800
 	call 06b5dh		;ade4   ; el sonido 0x5B
-d800_16_siguiente:		; el paso siguiente
+d800_0b_siguiente:		; el paso siguiente
 	inc (ix+001h)		;ade7   ; sube el paso de la ficha de 0xD800
 	ret			;adea
 hacia_snake_por_1a:		; con el byte 0x1A desde 2, en Y hacia Snake (0x400, el dibujo 2 o 0, byte 0x0C = 1); si no, en X (el dibujo 6 o 4, byte 0x0C = 2)
@@ -1416,29 +1416,29 @@ pon_hacia_en_x:
 	ld (ix+009h),d		;ae2a   ; guarda la velocidad de la ficha de 0xD800 en X (alta)
 	ld (ix+00ch),002h		;ae2d
 	ret			;ae31
-d800_16_paso_3:		; p04:86DE; tocado (p14:AEEE), de vuelta (p14:AE76); con la espera, uno menos; sin ella, alineado con Snake (p14:AED4), p14:AEBE; rebota en los bordes (Y 0x50-0xA7 o X 0x38-0x87) dandose la vuelta
+d800_0b_paso_3:		; p04:86DE; tocado (p14:AEEE), de vuelta (p14:AE76); con la espera, uno menos; sin ella, alineado con Snake (p14:AED4), p14:AEBE; rebota en los bordes (Y 0x50-0xA7 o X 0x38-0x87) dandose la vuelta
 	call 086deh		;ae32   ; cambia_paso_cada_2: el byte 0x11 uno mas; cada 2, el paso del dibujo
-	call d800_16_tocado		;ae35   ; d800_16_tocado: con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
-	jr c,d800_16_vuelve		;ae38   ; tocado, de vuelta
+	call d800_0b_tocado		;ae35   ; d800_0b_tocado: con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
+	jr c,d800_0b_vuelve		;ae38   ; tocado, de vuelta
 	ld a,(ix+00eh)		;ae3a   ; lee la espera de la ficha de 0xD800
 	and a			;ae3d
-	jr z,d800_16_alineado		;ae3e   ; sin espera, aparte
+	jr z,d800_0b_alineado		;ae3e   ; sin espera, aparte
 	dec (ix+00eh)		;ae40   ; baja la espera de la ficha de 0xD800
-	jr d800_16_bordes		;ae43
-d800_16_alineado:
+	jr d800_0b_bordes		;ae43
+d800_0b_alineado:
 	call alineado_con_snake		;ae45   ; alineado_con_snake: acarreo si Snake esta a menos de 4 en X (o en Y, con el byte 0x1A desde 2)
-	jp c,d800_16_ataca		;ae48   ; d800_16_ataca: tocado, de vuelta; si no, el dibujo de p14:AF73, quieto, 0x18 cuadros y el siguiente
-d800_16_bordes:
+	jp c,d800_0b_ataca		;ae48   ; d800_0b_ataca: tocado, de vuelta; si no, el dibujo de p14:AF73, quieto, 0x18 cuadros y el siguiente
+d800_0b_bordes:
 	ld a,(ix+01ah)		;ae4b
 	cp 002h		;ae4e   ; en Y?
-	jr c,d800_16_bordes_x		;ae50
+	jr c,d800_0b_bordes_x		;ae50
 	ld a,(ix+003h)		;ae52   ; Y - 0x50...
 	sub 050h		;ae55
 	cp 058h		;ae57   ; ...dentro de 0x58, nada
 	ret c			;ae59
 	call 0809eh		;ae5a   ; al reves en Y
 	jr dibujo_al_reves		;ae5d
-d800_16_bordes_x:
+d800_0b_bordes_x:
 	ld a,(ix+005h)		;ae5f   ; lee la X de la ficha de 0xD800
 	sub 038h		;ae62   ; X - 0x38...
 	cp 050h		;ae64
@@ -1453,7 +1453,7 @@ dibujo_al_reves:		; el bit 1 del dibujo cambia
 	rla			;ae71
 	ld (ix+00dh),a		;ae72   ; guarda el dibujo de la ficha de 0xD800
 	ret			;ae75
-d800_16_vuelve:		; la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
+d800_0b_vuelve:		; la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
 	ld e,(ix+01bh)		;ae76
 	ld d,(ix+01ch)		;ae79
 	call 04442h		;ae7c   ; al reves en Y
@@ -1483,14 +1483,14 @@ dibujo_por_1a:		; el dibujo = el byte 0x1A de HL
 	ld a,(hl)			;aeb9
 	ld (ix+00dh),a		;aeba   ; guarda el dibujo de la ficha de 0xD800
 	ret			;aebd
-d800_16_ataca:		; tocado, de vuelta; si no, el dibujo de p14:AF73, quieto, 0x18 cuadros y el siguiente
-	call d800_16_tocado		;aebe   ; d800_16_tocado: con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
-	jr c,d800_16_vuelve		;aec1
+d800_0b_ataca:		; tocado, de vuelta; si no, el dibujo de p14:AF73, quieto, 0x18 cuadros y el siguiente
+	call d800_0b_tocado		;aebe   ; d800_0b_tocado: con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
+	jr c,d800_0b_vuelve		;aec1
 	ld hl,0af73h		;aec3
 	call dibujo_por_1a		;aec6   ; dibujo_por_1a: el dibujo = el byte 0x1A de HL
 	ld (ix+00ch),000h		;aec9   ; quieto
 	ld (ix+00eh),018h		;aecd   ; 0x18 cuadros
-	jp d800_16_siguiente		;aed1   ; d800_16_siguiente: el paso siguiente
+	jp d800_0b_siguiente		;aed1   ; d800_0b_siguiente: el paso siguiente
 alineado_con_snake:		; acarreo si Snake esta a menos de 4 en X (o en Y, con el byte 0x1A desde 2)
 	ld a,(ix+01ah)		;aed4
 	cp 002h		;aed7   ; en Y?
@@ -1505,7 +1505,7 @@ alineado_cerca:		; entre -4 y 3
 	sub 0fch		;aee9
 	cp 008h		;aeeb
 	ret			;aeed
-d800_16_tocado:		; con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
+d800_0b_tocado:		; con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
 	call cuenta_d800		;aeee   ; cuenta_d800: C = cuantas fichas de 0xD800 estan activas (de 4)
 	or a			;aef1
 	dec c			;aef2   ; una sola, nada
@@ -1525,25 +1525,25 @@ d800_16_tocado:		; con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el 
 	sub 0e0h		;af0a   ; ...a menos de 0x20
 	cp 040h		;af0c
 	ret			;af0e
-d800_16_paso_4:		; la espera; cada 8 cuadros, lo lanzado 6 (p06:9B3B); al acabar, el byte 0x0F uno mas: a 2, de vuelta; si no, hacia Snake, otra espera al azar y el paso de antes
+d800_0b_paso_4:		; la espera; cada 8 cuadros, lo lanzado 6 (p06:9B3B); al acabar, el byte 0x0F uno mas: a 2, de vuelta; si no, hacia Snake, otra espera al azar y el paso de antes
 	dec (ix+00eh)		;af0f   ; baja la espera de la ficha de 0xD800
-	jr z,d800_16_otra_vez		;af12   ; al acabar, aparte
+	jr z,d800_0b_otra_vez		;af12   ; al acabar, aparte
 	ld a,(ix+00eh)		;af14   ; lee la espera de la ficha de 0xD800
 	and 007h		;af17   ; cada 8...
 	jp z,09b3bh		;af19   ; ...lanza
 	ret			;af1c
-d800_16_otra_vez:
+d800_0b_otra_vez:
 	inc (ix+00fh)		;af1d
 	ld a,(ix+00fh)		;af20   ; la vez 2...
 	cp 002h		;af23
-	jp nc,d800_16_vuelve		;af25   ; ...de vuelta
+	jp nc,d800_0b_vuelve		;af25   ; ...de vuelta
 	call hacia_snake_por_1a		;af28   ; hacia Snake
 	call 04256h		;af2b   ; una espera al azar
 	and 01fh		;af2e
 	ld (ix+00eh),a		;af30   ; guarda la espera de la ficha de 0xD800
 	dec (ix+001h)		;af33   ; el paso de antes
 	ret			;af36
-d800_16_paso_5:		; la espera con la aceleracion; al acabar, el sitio de la fila del byte 0x1A de p14:AFD5 (la Y con 0-1, la X con 2-3), su dibujo y todo a 0 (paso 0)
+d800_0b_paso_5:		; la espera con la aceleracion; al acabar, el sitio de la fila del byte 0x1A de p14:AFD5 (la Y con 0-1, la X con 2-3), su dibujo y todo a 0 (paso 0)
 	dec (ix+00eh)		;af37   ; baja la espera de la ficha de 0xD800
 	jp nz,acelera_y		;af3a   ; mientras, acelera
 	ld a,(ix+01ah)		;af3d
@@ -1554,16 +1554,16 @@ d800_16_paso_5:		; la espera con la aceleracion; al acabar, el sitio de la fila 
 	call 0423eh		;af46   ; suma_a_hl: HL = HL + A
 	ld a,(ix+01ah)		;af49
 	cp 002h		;af4c   ; desde 2, la X
-	jr nc,d800_16_x		;af4e
+	jr nc,d800_0b_x		;af4e
 	ld a,(hl)			;af50   ; la Y
 	ld (ix+003h),a		;af51   ; guarda la Y de la ficha de 0xD800
 	inc hl			;af54
-	jr d800_16_dibujo		;af55
-d800_16_x:
+	jr d800_0b_dibujo		;af55
+d800_0b_x:
 	inc hl			;af57
 	ld a,(hl)			;af58   ; la X
 	ld (ix+005h),a		;af59   ; guarda la X de la ficha de 0xD800
-d800_16_dibujo:
+d800_0b_dibujo:
 	inc hl			;af5c
 	ld a,(hl)			;af5d   ; el dibujo
 	ld (ix+00dh),a		;af5e   ; guarda el dibujo de la ficha de 0xD800
@@ -1587,12 +1587,12 @@ DATA_resto_AF6F:
 ; ======================================================================
 
 
-d800_16_paso_6:		; 0x0C cuadros, el dibujo 0x80, quieto, p00:6FA8 y el siguiente; con una ficha sola en 0xD800, los sonidos 5 y 0x86; si no, el 0x14
+d800_0b_paso_6:		; 0x0C cuadros, el dibujo 0x80, quieto, p00:6FA8 y el siguiente; con una ficha sola en 0xD800, los sonidos 5 y 0x86; si no, el 0x14
 	ld (ix+00eh),00ch		;af77   ; la espera de la ficha de 0xD800 = 0x0C
 	ld (ix+00dh),080h		;af7b   ; el dibujo 0x80
 	ld (ix+00ch),000h		;af7f
 	call 06fa8h		;af83   ; rachas_bc6e_bancos_14:
-	call d800_16_siguiente		;af86   ; d800_16_siguiente: el paso siguiente
+	call d800_0b_siguiente		;af86   ; d800_0b_siguiente: el paso siguiente
 	call cuenta_d800		;af89   ; cuenta_d800: C = cuantas fichas de 0xD800 estan activas (de 4)
 	dec c			;af8c   ; una sola?
 	jp nz,06a44h		;af8d   ; sonido_14: pide el sonido 0x14
@@ -1613,15 +1613,15 @@ siguiente_cuenta_d800:		; la siguiente (0x20 bytes)
 	call 0423eh		;afa5   ; suma_a_hl: HL = HL + A
 	djnz cuenta_una_d800		;afa8
 	ret			;afaa
-d800_16_paso_7:		; la espera, el dibujo siguiente cada 4 cuadros; al acabar, la ficha libre y sus 4 sprites (desde 0xDC28 + su numero * 0x10) fuera
+d800_0b_paso_7:		; la espera, el dibujo siguiente cada 4 cuadros; al acabar, la ficha libre y sus 4 sprites (desde 0xDC28 + su numero * 0x10) fuera
 	dec (ix+00eh)		;afab
-	jr z,d800_16_fuera		;afae   ; al acabar, aparte
+	jr z,d800_0b_fuera		;afae   ; al acabar, aparte
 	ld a,(ix+00eh)		;afb0
 	and 003h		;afb3   ; cada 4...
 	ret nz			;afb5
 	inc (ix+00dh)		;afb6   ; ...el dibujo siguiente
 	ret			;afb9
-d800_16_fuera:		; libre
+d800_0b_fuera:		; libre
 	ld (ix+000h),000h		;afba
 	push ix		;afbe
 	pop hl			;afc0

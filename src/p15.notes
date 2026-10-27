@@ -1046,26 +1046,26 @@ L 0xB8A0 sprites_tipo_1_c
 L 0xB8B9 recorta_sprites de los 8 sprites desde el 10: con la Y entre 0xB0 y 0xBF, las lineas que pasan de 0xC0 a color 0 en 0xDAA0 (no tapan el marcador)
 L 0xB8C1 recorta_sprite 
 L 0xB8DC recorta_siguiente 
-L 0xB8EC d800_tipo_0c la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
+L 0xB8EC d800_tipo_1 la ficha de 0xD800 de tipo 1 (IX), su logica (p04:8A8D): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
 L 0xB925 salas_10_a_13 acarreo en las salas 0x10-0x13
-L 0xB92D tipo_0c_paso_0 en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
-L 0xB959 tipo_0c_paso_1 la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
+L 0xB92D d800_1_paso_0 en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
+L 0xB959 d800_1_paso_1 la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
 L 0xB968 paso_siguiente_0c el paso siguiente (byte 1 + 1)
 L 0xB96C copia_0c_48 de (0x30, L) 0x30 x C a (0x48, 0) por p00:47ED, con A = 0x48 en la pagina 0 y 0x18 en la 1
 L 0xB976 copia_0c_48_a 0x30 de ancho, desde la X 0x30
-L 0xB97F tipo_0c_paso_2 tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
-L 0xB989 tipo_0c_piezas las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
-L 0xB997 tipo_0c_paso_3 las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
-L 0xB9A1 tipo_0c_baja 
+L 0xB97F d800_1_paso_2 tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
+L 0xB989 d800_1_piezas las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
+L 0xB997 d800_1_paso_3 las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+L 0xB9A1 d800_1_baja 
 L 0xB9C1 copia_0c_a_48 de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
-L 0xB9CB tipo_0c_arriba 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
-L 0xB9D5 tipo_0c_paso_4 los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
+L 0xB9CB d800_1_arriba 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+L 0xB9D5 d800_1_paso_4 los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
 L 0xB9FA dos_piezas las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
 L 0xBA10 pon_dibujo_0c 
 L 0xBA14 dos_piezas_a por el bit 3 del byte 0x0E, las piezas de 8 x 8 de (0x20, 0x70) y (0x38, 0x70) o de (0x50, 0x70) y (0x58, 0x70) a las Y 0x18 y 0x30
 L 0xBA2B pieza_0c una pieza de 8 x 8 de (H, 0x70) a (0x40, E) de la otra pagina, o a (0x58, E) de esta en el paso 2
 L 0xBA45 pieza_0c_aqui a (0x58, E) de la pagina de dibujar
-L 0xBA51 tipo_0c_paso_5 su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
+L 0xBA51 d800_1_paso_5 su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
 L 0xBA7E tramo_siguiente el tramo siguiente (0-7) y sus velocidades de p15:BA94: el byte 7 y el 9
 L 0xBAB4 tramo_0 acarreo con la fila 7 y el byte 3 desde 0x40
 L 0xBAB7 llega_desde acarreo con D = H y B desde L

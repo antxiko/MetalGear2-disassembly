@@ -2728,7 +2728,7 @@ dano_c_a_d800:		; el dano C a la ficha de 0xD800 (p07:B471) guardando los regist
 	jr recupera_hl_de_bc		;b46f
 resta_a_d800:		; p07:B502; el byte 0x10 (su vida) menos C (no baja de 0); a 0, p07:B4C0; si queda: el sonido (p07:B4A3), el byte 0x16 = 0 y el 0x17 = C * 4 (al menos 0x0A); el tipo 9, el byte 0x13 = 0xFD
 	push bc			;b471
-	call d800_tipo_5		;b472   ; d800_tipo_5: el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
+	call golpe_d800_tipo_5		;b472
 	pop bc			;b475
 	ld a,(ix+010h)		;b476   ; su vida...
 	sub c			;b479   ; ...menos el dano
@@ -2796,7 +2796,7 @@ fuera_lo_lanzado:		; 0xD460-0xD4BF y 0xD4C0-0xD4DF a cero, los sprites de 0xDC68
 	ld bc,0000fh		;b4fa
 	ld a,0e0h		;b4fd
 	jp 04237h		;b4ff   ; llena_bloque: pone A en BC + 1 bytes desde HL
-d800_tipo_5:		; el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
+golpe_d800_tipo_5:		; el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
 	ld a,(ix+000h)		;b502
 	cp 005h		;b505
 	ret nz			;b507

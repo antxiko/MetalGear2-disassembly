@@ -1624,7 +1624,7 @@ p04 0x8807 colores_desde_daa0  los colores desde 0xDAA0
 p04 0x880A colores_del_dibujo  los colores del dibujo en rachas a DE: los de p56:AE23/AE2C, los del tipo (p56:ACE1) y casos
 p04 0x88B7 pantalla_de_d800  segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 p04 0x8940 d800_en_esta_sala  IX = 0xD800: Z si esta en esta sala
-p04 0x8947 d800_tipo_1  en esta sala: un rectangulo de la otra pagina y el mosaico de p56:A9ED
+p04 0x8947 mosaico_d800_tipo_1  en esta sala: un rectangulo de la otra pagina y el mosaico de p56:A9ED
 p04 0x8957 mosaico_a9ed  en X = 0x30, Y = 0
 p04 0x895A mosaico_a9ed_en  el mosaico de p56:A9ED (12 x 6) en DE, con los juegos de piezas 3 y 3
 p04 0x896F mosaico_a_la_otra  B filas de C caracteres de HL, de la pagina 2 a la otra
@@ -1912,7 +1912,7 @@ p05 0xA5CA cinco_puntos_abajo_b
 p05 0xA5D2 cinco_puntos_lado  
 p05 0xA5DA cinco_puntos_lado_b  
 p05 0xA5EA vuelve_al_camino  p04:9DCE: con acarreo, el paso 0x0A
-p05 0xA5F3 actor_de_a5f3  fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
+p05 0xA5F3 d800_tipo_3  la ficha de 0xD800 de tipo 3 (su logica, p04:8A8D): fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
 p05 0xA638 paso_siguiente_b  el paso siguiente
 p05 0xA63C espera_a_snake  con Snake en Y 0x50-0x7F, X 0x78-0x7F: el bit 7 de 0xD7D1, 0xCB3C = 1, 0x20 cuadros y la musica 0xA6
 p05 0xA65F mensaje_10  al acabar la espera, el mensaje 0x10 del banco 50
@@ -1976,7 +1976,7 @@ p05 0xAB95 escena_d8ac_8  p14:AF96: sin ninguno, 0xD8A0 = 4; cada 4 cuadros, las
 p05 0xABD6 quedan_fichas  p14:AF96: C = cuantas quedan; con 0, 0xD8A0 = 4 y Z
 p05 0xABE3 snake_de_su_lado  por el numero de ficha C: Snake por debajo de Y = 0x60, por encima de 0x80, a la derecha de X = 0x50, a la izquierda de 0x70
 p05 0xAC01 fichas_d800_en_3_4  las fichas de 0xD800 en los pasos 3-4: p14:AE76
-p05 0xAC1F actor_de_la_especial_29  solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
+p05 0xAC1F d800_tipo_4  la ficha de 0xD800 de tipo 4 (su logica, p04:8A8D): solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
 p05 0xAC6E especial_29_paso_0  desde la sala 2: 0xCB3C = 1, la direccion 2, el bit 0 de 0xD7D1, la musica 0xA6 y el paso siguiente
 p05 0xAC88 anda_y_suena  cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 p05 0xAC95 especial_29_paso_1  anda hasta la columna 7, X = 0x64, y gira a la direccion 1
@@ -2010,7 +2010,7 @@ p05 0xAF32 especial_29_paso_e  el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xC
 p05 0xAF59 especial_29_paso_f  con Snake cerca (0x20 en X, 0x50 en Y): 0xCB3C = 1, la musica de p01:6BAC y el mensaje 0x610
 p05 0xAF86 especial_29_paso_10  al acabar el mensaje, p01:7A27 y el paso siguiente
 p05 0xAF90 especial_29_paso_11  el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
-p05 0xAFA4 actor_de_d8a7  con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
+p05 0xAFA4 d800_tipo_5  la ficha de 0xD800 de tipo 5 (su logica, p04:8A8D): con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
 p05 0xB00B fin_de_la_cuenta  8 cuadros en 0x1F, el byte 0x16 = 0, el eje (0x15) y el dibujo (0x1D) de antes
 p05 0xB020 dibujo_de_la_cuenta  el dibujo de 0x1D, + 1 con la cuenta de 0x18 entre 2 y 4
 p05 0xB040 d8a7_paso_0  0x30 cuadros, 0xCB3C = 1, el bit 1 de 0xD7D7, sin musica pendiente y p03:B11F con 0
@@ -2037,7 +2037,7 @@ p05 0xB27D lanza_al_cruzarse  sin la cuenta de 0x18, en esta sala: 0x1C cuadros 
 p05 0xB295 al_paso_3  el paso 3, el eje 3 y una cuenta al azar
 p05 0xB29D cuenta_1c_al_azar  el byte 0x1C = 0x10-0x2F al azar
 p05 0xB2A8 guarda_snake_en_18  los bytes 0x18-0x19 = la Y y la X de Snake
-p05 0xB2B2 actor_de_las_salas_4_5  en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
+p05 0xB2B2 d800_tipo_7  la ficha de 0xD800 de tipo 7 (su logica, p04:8A8D): en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
 p05 0xB2CD sprites_si_14  los sprites 10-13 fuera y, sin el byte 0x14, los suyos
 p05 0xB2D8 en_4_5  acarreo con la fila y la columna de Snake entre 4 y 5
 p05 0xB2F8 salas_4_5_paso_0  0xCB3C = 1, el dibujo 8, el bit 1 de 0xD7D6, hacia abajo y la musica 0xA6
@@ -2075,7 +2075,7 @@ p05 0xB53F al_paso_4_y_gira  el paso 4 y hacia Snake
 p05 0xB546 salas_4_5_paso_7  al acabar la espera, el eje 3 y el dibujo de antes
 p05 0xB563 suena_68  en esta sala, el sonido 0x68
 p05 0xB56A sprites_desde_paso_5  desde el paso 5, sus sprites
-p05 0xB573 actor_de_d8a9  con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
+p05 0xB573 d800_tipo_0a  la ficha de 0xD800 de tipo 0x0A (su logica, p04:8A8D): con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
 p05 0xB5B5 d8a9_paso_0  con 0xD6B0: el sonido 0x89, 8 cuadros, 0xCB3C = 1 y el paso siguiente
 p05 0xB5C8 d8a9_paso_1  tras la espera, el mensaje 0x1110; al acabar, 0xCB3C = 0, 0xD509 = 1 y el paso siguiente
 p05 0xB5DF paso_siguiente_f  el paso siguiente
@@ -2107,7 +2107,7 @@ p05 0xB8EA parpadea_dibujo  cada 8 cuadros cambia el paso del dibujo; al acabar,
 p05 0xB8FF dibujo_16_y_40  el dibujo 0x16, 0x40 cuadros y el paso siguiente
 p05 0xB90A espera_y_aviso_8d  la espera; a 0x20, el aviso 0x8D; al acabar, el paso siguiente
 p05 0xB91A suelta_y_paso_20  0xCB3C = 0 y el paso 0x20
-p05 0xB923 actor_de_d8aa  con 0xD8AA, sus pasos (p05:B934)
+p05 0xB923 d800_tipo_9  la ficha de 0xD800 de tipo 9 (su logica, p04:8A8D): con 0xD8AA, sus pasos (p05:B934)
 p05 0xB960 d8aa_paso_0  el dibujo 0, 0xCB3C = 1, 0x18 cuadros y el paso siguiente
 p05 0xB96F d8aa_paso_1  al acabar la espera, el mensaje 0x910
 p05 0xB978 d8aa_paso_2  al acabar el mensaje: 0xD509 = 0xCB3C = 1, hacia abajo y el paso siguiente
@@ -2144,7 +2144,7 @@ p05 0xBCE8 d8aa_paso_12  al acabar la espera, 0xD8AA = 0 y el paso 0x20
 p05 0xBCF5 mosaico_de_13_5  en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x84, 0x18) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
 p05 0xBD26 mosaico_de_la_ficha  el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 p05 0xBD3B sprites_hasta_paso_0f  hasta el paso 0x0F, sus sprites; desde el, fuera
-p05 0xBD46 actor_de_la_sala_5  en la sala 5, sus pasos (p05:BD58)
+p05 0xBD46 d800_tipo_8  la ficha de 0xD800 de tipo 8 (su logica, p04:8A8D): en la sala 5, sus pasos (p05:BD58)
 p05 0xBD84 sala_5_paso_0  0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
 p05 0xBDAC sala_5_paso_1  al acabar la espera, 9 cuadros y el paso siguiente
 p05 0xBDBA sala_5_paso_2  cada 8 cuadros el dibujo siguiente; al acabar, el mensaje 0x1460
@@ -2746,7 +2746,7 @@ p07 0xB4A3 sonido_de_d800  con la vida desde 0x18 (los tipos 6, 8 y 0x0A) o desd
 p07 0xB4B6 compara_vida  
 p07 0xB4C0 d800_vencida  el paso de p07:B521 segun su tipo, el byte 0x16 = 0, el 0x17 = 4 y fuera lo lanzado (p07:B4D5)
 p07 0xB4D5 fuera_lo_lanzado  0xD460-0xD4BF y 0xD4C0-0xD4DF a cero, los sprites de 0xDC68-0xDC7F fuera y, con 0xD8A4, los de 0xDC28-0xDC37
-p07 0xB502 d800_tipo_5  el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
+p07 0xB502 golpe_d800_tipo_5  el tipo 5: el byte 0x18 = 6, el 0x0C al 0x15 y a 0, el dibujo al 0x1D y el byte 0x16 = 0
 p07 0xB520 nada_b520  
 p07 0xB52C dano_del_tipo  C = el dano del tipo C de lo lanzado por Snake (p07:B535)
 p07 0xB534 nada_b534  
@@ -3715,42 +3715,42 @@ p10 0xAA42 zona_13_sala_5  en la sala 5, el bit 1 de 0xD7D5
 p10 0xAA4E zona_13_sala_4  en la sala 4, el bit 7 de 0xD7D8
 p10 0xAA56 banderas_especiales  en la sala especial 0x39 sala 1, el bit 1 de 0xD7D8; en la 0x29 desde la sala 2, el 1 de 0xD7E1
 p10 0xAA6C especial_39_banderas  
-p10 0xAA78 d800_de_p10  la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
+p10 0xAA78 d800_tipo_2  la ficha de 0xD800 de tipo 2 (IX, su logica por p04:8A8D) con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
 p10 0xAAA9 r23_de_d8a5  R#23 (el desplazamiento vertical) = 0xD8A5 con la pantalla partida, 0 sin ella
 p10 0xAAB2 pon_r23  
-p10 0xAAB8 d800_p10_paso_0  0xCB39 = 0, sin musica pendiente, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0, 0xCB3C = 1, p03:B67D en (0x60, 0x60), el sonido 0xA1 y el paso siguiente
-p10 0xAADB d800_p10_paso_1  p03:B6C8; al acabar el barrido, el mensaje 0x0D10 del banco 50 y el paso siguiente
-p10 0xAAEB d800_p10_paso_2  al acabar el mensaje: p01:7A3E, 0xD8A4 = 0, 0xCB3C = 0 y el paso siguiente
+p10 0xAAB8 d800_2_paso_0  0xCB39 = 0, sin musica pendiente, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0, 0xCB3C = 1, p03:B67D en (0x60, 0x60), el sonido 0xA1 y el paso siguiente
+p10 0xAADB d800_2_paso_1  p03:B6C8; al acabar el barrido, el mensaje 0x0D10 del banco 50 y el paso siguiente
+p10 0xAAEB d800_2_paso_2  al acabar el mensaje: p01:7A3E, 0xD8A4 = 0, 0xCB3C = 0 y el paso siguiente
 p10 0xAAF6 cb3c_y_paso  
-p10 0xAAFC d800_p10_paso_3  en la sala 8: 0xCB3C = 1, la pantalla partida, 0xD8A5 = 0, el dibujo 0, el byte 0x11 = 1, 0x80 cuadros, la Y = 0, la X = 0x60 y el paso siguiente
+p10 0xAAFC d800_2_paso_3  en la sala 8: 0xCB3C = 1, la pantalla partida, 0xD8A5 = 0, el dibujo 0, el byte 0x11 = 1, 0x80 cuadros, la Y = 0, la X = 0x60 y el paso siguiente
 p10 0xAB22 paso_siguiente_d800_p10  
-p10 0xAB26 d800_p10_paso_4  la cuenta: la ficha baja uno y 0xD8A5 tambien (la pantalla de arriba sube), una linea de 0x60 de la pagina 2 y cada 5 cuadros el dibujo siguiente (p10:AB58); al acabar, el sonido 0xA1, el mensaje 0x0EC0 y el paso siguiente
-p10 0xAB4D d800_p10_fin_4  
+p10 0xAB26 d800_2_paso_4  la cuenta: la ficha baja uno y 0xD8A5 tambien (la pantalla de arriba sube), una linea de 0x60 de la pagina 2 y cada 5 cuadros el dibujo siguiente (p10:AB58); al acabar, el sonido 0xA1, el mensaje 0x0EC0 y el paso siguiente
+p10 0xAB4D d800_2_fin_4  
 p10 0xAB58 dibujo_d800_p10  cada B cuadros (byte 0x11) el dibujo + C (0-3); en los impares, el sonido 0x97 (paso 4) o 0x65; y lo pinta (p10:AB7D)
 p10 0xAB79 sonido_65_d800  
 p10 0xAB7C pinta_dibujo_d800  
 p10 0xAB7D dibujo_ab9d  el dibujo A (p10:AB9D): 0x38 lineas de 0x28 de la pagina 2 desde (X, 0x40) a (D, 0xC8)
 p10 0xAB8A linea_de_dibujo  
-p10 0xABA5 d800_p10_paso_5  al acabar el mensaje: p01:7A3E, la pantalla de arriba a su sitio (0xC0 x 0x28), el byte 0x0F = 0xA0, los bytes 0x11 y 0x16 = 1, 0xCB3C = 0, el paso siguiente, el sonido 5 y p04:8685
-p10 0xABD4 d800_p10_paso_6  baja de 2 en 2 (p10:ABE6) hasta la Y del byte 0x0F; alli, 0x31 cuadros, el byte 0x0F y el 0x18 a cero y el paso siguiente
-p10 0xABD8 d800_p10_fin_6  
+p10 0xABA5 d800_2_paso_5  al acabar el mensaje: p01:7A3E, la pantalla de arriba a su sitio (0xC0 x 0x28), el byte 0x0F = 0xA0, los bytes 0x11 y 0x16 = 1, 0xCB3C = 0, el paso siguiente, el sonido 5 y p04:8685
+p10 0xABD4 d800_2_paso_6  baja de 2 en 2 (p10:ABE6) hasta la Y del byte 0x0F; alli, 0x31 cuadros, el byte 0x0F y el 0x18 a cero y el paso siguiente
+p10 0xABD8 d800_2_fin_6  
 p10 0xABE6 baja_2  el dibujo cada 2 cuadros, la Y + 2 y 0xD8A5 - 2; acarreo por encima del byte 0x0F
-p10 0xABFE d800_p10_paso_8  sube (p10:AC04) hasta la Y del byte 0x0F; alli, como el paso 6
+p10 0xABFE d800_2_paso_8  sube (p10:AC04) hasta la Y del byte 0x0F; alli, como el paso 6
 p10 0xAC04 sube_1  el dibujo cada 4 cuadros hacia atras, la Y - 1 y 0xD8A5 + 1; acarreo por encima del byte 0x0F
-p10 0xAC18 d800_p10_paso_7  la cuenta: cada 8 cuadros, salvo con Snake en X 0x50-0x6F a menos de 0x20 por debajo en Y, lanza el tipo 6 con el desplazamiento 0xE0 hacia la X de Snake + el byte 0x0F * 4 - 4; al acabar, p10:AC4B
+p10 0xAC18 d800_2_paso_7  la cuenta: cada 8 cuadros, salvo con Snake en X 0x50-0x6F a menos de 0x20 por debajo en Y, lanza el tipo 6 con el desplazamiento 0xE0 hacia la X de Snake + el byte 0x0F * 4 - 4; al acabar, p10:AC4B
 p10 0xAC3A lanza_hacia_snake_p10  la X + el byte 0x0F * 4 - 4 (uno mas cada vez)
-p10 0xAC4B d800_p10_otra_vuelta  el byte 0x11 = 1; desde el paso 7: el dibujo hacia atras, el byte 0x0F = 0x60-0x7F al azar y el paso 8; si no, hacia delante, 0xB4 - (0-0x1F) y el paso 6
-p10 0xAC6E d800_p10_al_6  
-p10 0xAC88 d800_p10_paso_9  la cuenta; cada 16 cuadros (dos veces, byte 0x18) una ficha de 0xD4C0 en (Y - 0x58, 0x38) o (Y - 0x48, 0x80) con el tipo 3 o 4 y el sonido 0x1D; al acabar, p10:AC4B
+p10 0xAC4B d800_2_otra_vuelta  el byte 0x11 = 1; desde el paso 7: el dibujo hacia atras, el byte 0x0F = 0x60-0x7F al azar y el paso 8; si no, hacia delante, 0xB4 - (0-0x1F) y el paso 6
+p10 0xAC6E d800_2_al_6  
+p10 0xAC88 d800_2_paso_9  la cuenta; cada 16 cuadros (dos veces, byte 0x18) una ficha de 0xD4C0 en (Y - 0x58, 0x38) o (Y - 0x48, 0x80) con el tipo 3 o 4 y el sonido 0x1D; al acabar, p10:AC4B
 p10 0xACAB ficha_d4c0_derecha  las pares: (Y - 0x48, 0x80)
 p10 0xACB0 ficha_d4c0_libre  la primera libre de las dos de 0xD4C0
 p10 0xACB6 mira_d4c0  
 p10 0xACC4 pon_ficha_d4c0  a cero...
 p10 0xACE1 tipo_d4c0  
-p10 0xACEA d800_p10_paso_10  0xCB3C = 1, el byte 0x0F = 0x88; en Y = 0x88, el paso 0x20; por encima, el paso siguiente (baja); por debajo, el paso 0x0C (sube)
-p10 0xAD03 d800_p10_paso_11  baja hasta 0x88 y el paso 0x20
-p10 0xAD07 d800_p10_al_20  
-p10 0xAD0C d800_p10_paso_12  sube hasta 0x88 y el paso 0x20
+p10 0xACEA d800_2_paso_10  0xCB3C = 1, el byte 0x0F = 0x88; en Y = 0x88, el paso 0x20; por encima, el paso siguiente (baja); por debajo, el paso 0x0C (sube)
+p10 0xAD03 d800_2_paso_11  baja hasta 0x88 y el paso 0x20
+p10 0xAD07 d800_2_al_20  
+p10 0xAD0C d800_2_paso_12  sube hasta 0x88 y el paso 0x20
 p10 0xAD12 sprites_ad8e  los sprites de p10:AD21 y, cada 8 cuadros (byte 0x0F), el sonido 0x15
 p10 0xAD21 sprites_de_ad8e  8 sprites desde 0xDC28 con las Y y X de p10:AD8E (segun el byte 0x0F & 0x0C), los patrones de p10:ADAE (+ 4 cada par) y los colores de las rachas de p10:ADB2
 p10 0xAD76 patrones_ad76  
@@ -5295,21 +5295,21 @@ p14 0xAB19 d4c0_libre  la ficha libre, sus 2 sprites (byte 0x0E) fuera y libres 
 p14 0xAB41 sprites_d4c0  los 2 sprites (byte 0x0E) de la ficha en su Y y X - 8 con el patron de p14:AB96 por el dibujo (y + 4), y sus colores 0x0D y 0x47 (en el paso 3, 7 y 0x4A)
 p14 0xAB7C colores_d4c0  su sprite * 16...
 p14 0xAB90 colores_16  16 lineas de color A
-p14 0xAB9E d800_tipo_11  la ficha de 0xD800 de tipo 0x11: con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
-p14 0xABD7 d800_11_paso_0  con Snake en su fila de sala: 0xCB3C = 1, el bit 4 de 0xD7D3, 0x1E cuadros y el paso siguiente
-p14 0xABEE d800_11_paso_1  a los 0x1E cuadros: la musica 0xA6 y el mensaje 0x0A80 con ventana
-p14 0xABFB d800_11_siguiente  el paso siguiente
-p14 0xABFF d800_11_paso_2  el mensaje hasta que acaba; luego hacia Snake (p14:AC48)
-p14 0xAC08 d800_11_paso_3  entre columnas (p14:ACAA), p04:902E; en la columna de Snake desde X = 0x60: los bytes 0x0C y 0x0D a 0 y el mensaje 0x0B
-p14 0xAC26 d800_11_paso_4  el mensaje hasta que acaba; luego p00:7A59
-p14 0xAC30 d800_11_paso_5  p04:8685, 0xCB3C = 0, el byte 0x11 = 0, el 0x16 = 1, 0x20 cuadros y hacia Snake
+p14 0xAB9E d800_tipo_6  la ficha de 0xD800 de tipo 6 (su logica, p04:8A8D): con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
+p14 0xABD7 d800_6_paso_0  con Snake en su fila de sala: 0xCB3C = 1, el bit 4 de 0xD7D3, 0x1E cuadros y el paso siguiente
+p14 0xABEE d800_6_paso_1  a los 0x1E cuadros: la musica 0xA6 y el mensaje 0x0A80 con ventana
+p14 0xABFB d800_6_siguiente  el paso siguiente
+p14 0xABFF d800_6_paso_2  el mensaje hasta que acaba; luego hacia Snake (p14:AC48)
+p14 0xAC08 d800_6_paso_3  entre columnas (p14:ACAA), p04:902E; en la columna de Snake desde X = 0x60: los bytes 0x0C y 0x0D a 0 y el mensaje 0x0B
+p14 0xAC26 d800_6_paso_4  el mensaje hasta que acaba; luego p00:7A59
+p14 0xAC30 d800_6_paso_5  p04:8685, 0xCB3C = 0, el byte 0x11 = 0, el 0x16 = 1, 0x20 cuadros y hacia Snake
 p14 0xAC48 hacia_snake_x  la velocidad en X 0x200 hacia Snake (por la columna y la X), el byte 0x0C = 2 y el dibujo por la direccion (p14:ACD8)
 p14 0xAC54 hacia_snake_misma  
 p14 0xAC5C hacia_la_izquierda  negativa
 p14 0xAC5F pon_hacia_snake  la velocidad en X
-p14 0xAC6B d800_11_paso_6  entre columnas, el borde (p14:ACC4), cada 4 cuadros p04:902E; con la cuenta, al acabar hacia Snake; sin ella, en su columna a menos de 8 de Snake: quieto, el dibujo 2, 4 cuadros y el siguiente
-p14 0xAC87 d800_11_cuenta  
-p14 0xAC8E d800_11_cerca  
+p14 0xAC6B d800_6_paso_6  entre columnas, el borde (p14:ACC4), cada 4 cuadros p04:902E; con la cuenta, al acabar hacia Snake; sin ella, en su columna a menos de 8 de Snake: quieto, el dibujo 2, 4 cuadros y el siguiente
+p14 0xAC87 d800_6_cuenta  
+p14 0xAC8E d800_6_cerca  
 p14 0xACAA d800_entre_columnas  por debajo de X = 0x10, a la columna de la izquierda en 0xB0; desde 0xB1, a la de la derecha en 0x10
 p14 0xACBC d800_columna_izquierda  en 0xB0...
 p14 0xACC4 d800_borde  en la columna 6, por debajo de X = 0x14 se da la vuelta; en las otras, desde 0xAC; al darse la vuelta, 0x10 cuadros
@@ -5317,46 +5317,46 @@ p14 0xACD1 d800_vuelta  0x10 cuadros
 p14 0xACD8 dibujo_por_x  el dibujo 4 hacia la izquierda, 0 hacia la derecha
 p14 0xACE1 pon_dibujo_por_x  
 p14 0xACE5 d800_borde_6  
-p14 0xACED d800_11_paso_7  a los 4 cuadros, el dibujo siguiente, 4 mas, lo lanzado de tipo 3 y el siguiente
-p14 0xACFE d800_11_paso_8  a los 4 cuadros, 8 mas, el paso 6 y hacia Snake
-p14 0xAD0F d800_tipo_16  la ficha de 0xD800 de tipo 0x16, con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
-p14 0xAD27 d800_16_byte_16_0  
-p14 0xAD28 d800_16_byte_16  
-p14 0xAD48 d800_16_paso_0  el byte 0x16 = 0
-p14 0xAD4D d800_16_paso_1  la fila del byte 0x1A de p14:AD86: la velocidad (bytes 7-9) y la espera; la aceleracion 0x80 en los bytes 0x18-0x19, el byte 0x0C = 3, el sonido 0x5A y el siguiente
-p14 0xAD96 d800_16_paso_2  la espera; mientras, la velocidad en Y + la aceleracion (p14:AD9B); al acabar, guarda la velocidad en los bytes 0x1B-0x1E, hacia Snake (p14:ADEB), la Y entre 0x4A y 0xA8, una espera al azar (0-0x1F), el sonido 0x5B y el siguiente
+p14 0xACED d800_6_paso_7  a los 4 cuadros, el dibujo siguiente, 4 mas, lo lanzado de tipo 3 y el siguiente
+p14 0xACFE d800_6_paso_8  a los 4 cuadros, 8 mas, el paso 6 y hacia Snake
+p14 0xAD0F d800_tipo_0b  la ficha de 0xD800 de tipo 0x0B (su logica, p04:8A8D), con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
+p14 0xAD27 d800_0b_byte_16_0  
+p14 0xAD28 d800_0b_byte_16  
+p14 0xAD48 d800_0b_paso_0  el byte 0x16 = 0
+p14 0xAD4D d800_0b_paso_1  la fila del byte 0x1A de p14:AD86: la velocidad (bytes 7-9) y la espera; la aceleracion 0x80 en los bytes 0x18-0x19, el byte 0x0C = 3, el sonido 0x5A y el siguiente
+p14 0xAD96 d800_0b_paso_2  la espera; mientras, la velocidad en Y + la aceleracion (p14:AD9B); al acabar, guarda la velocidad en los bytes 0x1B-0x1E, hacia Snake (p14:ADEB), la Y entre 0x4A y 0xA8, una espera al azar (0-0x1F), el sonido 0x5B y el siguiente
 p14 0xAD9B acelera_y  la velocidad en Y (bytes 6-7) + la aceleracion (bytes 0x18-0x19)
-p14 0xADAF d800_16_guarda  la velocidad a los bytes 0x1B-0x1E
-p14 0xADD3 d800_16_y_min  ...desde 0x4A
-p14 0xADD9 d800_16_pon_y  
-p14 0xADE7 d800_16_siguiente  el paso siguiente
+p14 0xADAF d800_0b_guarda  la velocidad a los bytes 0x1B-0x1E
+p14 0xADD3 d800_0b_y_min  ...desde 0x4A
+p14 0xADD9 d800_0b_pon_y  
+p14 0xADE7 d800_0b_siguiente  el paso siguiente
 p14 0xADEB hacia_snake_por_1a  con el byte 0x1A desde 2, en Y hacia Snake (0x400, el dibujo 2 o 0, byte 0x0C = 1); si no, en X (el dibujo 6 o 4, byte 0x0C = 2)
 p14 0xAE04 pon_hacia_en_y  
 p14 0xAE12 hacia_snake_en_x  
 p14 0xAE24 pon_hacia_en_x  
-p14 0xAE32 d800_16_paso_3  p04:86DE; tocado (p14:AEEE), de vuelta (p14:AE76); con la espera, uno menos; sin ella, alineado con Snake (p14:AED4), p14:AEBE; rebota en los bordes (Y 0x50-0xA7 o X 0x38-0x87) dandose la vuelta
-p14 0xAE45 d800_16_alineado  
-p14 0xAE4B d800_16_bordes  
-p14 0xAE5F d800_16_bordes_x  
+p14 0xAE32 d800_0b_paso_3  p04:86DE; tocado (p14:AEEE), de vuelta (p14:AE76); con la espera, uno menos; sin ella, alineado con Snake (p14:AED4), p14:AEBE; rebota en los bordes (Y 0x50-0xA7 o X 0x38-0x87) dandose la vuelta
+p14 0xAE45 d800_0b_alineado  
+p14 0xAE4B d800_0b_bordes  
+p14 0xAE5F d800_0b_bordes_x  
 p14 0xAE6A dibujo_al_reves  el bit 1 del dibujo cambia
-p14 0xAE76 d800_16_vuelve  la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
+p14 0xAE76 d800_0b_vuelve  la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
 p14 0xAEB3 dibujo_por_1a  el dibujo = el byte 0x1A de HL
-p14 0xAEBE d800_16_ataca  tocado, de vuelta; si no, el dibujo de p14:AF73, quieto, 0x18 cuadros y el siguiente
+p14 0xAEBE d800_0b_ataca  tocado, de vuelta; si no, el dibujo de p14:AF73, quieto, 0x18 cuadros y el siguiente
 p14 0xAED4 alineado_con_snake  acarreo si Snake esta a menos de 4 en X (o en Y, con el byte 0x1A desde 2)
 p14 0xAEE3 alineado_en_x  
 p14 0xAEE9 alineado_cerca  entre -4 y 3
-p14 0xAEEE d800_16_tocado  con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
-p14 0xAF0F d800_16_paso_4  la espera; cada 8 cuadros, lo lanzado 6 (p06:9B3B); al acabar, el byte 0x0F uno mas: a 2, de vuelta; si no, hacia Snake, otra espera al azar y el paso de antes
-p14 0xAF1D d800_16_otra_vez  
-p14 0xAF37 d800_16_paso_5  la espera con la aceleracion; al acabar, el sitio de la fila del byte 0x1A de p14:AFD5 (la Y con 0-1, la X con 2-3), su dibujo y todo a 0 (paso 0)
-p14 0xAF57 d800_16_x  
-p14 0xAF5C d800_16_dibujo  
-p14 0xAF77 d800_16_paso_6  0x0C cuadros, el dibujo 0x80, quieto, p00:6FA8 y el siguiente; con una ficha sola en 0xD800, los sonidos 5 y 0x86; si no, el 0x14
+p14 0xAEEE d800_0b_tocado  con una ficha sola en 0xD800 (p14:AF96), sin acarreo; con el byte 0x17, acarreo; si no, acarreo con Snake a menos de 0x20 en Y y en X
+p14 0xAF0F d800_0b_paso_4  la espera; cada 8 cuadros, lo lanzado 6 (p06:9B3B); al acabar, el byte 0x0F uno mas: a 2, de vuelta; si no, hacia Snake, otra espera al azar y el paso de antes
+p14 0xAF1D d800_0b_otra_vez  
+p14 0xAF37 d800_0b_paso_5  la espera con la aceleracion; al acabar, el sitio de la fila del byte 0x1A de p14:AFD5 (la Y con 0-1, la X con 2-3), su dibujo y todo a 0 (paso 0)
+p14 0xAF57 d800_0b_x  
+p14 0xAF5C d800_0b_dibujo  
+p14 0xAF77 d800_0b_paso_6  0x0C cuadros, el dibujo 0x80, quieto, p00:6FA8 y el siguiente; con una ficha sola en 0xD800, los sonidos 5 y 0x86; si no, el 0x14
 p14 0xAF96 cuenta_d800  C = cuantas fichas de 0xD800 estan activas (de 4)
 p14 0xAF9C cuenta_una_d800  
 p14 0xAFA3 siguiente_cuenta_d800  la siguiente (0x20 bytes)
-p14 0xAFAB d800_16_paso_7  la espera, el dibujo siguiente cada 4 cuadros; al acabar, la ficha libre y sus 4 sprites (desde 0xDC28 + su numero * 0x10) fuera
-p14 0xAFBA d800_16_fuera  libre
+p14 0xAFAB d800_0b_paso_7  la espera, el dibujo siguiente cada 4 cuadros; al acabar, la ficha libre y sus 4 sprites (desde 0xDC28 + su numero * 0x10) fuera
+p14 0xAFBA d800_0b_fuera  libre
 p14 0xAFE1 snake_al_seguir  al seguir la partida: 0xCAAD = 3 (0 en la zona 0 fila 1); en la zona 0 desde la fila 5, Snake en el estado 2 (paso 0, 0xCB31 = 1, marcha 1); mirando abajo; en la zona 0x13 con el bit 5 de 0xD7D9, en (0x52, 0x32) de la fila 4 columna 8, sala 5; A = la zona
 p14 0xAFF8 snake_al_seguir_b  
 p14 0xB012 snake_mira_abajo  mirando abajo
@@ -5774,26 +5774,26 @@ p15 0xB8A0 sprites_tipo_1_c
 p15 0xB8B9 recorta_sprites  de los 8 sprites desde el 10: con la Y entre 0xB0 y 0xBF, las lineas que pasan de 0xC0 a color 0 en 0xDAA0 (no tapan el marcador)
 p15 0xB8C1 recorta_sprite  
 p15 0xB8DC recorta_siguiente  
-p15 0xB8EC d800_tipo_0c  la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
+p15 0xB8EC d800_tipo_1  la ficha de 0xD800 de tipo 1 (IX), su logica (p04:8A8D): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
 p15 0xB925 salas_10_a_13  acarreo en las salas 0x10-0x13
-p15 0xB92D tipo_0c_paso_0  en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
-p15 0xB959 tipo_0c_paso_1  la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
+p15 0xB92D d800_1_paso_0  en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
+p15 0xB959 d800_1_paso_1  la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
 p15 0xB968 paso_siguiente_0c  el paso siguiente (byte 1 + 1)
 p15 0xB96C copia_0c_48  de (0x30, L) 0x30 x C a (0x48, 0) por p00:47ED, con A = 0x48 en la pagina 0 y 0x18 en la 1
 p15 0xB976 copia_0c_48_a  0x30 de ancho, desde la X 0x30
-p15 0xB97F tipo_0c_paso_2  tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
-p15 0xB989 tipo_0c_piezas  las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
-p15 0xB997 tipo_0c_paso_3  las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
-p15 0xB9A1 tipo_0c_baja  
+p15 0xB97F d800_1_paso_2  tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
+p15 0xB989 d800_1_piezas  las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
+p15 0xB997 d800_1_paso_3  las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+p15 0xB9A1 d800_1_baja  
 p15 0xB9C1 copia_0c_a_48  de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
-p15 0xB9CB tipo_0c_arriba  0xCB3C = 0, los sprites de p35:670E y el paso siguiente
-p15 0xB9D5 tipo_0c_paso_4  los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
+p15 0xB9CB d800_1_arriba  0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+p15 0xB9D5 d800_1_paso_4  los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
 p15 0xB9FA dos_piezas  las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
 p15 0xBA10 pon_dibujo_0c  
 p15 0xBA14 dos_piezas_a  por el bit 3 del byte 0x0E, las piezas de 8 x 8 de (0x20, 0x70) y (0x38, 0x70) o de (0x50, 0x70) y (0x58, 0x70) a las Y 0x18 y 0x30
 p15 0xBA2B pieza_0c  una pieza de 8 x 8 de (H, 0x70) a (0x40, E) de la otra pagina, o a (0x58, E) de esta en el paso 2
 p15 0xBA45 pieza_0c_aqui  a (0x58, E) de la pagina de dibujar
-p15 0xBA51 tipo_0c_paso_5  su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
+p15 0xBA51 d800_1_paso_5  su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
 p15 0xBA7E tramo_siguiente  el tramo siguiente (0-7) y sus velocidades de p15:BA94: el byte 7 y el 9
 p15 0xBAB4 tramo_0  acarreo con la fila 7 y el byte 3 desde 0x40
 p15 0xBAB7 llega_desde  acarreo con D = H y B desde L

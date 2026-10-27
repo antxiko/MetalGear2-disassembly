@@ -1037,7 +1037,7 @@ C 0x6C9F 0xD87F + T
 C 0x6CE0 0xCA64...
 C 0x6CE6 ...o 0xCAA9
 C 0x6CE7 el bit 4 de 0xD7E1
-D 0x6C21 0x6C2C bytes_6C21  11 bytes entre el ret de p12:6C20 y el codigo de p12:6C2C que no lee ninguna rutina del listado ni carga ninguna instruccion
+D 0x6C21 0x6C2C minimo_d800  el paso minimo de cada tipo de ficha 0xD800 (1-0x0B) que guarda_d800 conserva en 0xD87F + el tipo al dejar la zona (p12:6BFC: HL = 0x6C20 + el tipo): 4, 0, 6, 0x0B, 3, 5, 3 y 0 los demas
 D 0x7ED0 0x7ED4 temblor_7ED0  los desvios 1-4 del temblor (0xFF, 0xFE, 0xFD, 0xFF) que lee p12:7EC3 (0x7ECF + el byte 0x1F)
 D 0x7FD4 0x8000 restos_finales_7FD4  44 bytes al final del banco detras del ultimo bloque que se lee (resto_7FBE): ningun lector del listado llega a ellos ni los apunta ninguna tabla declarada
 C 0x65D0 3 ficheros, desde el 0

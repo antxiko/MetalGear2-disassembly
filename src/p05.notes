@@ -260,7 +260,7 @@ L 0xA5CA cinco_puntos_abajo_b
 L 0xA5D2 cinco_puntos_lado 
 L 0xA5DA cinco_puntos_lado_b 
 L 0xA5EA vuelve_al_camino p04:9DCE: con acarreo, el paso 0x0A
-L 0xA5F3 actor_de_a5f3 fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
+L 0xA5F3 d800_tipo_3 la ficha de 0xD800 de tipo 3 (su logica, p04:8A8D): fuera de esta sala, sin musica; con 0xC693, el sonido 0x84; los pasos de p05:A614
 L 0xA638 paso_siguiente_b el paso siguiente
 L 0xA63C espera_a_snake con Snake en Y 0x50-0x7F, X 0x78-0x7F: el bit 7 de 0xD7D1, 0xCB3C = 1, 0x20 cuadros y la musica 0xA6
 L 0xA65F mensaje_10 al acabar la espera, el mensaje 0x10 del banco 50
@@ -324,7 +324,7 @@ L 0xAB95 escena_d8ac_8 p14:AF96: sin ninguno, 0xD8A0 = 4; cada 4 cuadros, las fi
 L 0xABD6 quedan_fichas p14:AF96: C = cuantas quedan; con 0, 0xD8A0 = 4 y Z
 L 0xABE3 snake_de_su_lado por el numero de ficha C: Snake por debajo de Y = 0x60, por encima de 0x80, a la derecha de X = 0x50, a la izquierda de 0x70
 L 0xAC01 fichas_d800_en_3_4 las fichas de 0xD800 en los pasos 3-4: p14:AE76
-L 0xAC1F actor_de_la_especial_29 solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
+L 0xAC1F d800_tipo_4 la ficha de 0xD800 de tipo 4 (su logica, p04:8A8D): solo en la especial 0x29 (si no, sin musica); con 0xC693 el sonido 0x84; los pasos de p05:AC48
 L 0xAC6E especial_29_paso_0 desde la sala 2: 0xCB3C = 1, la direccion 2, el bit 0 de 0xD7D1, la musica 0xA6 y el paso siguiente
 L 0xAC88 anda_y_suena cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 L 0xAC95 especial_29_paso_1 anda hasta la columna 7, X = 0x64, y gira a la direccion 1
@@ -358,7 +358,7 @@ L 0xAF32 especial_29_paso_e el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xCAE0
 L 0xAF59 especial_29_paso_f con Snake cerca (0x20 en X, 0x50 en Y): 0xCB3C = 1, la musica de p01:6BAC y el mensaje 0x610
 L 0xAF86 especial_29_paso_10 al acabar el mensaje, p01:7A27 y el paso siguiente
 L 0xAF90 especial_29_paso_11 el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
-L 0xAFA4 actor_de_d8a7 con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
+L 0xAFA4 d800_tipo_5 la ficha de 0xD800 de tipo 5 (su logica, p04:8A8D): con 0xCA77, sin musica; con 0xD8A7 = 2, la sala de Snake (p05:B161); al salir de la sala, 0xD8A7 = 2
 L 0xB00B fin_de_la_cuenta 8 cuadros en 0x1F, el byte 0x16 = 0, el eje (0x15) y el dibujo (0x1D) de antes
 L 0xB020 dibujo_de_la_cuenta el dibujo de 0x1D, + 1 con la cuenta de 0x18 entre 2 y 4
 L 0xB040 d8a7_paso_0 0x30 cuadros, 0xCB3C = 1, el bit 1 de 0xD7D7, sin musica pendiente y p03:B11F con 0
@@ -385,7 +385,7 @@ L 0xB27D lanza_al_cruzarse sin la cuenta de 0x18, en esta sala: 0x1C cuadros lan
 L 0xB295 al_paso_3 el paso 3, el eje 3 y una cuenta al azar
 L 0xB29D cuenta_1c_al_azar el byte 0x1C = 0x10-0x2F al azar
 L 0xB2A8 guarda_snake_en_18 los bytes 0x18-0x19 = la Y y la X de Snake
-L 0xB2B2 actor_de_las_salas_4_5 en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
+L 0xB2B2 d800_tipo_7 la ficha de 0xD800 de tipo 7 (su logica, p04:8A8D): en las filas y columnas 4-5 (si no, sin musica): con 0xC693 el sonido 0x84, sus pasos (p05:B2E8) y su musica
 L 0xB2CD sprites_si_14 los sprites 10-13 fuera y, sin el byte 0x14, los suyos
 L 0xB2D8 en_4_5 acarreo con la fila y la columna de Snake entre 4 y 5
 L 0xB2F8 salas_4_5_paso_0 0xCB3C = 1, el dibujo 8, el bit 1 de 0xD7D6, hacia abajo y la musica 0xA6
@@ -423,7 +423,7 @@ L 0xB53F al_paso_4_y_gira el paso 4 y hacia Snake
 L 0xB546 salas_4_5_paso_7 al acabar la espera, el eje 3 y el dibujo de antes
 L 0xB563 suena_68 en esta sala, el sonido 0x68
 L 0xB56A sprites_desde_paso_5 desde el paso 5, sus sprites
-L 0xB573 actor_de_d8a9 con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
+L 0xB573 d800_tipo_0a la ficha de 0xD800 de tipo 0x0A (su logica, p04:8A8D): con 0xD8A9 y fuera de las especiales: con 0xC693 el sonido 0x84 y sus pasos (p05:B58F)
 L 0xB5B5 d8a9_paso_0 con 0xD6B0: el sonido 0x89, 8 cuadros, 0xCB3C = 1 y el paso siguiente
 L 0xB5C8 d8a9_paso_1 tras la espera, el mensaje 0x1110; al acabar, 0xCB3C = 0, 0xD509 = 1 y el paso siguiente
 L 0xB5DF paso_siguiente_f el paso siguiente
@@ -455,7 +455,7 @@ L 0xB8EA parpadea_dibujo cada 8 cuadros cambia el paso del dibujo; al acabar, p0
 L 0xB8FF dibujo_16_y_40 el dibujo 0x16, 0x40 cuadros y el paso siguiente
 L 0xB90A espera_y_aviso_8d la espera; a 0x20, el aviso 0x8D; al acabar, el paso siguiente
 L 0xB91A suelta_y_paso_20 0xCB3C = 0 y el paso 0x20
-L 0xB923 actor_de_d8aa con 0xD8AA, sus pasos (p05:B934)
+L 0xB923 d800_tipo_9 la ficha de 0xD800 de tipo 9 (su logica, p04:8A8D): con 0xD8AA, sus pasos (p05:B934)
 L 0xB960 d8aa_paso_0 el dibujo 0, 0xCB3C = 1, 0x18 cuadros y el paso siguiente
 L 0xB96F d8aa_paso_1 al acabar la espera, el mensaje 0x910
 L 0xB978 d8aa_paso_2 al acabar el mensaje: 0xD509 = 0xCB3C = 1, hacia abajo y el paso siguiente
@@ -492,7 +492,7 @@ L 0xBCE8 d8aa_paso_12 al acabar la espera, 0xD8AA = 0 y el paso 0x20
 L 0xBCF5 mosaico_de_13_5 en la zona 0x13 sala 5: con los juegos 6-7, el mosaico de p12:7435 en (0x84, 0x18) y, con 0xD821 >= 0x0F, el de la ficha 0xD820
 L 0xBD26 mosaico_de_la_ficha el mosaico de p12:743D (4 x 2) en la X - 16, la Y - 16 de la ficha de IX
 L 0xBD3B sprites_hasta_paso_0f hasta el paso 0x0F, sus sprites; desde el, fuera
-L 0xBD46 actor_de_la_sala_5 en la sala 5, sus pasos (p05:BD58)
+L 0xBD46 d800_tipo_8 la ficha de 0xD800 de tipo 8 (su logica, p04:8A8D): en la sala 5, sus pasos (p05:BD58)
 L 0xBD84 sala_5_paso_0 0xE070 = 0xD500 = 0xD510 = 0, 0xCB3C = 1, el bit 3 de 0xD7D8, 0x10 cuadros, el dibujo 4 y la musica de p01:6BB8 en 0xB4 cuadros
 L 0xBDAC sala_5_paso_1 al acabar la espera, 9 cuadros y el paso siguiente
 L 0xBDBA sala_5_paso_2 cada 8 cuadros el dibujo siguiente; al acabar, el mensaje 0x1460

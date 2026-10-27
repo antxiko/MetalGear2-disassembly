@@ -2299,7 +2299,7 @@ recorta_siguiente:
 	pop bc			;b8e8
 	djnz recorta_sprite		;b8e9   ; 8
 	ret			;b8eb
-d800_tipo_0c:		; la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
+d800_tipo_1:		; la ficha de 0xD800 de tipo 1 (IX), su logica (p04:8A8D): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
 	call salas_10_a_13		;b8ec   ; fuera de las salas 0x10-0x13...
 	jp nc,086a4h		;b8ef   ; ...fuera su musica
 	ld hl,06aeeh		;b8f2   ; con 0xC693, p00:6AEE
@@ -2336,7 +2336,7 @@ salas_10_a_13:		; acarreo en las salas 0x10-0x13
 	sub 010h		;b928
 	cp 004h		;b92a
 	ret			;b92c
-tipo_0c_paso_0:		; en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
+d800_1_paso_0:		; en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30 x 0x60 copiado a (0x48, 0) de la otra pagina (p15:B9C1), el dibujo 0, el byte 0x0F = 0x60, los sprites de p35:6860, el color 7, la espera 0x10 y el paso siguiente
 	call 08100h		;b92d   ; fuera de su sala, nada
 	ret nz			;b930
 	ld hl,0d7d2h		;b931   ; el bit 3 de 0xD7D2
@@ -2354,7 +2354,7 @@ tipo_0c_paso_0:		; en su sala: el bit 3 de 0xD7D2, 0xCB3C = 1, (0x30, 0) de 0x30
 	call colores_daa0		;b94f   ; colores_daa0: los colores de 8 sprites (0x80 bytes de 0xDAA0) a A
 	ld (ix+00eh),010h		;b952   ; la espera 0x10
 	jp paso_siguiente_0c		;b956   ; paso_siguiente_0c: el paso siguiente (byte 1 + 1)
-tipo_0c_paso_1:		; la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
+d800_1_paso_1:		; la espera; a 0, la musica 0xA6, el byte 0x0E = 0, el 0x1F = 0x14 y el paso siguiente
 	dec (ix+00eh)		;b959   ; la espera
 	ret nz			;b95c
 	call 086c2h		;b95d   ; la musica 0xA6
@@ -2374,26 +2374,26 @@ copia_0c_48_a:		; 0x30 de ancho, desde la X 0x30
 	ld h,b			;b978
 	ld de,04800h		;b979   ; a (0x48, 0)
 	jp 047edh		;b97c   ; copia_rectangulo_logica: orden LMMM del VDP con la operacion logica de A
-tipo_0c_paso_2:		; tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
+d800_1_paso_2:		; tras la espera del byte 0x1F, las dos piezas (p15:B9FA, el dibujo cada 4); con el byte 0x0E desde 0x40, el paso siguiente
 	ld a,(ix+01fh)		;b97f   ; la espera
 	and a			;b982
-	jr z,tipo_0c_piezas		;b983
+	jr z,d800_1_piezas		;b983
 	dec (ix+01fh)		;b985
 	ret nz			;b988
-tipo_0c_piezas:		; las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
+d800_1_piezas:		; las piezas con el dibujo cada 4 y, desde 0x40, el paso siguiente
 	ld c,003h		;b989   ; el dibujo cada 4
 	call dos_piezas		;b98b   ; dos_piezas: las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
 	ld a,(ix+00eh)		;b98e   ; desde 0x40...
 	cp 040h		;b991
 	ret c			;b993
 	jp paso_siguiente_0c		;b994   ; ...el paso siguiente
-tipo_0c_paso_3:		; las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+d800_1_paso_3:		; las piezas (el dibujo cada 2 desde 0x50, cada 1 por debajo); el byte 0x0F uno menos: la linea 0x0F de (0, Y) a (0x48, Y) de la otra pagina y (0x30, 0x60 - Y) de alto Y a (0x48, 0); a 0, 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
 	ld a,(ix+00fh)		;b997   ; desde 0x50...
 	cp 050h		;b99a
 	ld c,001h		;b99c   ; ...cada 2...
-	jr nc,tipo_0c_baja		;b99e
+	jr nc,d800_1_baja		;b99e
 	dec c			;b9a0   ; ...si no, cada 1
-tipo_0c_baja:
+d800_1_baja:
 	call dos_piezas		;b9a1   ; dos_piezas: las dos piezas (p15:BA14), el byte 0x0E uno mas y, cada C + 1, el dibujo (byte 0x0D) uno mas de 0 a 2
 	dec (ix+00fh)		;b9a4   ; el byte 0x0F uno menos
 	ld a,(ix+00fh)		;b9a7
@@ -2405,7 +2405,7 @@ tipo_0c_baja:
 	ld bc,03001h		;b9b1   ; ...0x30 x 1
 	call 0475ah		;b9b4   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
 	pop af			;b9b7
-	jr z,tipo_0c_arriba		;b9b8   ; a 0: se acaba
+	jr z,d800_1_arriba		;b9b8   ; a 0: se acaba
 	ld c,(ix+00fh)		;b9ba   ; de la Y 0x60 - el byte 0x0F
 	ld a,060h		;b9bd
 	sub c			;b9bf
@@ -2415,12 +2415,12 @@ copia_0c_a_48:		; de (0x30, L) 0x30 x C a (0x48, 0) de la otra pagina
 	ld h,030h		;b9c4   ; desde la X 0x30
 	ld b,030h		;b9c6   ; 0x30 de ancho
 	jp 0475ah		;b9c8   ; copia_rectangulo_a_la_otra: p00:4767 de la pagina 0xCA42 a la otra
-tipo_0c_arriba:		; 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
+d800_1_arriba:		; 0xCB3C = 0, los sprites de p35:670E y el paso siguiente
 	xor a			;b9cb   ; 0xCB3C = 0
 	ld (0cb3ch),a		;b9cc
 	call 0504ch		;b9cf   ; los sprites de p35:670E
 	jp paso_siguiente_0c		;b9d2   ; paso_siguiente_0c: el paso siguiente (byte 1 + 1)
-tipo_0c_paso_4:		; los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
+d800_1_paso_4:		; los bytes 0x0F, 0x0D, 0x18 y 9 a 0, el 0x16 = 1, el 7 = 4, el 0x0C = 3, la espera al azar (p15:BB99), los sonidos 0x77 y 5 y el paso siguiente
 	xor a			;b9d5
 	ld (ix+00fh),a		;b9d6
 	ld (ix+00dh),a		;b9d9
@@ -2483,7 +2483,7 @@ pieza_0c_aqui:		; a (0x58, E) de la pagina de dibujar
 	rlca			;ba4b
 	or 002h		;ba4c
 	jp 04767h		;ba4e   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
-tipo_0c_paso_5:		; su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
+d800_1_paso_5:		; su sonido (p15:BB33), el borde (p15:BB42), sus disparos (p15:BBA4), el paso de sala (p15:BAF1); con su tramo (byte 0x0D) mira si llega al final (tabla p15:BAA4, con B = el byte 3, C = el 5, D = el 0x0A, E = el 0x0B) y pasa al siguiente (p15:BA7E); el byte 0x18 cambia de 0 a 1
 	call sonido_0c		;ba51   ; el sonido
 	call borde_d8b7		;ba54   ; el borde
 	call disparo_0c		;ba57   ; los disparos

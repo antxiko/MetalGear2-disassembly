@@ -464,8 +464,10 @@ D 0x8BAB 0x8BB6 nivel_por_tipo_8BAB  los bytes de los tipos 1-0x0B de la tabla q
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8691 0x8699 tabla_8691  4 destinos del despachador p00:424D (call en p04:868E, el indice en A): 6B69, 6B6D, 6B71, 6C0B; lo leen p04:868E (8 bytes)
 F 0x8691 w4
-D 0x8A75 0x8AA3 tabla_8A75  23 destinos del despachador p00:424D (call en p04:8A72, el indice en A): 8BDF, 8AD0, 8BDF, 8739, 8739, 8BDF, 8AC8, B2CD, BD3B, 8739, B56A, 8BDF, 8AAB, 8AA3, A5F3, AC1F, AFA4, 8AB3, B2B2, BD46, B923, B573, 8ABC; lo leen p04:8A72 (46 bytes)
+D 0x8A75 0x8A8D tabla_8A75  el dibujo de cada tipo de ficha 0xD800 (0-0x0B), el despachador p00:424D con A = el tipo (p04:8A72): 8BDF el 0, el 2, el 5 y el 0x0B; p15:B800 (por 8AD0) el 1; sprites_de_la_ficha 8739 el 3, el 4 y el 9; 8AC8 el 6; p05:B2CD el 7, p05:BD3B el 8, p05:B56A el 0x0A (24 bytes)
 F 0x8A75 w8
+D 0x8A8D 0x8AA3 tabla_8A8D  la logica de cada tipo de ficha 0xD800 (1-0x0B), por salta_por_tabla con el tipo - 1 (p04:8A61): p15:B8EC el 1, p10:AA78 el 2, p05:A5F3 el 3, p05:AC1F el 4, p05:AFA4 el 5, p14:AB9E el 6, p05:B2B2 el 7, p05:BD46 el 8, p05:B923 el 9, p05:B573 el 0x0A, p14:AD0F el 0x0B (22 bytes)
+F 0x8A8D w8
 D 0x8F2A 0x8F32 tabla_8F2A  4 destinos del despachador p00:424D (call en p04:8F27, el indice en A): 8F32, 8F56, 8FAD, 8FBB; lo leen p04:8F27 (8 bytes)
 F 0x8F2A w4
 D 0x9D5C 0x9DB0 tabla_9D5C  42 destinos del despachador p00:424D (call en p04:9D59, el indice en A): 8D7E, A250, A265, A27F, 8DB0, A2A6, A0E1, A118, 8ECD, 8ED9, 9DB0, 9DC2, 9E05, 9E31, 9E5A, 9E6F, A1C5, A1E5, A20C, A23F, A236, A14B, A161, A188, A1A7, A1A0, A1B6, A12F, A062, A080, A09A, A0AA, A0BC, A0DB, 9FA7, 9FEB, A001, 9E9A, 9EA4, 9EC1, 9EFD, A071; lo leen p04:9D59 (84 bytes)
@@ -561,7 +563,7 @@ L 0x8807 colores_desde_daa0 los colores desde 0xDAA0
 L 0x880A colores_del_dibujo los colores del dibujo en rachas a DE: los de p56:AE23/AE2C, los del tipo (p56:ACE1) y casos
 L 0x88B7 pantalla_de_d800 segun el tipo de 0xD800: 1 p04:8947; 2 en esta sala, una pantalla de mosaicos la primera vez
 L 0x8940 d800_en_esta_sala IX = 0xD800: Z si esta en esta sala
-L 0x8947 d800_tipo_1 en esta sala: un rectangulo de la otra pagina y el mosaico de p56:A9ED
+L 0x8947 mosaico_d800_tipo_1 en esta sala: un rectangulo de la otra pagina y el mosaico de p56:A9ED
 L 0x8957 mosaico_a9ed en X = 0x30, Y = 0
 L 0x895A mosaico_a9ed_en el mosaico de p56:A9ED (12 x 6) en DE, con los juegos de piezas 3 y 3
 L 0x896F mosaico_a_la_otra B filas de C caracteres de HL, de la pagina 2 a la otra
@@ -982,7 +984,7 @@ C 0x874E colores_desde_daa0: los colores desde 0xDAA0
 C 0x8751 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8754 cuenta_d800: C = cuantas fichas de 0xD800 estan activas (de 4)
 C 0x8759 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x875C d800_16_vuelve: la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
+C 0x875C d800_0b_vuelve: la velocidad guardada al reves, la espera de la fila siguiente de p14:AD86, el byte 0x0C = 3, el paso 5, el sonido 0x5A y el dibujo de p14:AF6F por el byte 0x1A
 C 0x8764 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x876B apunta a de paso: en p00:4D5A, 1 = solo las listas 6 y 7; en p14:BE6D, la cuenta de la racha
 C 0x87BE bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1012,7 +1014,6 @@ C 0x889F lee el dibujo de la ficha de 0xD800
 C 0x88AB borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x88B4 borra_bloque: pone a cero BC + 1 bytes desde HL
 C 0x88B7 lee 4 fichas de 0x20 bytes de 0xD800 (p04:89C3); sus tipos los lleva p10
-C 0x88BB d800_tipo_1: en esta sala: un rectangulo de la otra pagina y el mosaico de p56:A9ED
 C 0x88C0 d800_en_esta_sala: IX = 0xD800: Z si esta en esta sala
 C 0x88D4 borra_bloque_vram: llena un rectangulo de la VRAM con un color (PR2 p00:4B9D)
 C 0x88D7 bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
@@ -1058,18 +1059,19 @@ C 0x8A3A lee el tipo de la ficha de 0xD800
 C 0x8A3F actor_0b: el 0x0B con 0xD8A0 >= 2
 C 0x8A4B lee el estado de Snake (2, 9, 0x0A, 0x0B...: cambia sus bordes y sus choques)
 C 0x8A5A salta_por_tabla: salta a la palabra A de la tabla de HL
+C 0x8A61 tabla_8A8D: la logica de cada tipo de ficha 0xD800
 C 0x8A64 salta_por_tabla: salta a la palabra A de la tabla de HL
 C 0x8A69 lee el paso de la ficha de 0xD800
 C 0x8A72 despachador: salta a la palabra A de la tabla que va detras del call
 C 0x8AA3 bancos_10: pone el 10 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AA6 d800_de_p10: la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
+C 0x8AA6 d800_tipo_2: la ficha de 0xD800 de tipo 2 (IX, su logica por p04:8A8D) con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
 C 0x8AAB bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AAE d800_tipo_0c: la ficha de 0xD800 de tipo 0x0C (IX): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
+C 0x8AAE d800_tipo_1: la ficha de 0xD800 de tipo 1 (IX), su logica (p04:8A8D): solo en las salas 0x10-0x13 (si no, fuera su musica); con 0xC693, p00:6AEE; su paso por p15:B919 (6) y, desde el paso 4, p06:BA36 con su byte 0x0C y su musica
 C 0x8AB3 bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8AB6 d800_tipo_11: la ficha de 0xD800 de tipo 0x11: con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
+C 0x8AB6 d800_tipo_6: la ficha de 0xD800 de tipo 6 (su logica, p04:8A8D): con 0xCA77, fuera su musica; con 0xC693, p00:6BCC; su paso por p14:ABC5 (9), p06:BA36 con su byte 0x0C y, en los pasos 5-8, su musica
 C 0x8AB9 bancos_4_5: pone el 4 en 0x8000, el 5 en 0xA000 (con su copia en 0xC381-0xC383)
 C 0x8ABC bancos_14: pone el 14 en 0xA000 (con su copia en 0xC381-0xC383)
-C 0x8ABF d800_tipo_16: la ficha de 0xD800 de tipo 0x16, con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
+C 0x8ABF d800_tipo_0b: la ficha de 0xD800 de tipo 0x0B (su logica, p04:8A8D), con 0xD8A0: el byte 0x16 a 1 en los pasos 3-4 sin el byte 0x17; su paso por p14:AD38 (8) y p06:BA36 con su byte 0x0C
 C 0x8AC4 rutina_de_fase_b_1_4_5: rutina_de_fase y deja los bancos 1, 4 y 5
 C 0x8ACD sprites_de_la_ficha: los sprites 10-13 fuera y, si la ficha de IX esta en esta sala, sus sprites y colores
 C 0x8AD0 bancos_15: pone el 15 en 0xA000 (con su copia en 0xC381-0xC383)

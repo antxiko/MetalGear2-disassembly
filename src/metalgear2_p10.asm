@@ -1553,7 +1553,7 @@ especial_39_banderas:
 	ld hl,0d7d8h		;aa72
 	set 1,(hl)		;aa75   ; el bit 1 de 0xD7D8
 	ret			;aa77
-d800_de_p10:		; la ficha de 0xD800 (IX) de p04:8AA6 con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
+d800_tipo_2:		; la ficha de 0xD800 de tipo 2 (IX, su logica por p04:8A8D) con 0xD8A4: con 0xC692 el sonido 0x84, R#23 (p10:AAA9) y su paso (p10:AA8F, 13 pasos)
 	ld a,(0d8a4h)		;aa78
 	and a			;aa7b
 	ret z			;aa7c   ; sin 0xD8A4, nada
@@ -1587,7 +1587,7 @@ pon_r23:
 	ld b,a			;aab2
 	ld c,017h		;aab3   ; el registro 23
 	jp 00047h		;aab5   ; BIOS WRTVDP - Writes data in the VDP-register
-d800_p10_paso_0:		; 0xCB39 = 0, sin musica pendiente, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0, 0xCB3C = 1, p03:B67D en (0x60, 0x60), el sonido 0xA1 y el paso siguiente
+d800_2_paso_0:		; 0xCB39 = 0, sin musica pendiente, el bit 2 de 0xD7D5, fuera el 6 de 0xD7E0, 0xCB3C = 1, p03:B67D en (0x60, 0x60), el sonido 0xA1 y el paso siguiente
 	xor a			;aab8
 	ld (0cb39h),a		;aab9   ; 0xCB39 = 0
 	ld hl,00000h		;aabc   ; sin musica pendiente
@@ -1602,7 +1602,7 @@ d800_p10_paso_0:		; 0xCB39 = 0, sin musica pendiente, el bit 2 de 0xD7D5, fuera 
 	call 07a33h		;aad3   ; a_p03_b67d_b_10: a_p03_b67d y deja el banco 10
 	call 06b75h		;aad6   ; sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jr paso_siguiente_d800_p10		;aad9
-d800_p10_paso_1:		; p03:B6C8; al acabar el barrido, el mensaje 0x0D10 del banco 50 y el paso siguiente
+d800_2_paso_1:		; p03:B6C8; al acabar el barrido, el mensaje 0x0D10 del banco 50 y el paso siguiente
 	call 07a38h		;aadb   ; a_p03_b6c8_b_10: a_p03_b6c8 y deja el banco 10
 	ld a,(0e270h)		;aade   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;aae1
@@ -1610,7 +1610,7 @@ d800_p10_paso_1:		; p03:B6C8; al acabar el barrido, el mensaje 0x0D10 del banco 
 	ld de,00d10h		;aae3   ; el mensaje 0x0D10
 	call 061ceh		;aae6   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 	jr paso_siguiente_d800_p10		;aae9
-d800_p10_paso_2:		; al acabar el mensaje: p01:7A3E, 0xD8A4 = 0, 0xCB3C = 0 y el paso siguiente
+d800_2_paso_2:		; al acabar el mensaje: p01:7A3E, 0xD8A4 = 0, 0xCB3C = 0 y el paso siguiente
 	call 061feh		;aaeb   ; mensaje_cada_cuadro_bancos_10:
 	ret nz			;aaee   ; sin acabar, nada
 	call 07a3eh		;aaef   ; llama_7a27_1_bancos_10:
@@ -1620,7 +1620,7 @@ cb3c_y_paso:
 	xor a			;aaf6
 	ld (0cb3ch),a		;aaf7   ; 0xCB3C = 0
 	jr paso_siguiente_d800_p10		;aafa
-d800_p10_paso_3:		; en la sala 8: 0xCB3C = 1, la pantalla partida, 0xD8A5 = 0, el dibujo 0, el byte 0x11 = 1, 0x80 cuadros, la Y = 0, la X = 0x60 y el paso siguiente
+d800_2_paso_3:		; en la sala 8: 0xCB3C = 1, la pantalla partida, 0xD8A5 = 0, el dibujo 0, el byte 0x11 = 1, 0x80 cuadros, la Y = 0, la X = 0x60 y el paso siguiente
 	ld a,(0ca4bh)		;aafc   ; lee la sala de la zona
 	cp 008h		;aaff
 	ret nz			;ab01   ; fuera de la sala 8, nada
@@ -1639,9 +1639,9 @@ d800_p10_paso_3:		; en la sala 8: 0xCB3C = 1, la pantalla partida, 0xD8A5 = 0, e
 paso_siguiente_d800_p10:
 	inc (ix+001h)		;ab22   ; sube el paso de la ficha de 0xD800
 	ret			;ab25
-d800_p10_paso_4:		; la cuenta: la ficha baja uno y 0xD8A5 tambien (la pantalla de arriba sube), una linea de 0x60 de la pagina 2 y cada 5 cuadros el dibujo siguiente (p10:AB58); al acabar, el sonido 0xA1, el mensaje 0x0EC0 y el paso siguiente
+d800_2_paso_4:		; la cuenta: la ficha baja uno y 0xD8A5 tambien (la pantalla de arriba sube), una linea de 0x60 de la pagina 2 y cada 5 cuadros el dibujo siguiente (p10:AB58); al acabar, el sonido 0xA1, el mensaje 0x0EC0 y el paso siguiente
 	dec (ix+00eh)		;ab26   ; baja la espera de la ficha de 0xD800
-	jr z,d800_p10_fin_4		;ab29
+	jr z,d800_2_fin_4		;ab29
 	inc (ix+003h)		;ab2b   ; baja
 	ld hl,0d8a5h		;ab2e   ; la pantalla de arriba
 	dec (hl)			;ab31   ; la pantalla de arriba sube
@@ -1658,7 +1658,7 @@ d800_p10_paso_4:		; la cuenta: la ficha baja uno y 0xD8A5 tambien (la pantalla d
 	call 04767h		;ab45   ; copia_rectangulo: orden HMMM del VDP: copia un rectangulo de BC de (H,L) a (D,E); A = paginas (bits 0-1 origen, 2-3 destino)
 	ld bc,00501h		;ab48   ; cada 5 cuadros, uno mas
 	jr dibujo_d800_p10		;ab4b
-d800_p10_fin_4:
+d800_2_fin_4:
 	call 06b75h		;ab4d   ; sonido_a1: pide el sonido 0xA1 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	ld de,00ec0h		;ab50   ; el mensaje 0x0EC0
 	call 061ceh		;ab53   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
@@ -1718,7 +1718,7 @@ DATA_resto_AB9D:
 ; ======================================================================
 
 
-d800_p10_paso_5:		; al acabar el mensaje: p01:7A3E, la pantalla de arriba a su sitio (0xC0 x 0x28), el byte 0x0F = 0xA0, los bytes 0x11 y 0x16 = 1, 0xCB3C = 0, el paso siguiente, el sonido 5 y p04:8685
+d800_2_paso_5:		; al acabar el mensaje: p01:7A3E, la pantalla de arriba a su sitio (0xC0 x 0x28), el byte 0x0F = 0xA0, los bytes 0x11 y 0x16 = 1, 0xCB3C = 0, el paso siguiente, el sonido 5 y p04:8685
 	call 061feh		;aba5   ; mensaje_cada_cuadro_bancos_10:
 	ret nz			;aba8   ; sin acabar, nada
 	call 07a3eh		;aba9   ; llama_7a27_1_bancos_10:
@@ -1739,10 +1739,10 @@ d800_p10_paso_5:		; al acabar el mensaje: p01:7A3E, la pantalla de arriba a su s
 	call cb3c_y_paso		;abcb   ; cb3c_y_paso:
 	call 06b12h		;abce   ; sonido_05: pide el sonido 0x05
 	jp 08685h		;abd1   ; por_el_tipo_8698: por el byte del tipo en p04:8698 (p04:8691)
-d800_p10_paso_6:		; baja de 2 en 2 (p10:ABE6) hasta la Y del byte 0x0F; alli, 0x31 cuadros, el byte 0x0F y el 0x18 a cero y el paso siguiente
+d800_2_paso_6:		; baja de 2 en 2 (p10:ABE6) hasta la Y del byte 0x0F; alli, 0x31 cuadros, el byte 0x0F y el 0x18 a cero y el paso siguiente
 	call baja_2		;abd4   ; baja_2: el dibujo cada 2 cuadros, la Y + 2 y 0xD8A5 - 2; acarreo por encima del byte 0x0F
 	ret c			;abd7   ; sin llegar, sigue
-d800_p10_fin_6:
+d800_2_fin_6:
 	ld (ix+00eh),031h		;abd8   ; la espera de la ficha de 0xD800 = 0x31
 	xor a			;abdc
 	ld (ix+00fh),a		;abdd   ; el byte 0x0F = 0
@@ -1759,10 +1759,10 @@ baja_2:		; el dibujo cada 2 cuadros, la Y + 2 y 0xD8A5 - 2; acarreo por encima d
 	ld a,(ix+003h)		;abf7   ; lee la Y de la ficha de 0xD800
 	cp (ix+00fh)		;abfa   ; hasta el byte 0x0F
 	ret			;abfd
-d800_p10_paso_8:		; sube (p10:AC04) hasta la Y del byte 0x0F; alli, como el paso 6
+d800_2_paso_8:		; sube (p10:AC04) hasta la Y del byte 0x0F; alli, como el paso 6
 	call sube_1		;abfe   ; sube_1: el dibujo cada 4 cuadros hacia atras, la Y - 1 y 0xD8A5 + 1; acarreo por encima del byte 0x0F
 	ret nc			;ac01   ; sin llegar, sigue
-	jr d800_p10_fin_6		;ac02
+	jr d800_2_fin_6		;ac02
 sube_1:		; el dibujo cada 4 cuadros hacia atras, la Y - 1 y 0xD8A5 + 1; acarreo por encima del byte 0x0F
 	ld bc,004ffh		;ac04   ; cada 4 cuadros, hacia atras
 	call dibujo_d800_p10		;ac07   ; dibujo_d800_p10: cada B cuadros (byte 0x11) el dibujo + C (0-3); en los impares, el sonido 0x97 (paso 4) o 0x65; y lo pinta (p10:AB7D)
@@ -1772,9 +1772,9 @@ sube_1:		; el dibujo cada 4 cuadros hacia atras, la Y - 1 y 0xD8A5 + 1; acarreo 
 	ld a,(ix+003h)		;ac11   ; lee la Y de la ficha de 0xD800
 	cp (ix+00fh)		;ac14   ; hasta el byte 0x0F
 	ret			;ac17
-d800_p10_paso_7:		; la cuenta: cada 8 cuadros, salvo con Snake en X 0x50-0x6F a menos de 0x20 por debajo en Y, lanza el tipo 6 con el desplazamiento 0xE0 hacia la X de Snake + el byte 0x0F * 4 - 4; al acabar, p10:AC4B
+d800_2_paso_7:		; la cuenta: cada 8 cuadros, salvo con Snake en X 0x50-0x6F a menos de 0x20 por debajo en Y, lanza el tipo 6 con el desplazamiento 0xE0 hacia la X de Snake + el byte 0x0F * 4 - 4; al acabar, p10:AC4B
 	dec (ix+00eh)		;ac18   ; baja la espera de la ficha de 0xD800
-	jr z,d800_p10_otra_vuelta		;ac1b   ; al acabar, otra vuelta
+	jr z,d800_2_otra_vuelta		;ac1b   ; al acabar, otra vuelta
 	ld a,(ix+00eh)		;ac1d   ; lee la espera de la ficha de 0xD800
 	and 007h		;ac20   ; cada 8 cuadros
 	ret nz			;ac22   ; solo cada 8
@@ -1800,11 +1800,11 @@ lanza_hacia_snake_p10:		; la X + el byte 0x0F * 4 - 4 (uno mas cada vez)
 	sub 010h		;ac45
 	ld h,a			;ac47
 	jp 09b30h		;ac48   ; lanza el 6
-d800_p10_otra_vuelta:		; el byte 0x11 = 1; desde el paso 7: el dibujo hacia atras, el byte 0x0F = 0x60-0x7F al azar y el paso 8; si no, hacia delante, 0xB4 - (0-0x1F) y el paso 6
+d800_2_otra_vuelta:		; el byte 0x11 = 1; desde el paso 7: el dibujo hacia atras, el byte 0x0F = 0x60-0x7F al azar y el paso 8; si no, hacia delante, 0xB4 - (0-0x1F) y el paso 6
 	ld (ix+011h),001h		;ac4b   ; el byte 0x11 = 1
 	ld a,(ix+001h)		;ac4f   ; lee el paso de la ficha de 0xD800
 	cp 007h		;ac52   ; el paso 7...
-	jr nz,d800_p10_al_6		;ac54
+	jr nz,d800_2_al_6		;ac54
 	ld a,(ix+00dh)		;ac56   ; lee el dibujo de la ficha de 0xD800
 	dec a			;ac59   ; ...hacia atras
 	and 003h		;ac5a
@@ -1815,7 +1815,7 @@ d800_p10_otra_vuelta:		; el byte 0x11 = 1; desde el paso 7: el dibujo hacia atra
 	ld (ix+00fh),a		;ac66
 	ld (ix+001h),008h		;ac69   ; el paso de la ficha de 0xD800 = 0x08
 	ret			;ac6d
-d800_p10_al_6:
+d800_2_al_6:
 	ld a,(ix+00dh)		;ac6e   ; lee el dibujo de la ficha de 0xD800
 	inc a			;ac71   ; hacia delante
 	and 003h		;ac72
@@ -1827,9 +1827,9 @@ d800_p10_al_6:
 	ld (ix+00fh),a		;ac80
 	ld (ix+001h),006h		;ac83   ; el paso de la ficha de 0xD800 = 0x06
 	ret			;ac87
-d800_p10_paso_9:		; la cuenta; cada 16 cuadros (dos veces, byte 0x18) una ficha de 0xD4C0 en (Y - 0x58, 0x38) o (Y - 0x48, 0x80) con el tipo 3 o 4 y el sonido 0x1D; al acabar, p10:AC4B
+d800_2_paso_9:		; la cuenta; cada 16 cuadros (dos veces, byte 0x18) una ficha de 0xD4C0 en (Y - 0x58, 0x38) o (Y - 0x48, 0x80) con el tipo 3 o 4 y el sonido 0x1D; al acabar, p10:AC4B
 	dec (ix+00eh)		;ac88   ; baja la espera de la ficha de 0xD800
-	jr z,d800_p10_otra_vuelta		;ac8b   ; al acabar, otra vuelta
+	jr z,d800_2_otra_vuelta		;ac8b   ; al acabar, otra vuelta
 	ld a,(ix+00eh)		;ac8d   ; lee la espera de la ficha de 0xD800
 	add a,004h		;ac90   ; cada 16 cuadros
 	and 00fh		;ac92
@@ -1892,27 +1892,27 @@ tipo_d4c0:
 	ld l,a			;ace5
 	ld (hl),c			;ace6   ; ...y su sprite
 	jp 06a6fh		;ace7   ; sonido_1d: pide el sonido 0x1D
-d800_p10_paso_10:		; 0xCB3C = 1, el byte 0x0F = 0x88; en Y = 0x88, el paso 0x20; por encima, el paso siguiente (baja); por debajo, el paso 0x0C (sube)
+d800_2_paso_10:		; 0xCB3C = 1, el byte 0x0F = 0x88; en Y = 0x88, el paso 0x20; por encima, el paso siguiente (baja); por debajo, el paso 0x0C (sube)
 	ld a,001h		;acea
 	ld (0cb3ch),a		;acec   ; 0xCB3C = 1
 	ld (ix+00fh),088h		;acef   ; el byte 0x0F = 0x88
 	ld a,(ix+003h)		;acf3   ; lee la Y de la ficha de 0xD800
 	cp 088h		;acf6
-	jr z,d800_p10_al_20		;acf8   ; en 0x88, el paso 0x20
+	jr z,d800_2_al_20		;acf8   ; en 0x88, el paso 0x20
 	ld a,00ch		;acfa   ; por debajo, el paso 0x0C
 	jp c,paso_siguiente_d800_p10		;acfc   ; paso_siguiente_d800_p10:
 	ld (ix+001h),a		;acff   ; guarda el paso de la ficha de 0xD800
 	ret			;ad02
-d800_p10_paso_11:		; baja hasta 0x88 y el paso 0x20
+d800_2_paso_11:		; baja hasta 0x88 y el paso 0x20
 	call baja_2		;ad03   ; baja_2: el dibujo cada 2 cuadros, la Y + 2 y 0xD8A5 - 2; acarreo por encima del byte 0x0F
 	ret c			;ad06   ; sin llegar, sigue
-d800_p10_al_20:
+d800_2_al_20:
 	ld (ix+001h),020h		;ad07   ; el paso de la ficha de 0xD800 = 0x20
 	ret			;ad0b
-d800_p10_paso_12:		; sube hasta 0x88 y el paso 0x20
+d800_2_paso_12:		; sube hasta 0x88 y el paso 0x20
 	call sube_1		;ad0c   ; sube_1: el dibujo cada 4 cuadros hacia atras, la Y - 1 y 0xD8A5 + 1; acarreo por encima del byte 0x0F
 	ret nc			;ad0f   ; sin llegar, sigue
-	jr d800_p10_al_20		;ad10
+	jr d800_2_al_20		;ad10
 sprites_ad8e:		; los sprites de p10:AD21 y, cada 8 cuadros (byte 0x0F), el sonido 0x15
 	call sprites_de_ad8e		;ad12   ; sprites_de_ad8e: 8 sprites desde 0xDC28 con las Y y X de p10:AD8E (segun el byte 0x0F & 0x0C), los patrones de p10:ADAE (+ 4 cada par) y los colores de las rachas de p10:ADB2
 	inc (ix+00fh)		;ad15   ; uno mas al byte 0x0F
