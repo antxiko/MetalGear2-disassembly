@@ -26,13 +26,27 @@ emulado y aqui solo se le dice a que sala ir, como lo hace el juego:
     el juego mete a Snake en la sala (2, 9) con la entrada corta (p00:5AD9) y
     tapa las salas 2, 3 y 8 (p00:5734); aqui se pinta con 0xD881 = 0xD888 =
     0xFF, despues de esos sucesos.
+  - las salas a oscuras (zona 3: la especial 0x0C y las salas 0, 5 y 0x10;
+    zona 4: las 5, 0x0E y 0x13): con su bandera de 0xCAC9-0xCACD puesta el
+    juego deja la pagina en negro con un solo caracter, el 0x53 (p08:A13B),
+    o, con las gafas (0xCB21 = 3), la paleta de p56:BCCF. Al entrar en la
+    zona 0xCACB-0xCACD valen 1 (p00:5A84). Aqui se pintan con la luz: las
+    banderas a cero antes de cada sala.
   - el montaje: salir por arriba SUMA uno a la fila y por abajo resta
     (p02:8117, p02:814F); por la izquierda la columna uno menos (p02:8169).
     La fila 1 va abajo del todo.
   - la imagen: los 192 x 192 puntos de la sala (24 x 24 caracteres,
     p00:57AE) de la pagina que ensena el VDP (R#2).
 
+Las salas especiales (0xCA76 = 1-0x39, los interiores tras las puertas): su
+rejilla en p30:BA18 y su dibujo con las piezas de la zona desde la que se
+entra. La zona sale de las tablas de puertas (p15:B4B5, fichas de 3 bytes
+[como y donde][fila y columna][puerta de llegada]; como = 1, una especial,
+p15:A9D4). Se entra en esa zona y luego en la especial como p15:AB4F: su
+rejilla a 0xD900 (p02:804E), sus mapas de bits (p00:5CAE) y entra_en_sala_especial (p00:55CF).
+
 Uso: mapas.py salas [zona ...]     las salas a work/salas/zZZ_sSS.png
+     mapas.py especiales           las especiales a work/salas/eEE_sSS.png
      mapas.py zonas [zona ...]     las zonas montadas a work/mapas/zona_ZZ.png
 """
 import json
@@ -73,6 +87,83 @@ def rejilla(zona, tabla=0xB8A5):
     return g
 
 
+def zona_de_especial():
+    """{especial: zona} de las tablas de puertas de p15:B4B5. La de la zona 0x13
+    es la ultima y no se sabe donde acaba: solo se le da la 0x39 (las demas
+    que saldrian de leer de mas ya tienen zona)."""
+    ptrs = [palabra(15, 0xB4B5 + 2 * z) for z in range(N_ZONAS)]
+    dueno = {}
+    for z, p in enumerate(ptrs[:-1]):
+        fin = min([q for q in ptrs if q > p] or [p])
+        for k in range((fin - p) // 3):
+            a = byte(15, p + 3 * k)
+            if a >> 6 == 1:
+                dueno.setdefault(a & 0x3F, z)
+    dueno.setdefault(0x39, 0x13)
+    return dueno
+
+
+def luces(m):
+    """Las salas a oscuras con la luz puesta: 0xCAC9-0xCACD a cero (p08:A0FB)."""
+    for d in range(0xCAC9, 0xCACE):
+        m.pon(d, 0)
+
+
+def entra_en_zona(m, z):
+    """La primera sala de la zona z por cambia_de_zona (p00:59A7)."""
+    casilla = min(c for c, s in rejilla(z).items() if s < 0x80)
+    m.pon(0xCA76, 0)
+    m.pon(0xCA50, casilla >> 4)
+    m.pon(0xCA51, casilla & 15)
+    m.pon(0xCA4A, 0x3F)
+    m.bancos_123()
+    m.llama(0x59A7, a=z)
+
+
+def pinta_especiales():
+    from mg2run import Mg2
+    os.makedirs(SALAS, exist_ok=True)
+    m = Mg2()
+    m.llama(0x9E2B)
+    m.pon(0xCADF, 0)
+    dueno = zona_de_especial()
+    info = {}
+    for z in sorted(set(dueno.values())):
+        m.pon(0xD430, 2 if z == 7 else 0)
+        for d in (0xD881, 0xD888):
+            m.pon(d, 0xFF if z == 0x12 else 0)
+        entra_en_zona(m, z)
+        for e in sorted(k for k, v in dueno.items() if v == z):
+            g = rejilla(e - 1, 0xBA18)
+            for casilla in sorted(g):
+                sala = g[casilla]
+                luces(m)
+                m.pon(0xCA76, e)
+                m.pon(0xCA50, casilla >> 4)
+                m.pon(0xCA51, casilla & 15)
+                m.bancos_123()
+                m.llama(0x804E)                       # su rejilla a 0xD900 (p15:AB5D)
+                m.bancos_123()
+                m.llama(0x804E)                       # su rejilla a 0xD900 (p15:AB5D)
+                m.bancos_123()
+                m.llama(0x5CAE)                       # mapas_de_bits_especiales
+                m.bancos_123()
+                m.llama(0x55CF)                       # entra_en_sala_especial
+                assert m.mem[0xCA4B] == sala, (e, sala, m.mem[0xCA4B])
+                pag = (m.vdp.r[2] >> 5) & 3
+                m.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO)).save(
+                    os.path.join(SALAS, "e%02X_s%02X.png" % (e, sala)))
+                info["E%02X_%02X" % (e, sala)] = {"zona": z, "fila": casilla >> 4,
+                                                  "columna": casilla & 15,
+                                                  "paleta": [list(c) for c in m.vdp.pal]}
+                print("especial %02X (zona %02X) sala %02X" % (e, z, sala), flush=True)
+        m.pon(0xCA76, 0)
+    ruta = os.path.join(SALAS, "salas.json")
+    viejo = json.load(open(ruta)) if os.path.exists(ruta) else {}
+    viejo.update(info)
+    json.dump(viejo, open(ruta, "w"), indent=0, sort_keys=True)
+
+
 def pinta_salas(zonas):
     from mg2run import Mg2
     os.makedirs(SALAS, exist_ok=True)
@@ -101,6 +192,7 @@ def pinta_salas(zonas):
                 m.llama(0x59A7, a=z)                  # cambia_de_zona
                 primera = False
             else:
+                luces(m)
                 m.llama(0x52CF)                       # entra_en_sala
             assert m.mem[0xCA4A] == z and m.mem[0xCA4B] == sala, (z, sala, m.mem[0xCA4A], m.mem[0xCA4B])
             pag = (m.vdp.r[2] >> 5) & 3
@@ -138,8 +230,12 @@ def monta_zonas(zonas):
 
 def main(argv):
     zonas = [int(a, 16) for a in argv[1:]] or list(range(N_ZONAS))
+    if not argv:
+        argv = [""]
     if argv[0] == "salas":
         pinta_salas(zonas)
+    elif argv[0] == "especiales":
+        pinta_especiales()
     elif argv[0] == "zonas":
         monta_zonas(zonas)
     else:
