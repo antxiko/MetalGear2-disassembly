@@ -52,19 +52,36 @@ emulado y aqui solo se le dice a que sala ir, como lo hace el juego:
     La fila 1 va abajo del todo.
   - la imagen: los 192 x 192 puntos de la sala (24 x 24 caracteres,
     p00:57AE) de la pagina que ensena el VDP (R#2).
+  - los actores: son de la zona y van de sala en sala (su fila y columna en
+    los bytes 0x0A-0x0B de cada ficha de 0xCE00). Se pintan como al entrar en
+    la zona: la maquina va de sala en sala sin cuadros (los actores no se
+    mueven) y los cuadros de cada sala se corren en una copia. Al pasar a una sala, borra_lo_de_la_sala (p01:7BAA, como sala_de_al_lado
+    p02:8096) suelta los 22 sprites que se reparten (0xD400); sin eso se
+    acaban. Sus sprites salen de las copias 0xDA00 (colores) y 0xDC00
+    (atributos) del ultimo cuadro, con los dibujos de la VRAM (R#6), sin los
+    de Snake (los 8 primeros: p01:7C7D, p11:BCD1): zZZ_sSS_spr.png.
+    Los colores se ponen al repartirle los sprites (p04:81C5): los de
+    p08:B9FB por el tipo, o, en la zona 3 y la 0x0A desde la fila 4 (0xD437,
+    p00:4ECC), los de p08:BA2F para el tipo 1. Con alerta el tipo lleva el
+    bit 7 (p12:6925, p14:B2F6) y palabra_de_tabla lo dobla en 8 bits: el 0x81
+    toma los de B9FB como el 1 y no los de BA2F. Aqui no hay alerta (0xCA5F
+    a 0 en todas): como openMSX sin alerta (work/omsx_difs, zona 3).
 
 Las salas especiales (0xCA76 = 1-0x39, los interiores tras las puertas): su
 rejilla en p30:BA18 y su dibujo con las piezas de la zona desde la que se
 entra. La zona sale de las tablas de puertas (p15:B4B5, fichas de 3 bytes
 [como y donde][fila y columna][puerta de llegada]; como = 1, una especial,
 p15:A9D4). Se entra en esa zona y luego en la especial como p15:AB4F: su
-rejilla a 0xD900 (p02:804E), sus mapas de bits (p00:5CAE) y entra_en_sala_especial (p00:55CF).
+rejilla a 0xD900 (p02:804E), sus mapas de bits (p00:5CAE), sus actores
+(p12:69E0), las rayas de la 0x31 (p10:BCE4), entra_en_sala_especial (p00:55CF;
+el juego entra por la puerta con 55D2 y la deja abierta) y p12:67E1.
 
 Uso: mapas.py salas [zona ...]     las salas a work/salas/zZZ_sSS.png
      mapas.py especiales           las especiales a work/salas/eEE_sSS.png
-     mapas.py zonas [zona ...]     las zonas montadas a work/mapas/zona_ZZ.png
-     mapas.py montar_especiales    cada especial montada a work/mapas/especial_EE.png
+     mapas.py zonas [zona ...]     las zonas montadas a work/mapas/zona_ZZ.png (y _spr)
+     mapas.py montar_especiales    cada especial montada a work/mapas/especial_EE.png (y _spr)
 """
+import copy
 import json
 import os
 import sys
@@ -133,6 +150,12 @@ def cuadros(m, n=CUADROS):
     pagina cada cuadro y no al entrar (el rojo de la sala 7 de la zona 3, el
     misil de la sala 0x12 de la zona 7). La sala no debe cambiar."""
     antes = m.mem[0xCA4A], m.mem[0xCA4B], m.mem[0xCA76]
+    # el estado 4 deja 0xCA40 = 1 tras la partida nueva (p01:739E); sin el,
+    # fin_del_paso (p01:7485) pasa al estado 6 en el primer cuadro
+    m.pon(0xCA40, 1)
+    # Snake ya llegado: en el estado 0x19, el de la llegada, la paleta se
+    # funde a negro (p11:A017); jugando vale 0 (openMSX)
+    m.pon(0xCB00, 0)
     m.pon(0xCA00, 5)
     m.pon(0xCA01, 0)
     # jugando, 0xCA97 vale 0 (la partida nueva lo deja a 1 para la llamada
@@ -159,6 +182,36 @@ def cuadros(m, n=CUADROS):
     assert (m.mem[0xCA4A], m.mem[0xCA4B], m.mem[0xCA76]) == antes, (antes, m.mem[0xCA4A], m.mem[0xCA4B])
 
 
+SNAKE = 8                          # los sprites 0-7 son de Snake
+
+
+def con_sprites(m, im):
+    """im con los sprites del ultimo cuadro encima, salvo los de Snake."""
+    return sprites_de_ram(m.vdp, m.mem, im)
+
+
+def sprites_de_ram(v, mem, im):
+    """Las copias 0xDA00 y 0xDC00 de mem puestas en la tabla de la VRAM que
+    se ve (R#5, R#11) y pintadas como el chip (msx2run.V9938.sprites), sin
+    los 8 primeros (Snake). Vale para un volcado de openMSX."""
+    attr = ((v.r[11] & 3) << 15) | ((v.r[5] & 0xFC) << 7)
+    viejo = bytes(v.vram[attr - 0x200:attr + 0x80])
+    v.vram[attr - 0x200:attr + 0x80] = mem[0xDA00:0xDC80]
+    for n in range(SNAKE):
+        v.vram[attr + 4 * n] = 0xE0
+    v.sprites(im)
+    v.vram[attr - 0x200:attr + 0x80] = viejo
+    return im
+
+
+def actores_aqui(m):
+    """Los actores de la sala de ahora: [numero, tipo, Y, X]."""
+    f, c = m.mem[0xCA50], m.mem[0xCA51]
+    return [[k, m.mem[0xCE00 + 0x40 * k], m.mem[0xCE03 + 0x40 * k], m.mem[0xCE05 + 0x40 * k]]
+            for k in range(24) if m.mem[0xCE00 + 0x40 * k]
+            and m.mem[0xCE0A + 0x40 * k] == f and m.mem[0xCE0B + 0x40 * k] == c]
+
+
 def entra_en_zona(m, z):
     """La primera sala de la zona z por cambia_de_zona (p00:59A7)."""
     casilla = min(c for c, s in rejilla(z).items() if s < 0x80)
@@ -183,7 +236,11 @@ def pinta_especiales():
         for d in (0xD881, 0xD888):
             m.pon(d, 0xFF if z == 0x12 else 0)
         entra_en_zona(m, z)
+        zona = m
         for e in sorted(k for k, v in dueno.items() if v == z):
+            # cada especial desde la zona, como por su puerta: sin los
+            # actores de la especial anterior (0xD300, byte 0x1B = 1)
+            m = copy.deepcopy(zona)
             g = rejilla(e - 1, 0xBA18)
             for casilla in sorted(g):
                 sala = g[casilla]
@@ -192,22 +249,37 @@ def pinta_especiales():
                 m.pon(0xCA50, casilla >> 4)
                 m.pon(0xCA51, casilla & 15)
                 m.bancos_123()
+                m.llama(0x7BAA)                       # borra_lo_de_la_sala (p15:AB5A)
+                m.bancos_123()
                 m.llama(0x804E)                       # su rejilla a 0xD900 (p15:AB5D)
                 m.bancos_123()
                 m.llama(0x804E)                       # su rejilla a 0xD900 (p15:AB5D)
                 m.bancos_123()
                 m.llama(0x5CAE)                       # mapas_de_bits_especiales
+                for d in (0xD44C, 0xD44D, 0xD44E, 0xE070, 0xE078):
+                    m.pon(d, 0)                       # p15:AB66
+                m.bancos_123()
+                m.llama(0x5F0A)                       # actores_de_la_especial (p15:AB7E)
+                m.bancos_123()
+                m.llama(0x8D2A)                       # fichas_e100_especial_31 (p15:AB81)
                 m.bancos_123()
                 m.llama(0x55CF)                       # entra_en_sala_especial
+                m.bancos_123()
+                m.llama(0x5F01)                       # fichas_cd00_56 (p15:AB87)
                 assert m.mem[0xCA4B] == sala, (e, sala, m.mem[0xCA4B])
-                cuadros(m)
-                pag = (m.vdp.r[2] >> 5) & 3
-                m.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO)).save(
+                c = copy.deepcopy(m)                  # los cuadros, en una copia
+                cuadros(c)
+                pag = (c.vdp.r[2] >> 5) & 3
+                c.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO)).save(
                     os.path.join(SALAS, "e%02X_s%02X.png" % (e, sala)))
+                con_sprites(c, c.vdp.pagina(pag, LADO)).crop((0, 0, LADO, LADO)).save(
+                    os.path.join(SALAS, "e%02X_s%02X_spr.png" % (e, sala)))
                 info["E%02X_%02X" % (e, sala)] = {"zona": z, "fila": casilla >> 4,
                                                   "columna": casilla & 15,
-                                                  "paleta": [list(c) for c in m.vdp.pal]}
+                                                  "paleta": [list(x) for x in c.vdp.pal],
+                                                  "actores": actores_aqui(c), "alerta": c.mem[0xCA5F]}
                 print("especial %02X (zona %02X) sala %02X" % (e, z, sala), flush=True)
+        m = zona
         m.pon(0xCA76, 0)
     ruta = os.path.join(SALAS, "salas.json")
     viejo = json.load(open(ruta)) if os.path.exists(ruta) else {}
@@ -247,16 +319,27 @@ def pinta_salas(zonas):
                 m.llama(0x59A7, a=z)                  # cambia_de_zona
                 primera = False
             else:
+                m.llama(0x7BAA)                       # borra_lo_de_la_sala
+                m.pon(0xD44A, 0xFF)                   # como sala_de_al_lado (p02:8099)
+                for d in (0xD42E, 0xD44F, 0xD456, 0xD451):
+                    m.pon(d, 0)
                 luces(m)
+                m.bancos_123()
                 m.llama(0x52CF)                       # entra_en_sala
             assert m.mem[0xCA4A] == z and m.mem[0xCA4B] == sala, (z, sala, m.mem[0xCA4A], m.mem[0xCA4B])
-            cuadros(m)
-            pag = (m.vdp.r[2] >> 5) & 3
-            im = m.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO))
+            # los cuadros, en una copia: la maquina sigue de sala en sala sin
+            # ellos y los actores quedan donde empiezan
+            c = copy.deepcopy(m)
+            cuadros(c)
+            pag = (c.vdp.r[2] >> 5) & 3
+            im = c.vdp.pagina(pag, LADO).crop((0, 0, LADO, LADO))
             nombre = "z%02X_s%02X.png" % (z, sala)
             im.save(os.path.join(SALAS, nombre))
+            con_sprites(c, c.vdp.pagina(pag, LADO)).crop((0, 0, LADO, LADO)).save(
+                os.path.join(SALAS, "z%02X_s%02X_spr.png" % (z, sala)))
             info["%02X_%02X" % (z, sala)] = {"fila": fila, "columna": col,
-                                             "paleta": [list(c) for c in m.vdp.pal]}
+                                             "paleta": [list(x) for x in c.vdp.pal],
+                                             "actores": actores_aqui(c), "alerta": c.mem[0xCA5F]}
             print("zona %02X sala %02X (%X, %X) %.1f s" % (z, sala, fila, col, time.time() - t), flush=True)
     viejo = {}
     ruta = os.path.join(SALAS, "salas.json")
@@ -276,11 +359,12 @@ def monta_zonas(zonas):
         f0, c0 = min(filas), min(cols)
         ancho = (max(cols) - c0 + 1) * LADO
         alto = (max(filas) - f0 + 1) * LADO
-        im = Image.new("RGB", (ancho, alto), (0, 0, 0))
-        for c, s in g.items():
-            sala = Image.open(os.path.join(SALAS, "z%02X_s%02X.png" % (z, s)))
-            im.paste(sala, (((c & 15) - c0) * LADO, (max(filas) - (c >> 4)) * LADO))
-        im.save(os.path.join(MAPAS, "zona_%02X.png" % z))
+        for cola in ("", "_spr"):
+            im = Image.new("RGB", (ancho, alto), (0, 0, 0))
+            for c, s in g.items():
+                sala = Image.open(os.path.join(SALAS, "z%02X_s%02X%s.png" % (z, s, cola)))
+                im.paste(sala, (((c & 15) - c0) * LADO, (max(filas) - (c >> 4)) * LADO))
+            im.save(os.path.join(MAPAS, "zona_%02X%s.png" % (z, cola)))
         print("zona %02X: %d salas, %d x %d" % (z, len(g), ancho, alto))
 
 
@@ -294,11 +378,12 @@ def monta_especiales():
         filas = [c >> 4 for c in g]
         cols = [c & 15 for c in g]
         c0 = min(cols)
-        im = Image.new("RGB", ((max(cols) - c0 + 1) * LADO, (max(filas) - min(filas) + 1) * LADO))
-        for c, sala in g.items():
-            im.paste(Image.open(os.path.join(SALAS, "e%02X_s%02X.png" % (e, sala))),
-                     (((c & 15) - c0) * LADO, (max(filas) - (c >> 4)) * LADO))
-        im.save(os.path.join(MAPAS, "especial_%02X.png" % e))
+        for cola in ("", "_spr"):
+            im = Image.new("RGB", ((max(cols) - c0 + 1) * LADO, (max(filas) - min(filas) + 1) * LADO))
+            for c, sala in g.items():
+                im.paste(Image.open(os.path.join(SALAS, "e%02X_s%02X%s.png" % (e, sala, cola))),
+                         (((c & 15) - c0) * LADO, (max(filas) - (c >> 4)) * LADO))
+            im.save(os.path.join(MAPAS, "especial_%02X%s.png" % (e, cola)))
     print("%d especiales montadas" % len(zona_de_especial()))
 
 
