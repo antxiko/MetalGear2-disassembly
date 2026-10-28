@@ -20,8 +20,13 @@ vistos, y cada 16 cuadros la pantalla entera.
 
 Lo que sale (2026-10-28), todo con el cartucho ejecutado:
   1 zona 7: helicoptero de mosaicos y su sombra; acaba como con los misiles (paso 0x20 -> 0x2A-0x2D)
-  2 zona 0x12 sala 8: el robot de mosaicos; sus piezas en la pagina, montadas por la pantalla
-    partida (R#23 por lineas) que msx2run no hace: la figura entera SIN COTEJO
+  2 zona 0x12: empieza en la sala 3 (p00:5ADF) y entra en la 8 por la puerta 8, de tipo 5
+    (p15:AADF); el robot de mosaicos
+    (p04:88B7, una vez, en la pagina contraria a 0xCA42); sus piezas en la pagina 2, montadas por la
+    pantalla partida (R#23 por lineas, que msx2run no hace): vNNNNN.png la monta como la
+    interrupcion de linea (pantalla_partida), cotejada con openMSX (tools/omsx_partida.tcl,
+    coteja_partida.py: v00320 contra openMSX en el mismo paso, 224 puntos de 54272: un
+    objeto lanzado y la barra de vida)
   3 zona 3: el cientifico que se transforma, sus estrellas, la muerte
   4 especial 0x29: "Running" (en katakana) en su mensaje; se queda en el mensaje del paso 0x10
   5 zona 0x13: empieza con una llamada del transceptor (antes, con p01:741A suelto, la
@@ -34,7 +39,8 @@ Lo que sale (2026-10-28), todo con el cartucho ejecutado:
   0x0B zona 0x0B: cuatro a la vez dentro del ascensor de la entrada 5, en la planta 0x13
     (p07:A248 -> 0xD8A0 = 1 -> p05:AA90 y la escena de 0xD8AC, p05:AB08); arden al morir
 
-Uso: jefes.py TIPO [cuadros]  -> work/jefes/tTT/sNNNN.png (sprites), pNNNN.png (pantalla)
+Uso: jefes.py TIPO [cuadros]  -> work/jefes/tTT/sNNNN.png (sprites), pNNNN.png (pantalla),
+     vNNNN.png (la pantalla partida montada, con 0xCA1C)
 """
 import hashlib
 import os
@@ -116,6 +122,15 @@ def maquina(f):
         for d, v in ((0xD8CD, 0x13), (0xD8C4, 2), (0xD8C1, 0x0F), (0xD8C3, 0x10)):
             m.pon(d, v)
         return m
+    if z == 0x12 and m.mem[0xD881] != 0xFF:
+        # en la zona 0x12 el juego mismo pone a Snake en la sala 3 (0xCA50 = 2,
+        # 0xCA51 = 9, p00:5ADF): ahi corren los pasos 0-2 del 2 y el 3 lo
+        # espera en la sala 8, a la que se entra por la puerta 8 (pelea). Llevarlo
+        # derecho a la 8 pinta el robot en la pagina que no es: pantalla_de_d800
+        # (p04:88B7) lo monta una sola vez (0xD8A6) en la otra (0xCA42 ^ 1) y
+        # copia la pagina 1 a la 2
+        a_la_sala(m, m.mem[0xCA50], m.mem[0xCA51])
+        return m
     a_la_sala(m, f["fila"], f["columna"])
     return m
 
@@ -151,6 +166,33 @@ def sprites(m, desde=8):
     return (im.crop(caja), caja) if caja else None
 
 
+def pantalla_partida(v, mem):
+    """La pantalla como la parte la interrupcion de linea con 0xCA1C (p03:A041-A0B4):
+    arriba la pagina 0 (R#2 = 0x1F) con sprites y el desplazamiento R#23 de su copia
+    0xFFF6 (r23_de_d8a5, p10:AAA9: 0xD8A5; en los pasos 2-4 de la partida, 0); la
+    interrupcion en la linea R#19 = 0xB4 + el desplazamiento (en los pasos 2-4, 0xBC)
+    y, pasado el borde (HR), abajo la pagina 1 sin sprites y R#23 = 0. Las lineas de
+    la VRAM: la del aparato es R#19 - R#23 (como openMSX) y el cambio, la siguiente.
+    Los sprites, de la tabla que el juego ha subido (la Y ya con + 0xD8A5, p01:6880),
+    se mueven con R#23 como el fondo."""
+    from PIL import Image
+    d = mem[0xFFF6]
+    b = d
+    if 2 <= mem[0xCA01] <= 4:
+        d, b = 0, 8
+    corte = ((0xB4 + b - d) & 0xFF) + 1
+    arriba = v.pagina(0, 256)
+    v.sprites(arriba)
+    abajo = v.pagina(1, 212)
+    im = Image.new("RGB", (256, 212))
+    for y in range(212):
+        if y < corte:
+            im.paste(arriba.crop((0, (y + d) & 0xFF, 256, ((y + d) & 0xFF) + 1)), (0, y))
+        else:
+            im.paste(abajo.crop((0, y, 256, y + 1)), (0, y))
+    return im
+
+
 def pelea(tipo, cuadros=600):
     """La pelea de la ficha de tipo; si al morir aparece otra (2 -> 9 -> 0x0A
     en la zona 0x12, 5 -> 8 en la 0x13: quita_d800 p04:8C23-8C2D, p04:8CFB),
@@ -172,7 +214,7 @@ def pelea(tipo, cuadros=600):
         t = m.mem[ahora] if ahora else None
         if t != vivo:
             vivo, ix, desde = t, ahora, k
-            if t and (m.mem[ix + 0x0A], m.mem[ix + 0x0B]) != (m.mem[0xCA50], m.mem[0xCA51]):
+            if t and t != 2 and (m.mem[ix + 0x0A], m.mem[ix + 0x0B]) != (m.mem[0xCA50], m.mem[0xCA51]):
                 a_la_sala(m, m.mem[ix + 0x0A], m.mem[ix + 0x0B])   # la nueva esta en otra sala
             if t:
                 sal = os.path.join(raiz, "t%02X" % t)
@@ -212,12 +254,14 @@ def pelea(tipo, cuadros=600):
                 m.pon_banco(0xA000, 7)
                 m.mem[0xC383] = 7
                 m.llama(0xB471, ix=ix, c=m.mem[ix + 0x10])   # resta_a_d800: sin vida
-        if vivo == 2 and m.mem[ix + 1] == 3 and not m.mem[0xD8A4] and k == desde24 + 30:
-            # el 2 sigue en la sala 8 cuando se entra por la puerta de tipo 5,
-            # que vuelve a poner 0xD8A4 = 1 y la pantalla partida (p15:AADF)
-            m.pon(0xD8A4, 1)
-            m.pon(0xCA42, 1)
-            m.pon(0xCA1C, 1)
+        if vivo == 2 and m.mem[ix + 1] == 3 and m.mem[0xCA4B] != 8 and not m.mem[0xD570] and k % 20 == 0:
+            # el 3 espera en la sala 8 con 0xD8A4: se entra por la puerta 8 de la
+            # sala 3, de tipo 5 (tipo_cruzado_5, p15:AADF: 0xD8A4 = 1, la pagina 1,
+            # la pantalla partida, R#0 = 0x16); cruzada como tools/omsx_salas.tcl
+            # (la ficha libre 0xD570 en el estado 3, p15:A9AB) pero con su tipo
+            m.pon(0xD570, 5)
+            m.pon(0xD571, 3)
+            m.pon(0xD575, 8)
         if vivo == 9 and not m.mem[0xD8AA] and k == desde + 30:
             m.pon(0xD8AA, 1)                    # como p14:B0BA (y p01:73C8): sin el, el 9 espera
         if vivo and m.mem[ix + 1] == 0x24 and k == desde24 + 60:
@@ -254,6 +298,8 @@ def pelea(tipo, cuadros=600):
             im.save(os.path.join(sal, "p%05d.png" % k))
             if vivo == 2:                       # su figura, en la pagina 2
                 v.pagina(2, 256).save(os.path.join(sal, "g%05d.png" % k))
+            if m.mem[0xCA1C]:                   # y la pantalla partida montada
+                pantalla_partida(m.vdp, m.mem).save(os.path.join(sal, "v%05d.png" % k))
     print("zona %02X: %s; %d dibujos distintos" % (
         f["zona"], " ".join("%d:%02X/%02X" % (k, p[0], p[1]) for k, p in pasos), len(vistos)))
 

@@ -9,10 +9,17 @@ cada uno en su sitio por sitio_en_el_radar, p12:6DE2). Con la alerta parpadea
 (radar_en_alerta).
 
 Aqui: la sala 2 de la zona 6 (cuatro soldados), el cuadro entero (p01:728E)
-y el recuadro guardado cada 8 cuadros; despues, lo mismo con la alerta
-(0xCA5F = 2, como cuando un actor ve a Snake, p04:8455).
+y el recuadro guardado cada 8 cuadros; despues, lo mismo con la alerta puesta
+como la pone un actor que ve a Snake (alerta_sin_musica, p04:9955 -> p14:B176,
+que pone 0xCA5F y el marcador: 0xE208 = 0x0800). Con 0xCA5F solo no basta: la
+cuenta 0xE209 empieza en 0 y el parpadeo tardaria 256 cuadros.
 
-Uso: radar.py  -> work/radar/sin_NNN.png, alerta_NNN.png y la sala entera
+Despues, la alerta 1 (a_alerta_1, p04:934C). En el recuadro (rotulos_de_alerta,
+p04:984C): LEVEL = alerta + 1 (tope 3) y el numero, con la 2 la vida de Snake
+(0xCA53) y con la 1 la cuenta 0xD42B / 8.
+
+Uso: radar.py  -> work/radar/sin_NNN.png, alerta2_NNN.png, alerta1_NNN.png y
+la sala entera (sala_160, sala_260, sala_460)
 """
 import os
 import sys
@@ -40,9 +47,20 @@ def main():
     # (p06:B048); aqui no hay llegada (0xCADF = 0): se enciende como p11:A107
     m.pon(0xCABA, 0)
     vistos = set()
-    for k in range(400):
-        if k == 200:
-            m.pon(0xCA5F, 2)                  # la alerta
+    aviso = 0
+    for k in range(500):
+        if k == 200:                          # la alerta como la pone un actor:
+            m.bancos_123()                    # alerta_sin_musica (p04:9955 ->
+            m.pon_banco(0x8000, 4)            # p14:B176), con su marcador
+            m.mem[0xC382] = 4                 # (p04:9814: 0xE208 = 0x0800)
+            m.llama(0x9955)
+            print("alerta", m.mem[0xCA5F], "E208/9 %02X %02X" % (m.mem[0xE208], m.mem[0xE209]))
+        if k == 300:                          # la alerta 1, la de despues
+            m.bancos_123()                    # (a_alerta_1, p04:934C: la cuenta
+            m.pon_banco(0x8000, 4)            # 0xD42B de p15:BE48 y sus rotulos)
+            m.mem[0xC382] = 4
+            m.llama(0x934C)
+            print("alerta", m.mem[0xCA5F], "cuenta", m.mem[0xD42B] | m.mem[0xD42C] << 8)
         m.pon(0xCA08, 0)
         m.pon(0xCA07, 0)
         m.bancos_123()
@@ -50,15 +68,21 @@ def main():
         m.pon(0xCA53, 0x20)
         if m.mem[0xCA00] != 5 or m.mem[0xCA01] != 0:
             print("cuadro %d: estado %d paso %d" % (k, m.mem[0xCA00], m.mem[0xCA01]))
-        if k % 8 == 0:
+            if m.mem[0xCA01] == 9 and k - (aviso or k) < 6:  # el aviso sobre el actor que ve
+                aviso = aviso or k                 # a Snake (0xD458, p12:74BC)
+                v = m.vdp
+                im = v.pagina((v.r[2] >> 5) & 3, 212)
+                mapas.sprites_de_ram(v, m.mem, im)
+                im.save(os.path.join(SAL, "aviso_%03d.png" % k))
+        if k % 4 == 0:
             v = m.vdp
             im = v.pagina((v.r[2] >> 5) & 3, 212)
             r = im.crop((0xC4, 0x17, 0xC4 + 0x38, 0x17 + 0x38))
             h = r.tobytes()
             if h not in vistos:
                 vistos.add(h)
-                r.save(os.path.join(SAL, "%s_%03d.png" % ("alerta" if k >= 200 else "sin", k)))
-            if k in (160, 360):
+                r.save(os.path.join(SAL, "%s_%03d.png" % ("sin" if k < 200 else "alerta2" if k < 300 else "alerta1", k)))
+            if k in (160, 260, 460):
                 mapas.sprites_de_ram(v, m.mem, im)
                 im.save(os.path.join(SAL, "sala_%03d.png" % k))
     print(len(vistos), "radares distintos")
