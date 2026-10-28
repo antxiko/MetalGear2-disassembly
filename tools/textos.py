@@ -319,7 +319,8 @@ def transceptor():
                         out.append("- (sin mensaje%s)" % ("" if u is None else ", hasta %d" % u))
                         continue
                     t, _ = mensaje(48, mm)
-                    out.append("- p48:%04X%s%s:" % (mm, " tras %d" % e if e else "",
+                    out.append("- p%02d:%04X%s%s:" % (48 if mm < 0xA000 else 49, mm,
+                                                     " tras %d" % e if e else "",
                                                      "" if u is None else ", al azar hasta %d" % u))
                     out.append("")
                     out.append("    " + t.replace("\n", "\n    "))

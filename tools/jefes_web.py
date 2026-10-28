@@ -19,7 +19,7 @@ JEFES = os.path.join(RAIZ, "work", "jefes")
 # los nombres, de sus mensajes (tools/textos.py; work/textos/textos.md)
 NOMBRES = {
     0x01: ("HIND D", "p49:AF2E, ケスラー: HIND・D"),
-    0x02: ("METAL GEAR (el nuevo, con FOX dentro)", "p49:B9BA... ペトロ: シンガタMETAL GEAR; su mensaje, de FOX"),
+    0x02: ("METAL GEAR (el nuevo, con FOX dentro)", "p50:9182, SNAKE: シンガタMETAL GEAR; su mensaje, de FOX"),
     0x03: ("BLACK COLOR (Kyle Schneider)", "p50:8807 y 887B"),
     0x04: ("RUNNING MAN", "p50:8BDA"),
     0x05: ("NIGHT SIGHT", "p49:B233, ケスラー; p49:B9A9"),

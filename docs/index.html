@@ -1,0 +1,98 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metal Gear 2: Solid Snake - commented disassembly</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<header class="top">
+  <img src="data:image/png;base64,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" alt="Metal Gear 2: Solid Snake">
+  <p class="claim">The 20 zones with their 274 rooms and 57 special rooms, Snake with his 98 drawings, the enemies, the eleven boss fights, the weapons, the equipment and the radar, the transceiver with every conversation, the texts, the 44 tunes taken from its own engine, the intro and the ending, and the debug monitor hidden in the last bank.</p>
+  <p class="ficha">Konami - <b>(c) Konami 1990</b> - Cartridge <b>RC-767</b>, 512 KB MegaROM (Konami with SCC) - <b>MSX2</b> - Dump <b>af567ea6...</b></p>
+</header>
+<p class="ficha" style="border:1px solid var(--oro);padding:.8em 1em;margin:1.5em 0">
+<b>There are no screenshots of the game here.</b> The maps, the characters, the fights, the screens and the sequences are <b>painted by the cartridge itself</b>, running its own code here, and checked against openMSX's VRAM point by point. The only screenshots are those of the debug monitor, which cannot be seen without a patch.</p>
+<nav><a href="THE-MAPS.html">The maps</a><a href="SNAKE.html">Snake</a><a href="THE-ENEMIES.html">The enemies</a><a href="THE-BOSSES.html">The bosses</a><a href="THE-TRANSCEIVER.html">The transceiver</a><a href="THE-TEXTS.html">The texts</a><a href="THE-MUSIC.html">The music</a><a href="THE-SEQUENCES.html">The sequences</a><span style="opacity:.35">|</span><a href="CURIOSITIES.html">Curiosities</a><a href="THE-DEBUG-MONITOR.html">The debug monitor</a><span style="opacity:.35">|</span><a href="UNDER-THE-HOOD.html">Under the hood</a><a href="es/" style="margin-left:auto;color:var(--oro)">En castellano</a></nav>
+<section id="numbers">
+  <h2>The cartridge in numbers</h2>
+  <div class="cifras"><div class="cifra"><b>100%</b><span>of the binary explained</span></div><div class="cifra"><b>7,673</b><span>routines and labels</span></div><div class="cifra"><b>45.9%</b><span>of the listing commented</span></div><div class="cifra"><b>118,147</b><span>bytes of code</span></div><div class="cifra"><b>406,141</b><span>bytes of data</span></div><div class="cifra"><b>0</b><span>bytes unidentified</span></div></div>
+</section>
+<section id="pages"><h2>What is inside</h2><div class="hall"><h3>The game</h3><ul><li><a href="THE-MAPS.html">The maps</a>: the 20 zones, room by room, with their doors, special rooms and enemies.</li><li><a href="SNAKE.html">Snake</a>: his 98 drawings, the weapons (F2), the equipment (F3) and the radar.</li><li><a href="THE-ENEMIES.html">The enemies</a>: the 17 kinds of actor with all their drawings.</li><li><a href="THE-BOSSES.html">The bosses</a>: the eleven fights, played by the cartridge.</li><li><a href="THE-TRANSCEIVER.html">The transceiver</a>: the frequencies, who answers, the portraits and every conversation.</li><li><a href="THE-TEXTS.html">The texts</a>: the font, its 128 kanji, the signs and the rest of the messages.</li><li><a href="THE-MUSIC.html">The music</a>: the 44 tunes, from its own sound engine, and where each one is asked for.</li><li><a href="THE-SEQUENCES.html">The sequences</a>: the intro, the title and the ending, at the MSX's own pace.</li></ul></div><div class="hall"><h3>Curiosities</h3><ul><li><a href="CURIOSITIES.html">Curiosities</a>: VRAM:OIK, the 140.07 radio, Konami and the MSX inside the game, SNATCHER, the open questions.</li><li><a href="THE-DEBUG-MONITOR.html">The debug monitor</a>: the programmers' tool left in bank 63, switched off by two bytes.</li></ul></div><div class="hall"><h3>Under the hood</h3><ul><li><a href="UNDER-THE-HOOD.html">Under the hood</a>: rebuilding the ROM, the mapper, the interrupt in RAM, the states, the RAM, the VRAM and the tools.</li></ul></div></section>
+<footer><p>This is documentation and preservation work: the code and artwork still belong to their authors and to Konami, and the cartridge image is not distributed.</p></footer>

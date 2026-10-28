@@ -2,9 +2,9 @@
 """Las rutinas de OTRO desensamblado que estan tambien en este, instruccion
 por instruccion.
 
-Gekitotsu Pennant Race 2 es la continuacion de The Pro Yakyuu Gekitotsu
-Pennant Race (RC-757), y aunque casi no comparten bytes -todo esta en otras
-direcciones- muchas rutinas son la misma. Aqui la firma de una rutina es la
+Dos cartuchos de Konami casi no comparten bytes -todo esta en otras
+direcciones-, pero muchas rutinas de libreria son la misma (aqui se paso con
+el listado de otro MSX2 con SCC para traer sus nombres). La firma de una rutina es la
 lista de sus instrucciones desde la etiqueta hasta el primer `ret`, `jp` o
 `jr` sin condicion, con los operandos de 16 bits tapados (en una copia las
 direcciones cambian; los registros, los valores de un byte y los saltos

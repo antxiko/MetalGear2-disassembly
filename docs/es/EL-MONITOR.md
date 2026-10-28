@@ -1,4 +1,4 @@
-# El monitor de depuración escondido en el banco 63
+# El monitor de depuración
 
 El cartucho guarda, en el último banco, una herramienta de los programadores
 que nunca llega a ejecutarse: un monitor de depuración con pausa, visor de la
@@ -17,8 +17,8 @@ B801  ret      ; ...y vuelve
 ```
 
 Detrás, de 0xB802 a 0xBF6B (1.897 bytes, 952 instrucciones), está el monitor
-completo. El trazado del cartucho no llegaba hasta ahí: se ha desensamblado
-poniendo una semilla en 0xB802.
+completo. Ningún camino del juego llega hasta ahí: está desensamblado desde
+una semilla en 0xB802.
 
 Para encenderlo basta con cambiar esos dos bytes por dos `nop`. Son el
 desplazamiento 0x7F800 de la ROM (banco 63 × 0x2000 + 0x1800): `B7 C9` pasa a

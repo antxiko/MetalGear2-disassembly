@@ -208,6 +208,29 @@ test:
 	@echo "=================================================================="
 	@python3 -m unittest discover -s tests -v
 
+# Las imagenes y las musicas de la web: las juntan de lo que pinta el cartucho
+# ejecutado en work/ (mapas.py, snake.py, jefes.py... ver tools/imagenes_web.py).
+# Necesitan PIL: el python de Programs, no el de la Store.
+PYIMG ?= /c/Users/Antxiko/AppData/Local/Programs/Python/Python313/python.exe
+imagenes: $(ROM)
+	$(PYIMG) tools/imagenes_web.py docs
+
+# La web: en el repositorio solo van las paginas en markdown; GitHub Pages las
+# convierte con Jekyll (tools/jekyll.py escribe su configuracion y plantillas).
+# Las partes largas (letreros, conversaciones, textos, musicas) las escribe
+# tools/paginas_web.py desde la ROM. La portada la monta make_web.py con lo de
+# tools/contenido_web.py. Para comprobar los enlaces se construye en local con
+# el mismo Jekyll (3.10).
+JEKYLL ?= C:/msys64/mingw64/bin/ruby C:/msys64/mingw64/bin/jekyll
+web: $(ROM)
+	python3 tools/paginas_web.py docs
+	python3 tools/jekyll.py docs
+	python3 tools/make_web.py docs/imagenes docs/index.html en
+	python3 tools/make_web.py docs/imagenes docs/es/index.html es
+	rm -rf $(WORK)/_site
+	$(JEKYLL) build -s docs -d $(WORK)/_site
+	python3 tools/check_enlaces.py $(WORK)/_site
+
 clean:
 	rm -f $(WORK)/p*.trace.json $(WORK)/p*.blocks $(WORK)/p*.out.bin \
 	      $(WORK)/reensamblada.rom $(WORK)/pasmo.err
