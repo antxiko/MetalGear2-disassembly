@@ -3,7 +3,8 @@
 mensajes de los bancos 48-51 decodificados como los escribe el juego.
 
 Lo leido en el listado:
-- siguiente_letra (p01:66C4): un primer byte < 4 es la velocidad (p01:654F);
+- siguiente_letra (p01:66C4): un primer byte < 4 es la velocidad (p01:654F),
+  y tambien el que va detras de un 0xFC (su paso 2, espera_tecla_de_ventana p01:65E9);
   0xFF el final, 0xFE salto de linea, 0xFD espera una tecla, 0xFC espera y
   el paso siguiente, 0xFB espera y el paso 4; 0x76-0x7F y 0xD4-0xDF dicen
   quien habla (0-9 y 0x0A-0x15: su nombre de la tabla de p50:8004, pinta_quien_habla
@@ -107,10 +108,10 @@ def mensaje(espacio, d, nombres=True):
             break
         if c == 0xFE:
             out.append("\n")
-        elif c == 0xFD:
-            out.append(" ▼\n")
-        elif c == 0xFC:
-            out.append(" ▼▼\n")
+        elif c in (0xFD, 0xFC):
+            out.append(" ▼\n" if c == 0xFD else " ▼▼\n")
+            if c == 0xFC and byte(espacio, d + 1) < 4:
+                d += 1                         # una velocidad nueva (paso 2, p01:65E9)
         elif c == 0xFB:
             out.append(" ▽")
             d += 1
