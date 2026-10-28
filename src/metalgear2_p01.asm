@@ -189,7 +189,7 @@ L_60F1:
 	ex de,hl			;60f6
 	ret			;60f7
 L_60F8:
-	jr c,L_60FE		;60f8   ; sin el bit 7, se cumple con las condiciones
+	jr c,L_60FE		;60f8   ; sin el bit 7, basta con las banderas
 	inc hl			;60fa   ; si no, la siguiente
 	inc hl			;60fb
 	inc hl			;60fc
@@ -198,44 +198,44 @@ L_60FE:
 	ld a,001h		;60fe   ; se cumple
 	ld (0ca9ch),a		;6100   ; guarda 1 si una conversacion ha encontrado su ficha
 	ret			;6103
-mira_condiciones:		; las n condiciones de la ficha (bits 0-3 de la cabeza; bit 4: todas o ninguna)
+mira_condiciones:		; las n banderas de 0xD7D0 de la ficha (bits 0-3 de la cabeza): sin el bit 4, se cumple con todas puestas (contrastado con el cartucho: tools/prueba_conversaciones.py); con el bit 4, con la ultima puesta y las demas no (leido: ninguna ficha lo usa)
 	ld a,(hl)			;6104
-	and 00fh		;6105   ; B = cuantas condiciones
+	and 00fh		;6105   ; B = cuantas banderas
 	ld b,a			;6107
 	ld a,(hl)			;6108
 	inc hl			;6109
-	bit 4,a		;610a   ; bit 4: tienen que estar todas
+	bit 4,a		;610a   ; con el bit 4 (ninguna ficha de p48 lo usa): p01:6124
 	jr nz,L_6124		;610c
-	ld a,b			;610e   ; ninguna: se cumple
+	ld a,b			;610e   ; sin banderas: se cumple
 	or a			;610f
 	jr nz,L_6114		;6110
 	scf			;6112
 	ret			;6113
 L_6114:
-	ld a,(hl)			;6114   ; vale una que este
-	call mira_condicion		;6115   ; esta? (p03:B0F6)
+	ld a,(hl)			;6114   ; todas puestas: esta esta?
+	call mira_condicion		;6115   ; mira_bandera: NZ si esta puesta (p03:B0F6)
 	jr z,L_611F		;6118
-	inc hl			;611a   ; no: la siguiente
+	inc hl			;611a   ; si: la siguiente
 	djnz L_6114		;611b
-	scf			;611d   ; ninguna esta: se cumple
+	scf			;611d   ; todas puestas: se cumple
 	ret			;611e
 L_611F:
-	inc hl			;611f   ; salta las que quedan
+	inc hl			;611f   ; una no esta: salta las que quedan
 	djnz L_611F		;6120
-	and a			;6122   ; no se cumple
+	and a			;6122   ; y no se cumple
 	ret			;6123
 L_6124:
-	ld a,(hl)			;6124   ; todas
+	ld a,(hl)			;6124   ; con el bit 4: la primera puesta...
 	call mira_condicion		;6125   ; mira_condicion: la condicion A (p03:B0F6), con los bancos 48-49 a la vuelta
-	jr nz,L_612F		;6128   ; una no esta: no se cumple
+	jr nz,L_612F		;6128   ; ...puesta: p01:612F
 	inc hl			;612a
 	djnz L_6124		;612b
-	and a			;612d   ; todas estan: no se cumple
+	and a			;612d   ; ninguna puesta: no se cumple
 	ret			;612e
 L_612F:
-	inc hl			;612f   ; salta las que quedan...
+	inc hl			;612f   ; salta esta; si quedan mas, no se cumple (p01:611F)...
 	djnz L_611F		;6130
-	scf			;6132   ; ...y se cumple
+	scf			;6132   ; ...y si era la ultima, se cumple
 	ret			;6133
 mira_condicion:		; la condicion A (p03:B0F6), con los bancos 48-49 a la vuelta
 	push bc			;6134

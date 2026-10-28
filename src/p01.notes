@@ -1,4 +1,22 @@
 
+
+# --- A MANO: comentarios escritos leyendo el codigo ---
+C 0x60F8 sin el bit 7, basta con las banderas
+C 0x6105 B = cuantas banderas
+C 0x610A con el bit 4 (ninguna ficha de p48 lo usa): p01:6124
+C 0x610E sin banderas: se cumple
+C 0x6114 todas puestas: esta esta?
+C 0x6115 mira_bandera: NZ si esta puesta (p03:B0F6)
+C 0x611A si: la siguiente
+C 0x611D todas puestas: se cumple
+C 0x611F una no esta: salta las que quedan
+C 0x6122 y no se cumple
+C 0x6124 con el bit 4: la primera puesta...
+C 0x6128 ...puesta: p01:612F
+C 0x612D ninguna puesta: no se cumple
+C 0x612F salta esta; si quedan mas, no se cumple (p01:611F)...
+C 0x6132 ...y si era la ultima, se cumple
+# --- fin de lo escrito a mano ---
 # --- A MANO: comentarios, nombres y bloques ---
 C 0x6000 el bit de expandido...
 C 0x6002 ...con el slot primario
@@ -37,23 +55,8 @@ C 0x60D7 es esta zona...
 C 0x60DE ...y esta sala?
 C 0x60E8 la sala especial
 C 0x60F1 no se cumple: detras de la ficha
-C 0x60F8 sin el bit 7, se cumple con las condiciones
 C 0x60FA si no, la siguiente
 C 0x60FE se cumple
-C 0x6105 B = cuantas condiciones
-C 0x610A bit 4: tienen que estar todas
-C 0x610E ninguna: se cumple
-C 0x6114 vale una que este
-C 0x6115 esta? (p03:B0F6)
-C 0x611A no: la siguiente
-C 0x611D ninguna esta: se cumple
-C 0x611F salta las que quedan
-C 0x6122 no se cumple
-C 0x6124 todas
-C 0x6128 una no esta: no se cumple
-C 0x612D todas estan: no se cumple
-C 0x612F salta las que quedan...
-C 0x6132 ...y se cumple
 C 0x6142 la lista...
 C 0x6146 ...n
 C 0x6149 DE = los mensajes
@@ -651,7 +654,7 @@ L 0x608B recorre_conversacion busca la primera ficha que se cumple y hace su acc
 L 0x60A3 hace_accion accion 0: un mensaje; 1: uno al azar (p01:6142); otra: nada
 L 0x60B4 accion_mensaje el mensaje de la accion a 0xD7B7 (0 = ninguno)
 L 0x60C4 mira_ficha si se cumplen las condiciones de la ficha y, con el bit 7, la zona y la sala
-L 0x6104 mira_condiciones las n condiciones de la ficha (bits 0-3 de la cabeza; bit 4: todas o ninguna)
+L 0x6104 mira_condiciones las n banderas de 0xD7D0 de la ficha (bits 0-3 de la cabeza): sin el bit 4, se cumple con todas puestas (contrastado con el cartucho: tools/prueba_conversaciones.py); con el bit 4, con la ultima puesta y las demas no (leido: ninguna ficha lo usa)
 L 0x6134 mira_condicion la condicion A (p03:B0F6), con los bancos 48-49 a la vuelta
 L 0x6142 mensaje_al_azar [n], n mensajes y n umbrales: elige uno con p01:6172
 L 0x6172 azar_100 un numero al azar de 0 a 99 (R y 0xCA03)
