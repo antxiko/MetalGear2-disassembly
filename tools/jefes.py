@@ -10,25 +10,29 @@ sin vida (resta_a_d800, p07:B471) pasan a los pasos 0x20 y siguientes
 
 Aqui: se entra en la zona y en la sala de la ficha (como tools/mapas.py), se
 pone a Snake donde la pelea empieza (la Y y la X que mira su primer paso), y
-se corre el bucle del juego (p01:741A) cuadro a cuadro: con un mensaje abierto
+se corre el cuadro del juego (p01:728E, el de la interrupcion) cuadro a cuadro: con un mensaje abierto
 (0xD8A8 o 0xE221) se pulsa el disparo 1 un cuadro si y otro no (p01:660F),
-la vida de Snake (0xCA53) se deja llena, y a los CUADROS cuadros se le quita
+la vida de Snake (0xCA53) se deja llena (y si lo aplastan, de vuelta al
+estado 0), y a los CUADROS cuadros se le quita
 al jefe toda la vida con resta_a_d800 para ver como acaba. De cada cuadro se
 guardan los sprites 8-31 (los 0-7 son de Snake) si son distintos de los ya
 vistos, y cada 16 cuadros la pantalla entera.
 
-Lo que sale (2026-10-27), todo con el cartucho ejecutado:
+Lo que sale (2026-10-28), todo con el cartucho ejecutado:
   1 zona 7: helicoptero de mosaicos y su sombra; acaba como con los misiles (paso 0x20 -> 0x2A-0x2D)
   2 zona 0x12 sala 8: el robot de mosaicos; sus piezas en la pagina, montadas por la pantalla
     partida (R#23 por lineas) que msx2run no hace: la figura entera SIN COTEJO
   3 zona 3: el cientifico que se transforma, sus estrellas, la muerte
   4 especial 0x29: "Running" (en katakana) en su mensaje; se queda en el mensaje del paso 0x10
-  5 zona 0x13: se ve con el transceptor abierto (SIN EXPLICAR); al morir saca al 8
-  6 zona 0x0E, 7 zona 0x0A, 8 zona 0x13: enteros
+  5 zona 0x13: empieza con una llamada del transceptor (antes, con p01:741A suelto, la
+    pantalla del transceptor se quedaba: la cierran los pasos de p01:728E); al morir saca al 8
+  6 zona 0x0E, 7 zona 0x0A: enteros. 8 zona 0x13: hasta su paso 0x11, que espera el bit 5 de
+    0xD7D9 (p05:BFA0) para lo de despues (Snake al estado 0x17, el mensaje 0x1718)
   9 zona 0x12: "FOX" en su conversacion; sus pasos 5-0x10 esperan sucesos (0xD88C, salas
     2 y 3): se ven los de antes y los del final
   0x0A zona 0x12: el paso 0 espera 0xD6B0: solo se ve desde que se le quita la vida
-  0x0B: por la escena de 0xD8AC (p05:AB08), sin hacer
+  0x0B zona 0x0B: cuatro a la vez dentro del ascensor de la entrada 5, en la planta 0x13
+    (p07:A248 -> 0xD8A0 = 1 -> p05:AA90 y la escena de 0xD8AC, p05:AB08); arden al morir
 
 Uso: jefes.py TIPO [cuadros]  -> work/jefes/tTT/sNNNN.png (sprites), pNNNN.png (pantalla)
 """
@@ -55,6 +59,12 @@ def b56(d):
 
 
 def ficha(tipo):
+    if tipo == 0x0B:
+        # el ascensor de la entrada 5 (p07:AA83, la ficha 16: zona 0x0B, sala 7,
+        # Y 0x88, X 0x48 y 7F 20 A8): al pasar por la planta 0x13 con 0xD658 el
+        # paso 0x0F (p07:A248), que pone 0xD8A0 = 1 (p07:A346): las cuatro
+        # fichas de tipo 0x0B (p05:AA90) y la escena de 0xD8AC (p05:AB08)
+        return {"zona": 0x0B, "sala": 7, "ascensor": (5, 0x88, 0x48, 0x7F, 0x20, 0xA8)}
     a = FILAS[tipo]
     t, y, x, f, c, vida = (b56(a + i) for i in range(6))
     assert t == tipo
@@ -91,6 +101,19 @@ def maquina(f):
             m.bancos_123()
             m.llama(d)
         for d, v in ((0xCA40, 1), (0xCB00, 0), (0xCA00, 5), (0xCA01, 0), (0xCA97, 0), (0xD8A8, 0)):
+            m.pon(d, v)
+        return m
+    if f.get("ascensor"):
+        g = {v: k for k, v in mapas.rejilla(z).items()}
+        a_la_sala(m, g[f["sala"]] >> 4, g[f["sala"]] & 15)
+        n, y, x, a, b, c = f["ascensor"]
+        for d, v in ((0xD8C2, n), (0xD8CF, y), (0xD8D0, x), (0xD8C6, a), (0xD8C7, b), (0xD8C8, c), (0xD658, 1)):
+            m.pon(d, v)
+        m.pon_banco(0xA000, 7)
+        m.mem[0xC383] = 7
+        m.llama(0xA40D)                       # snake_entra_en_d8c0: Snake dentro
+        # bajando, en la planta 0x13: el paso 0x0F con su cuenta (p07:A266)
+        for d, v in ((0xD8CD, 0x13), (0xD8C4, 2), (0xD8C1, 0x0F), (0xD8C3, 0x10)):
             m.pon(d, v)
         return m
     a_la_sala(m, f["fila"], f["columna"])
@@ -141,7 +164,7 @@ def pelea(tipo, cuadros=600):
         m.pon(0xCB05, SITIO_DE_SNAKE[tipo][1])
     vistos, antes, antes_f, pasos = set(), 0, 0, []
     vivo, desde, fin, desde24 = None, 0, None, -1
-    for k in range(4000):
+    for k in range(6000):
         # el tipo vivo: la primera ficha ocupada de las 3 de las salas normales
         # (en las especiales, solo la de 0xD860: fichas_d800 p04:89E8)
         fichas = [0xD860] if m.mem[0xCA76] else [0xD800, 0xD820, 0xD840]
@@ -176,7 +199,13 @@ def pelea(tipo, cuadros=600):
             # (p07:B521) y acaban por lo suyo: el 1 con los misiles (vida a
             # cero: el paso 0x20, p06:A065-A072), el 2 con las fichas de
             # 0xDF80 (a cero: el paso 0x0A, p07:BF14-BF1C)
-            if vivo in (1, 2):
+            if vivo == 0x0B:                    # las cuatro a la vez
+                for d in (0xD800, 0xD820, 0xD840, 0xD860):
+                    if m.mem[d] == 0x0B and m.mem[d + 0x10]:
+                        m.pon_banco(0xA000, 7)
+                        m.mem[0xC383] = 7
+                        m.llama(0xB471, ix=d, c=m.mem[d + 0x10])
+            elif vivo in (1, 2):
                 m.pon(ix + 0x10, 0)
                 m.pon(ix + 1, 0x20 if vivo == 1 else 0x0A)
             else:
@@ -195,8 +224,14 @@ def pelea(tipo, cuadros=600):
             # el paso 0x24 espera a Snake en otra sala (p04:8BB6); aqui se sigue
             m.pon(ix + 1, 0x25)
         m.bancos_123()
-        m.llama(0x741A)
+        m.llama(0x728E)                       # el cuadro entero, como la interrupcion (p03:A13F)
         m.pon(0xCA53, 0x20)
+        if m.mem[0xCB00] == 0x14:
+            # Snake aplastado (el 2: dentro de su forma, p07:BE9C -> p03:AC02) o
+            # sin vida: el paso 0 lo pasa al 0x0B (p01:745E), donde las fichas ya
+            # no corren. Como con la vida, se deshace
+            for d in (0xCB00, 0xCA01, 0xCB40, 0xCB41):
+                m.pon(d, 0)
         if m.mem[0xCA00] != 5:
             print("cuadro %d: la partida pasa al estado %d" % (k, m.mem[0xCA00]))
             break
