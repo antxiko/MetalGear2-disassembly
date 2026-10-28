@@ -22,6 +22,15 @@ that follows it. So that they patrol and don't chase Snake, the alert
 game frame every 5 of the VDP, measured in openMSX). There is one for each
 different look (kind, patterns and colours); the identical ones are counted.
 
+## All their drawings
+
+The different pictures of each GIF below, one row per enemy, in the same
+order and with no repeats:
+
+![The enemies' drawings, no repeats](imagenes/enemigos_hoja.png)
+
+## One by one
+
 <!-- generado:enemigos -->
 ### 1. Soldier (kind 0x01)
 

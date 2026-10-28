@@ -50,6 +50,96 @@ def rejilla(dibujos, por_fila, celda, k=2, fondo=NEGRO):
     return amplia(hoja, k)
 
 
+def iguales(a, b, tol=3):
+    """Si dos dibujos (RGBA o sobre negro) son el mismo a la vista: alineados
+    abajo y al centro, con hasta un punto de desplazamiento, difieren en tol
+    puntos o menos."""
+    from PIL import Image
+    a, b = solido(a), solido(b)
+    if abs(a.size[0] - b.size[0]) > 3 or abs(a.size[1] - b.size[1]) > 3:
+        return False
+    w, h = max(a.size[0], b.size[0]) + 2, max(a.size[1], b.size[1]) + 2
+    pa = a.load()
+    mejor = None
+    for dx in (-1, 0, 1):
+        for dy in (-1, 0, 1):
+            ca = Image.new("RGB", (w, h))
+            cb = Image.new("RGB", (w, h))
+            ca.paste(a, ((w - a.size[0]) // 2, h - a.size[1] - 1))
+            cb.paste(b, ((w - b.size[0]) // 2 + dx, h - b.size[1] - 1 + dy))
+            n = sum(1 for x, y in zip(ca.getdata(), cb.getdata()) if x != y)
+            mejor = n if mejor is None else min(mejor, n)
+    return mejor <= tol
+
+
+def solido(im):
+    """El dibujo sobre negro, recortado a lo que tiene."""
+    from PIL import Image
+    if im.mode == "RGBA":
+        fondo = Image.new("RGB", im.size)
+        fondo.paste(im, (0, 0), im)
+        im = fondo
+    im = im.convert("RGB")
+    caja = im.getbbox()
+    return im.crop(caja) if caja else im
+
+
+def distintos(ims, tol=3):
+    """Los dibujos sin los que ya han salido (a la vista, iguales())."""
+    r, exactos = [], set()
+    for im in ims:
+        im = solido(im)
+        k = im.tobytes() + bytes(im.size)
+        if k in exactos:                      # los iguales del todo, sin mirar mas
+            continue
+        exactos.add(k)
+        if not any(iguales(im, o, tol) for o in r):
+            r.append(im)
+    return r
+
+
+def hoja_de(filas, por_fila=16, celda=(36, 40), k=2, fondo=NEGRO):
+    """Una fila de rejilla() por grupo, una debajo de otra."""
+    from PIL import Image
+    filas = [rejilla(f, por_fila, celda, k, fondo) for f in filas if f]
+    h = Image.new("RGB", (max(f.size[0] for f in filas), sum(f.size[1] for f in filas) + 8 * (len(filas) - 1)),
+                  (40, 40, 40))
+    y = 0
+    for f in filas:
+        h.paste(f, (0, y))
+        y += f.size[1] + 8
+    return h
+
+
+def piezas(im, hueco=2):
+    """Las piezas sueltas de una imagen sobre negro (lo que tiene puntos a
+    menos de `hueco` de distancia es la misma pieza): cada objeto aparte, el
+    jefe por un lado y sus balas por otro."""
+    im = solido(im)
+    w, h = im.size
+    px = im.load()
+    lleno = {(x, y) for y in range(h) for x in range(w) if px[x, y] != (0, 0, 0)}
+    r = []
+    while lleno:
+        pila = [lleno.pop()]
+        pieza = set(pila)
+        while pila:
+            x, y = pila.pop()
+            for dx in range(-hueco, hueco + 1):
+                for dy in range(-hueco, hueco + 1):
+                    q = (x + dx, y + dy)
+                    if q in lleno:
+                        lleno.discard(q)
+                        pieza.add(q)
+                        pila.append(q)
+        xs = [x for x, _ in pieza]
+        ys = [y for _, y in pieza]
+        caja = (min(xs), min(ys), max(xs) + 1, max(ys) + 1)
+        if (caja[2] - caja[0]) * (caja[3] - caja[1]) >= 16:   # fuera los puntos sueltos
+            r.append(im.crop(caja))
+    return r
+
+
 def guarda(im, docs, nombre):
     ruta = os.path.join(docs, "imagenes", nombre)
     im.save(ruta, optimize=True)
@@ -68,6 +158,49 @@ def main(docs):
 
     for z in range(20):
         guarda(Image.open(w("mapas", "web_zona_%02X.png" % z)), docs, "zona_%02X.png" % z)
+
+    # LAS HOJAS, sin repetir (iguales(): a la vista, hasta 3 puntos distintos)
+    # Snake: los dibujos del barrido (snake.py barre) por su numero, sin el 7
+    # (sus patrones son de Snake tumbado y se pintan partidos: no sale jugando)
+    import json
+    snake = json.load(open(w("snake", "snake.json"), encoding="utf-8"))
+    vistos, filas = [], []
+    for dib in sorted({x["dibujo"] for x in snake}):
+        if dib == 7:
+            continue
+        fila = []
+        for x in snake:
+            if x["dibujo"] == dib:
+                im = Image.open(w("snake", x["fichero"]))
+                if not any(iguales(im, o) for o in vistos):
+                    vistos.append(im)
+                    fila.append(solido(im))
+        filas.append(fila)
+    guarda(hoja_de(filas), docs, "snake_hoja.png")
+    # los enemigos: las imagenes distintas de cada GIF de enemigos.py, una fila cada uno
+    ene = json.load(open(w("enemigos", "enemigos.json")))
+    filas = []
+    for e in ene:
+        ims = [solido(f.convert("RGB")) for f in ImageSequence.Iterator(Image.open(w("enemigos", e["gif"])))]
+        filas.append(distintos([i for i in ims if i.getbbox()]))
+    guarda(hoja_de(filas, celda=(52, 52)), docs, "enemigos_hoja.png")
+    # los jefes de sprites (no el HIND D ni METAL GEAR, que son caracteres): las
+    # piezas distintas de sus sprites (jefes.py: los 8-31 de cada cuadro)
+    os.makedirs(os.path.join(img, "jefes"), exist_ok=True)
+    for t in (3, 4, 6, 0x0B, 7, 5, 8, 9, 0x0A):
+        d = w("jefes", "t%02X" % t)
+        todas = []
+        for f in sorted(x for x in os.listdir(d) if x.startswith("s")):
+            im = Image.open(os.path.join(d, f)).convert("RGB")
+            # el fondo de jefes.py es magenta (ROSA): a negro
+            im.putdata([(0, 0, 0) if p == (255, 0, 255) else p for p in im.getdata()])
+            todas += piezas(im)
+        mios = distintos(todas)
+        mios.sort(key=lambda i: -i.size[0] * i.size[1])
+        grande = max(i.size[1] for i in mios) + 4
+        ancho = max(i.size[0] for i in mios) + 4
+        guarda(hoja_de([mios], por_fila=max(4, min(16, 640 // ancho)), celda=(ancho, grande)),
+               docs, "jefes/sprites_%02X.png" % t)
 
     # cada arma y cada cosa: el dibujo de lo elegido, del recuadro de la derecha
     # (F2 arriba, F3 abajo; medido: lo que cambia de una pantalla a otra)

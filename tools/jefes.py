@@ -194,7 +194,7 @@ def pantalla_partida(v, mem):
     return im
 
 
-TOPE_GIF = 1500                                 # imagenes distintas por pelea, como mucho
+TOPE_GIF = 4000                                 # imagenes distintas por pelea, como mucho
 
 
 def pelea(tipo, cuadros=600):
@@ -217,7 +217,7 @@ def pelea(tipo, cuadros=600):
     vistos, antes, antes_f, pasos = set(), 0, 0, []
     vivo, desde, fin, desde24 = None, 0, None, -1
     gif = None                                  # la pelea entera, al ritmo del MSX (gif_juego.py)
-    for k in range(6000):
+    for k in range(9000):
         # el tipo vivo: la primera ficha ocupada de las 3 de las salas normales
         # (en las especiales, solo la de 0xD860: fichas_d800 p04:89E8)
         fichas = [0xD860] if m.mem[0xCA76] else [0xD800, 0xD820, 0xD840]
@@ -228,7 +228,40 @@ def pelea(tipo, cuadros=600):
                 gif.guarda(os.path.join(raiz, "pelea_%02X.gif" % vivo), tope_ms=4000)
             gif = Gif() if t else None
             vivo, ix, desde = t, ahora, k
-            if t and t != 2 and (m.mem[ix + 0x0A], m.mem[ix + 0x0B]) != (m.mem[0xCA50], m.mem[0xCA51]):
+            if t == 0x0A:
+                # BIG BOSS: su paso 0 espera 0xD6B0 (p05:B5B5), que solo pone
+                # zona_12_con_d889 (p14:B104), por donde el juego vuelve a la
+                # zona 0x12 tras GREY FOX: Snake sin nada de lo que lleva,
+                # 0xD8A9 = 0xD6B0 = 1 y en la fila 2 columna 8 mirando a la
+                # izquierda; el paso 2 le espera en la sala 1 (p05:B5E3), la de
+                # la izquierda: aqui se le pone ya en ella, entrando por la derecha
+                for d in range(0xD600, 0xD700):
+                    m.pon(d, 0)
+                for d in range(0xD7F0, 0xD800):
+                    m.pon(d, 0)
+                m.pon(0xD8A9, 1)
+                m.pon(0xD6B0, 1)
+                # sin nada elegido (como p04:8CDA) y sin arder: 0xCB4B pone la llama
+                # sobre Snake (sprites_del_puesto, p12:7DA0); le queda de la pelea
+                # de antes y el CONTINUE del juego lo borra (en openMSX no esta)
+                for d in (0xCB20, 0xCB21, 0xCB4B, 0xCB4C, 0xCB4D):
+                    m.pon(d, 0)
+                # y la ficha como la deja p14:B11E: en 0xD840, solo el tipo
+                # (cotejado con openMSX: tools/omsx_bigboss.tcl, por CONTINUE)
+                for d in range(0xD800, 0xD880):
+                    m.pon(d, 0)
+                # el tipo lo pone p14:B11E y, al entrar en la zona, el resto sale
+                # de su fila de p56 (fichas_d800_de_la_zona): [tipo][Y][X][fila]
+                # [columna][vida] a los bytes 0, 3, 5, 0x0A, 0x0B y 0x10 (asi en openMSX)
+                fila = [ROM[56 * 0x2000 + FILAS[0x0A] - 0xA000 + i] for i in range(6)]
+                for o, v in zip((0, 3, 5, 0x0A, 0x0B, 0x10), fila):
+                    m.pon(0xD840 + o, v)
+                ix = 0xD840
+                a_la_sala(m, 2, 7)
+                m.pon(0xCB03, 0x68)
+                m.pon(0xCB05, 0xB0)
+                m.pon(0xCB0E, 3)
+            elif t and t != 2 and (m.mem[ix + 0x0A], m.mem[ix + 0x0B]) != (m.mem[0xCA50], m.mem[0xCA51]):
                 a_la_sala(m, m.mem[ix + 0x0A], m.mem[ix + 0x0B])   # la nueva esta en otra sala
             if t:
                 sal = os.path.join(raiz, "t%02X" % t)
@@ -250,6 +283,20 @@ def pelea(tipo, cuadros=600):
         m.pon(0xCA0A, funcion)
         m.pon(0xCA09, funcion & ~antes_f)
         antes_f = funcion
+        if vivo == 0x0A and m.mem[ix + 1] == 4 and m.mem[0xCA4B] != 6:
+            # su paso 4 (d8a9_en_sala_6, p05:B608) espera a Snake en la sala 6:
+            # entra ahi, y alli llegan BIG BOSS, los mensajes y la pelea
+            a_la_sala(m, 3, 7)
+            m.pon(0xCB03, 0x9F)                 # entrando por abajo, como en openMSX
+            m.pon(0xCB05, 0x58)
+            m.pon(0xCB0E, 1)
+            desde = 10 ** 9                     # la vida, cuando empiece a buscarle
+        if vivo == 0x0A and m.mem[ix + 1] == 6 and not os.path.exists(os.path.join(raiz, "mi_0A_paso6.ram")):
+            # para cotejar con openMSX (work/omsx_bigboss, el volcado del paso 6)
+            open(os.path.join(raiz, "mi_0A_paso6.ram"), "wb").write(bytes(m.mem))
+            open(os.path.join(raiz, "mi_0A_paso6.vram"), "wb").write(bytes(m.vdp.vram))
+        if vivo == 0x0A and m.mem[ix + 1] >= 8 and desde == 10 ** 9:
+            desde = k                           # d8a9_busca (paso 8): la pelea
         if vivo and k == desde + cuadros and m.mem[ix + 0x10]:
             # el final: los tipos 1 y 2 vuelven al paso 0 con resta_a_d800
             # (p07:B521) y acaban por lo suyo: el 1 con los misiles (vida a
@@ -305,14 +352,15 @@ def pelea(tipo, cuadros=600):
             if h not in vistos:
                 vistos.add(h)
                 r[0].save(os.path.join(sal, "s%05d.png" % k))
-        if gif is not None and len(gif) < TOPE_GIF:
+        abierto = m.mem[0xD8A8] or m.mem[0xE221] or m.mem[0xE1E8]
+        if gif is not None and len(gif) < TOPE_GIF and (not abierto or k % 8 == 0):
             v = m.vdp
             if m.mem[0xCA1C]:
                 im = pantalla_partida(v, m.mem)
             else:
                 im = v.pagina((v.r[2] >> 5) & 3, 212)
-                mapas.sprites_de_ram(v, m.mem, im)
-            gif.pon(im.convert("RGB").crop((0, 0, 0xC0, 0xC0)))
+                mapas.sprites_de_ram(v, m.mem, im, con_snake=True)
+            gif.pon(im.convert("RGB").crop((0, 0, 0xC0, 0xC0)), 8 if abierto else 1)
         if k % 16 == 0:
             v = m.vdp
             im = v.pagina((v.r[2] >> 5) & 3, 212)

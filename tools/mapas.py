@@ -191,14 +191,14 @@ def con_sprites(m, im):
     return sprites_de_ram(m.vdp, m.mem, im)
 
 
-def sprites_de_ram(v, mem, im):
+def sprites_de_ram(v, mem, im, con_snake=False):
     """Las copias 0xDA00 y 0xDC00 de mem puestas en la tabla de la VRAM que
     se ve (R#5, R#11) y pintadas como el chip (msx2run.V9938.sprites), sin
     los 8 primeros (Snake). Vale para un volcado de openMSX."""
     attr = ((v.r[11] & 3) << 15) | ((v.r[5] & 0xFC) << 7)
     viejo = bytes(v.vram[attr - 0x200:attr + 0x80])
     v.vram[attr - 0x200:attr + 0x80] = mem[0xDA00:0xDC80]
-    for n in range(SNAKE):
+    for n in range(0 if con_snake else SNAKE):
         v.vram[attr + 4 * n] = 0xE0
     v.sprites(im)
     v.vram[attr - 0x200:attr + 0x80] = viejo

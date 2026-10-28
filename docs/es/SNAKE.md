@@ -32,6 +32,15 @@ el 0x0B, con sus colores fijos (`p12:7AE5`), que se desliza:
 
 ![Bajo el cubo](../imagenes/snake_cubo.gif)
 
+## Todos sus dibujos
+
+Cada dibujo una sola vez (los que a la vista son iguales, quitados), una fila
+por número de dibujo: 0, 1, 2, 3, 4, 8, 9, 0x0A, 0x0B, 0x0C y 0x0E. El 9
+(`p63:B27A`) parece el 0 pero no lo es: cada imagen cambia en 20 a 67
+puntos.
+
+![Los dibujos de Snake, sin repetir](../imagenes/snake_hoja.png)
+
 ## Cómo se pinta
 
 Snake son **cuatro sprites de 16 x 16**: dos arriba y dos 16 puntos más

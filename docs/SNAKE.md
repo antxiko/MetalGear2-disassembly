@@ -32,6 +32,15 @@ pace (one game frame every 5 of the VDP, measured in openMSX).
 
 ![Under the bucket](imagenes/snake_cubo.gif)
 
+## All his drawings
+
+Each drawing only once (those that look the same, removed), one row per
+drawing number: 0, 1, 2, 3, 4, 8, 9, 0x0A, 0x0B, 0x0C and 0x0E. Number 9
+(`p63:B27A`) looks like 0 but is not: each picture differs in 20 to 67
+dots.
+
+![Snake's drawings, no repeats](imagenes/snake_hoja.png)
+
 ## How he is painted
 
 Snake is **four 16 x 16 sprites**: two on top and two 16 dots lower, and in

@@ -33,6 +33,10 @@ one frame every 5 of the VDP (measured in openMSX, see
 [Under the hood](UNDER-THE-HOOD.html)). A still picture longer than 4 seconds
 (a message waiting) is left at 4.
 
+Under each GIF, its sprites with no repeats: the loose pieces of sprites 8-31
+of each frame (the boss, its shots, its explosions), each one once. The HIND D
+and METAL GEAR have none: they are made of screen characters, not sprites.
+
 The bosses' patterns are loaded by the game when the opening call ends
 (`p09:B82F`): checked against openMSX in PREDATOR's room, identical.
 
@@ -40,12 +44,16 @@ The bosses' patterns are loaded by the game when the opening call ends
 
 ![BLACK COLOR](imagenes/jefes/pelea_03.gif)
 
+![Its sprites, no repeats](imagenes/jefes/sprites_03.png)
+
 The scientist who transforms. His messages are signed «BLACK COLOR»
 (`p50:8807`), and `p50:887B` says who he is: Kyle Schneider.
 
 ## 2. RUNNING MAN (special room 0x29)
 
 ![RUNNING MAN](imagenes/jefes/pelea_04.gif)
+
+![Its sprites, no repeats](imagenes/jefes/sprites_04.png)
 
 «オレはRUNNING MAN» (`p50:8BDA`). In the cartridge running, the fight stays
 in the message of its step 0x10, «見てろっ！！».
@@ -62,11 +70,15 @@ with its shadow; when it dies it ends like the missiles (steps 0x20 and
 
 ![RED BLASTER](imagenes/jefes/pelea_06.gif)
 
+![Its sprites, no repeats](imagenes/jefes/sprites_06.png)
+
 «おれはRED BLASTER» (`p50:8D64`), with his grenades.
 
 ## 5. ULTRABOX (zone 0x0B)
 
 ![ULTRABOX](imagenes/jefes/pelea_0B.gif)
+
+![Its sprites, no repeats](imagenes/jefes/sprites_0B.png)
 
 Four at once, inside the lift: on reaching floor 0x13 (`p07:A248`) step 0x0F
 sets `0xD8A0` and the four records come out (`p05:AA90`) with their scene
@@ -77,11 +89,15 @@ sets `0xD8A0` and the four records come out (`p05:AA90`) with their scene
 
 ![PREDATOR](imagenes/jefes/pelea_07.gif)
 
+![Its sprites, no repeats](imagenes/jefes/sprites_07.png)
+
 «プレデター『本物のヘビかどうかためしてやる』» (`p50:8D95`).
 
 ## 7. NIGHT SIGHT (zone 0x13)
 
 ![NIGHT SIGHT](imagenes/jefes/pelea_05.gif)
+
+![Its sprites, no repeats](imagenes/jefes/sprites_05.png)
 
 It starts with a transceiver call. ケスラー names it (`p49:B233`). He is
 not seen in the fight: he wears «the latest camouflage suit, stealth» and a
@@ -91,6 +107,8 @@ kind 8.
 ## 8. Pettrovich (zone 0x13)
 
 ![Pettrovich](imagenes/jefes/pelea_08.gif)
+
+![Its sprites, no repeats](imagenes/jefes/sprites_08.png)
 
 ペトロビッチ・マッドナー, the doctor: his messages are 0x14-0x17 of
 `p50:8E35-9182` and ケスラー gives his full name (`p49:B61E`). The record
@@ -114,6 +132,8 @@ different out of 54,272, a thrown object and the life bar. Snake calls it
 
 ![GREY FOX](imagenes/jefes/pelea_09.gif)
 
+![Its sprites, no repeats](imagenes/jefes/sprites_09.png)
+
 With his conversation (`p50:990C`). «GREY FOX», spelt like that, in the
 texts. His steps 5 to 0x10 wait for events of rooms 2 and 3 (`0xD88C`).
 
@@ -121,10 +141,18 @@ texts. His steps 5 to 0x10 wait for events of rooms 2 and 3 (`0xD88C`).
 
 ![BIG BOSS](imagenes/jefes/pelea_0A.gif)
 
-His messages, `p50:92BB` and `p50:92FF`. Step 0 waits for `0xD6B0`: in the
-cartridge running he is seen from the moment his life is taken away, and his
-colours change from one frame to the next. This fight, GREY FOX's and NIGHT
-SIGHT's are not checked against openMSX.
+![Its sprites, no repeats](imagenes/jefes/sprites_0A.png)
+
+His messages, `p50:92BB` and `p50:92FF`. The fight is started by
+`zona_12_con_d889` (`p14:B104`), the way the game comes back into zone 0x12
+after GREY FOX: Snake with nothing he carried, `0xD8A9` = `0xD6B0` = 1 and BIG
+BOSS's record at `0xD840`. His step 2 tells Snake something in room 1 and step
+4 waits for him in room 6 (`p05:B608`), where he arrives, they talk with both
+portraits (`p50:92BB`...) and he starts looking for him (step 8). Checked
+against openMSX arriving the same way (`tools/omsx_bigboss.tcl`: losing in
+zone 0x12 and CONTINUE): BIG BOSS's record and sprites at his step 6,
+identical. When his life is taken away he flashes blue, orange and red. GREY
+FOX's and NIGHT SIGHT's fights are not checked against openMSX.
 
 ## The music
 

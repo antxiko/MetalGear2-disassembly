@@ -31,6 +31,11 @@ van **al ritmo del MSX**: jugando, el juego procesa un cuadro cada 5 del VDP
 (medido en openMSX, ver [Por dentro](POR-DENTRO.html)). Una imagen quieta de
 más de 4 segundos (un mensaje que espera) se deja en 4.
 
+Debajo de cada GIF, sus sprites sin repetir: las piezas sueltas de los
+sprites 8-31 de cada cuadro (el jefe, sus disparos, sus explosiones), cada
+una una vez. El HIND D y METAL GEAR no tienen: están hechos de caracteres de
+la pantalla, no de sprites.
+
 Los patrones de los jefes los carga el juego al acabar la llamada del
 principio (`p09:B82F`): cotejados con openMSX en la sala de PREDATOR, iguales.
 
@@ -38,12 +43,16 @@ principio (`p09:B82F`): cotejados con openMSX en la sala de PREDATOR, iguales.
 
 ![BLACK COLOR](../imagenes/jefes/pelea_03.gif)
 
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_03.png)
+
 El científico que se transforma. Sus mensajes lo firman «BLACK COLOR»
 (`p50:8807`), y `p50:887B` dice quién es: Kyle Schneider.
 
 ## 2. RUNNING MAN (especial 0x29)
 
 ![RUNNING MAN](../imagenes/jefes/pelea_04.gif)
+
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_04.png)
 
 «オレはRUNNING MAN» (`p50:8BDA`). En el cartucho ejecutado la pelea se queda
 en el mensaje de su paso 0x10, «見てろっ！！».
@@ -60,11 +69,15 @@ sprites, con su sombra; al morir acaba como los misiles (pasos 0x20 y
 
 ![RED BLASTER](../imagenes/jefes/pelea_06.gif)
 
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_06.png)
+
 «おれはRED BLASTER» (`p50:8D64`), con sus granadas.
 
 ## 5. ULTRABOX (zona 0x0B)
 
 ![ULTRABOX](../imagenes/jefes/pelea_0B.gif)
+
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_0B.png)
 
 Cuatro a la vez, dentro del ascensor: al llegar a la planta 0x13 (`p07:A248`)
 el paso 0x0F pone `0xD8A0` y salen las cuatro fichas (`p05:AA90`) con su
@@ -75,11 +88,15 @@ escena (`p05:AB08`). «BOX『おれたちはみっ室専門のアンサツブタ
 
 ![PREDATOR](../imagenes/jefes/pelea_07.gif)
 
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_07.png)
+
 «プレデター『本物のヘビかどうかためしてやる』» (`p50:8D95`).
 
 ## 7. NIGHT SIGHT (zona 0x13)
 
 ![NIGHT SIGHT](../imagenes/jefes/pelea_05.gif)
+
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_05.png)
 
 Empieza con una llamada del transceptor. Lo nombra ケスラー (`p49:B233`).
 En la pelea no se le ve: va con «el último traje de camuflaje, invisible» y
@@ -88,6 +105,8 @@ una pistola que no suena (`p49:B9BA`). Al morir saca la ficha de tipo 8.
 ## 8. Pettrovich (zona 0x13)
 
 ![Pettrovich](../imagenes/jefes/pelea_08.gif)
+
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_08.png)
 
 ペトロビッチ・マッドナー, el doctor: sus mensajes son los 0x14-0x17 de
 `p50:8E35-9182` y el nombre entero lo da ケスラー (`p49:B61E`). La ficha se
@@ -111,6 +130,8 @@ distintos de 54.272, un objeto lanzado y la barra de vida. Snake lo llama
 
 ![GREY FOX](../imagenes/jefes/pelea_09.gif)
 
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_09.png)
+
 Con su conversación (`p50:990C`). Así, «GREY FOX», en los textos. Sus pasos
 5 a 0x10 esperan sucesos de las salas 2 y 3 (`0xD88C`).
 
@@ -118,10 +139,18 @@ Con su conversación (`p50:990C`). Así, «GREY FOX», en los textos. Sus pasos
 
 ![BIG BOSS](../imagenes/jefes/pelea_0A.gif)
 
-Sus mensajes, `p50:92BB` y `p50:92FF`. El paso 0 espera `0xD6B0`: en el
-cartucho ejecutado se ve desde que se le quita la vida, y sus colores cambian
-de un cuadro a otro. Esta pelea, la de GREY FOX y la de NIGHT SIGHT no están
-cotejadas con openMSX.
+![Sus sprites, sin repetir](../imagenes/jefes/sprites_0A.png)
+
+Sus mensajes, `p50:92BB` y `p50:92FF`. La pelea la arranca
+`zona_12_con_d889` (`p14:B104`), por donde el juego vuelve a la zona 0x12 tras
+GREY FOX: Snake sin nada de lo que llevaba, `0xD8A9` = `0xD6B0` = 1 y la ficha
+de BIG BOSS en `0xD840`. Su paso 2 le dice algo a Snake en la sala 1 y el 4 le
+espera en la sala 6 (`p05:B608`), donde llega, hablan con los dos retratos
+(`p50:92BB`...) y empieza a buscarle (paso 8). Cotejado con openMSX llegando
+por el mismo camino (`tools/omsx_bigboss.tcl`: perder en la zona 0x12 y
+CONTINUE): la ficha y los sprites de BIG BOSS en su paso 6, iguales. Al
+quitarle la vida parpadea en azul, naranja y rojo. La pelea de GREY FOX y la
+de NIGHT SIGHT no están cotejadas con openMSX.
 
 ## La música
 

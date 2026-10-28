@@ -23,6 +23,15 @@ puntos que lo sigue. Para que patrullen y no corran tras Snake, la alerta
 (un cuadro del juego cada 5 del VDP, medido en openMSX). Sale uno por cada
 aspecto distinto (tipo, patrones y colores); los iguales se cuentan.
 
+## Todos sus dibujos
+
+Las imágenes distintas de cada GIF de abajo, una fila por enemigo, en el
+mismo orden y sin repetir:
+
+![Los dibujos de los enemigos, sin repetir](../imagenes/enemigos_hoja.png)
+
+## Uno a uno
+
 <!-- generado:enemigos -->
 ### 1. Soldado (tipo 0x01)
 
