@@ -7,6 +7,33 @@ la VRAM y de los sprites, las coordenadas de Snake y trampas de teclado.
 Está entero y lo apagan **dos bytes**. Todo, con sus teclas, en
 [El monitor](EL-MONITOR.html).
 
+## Los dos huevos: una boa y un búho
+
+En el equipo hay **dos huevos** (タマゴ, las cosas 0x0E y 0x0F), y los dos se
+incuban solos, contando cuadros del juego:
+
+- El **0x0E**: al cogerlo (`p03:BD33` → `p10:A1C1`) cuenta 2 x 0x200 cuadros
+  (unos 87 s en el MSX) y su dibujo en F3 cambia dos veces (`p10:A204`). Al
+  acabar sale la ficha `0xE1D8`, de dos sprites (`p10:A234`), que va a por las
+  raciones C que lleve Snake, la B3, la B2 y la B1, y se las come
+  (`p10:A24D`). Es la boa de la que habla Norden: «se come de todo; las
+  raciones le encantarán, tíralas cuando llegue a la cáscara del huevo»
+  (`p49:A2FD`).
+- El **0x0F**: cuenta 0x600, 0x300, 0x80 y 0x20 cuadros (unos 3 min 30 s)
+  cambiando de dibujo, y luego alterna dos pasos para siempre; en uno, si
+  Snake lo lleva puesto, suena el sonido 0x26 (`p11:BC62`). Es el búho:
+  Norden dice que el búho de Zanzíbar ulula al ponerse el sol y que allí lo
+  usan de reloj (`p49:A1CD`). Con él puesto, en la sala 0x0E de la zona 0x0A
+  un actor cambia de paso (`p05:A035`) y la fase de la partida pasa al menos
+  a 8 (`p05:A0C5`).
+
+## El juego va a 12 cuadros por segundo
+
+Jugando, el juego procesa un cuadro cada 5 del VDP (a veces 6): en openMSX,
+el contador `0xCA03` sube 709 veces en 3.600 cuadros, un minuto
+(`tools/lanza_ritmo.ps1 -modo partida`). Es el ritmo de todos los GIF de la
+partida de esta web.
+
 ## VRAM:OIK bytes
 
 En la charla del final, Snake pide meter en un MSX el cartucho del doctor
@@ -140,4 +167,7 @@ corregidos:
   el cartucho ejecutado: lo que viene después en esas dos peleas no está
   visto.
 - El mensaje de キャリー del 140.99 (arriba).
+- La conversación sin número de `p48:84B1` encadena, un cuadro detrás de
+  otro, trozos de los mensajes de ケスラー empezados a media frase: no está
+  visto si el juego la usa.
 - Las trampas del monitor marcadas como «leído» ([El monitor](EL-MONITOR.html)).

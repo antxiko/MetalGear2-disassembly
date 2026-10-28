@@ -60,7 +60,7 @@ def maquina():
     import mapas
     from mg2run import Mg2
     m = Mg2()
-    m.llama(0x9E2B)                  # la partida nueva
+    m.partida_nueva()                  # la partida nueva
     m.pon(0xCADF, 0)                 # sin la llegada (p06:A0F5)
     mapas.entra_en_zona(m, 0)
     mapas.cuadros(m, 1)
@@ -245,9 +245,72 @@ def juega():
     return not fuera
 
 
+# Las acciones de Snake para la web, jugadas con el mando emulado: (nombre,
+# preparacion, teclas). La preparacion pone lo elegido (0xCB21 en F3, 0xCB20 en
+# F2) y llama a estado_que_toca (p02:98BF), como al salir del menu.
+ACCIONES = [
+    ("andar", {}, [(ARR, 16), (IZQ, 16), (ABA, 16), (DER, 16), (0, 4)]),
+    ("golpe", {}, [(d, 2) for d in ()] + sum(([(d, 2), (0, 2), (B1, 1), (0, 10)]
+                                               for d in (ARR, IZQ, ABA, DER)), [])),
+    ("arrastrarse", {}, [(B2 | B1, 1), (B2, 3), (0, 6), (ARR, 16), (IZQ, 16), (ABA, 16),
+                         (DER, 16), (0, 4)]),
+    ("pistola", {0xCB20: 1, 0xD600: 1, 0xD601: 0x99}, sum(([(d, 2), (0, 2), (B1, 1), (0, 8),
+                                                            (B1, 1), (0, 8)]
+                                                           for d in (ARR, IZQ, ABA, DER)), [])),
+    ("caja", {0xCB21: 0x0A, 0xD65C: 1}, [(ARR, 16), (IZQ, 16), (ABA, 16), (DER, 16), (0, 8)]),
+    ("cubo", {0xCB21: 0x0B, 0xD660: 1}, [(ARR, 16), (IZQ, 16), (ABA, 16), (DER, 16), (0, 8)]),
+]
+
+
+def gifs(sal):
+    """Una animacion por accion: el cuadro del juego (p01:741A) con las teclas,
+    los sprites 0-7 de Snake en un recuadro que lo sigue, al ritmo del MSX."""
+    from PIL import Image
+    from gif_juego import Gif
+    os.makedirs(sal, exist_ok=True)
+    for nombre, prepara, teclas in ACCIONES:
+        m = maquina()
+        # la partida empieza con el dibujo 0x0D (sin sprites) hasta que Snake
+        # llega; aqui, a la vista en el centro de la sala
+        for d, v in ((0xCB01, 0), (0xCB03, 0x80), (0xCB05, 0x80), (0xCB0E, 1)):
+            m.pon(d, v)
+        for d, v in prepara.items():
+            m.pon(d, v)
+        if prepara:
+            m.bancos_123()
+            m.llama(0x98BF)
+        g, antes = Gif(), 0
+        for t, n in teclas:
+            for _ in range(n):
+                m.pon(0xCA08, t)
+                m.pon(0xCA07, t & ~antes)
+                antes = t
+                m.bancos_123()
+                m.llama(0x741A)
+                m.pon(0xCB03, max(0x30, min(0xB0, m.mem[0xCB03])))
+                m.pon(0xCB05, max(0x30, min(0xB0, m.mem[0xCB05])))
+                f = foto(m)
+                m.llama(0x5DD3)                  # Snake pintado, como al empezar el cuadro siguiente
+                v = m.vdp
+                attr = ((v.r[11] & 3) << 15) | ((v.r[5] & 0xFC) << 7)
+                viejo = bytes(v.vram[attr - 0x200:attr + 0x80])
+                v.vram[attr - 0x200:attr + 0x80] = m.mem[0xDA00:0xDC80]
+                for k in range(8, 32):
+                    v.vram[attr + 4 * k] = 0xE0
+                im = Image.new("RGB", (256, 212), (0, 0, 0))
+                v.sprites(im)
+                v.vram[attr - 0x200:attr + 0x80] = viejo
+                y, x = m.mem[0xCB03], m.mem[0xCB05]
+                g.pon(im.crop((x - 32, y - 48, x + 32, y + 16)))
+                vuelve(m, f)
+        g.guarda(os.path.join(sal, "snake_%s.gif" % nombre))
+
+
 if __name__ == "__main__":
     orden = sys.argv[1] if len(sys.argv) > 1 else "barre"
     if orden == "barre":
         barre()
+    elif orden == "gif":
+        gifs(os.path.join(RAIZ, "work", "snake_gif"))
     elif orden == "juega":
         sys.exit(0 if juega() else 1)

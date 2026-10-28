@@ -7,6 +7,8 @@
 #   RITMO_MODO pres: desde el arranque, RITMO_CUADROS cuadros (por defecto 20000)
 #   RITMO_MODO final: empieza la partida, pasa la llamada (RETURN hasta 0xCA97 = 0),
 #     pone 0xCAAF = 1 y apunta desde el estado 7 hasta que sale de el
+#   RITMO_MODO partida: empieza la partida, pasa la llamada y apunta RITMO_CUADROS
+#     cuadros jugando en la primera sala (Snake quieto, los soldados andando)
 #   RITMO_SALIDA: el fichero (work/ritmo_<modo>.txt)
 proc opcion {nombre porDefecto} {
     global env
@@ -29,7 +31,7 @@ proc apunta {} {
     puts $::f [format "%d %d %d %d %d" $e [debug read memory 0xCA01] [debug read memory 0xCA2C] \
         [debug read memory 0xD701] [debug read memory 0xCA03]]
     incr ::n
-    if {$::MODO eq "pres" && $::n >= $::CUADROS} { close $::f; exit }
+    if {$::MODO ne "final" && $::n >= $::CUADROS} { close $::f; exit }
     after frame apunta
 }
 
@@ -50,12 +52,12 @@ proc empieza {} {
     } elseif {[debug read memory 0xCA01] == 0} {
         incr ::quieto
         if {$::quieto >= 6} {
-            poke 0xCAAF 1
+            if {$::MODO eq "final"} { poke 0xCAAF 1 }
             after frame apunta
             return
         }
     }
     after time 0.5 empieza
 }
-if {$::MODO eq "final"} { after time 20 empieza } else { after frame apunta }
+if {$::MODO eq "pres"} { after frame apunta } else { after time 20 empieza }
 after time 1500 {close $::f; exit}

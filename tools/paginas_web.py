@@ -19,13 +19,14 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 import textos as T                                   # noqa: E402
 import musica as MU                                  # noqa: E402
+import traducciones as TR                            # noqa: E402
 
 # las paginas de cada idioma donde va cada parte
 DONDE = {
-    "en": {"armas": "SNAKE.md", "equipo": "SNAKE.md", "musica": "THE-MUSIC.md",
+    "en": {"enemigos": "THE-ENEMIES.md", "armas": "SNAKE.md", "equipo": "SNAKE.md", "musica": "THE-MUSIC.md",
            "conversaciones": "THE-TRANSCEIVER.md", "textos": "THE-TEXTS.md",
            "letreros": "THE-TEXTS.md"},
-    "es": {"armas": "SNAKE.md", "equipo": "SNAKE.md", "musica": "LA-MUSICA.md",
+    "es": {"enemigos": "LOS-ENEMIGOS.md", "armas": "SNAKE.md", "equipo": "SNAKE.md", "musica": "LA-MUSICA.md",
            "conversaciones": "EL-TRANSCEPTOR.md", "textos": "LOS-TEXTOS.md",
            "letreros": "LOS-TEXTOS.md"},
 }
@@ -37,14 +38,14 @@ PAL = {
                especial="en la especial %02X", azar="al azar, hasta %d de 100",
                tras="%d cuadros después",
                cabeza="Hablan: %s. La conversación de `p48:%04X`, con %d fichas.", conv="Conversación de p48:%04X",
-               sinmsg="(sin mensaje)"),
+               sinmsg="(sin mensaje)", original="Original", traduccion="Traducción"),
     "en": dict(casilla="Slot", texto="Sign", nada="(none)", donde="Where",
                ficha="Record", todas="with all of them set", ultima="with the last one set and the others not",
                sin="always", banderas="flags", zona="in zone %02X, room %02X",
                especial="in special room %02X", azar="at random, up to %d out of 100",
                tras="%d frames later",
                cabeza="Speaking: %s. The conversation at `p48:%04X`, with %d records.", conv="Conversation at p48:%04X",
-               sinmsg="(no message)"),
+               sinmsg="(no message)", original="Original", traduccion="Translation"),
 }
 
 
@@ -77,6 +78,9 @@ def bloque(texto):
 
 def letreros_de(tabla, idioma):
     p = PAL[idioma]
+    pref = "f2" if tabla == 0x8046 else "f3"
+    raiz_img = "../imagenes/equipo/" if idioma == "es" else "imagenes/equipo/"
+    docs = os.path.join(T.RAIZ, "docs", "imagenes", "equipo")
     t = palabra50(tabla)
     out, vistos = [], {}
     n = 0
@@ -85,20 +89,22 @@ def letreros_de(tabla, idioma):
         if not 0x8000 <= d < 0xC000:
             break
         n += 1
-    out.append("| %s | | %s |" % (p["casilla"], p["texto"]))
-    out.append("|---:|---|---|")
+    out.append("| %s | | | %s |" % (p["casilla"], p["texto"]))
+    out.append("|---:|---|---|---|")
     for i in range(n):
         d = palabra50(t + 2 * i)
         txt = letrero(50, d).split("\n")
+        fich = "%s_c%02X.png" % (pref, i)
+        dib = ("![](%s%s)" % (raiz_img, fich)) if os.path.exists(os.path.join(docs, fich)) else ""
         if d == palabra50(t):
-            out.append("| %d | | %s |" % (i, p["nada"]))
+            out.append("| %d | %s | | %s |" % (i, dib, p["nada"]))
             continue
         cabeza = re.sub(r"\s+", " ", txt[0].replace("　", " ")).strip()
         resto = "".join(txt[1:])
         igual = vistos.get(d)
         vistos.setdefault(d, i)
-        out.append("| %d | `p%02d:%04X` | **%s**%s |" % (
-            i, banco(50, d), d, cabeza,
+        out.append("| %d | %s | `p%02d:%04X` | **%s**%s |" % (
+            i, dib, banco(50, d), d, cabeza,
             (" " + resto) if resto and igual is None else
             (" (= %d)" % igual if igual is not None else "")))
     return out + [""]
@@ -144,6 +150,7 @@ def fichas(fs, idioma):
             cond += ", " + (p["especial"] % x if z >= 0x14 else p["zona"] % (z, x))
         out.append("**%s %d** (%s)" % (p["ficha"], i, cond))
         out.append("")
+        filas = []
         for e, a, m in f["acciones"]:
             lista = [(m, None)] if a == 0 else T.al_azar(m) if a == 1 else []
             for mm, u in lista:
@@ -153,15 +160,29 @@ def fichas(fs, idioma):
                 if u is not None:
                     notas.append(p["azar"] % u)
                 if not mm:
-                    out.append("- %s%s" % (p["sinmsg"], (" (" + ", ".join(notas) + ")") if notas else ""))
-                    out.append("")
+                    filas.append("| | %s%s | |" % (p["sinmsg"], (" (" + ", ".join(notas) + ")") if notas else ""))
                     continue
                 t, _ = T.mensaje(48, mm)
-                out.append("`p%02d:%04X`%s" % (banco(48, mm), mm,
-                                                (" (" + ", ".join(notas) + ")") if notas else ""))
-                out.append("")
-                out += bloque(t)
+                filas.append("| `p%02d:%04X`%s | %s | %s |" % (
+                    banco(48, mm), mm, ("<br>" + ", ".join(notas)) if notas else "",
+                    celda(t), traduccion(mm, idioma)))
+        if filas:
+            out += ["| | %s | %s |" % (p["original"], p["traduccion"]), "|---|---|---|"] + filas + [""]
     return out
+
+
+def celda(texto):
+    """El texto del juego en una celda: los saltos de linea del juego, <br>."""
+    return texto.rstrip().replace("|", "\\|").replace("\n", "<br>")
+
+
+def traduccion(mm, idioma):
+    i = 0 if idioma == "en" else 1
+    if mm in TR.T:
+        return TR.T[mm][i].replace(" / ", "<br>")
+    entero = TR.COLAS[mm]
+    return (("(starts in the middle of `p%02d:%04X`)" if i == 0 else
+             "(empieza a media frase de `p%02d:%04X`)") % (banco(48, entero), entero))
 
 
 def conversaciones(idioma):
@@ -253,7 +274,46 @@ def letreros(idioma):
     return out + [""]
 
 
+# lo que es cada tipo de actor, a la vista (actores_dibujos.py y los mapas)
+QUE = {
+    0x01: ("soldado", "soldier"), 0x02: ("soldado", "soldier"), 0x04: ("soldado", "soldier"),
+    0x05: ("soldado", "soldier"), 0x06: ("soldado", "soldier"), 0x07: ("soldado", "soldier"),
+    0x09: ("soldado", "soldier"), 0x0A: ("soldado", "soldier"), 0x0C: ("soldado", "soldier"),
+    0x10: ("figura pequeña de gorra roja", "small figure in a red cap"),
+    0x11: ("figura pequeña con coletas", "small figure with pigtails"),
+    0x12: ("animal pequeño", "small animal"), 0x13: ("cúpula azul", "blue dome"),
+    0x14: ("máquina de 48 x 48 puntos", "48 x 48 dot machine"), 0x15: ("cámara", "camera"),
+    0x16: ("pájaro", "bird"), 0x17: ("un punto de 4 x 4, con los pájaros", "a 4 x 4 dot, with the birds"),
+}
+
+
+def enemigos(idioma):
+    import json
+    ruta = os.path.join(T.RAIZ, "work", "enemigos", "enemigos.json")
+    lista = json.load(open(ruta)) if os.path.exists(ruta) else []
+    i = 0 if idioma == "es" else 1
+    raiz_img = "../imagenes/enemigos/" if idioma == "es" else "imagenes/enemigos/"
+    out = []
+    for e in lista:
+        sala = e["sala"]
+        donde = (("especial %s, sala %s" if i == 0 else "special room %s, room %s") % (sala[1:3], sala[4:])
+                 if sala.startswith("E") else
+                 ("zona %s, sala %s" if i == 0 else "zone %s, room %s") % (sala[:2], sala[3:]))
+        mas = len(e["tambien"])
+        out.append("### %d. %s (%s 0x%02X)" % (e["n"] + 1, QUE.get(e["tipo"], ("?", "?"))[i].capitalize(),
+                                               "tipo" if i == 0 else "kind", e["tipo"]))
+        out.append("")
+        out.append("![](%s%s)" % (raiz_img, e["gif"]))
+        out.append("")
+        out.append(("Jugado en la %s%s." if i == 0 else "Played in %s%s.") % (
+            donde, ("; igual en %d salas más" % mas if i == 0 else "; the same in %d more rooms" % mas)
+            if mas else ""))
+        out.append("")
+    return out
+
+
 PARTES = {
+    "enemigos": enemigos,
     "armas": lambda i: letreros_de(0x8046, i),
     "equipo": lambda i: letreros_de(0x8048, i),
     "musica": musica,

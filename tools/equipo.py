@@ -25,7 +25,7 @@ def maquina():
     import mapas
     from mg2run import Mg2
     m = Mg2()
-    m.llama(0x9E2B)                           # la partida nueva
+    m.partida_nueva()                           # la partida nueva
     m.pon(0xCADF, 0)
     mapas.entra_en_zona(m, 0)
     for d, v in ((0xCA40, 1), (0xCB00, 0), (0xCA00, 5), (0xCA01, 0), (0xCA97, 0), (0xD8A8, 0)):

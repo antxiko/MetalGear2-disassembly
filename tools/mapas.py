@@ -246,7 +246,7 @@ def pinta_especiales():
     from mg2run import Mg2
     os.makedirs(SALAS, exist_ok=True)
     m = Mg2()
-    m.llama(0x9E2B)
+    m.partida_nueva()
     m.pon(0xCADF, 0)
     dueno = zona_de_especial()
     info = {}
@@ -311,7 +311,7 @@ def pinta_salas(zonas):
     from mg2run import Mg2
     os.makedirs(SALAS, exist_ok=True)
     m = Mg2()
-    m.llama(0x9E2B)                               # la partida nueva
+    m.partida_nueva()                               # la partida nueva
     m.pon(0xCADF, 0)                              # sin la llegada de Snake (p06:A0F5)
     info = {}
     for z in zonas:

@@ -7,6 +7,32 @@ viewer, Snake's coordinates and keyboard cheats. It is complete and **two
 bytes** switch it off. All of it, with its keys, in
 [The debug monitor](THE-DEBUG-MONITOR.html).
 
+## The two eggs: a boa and an owl
+
+There are **two eggs** in the equipment (タマゴ, items 0x0E and 0x0F), and
+both hatch on their own, counting game frames:
+
+- **0x0E**: when it is picked up (`p03:BD33` → `p10:A1C1`) it counts 2 x
+  0x200 frames (about 87 s on the MSX) and its drawing in F3 changes twice
+  (`p10:A204`). At the end the `0xE1D8` record comes out, two sprites
+  (`p10:A234`), which goes for the C rations Snake carries, B3, B2 and B1, and
+  eats them (`p10:A24D`). It is the boa Norden talks about: «it eats
+  anything; it'll love the rations, throw them away when it reaches the
+  eggshell» (`p49:A2FD`).
+- **0x0F**: it counts 0x600, 0x300, 0x80 and 0x20 frames (about 3 min 30 s)
+  changing its drawing, and then alternates two steps forever; in one, if
+  Snake has it equipped, sound 0x26 plays (`p11:BC62`). It is the owl: Norden
+  says the Zanzibar owl hoots at sunset and they use it as a clock there
+  (`p49:A1CD`). With it equipped, in room 0x0E of zone 0x0A an actor changes
+  step (`p05:A035`) and the game phase goes to at least 8 (`p05:A0C5`).
+
+## The game runs at 12 frames a second
+
+While playing, the game processes one frame every 5 of the VDP (sometimes
+6): in openMSX, the counter `0xCA03` goes up 709 times in 3,600 frames, a
+minute (`tools/lanza_ritmo.ps1 -modo partida`). It is the pace of all the
+gameplay GIFs on this site.
+
 ## VRAM:OIK bytes
 
 In the talk at the end, Snake asks for doctor マルフ's cartridge to be put
@@ -140,4 +166,7 @@ corrected:
   the cartridge running: what comes next in those two fights has not been
   seen.
 - キャリー's 140.99 message (above).
+- The unnumbered conversation at `p48:84B1` chains, one frame after another,
+  pieces of ケスラー's messages started in mid-sentence: whether the game uses
+  it has not been seen.
 - The monitor cheats marked «read» ([The debug monitor](THE-DEBUG-MONITOR.html)).

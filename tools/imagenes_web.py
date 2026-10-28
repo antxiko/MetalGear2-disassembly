@@ -4,14 +4,14 @@ ejecutado. Aqui no se dibuja nada: se juntan, se recortan y se amplian los PNG
 que dejan en work/ las herramientas que corren el juego:
 
   mapas.py rotular        work/mapas/web_zona_ZZ.png   -> zona_ZZ.png
-  snake.py barre          work/snake/NNN_dDD.png       -> snake.png
-  actores_dibujos.py      work/actores/tTT_dDD.png     -> actores.png
-  jefes.py + jefes_web.py work/jefes/web_tTT.png       -> jefe_TT.png
-  equipo.py f2 / f3       work/equipo/f2_*, f3_*       -> armas.png, equipo.png
-  radar.py                work/radar/*                 -> radar.png
+  snake.py gif            work/snake_gif/snake_*.gif   -> snake_*.gif (una por accion)
+  enemigos.py             work/enemigos/*.gif          -> enemigos/ (uno por enemigo distinto)
+  jefes.py                work/jefes/pelea_TT.gif      -> jefes/ (cada pelea entera)
+  equipo.py f2 / f3       work/equipo/f2_*, f3_*       -> armas.png, equipo.png, equipo/ (cada cosa)
+  radar.py                work/radar/radar.gif         -> radar.gif
   retratos.py             work/textos/retrato_NN.png   -> retratos.png, tabaco.png
   textos.py fuente        work/textos/fuente_f0/f8.png -> fuente_f0.png, fuente_f8.png
-  secuencias.py gif       work/gif/*.gif               -> los GIF; logotipo.png (titulo)
+  secuencias.py gif       work/gif/*.gif               -> presentacion.gif, final.gif; logotipo.png
   secuencias.py final     work/final/f07060.png        -> vram_oik.png
   musica.py todas         work/audio/musica_NN.mp3     -> docs/audio/
 
@@ -69,45 +69,18 @@ def main(docs):
     for z in range(20):
         guarda(Image.open(w("mapas", "web_zona_%02X.png" % z)), docs, "zona_%02X.png" % z)
 
-    # Snake: los 98 dibujos del barrido, una fila por dibujo de 0xCB01
-    snake = json.load(open(w("snake", "snake.json"), encoding="utf-8"))
-    porn = {}
-    for s in snake:
-        porn.setdefault(s["dibujo"], []).append(Image.open(w("snake", s["fichero"])))
-    filas = [rejilla(v, 16, (36, 40)) for _, v in sorted(porn.items())]
-    hoja = Image.new("RGB", (max(f.size[0] for f in filas), sum(f.size[1] for f in filas)), NEGRO)
-    y = 0
-    for f in filas:
-        hoja.paste(f, (0, y))
-        y += f.size[1]
-    guarda(hoja, docs, "snake.png")
-
-    # los actores: una fila por tipo
-    act = json.load(open(w("actores", "actores.json"), encoding="utf-8"))
-    filas = []
-    for t in sorted(act):
-        ims = [Image.open(w("actores", p["fichero"])) for p in act[t]["pintados"]]
-        filas.append(rejilla(ims, 16, (36, 40)))
-    hoja = Image.new("RGB", (max(f.size[0] for f in filas), sum(f.size[1] for f in filas)), NEGRO)
-    y = 0
-    for f in filas:
-        hoja.paste(f, (0, y))
-        y += f.size[1]
-    guarda(hoja, docs, "actores.png")
-
-    for t in range(1, 12):
-        guarda(Image.open(w("jefes", "web_t%02X.png" % t)), docs, "jefe_%02X.png" % t)
-
+    # cada arma y cada cosa: el dibujo de lo elegido, del recuadro de la derecha
+    # (F2 arriba, F3 abajo; medido: lo que cambia de una pantalla a otra)
+    os.makedirs(os.path.join(img, "equipo"), exist_ok=True)
+    for f in sorted(os.listdir(w("equipo"))):
+        if not f.endswith(".png") or "_c" not in f:
+            continue
+        caja = (208, 114, 248, 132) if f.startswith("f2") else (214, 162, 248, 180)
+        cosa = f[:2] + "_c" + f.split("_c")[1]         # f2_c01.png ...
+        im = amplia(Image.open(w("equipo", f)).convert("RGB").crop(caja), 2)
+        im.save(os.path.join(img, "equipo", cosa), optimize=True)
     guarda(amplia(Image.open(w("equipo", "f2_00_c01.png")).convert("RGB"), 2), docs, "armas.png")
     guarda(amplia(Image.open(w("equipo", "f3_00_c01.png")).convert("RGB"), 2), docs, "equipo.png")
-
-    # el radar: sin alerta (barrido y puntos), alerta 2, alerta 1
-    tira = [Image.open(w("radar", n)).convert("RGB") for n in
-            ("sin_008.png", "sin_160.png", "alerta2_208.png", "alerta1_304.png")]
-    hoja = Image.new("RGB", (len(tira) * 60 - 4, 56), (40, 40, 40))
-    for i, im in enumerate(tira):
-        hoja.paste(im, (i * 60, 0))
-    guarda(amplia(hoja, 3), docs, "radar.png")
 
     ret = [Image.open(w("textos", "retrato_%02d.png" % i)).convert("RGB") for i in range(12)]
     hoja = Image.new("RGB", (12 * 36 - 4, 48), NEGRO)
@@ -125,9 +98,33 @@ def main(docs):
 
     guarda(amplia(Image.open(w("final", "f07060.png")).convert("RGB"), 2), docs, "vram_oik.png")
 
-    for f in sorted(os.listdir(w("gif"))):
-        shutil.copyfile(w("gif", f), os.path.join(img, f))
-        print("  %-22s %4d KB" % (f, os.path.getsize(os.path.join(img, f)) // 1024))
+    # la presentacion y el final, cada uno en UN GIF: las escenas de
+    # secuencias.py seguidas, cada imagen con su duracion (al ritmo del MSX)
+    for nombre, escenas in (("presentacion.gif", ("konami", "creditos_1", "creditos_2", "titulo",
+                                                  "historia_1", "historia_2")),
+                            ("final.gif", ("zanzibar", "sol", "charla", "reparto", "blanco"))):
+        imgs, durs = [], []
+        for e in escenas:
+            for f in ImageSequence.Iterator(Image.open(w("gif", e + ".gif"))):
+                imgs.append(f.convert("RGB").copy())
+                durs.append(f.info.get("duration", 100))
+        ruta = os.path.join(img, nombre)
+        imgs[0].save(ruta, save_all=True, append_images=imgs[1:], duration=durs, loop=0, optimize=True)
+        print("  %-22s %4d imagenes, %.1f s, %d KB" % (nombre, len(imgs), sum(durs) / 1000,
+                                                     os.path.getsize(ruta) // 1024))
+    for f in ("radar.gif",):
+        shutil.copyfile(w("radar", f), os.path.join(img, f))
+    for f in sorted(os.listdir(w("snake_gif"))):
+        shutil.copyfile(w("snake_gif", f), os.path.join(img, f))
+    os.makedirs(os.path.join(img, "jefes"), exist_ok=True)
+    for f in sorted(os.listdir(w("jefes"))):
+        if f.startswith("pelea_") and f.endswith(".gif"):
+            shutil.copyfile(w("jefes", f), os.path.join(img, "jefes", f))
+    if os.path.isdir(w("enemigos")):
+        os.makedirs(os.path.join(img, "enemigos"), exist_ok=True)
+        for f in sorted(os.listdir(w("enemigos"))):
+            if f.endswith(".gif"):
+                shutil.copyfile(w("enemigos", f), os.path.join(img, "enemigos", f))
 
     aud = os.path.join(docs, "audio")
     os.makedirs(aud, exist_ok=True)

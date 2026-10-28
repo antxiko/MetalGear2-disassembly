@@ -90,6 +90,27 @@ page 2 the pieces of the rooms, which are copied with HMMM commands. The
 sprite patterns go at `0xF800` (R#6 = 0x1F). The fight with METAL GEAR splits
 the screen by changing R#23 on one line (`0xCA1C`).
 
+## What the emulator has to do
+
+For the cartridge running (`tools/mg2run.py` on top of `tools/msx2run.py`) to
+paint the same as an MSX, three things were needed, each checked against
+openMSX:
+
+- **Finishing the opening call.** The game starts with キャンベル's call open
+  (`0xCA97` = 1), and meanwhile `empieza_la_partida` (`p02:9E94`) does not
+  load the runs at `p37:B007` and `p37:AF4C`, the sprite patterns of the
+  bosses, the enemies and what Snake carries: it loads them when the call ends
+  (`p09:B82F`). Skipping the call without loading them gave sprites with
+  letters instead of PREDATOR, NIGHT SIGHT or GREY FOX.
+- **The RAM of page 2.** With `ENASLT` and the slot at `0xC386` the game puts
+  its RAM at `0x8000-0xBFFF`, keeps the radar's room drawings there and goes
+  back to the cartridge with `WSLREG`. Without it, the radar comes out full of
+  noise.
+- **The pace.** While playing, one game frame every 5 of the VDP (sometimes
+  6): 709 in 3,600 (`tools/omsx_ritmo.tcl`, `partida` mode). The gameplay
+  GIFs go at that pace (`tools/gif_juego.py`); those of the intro and the
+  ending, at theirs, measured frame by frame.
+
 ## How it has been done
 
 - **The trace** follows the code from its entry points with the bank there is
@@ -104,7 +125,8 @@ the screen by changing R#23 on one line (`0xCA1C`).
   Snake (`tools/snake.py`), the actors (`tools/actores_dibujos.py`), the
   fights (`tools/jefes.py`), F2 and F3 (`tools/equipo.py`), the radar
   (`tools/radar.py`), the portraits (`tools/retratos.py`) and the sequences
-  (`tools/secuencias.py`). `tools/imagenes_web.py` only puts them together.
+  (`tools/secuencias.py`) and the enemies (`tools/enemigos.py`).
+  `tools/imagenes_web.py` only puts them together.
 - **The check against openMSX** is done by dumping the VRAM at the same
   moment of the game (`tools/omsx_*.tcl`, `tools/lanza_*.ps1`) and comparing
   dot by dot (`tools/coteja_salas.py`, `coteja_sprites.py`,

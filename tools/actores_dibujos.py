@@ -65,7 +65,7 @@ def a_la_sala(clave):
     import mapas
     from mg2run import Mg2
     m = Mg2()
-    m.llama(0x9E2B)
+    m.partida_nueva()
     m.pon(0xCADF, 0)
     if clave.startswith("E"):
         e, sala = int(clave[1:3], 16), int(clave[4:], 16)

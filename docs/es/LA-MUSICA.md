@@ -22,6 +22,19 @@ en el PSG y el SCC lo mismo, cuadro a cuadro, que el motor ejecutado aquí
 (`tools/coteja_psg.py`). La 0x8A, igual salvo el primer cuadro, en el que el
 juego vuelve a cargar las cinco ondas del SCC y aquí se carga una.
 
+Tres parejas se parecen mucho (comparadas las notas del PSG y del SCC de los
+60 primeros segundos, `work/compara_musicas.py`): la **0x6E** con la **0x6D**
+(un 67 % de las notas en el mismo orden) y la **0x6B** con la **0x6A** (en los
+10 primeros segundos las notas del SCC casan en 453 de 600 cuadros; la 0x6B
+dura 145 s y la 0x6A 171). Ni la 0x6B ni la 0x6E las pide nadie: tienen pinta
+de versiones anteriores que se quedaron en el cartucho. La **0x98** y la
+**0x91** comparten un 53 %.
+
+La **0x98** no vuelve a empezar ni se calla: el motor sigue leyendo después
+de su partitura. En el final suena mientras sube Zanzibar y la corta la 0xA3
+(`p13:9731`) 29,3 s después (medido con el ritmo de openMSX); aquí va
+cortada ahí.
+
 <!-- generado:musica -->
 ### 0x6A
 
@@ -205,7 +218,7 @@ juego vuelve a cargar las cinco ondas del SCC y aquí se carga una.
 
 ### 0x98
 
-*Dónde: p13:961C.*
+*Dónde: El final, mientras sube Zanzibar (p13:961C), hasta que la corta la 0xA3: 29,3 s en el MSX.*
 
 <audio controls preload="none" src="../audio/musica_98.mp3"></audio>
 

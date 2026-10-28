@@ -298,15 +298,41 @@ class Msx(Z80):
         self.tolera_bios = False
         self.bios_rara = []
         self.mando = 0xFF
+        # la RAM de la pagina 2 (0x8000-0xBFFF), que el juego pone con ENASLT y el
+        # slot de self.slot_ram (None: el cartucho se queda siempre)
+        self.slot_ram = None
+        self.ram2 = bytearray(0x4000)
+        self.ram_en_8000 = False
 
     def pon_banco(self, ventana, banco):
         self.bancos[ventana] = banco
+        if getattr(self, "ram_en_8000", False) and 0x8000 <= ventana < 0xC000:
+            return                                # la RAM tapa el cartucho
         b = banco % (len(self.rom) // 0x2000)
         self.mem[ventana:ventana + 0x2000] = self.rom[b * 0x2000:(b + 1) * 0x2000]
+
+    def enaslt(self, slot, pagina):
+        """ENASLT en la pagina 2: la RAM (slot_ram) o el cartucho."""
+        if pagina != 2 or self.slot_ram is None:
+            return
+        quiere = slot == self.slot_ram
+        if quiere == self.ram_en_8000:
+            return
+        if quiere:
+            self.mem[0x8000:0xC000] = self.ram2
+            self.ram_en_8000 = True
+        else:
+            self.ram2[:] = self.mem[0x8000:0xC000]
+            self.ram_en_8000 = False
+            for vent in (0x8000, 0xA000):
+                self.pon_banco(vent, self.bancos[vent])
 
     def _escribir(self, d, v):
         d &= 0xFFFF
         v &= 0xFF
+        if getattr(self, "ram_en_8000", False) and 0x8000 <= d < 0xC000:
+            self.mem[d] = v
+            return
         if 0x4000 <= d < 0xC000:
             if (d & 0x1800) == 0x1000:
                 self.pon_banco(d & 0xE000, v)
@@ -369,7 +395,11 @@ class Msx(Z80):
             self.a = 0xFF
         elif pc == 0x013E:                                # RDVDP
             self.a = 0
-        elif pc in (0x0024, 0x0062, 0x0090, 0x0041, 0x0044):   # ENASLT, CHGCLR, GICINI, DISSCR, ENASCR
+        elif pc == 0x0024:                                # ENASLT: A el slot, H la pagina
+            self.enaslt(self.a, (self.h >> 6) & 3)
+        elif pc == 0x013B:                                # WSLREG: los slots del arranque
+            self.enaslt(None, 2)
+        elif pc in (0x0062, 0x0090, 0x0041, 0x0044):      # CHGCLR, GICINI, DISSCR, ENASCR
             pass
         elif self.tolera_bios:
             # el juego salta a la BIOS por un sitio que no es una de sus entradas (el

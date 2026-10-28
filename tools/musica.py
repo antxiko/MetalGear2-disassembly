@@ -74,7 +74,8 @@ PIEZAS = [
     P(0x89, "p01:73CF y la ficha 0xD8A9 (p05:B5BA)", "p01:73CF and the 0xD8A9 record (p05:B5BA)", K),
     P(0x8A, "p07:A36D", "p07:A36D", K),
     P(0x91, "La pelea del tipo 1, el helicóptero (p15:B8F2), y la escena 9 (p09:B5A2)", "The type 1 fight, the helicopter (p15:B8F2), and scene 9 (p09:B5A2)", K),
-    P(0x98, "p13:961C", "p13:961C", K),
+    P(0x98, "El final, mientras sube Zanzibar (p13:961C), hasta que la corta la 0xA3: 29,3 s en el MSX",
+      "The ending, while Zanzibar rises (p13:961C), until 0xA3 cuts it: 29.3 s on the MSX", K),
     P(0x99, "La presentación (p13:808F); en la radio del 140.07", "The intro (p13:808F); on the 140.07 radio", K),
     P(0x9A, "La presentación (p14:A336); en la radio del 140.07", "The intro (p14:A336); on the 140.07 radio", K),
     P(0x9C, "La escena 3 (p09:A8D3) y el mensaje por sitio (p05:A9E8); en la radio del 140.07", "Scene 3 (p09:A8D3) and the message by place (p05:A9E8); on the 140.07 radio", K),
@@ -97,6 +98,11 @@ CFG = dict(rom="metalgear2.rom", org=0x4000, mapper="konami_scc",
            banco_frame=16, banco_pide=16, ram=(0xC400, 0xC6A0), hz=60,
            psg0={7: 0xBF}, romtype="KonamiSCC", max_s=90, piezas=PIEZAS,
            pagina=None,
+           # la 0x98 no vuelve a empezar ni se calla: en el final (p13:961C, el
+           # cuadro 248 del estado 7) suena hasta que el paso 9 pide la 0xA3
+           # (p13:9731, el cuadro 1322): 1756 cuadros reales del MSX
+           # (work/ritmo_final.txt), 29,3 s
+           corte={0x98: 1756},
            # 0xC660 cuenta los cuadros (p16:42C6): no cierra el bucle
            excluye=[0xC660], juntos={}, cotejado=[n for n, *_ in PIEZAS], ram_de={},
            maquina="C-BIOS_MSX2_JP")

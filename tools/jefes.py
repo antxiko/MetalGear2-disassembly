@@ -48,6 +48,7 @@ import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
+from gif_juego import Gif   # noqa: E402
 RAIZ = os.path.join(AQUI, "..")
 ROM = open(os.path.join(RAIZ, "metalgear2.rom"), "rb").read()
 ROSA = (255, 0, 255)
@@ -57,7 +58,7 @@ FILAS = {3: 0xA19B, 1: 0xA1A1, 4: 0xA1D2, 7: 0xA1AD, 6: 0xA1A7, 2: 0xA1B3,
          9: 0xA1BF, 0x0A: 0xA1C5, 5: 0xA1B9, 8: 0xA1CB}
 ZONA = {3: 3, 1: 7, 4: 7, 7: 0x0A, 6: 0x0E, 2: 0x12, 9: 0x12, 0x0A: 0x12, 5: 0x13, 8: 0x13}
 # donde espera a Snake el primer paso de cada tipo (Y, X), leido en su logica
-SITIO_DE_SNAKE = {3: (0x60, 0x7C)}
+SITIO_DE_SNAKE = {3: (0x60, 0x7C), 6: (0xA0, 0x60)}   # el 6: Snake a la vista, abajo en el centro
 
 
 def b56(d):
@@ -84,7 +85,7 @@ def maquina(f):
     import mapas
     from mg2run import Mg2
     m = Mg2()
-    m.llama(0x9E2B)
+    m.partida_nueva()
     m.pon(0xCADF, 0)
     z = f["zona"]
     m.pon(0xD430, 2 if z == 7 else 0)
@@ -193,19 +194,29 @@ def pantalla_partida(v, mem):
     return im
 
 
+TOPE_GIF = 1500                                 # imagenes distintas por pelea, como mucho
+
+
 def pelea(tipo, cuadros=600):
-    """La pelea de la ficha de tipo; si al morir aparece otra (2 -> 9 -> 0x0A
+    """Deja tambien work/jefes/pelea_TT.gif, la pelea entera al ritmo del MSX.
+    La pelea de la ficha de tipo; si al morir aparece otra (2 -> 9 -> 0x0A
     en la zona 0x12, 5 -> 8 en la 0x13: quita_d800 p04:8C23-8C2D, p04:8CFB),
     se sigue con ella. Los dibujos van a la carpeta del tipo que esta vivo."""
     import mapas
     f = ficha(tipo)
     m = maquina(f)
+    if m.mem[0xCB01] == 0x0D:
+        # la partida empieza con Snake en el dibujo 0x0D (sin sprites) hasta su
+        # llegada, que aqui no hay: a la vista, como al acabar la llegada
+        m.pon(0xCB01, 0)
+        m.pon(0xCB0E, 1)
     raiz = os.path.join(RAIZ, "work", "jefes")
     if tipo in SITIO_DE_SNAKE:
         m.pon(0xCB03, SITIO_DE_SNAKE[tipo][0])
         m.pon(0xCB05, SITIO_DE_SNAKE[tipo][1])
     vistos, antes, antes_f, pasos = set(), 0, 0, []
     vivo, desde, fin, desde24 = None, 0, None, -1
+    gif = None                                  # la pelea entera, al ritmo del MSX (gif_juego.py)
     for k in range(6000):
         # el tipo vivo: la primera ficha ocupada de las 3 de las salas normales
         # (en las especiales, solo la de 0xD860: fichas_d800 p04:89E8)
@@ -213,6 +224,9 @@ def pelea(tipo, cuadros=600):
         ahora = next((d for d in fichas if m.mem[d]), None)
         t = m.mem[ahora] if ahora else None
         if t != vivo:
+            if gif is not None:
+                gif.guarda(os.path.join(raiz, "pelea_%02X.gif" % vivo), tope_ms=4000)
+            gif = Gif() if t else None
             vivo, ix, desde = t, ahora, k
             if t and t != 2 and (m.mem[ix + 0x0A], m.mem[ix + 0x0B]) != (m.mem[0xCA50], m.mem[0xCA51]):
                 a_la_sala(m, m.mem[ix + 0x0A], m.mem[ix + 0x0B])   # la nueva esta en otra sala
@@ -291,6 +305,14 @@ def pelea(tipo, cuadros=600):
             if h not in vistos:
                 vistos.add(h)
                 r[0].save(os.path.join(sal, "s%05d.png" % k))
+        if gif is not None and len(gif) < TOPE_GIF:
+            v = m.vdp
+            if m.mem[0xCA1C]:
+                im = pantalla_partida(v, m.mem)
+            else:
+                im = v.pagina((v.r[2] >> 5) & 3, 212)
+                mapas.sprites_de_ram(v, m.mem, im)
+            gif.pon(im.convert("RGB").crop((0, 0, 0xC0, 0xC0)))
         if k % 16 == 0:
             v = m.vdp
             im = v.pagina((v.r[2] >> 5) & 3, 212)
@@ -300,6 +322,8 @@ def pelea(tipo, cuadros=600):
                 v.pagina(2, 256).save(os.path.join(sal, "g%05d.png" % k))
             if m.mem[0xCA1C]:                   # y la pantalla partida montada
                 pantalla_partida(m.vdp, m.mem).save(os.path.join(sal, "v%05d.png" % k))
+    if gif is not None:
+        gif.guarda(os.path.join(raiz, "pelea_%02X.gif" % vivo), tope_ms=4000)
     print("zona %02X: %s; %d dibujos distintos" % (
         f["zona"], " ".join("%d:%02X/%02X" % (k, p[0], p[1]) for k, p in pasos), len(vistos)))
 

@@ -37,7 +37,7 @@ def main():
     from mg2run import Mg2
     os.makedirs(SAL, exist_ok=True)
     m = Mg2()
-    m.llama(0x9E2B)
+    m.partida_nueva()
     m.pon(0xCADF, 0)
     mapas.entra_en_zona(m, ZONA)
     g = {v: k for k, v in mapas.rejilla(ZONA).items()}
@@ -48,6 +48,8 @@ def main():
     m.pon(0xCABA, 0)
     vistos = set()
     aviso = 0
+    from gif_juego import Gif
+    gif = Gif()                               # el radar entero, cuadro a cuadro, al ritmo del MSX
     for k in range(500):
         if k == 200:                          # la alerta como la pone un actor:
             m.bancos_123()                    # alerta_sin_musica (p04:9955 ->
@@ -74,6 +76,9 @@ def main():
                 im = v.pagina((v.r[2] >> 5) & 3, 212)
                 mapas.sprites_de_ram(v, m.mem, im)
                 im.save(os.path.join(SAL, "aviso_%03d.png" % k))
+        v = m.vdp
+        rad = v.pagina((v.r[2] >> 5) & 3, 212).convert("RGB").crop((0xC4, 0x17, 0xC4 + 0x38, 0x17 + 0x38))
+        gif.pon(rad.resize((0x38 * 3, 0x38 * 3)))
         if k % 4 == 0:
             v = m.vdp
             im = v.pagina((v.r[2] >> 5) & 3, 212)
@@ -85,6 +90,7 @@ def main():
             if k in (160, 260, 460):
                 mapas.sprites_de_ram(v, m.mem, im)
                 im.save(os.path.join(SAL, "sala_%03d.png" % k))
+    gif.guarda(os.path.join(SAL, "radar.gif"))
     print(len(vistos), "radares distintos")
 
 

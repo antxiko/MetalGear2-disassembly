@@ -371,9 +371,12 @@ def main(cfg, argv):
         print("cuadros: %d, vuelve al %s" % (len(cuadros), vuelta))
     elif argv[0] == "mp3":
         n = int(argv[1], 0)
-        cuadros, vuelta = ejecuta(cfg, rom, n)
+        corte = cfg.get("corte", {}).get(n)       # donde la corta el juego (cuadros)
+        cuadros, vuelta = ejecuta(cfg, rom, n, corte)
         todo, fundido = desarrolla(cuadros, vuelta, hz)
-        if vuelta is None and len(cuadros) >= hz * cfg.get("max_s", 300) - 1:
+        if corte:
+            fundido = 2 * hz        # cortada donde el juego pide otra: se apaga en 2 s
+        elif vuelta is None and len(cuadros) >= hz * cfg.get("max_s", 300) - 1:
             fundido = 3 * hz        # la pieza se corta al tope: se apaga en 3 s
         a_mp3(sintetiza(todo, hz, cfg.get("psg0")), argv[2], fundido, hz)
         print("0x%02X: %d cuadros (%.1f s), vuelve al %s -> %s" % (

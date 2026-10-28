@@ -90,6 +90,26 @@ equipo, y la 2 las piezas de las salas, que se copian con órdenes HMMM. Los
 patrones de los sprites van en `0xF800` (R#6 = 0x1F). La pelea con METAL
 GEAR parte la pantalla cambiando R#23 en una línea (`0xCA1C`).
 
+## Lo que tiene que hacer el emulador
+
+Para que el cartucho ejecutado (`tools/mg2run.py` sobre `tools/msx2run.py`)
+pinte lo mismo que un MSX han hecho falta tres cosas, cada una cotejada con
+openMSX:
+
+- **Acabar la llamada del principio.** La partida empieza con la llamada de
+  キャンベル abierta (`0xCA97` = 1), y mientras tanto `empieza_la_partida`
+  (`p02:9E94`) no carga las rachas de `p37:B007` y `p37:AF4C`, los patrones
+  de sprite de los jefes, los enemigos y lo que lleva Snake: los carga al
+  acabar la llamada (`p09:B82F`). Saltarse la llamada sin cargarlos daba
+  sprites con letras en lugar de PREDATOR, NIGHT SIGHT o GREY FOX.
+- **La RAM de la página 2.** Con `ENASLT` y el slot de `0xC386` el juego pone
+  su RAM en `0x8000-0xBFFF`, guarda ahí los dibujos de las salas del radar
+  y vuelve al cartucho con `WSLREG`. Sin eso, el radar sale lleno de ruido.
+- **El ritmo.** Jugando, un cuadro del juego cada 5 del VDP (a veces 6):
+  709 en 3.600 (`tools/omsx_ritmo.tcl`, modo `partida`). Los GIF de la
+  partida van a ese ritmo (`tools/gif_juego.py`); los de la presentación y
+  el final, al suyo, medido cuadro a cuadro.
+
 ## Cómo se ha hecho
 
 - **El trazado** sigue el código desde sus entradas con el banco que hay en
@@ -104,7 +124,8 @@ GEAR parte la pantalla cambiando R#23 en una línea (`0xCA1C`).
   Snake (`tools/snake.py`), los actores (`tools/actores_dibujos.py`), las
   peleas (`tools/jefes.py`), F2 y F3 (`tools/equipo.py`), el radar
   (`tools/radar.py`), los retratos (`tools/retratos.py`) y las secuencias
-  (`tools/secuencias.py`). `tools/imagenes_web.py` solo las junta.
+  (`tools/secuencias.py`) y los enemigos (`tools/enemigos.py`).
+  `tools/imagenes_web.py` solo las junta.
 - **El cotejo con openMSX** se hace volcando la VRAM en el mismo momento del
   juego (`tools/omsx_*.tcl`, `tools/lanza_*.ps1`) y comparando punto a punto
   (`tools/coteja_salas.py`, `coteja_sprites.py`, `coteja_partida.py`,

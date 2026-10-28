@@ -57,7 +57,8 @@ class TestWeb(unittest.TestCase):
 
     def test_no_se_nombra_otro_juego_de_la_serie(self):
         for p in paginas():
-            txt = sin_compartido(open(p, encoding="utf-8").read())
+            # ケスラー llama a Snake «ローンレンジャー», Lone Ranger: una cita del juego
+            txt = sin_compartido(open(p, encoding="utf-8").read()).replace("Lone Ranger", "")
             for j in OTROS_JUEGOS:
                 self.assertNotIn(j, txt, "%s nombra %s" % (p, j))
 

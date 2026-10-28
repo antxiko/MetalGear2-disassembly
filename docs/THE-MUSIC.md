@@ -23,6 +23,17 @@ writes to the PSG and the SCC the same thing, frame by frame, as the engine
 run here (`tools/coteja_psg.py`). Tune 0x8A, the same except for the first
 frame, in which the game reloads the five SCC waves and here one is loaded.
 
+Three pairs are very alike (comparing the PSG and SCC notes of the first
+60 seconds, `work/compara_musicas.py`): **0x6E** with **0x6D** (67 % of the
+notes in the same order) and **0x6B** with **0x6A** (in the first 10 seconds
+the SCC notes match in 453 of 600 frames; 0x6B lasts 145 s and 0x6A 171).
+Nobody asks for 0x6B or 0x6E: they look like earlier versions left in the
+cartridge. **0x98** and **0x91** share 53 %.
+
+**0x98** never loops or stops: the engine goes on reading past its score. In
+the ending it plays while Zanzibar rises and 0xA3 (`p13:9731`) cuts it 29.3 s
+later (measured with openMSX's pace); here it is cut there.
+
 <!-- generado:musica -->
 ### 0x6A
 
@@ -206,7 +217,7 @@ frame, in which the game reloads the five SCC waves and here one is loaded.
 
 ### 0x98
 
-*Where: p13:961C.*
+*Where: The ending, while Zanzibar rises (p13:961C), until 0xA3 cuts it: 29.3 s on the MSX.*
 
 <audio controls preload="none" src="audio/musica_98.mp3"></audio>
 
