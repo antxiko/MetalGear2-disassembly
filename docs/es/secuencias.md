@@ -63,9 +63,29 @@ El estado 2 (p14:A2AD) lleva la paleta un paso cada 2 cuadros hacia la de
 p13:9278, que son 16 colores (7, 7, 7): la pantalla del titulo se va a blanco
 antes de volver al logotipo de Konami.
 
+## Al ritmo del MSX
+
+El cartucho ejecutado no espera al VDP: cada cuadro procesado (p01:728E) es 1/60
+s. En el MSX no: `tools/lanza_ritmo.ps1 -modo pres|final` (tools/omsx_ritmo.tcl)
+apunta en cada cuadro real de openMSX el contador 0xCA03, que sube una vez por
+cuadro procesado, y deja work/ritmo_pres.txt (40000 cuadros) y ritmo_final.txt
+(30324). Los pasos caen en el mismo cuadro procesado que en el cartucho ejecutado
+(k + 2 en la presentacion, en las dos vueltas; k + 1 en el final), asi que cada
+cuadro ejecutado recibe su momento real. Lo que se ve tras el cuadro k sale cuando
+empieza el siguiente: tras el logotipo, montar la pantalla de los bancos 52-53
+(p01:72ED) ya ha subido 0xCA03 y tarda 252 cuadros reales.
+
+- Creditos de la presentacion: 147 s ejecutados, 178,9 s en el MSX.
+- Creditos sobre el sol: 40,5 s ejecutados, 249,8 s en el MSX.
+- Reparto: 93,5 s ejecutados, 115,0 s en el MSX.
+
 ## Para la web
 
 `python tools/secuencias.py gif pres work/gif` y `gif final work/gif`: 11 GIF
-(un cuadro de cada 4; los iguales seguidos, uno con su duracion), 1,5 MB:
-konami, creditos_1, creditos_2, titulo, historia_1, historia_2, zanzibar, sol,
-charla, reparto, blanco. Los mensajes de la charla, en work/charla_final.txt.
+al ritmo medido (un cuadro cada 4 reales, 15 por segundo; los iguales seguidos,
+uno con su duracion; el GIF cuenta en centesimas y se redondea el tiempo
+acumulado). Duraciones cotejadas con work/ritmo_*.txt: creditos 178,92 s contra
+178,92 s; el sol 249,1 s contra 249,8 s (la carga de su pantalla queda en la
+ultima imagen de zanzibar). Escenas: konami, creditos_1, creditos_2, titulo,
+historia_1, historia_2, zanzibar, sol, charla, reparto, blanco (2,2 MB). Los
+mensajes de la charla, en work/charla_final.txt.

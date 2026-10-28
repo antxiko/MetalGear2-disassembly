@@ -20,7 +20,8 @@ Las escenas de la web (cuadros del cartucho ejecutado, 60 por segundo):
         (22-27), blanco 15364-15634 (28-30)
 Ojo: el cartucho ejecutado no espera al VDP; en el MSX (openMSX) las copias de
 cada cuadro del paso 15 del final hacen que los creditos sobre el sol duren
-unas diez veces mas (231 s contra 22 s).
+unas diez veces mas (231 s contra 22 s), y la presentacion entera va a unos 45
+cuadros por segundo. Los GIF van al ritmo medido en openMSX (ritmo()).
 
 Uso: secuencias.py pres|final cuadros dir [cada]  -> dir/fNNNNN.png (los distintos)
      secuencias.py gif pres|final dir [cada] [escala]  -> dir/<escena>.gif
@@ -75,43 +76,85 @@ ESCENAS = {
 }
 
 
+# el cuadro procesado de openMSX (0xCA03 desde el principio de work/ritmo_*.txt)
+# que corresponde al cuadro k del cartucho ejecutado: k + DESFASE (los pasos de
+# 0xD701 y 0xCA2C caen ahi en las dos vueltas de la presentacion y en todo el final)
+DESFASE = {"pres": 2, "final": 1}
+
+
+def ritmo(cual):
+    """Para cada cuadro procesado p, el cuadro real (de 60 por segundo) en que el
+    MSX lo muestra: medido en openMSX con tools/omsx_ritmo.tcl (lanza_ritmo.ps1)."""
+    import os.path
+    ruta = os.path.join(AQUI, "..", "work", "ritmo_%s.txt" % cual)
+    real, acc, prev = [], 0, None
+    for r, ln in enumerate(open(ruta)):
+        c = int(ln.split()[4])
+        if prev is not None:
+            acc += (c - prev) & 0xFF
+        prev = c
+        while len(real) <= acc:
+            real.append(r)
+    return real
+
+
 def gifs(cual, sal, cada=4, escala=1):
-    """Cada escena en un GIF: un cuadro de cada CADA; los iguales seguidos, uno
-    solo con su duracion (en milisegundos, 60 cuadros por segundo)."""
+    """Cada escena en un GIF al ritmo del MSX: de los cuadros del cartucho
+    ejecutado se coge uno cada CADA cuadros reales (work/ritmo_*.txt: donde el
+    juego espera al VDP, cada cuadro procesado dura varios), y cada imagen dura
+    lo que tarda el MSX en llegar a la siguiente; las iguales seguidas, una."""
     os.makedirs(sal, exist_ok=True)
+    real = ritmo(cual)
+    off = DESFASE[cual]
     esc = ESCENAS[cual]
     fin = max(h for _, _, h in esc)
-    imgs, durs, clave = [], [], None
+    imgs, inicios, clave, ultimo = [], [], None, None
     actual = None
+
+    def cierra():
+        if actual and imgs:
+            fin_t = real[min(actual[2] + off + 1, len(real) - 1)]
+            durs = [(b - a) * 1000 / 60 for a, b in zip(inicios, inicios[1:] + [fin_t])]
+            guarda(imgs, durs, os.path.join(sal, actual[0] + ".gif"))
     for k, m in cuadros(cual, fin):
         e = next((x for x in esc if x[1] <= k < x[2]), None)
         if e is not actual:
-            if actual and imgs:
-                guarda(imgs, durs, os.path.join(sal, actual[0] + ".gif"))
-            actual, imgs, durs, clave = e, [], [], None
-        if not e or (k - e[1]) % cada:
+            cierra()
+            actual, imgs, inicios, clave, ultimo = e, [], [], None, None
+        if not e:
             continue
+        # lo que deja el cuadro k se ve cuando el MSX empieza el siguiente: una
+        # llamada larga (montar la pantalla de los bancos 52-53 tras el logotipo,
+        # 252 cuadros reales) ya ha subido 0xCA03 y aun no ha acabado
+        t = real[min(k + off + 1, len(real) - 1)]
+        if ultimo is not None and t < ultimo + cada:
+            continue
+        ultimo = t
         v = m.vdp
         a = ((v.r[11] & 3) << 15) | ((v.r[5] & 0xFC) << 7)
         p = (v.r[2] >> 5) & 3
         c = hashlib.md5(bytes(v.vram[p * 0x8000:(p + 1) * 0x8000]) + bytes(v.vram[a - 0x200:a + 0x80])
                         + bytes(v.r[:24]) + str(v.pal).encode()).digest()
-        ms = cada * 1000 / 60
         if c == clave:
-            durs[-1] += ms
             continue
         clave = c
         im = pinta(v)
         if escala > 1:
             im = im.resize((256 * escala, 212 * escala))
         imgs.append(im)
-        durs.append(ms)
-    if actual and imgs:
-        guarda(imgs, durs, os.path.join(sal, actual[0] + ".gif"))
+        inicios.append(t)
+    cierra()
 
 
 def guarda(imgs, durs, ruta):
-    imgs[0].save(ruta, save_all=True, append_images=imgs[1:], duration=[round(d) for d in durs],
+    # el GIF cuenta en centesimas: se redondea el tiempo acumulado, no cada
+    # duracion (66,7 ms por imagen se quedaban en 60 y los creditos perdian 5 s)
+    acum, ms = 0, []
+    for d in durs:
+        ms.append(round((acum + d) / 10) * 10 - round(acum / 10) * 10)
+        acum += d
+    durs = ms
+    imgs[0].save(ruta, save_all=True, append_images=imgs[1:], duration=durs,
                  loop=0, optimize=True)
     print("%s: %d imagenes, %.1f s, %d KB" % (ruta, len(imgs), sum(durs) / 1000, os.path.getsize(ruta) // 1024))
 
