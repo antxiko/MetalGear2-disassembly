@@ -70,22 +70,22 @@ screens, with everything in them, are painted by the cartridge
 The F2 signs, as the ROM has them:
 
 <!-- generado:armas -->
-| Slot | | | Sign |
-|---:|---|---|---|
-| 0 | | | (none) |
-| 1 | ![](imagenes/equipo/f2_c01.png) | `p51:B546` | **ハンドガン ［ベレッタM92F］** アメリカ軍用セイシキピストルとしてサイヨウされているセミオートマチックピストル。サイレンサーソウチャクカ。タマホキュウカ。 |
-| 2 | ![](imagenes/equipo/f2_c02.png) | `p51:B59A` | **サブマシンガン ［イングラムM11］** アメリカのコガタケイリョウSMG。ショットキーをおしつづけるとフルオートになる。サイレンサーソウチャクカ。タマホキュウカ。 |
-| 3 | ![](imagenes/equipo/f2_c03.png) | `p51:B5ED` | **グレネード ［M68］** アメリカセイ、チャクハツシンカンシキハヘンシュリュウダン。ジメンにトウタツするとバクハツする。ラッカチテンはターゲット上。 |
-| 4 | | | (none) |
-| 5 | ![](imagenes/equipo/f2_c05.png) | `p51:B63B` | **タイクウミサイル ［スティンガー］** ケイタイシキ、タイクウミサイル。レーダー内のショウジュンをカーソルイドウさせ、ショットキーでハッシャする。レーダー内カノウ。 |
-| 6 | ![](imagenes/equipo/f2_c06.png) | `p51:B690` | **リモコンミサイル ［M47ドラゴン］** シュ動モクシセン指令ホウシキによりハッシャゴのミサイルとモクヒョウをモクシによるカーソルソウサでホウコウをシュウセイできる。 |
-| 7 | ![](imagenes/equipo/f2_c07.png) | `p51:B6E7` | **プラスチック・バクダン** ヘンケイカノウなケイリョウコウセイノウバクヤク。 |
-| 8 | ![](imagenes/equipo/f2_c08.png) | `p51:B70E` | **ジライ ［M 78］** ショットキーでセット、ホフクで真上を通るとカイシュウ。タンチキがあればレーダー上にうつる。レーダー内にサイダイ16コセットカ。 |
-| 9 | ![](imagenes/equipo/f2_c09.png) | `p51:B808` | **カモフラージュ・マット ［ファントム07］** あらゆるVRAMにタイオウできるカモフラージュ・マット。ショットキーでセット、真上を通るとカイシュウ。下に潜れば見えなくなる。 |
-| 10 | ![](imagenes/equipo/f2_c0A.png) | `p51:B761` | **ムリョク化ガス ［ABC M25A2］** ボウドウチンアツ用シュリュウダン。バクハツするとCN1ガスをかざ下にフンシュツする。かざ上でのシヨウはキケン。 |
-| 11 | ![](imagenes/equipo/f2_c0B.png) | `p51:B7B3` | **マウス ［ジェリー2］** シカケやセンサーを発見するのにつかうダミーロボット。物音モードのカイジョにもつかえる。ショットキーでプレイヤーの前方へはしる。 |
-| 12 | ![](imagenes/equipo/f2_c0C.png) | `p51:B866` | **ライター ［JR TOKAI］。** どこにでもうっている100エンライター。シヨウホウホウはフメイ。 |
-| 13 | | | (none) |
+| Slot | | | Sign | Translation |
+|---:|---|---|---|---|
+| 0 | | | (none) | |
+| 1 | ![](imagenes/equipo/f2_c01.png) | `p51:B546` | **ハンドガン ［ベレッタM92F］** アメリカ軍用セイシキピストルとしてサイヨウされているセミオートマチックピストル。サイレンサーソウチャクカ。タマホキュウカ。 | HANDGUN [Beretta M92F]. Semi-automatic pistol adopted as the official US military pistol. Takes a silencer. Ammunition can be resupplied. |
+| 2 | ![](imagenes/equipo/f2_c02.png) | `p51:B59A` | **サブマシンガン ［イングラムM11］** アメリカのコガタケイリョウSMG。ショットキーをおしつづけるとフルオートになる。サイレンサーソウチャクカ。タマホキュウカ。 | SUBMACHINE GUN [Ingram M11]. Small, light American SMG. Keep the shot key pressed for full auto. Takes a silencer. Ammunition can be resupplied. |
+| 3 | ![](imagenes/equipo/f2_c03.png) | `p51:B5ED` | **グレネード ［M68］** アメリカセイ、チャクハツシンカンシキハヘンシュリュウダン。ジメンにトウタツするとバクハツする。ラッカチテンはターゲット上。 | GRENADE [M68]. American impact-fuse fragmentation grenade. It explodes when it hits the ground. It lands on the target. |
+| 4 | | | (none) | |
+| 5 | ![](imagenes/equipo/f2_c05.png) | `p51:B63B` | **タイクウミサイル ［スティンガー］** ケイタイシキ、タイクウミサイル。レーダー内のショウジュンをカーソルイドウさせ、ショットキーでハッシャする。レーダー内カノウ。 | ANTI-AIR MISSILE [Stinger]. Portable anti-air missile. Move the sight cursor on the radar and fire with the shot key. Usable within the radar. |
+| 6 | ![](imagenes/equipo/f2_c06.png) | `p51:B690` | **リモコンミサイル ［M47ドラゴン］** シュ動モクシセン指令ホウシキによりハッシャゴのミサイルとモクヒョウをモクシによるカーソルソウサでホウコウをシュウセイできる。 | REMOTE-CONTROLLED MISSILE [M47 Dragon]. With manual line-of-sight guidance, the course of the missile can be corrected after launch by steering a cursor on sight. |
+| 7 | ![](imagenes/equipo/f2_c07.png) | `p51:B6E7` | **プラスチック・バクダン** ヘンケイカノウなケイリョウコウセイノウバクヤク。 | PLASTIC EXPLOSIVE. Light, high-performance explosive that can be shaped. |
+| 8 | ![](imagenes/equipo/f2_c08.png) | `p51:B70E` | **ジライ ［M 78］** ショットキーでセット、ホフクで真上を通るとカイシュウ。タンチキがあればレーダー上にうつる。レーダー内にサイダイ16コセットカ。 | MINE [M 78]. Set with the shot key; picked up by crawling right over it. With the detector it shows on the radar. Up to 16 can be set within the radar. |
+| 9 | ![](imagenes/equipo/f2_c09.png) | `p51:B808` | **カモフラージュ・マット ［ファントム07］** あらゆるVRAMにタイオウできるカモフラージュ・マット。ショットキーでセット、真上を通るとカイシュウ。下に潜れば見えなくなる。 | CAMOUFLAGE MAT [Phantom 07]. A camouflage mat compatible with any VRAM. Set with the shot key, picked up by going right over it. Get under it and you can't be seen. |
+| 10 | ![](imagenes/equipo/f2_c0A.png) | `p51:B761` | **ムリョク化ガス ［ABC M25A2］** ボウドウチンアツ用シュリュウダン。バクハツするとCN1ガスをかざ下にフンシュツする。かざ上でのシヨウはキケン。 | DISABLING GAS [ABC M25A2]. Riot control grenade. When it explodes it spreads CN1 gas downwind. Using it upwind is dangerous. |
+| 11 | ![](imagenes/equipo/f2_c0B.png) | `p51:B7B3` | **マウス ［ジェリー2］** シカケやセンサーを発見するのにつかうダミーロボット。物音モードのカイジョにもつかえる。ショットキーでプレイヤーの前方へはしる。 | MOUSE [Jerry 2]. Dummy robot used to find traps and sensors. It can also switch off the noise mode. With the shot key it runs ahead of the player. |
+| 12 | ![](imagenes/equipo/f2_c0C.png) | `p51:B866` | **ライター ［JR TOKAI］。** どこにでもうっている100エンライター。シヨウホウホウはフメイ。 | LIGHTER [JR TOKAI]. A 100-yen lighter sold everywhere. How to use it: unknown. |
+| 13 | | | (none) | |
 <!-- /generado -->
 
 ## The equipment (F3)
@@ -93,43 +93,43 @@ The F2 signs, as the ROM has them:
 ![EQUIPMENT SELECT](imagenes/equipo.png)
 
 <!-- generado:equipo -->
-| Slot | | | Sign |
-|---:|---|---|---|
-| 0 | | | (none) |
-| 1 | ![](imagenes/equipo/f3_c01.png) | `p51:B89A` | **タバコ ［ラッキー・ストライカー］** ゼンカイにひきつづき、SNAKEアイヨウのタバコ。コドクな戦場にはイキヌキもヒツヨウ。しかし・・・真のシヨウホウホウはフメイ。 |
-| 2 | ![](imagenes/equipo/f3_c02.png) | `p51:BA39` | **ソウガンキョウ ［ニコス F500］** これをつかうとプレイヤーを中心に上下左右のガメンを見ることができる。 |
-| 3 | ![](imagenes/equipo/f3_c03.png) | `p51:BB19` | **ナイトビュア** クラヤミでも真ヒルのように見えるアンシゴーグル。これをソウビすればいかなるクラヤミでも見えるようになる。 |
-| 4 | ![](imagenes/equipo/f3_c04.png) | `p51:B943` | **ガスマスク［ライアット・フェイス・マスク］** これをソウビするとドクガス・エリアでO2ゲージが2バイになり、へり方もおそくなりタイキュウ時間がのびる。ムリョク化ガスにもカ。 |
-| 5 | ![](imagenes/equipo/f3_c05.png) | `p51:B8F2` | **ボディ・アーマー ［S・P・S］** テキからのダメージがハンゲンするボウダンチョッキ。サイレント・パートナー・スペシャルといわれ、ジュウダンにのみユウコウ。 |
-| 6 | | | (none) |
-| 7 | ![](imagenes/equipo/f3_c07.png) | `p51:B9E7` | **サンソボンベ** これをソウビすると水中でのO2ゲージが2バイになり、へり方もおそくなり潜水時間がながくなる。水上に上がればマンタンにもどる。 |
-| 8 | ![](imagenes/equipo/f3_c08.png) | `p51:B99F` | **ジライタンチキ** これをソウビするとジライがレーダー上にしろいコウテンとなってうつる。プレイヤーのしかけたジライもドウヨウにハンノウする。 |
-| 9 | ![](imagenes/equipo/f3_c09.png) | `p51:BAF4` | **ハングライダー** 戦場でのリヨウカチはなし。シヨウホウホウはフメイ。 |
-| 10 | ![](imagenes/equipo/f3_c0A.png) | `p51:BA77` | **ダンボール** タッキュウビンのどこにでもあるようなダンボールのハコ。ザンジバーランドいきのデンピョウがはられている。シヨウホウホウはフメイ。 |
-| 11 | ![](imagenes/equipo/f3_c0B.png) | `p51:BABF` | **バケツ** トイレそうじ用のカネセイのゴミバケツ。かなりじょうぶなシロモノだ。シヨウホウホウはフメイ。 |
-| 12 | ![](imagenes/equipo/f3_c0C.png) | `p51:BBF4` | **カゼグスリ ［PLカル ホワイト］** エン化リゾチームハイゴウのビエン用カゼグスリ。くしゃみ、はな水、はなづまり、なみだ目にきく。15サイ以上、1かい、1カプセル。 |
-| 13 | ![](imagenes/equipo/f3_c0D.png) | `p51:BB84` | **カセットテープ** ナターシャのロッカーにあったカセットテープ。ザンジバーランドのコッカがロクオンされている。 |
-| 14 | ![](imagenes/equipo/f3_c0E.png) | `p51:BB5A` | **タマゴ** バイオラボにあったタマゴ。たべられそうにはない。シヨウホウホウはフメイ。 |
-| 15 | ![](imagenes/equipo/f3_c0F.png) | `p51:BB5A` | **タマゴ** (= 14) |
-| 16 | ![](imagenes/equipo/f3_c10.png) | `p51:BC4E` | **ブローチ** ナターシャがくれたブローチ。ザンジバーランドのマークがモチーフされている。シヨウホウホウはフメイ。ナターシャのにおいがする。 |
-| 17 | ![](imagenes/equipo/f3_c11.png) | `p51:BD04` | **レッド・カード** カード1から3をダイヨウするマスター・カード。 |
-| 18 | ![](imagenes/equipo/f3_c12.png) | `p51:BD25` | **ブルー・カード** カード4から6をダイヨウするマスター・カード。 |
-| 19 | ![](imagenes/equipo/f3_c13.png) | `p51:BD46` | **グリーン・カード** カード7から9をダイヨウするマスター・カード。 |
-| 20 | ![](imagenes/equipo/f3_c14.png) | `p51:BCE7` | **カード** ザンジバーランドでシヨウされているICカード。 |
-| 21 | ![](imagenes/equipo/f3_c15.png) | `p51:BCE7` | **カード** (= 20) |
-| 22 | ![](imagenes/equipo/f3_c16.png) | `p51:BCE7` | **カード** (= 20) |
-| 23 | ![](imagenes/equipo/f3_c17.png) | `p51:BCE7` | **カード** (= 20) |
-| 24 | ![](imagenes/equipo/f3_c18.png) | `p51:BCE7` | **カード** (= 20) |
-| 25 | ![](imagenes/equipo/f3_c19.png) | `p51:BCE7` | **カード** (= 20) |
-| 26 | ![](imagenes/equipo/f3_c1A.png) | `p51:BCE7` | **カード** (= 20) |
-| 27 | ![](imagenes/equipo/f3_c1B.png) | `p51:BCE7` | **カード** (= 20) |
-| 28 | ![](imagenes/equipo/f3_c1C.png) | `p51:BCE7` | **カード** (= 20) |
-| 29 | ![](imagenes/equipo/f3_c1D.png) | `p51:BC94` | **スプレー ［ミセス・スプレー］** ジメチエーテル、LPガスをつかったキョウネンセイのラッカー用スプレー。カキゲンキンとかかれている。イロはメタリックグレイだ。 |
-| 30 | | | (none) |
-| 31 | ![](imagenes/equipo/f3_c1F.png) | `p51:BBBC` | **カートリッジ** マルフののこしたゲームカートリッジ。この中にOILIXのマイクロフィルムがかくされている。 |
-| 32 | ![](imagenes/equipo/f3_c20.png) | `p51:BD68` | **Cレーション ［B1ユニット］** ショットキーでタイリョクのカイフクができるギュウニク、ブタニク、ハムエッグ、ツナフィッシュ、チョコレート、クラッカーをふくむ。 |
-| 33 | ![](imagenes/equipo/f3_c21.png) | `p51:BDBB` | **Cレーション ［B2ユニット］** ショットキーでタイリョクのカイフクができるマメとミートボールのトマトニ、マメとフランクフルト、ギュウニクのポテトニをふくむ。 |
-| 34 | ![](imagenes/equipo/f3_c22.png) | `p51:BE0D` | **Cレーション ［B3ユニット］** ショットキーでタイリョクのカイフクができるスライスハム、ニワトリとシチメンチョウ、スパゲッティ、チーズ、コーヒーをふくむ。 |
+| Slot | | | Sign | Translation |
+|---:|---|---|---|---|
+| 0 | | | (none) | |
+| 1 | ![](imagenes/equipo/f3_c01.png) | `p51:B89A` | **タバコ ［ラッキー・ストライカー］** ゼンカイにひきつづき、SNAKEアイヨウのタバコ。コドクな戦場にはイキヌキもヒツヨウ。しかし・・・真のシヨウホウホウはフメイ。 | CIGARETTES [Lucky Striker]. SNAKE's favourite cigarettes, as last time. A break is needed on the lonely battlefield too. But... their true use is unknown. |
+| 2 | ![](imagenes/equipo/f3_c02.png) | `p51:BA39` | **ソウガンキョウ ［ニコス F500］** これをつかうとプレイヤーを中心に上下左右のガメンを見ることができる。 | BINOCULARS [Nikos F500]. With them you can see the screens up, down, left and right of the player. |
+| 3 | ![](imagenes/equipo/f3_c03.png) | `p51:BB19` | **ナイトビュア** クラヤミでも真ヒルのように見えるアンシゴーグル。これをソウビすればいかなるクラヤミでも見えるようになる。 | NIGHT VIEWER. Night vision goggles that show the dark as in broad daylight. Equipped, you can see in any darkness. |
+| 4 | ![](imagenes/equipo/f3_c04.png) | `p51:B943` | **ガスマスク［ライアット・フェイス・マスク］** これをソウビするとドクガス・エリアでO2ゲージが2バイになり、へり方もおそくなりタイキュウ時間がのびる。ムリョク化ガスにもカ。 | GAS MASK [Riot Face Mask]. Equipped, the O2 gauge doubles in poison gas areas and drops more slowly, so you last longer. Also works against disabling gas. |
+| 5 | ![](imagenes/equipo/f3_c05.png) | `p51:B8F2` | **ボディ・アーマー ［S・P・S］** テキからのダメージがハンゲンするボウダンチョッキ。サイレント・パートナー・スペシャルといわれ、ジュウダンにのみユウコウ。 | BODY ARMOUR [S.P.S.]. Bulletproof vest that halves the enemy's damage. Called Silent Partner Special; it only works against bullets. |
+| 6 | | | (none) | |
+| 7 | ![](imagenes/equipo/f3_c07.png) | `p51:B9E7` | **サンソボンベ** これをソウビすると水中でのO2ゲージが2バイになり、へり方もおそくなり潜水時間がながくなる。水上に上がればマンタンにもどる。 | OXYGEN TANK. Equipped, the O2 gauge doubles under water and drops more slowly, so you can dive longer. It refills when you surface. |
+| 8 | ![](imagenes/equipo/f3_c08.png) | `p51:B99F` | **ジライタンチキ** これをソウビするとジライがレーダー上にしろいコウテンとなってうつる。プレイヤーのしかけたジライもドウヨウにハンノウする。 | MINE DETECTOR. Equipped, mines show on the radar as white dots. The player's own mines show too. |
+| 9 | ![](imagenes/equipo/f3_c09.png) | `p51:BAF4` | **ハングライダー** 戦場でのリヨウカチはなし。シヨウホウホウはフメイ。 | HANG GLIDER. No use on the battlefield. How to use it: unknown. |
+| 10 | ![](imagenes/equipo/f3_c0A.png) | `p51:BA77` | **ダンボール** タッキュウビンのどこにでもあるようなダンボールのハコ。ザンジバーランドいきのデンピョウがはられている。シヨウホウホウはフメイ。 | CARDBOARD BOX. An ordinary cardboard box like any parcel service's. It has a label for Zanzibar Land. How to use it: unknown. |
+| 11 | ![](imagenes/equipo/f3_c0B.png) | `p51:BABF` | **バケツ** トイレそうじ用のカネセイのゴミバケツ。かなりじょうぶなシロモノだ。シヨウホウホウはフメイ。 | BUCKET. A metal bin for cleaning toilets. Quite a sturdy thing. How to use it: unknown. |
+| 12 | ![](imagenes/equipo/f3_c0C.png) | `p51:BBF4` | **カゼグスリ ［PLカル ホワイト］** エン化リゾチームハイゴウのビエン用カゼグスリ。くしゃみ、はな水、はなづまり、なみだ目にきく。15サイ以上、1かい、1カプセル。 | COLD MEDICINE [PL Cal White]. Nasal cold medicine with lysozyme chloride. For sneezing, runny nose, blocked nose and watery eyes. Over 15: 1 capsule each time. |
+| 13 | ![](imagenes/equipo/f3_c0D.png) | `p51:BB84` | **カセットテープ** ナターシャのロッカーにあったカセットテープ。ザンジバーランドのコッカがロクオンされている。 | CASSETTE TAPE. The tape that was in Natasha's locker. The national anthem of Zanzibar Land is recorded on it. |
+| 14 | ![](imagenes/equipo/f3_c0E.png) | `p51:BB5A` | **タマゴ** バイオラボにあったタマゴ。たべられそうにはない。シヨウホウホウはフメイ。 | EGG. An egg from the bio lab. It doesn't look edible. How to use it: unknown. |
+| 15 | ![](imagenes/equipo/f3_c0F.png) | `p51:BB5A` | **タマゴ** (= 14) | (= 14) |
+| 16 | ![](imagenes/equipo/f3_c10.png) | `p51:BC4E` | **ブローチ** ナターシャがくれたブローチ。ザンジバーランドのマークがモチーフされている。シヨウホウホウはフメイ。ナターシャのにおいがする。 | BROOCH. The brooch Natasha gave him. Its motif is the emblem of Zanzibar Land. How to use it: unknown. It smells of Natasha. |
+| 17 | ![](imagenes/equipo/f3_c11.png) | `p51:BD04` | **レッド・カード** カード1から3をダイヨウするマスター・カード。 | RED CARD. Master card that stands for cards 1 to 3. |
+| 18 | ![](imagenes/equipo/f3_c12.png) | `p51:BD25` | **ブルー・カード** カード4から6をダイヨウするマスター・カード。 | BLUE CARD. Master card that stands for cards 4 to 6. |
+| 19 | ![](imagenes/equipo/f3_c13.png) | `p51:BD46` | **グリーン・カード** カード7から9をダイヨウするマスター・カード。 | GREEN CARD. Master card that stands for cards 7 to 9. |
+| 20 | ![](imagenes/equipo/f3_c14.png) | `p51:BCE7` | **カード** ザンジバーランドでシヨウされているICカード。 | CARD. IC card used in Zanzibar Land. |
+| 21 | ![](imagenes/equipo/f3_c15.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 22 | ![](imagenes/equipo/f3_c16.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 23 | ![](imagenes/equipo/f3_c17.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 24 | ![](imagenes/equipo/f3_c18.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 25 | ![](imagenes/equipo/f3_c19.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 26 | ![](imagenes/equipo/f3_c1A.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 27 | ![](imagenes/equipo/f3_c1B.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 28 | ![](imagenes/equipo/f3_c1C.png) | `p51:BCE7` | **カード** (= 20) | (= 20) |
+| 29 | ![](imagenes/equipo/f3_c1D.png) | `p51:BC94` | **スプレー ［ミセス・スプレー］** ジメチエーテル、LPガスをつかったキョウネンセイのラッカー用スプレー。カキゲンキンとかかれている。イロはメタリックグレイだ。 | SPRAY [Mrs. Spray]. Lacquer spray with dimethyl ether and LP gas, highly flammable. It says «keep away from fire». The colour is metallic grey. |
+| 30 | | | (none) | |
+| 31 | ![](imagenes/equipo/f3_c1F.png) | `p51:BBBC` | **カートリッジ** マルフののこしたゲームカートリッジ。この中にOILIXのマイクロフィルムがかくされている。 | CARTRIDGE. The game cartridge Marv left. The OILIX microfilm is hidden in it. |
+| 32 | ![](imagenes/equipo/f3_c20.png) | `p51:BD68` | **Cレーション ［B1ユニット］** ショットキーでタイリョクのカイフクができるギュウニク、ブタニク、ハムエッグ、ツナフィッシュ、チョコレート、クラッカーをふくむ。 | C RATION [B1 unit]. Restores life with the shot key. Contains beef, pork, ham and egg, tuna fish, chocolate and crackers. |
+| 33 | ![](imagenes/equipo/f3_c21.png) | `p51:BDBB` | **Cレーション ［B2ユニット］** ショットキーでタイリョクのカイフクができるマメとミートボールのトマトニ、マメとフランクフルト、ギュウニクのポテトニをふくむ。 | C RATION [B2 unit]. Restores life with the shot key. Contains beans and meatballs in tomato, beans and frankfurters, and beef with potatoes. |
+| 34 | ![](imagenes/equipo/f3_c22.png) | `p51:BE0D` | **Cレーション ［B3ユニット］** ショットキーでタイリョクのカイフクができるスライスハム、ニワトリとシチメンチョウ、スパゲッティ、チーズ、コーヒーをふくむ。 | C RATION [B3 unit]. Restores life with the shot key. Contains sliced ham, chicken and turkey, spaghetti, cheese and coffee. |
 <!-- /generado -->
 
 ## The radar

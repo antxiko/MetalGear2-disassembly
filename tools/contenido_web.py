@@ -92,12 +92,11 @@ PAGINAS = [
      ("THE-BOSSES.html", "LOS-JEFES.html", "The bosses", "Los jefes",
       "the eleven fights in order of appearance, played by the cartridge",
       "las once peleas en orden de aparici&oacute;n, jugadas por el cartucho"),
-     ("THE-TRANSCEIVER.html", "EL-TRANSCEPTOR.html", "The transceiver", "El transceptor",
-      "the frequencies, who answers, the portraits and every conversation, translated",
-      "las frecuencias, qui&eacute;n contesta, los retratos y todas las conversaciones, traducidas"),
      ("THE-TEXTS.html", "LOS-TEXTOS.html", "The texts", "Los textos",
-      "the font, its 128 kanji, the signs and the rest of the messages",
-      "la fuente, sus 128 kanji, los letreros y el resto de los mensajes"),
+      "the transceiver (frequencies, who answers, every conversation), the scenes in story order and "
+      "the signs, all translated; the font and its 128 kanji",
+      "el transceptor (frecuencias, qui&eacute;n contesta, todas las conversaciones), las escenas en el "
+      "orden de la historia y los letreros, todo traducido; la fuente y sus 128 kanji"),
      ("THE-MUSIC.html", "LA-MUSICA.html", "The music", "La m&uacute;sica",
       "the 44 tunes, from its own sound engine, and where each one is asked for",
       "las 44 m&uacute;sicas, de su propio motor de sonido, y d&oacute;nde se pide cada una"),

@@ -163,7 +163,7 @@ corregidos:
   dibujos por tipo (`p04:8A75`) y otra de lógica por tipo menos uno
   (`p04:8A8D`).
 - Los comentarios de `mira_condiciones` (`p01:6104`) decían las condiciones al
-  revés; las 3.000 pruebas de [El transceptor](EL-TRANSCEPTOR.html) lo
+  revés; las 3.000 pruebas de [Los textos](LOS-TEXTOS.html) lo
   cazaron.
 - El orden vertical de las salas: la fila **sube** al salir por arriba
   (`p02:8117`).

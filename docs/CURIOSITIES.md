@@ -163,7 +163,7 @@ corrected:
   drawing table by kind (`p04:8A75`) and one logic table by kind minus one
   (`p04:8A8D`).
 - The comments of `mira_condiciones` (`p01:6104`) gave the conditions the
-  wrong way round; the 3,000 tests of [The transceiver](THE-TRANSCEIVER.html)
+  wrong way round; the 3,000 tests of [The texts](THE-TEXTS.html)
   caught it.
 - The vertical order of the rooms: the row **goes up** on leaving through
   the top (`p02:8117`).

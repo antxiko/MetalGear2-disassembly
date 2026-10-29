@@ -20,14 +20,15 @@ sys.path.insert(0, AQUI)
 import textos as T                                   # noqa: E402
 import musica as MU                                  # noqa: E402
 import traducciones as TR                            # noqa: E402
+import traducciones_textos as TX                     # noqa: E402
 
 # las paginas de cada idioma donde va cada parte
 DONDE = {
     "en": {"enemigos": "THE-ENEMIES.md", "armas": "SNAKE.md", "equipo": "SNAKE.md", "musica": "THE-MUSIC.md",
-           "conversaciones": "THE-TRANSCEIVER.md", "textos": "THE-TEXTS.md",
+           "conversaciones": "THE-TEXTS.md", "escenas": "THE-TEXTS.md",
            "letreros": "THE-TEXTS.md"},
     "es": {"enemigos": "LOS-ENEMIGOS.md", "armas": "SNAKE.md", "equipo": "SNAKE.md", "musica": "LA-MUSICA.md",
-           "conversaciones": "EL-TRANSCEPTOR.md", "textos": "LOS-TEXTOS.md",
+           "conversaciones": "LOS-TEXTOS.md", "escenas": "LOS-TEXTOS.md",
            "letreros": "LOS-TEXTOS.md"},
 }
 
@@ -87,24 +88,25 @@ def letreros_de(tabla, idioma):
     # (cosas_de_d600 p10:B00E, cosas_de_d638 p10:B042); detras de la tabla de
     # F3 siguen punteros que parecen de ella y son trozos de mensajes de p51
     n = 1 + (13 if tabla == 0x8046 else 0x22)
-    out.append("| %s | | | %s |" % (p["casilla"], p["texto"]))
-    out.append("|---:|---|---|---|")
+    out.append("| %s | | | %s | %s |" % (p["casilla"], p["texto"], p["traduccion"]))
+    out.append("|---:|---|---|---|---|")
     for i in range(n):
         d = palabra50(t + 2 * i)
         txt = letrero(50, d).split("\n")
         fich = "%s_c%02X.png" % (pref, i)
         dib = ("![](%s%s)" % (raiz_img, fich)) if os.path.exists(os.path.join(docs, fich)) else ""
         if d == palabra50(t):                       # casilla vacia: sin su recuadro azul
-            out.append("| %d | | | %s |" % (i, p["nada"]))
+            out.append("| %d | | | %s | |" % (i, p["nada"]))
             continue
         cabeza = re.sub(r"\s+", " ", txt[0].replace("　", " ")).strip()
         resto = "".join(txt[1:])
         igual = vistos.get(d)
         vistos.setdefault(d, i)
-        out.append("| %d | %s | `p%02d:%04X` | **%s**%s |" % (
+        trad = TX.EQUIPO[d][0 if idioma == "en" else 1] if igual is None else "(= %d)" % igual
+        out.append("| %d | %s | `p%02d:%04X` | **%s**%s | %s |" % (
             i, dib, banco(50, d), d, cabeza,
             (" " + resto) if resto and igual is None else
-            (" (= %d)" % igual if igual is not None else "")))
+            (" (= %d)" % igual if igual is not None else ""), trad))
     return out + [""]
 
 
@@ -194,14 +196,14 @@ def conversaciones(idioma):
             for q in T.quien_habla(48, mm):
                 if q not in quienes:
                     quienes.append(q)
-        out.append("### 140.%02X" % nums[k])
+        out.append("#### 140.%02X" % nums[k])
         out.append("")
         out.append(p["cabeza"] % (", ".join(T.nombre(q) for q in quienes) or "-", t, len(fs)))
         out.append("")
         out += fichas(fs, idioma)
     for c in T.OTRAS:
         t = T.byte(48, c) | T.byte(48, c + 1) << 8
-        out.append("### " + p["conv"] % t)
+        out.append("#### " + p["conv"] % t)
         out.append("")
         out += fichas(T.conversacion_en(t), idioma)
     return out
@@ -234,6 +236,31 @@ def textos(idioma):
     return out
 
 
+def escenas(idioma):
+    """Los mensajes que no son del transceptor, por la historia (traducciones_textos.ESCENAS),
+    en tabla original | traduccion."""
+    p = PAL[idioma]
+    i = 0 if idioma == "en" else 1
+    out = []
+    for titulo_en, titulo_es, nota_en, nota_es, lista in TX.ESCENAS:
+        out.append("### " + (titulo_en if i == 0 else titulo_es))
+        out.append("")
+        nota = nota_en if i == 0 else nota_es
+        if nota:
+            out += [nota, ""]
+        out.append("| | %s | %s |" % (p["original"], p["traduccion"]))
+        out.append("|---|---|---|")
+        for cual in lista:
+            b, d = int(cual[1:3]), int(cual[4:], 16)
+            esp = 48 if b in (48, 49) else 50
+            texto, _ = T.mensaje(esp, d)
+            orig = "<br>".join(x.replace("|", "\\|") for x in texto.strip().split("\n"))
+            tr = TX.T[cual][i].replace("|", "\\|").replace(" / ", "<br>")
+            out.append("| `%s` | %s | %s |" % (cual, orig, tr))
+        out.append("")
+    return out
+
+
 def de_las_tablas():
     """Los letreros de F2 y F3 (ya en la pagina de Snake)."""
     r = set()
@@ -249,7 +276,8 @@ def de_las_tablas():
 def letreros(idioma):
     fuera = de_las_tablas()
     txt = open(os.path.join(T.RAIZ, "src", "metalgear2_p51.asm"), encoding="utf-8").read()
-    out = ["| | |", "|---|---|"]
+    p = PAL[idioma]
+    out = ["| | %s | %s |" % (p["original"], p["traduccion"]), "|---|---|---|"]
     for m in re.finditer(r"^; DATOS (letrero_[0-9A-F]+): letrero \((p00:49[0-9A-F]+)\).*?\n;   0x([0-9a-f]+)\.\.0x([0-9a-f]+)",
                          txt, re.M | re.S):
         d, fin, con_sitio = int(m.group(3), 16), int(m.group(4), 16), m.group(2) == "p00:4918"
@@ -268,7 +296,9 @@ def letreros(idioma):
             linea += c
             d += k
         lineas.append(linea)
-        out.append("| `p51:%s` | %s |" % (m.group(1)[8:], " / ".join(x.replace("|", "\\|") for x in lineas)))
+        tr = TX.LETREROS[int(m.group(1)[8:], 16)][0 if idioma == "en" else 1]
+        out.append("| `p51:%s` | %s | %s |" % (m.group(1)[8:], " / ".join(x.replace("|", "\\|") for x in lineas),
+                                            tr.replace("|", "\\|")))
     return out + [""]
 
 
@@ -365,7 +395,7 @@ PARTES = {
     "equipo": lambda i: letreros_de(0x8048, i),
     "musica": musica,
     "conversaciones": conversaciones,
-    "textos": textos,
+    "escenas": escenas,
     "letreros": letreros,
 }
 

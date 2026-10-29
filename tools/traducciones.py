@@ -5,7 +5,7 @@ castellano). Hechas a mano desde el texto que decodifica tools/textos.py; los
 nombres propios van como los escribe el juego.
 
 Las usa tools/paginas_web.py para la tabla original | traduccion de
-EL-TRANSCEPTOR y THE-TRANSCEIVER.
+LOS-TEXTOS y THE-TEXTS (la parte del transceptor).
 """
 
 T = {
