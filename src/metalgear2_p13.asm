@@ -2177,7 +2177,7 @@ DATA_resto_9218:
 ; ======================================================================
 
 
-pantalla_de_56:		; con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0xA8 x 0x48 a 0 en (0x28, 0x40) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
+pantalla_de_56:		; el logotipo de Konami, con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0xA8 x 0x48 a 0 en (0x28, 0x40) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
 	call 045f1h		;92d1   ; apaga_pantalla_y_sprites: p00:45CC y p00:45F6
 	call 0418eh		;92d4   ; bancos_56: pone el 56 en 0xA000 (con su copia en 0xC381-0xC383)
 	ld hl,0ae95h		;92d7   ; la paleta de p56:AE95

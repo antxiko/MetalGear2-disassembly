@@ -834,7 +834,7 @@ L 0x91CB pon_verde_b
 L 0x91D8 compara_paleta igual?
 L 0x91E7 pon_paleta_e900 
 L 0x91F0 paleta_9258 en 0xE900, la paleta de p13:9258 ([n][rojo-azul][verde]) y 0xFF
-L 0x92D1 pantalla_de_56 con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0xA8 x 0x48 a 0 en (0x28, 0x40) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
+L 0x92D1 pantalla_de_56 el logotipo de Konami, con el banco 56: la paleta de p56:AE95, R#7 = 0x0F, un rectangulo de 0xA8 x 0x48 a 0 en (0x28, 0x40) de la pagina 3, los caracteres de p56:AEE6, p56:AF4E y p56:AFB6 a la VRAM (0x800, 0x7000, 0xD800), las piezas de p56:AEA5 en (0x40, 0x40) y todo encendido; 0xCA12 = 0x3C, 0xCA13 = 0x31, 0xCA14 = 0
 L 0x932F pantalla_de_56_baja cada 2 cuadros (0xCA12), 0xCA13 uno menos y el rectangulo de (0x28, 0x40) de 0xA8 x (0x31 - 0xCA13) copiado sobre si mismo en la pagina 3; al llegar a 0, 0xCA14 = 1
 L 0x9341 pantalla_56_rect 0x31 - 0xCA13 de alto
 L 0x9351 piezas_de_lista las piezas de la lista HL en DE: cada byte una pieza (p00:49FB) y el caracter siguiente; 0xFE [x]: otra fila 8 mas abajo y X + x; 0xFF se acaba

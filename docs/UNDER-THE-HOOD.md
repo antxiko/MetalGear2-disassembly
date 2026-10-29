@@ -111,6 +111,45 @@ openMSX:
   GIFs go at that pace (`tools/gif_juego.py`); those of the intro and the
   ending, at theirs, measured frame by frame.
 
+## What it shares with Metal Gear
+
+Very little. Comparing both listings instruction by instruction, in runs of
+**16 bytes or more** (6 instructions or more) and masking the absolute
+addresses -a routine moved elsewhere counts the same-, there are **1,484
+bytes** out of this cartridge's 118,147 bytes of code, **1.3 %**: 38 runs
+identical byte for byte and 53 equal except for the addresses. None is longer
+than 76 bytes. The game engine is written anew.
+
+What repeats is Konami's MSX2 library:
+
+| System | Bytes | Routines | For example |
+|---|---:|---:|---|
+| The VDP: commands, VRAM, palette, sprites | 863 | 34 | `copia_rectangulo` (`p00:4767`), `borra_bloque_vram` (`p00:46FF`), `lee_estado_vdp` (`p00:465C`), `cambia_tablas_de_sprites` (`p01:67CD`) |
+| 1 to 3 bit characters turned into 4 | 208 | 11 | `caracter_a_4_bits` (`p00:48A5`), `fila_3_bits` (`p00:4BB1`) |
+| Joystick and keyboard | 170 | 8 | `mira_el_mando` (`p06:A65C`), `mando` (`p06:B0C8`) |
+| The Konami logo | 105 | 7 | `pantalla_de_56` (`p13:92D1`) |
+| Arithmetic | 54 | 4 | `por_la_rapidez` (`p02:8707`), `multiplica` (`p02:8719`) |
+| Start-up | 46 | 3 | `slot_del_cartucho` (`p00:5FF1`), `arranque_por_el_gancho` (`p00:4040`) |
+| The state loop | 38 | 2 | `cada_cuadro` (`p01:728E`), with the RAM moved from 0xC0xx to 0xCAxx |
+
+389 of those bytes are a second copy of the VDP library in bank 63, the one
+used by the debug monitor (`copia_hmmm`, `p63:BB99`).
+
+What they do **not** share, not even a 16 byte run: the sound engine (Metal
+Gear's drives the PSG; this one, the SCC, `p16`-`p17`), the bank switching,
+the texts and the transceiver, and the guards' intelligence. Only the aiming
+looks alike: `velocidad_hacia` and `angulo_hacia` (`p02:8667`-`8725`) do the
+same calculation with the same sine table, but rewritten: only pieces of 3 to
+22 instructions match.
+
+The identical data are 578 bytes: the Konami logo (497 bytes, the palette and
+pieces at `p56:AE95`), the sine table (`p08:BE7D`) and the joystick direction
+table (`p06:A6A8`). Texts and music, nothing.
+
+On Metal Gear's side it is 1,179 of its 35,620 bytes of code, 3.3 %. With a
+lower threshold (12 bytes) it comes to 2.3 % of this one and 5.7 % of that
+one; with a higher one (32 bytes), 0.7 % and 1.6 %.
+
 ## How it has been done
 
 - **The trace** follows the code from its entry points with the bank there is

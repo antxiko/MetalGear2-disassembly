@@ -110,6 +110,45 @@ openMSX:
   partida van a ese ritmo (`tools/gif_juego.py`); los de la presentación y
   el final, al suyo, medido cuadro a cuadro.
 
+## Lo que comparte con Metal Gear
+
+Muy poco. Comparados los dos listados instrucción a instrucción, con tramos
+de **16 bytes o más** (6 instrucciones o más) y tapando las direcciones
+absolutas -una rutina movida de sitio cuenta igual-, salen **1.484 bytes**
+de los 118.147 de código de este cartucho, el **1,3 %**: 38 tramos idénticos
+byte a byte y 53 iguales salvo las direcciones. Ninguno pasa de 76 bytes.
+El motor del juego está escrito de nuevo.
+
+Lo que se repite es la biblioteca de MSX2 de Konami:
+
+| Sistema | Bytes | Rutinas | Por ejemplo |
+|---|---:|---:|---|
+| El VDP: órdenes, VRAM, paleta, sprites | 863 | 34 | `copia_rectangulo` (`p00:4767`), `borra_bloque_vram` (`p00:46FF`), `lee_estado_vdp` (`p00:465C`), `cambia_tablas_de_sprites` (`p01:67CD`) |
+| Caracteres de 1 a 3 bits pasados a 4 | 208 | 11 | `caracter_a_4_bits` (`p00:48A5`), `fila_3_bits` (`p00:4BB1`) |
+| El mando y el teclado | 170 | 8 | `mira_el_mando` (`p06:A65C`), `mando` (`p06:B0C8`) |
+| El logotipo de Konami | 105 | 7 | `pantalla_de_56` (`p13:92D1`) |
+| Aritmética | 54 | 4 | `por_la_rapidez` (`p02:8707`), `multiplica` (`p02:8719`) |
+| El arranque | 46 | 3 | `slot_del_cartucho` (`p00:5FF1`), `arranque_por_el_gancho` (`p00:4040`) |
+| El bucle de estados | 38 | 2 | `cada_cuadro` (`p01:728E`), con la RAM movida de 0xC0xx a 0xCAxx |
+
+389 de esos bytes son una segunda copia de la biblioteca del VDP en el banco
+63, la del monitor de depuración (`copia_hmmm`, `p63:BB99`).
+
+Lo que **no** comparten, ni un tramo de 16 bytes: el motor de sonido (el de
+Metal Gear es del PSG; este, del SCC, `p16`-`p17`), los cambios de banco, los
+textos y el transceptor, y la inteligencia de los guardias. De ella solo se
+parece la puntería: `velocidad_hacia` y `angulo_hacia` (`p02:8667`-`8725`)
+hacen el mismo cálculo con la misma tabla de senos, pero reescrito: solo
+casan trozos de 3 a 22 instrucciones.
+
+Los datos idénticos son 578 bytes: el logotipo de Konami (497 bytes, la
+paleta y las piezas de `p56:AE95`), la tabla de senos (`p08:BE7D`) y la de
+la dirección del mando (`p06:A6A8`). De textos y música, nada.
+
+Del lado de Metal Gear son 1.179 de sus 35.620 bytes de código, el 3,3 %.
+Con un umbral más bajo (12 bytes) sale el 2,3 % de este y el 5,7 % de aquel;
+con uno más alto (32 bytes), el 0,7 % y el 1,6 %.
+
 ## Cómo se ha hecho
 
 - **El trazado** sigue el código desde sus entradas con el banco que hay en
