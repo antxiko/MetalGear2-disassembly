@@ -17,7 +17,8 @@ zona.
 
 Cada enemigo lo **juega el cartucho ejecutado** (`tools/enemigos.py`): se
 entra en su sala y se corren 120 cuadros del juego entero (`p01:728E`); lo
-que se ve es la sala entera, como en la pantalla, con Snake quieto. Para que
+que se ve es la sala entera, como en la pantalla, sin Snake (para llegar a
+la sala la herramienta lo deja donde cae, a veces fuera del suelo). Para que
 patrullen y no corran tras Snake, la alerta (`0xCA5F`) se pone a cero en cada
 cuadro. Los GIF van **al ritmo del MSX** (un cuadro del juego cada 5 del VDP,
 medido en openMSX). Sale uno por aspecto distinto: todos los soldados (tipos

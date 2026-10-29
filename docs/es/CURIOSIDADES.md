@@ -73,9 +73,25 @@ boca (`p01:70C9`, `p44:95D1`):
 ## Dos músicas que no pide nadie
 
 La **0x6B** y la **0x6E** tienen su rutina (`p01:6B22`, `p01:6B2E`) y su
-partitura, pero ninguna llamada, tabla ni `ld a,` las pide: la dirección de
-sus rutinas no sale en ningún banco (la de la 0x6E, solo como un byte de una
-sala, en `p24`). Medido barriendo la ROM. Están en [La música](LA-MUSICA.html).
+partitura, pero nada del juego llega a ellas. Comprobado por todos los
+caminos por los que se pide una música:
+
+- Todas las rutinas de sonido (172 en `p01` y 5 en `p00`) llevan su número
+  fijo (`ld a,NN`) y saltan a `0xC340`; nadie más llega a `0xC340` ni a `p16:4003` con otro
+  número, y el motor no se pide sonidos a sí mismo.
+- Ningún `call`, `jp` ni `jr` va a `p01:6B22` ni a `p01:6B2E`.
+- Las músicas por dirección (`pide_musica_hl`, la pendiente de `0xCA19`, la
+  que suena en `0xCA20`, `rutina_de_fase` con sus listas de `p06:B40C`, la
+  radio de `p09:BFC1`) toman la dirección de un `ld hl,` o de una tabla de
+  palabras; los ocho saltos indirectos (`jp (hl)`) también.
+- Los bytes de la dirección `22 6B` no salen en ningún sitio de la ROM, y
+  `2E 6B` solo en `p24:1704`, dentro de los bloques de las salas de la zona 2
+  (`p00:58DD`): números de bloque, no un puntero.
+
+Y al ejecutar el motor se ve qué son: la 0x6E lee los mismos bytes de
+partitura que la **0x6D** salvo 17 (su cabecera), y la 0x6B comparte con la
+**0x6A** 1.393 de sus 1.922 (`tools/partituras.py`). Son variantes de esas dos
+que se quedaron sin usar. Están en [La música](LA-MUSICA.html).
 
 ## Un 140.99 que al cargar es 140.98
 

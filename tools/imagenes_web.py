@@ -204,6 +204,11 @@ def main(docs):
             # el fondo de jefes.py es magenta (ROSA): a negro
             im.putdata([(0, 0, 0) if p == (255, 0, 255) else p for p in im.getdata()])
             todas += piezas(im)
+        # fuera las piezas de un solo color: el destello del golpe, el parpadeo al
+        # morir (BIG BOSS en rojo, azul y naranja) y el contorno al arder. Son cuadros
+        # de verdad (en el GIF estan) pero en la hoja parecen dibujos rotos
+        todas = [i for i in todas
+                 if len({c for _, c in i.convert("RGB").getcolors(4096) or []} - {(0, 0, 0)}) > 1]
         mios = distintos(todas)
         mios.sort(key=lambda i: -i.size[0] * i.size[1])
         grande = max(i.size[1] for i in mios) + 4
@@ -283,6 +288,19 @@ def main(docs):
         for f in sorted(os.listdir(w("enemigos"))):
             if f.startswith("sala_") and f.endswith(".gif"):
                 shutil.copyfile(w("enemigos", f), os.path.join(d, f))
+
+    # una pantalla de cada parte de las secuencias (las que nombra la pagina): de
+    # los GIF por escena de secuencias.py (work/gif), la imagen que mas tiempo se
+    # queda en pantalla sin ser negra (la de mas colores cogia dibujos a medias)
+    os.makedirs(os.path.join(img, "secuencias"), exist_ok=True)
+    for f in sorted(os.listdir(w("gif"))):
+        if not f.endswith(".gif") or f == "blanco.gif":     # el fundido a blanco: blanco
+            continue
+        frs = [(x.convert("RGB"), x.info.get("duration", 0))
+               for x in ImageSequence.Iterator(Image.open(w("gif", f)))]
+        frs = [(x, d) for x, d in frs if x.getbbox()] or frs
+        mejor = max(frs, key=lambda xd: xd[1])[0]
+        guarda(amplia(mejor, 2), docs, "secuencias/%s.png" % f[:-4])
 
     aud = os.path.join(docs, "audio")
     os.makedirs(aud, exist_ok=True)

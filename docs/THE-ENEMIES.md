@@ -16,7 +16,8 @@ what tells them apart is each zone's colours.
 
 Each enemy is **played by the cartridge running** (`tools/enemigos.py`):
 its room is entered and 120 frames of the whole game (`p01:728E`) are run;
-what you see is the whole room, as on screen, with Snake standing still. So
+what you see is the whole room, as on screen, without Snake (to reach the
+room the tool leaves him wherever he lands, sometimes off the floor). So
 that they patrol and don't chase Snake, the alert (`0xCA5F`) is set to zero
 every frame. The GIFs go **at the MSX's pace** (one game frame every 5 of the
 VDP, measured in openMSX). There is one per different look: all the

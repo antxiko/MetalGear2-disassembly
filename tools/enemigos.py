@@ -292,15 +292,15 @@ def agrupa(cuadros=60):
 
 
 def gif_de_sala(clave, nombre, cuadros=120, actor=None):
-    """La sala entera jugada `cuadros` cuadros, con Snake, al ritmo del MSX. Con
+    """La sala entera jugada `cuadros` cuadros, sin Snake, al ritmo del MSX. Con
     actor, sus dibujos distintos a work/enemigos/<nombre>_dNN.png (para la hoja)."""
     import mapas
     from actores_dibujos import a_la_sala
     from gif_juego import Gif
     m = a_la_sala(clave)
-    if m.mem[0xCB01] == 0x0D:                       # Snake a la vista (ver jefes.py)
-        m.pon(0xCB01, 0)
-        m.pon(0xCB0E, 1)
+    # Snake no se pinta: el atajo a la sala lo deja donde cae, a veces fuera del
+    # suelo (en la sala 0x0A de la zona 1, en lo negro); con la alerta a cero no
+    # cuenta para los enemigos
     sala = (m.mem[0xCA4A], m.mem[0xCA4B], m.mem[0xCA76])
     gif, dibujos = Gif(), []
     for c in range(cuadros):
@@ -320,7 +320,7 @@ def gif_de_sala(clave, nombre, cuadros=120, actor=None):
                     dibujos.append(d.crop(caja))
         v = m.vdp
         im = v.pagina((v.r[2] >> 5) & 3, 212)
-        mapas.sprites_de_ram(v, m.mem, im, con_snake=True)
+        mapas.sprites_de_ram(v, m.mem, im)
         gif.pon(im.convert("RGB").crop((0, 0, 0xC0, 0xC0)))
     gif.guarda(os.path.join(SAL, nombre))
     for i, d in enumerate(dibujos):

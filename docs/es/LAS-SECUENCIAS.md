@@ -22,16 +22,28 @@ El estado 0 (`p01:72B2`) pinta el logotipo de Konami (`p13:92D1`) y elige una
 de **dos vueltas** según `0xCA2A`, que se alterna: la de los créditos y la de
 la historia.
 
+![El logotipo de Konami](../imagenes/secuencias/konami.png)
+
 **Los créditos** (estado 1, `p13:8000`, pasos 1-0x41 de `0xCA2C`): cada uno
 con su plano dibujado línea a línea, sus sprites y sus letras escritas una a
 una. 178,9 s en el MSX (147 s en el cartucho ejecutado).
+
+![Los créditos](../imagenes/secuencias/creditos_1.png)
+
+![Los créditos](../imagenes/secuencias/creditos_2.png)
 
 **El título** (`p14:A196` y el estado 2, `p14:A299`): METAL GEAR 2 SOLID
 SNAKE, que acaba **en blanco**: el estado 2 lleva la paleta un paso cada dos
 cuadros hacia la de `p13:9278`, que son 16 colores (7, 7, 7).
 
+![El título](../imagenes/secuencias/titulo.png)
+
 **La historia** (la otra vuelta, pasos 0x80 y siguientes, `p14:A2CF`): el
 texto en japonés sobre los dibujos.
+
+![La historia](../imagenes/secuencias/historia_1.png)
+
+![La historia](../imagenes/secuencias/historia_2.png)
 
 ## El final
 
@@ -42,16 +54,24 @@ El estado 7 (`p13:9555`, 31 pasos de `0xD701`), al que la partida pasa con
 
 **Zanzibar** (pasos 2-8), subiendo con el desplazamiento vertical (R#23).
 
+![Zanzibar](../imagenes/secuencias/zanzibar.png)
+
 **Los créditos sobre el sol** (pasos 9-17). El paso 15 cambia de página cada
 cuadro y en cada una borra un rectángulo de 0x90 x 0x60, copia encima el
 dibujo de la página 2 y las letras (`p13:9871`): en el MSX dura **249,8 s**;
 en el cartucho ejecutado, sin esperar al VDP, 40,5.
 
+![Los créditos sobre el sol](../imagenes/secuencias/sol.png)
+
 **La charla** (pasos 18-21): los 19 mensajes de `p50:8042`
 (`p50:9D2C-9F7D`), con la pantalla del MSX de la que habla
 [Curiosidades](CURIOSIDADES.html).
 
+![La charla](../imagenes/secuencias/charla.png)
+
 **El reparto** (pasos 22-27), con los retratos: 115 s en el MSX.
+
+![El reparto](../imagenes/secuencias/reparto.png)
 
 **El fundido a blanco** (pasos 28-30).
 

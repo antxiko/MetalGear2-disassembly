@@ -73,9 +73,25 @@ cigarette in his mouth (`p01:70C9`, `p44:95D1`):
 ## Two tunes nobody asks for
 
 Tunes **0x6B** and **0x6E** have their routine (`p01:6B22`, `p01:6B2E`) and
-their score, but no call, table or `ld a,` asks for them: the address of
-their routines appears in no bank (0x6E's, only as a byte of a room, in
-`p24`). Measured by sweeping the ROM. They are in [The music](THE-MUSIC.html).
+their score, but nothing in the game reaches them. Checked along every path a
+tune is asked for by:
+
+- All the sound routines (172 in `p01` and 5 in `p00`) carry their fixed
+  number (`ld a,NN`) and jump to `0xC340`; nothing else reaches `0xC340` or `p16:4003` with another
+  number, and the engine never asks itself for a sound.
+- No `call`, `jp` or `jr` goes to `p01:6B22` or `p01:6B2E`.
+- The tunes asked for by address (`pide_musica_hl`, the pending one at
+  `0xCA19`, the one playing at `0xCA20`, `rutina_de_fase` with its lists at
+  `p06:B40C`, the radio at `p09:BFC1`) take the address from an `ld hl,` or
+  from a table of words; so do the eight indirect jumps (`jp (hl)`).
+- The address bytes `22 6B` appear nowhere in the ROM, and `2E 6B` only at
+  `p24:1704`, inside the room blocks of zone 2 (`p00:58DD`): block numbers, not
+  a pointer.
+
+And running the engine shows what they are: 0x6E reads the same score bytes as
+**0x6D** but for 17 (its header), and 0x6B shares 1,393 of its 1,922 with
+**0x6A** (`tools/partituras.py`). They are variants of those two that were
+left unused. They are in [The music](THE-MUSIC.html).
 
 ## A 140.99 that becomes 140.98 on loading
 
