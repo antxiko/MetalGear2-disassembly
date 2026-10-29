@@ -151,6 +151,10 @@ corregidos:
   cazaron.
 - El orden vertical de las salas: la fila **sube** al salir por arriba
   (`p02:8117`).
+- Los pasos de la tabla de RUNNING MAN (`p05:AC48`) se llamaban con uno o dos
+  de menos desde `0xAD2F`: los pasos 7 y 8 repiten el 1 y el 2. Salió al
+  acabar su pelea. Lo mismo con los de GREY FOX (`p05:B934`), con tres de
+  menos desde `0xBBA2`: los pasos 0x0D-0x0F van todos a un `ret` (`p05:BA57`).
 
 ## Preguntas abiertas
 
@@ -163,9 +167,6 @@ corregidos:
 - Unos pocos puntos (de 4 a 25) de las luces de los botones de los ascensores
   y del número de planta de la zona 0x10 salen distintos de openMSX sin
   explicar.
-- **RUNNING MAN** se queda en su mensaje y **Pettrovich** en su paso 0x11 en
-  el cartucho ejecutado: lo que viene después en esas dos peleas no está
-  visto.
 - El mensaje de キャリー del 140.99 (arriba).
 - La conversación sin número de `p48:84B1` encadena, un cuadro detrás de
   otro, trozos de los mensajes de ケスラー empezados a media frase: no está

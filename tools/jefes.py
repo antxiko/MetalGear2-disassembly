@@ -11,7 +11,7 @@ sin vida (resta_a_d800, p07:B471) pasan a los pasos 0x20 y siguientes
 Aqui: se entra en la zona y en la sala de la ficha (como tools/mapas.py), se
 pone a Snake donde la pelea empieza (la Y y la X que mira su primer paso), y
 se corre el cuadro del juego (p01:728E, el de la interrupcion) cuadro a cuadro: con un mensaje abierto
-(0xD8A8 o 0xE221) se pulsa el disparo 1 un cuadro si y otro no (p01:660F),
+(la ventana 0xD8A8, o la llamada 0xE1E8) se pulsa el disparo 1 cada 30 cuadros, para que se lea (p01:660F),
 la vida de Snake (0xCA53) se deja llena (y si lo aplastan, de vuelta al
 estado 0), y a los CUADROS cuadros se le quita
 al jefe toda la vida con resta_a_d800 para ver como acaba. De cada cuadro se
@@ -151,6 +151,21 @@ def a_la_sala(m, fila, col):
         m.pon(d, v)
 
 
+def sala_por_arriba(m, fila, col):
+    """Snake a la sala (fila, col) por el camino del juego: sale por arriba y la
+    fila sube (p02:8117), como tools/omsx_salas.tcl. a_la_sala, en una especial,
+    pintaba la sala de la zona normal."""
+    m.pon(0xCA50, (fila - 1) & 0xFF)
+    m.pon(0xCA51, col)
+    m.pon(0xCB03, 0xBF)
+    m.pon(0xCA41, 1)
+    for _ in range(40):
+        m.bancos_123()
+        m.llama(0x728E)
+        if not m.mem[0xCA41] and m.mem[0xCA01] == 0:
+            break
+
+
 def sprites(m, desde=8):
     """Los sprites desde el 8 (0xDA00/0xDC00) solos, recortados: (imagen, caja) o None."""
     from PIL import Image, ImageChops
@@ -215,9 +230,9 @@ def pelea(tipo, cuadros=600):
         m.pon(0xCB03, SITIO_DE_SNAKE[tipo][0])
         m.pon(0xCB05, SITIO_DE_SNAKE[tipo][1])
     vistos, antes, antes_f, pasos = set(), 0, 0, []
-    vivo, desde, fin, desde24 = None, 0, None, -1
+    vivo, desde, fin, desde24, desde_ini = None, 0, None, -1, 0
     gif = None                                  # la pelea entera, al ritmo del MSX (gif_juego.py)
-    for k in range(9000):
+    for k in range(14000):                       # la cadena 2 -> 9 -> 0x0A pasa de 9000
         # el tipo vivo: la primera ficha ocupada de las 3 de las salas normales
         # (en las especiales, solo la de 0xD860: fichas_d800 p04:89E8)
         fichas = [0xD860] if m.mem[0xCA76] else [0xD800, 0xD820, 0xD840]
@@ -228,6 +243,7 @@ def pelea(tipo, cuadros=600):
                 gif.guarda(os.path.join(raiz, "pelea_%02X.gif" % vivo), tope_ms=4000)
             gif = Gif() if t else None
             vivo, ix, desde = t, ahora, k
+            desde_ini = k
             if t == 0x0A:
                 # BIG BOSS: su paso 0 espera 0xD6B0 (p05:B5B5), que solo pone
                 # zona_12_con_d889 (p14:B104), por donde el juego vuelve a la
@@ -270,16 +286,33 @@ def pelea(tipo, cuadros=600):
                     os.remove(os.path.join(sal, x))
             elif fin is None:
                 fin = k + 120                  # sin ninguna: un rato mas y se acaba
+                if os.environ.get("TRAZA_JEFE"):
+                    print(k, "sin ficha: CA76 %02X D800 %s CA4A %02X CA4B %02X" % (
+                        m.mem[0xCA76], bytes(m.mem[0xD800:0xD880:0x20]).hex(), m.mem[0xCA4A], m.mem[0xCA4B]),
+                        flush=True)
         if fin is not None and k >= fin:
             break
-        # un mensaje (0xD8A8, 0xE221) o una llamada (0xE1E8, p03:B11F): el disparo 1
-        mensaje = m.mem[0xD8A8] or m.mem[0xE221] or m.mem[0xE1E8]
-        teclas = 0x10 if mensaje and k % 2 else 0
+        # un mensaje (0xD8A8) o una llamada (0xE1E8, p03:B11F): el disparo 1
+        # (0xE221, el paso del mensaje, se queda a 3 tras acabarlo: la ventana es 0xD8A8)
+        mensaje = m.mem[0xD8A8] or m.mem[0xE1E8]
+        # (0xE221 no: se queda a 3 en peleas enteras, la de RUNNING MAN)
+        if vivo and (m.mem[0xD8A8] or m.mem[0xE1E8] or m.mem[0xCA97]) and desde < 10 ** 9                 and desde - desde_ini < 1500:
+            # (como mucho 1500: en la pelea de GREY FOX 0xD8A8 se queda puesto)
+            # los cuadros con un mensaje o una llamada abiertos no cuentan para
+            # quitarle la vida: con la llamada de Holly abierta, Pettrovich moria
+            # sin que se viera la pelea
+            desde += 1
+        # cada 30 cuadros (2,5 s en el MSX): antes, un cuadro si y otro no, y el
+        # mensaje se pasaba sin llegar a escribirse (ventanas vacias en los GIF)
+        # para pulsar si vale 0xE221 (el paso del mensaje): la charla final de GREY
+        # FOX (p05:BC4A) no abre 0xD8A8; en la pelea de RUNNING MAN se queda a 3 y
+        # Snake dispara cada 30 cuadros
+        teclas = 0x10 if (mensaje or m.mem[0xE221]) and k % 30 == 0 else 0
         m.pon(0xCA08, teclas)
         m.pon(0xCA07, teclas & ~antes)
         antes = teclas
         # una llamada del transceptor (0xCA97): RETURN, un cuadro si y otro no
-        funcion = 0x20 if (m.mem[0xCA97] or m.mem[0xE1E8]) and k % 2 else 0
+        funcion = 0x20 if (m.mem[0xCA97] or m.mem[0xE1E8]) and k % 30 == 15 else 0
         m.pon(0xCA0A, funcion)
         m.pon(0xCA09, funcion & ~antes_f)
         antes_f = funcion
@@ -323,6 +356,50 @@ def pelea(tipo, cuadros=600):
             m.pon(0xD570, 5)
             m.pon(0xD571, 3)
             m.pon(0xD575, 8)
+        if os.environ.get("TRAZA_JEFE") and vivo and k % 25 == 0 and k >= desde + cuadros:
+            print(k, "paso %02X D8A8 %02X E221 %02X snake %02X,%02X jefe %02X,%02X sala jefe %02X,%02X snake %02X,%02X" % (
+                m.mem[ix + 1], m.mem[0xD8A8], m.mem[0xE221], m.mem[0xCB03], m.mem[0xCB05], m.mem[ix + 3],
+                m.mem[ix + 5], m.mem[ix + 0x0A], m.mem[ix + 0x0B], m.mem[0xCA50], m.mem[0xCA51]), flush=True)
+        if vivo == 4 and m.mem[ix + 1] == 0x10 and m.mem[0xD8A8] == 0:
+            # RUNNING MAN rendido (paso 0x10, p05:AF59) espera a que Snake se le
+            # acerque (0x20 en X; en Y, de 0x28 por encima a 0x28 por debajo) para
+            # decir su mensaje (0x610) y acabar (pasos 0x11, 0x12 -> 0x20): aqui
+            # Snake va a su sala y a su lado, como iria el jugador. A la sala, por
+            # el camino del juego (sale por arriba: la fila sube, p02:8117), no con
+            # a_la_sala: en la especial 0x29 pintaba la sala de la zona normal
+            if (m.mem[ix + 0x0A], m.mem[ix + 0x0B]) != (m.mem[0xCA50], m.mem[0xCA51]):
+                sala_por_arriba(m, m.mem[ix + 0x0A], m.mem[ix + 0x0B])
+            m.pon(0xCB03, m.mem[ix + 3])
+            m.pon(0xCB05, min(0xB0, m.mem[ix + 5] + 0x18))
+            m.pon(0xCB0E, 3)
+        if vivo == 8 and m.mem[ix + 1] == 0x11 and not m.mem[0xD7D9] & 0x20 and m.mem[0xD8A8] == 0:
+            # Pettrovich (paso 0x11, p05:BFA0) espera el bit 5 de 0xD7D9, que pone
+            # coger la cosa 0x2D (bandera_por_cosa p10:A68C): el cartucho de Marv
+            # (casilla 0x1F de F3, ficha 0xD6B0). Aqui, cogido como al abrir la taquilla
+            m.pon(0xD6B0, 1)
+            m.pon(0xD7D9, m.mem[0xD7D9] | 0x20)
+        if os.environ.get("TRAZA_JEFE") and vivo == 9 and m.mem[ix + 1] in (5, 6) and k % 20 == 0:
+            print(k, "fox %02X D8A8 %02X E1E8 %02X D88C %02X sala %02X CB4B %02X CA97 %02X D600 %s" % (
+                m.mem[ix + 1], m.mem[0xD8A8], m.mem[0xE1E8], m.mem[0xD88C], m.mem[0xCA4B], m.mem[0xCB4B],
+                m.mem[0xCA97], bytes(m.mem[0xD600:0xD610]).hex()), flush=True)
+        if vivo == 9 and m.mem[ix + 1] == 5 and not m.mem[0xD8A8] and not m.mem[0xE1E8]:
+            # GREY FOX, paso 5 (p05:B9F3): espera 0xD88C = 0xFF y a Snake en la sala 3.
+            # 0xD88C lo pone el juego (cb4b_sin_cosas, p10:BBDD, al abrir F2 o F3) cuando
+            # Snake, ardiendo, ya no lleva ninguna de las 0x31 cosas: aqui se tiran todas,
+            # se mira como al abrir el menu, y a la sala 3
+            if m.mem[0xD88C] != 0xFF:
+                for d in range(0xD600, 0xD600 + 4 * 0x31):
+                    m.pon(d, 0)
+                m.pon(0xCB20, 0)
+                m.pon(0xCB21, 0)
+                m.pon_banco(0xA000, 10)             # lo que mira el juego al abrir F2 o F3 (p10:AED9, AF33)
+                m.mem[0xC383] = 10
+                m.llama(0xBBDD)
+                m.bancos_123()
+            elif m.mem[0xCA4B] != 3:
+                sala_por_arriba(m, 2, 9)
+        if vivo == 9 and m.mem[ix + 1] == 6 and m.mem[0xCA4B] != 2:
+            sala_por_arriba(m, 2, 8)                # el paso 6 (p05:BA0C) le espera en la sala 2
         if vivo == 9 and not m.mem[0xD8AA] and k == desde + 30:
             m.pon(0xD8AA, 1)                    # como p14:B0BA (y p01:73C8): sin el, el 9 espera
         if vivo and m.mem[ix + 1] == 0x24 and k == desde24 + 60:
@@ -352,7 +429,7 @@ def pelea(tipo, cuadros=600):
             if h not in vistos:
                 vistos.add(h)
                 r[0].save(os.path.join(sal, "s%05d.png" % k))
-        abierto = m.mem[0xD8A8] or m.mem[0xE221] or m.mem[0xE1E8]
+        abierto = m.mem[0xD8A8] or m.mem[0xE1E8]
         if gif is not None and len(gif) < TOPE_GIF and (not abierto or k % 8 == 0):
             v = m.vdp
             if m.mem[0xCA1C]:

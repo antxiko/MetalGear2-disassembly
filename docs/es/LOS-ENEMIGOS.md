@@ -15,155 +15,110 @@ zona.
 
 ## Cómo están hechos
 
-Cada enemigo de cada sala lo **juega el cartucho ejecutado**
-(`tools/enemigos.py`): se entra en su sala, se corren 120 cuadros del juego
-entero (`p01:728E`) y se pintan solo sus sprites, en un recuadro de 64 x 64
-puntos que lo sigue. Para que patrullen y no corran tras Snake, la alerta
-(`0xCA5F`) se pone a cero en cada cuadro. Los GIF van **al ritmo del MSX**
-(un cuadro del juego cada 5 del VDP, medido en openMSX). Sale uno por cada
-aspecto distinto (tipo, patrones y colores); los iguales se cuentan.
+Cada enemigo lo **juega el cartucho ejecutado** (`tools/enemigos.py`): se
+entra en su sala y se corren 120 cuadros del juego entero (`p01:728E`); lo
+que se ve es la sala entera, como en la pantalla, con Snake quieto. Para que
+patrullen y no corran tras Snake, la alerta (`0xCA5F`) se pone a cero en cada
+cuadro. Los GIF van **al ritmo del MSX** (un cuadro del juego cada 5 del VDP,
+medido en openMSX). Sale uno por aspecto distinto: todos los soldados (tipos
+1-9, 0x0A y 0x0C) son una clase y los distinguen sus colores, y un soldado
+con todos sus colores en los de otro (visto de espaldas) es el mismo. La sala
+de cada GIF es aquella en la que más se mueve.
+
+Cotejado con openMSX (`tools/omsx_salas.tcl` con un volcado cada 0,4 s, ocho
+salas): las cámaras se deslizan por la pared y los soldados dormidos de la
+sala 0x0D de la zona 4 se pintan en sus camas con el fondo, no con sprites.
+La primera versión de esta página pintaba cada enemigo en un recuadro que lo
+seguía: las cámaras salían quietas, y al soldado dormido se le daban sprites
+a la fuerza y salía sin cabeza.
 
 ## Todos sus dibujos
 
-Las imágenes distintas de cada GIF de abajo, una fila por enemigo, en el
-mismo orden y sin repetir:
+Los dibujos distintos del enemigo de cada GIF de abajo, una fila por
+enemigo, en el mismo orden y sin repetir:
 
 ![Los dibujos de los enemigos, sin repetir](../imagenes/enemigos_hoja.png)
 
 ## Uno a uno
 
 <!-- generado:enemigos -->
-### 1. Soldado (tipo 0x01)
+### 1. Soldado de boina roja
 
-![](../imagenes/enemigos/00_t01_00_01.gif)
+![](../imagenes/enemigos/sala_00_02_02.gif)
 
-Jugado en la zona 00, sala 01; igual en 66 salas más.
+La zona 02, sala 02, jugada; tipos 0x01, 0x06, 0x09, 0x0C; sale en 52 salas más.
 
-### 2. Soldado (tipo 0x02)
+### 2. Soldado de casco gris
 
-![](../imagenes/enemigos/06_t02_01_13.gif)
+![](../imagenes/enemigos/sala_01_03_03.gif)
 
-Jugado en la zona 01, sala 13.
+La zona 03, sala 03, jugada; tipos 0x01, 0x04, 0x05; sale en 11 salas más.
 
-### 3. Soldado (tipo 0x04)
+### 3. Soldados en la sala roja
 
-![](../imagenes/enemigos/08_t04_03_00.gif)
+![](../imagenes/enemigos/sala_02_E2E_00.gif)
 
-Jugado en la zona 03, sala 00; igual en 8 salas más.
+La especial 2E, sala 00, jugada; tipo 0x01; sale en una sala más.
 
-### 4. Soldado (tipo 0x01)
+Los soldados de siempre, en una sala con la paleta en rojos.
 
-![](../imagenes/enemigos/09_t01_03_03.gif)
+### 4. Soldado de boina verde
 
-Jugado en la zona 03, sala 03.
+![](../imagenes/enemigos/sala_03_01_13.gif)
 
-### 5. Soldado (tipo 0x01)
+La zona 01, sala 13, jugada; tipo 0x02; no sale en otra sala.
 
-![](../imagenes/enemigos/10_t01_03_08.gif)
+BLACK COLOR le dice a Snake que siga a un hombre con boina verde que está en el 1F: «男のトクチョウはグリーンベレーをかぶっている。1Fにいるはずだ» (`p50:887B`). Solo sale en esta sala.
 
-Jugado en la zona 03, sala 08; igual en 7 salas más.
+### 5. Niño
 
-### 6. Soldado (tipo 0x05)
+![](../imagenes/enemigos/sala_04_06_1D.gif)
 
-![](../imagenes/enemigos/12_t05_03_10.gif)
+La zona 06, sala 1D, jugada; tipo 0x10; sale en 18 salas más.
 
-Jugado en la zona 03, sala 10.
+Los mensajes de los niños los firma «こども» (`p50:82E3`). Pegarles quita a Snake 4 de vida: el golpe (`p03:A360`) pasa por `delante_con_actores` (`p07:AED1`).
 
-### 7. Figura pequeña con coletas (tipo 0x11)
+### 6. Niña con coletas
 
-![](../imagenes/enemigos/13_t11_04_05.gif)
+![](../imagenes/enemigos/sala_05_06_23.gif)
 
-Jugado en la zona 04, sala 05; igual en 10 salas más.
+La zona 06, sala 23, jugada; tipo 0x11; sale en 9 salas más.
 
-### 8. Soldado (tipo 0x09)
+Una niña: aquí dice «ながれにさからってはいけないって、かた目のおじちゃんが。» (`p50:82E3`). Como a los otros niños, pegarle quita vida a Snake.
 
-![](../imagenes/enemigos/14_t09_04_08.gif)
+### 7. Hámster de Zanzíbar
 
-Jugado en la zona 04, sala 08.
+![](../imagenes/enemigos/sala_06_E39_01.gif)
 
-### 9. Soldado (tipo 0x06)
+La especial 39, sala 01, jugada; tipo 0x12; no sale en otra sala.
 
-![](../imagenes/enemigos/16_t06_04_16.gif)
+Norden: «ザンジバーハムスター», que tendría veneno (`p49:A38E`).
 
-Jugado en la zona 04, sala 16.
+### 8. Cúpula azul
 
-### 10. Cúpula azul (tipo 0x13)
+![](../imagenes/enemigos/sala_07_06_01.gif)
 
-![](../imagenes/enemigos/17_t13_06_01.gif)
+La zona 06, sala 01, jugada; tipo 0x13; sale en 7 salas más.
 
-Jugado en la zona 06, sala 01; igual en 31 salas más.
+### 9. Máquina que recorre su ruta
 
-### 11. Figura pequeña de gorra roja (tipo 0x10)
+![](../imagenes/enemigos/sala_08_08_04.gif)
 
-![](../imagenes/enemigos/18_t10_06_02.gif)
+La zona 08, sala 04, jugada; tipo 0x14; sale en 3 salas más.
 
-Jugado en la zona 06, sala 02; igual en 20 salas más.
+### 10. Cámara
 
-### 12. Máquina de 48 x 48 puntos (tipo 0x14)
+![](../imagenes/enemigos/sala_09_01_0A.gif)
 
-![](../imagenes/enemigos/21_t14_08_03.gif)
+La zona 01, sala 0A, jugada; tipo 0x15; sale en 11 salas más.
 
-Jugado en la zona 08, sala 03; igual en 3 salas más.
+### 11. Paloma
 
-### 13. Soldado (tipo 0x01)
+![](../imagenes/enemigos/sala_10_0F_03.gif)
 
-![](../imagenes/enemigos/22_t01_0A_14.gif)
+La zona 0F, sala 03, jugada; tipo 0x16; no sale en otra sala.
 
-Jugado en la zona 0A, sala 14; igual en 2 salas más.
-
-### 14. Pájaro (tipo 0x16)
-
-![](../imagenes/enemigos/25_t16_0F_03.gif)
-
-Jugado en la zona 0F, sala 03.
-
-### 15. Animal pequeño (tipo 0x12)
-
-![](../imagenes/enemigos/28_t12_E39_01.gif)
-
-Jugado en la especial 39, sala 01; igual en 10 salas más.
-
-### 16. Cámara (tipo 0x15)
-
-![](../imagenes/enemigos/30_t15_01_0A.gif)
-
-Jugado en la zona 01, sala 0A; igual en 9 salas más.
-
-### 17. Soldado (tipo 0x0C)
-
-![](../imagenes/enemigos/31_t0C_01_0D.gif)
-
-Jugado en la zona 01, sala 0D; igual en 4 salas más.
-
-### 18. Soldado (tipo 0x01)
-
-![](../imagenes/enemigos/32_t01_03_11.gif)
-
-Jugado en la zona 03, sala 11; igual en 2 salas más.
-
-### 19. Soldado (tipo 0x0A)
-
-![](../imagenes/enemigos/33_t0A_04_0D.gif)
-
-Jugado en la zona 04, sala 0D; igual en 2 salas más.
-
-### 20. Soldado (tipo 0x0A)
-
-![](../imagenes/enemigos/34_t0A_04_0D.gif)
-
-Jugado en la zona 04, sala 0D; igual en 5 salas más.
-
-### 21. Cámara (tipo 0x15)
-
-![](../imagenes/enemigos/35_t15_05_00.gif)
-
-Jugado en la zona 05, sala 00; igual en 2 salas más.
-
-### 22. Un punto de 4 x 4, con los pájaros (tipo 0x17)
-
-![](../imagenes/enemigos/36_t17_0F_03.gif)
-
-Jugado en la zona 0F, sala 03.
+Norden: una paloma torcaz enseñada como mensajera, «デンショばとにクンレンされたモリバト», que traería Marv (`p49:A024`).
 <!-- /generado -->
 
 ## Los que no salen en ninguna sala

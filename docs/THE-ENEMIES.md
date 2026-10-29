@@ -14,155 +14,111 @@ what tells them apart is each zone's colours.
 
 ## How they are made
 
-Each enemy of each room is **played by the cartridge running**
-(`tools/enemigos.py`): its room is entered, 120 frames of the whole game
-(`p01:728E`) are run and only its sprites are painted, in a 64 x 64 dot box
-that follows it. So that they patrol and don't chase Snake, the alert
-(`0xCA5F`) is set to zero every frame. The GIFs go **at the MSX's pace** (one
-game frame every 5 of the VDP, measured in openMSX). There is one for each
-different look (kind, patterns and colours); the identical ones are counted.
+Each enemy is **played by the cartridge running** (`tools/enemigos.py`):
+its room is entered and 120 frames of the whole game (`p01:728E`) are run;
+what you see is the whole room, as on screen, with Snake standing still. So
+that they patrol and don't chase Snake, the alert (`0xCA5F`) is set to zero
+every frame. The GIFs go **at the MSX's pace** (one game frame every 5 of the
+VDP, measured in openMSX). There is one per different look: all the
+soldiers (kinds 1-9, 0x0A and 0x0C) are one class, told apart by their
+colours, and a soldier whose colours are all in another one's (seen from
+behind) is the same soldier. The room of each GIF is the one where it moves
+the most.
+
+Checked against openMSX (`tools/omsx_salas.tcl` with a dump every 0.4 s, eight
+rooms): the cameras slide along the wall and the soldiers asleep in room 0x0D
+of zone 4 are drawn in their beds with the background, not with sprites. The
+first version of this page painted each enemy in a box that followed it: the
+cameras came out still, and the sleeping soldier was given sprites by force
+and came out headless.
 
 ## All their drawings
 
-The different pictures of each GIF below, one row per enemy, in the same
-order and with no repeats:
+The different drawings of the enemy in each GIF below, one row per enemy, in
+the same order and with no repeats:
 
 ![The enemies' drawings, no repeats](imagenes/enemigos_hoja.png)
 
 ## One by one
 
 <!-- generado:enemigos -->
-### 1. Soldier (kind 0x01)
+### 1. Soldier in a red beret
 
-![](imagenes/enemigos/00_t01_00_01.gif)
+![](imagenes/enemigos/sala_00_02_02.gif)
 
-Played in zone 00, room 01; the same in 66 more rooms.
+Zone 02, room 02, played; kinds 0x01, 0x06, 0x09, 0x0C; it is in 52 more rooms.
 
-### 2. Soldier (kind 0x02)
+### 2. Soldier in a grey helmet
 
-![](imagenes/enemigos/06_t02_01_13.gif)
+![](imagenes/enemigos/sala_01_03_03.gif)
 
-Played in zone 01, room 13.
+Zone 03, room 03, played; kinds 0x01, 0x04, 0x05; it is in 11 more rooms.
 
-### 3. Soldier (kind 0x04)
+### 3. Soldiers in the red room
 
-![](imagenes/enemigos/08_t04_03_00.gif)
+![](imagenes/enemigos/sala_02_E2E_00.gif)
 
-Played in zone 03, room 00; the same in 8 more rooms.
+Special room 2E, room 00, played; kind 0x01; it is in one more room.
 
-### 4. Soldier (kind 0x01)
+The usual soldiers, in a room whose palette is all reds.
 
-![](imagenes/enemigos/09_t01_03_03.gif)
+### 4. Soldier in a green beret
 
-Played in zone 03, room 03.
+![](imagenes/enemigos/sala_03_01_13.gif)
 
-### 5. Soldier (kind 0x01)
+Zone 01, room 13, played; kind 0x02; it is in no other room.
 
-![](imagenes/enemigos/10_t01_03_08.gif)
+BLACK COLOR tells Snake to tail a man in a green beret who is on 1F: «男のトクチョウはグリーンベレーをかぶっている。1Fにいるはずだ» (`p50:887B`). He is only in this room.
 
-Played in zone 03, room 08; the same in 7 more rooms.
+### 5. Child
 
-### 6. Soldier (kind 0x05)
+![](imagenes/enemigos/sala_04_06_1D.gif)
 
-![](imagenes/enemigos/12_t05_03_10.gif)
+Zone 06, room 1D, played; kind 0x10; it is in 18 more rooms.
 
-Played in zone 03, room 10.
+The children's messages are signed «こども» (`p50:82E3`). Punching them takes 4 life from Snake: the punch (`p03:A360`) goes through `delante_con_actores` (`p07:AED1`).
 
-### 7. Small figure with pigtails (kind 0x11)
+### 6. Girl with pigtails
 
-![](imagenes/enemigos/13_t11_04_05.gif)
+![](imagenes/enemigos/sala_05_06_23.gif)
 
-Played in zone 04, room 05; the same in 10 more rooms.
+Zone 06, room 23, played; kind 0x11; it is in 9 more rooms.
 
-### 8. Soldier (kind 0x09)
+A girl: here she says «ながれにさからってはいけないって、かた目のおじちゃんが。» (`p50:82E3`). As with the other children, punching her takes life from Snake.
 
-![](imagenes/enemigos/14_t09_04_08.gif)
+### 7. Zanzibar hamster
 
-Played in zone 04, room 08.
+![](imagenes/enemigos/sala_06_E39_01.gif)
 
-### 9. Soldier (kind 0x06)
+Special room 39, room 01, played; kind 0x12; it is in no other room.
 
-![](imagenes/enemigos/16_t06_04_16.gif)
+Norden: «ザンジバーハムスター», said to be poisonous (`p49:A38E`).
 
-Played in zone 04, room 16.
+### 8. Blue dome
 
-### 10. Blue dome (kind 0x13)
+![](imagenes/enemigos/sala_07_06_01.gif)
 
-![](imagenes/enemigos/17_t13_06_01.gif)
+Zone 06, room 01, played; kind 0x13; it is in 7 more rooms.
 
-Played in zone 06, room 01; the same in 31 more rooms.
+### 9. Machine that runs along its route
 
-### 11. Small figure in a red cap (kind 0x10)
+![](imagenes/enemigos/sala_08_08_04.gif)
 
-![](imagenes/enemigos/18_t10_06_02.gif)
+Zone 08, room 04, played; kind 0x14; it is in 3 more rooms.
 
-Played in zone 06, room 02; the same in 20 more rooms.
+### 10. Camera
 
-### 12. 48 x 48 dot machine (kind 0x14)
+![](imagenes/enemigos/sala_09_01_0A.gif)
 
-![](imagenes/enemigos/21_t14_08_03.gif)
+Zone 01, room 0A, played; kind 0x15; it is in 11 more rooms.
 
-Played in zone 08, room 03; the same in 3 more rooms.
+### 11. Pigeon
 
-### 13. Soldier (kind 0x01)
+![](imagenes/enemigos/sala_10_0F_03.gif)
 
-![](imagenes/enemigos/22_t01_0A_14.gif)
+Zone 0F, room 03, played; kind 0x16; it is in no other room.
 
-Played in zone 0A, room 14; the same in 2 more rooms.
-
-### 14. Bird (kind 0x16)
-
-![](imagenes/enemigos/25_t16_0F_03.gif)
-
-Played in zone 0F, room 03.
-
-### 15. Small animal (kind 0x12)
-
-![](imagenes/enemigos/28_t12_E39_01.gif)
-
-Played in special room 39, room 01; the same in 10 more rooms.
-
-### 16. Camera (kind 0x15)
-
-![](imagenes/enemigos/30_t15_01_0A.gif)
-
-Played in zone 01, room 0A; the same in 9 more rooms.
-
-### 17. Soldier (kind 0x0C)
-
-![](imagenes/enemigos/31_t0C_01_0D.gif)
-
-Played in zone 01, room 0D; the same in 4 more rooms.
-
-### 18. Soldier (kind 0x01)
-
-![](imagenes/enemigos/32_t01_03_11.gif)
-
-Played in zone 03, room 11; the same in 2 more rooms.
-
-### 19. Soldier (kind 0x0A)
-
-![](imagenes/enemigos/33_t0A_04_0D.gif)
-
-Played in zone 04, room 0D; the same in 2 more rooms.
-
-### 20. Soldier (kind 0x0A)
-
-![](imagenes/enemigos/34_t0A_04_0D.gif)
-
-Played in zone 04, room 0D; the same in 5 more rooms.
-
-### 21. Camera (kind 0x15)
-
-![](imagenes/enemigos/35_t15_05_00.gif)
-
-Played in zone 05, room 00; the same in 2 more rooms.
-
-### 22. A 4 x 4 dot, with the birds (kind 0x17)
-
-![](imagenes/enemigos/36_t17_0F_03.gif)
-
-Played in zone 0F, room 03.
+Norden: a wood pigeon trained as a carrier, «デンショばとにクンレンされたモリバト», probably brought by Marv (`p49:A024`).
 <!-- /generado -->
 
 ## The ones in no room

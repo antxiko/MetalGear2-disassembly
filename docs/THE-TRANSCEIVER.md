@@ -355,8 +355,8 @@ Speaking: ホーリー, SNAKE. The conversation at `p48:813F`, with 10 records.
 | | Original | Translation |
 |---|---|---|
 | `p48:88E1` | ホーリー『SNAKE！音・・・音がするの。<br>わたしの左から・・・エレベーター<br>の音がする。 ▼<br>それから・・・右からはポンプのよ<br>うな音がきこえるわ。前とうしろか<br>らは水のながれる音がする ▽ | HOLLY: SNAKE! Sounds... I can hear sounds. From my left... the sound of a lift.<br>And from the right... something like a pump. From in front and behind, the sound of running water. |
-| `p48:8944`<br>1 frames later | SNAKE『前ごから水の音・・・右からポンプ<br>音・・・左からエレベーター音？<br>音のマップができたな ▽ | SNAKE: Water in front and behind... a pump on the right... a lift on the left? That makes a map of sounds. |
-| `p48:897A`<br>1 frames later | ホーリー『SNAKE！かれらわたしのムセン<br>キに気がつかなかったみたい。<br>だけどはやくきてっ！まってるわ ▽ | HOLLY: SNAKE! It seems they didn't notice my radio. But come quickly! I'm waiting. |
+| `p48:8944`<br>1 frame later | SNAKE『前ごから水の音・・・右からポンプ<br>音・・・左からエレベーター音？<br>音のマップができたな ▽ | SNAKE: Water in front and behind... a pump on the right... a lift on the left? That makes a map of sounds. |
+| `p48:897A`<br>1 frame later | ホーリー『SNAKE！かれらわたしのムセン<br>キに気がつかなかったみたい。<br>だけどはやくきてっ！まってるわ ▽ | HOLLY: SNAKE! It seems they didn't notice my radio. But come quickly! I'm waiting. |
 
 **Record 1** (flags 4C 7A, with all of them set)
 
@@ -439,8 +439,8 @@ Speaking: ケスラー, SNAKE. The conversation at `p48:8188`, with 8 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:B5B9` | ケスラー『BIG　BOSS・・・ ▼<br>ウイリアム・モーガンとならぶデン<br>セツ的軍人。かれのソンザイはヨウ<br>兵たちの間でシンワと化している ▽ | KESSLER: BIG BOSS...<br>A legendary soldier on a par with William Morgan. Among mercenaries he has become a myth. |
-| `p49:B5FF`<br>1 frames later | SNAKE『そんなことはいい！やつのサイシン<br>のジョウホウがしりたい ▽ | SNAKE: Never mind that! I want his latest information. |
-| `p49:B61E`<br>1 frames later | ケスラー『わかった・・だがこれはたんなるう<br>わさだぜ、いいか。3年前のOUT<br>ER　HEAVENカンラクでかれ<br>はヒン死のジュウショウをおった ▼<br>リョウテ、リョウアシ、右目、右み<br>みをうしないながらも、やつはかろ<br>うじて・・・生きていた。 ▼<br>そんなおり、東がわのボウクンが物<br>体と化したヤツに目をつけた。やつ<br>の軍人としてのサイノウがミリョク<br>だったのだろうよ。 ▼<br>やつらはペトロビッチ・マッドナー<br>のSNATCHERケイカクを<br>いそがせ、かれをそのジッケンバイ<br>タイとしてえらんだ。 ▼<br>サイバネティックス・オーガズムと<br>かいうジッケンらしい。つまりかれ<br>は人であって人でない。しんじられ<br>ねぇがな・・ ▼<br>これが本当だとすりゃ、SNAKE<br>、おまえにかち目はねえぞ！やつに<br>はどんなトクシュギジュツも通用し<br>ねえ。 ▼<br>SNAKE・・・あきらめろ・・・<br>かてねぇぜ、やつには。<br>・・・OVER ▽ | KESSLER: All right... but this is just a rumour, eh. Three years ago, at the fall of OUTER HEAVEN, he was mortally wounded.<br>He lost both hands, both legs, his right eye and his right ear, but somehow... he was still alive.<br>Then a tyrant from the East took an interest in the thing he had become. His talent as a soldier must have appealed to them.<br>They hurried on Pettrovich Madnar's SNATCHER plan and chose him as its test subject.<br>Some experiment called «cybernetic organism». So he's a man and not a man. Hard to believe...<br>If it's true, SNAKE, you don't stand a chance! No special technique will work on him.<br>SNAKE... give up... you can't beat him... OVER |
+| `p49:B5FF`<br>1 frame later | SNAKE『そんなことはいい！やつのサイシン<br>のジョウホウがしりたい ▽ | SNAKE: Never mind that! I want his latest information. |
+| `p49:B61E`<br>1 frame later | ケスラー『わかった・・だがこれはたんなるう<br>わさだぜ、いいか。3年前のOUT<br>ER　HEAVENカンラクでかれ<br>はヒン死のジュウショウをおった ▼<br>リョウテ、リョウアシ、右目、右み<br>みをうしないながらも、やつはかろ<br>うじて・・・生きていた。 ▼<br>そんなおり、東がわのボウクンが物<br>体と化したヤツに目をつけた。やつ<br>の軍人としてのサイノウがミリョク<br>だったのだろうよ。 ▼<br>やつらはペトロビッチ・マッドナー<br>のSNATCHERケイカクを<br>いそがせ、かれをそのジッケンバイ<br>タイとしてえらんだ。 ▼<br>サイバネティックス・オーガズムと<br>かいうジッケンらしい。つまりかれ<br>は人であって人でない。しんじられ<br>ねぇがな・・ ▼<br>これが本当だとすりゃ、SNAKE<br>、おまえにかち目はねえぞ！やつに<br>はどんなトクシュギジュツも通用し<br>ねえ。 ▼<br>SNAKE・・・あきらめろ・・・<br>かてねぇぜ、やつには。<br>・・・OVER ▽ | KESSLER: All right... but this is just a rumour, eh. Three years ago, at the fall of OUTER HEAVEN, he was mortally wounded.<br>He lost both hands, both legs, his right eye and his right ear, but somehow... he was still alive.<br>Then a tyrant from the East took an interest in the thing he had become. His talent as a soldier must have appealed to them.<br>They hurried on Pettrovich Madnar's SNATCHER plan and chose him as its test subject.<br>Some experiment called «cybernetic organism». So he's a man and not a man. Hard to believe...<br>If it's true, SNAKE, you don't stand a chance! No special technique will work on him.<br>SNAKE... give up... you can't beat him... OVER |
 
 **Record 1** (flags 3F 3E 62, with all of them set)
 
@@ -506,17 +506,17 @@ Speaking: ペトロ, SNAKE. The conversation at `p48:81CA`, with 5 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:AA88` | ペトロ『マルフはチェコごとスロバキアごし<br>かはなせん。それにケイカイ心がつ<br>よいタイプ、こんなジョウキョウで<br>はなおさらじゃ ▽ | PETRO: Marv only speaks Czech and Slovak. And he's the cautious type, all the more in a situation like this. |
-| `p49:AAC6`<br>1 frames later | SNAKE『あんたは、ペトロビッチ？ ▽ | SNAKE: You are Pettrovich? |
-| `p49:AAD5`<br>1 frames later | ペトロ『わしはロシアごとえいごしかはなせ<br>ん・・・<br>そうじゃ！<br>ナターシャならはなせる ▽ | PETRO: I only speak Russian and English... That's it! Natasha can speak it. |
-| `p49:AAFF`<br>1 frames later | SNAKE『ナターシャ？<br>・・・あんたらをゴエイしてきたS<br>TBの女か？ ▽ | SNAKE: Natasha? ...the STB woman who was escorting you? |
-| `p49:AB21`<br>1 frames later | ペトロ『カノジョならコトバもわかるし、マ<br>ルフも気をゆるしているはず ▽ | PETRO: She knows the language, and Marv should trust her. |
-| `p49:AB43`<br>1 frames later | SNAKE『ぶじなのか？その女 ▽ | SNAKE: Is she safe? That woman. |
-| `p49:AB50`<br>1 frames later | ペトロ『大じょうぶ、ナターシャはふつうの<br>女ではない。プロのエージェントじ<br>ゃ。 ▼<br>わしらがつかまった時、かのじょだ<br>けはなんとかテキのユニフォームを<br>ぬすんでにげることができたんじゃ<br>。 ▼<br>きっとキカイをうかがってこのザン<br>ジバーランドのどこかにセンプクし<br>ているはずじゃ。 ▽ | PETRO: Don't worry, Natasha is no ordinary woman. She's a professional agent.<br>When we were captured, she alone managed to steal an enemy uniform and escape.<br>She must be lying low somewhere in Zanzibar Land, waiting for her chance. |
-| `p49:ABDA`<br>1 frames later | SNAKE『カノジョもムセンキを？ ▽ | SNAKE: Does she have a radio too? |
-| `p49:ABE8`<br>1 frames later | ペトロ『いや、つかまった時に真っさきにう<br>ばわれた・・・わかるのはかのじょ<br>もテキのユニホームをきていること<br>だけじゃ ▽ | PETRO: No, it was the first thing they took when we were caught... all I know is that she is also wearing an enemy uniform. |
-| `p49:AC24`<br>1 frames later | SNAKE『てがかりはなしか・・・ ▽ | SNAKE: No leads, then... |
-| `p49:AC32`<br>1 frames later | ペトロ『てがかりはかのじょが女ということ<br>じゃ。たとえテキのカッコウをして<br>いようとも・・・このヨウサイに女<br>兵士はいないからの。 ▼<br>それがてがかりじゃ ▽ | PETRO: The lead is that she's a woman. Even dressed as the enemy... there are no women soldiers in this fortress.<br>That's the lead. |
-| `p49:AC80`<br>1 frames later | ペトロ『ナターシャは女じゃ。女しかいけな<br>い場所でまちぶせてはどうじゃ？<br>たとえば女子トイレとか・・・<br>・・・OVER ▽ | PETRO: Natasha is a woman. Why not wait for her somewhere only women can go? The women's toilets, for instance... OVER |
+| `p49:AAC6`<br>1 frame later | SNAKE『あんたは、ペトロビッチ？ ▽ | SNAKE: You are Pettrovich? |
+| `p49:AAD5`<br>1 frame later | ペトロ『わしはロシアごとえいごしかはなせ<br>ん・・・<br>そうじゃ！<br>ナターシャならはなせる ▽ | PETRO: I only speak Russian and English... That's it! Natasha can speak it. |
+| `p49:AAFF`<br>1 frame later | SNAKE『ナターシャ？<br>・・・あんたらをゴエイしてきたS<br>TBの女か？ ▽ | SNAKE: Natasha? ...the STB woman who was escorting you? |
+| `p49:AB21`<br>1 frame later | ペトロ『カノジョならコトバもわかるし、マ<br>ルフも気をゆるしているはず ▽ | PETRO: She knows the language, and Marv should trust her. |
+| `p49:AB43`<br>1 frame later | SNAKE『ぶじなのか？その女 ▽ | SNAKE: Is she safe? That woman. |
+| `p49:AB50`<br>1 frame later | ペトロ『大じょうぶ、ナターシャはふつうの<br>女ではない。プロのエージェントじ<br>ゃ。 ▼<br>わしらがつかまった時、かのじょだ<br>けはなんとかテキのユニフォームを<br>ぬすんでにげることができたんじゃ<br>。 ▼<br>きっとキカイをうかがってこのザン<br>ジバーランドのどこかにセンプクし<br>ているはずじゃ。 ▽ | PETRO: Don't worry, Natasha is no ordinary woman. She's a professional agent.<br>When we were captured, she alone managed to steal an enemy uniform and escape.<br>She must be lying low somewhere in Zanzibar Land, waiting for her chance. |
+| `p49:ABDA`<br>1 frame later | SNAKE『カノジョもムセンキを？ ▽ | SNAKE: Does she have a radio too? |
+| `p49:ABE8`<br>1 frame later | ペトロ『いや、つかまった時に真っさきにう<br>ばわれた・・・わかるのはかのじょ<br>もテキのユニホームをきていること<br>だけじゃ ▽ | PETRO: No, it was the first thing they took when we were caught... all I know is that she is also wearing an enemy uniform. |
+| `p49:AC24`<br>1 frame later | SNAKE『てがかりはなしか・・・ ▽ | SNAKE: No leads, then... |
+| `p49:AC32`<br>1 frame later | ペトロ『てがかりはかのじょが女ということ<br>じゃ。たとえテキのカッコウをして<br>いようとも・・・このヨウサイに女<br>兵士はいないからの。 ▼<br>それがてがかりじゃ ▽ | PETRO: The lead is that she's a woman. Even dressed as the enemy... there are no women soldiers in this fortress.<br>That's the lead. |
+| `p49:AC80`<br>1 frame later | ペトロ『ナターシャは女じゃ。女しかいけな<br>い場所でまちぶせてはどうじゃ？<br>たとえば女子トイレとか・・・<br>・・・OVER ▽ | PETRO: Natasha is a woman. Why not wait for her somewhere only women can go? The women's toilets, for instance... OVER |
 
 **Record 3** (flags 71 0E, with all of them set)
 
@@ -530,29 +530,29 @@ Speaking: ペトロ, SNAKE. The conversation at `p48:81CA`, with 5 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:A548` | ペトロ『おう、わかってくれたか・・・<br>タップ・コードの意味を ▽ | PETRO: Ah, so you understood... the meaning of the tap code. |
-| `p49:A567`<br>1 frames later | SNAKE『マルフ博士？ ▽ | SNAKE: Dr Marv? |
-| `p49:A572`<br>1 frames later | ペトロ『ひしぶりだな、<br>SOLID　SNAKE！ ▽ | PETRO: Long time no see, SOLID SNAKE! |
-| `p49:A589`<br>1 frames later | SNAKE『ペトロビッチ博士？<br>・・・どうして！ ▽ | SNAKE: Dr Pettrovich? ...How come! |
-| `p49:A5A0`<br>1 frames later | ペトロ『マルフとわしはプラハの学会でよく<br>会っていた。ことばこそ通じないが<br>いっしゅの学者なかまじゃった。 ▼<br>わしもマルフといっしょにアメリカ<br>ホウモンのさい、ここの連中につか<br>まったのじゃ。 ▽ | PETRO: Marv and I often met at conferences in Prague. We can't understand each other's language, but we're fellow scholars of a sort.<br>I was caught by this lot together with Marv, on our visit to America. |
-| `p49:A606`<br>1 frames later | SNAKE『マルフ博士は？ ▽ | SNAKE: And Dr Marv? |
-| `p49:A612`<br>1 frames later | ペトロ『かれはすうじつ前、ここからタワー<br>ビルにうつされた。ここから北にす<br>うキロのところにあるたかいビルじ<br>ゃ ▽ | PETRO: A few days ago he was moved from here to the Tower Building. It's a tall building a few kilometres north of here. |
-| `p49:A64B`<br>1 frames later | SNAKE『くそっ、またておくれかっ！<br>マルフはタワービル・・・ ▽ | SNAKE: Damn, too late again! Marv is in the Tower Building... |
-| `p49:A668`<br>1 frames later | ペトロ『SNAKE、わしがいかされている<br>ケントウがつくか？ ▽ | PETRO: SNAKE, can you guess why they're keeping me alive? |
-| `p49:A685`<br>1 frames later | SNAKE『・・・あんたがヒツヨウだからだ。<br>・・・すると？？ ▽ | SNAKE: ...because they need you. ...So?? |
-| `p49:A6A1`<br>1 frames later | ペトロ『そう・・・METAL　GEARじ<br>ゃよ。SNAKE。<br>あるのじゃ、あれが・・・ここに。<br> ▼<br>あたらしいMETAL　GEARは<br>すでにカンセイしておる。3年前、<br>あんたがハカイしたのはたんなるシ<br>サクヒン・・・ ▼<br>今では、あのスウバイものパワーを<br>ひめたカイリョウタイプが作られ、<br>さらにそのケイリョウ化タイプのリ<br>ョウサンもすすめられている。 ▽ | PETRO: That's right... METAL GEAR, SNAKE. It exists... here.<br>The new METAL GEAR is already finished. What you destroyed three years ago was just a prototype...<br>Now an improved type with several times its power has been built, and mass production of a lighter type is under way. |
-| `p49:A752`<br>1 frames later | SNAKE『すると、あのハイキ用カクチョゾウ<br>コシュウゲキはMETAL　GEA<br>Rが・・・ ▽ | SNAKE: So those attacks on the nuclear stores for dismantling were METAL GEAR... |
-| `p49:A77D`<br>1 frames later | ペトロ『その通り。METAL　GEARは<br>カクトウサイホコウセンシャじゃ。<br>こいつのジツリョクはカクをトウサ<br>イしてはじめてハッキされる。 ▼<br>ザンジバーランドは世界でユイイツ<br>カクをテに入れた。その上、ダイタ<br>イエネルギーであるOILIXを<br>わがものにしようとしている。 ▼<br>SNAKE・・・ここまで言えば、<br>こいつらのクロマクが見えてきたじ<br>ゃろう？ ▽ | PETRO: Exactly. METAL GEAR is a nuclear-armed walking tank. Its real power only shows once it carries nuclear weapons.<br>Zanzibar Land is the only place in the world that has its hands on nuclear weapons. And on top of that it wants OILIX, the alternative energy, for itself.<br>SNAKE... with all I've told you, you can see who's behind them, can't you? |
-| `p49:A830`<br>1 frames later | SNAKE『BIG・・・BOSS？？ ▽ | SNAKE: BIG... BOSS?? |
-| `p49:A83F`<br>1 frames later | ペトロ『やつじゃ！やつはMETAL　GE<br>ARとOILIXで世界をにぎろう<br>とたくらんどる。やつらにわたして<br>はならん！OILIXを。 ▼<br>カガクは人ごろしのためだけにある<br>のではない。マルフはイシはつよい<br>がシンゾウがよわい。いそいでくれ<br>っ！ ▼<br>やつらのゴウモンにいつまでたえら<br>れるかわからん ▽ | PETRO: Him! He plans to rule the world with METAL GEAR and OILIX. They mustn't get OILIX!<br>Science isn't only for killing people. Marv is strong-willed but has a weak heart. Hurry!<br>I don't know how long he can stand their torture. |
-| `p49:A8D3`<br>1 frames later | SNAKE『ヤクヒンをつかわれるとヤッカイだ<br>な ▽ | SNAKE: If they use drugs on him, it'll be bad. |
-| `p49:A8E8`<br>1 frames later | ペトロ『マルフはわたしと同じ、コガタムセ<br>ンキを体内にもっているはずだ。同<br>コウしていたSTBの女エージェン<br>トがわたしてくれたものじゃ。 ▼<br>シュウハスウがわかればフツウのム<br>センキで連絡できる ▽ | PETRO: Marv, like me, should have a small radio inside his body. The STB woman agent who came with us gave it to us.<br>If you know the frequency you can reach him with an ordinary radio. |
-| `p49:A94E`<br>1 frames later | SNAKE『ペトロビッチ、<br>あんたはどうする？ ▽ | SNAKE: Pettrovich, what about you? |
-| `p49:A962`<br>1 frames later | ペトロ『きみとわしをへだてるカベはチョバ<br>ムプレートじゃ。バクハはフカノウ<br>じゃ。わしはほっといて、マルフを<br>たすけてくれ。SNAKE ▽ | PETRO: The wall between us is Chobham plate. It can't be blown up. Never mind me, save Marv. SNAKE. |
-| `p49:A9A4`<br>1 frames later | SNAKE『わかった。あとでむかえにくる ▽ | SNAKE: All right. I'll come back for you later. |
-| `p49:A9B5`<br>1 frames later | ペトロ『SNAKE？ ▽ | PETRO: SNAKE? |
-| `p49:A9BE`<br>1 frames later | ペトロ『むすめのエレンがきみのファンでね<br>。なかなかケッコンせん。こまった<br>もんだ。 ▼<br>・・・それからわしのユウジンでヨ<br>ゼフ・ノルデンという動物学者がこ<br>の地方にすんでいるのじゃ。シュウ<br>ハスウ140・40ではなせる。 ▼<br>動物にかんすることなら力になって<br>くれるじゃろう・・・ ▽ | PETRO: My daughter Ellen is a fan of yours. She just won't get married. What a nuisance.<br>...And a friend of mine, a zoologist called Josef Norden, lives in this region. You can talk to him on 140.40.<br>He'll help you with anything about animals... |
-| `p49:AA4F`<br>1 frames later | SNAKE『大ジョウブだ。むすめのケッコンシ<br>キには間に合うようにむかえにくる<br> ▽ | SNAKE: Don't worry. I'll be back for you in time for your daughter's wedding. |
-| `p49:AA77`<br>1 frames later | ペトロ『ありがとう。SNAKE・・・ ▽ | PETRO: Thank you. SNAKE... |
+| `p49:A567`<br>1 frame later | SNAKE『マルフ博士？ ▽ | SNAKE: Dr Marv? |
+| `p49:A572`<br>1 frame later | ペトロ『ひしぶりだな、<br>SOLID　SNAKE！ ▽ | PETRO: Long time no see, SOLID SNAKE! |
+| `p49:A589`<br>1 frame later | SNAKE『ペトロビッチ博士？<br>・・・どうして！ ▽ | SNAKE: Dr Pettrovich? ...How come! |
+| `p49:A5A0`<br>1 frame later | ペトロ『マルフとわしはプラハの学会でよく<br>会っていた。ことばこそ通じないが<br>いっしゅの学者なかまじゃった。 ▼<br>わしもマルフといっしょにアメリカ<br>ホウモンのさい、ここの連中につか<br>まったのじゃ。 ▽ | PETRO: Marv and I often met at conferences in Prague. We can't understand each other's language, but we're fellow scholars of a sort.<br>I was caught by this lot together with Marv, on our visit to America. |
+| `p49:A606`<br>1 frame later | SNAKE『マルフ博士は？ ▽ | SNAKE: And Dr Marv? |
+| `p49:A612`<br>1 frame later | ペトロ『かれはすうじつ前、ここからタワー<br>ビルにうつされた。ここから北にす<br>うキロのところにあるたかいビルじ<br>ゃ ▽ | PETRO: A few days ago he was moved from here to the Tower Building. It's a tall building a few kilometres north of here. |
+| `p49:A64B`<br>1 frame later | SNAKE『くそっ、またておくれかっ！<br>マルフはタワービル・・・ ▽ | SNAKE: Damn, too late again! Marv is in the Tower Building... |
+| `p49:A668`<br>1 frame later | ペトロ『SNAKE、わしがいかされている<br>ケントウがつくか？ ▽ | PETRO: SNAKE, can you guess why they're keeping me alive? |
+| `p49:A685`<br>1 frame later | SNAKE『・・・あんたがヒツヨウだからだ。<br>・・・すると？？ ▽ | SNAKE: ...because they need you. ...So?? |
+| `p49:A6A1`<br>1 frame later | ペトロ『そう・・・METAL　GEARじ<br>ゃよ。SNAKE。<br>あるのじゃ、あれが・・・ここに。<br> ▼<br>あたらしいMETAL　GEARは<br>すでにカンセイしておる。3年前、<br>あんたがハカイしたのはたんなるシ<br>サクヒン・・・ ▼<br>今では、あのスウバイものパワーを<br>ひめたカイリョウタイプが作られ、<br>さらにそのケイリョウ化タイプのリ<br>ョウサンもすすめられている。 ▽ | PETRO: That's right... METAL GEAR, SNAKE. It exists... here.<br>The new METAL GEAR is already finished. What you destroyed three years ago was just a prototype...<br>Now an improved type with several times its power has been built, and mass production of a lighter type is under way. |
+| `p49:A752`<br>1 frame later | SNAKE『すると、あのハイキ用カクチョゾウ<br>コシュウゲキはMETAL　GEA<br>Rが・・・ ▽ | SNAKE: So those attacks on the nuclear stores for dismantling were METAL GEAR... |
+| `p49:A77D`<br>1 frame later | ペトロ『その通り。METAL　GEARは<br>カクトウサイホコウセンシャじゃ。<br>こいつのジツリョクはカクをトウサ<br>イしてはじめてハッキされる。 ▼<br>ザンジバーランドは世界でユイイツ<br>カクをテに入れた。その上、ダイタ<br>イエネルギーであるOILIXを<br>わがものにしようとしている。 ▼<br>SNAKE・・・ここまで言えば、<br>こいつらのクロマクが見えてきたじ<br>ゃろう？ ▽ | PETRO: Exactly. METAL GEAR is a nuclear-armed walking tank. Its real power only shows once it carries nuclear weapons.<br>Zanzibar Land is the only place in the world that has its hands on nuclear weapons. And on top of that it wants OILIX, the alternative energy, for itself.<br>SNAKE... with all I've told you, you can see who's behind them, can't you? |
+| `p49:A830`<br>1 frame later | SNAKE『BIG・・・BOSS？？ ▽ | SNAKE: BIG... BOSS?? |
+| `p49:A83F`<br>1 frame later | ペトロ『やつじゃ！やつはMETAL　GE<br>ARとOILIXで世界をにぎろう<br>とたくらんどる。やつらにわたして<br>はならん！OILIXを。 ▼<br>カガクは人ごろしのためだけにある<br>のではない。マルフはイシはつよい<br>がシンゾウがよわい。いそいでくれ<br>っ！ ▼<br>やつらのゴウモンにいつまでたえら<br>れるかわからん ▽ | PETRO: Him! He plans to rule the world with METAL GEAR and OILIX. They mustn't get OILIX!<br>Science isn't only for killing people. Marv is strong-willed but has a weak heart. Hurry!<br>I don't know how long he can stand their torture. |
+| `p49:A8D3`<br>1 frame later | SNAKE『ヤクヒンをつかわれるとヤッカイだ<br>な ▽ | SNAKE: If they use drugs on him, it'll be bad. |
+| `p49:A8E8`<br>1 frame later | ペトロ『マルフはわたしと同じ、コガタムセ<br>ンキを体内にもっているはずだ。同<br>コウしていたSTBの女エージェン<br>トがわたしてくれたものじゃ。 ▼<br>シュウハスウがわかればフツウのム<br>センキで連絡できる ▽ | PETRO: Marv, like me, should have a small radio inside his body. The STB woman agent who came with us gave it to us.<br>If you know the frequency you can reach him with an ordinary radio. |
+| `p49:A94E`<br>1 frame later | SNAKE『ペトロビッチ、<br>あんたはどうする？ ▽ | SNAKE: Pettrovich, what about you? |
+| `p49:A962`<br>1 frame later | ペトロ『きみとわしをへだてるカベはチョバ<br>ムプレートじゃ。バクハはフカノウ<br>じゃ。わしはほっといて、マルフを<br>たすけてくれ。SNAKE ▽ | PETRO: The wall between us is Chobham plate. It can't be blown up. Never mind me, save Marv. SNAKE. |
+| `p49:A9A4`<br>1 frame later | SNAKE『わかった。あとでむかえにくる ▽ | SNAKE: All right. I'll come back for you later. |
+| `p49:A9B5`<br>1 frame later | ペトロ『SNAKE？ ▽ | PETRO: SNAKE? |
+| `p49:A9BE`<br>1 frame later | ペトロ『むすめのエレンがきみのファンでね<br>。なかなかケッコンせん。こまった<br>もんだ。 ▼<br>・・・それからわしのユウジンでヨ<br>ゼフ・ノルデンという動物学者がこ<br>の地方にすんでいるのじゃ。シュウ<br>ハスウ140・40ではなせる。 ▼<br>動物にかんすることなら力になって<br>くれるじゃろう・・・ ▽ | PETRO: My daughter Ellen is a fan of yours. She just won't get married. What a nuisance.<br>...And a friend of mine, a zoologist called Josef Norden, lives in this region. You can talk to him on 140.40.<br>He'll help you with anything about animals... |
+| `p49:AA4F`<br>1 frame later | SNAKE『大ジョウブだ。むすめのケッコンシ<br>キには間に合うようにむかえにくる<br> ▽ | SNAKE: Don't worry. I'll be back for you in time for your daughter's wedding. |
+| `p49:AA77`<br>1 frame later | ペトロ『ありがとう。SNAKE・・・ ▽ | PETRO: Thank you. SNAKE... |
 
 ### 140.51
 
@@ -569,7 +569,7 @@ Speaking: マルフ, SNAKE. The conversation at `p48:8296`, with 2 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:A4B3` | マルフ『メニャー　ザビート　マルフ。<br>シュトー　ナム　ジェラーチ？ムィ<br>ハチーム　ミーラ。 ▼<br>ムィ　イスラルニャー　エム<br>スボィ　ドルト。ナジョー　<br>ユースィ、シュトー　アン<br>イリジョート。 ▼<br>モィ　タヴァーリシィ・・・ ▽ | MARV: (in Russian, written in katakana) Menya zovut Marv. Shto nam delat'? My khotim mira... (My name is Marv. What shall we do? We want peace...)<br>(the rest, words that do not make sentences)<br>Moy tovarishch... (my comrade...) |
-| `p49:A51E`<br>1 frames later | SNAKE『・・・なんのことだ？・・・<br>さっぱりわからん。ペトロヴィッチ<br>にきいてみようか ▽ | SNAKE: ...What's that? ...I don't understand a word. Maybe I'll ask Pettrovich. |
+| `p49:A51E`<br>1 frame later | SNAKE『・・・なんのことだ？・・・<br>さっぱりわからん。ペトロヴィッチ<br>にきいてみようか ▽ | SNAKE: ...What's that? ...I don't understand a word. Maybe I'll ask Pettrovich. |
 
 ### 140.27
 
@@ -582,13 +582,13 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:B7B6` | ナターシャ『メニャー　ザヴート　ナターシャ ▽ | NATASHA: (in Russian) Menya zovut Natasha. (My name is Natasha.) |
-| `p49:B7C8`<br>1 frames later | マルフ『メニャー　ザヴィート　マルフ ▽ | MARV: (in Russian) Menya zovut Marv. (My name is Marv.) |
-| `p49:B7D9`<br>1 frames later | ナターシャ『マルフ！カク　ヴィ　セジャー<br>シューフスト　ヴェチェ？ ▽ | NATASHA: (in Russian) Marv! Kak vy sebya chuvstvuete? (Marv! How are you feeling?) |
-| `p49:B7F7`<br>1 frames later | マルフ『スパシーバ、ハラショウ　モイ　<br>タバーリシィ、ナターシャ　アナ　<br>セゴドニャ　アソベンナ<br>クラシーヴァ？ ▽ | MARV: (in Russian) Spasibo, khorosho, moy tovarishch. Natasha, ona segodnya osobenno krasivaya? (Thank you, fine, my comrade. Natasha, is she especially pretty today?) |
-| `p49:B82E`<br>1 frames later | ナターシャ『スカジィーチェ、パジャルイスタ、<br>マルフ？ ▽ | NATASHA: (in Russian) Skazhite, pozhaluysta, Marv? (Tell me, please, Marv?) |
-| `p49:B846`<br>1 frames later | マルフ『タワーヴィル、クレブスキュール<br>ムコヴァ　シュシュノワ　<br>シリバシュ　イケタニ ▽ | MARV: (pseudo-Russian) Tower building... (the rest, words that do not make sentences) |
-| `p49:B870`<br>1 frames later | ナターシャ『ムエェ　ナーダ<br>ナダズシ　イアチ ▽ | NATASHA: (pseudo-Russian, words that do not make sentences) |
-| `p49:B883`<br>1 frames later | マルフ『ヤ　エム　オダガダーレン<br>シアシアーダ ▽ | MARV: (pseudo-Russian, words that do not make sentences) |
+| `p49:B7C8`<br>1 frame later | マルフ『メニャー　ザヴィート　マルフ ▽ | MARV: (in Russian) Menya zovut Marv. (My name is Marv.) |
+| `p49:B7D9`<br>1 frame later | ナターシャ『マルフ！カク　ヴィ　セジャー<br>シューフスト　ヴェチェ？ ▽ | NATASHA: (in Russian) Marv! Kak vy sebya chuvstvuete? (Marv! How are you feeling?) |
+| `p49:B7F7`<br>1 frame later | マルフ『スパシーバ、ハラショウ　モイ　<br>タバーリシィ、ナターシャ　アナ　<br>セゴドニャ　アソベンナ<br>クラシーヴァ？ ▽ | MARV: (in Russian) Spasibo, khorosho, moy tovarishch. Natasha, ona segodnya osobenno krasivaya? (Thank you, fine, my comrade. Natasha, is she especially pretty today?) |
+| `p49:B82E`<br>1 frame later | ナターシャ『スカジィーチェ、パジャルイスタ、<br>マルフ？ ▽ | NATASHA: (in Russian) Skazhite, pozhaluysta, Marv? (Tell me, please, Marv?) |
+| `p49:B846`<br>1 frame later | マルフ『タワーヴィル、クレブスキュール<br>ムコヴァ　シュシュノワ　<br>シリバシュ　イケタニ ▽ | MARV: (pseudo-Russian) Tower building... (the rest, words that do not make sentences) |
+| `p49:B870`<br>1 frame later | ナターシャ『ムエェ　ナーダ<br>ナダズシ　イアチ ▽ | NATASHA: (pseudo-Russian, words that do not make sentences) |
+| `p49:B883`<br>1 frame later | マルフ『ヤ　エム　オダガダーレン<br>シアシアーダ ▽ | MARV: (pseudo-Russian, words that do not make sentences) |
 
 ### Conversation at p48:8533
 
@@ -597,8 +597,8 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:BDDF` | SNAKE『なにをもたもたしている！<br>クリスマスがおわってしまうぞっ ▽ | SNAKE: What are you dawdling for! Christmas will be over! |
-| `p49:BDFE`<br>1 frames later | パイロット『こちら、チャーリー。<br>救出地テンまで10キロのところま<br>できている。 ▼<br>もうすこしもちこたえてくれっ！<br>OVER・・・ ▽ | PILOT: Charlie here. We're 10 km from the rescue point.<br>Hold on a little longer! OVER... |
-| `p49:BE3E`<br>1 frames later | SNAKE『はやく、たのむ！！ ▽ | SNAKE: Quick, please!! |
+| `p49:BDFE`<br>1 frame later | パイロット『こちら、チャーリー。<br>救出地テンまで10キロのところま<br>できている。 ▼<br>もうすこしもちこたえてくれっ！<br>OVER・・・ ▽ | PILOT: Charlie here. We're 10 km from the rescue point.<br>Hold on a little longer! OVER... |
+| `p49:BE3E`<br>1 frame later | SNAKE『はやく、たのむ！！ ▽ | SNAKE: Quick, please!! |
 
 ### Conversation at p48:8542
 
@@ -616,17 +616,17 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:AF42` | きいただけでだいの男た<br>ちがキモをひやす。 ▼<br>へへ・・セキサイジュウリョウ1マ<br>ン2センキロ、サイコウジソク25<br>0キロ、サイコウコウド4500メ<br>ートル。 ▼<br>ミサイル、バルカンホウをそなえ、<br>チタニウムソウコウバンでまもられ<br>た空のかい物。 ▼<br>コウドからのショウシャをされたら<br>ひとたまりもねぇ。 ▼<br>出会えばサイゴ、かち目なんぞねぇ<br>・・・と言いてぇところだが、タイ<br>クウミサイルのトウジョウでジジョ<br>ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
-| `p49:AF5F`<br>1 frames later | サイジュウリョウ1マ<br>ン2センキロ、サイコウジソク25<br>0キロ、サイコウコウド4500メ<br>ートル。 ▼<br>ミサイル、バルカンホウをそなえ、<br>チタニウムソウコウバンでまもられ<br>た空のかい物。 ▼<br>コウドからのショウシャをされたら<br>ひとたまりもねぇ。 ▼<br>出会えばサイゴ、かち目なんぞねぇ<br>・・・と言いてぇところだが、タイ<br>クウミサイルのトウジョウでジジョ<br>ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
-| `p49:AF7B`<br>1 frames later | キロ、サイコウコウド4500メ<br>ートル。 ▼<br>ミサイル、バルカンホウをそなえ、<br>チタニウムソウコウバンでまもられ<br>た空のかい物。 ▼<br>コウドからのショウシャをされたら<br>ひとたまりもねぇ。 ▼<br>出会えばサイゴ、かち目なんぞねぇ<br>・・・と言いてぇところだが、タイ<br>クウミサイルのトウジョウでジジョ<br>ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
-| `p49:B00F`<br>1 frames later | ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
+| `p49:AF5F`<br>1 frame later | サイジュウリョウ1マ<br>ン2センキロ、サイコウジソク25<br>0キロ、サイコウコウド4500メ<br>ートル。 ▼<br>ミサイル、バルカンホウをそなえ、<br>チタニウムソウコウバンでまもられ<br>た空のかい物。 ▼<br>コウドからのショウシャをされたら<br>ひとたまりもねぇ。 ▼<br>出会えばサイゴ、かち目なんぞねぇ<br>・・・と言いてぇところだが、タイ<br>クウミサイルのトウジョウでジジョ<br>ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
+| `p49:AF7B`<br>1 frame later | キロ、サイコウコウド4500メ<br>ートル。 ▼<br>ミサイル、バルカンホウをそなえ、<br>チタニウムソウコウバンでまもられ<br>た空のかい物。 ▼<br>コウドからのショウシャをされたら<br>ひとたまりもねぇ。 ▼<br>出会えばサイゴ、かち目なんぞねぇ<br>・・・と言いてぇところだが、タイ<br>クウミサイルのトウジョウでジジョ<br>ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
+| `p49:B00F`<br>1 frame later | ウはかわってきた。 ▼<br>タイクウミサイルがあれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
 | `p49:B021`<br>16 frames later | があれば、このカ<br>イチョウをおとすことができるぜ<br>・・・OVER ▽ | (starts in the middle of `p49:AF2E`) |
-| `p49:B04E`<br>1 frames later | Rか・<br>あかいバクハマとしてしられるソ<br>ビエトのルムンバ大学出のアンサ<br>ツ専門エリートだ。 ▼<br>やつのてはブービートラップをは<br>りめぐらし、あいてのあしどめを<br>しておいてからトクイのグレネー<br>ド・ランチャーでとどめをさす。 ▼<br>SNAKE、グレネードにはグレ<br>ネードでオウタイしろ！やつもま<br>た、なにかのショウヘキに身をか<br>くしているはず。 ▼<br>グレネードならそんな所でもコウ<br>ゲキできるぜ。・・・OVER ▽ | (starts in the middle of `p49:B042`) |
-| `p49:B091`<br>1 frames later | りめぐらし、あいてのあしどめを<br>しておいてからトクイのグレネー<br>ド・ランチャーでとどめをさす。 ▼<br>SNAKE、グレネードにはグレ<br>ネードでオウタイしろ！やつもま<br>た、なにかのショウヘキに身をか<br>くしているはず。 ▼<br>グレネードならそんな所でもコウ<br>ゲキできるぜ。・・・OVER ▽ | (starts in the middle of `p49:B042`) |
-| `p49:B0A2`<br>1 frames later | ておいてからトクイのグレネー<br>ド・ランチャーでとどめをさす。 ▼<br>SNAKE、グレネードにはグレ<br>ネードでオウタイしろ！やつもま<br>た、なにかのショウヘキに身をか<br>くしているはず。 ▼<br>グレネードならそんな所でもコウ<br>ゲキできるぜ。・・・OVER ▽ | (starts in the middle of `p49:B042`) |
-| `p49:B11F`<br>1 frames later | TRABOXか・・・<br>SAS、GSG9、UDT出以者で<br>コンセイされたミッシツ専門のアン<br>サツブタイだ。 ▼<br>どいつも戦ソウのプロだ。やつらは<br>まばたきひとつせずに人をころす。<br>同時にあいてにしてはふりだ。 ▼<br>ー人ずつ、かたずけるのがベストだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
-| `p49:B137`<br>1 frames later | し以者で<br>コンセイされたミッシツ専門のアン<br>サツブタイだ。 ▼<br>どいつも戦ソウのプロだ。やつらは<br>まばたきひとつせずに人をころす。<br>同時にあいてにしてはふりだ。 ▼<br>ー人ずつ、かたずけるのがベストだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
-| `p49:B182`<br>1 frames later | あいてにしてはふりだ。 ▼<br>ー人ずつ、かたずけるのがベストだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
-| `p49:B19D`<br>1 frames later | トだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
+| `p49:B04E`<br>1 frame later | Rか・<br>あかいバクハマとしてしられるソ<br>ビエトのルムンバ大学出のアンサ<br>ツ専門エリートだ。 ▼<br>やつのてはブービートラップをは<br>りめぐらし、あいてのあしどめを<br>しておいてからトクイのグレネー<br>ド・ランチャーでとどめをさす。 ▼<br>SNAKE、グレネードにはグレ<br>ネードでオウタイしろ！やつもま<br>た、なにかのショウヘキに身をか<br>くしているはず。 ▼<br>グレネードならそんな所でもコウ<br>ゲキできるぜ。・・・OVER ▽ | (starts in the middle of `p49:B042`) |
+| `p49:B091`<br>1 frame later | りめぐらし、あいてのあしどめを<br>しておいてからトクイのグレネー<br>ド・ランチャーでとどめをさす。 ▼<br>SNAKE、グレネードにはグレ<br>ネードでオウタイしろ！やつもま<br>た、なにかのショウヘキに身をか<br>くしているはず。 ▼<br>グレネードならそんな所でもコウ<br>ゲキできるぜ。・・・OVER ▽ | (starts in the middle of `p49:B042`) |
+| `p49:B0A2`<br>1 frame later | ておいてからトクイのグレネー<br>ド・ランチャーでとどめをさす。 ▼<br>SNAKE、グレネードにはグレ<br>ネードでオウタイしろ！やつもま<br>た、なにかのショウヘキに身をか<br>くしているはず。 ▼<br>グレネードならそんな所でもコウ<br>ゲキできるぜ。・・・OVER ▽ | (starts in the middle of `p49:B042`) |
+| `p49:B11F`<br>1 frame later | TRABOXか・・・<br>SAS、GSG9、UDT出以者で<br>コンセイされたミッシツ専門のアン<br>サツブタイだ。 ▼<br>どいつも戦ソウのプロだ。やつらは<br>まばたきひとつせずに人をころす。<br>同時にあいてにしてはふりだ。 ▼<br>ー人ずつ、かたずけるのがベストだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
+| `p49:B137`<br>1 frame later | し以者で<br>コンセイされたミッシツ専門のアン<br>サツブタイだ。 ▼<br>どいつも戦ソウのプロだ。やつらは<br>まばたきひとつせずに人をころす。<br>同時にあいてにしてはふりだ。 ▼<br>ー人ずつ、かたずけるのがベストだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
+| `p49:B182`<br>1 frame later | あいてにしてはふりだ。 ▼<br>ー人ずつ、かたずけるのがベストだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
+| `p49:B19D`<br>1 frame later | トだ<br>ぜ・・・OVER ▽ | (starts in the middle of `p49:B11B`) |
 
 ### Conversation at p48:84ED
 
@@ -635,10 +635,10 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:BD33` | SNAKE『こちら、SNAKE。<br>チャーリー、オウトウねがいま<br>す？ ▽ | SNAKE: SNAKE here. Charlie, please respond? |
-| `p49:BD52`<br>1 frames later | パイロット『こちら、チャーリー。<br>どうぞ、SNAKE・・・ ▽ | PILOT: Charlie here. Go ahead, SNAKE... |
-| `p49:BD6C`<br>1 frames later | SNAKE『カートリッジをカイシュウ、キカン<br>する。<br>・・・救出地テンへいそぐ！ ▽ | SNAKE: Cartridge recovered, returning. ...Heading for the rescue point! |
-| `p49:BD94`<br>1 frames later | パイロット『ラジャー。救出地テンへむかう。<br>・・・キャクジンは？ ▽ | PILOT: Roger. Heading for the rescue point. ...Any passengers? |
-| `p49:BDB4`<br>1 frames later | SNAKE『・・・ひとりだ。<br>・・・ブロンドのビジン ▽ | SNAKE: ...One. ...A blonde beauty. |
+| `p49:BD52`<br>1 frame later | パイロット『こちら、チャーリー。<br>どうぞ、SNAKE・・・ ▽ | PILOT: Charlie here. Go ahead, SNAKE... |
+| `p49:BD6C`<br>1 frame later | SNAKE『カートリッジをカイシュウ、キカン<br>する。<br>・・・救出地テンへいそぐ！ ▽ | SNAKE: Cartridge recovered, returning. ...Heading for the rescue point! |
+| `p49:BD94`<br>1 frame later | パイロット『ラジャー。救出地テンへむかう。<br>・・・キャクジンは？ ▽ | PILOT: Roger. Heading for the rescue point. ...Any passengers? |
+| `p49:BDB4`<br>1 frame later | SNAKE『・・・ひとりだ。<br>・・・ブロンドのビジン ▽ | SNAKE: ...One. ...A blonde beauty. |
 | `p49:BDCB`<br>32 frames later | パイロット『たのしみにしている<br>・・・OVER ▽ | PILOT: Looking forward to it... OVER |
 
 ### Conversation at p48:82AA
@@ -648,12 +648,12 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:B346` | ケスラー『GREY　FOX・・・<br>本名、フランク・イェーガー。もと<br>FOX　HOUND出身。 ▼<br>BIG　BOSS時だいのFOXの<br>ショウゴウをもつさいごの男。<br>クンショウ5カイ・・・ ▽ | KESSLER: GREY FOX... real name Frank Jaeger. Ex FOX HOUND.<br>The last man to hold the title of FOX in BIG BOSS's day. Decorated five times... |
-| `p49:B3A4`<br>1 frames later | SNAKE『わかっている・・・やつのユウシュ<br>ウさは。やつのことはコウハイであ<br>るオレがいちばんよくしっている ▼<br>狙ったものはかならずのがさないレ<br>イセイチンチャクなハンターだ。タ<br>イインたちのだれもがそんけいし、<br>したっていた・・・ ▽ | SNAKE: I know... how good he is. As his junior, I know him better than anyone.<br>A cool-headed hunter who never lets his target escape. Every man in the unit respected him and looked up to him... |
-| `p49:B416`<br>1 frames later | ケスラー『そうだったな。SNAKE・・・じ<br>ゃ、やつのカコはどうだ？なにかの<br>たしにはなるだろうて・・・ ▼<br>10年前、やつはこの世界でハン<br>ターとよばれていた。イェーガー<br>はドイツごでハンターという意味ら<br>しい。 ▼<br>そのころ、やつは東がわの女とカン<br>ケイがあった。 ▼<br>やつは女の西がわへボウメイ、オー<br>バー・ザ・フェンスをこころみたが<br>けっきょくシッパイにおわった。 ▼<br>西がわは女にキョウミをしめさなか<br>ったらしい。やつはそのことで西が<br>わの上そう部連中をうらんでいたら<br>しい ▽ | KESSLER: That's right, SNAKE... then what about his past? It might be of some use...<br>Ten years ago he was called the Hunter in this world. Jaeger means hunter in German, it seems.<br>Back then he was involved with a woman from the East.<br>He tried to defect with her to the West, over the fence, but it ended in failure.<br>It seems the West wasn't interested in the woman. He held a grudge against the West's top brass for it. |
-| `p49:B50F`<br>1 frames later | SNAKE『その女の名は？！ ▽ | SNAKE: That woman's name?! |
-| `p49:B51C`<br>1 frames later | ケスラー『オリンピックのスケートセンシュだ<br>った。ナターシャ・マルコヴァとい<br>う・・・ぞくっとするくらい、いい<br>女だったぜ ▽ | KESSLER: She was an Olympic skater. Natasha Markova... a woman so good-looking it gave you shivers. |
-| `p49:B558`<br>1 frames later | SNAKE『ナ、ナターシャ<br>・・・マルコ・ヴァ！ ▽ | SNAKE: Na, Natasha... Marko-va! |
-| `p49:B56D`<br>1 frames later | ケスラー『SNAKE！もし、おまえがこのF<br>OXにかてたら・・オレはSOLI<br>D　SNAKEを世界ーのヨウヘイ<br>だとセンデンしてやろう！ ▼<br>・・・OVER ▽ | KESSLER: SNAKE! If you beat this FOX... I'll tell the world SOLID SNAKE is the best mercenary there is!<br>...OVER |
+| `p49:B3A4`<br>1 frame later | SNAKE『わかっている・・・やつのユウシュ<br>ウさは。やつのことはコウハイであ<br>るオレがいちばんよくしっている ▼<br>狙ったものはかならずのがさないレ<br>イセイチンチャクなハンターだ。タ<br>イインたちのだれもがそんけいし、<br>したっていた・・・ ▽ | SNAKE: I know... how good he is. As his junior, I know him better than anyone.<br>A cool-headed hunter who never lets his target escape. Every man in the unit respected him and looked up to him... |
+| `p49:B416`<br>1 frame later | ケスラー『そうだったな。SNAKE・・・じ<br>ゃ、やつのカコはどうだ？なにかの<br>たしにはなるだろうて・・・ ▼<br>10年前、やつはこの世界でハン<br>ターとよばれていた。イェーガー<br>はドイツごでハンターという意味ら<br>しい。 ▼<br>そのころ、やつは東がわの女とカン<br>ケイがあった。 ▼<br>やつは女の西がわへボウメイ、オー<br>バー・ザ・フェンスをこころみたが<br>けっきょくシッパイにおわった。 ▼<br>西がわは女にキョウミをしめさなか<br>ったらしい。やつはそのことで西が<br>わの上そう部連中をうらんでいたら<br>しい ▽ | KESSLER: That's right, SNAKE... then what about his past? It might be of some use...<br>Ten years ago he was called the Hunter in this world. Jaeger means hunter in German, it seems.<br>Back then he was involved with a woman from the East.<br>He tried to defect with her to the West, over the fence, but it ended in failure.<br>It seems the West wasn't interested in the woman. He held a grudge against the West's top brass for it. |
+| `p49:B50F`<br>1 frame later | SNAKE『その女の名は？！ ▽ | SNAKE: That woman's name?! |
+| `p49:B51C`<br>1 frame later | ケスラー『オリンピックのスケートセンシュだ<br>った。ナターシャ・マルコヴァとい<br>う・・・ぞくっとするくらい、いい<br>女だったぜ ▽ | KESSLER: She was an Olympic skater. Natasha Markova... a woman so good-looking it gave you shivers. |
+| `p49:B558`<br>1 frame later | SNAKE『ナ、ナターシャ<br>・・・マルコ・ヴァ！ ▽ | SNAKE: Na, Natasha... Marko-va! |
+| `p49:B56D`<br>1 frame later | ケスラー『SNAKE！もし、おまえがこのF<br>OXにかてたら・・オレはSOLI<br>D　SNAKEを世界ーのヨウヘイ<br>だとセンデンしてやろう！ ▼<br>・・・OVER ▽ | KESSLER: SNAKE! If you beat this FOX... I'll tell the world SOLID SNAKE is the best mercenary there is!<br>...OVER |
 
 **Record 1** (flags 5B 4C 5E 2F A1, with all of them set)
 
@@ -672,18 +672,18 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:B8CF` | 『カード9はプレデターがもってい<br>たはずだ！ ▽ | (no name): Card 9 should have been with Predator! |
-| `p49:B8E6`<br>1 frames later | SNAKE『カード8じゃないのか？ヤツはカ<br>ード8をもっていたぞ。 ▽ | SNAKE: Not card 8? He had card 8. |
-| `p49:B904`<br>1 frames later | 『いや、カード8と9のリョウホウ<br>をカンリしていたはずだ。 ▼<br>おそらくおとしたにちがいない。<br>ヤツのいたエリアをさがしてみろ<br>！見つかるはずだ。<br>・・・うまくやれよ ▽ | (no name): No, he was in charge of both cards 8 and 9.<br>He must have dropped it. Search the area where he was! You'll find it... good luck. |
+| `p49:B8E6`<br>1 frame later | SNAKE『カード8じゃないのか？ヤツはカ<br>ード8をもっていたぞ。 ▽ | SNAKE: Not card 8? He had card 8. |
+| `p49:B904`<br>1 frame later | 『いや、カード8と9のリョウホウ<br>をカンリしていたはずだ。 ▼<br>おそらくおとしたにちがいない。<br>ヤツのいたエリアをさがしてみろ<br>！見つかるはずだ。<br>・・・うまくやれよ ▽ | (no name): No, he was in charge of both cards 8 and 9.<br>He must have dropped it. Search the area where he was! You'll find it... good luck. |
 
 **Record 4** (flags 61 3E 62 3F, with all of them set)
 
 | | Original | Translation |
 |---|---|---|
 | `p49:B957` | 『オレだ・・・ファンのー人だ。<br>SNAKE、気をつけろ。 ▼<br>そのヘヤにあのデンセツのゲリラ<br>ブタイ、ウィスパーズの生きの<br>こり、NIGHT　SIGHTが<br>いる ▽ | (no name): It's me... one of your fans. SNAKE, be careful.<br>In that room is NIGHT SIGHT, survivor of that legendary guerrilla unit, the Whispers. |
-| `p49:B9A9`<br>1 frames later | SNAKE『NIGHT　SIGHT・・・ ▽ | SNAKE: NIGHT SIGHT... |
-| `p49:B9BA`<br>1 frames later | 『サイシンのカモフラージュ・スーツ<br>をきてステルス。 ▼<br>おまけに全くジュウセイのしないジ<br>ュウ、ウェイ・ション・ショウ・シ<br>ャンでコウゲキしてくる。 ▼<br>ダレもヤツのスガタを見たことがな<br>い。わかるか？この意味が・・・ ▽ | (no name): He wears the latest camouflage suit: stealth.<br>And he attacks with a gun that makes no sound at all, the Wei Xiong Shou Shan.<br>Nobody has ever seen him. Do you understand what that means? |
-| `p49:BA29`<br>1 frames later | SNAKE『シンセツなファンをもって<br>コウエイだ ▽ | SNAKE: I'm honoured to have such a kind fan. |
-| `p49:BA3D`<br>1 frames later | 『音に注意するんだ。SNAKE！<br>・・・OVER ▽ | (no name): Pay attention to sound, SNAKE! ...OVER |
+| `p49:B9A9`<br>1 frame later | SNAKE『NIGHT　SIGHT・・・ ▽ | SNAKE: NIGHT SIGHT... |
+| `p49:B9BA`<br>1 frame later | 『サイシンのカモフラージュ・スーツ<br>をきてステルス。 ▼<br>おまけに全くジュウセイのしないジ<br>ュウ、ウェイ・ション・ショウ・シ<br>ャンでコウゲキしてくる。 ▼<br>ダレもヤツのスガタを見たことがな<br>い。わかるか？この意味が・・・ ▽ | (no name): He wears the latest camouflage suit: stealth.<br>And he attacks with a gun that makes no sound at all, the Wei Xiong Shou Shan.<br>Nobody has ever seen him. Do you understand what that means? |
+| `p49:BA29`<br>1 frame later | SNAKE『シンセツなファンをもって<br>コウエイだ ▽ | SNAKE: I'm honoured to have such a kind fan. |
+| `p49:BA3D`<br>1 frame later | 『音に注意するんだ。SNAKE！<br>・・・OVER ▽ | (no name): Pay attention to sound, SNAKE! ...OVER |
 
 **Record 5** (flags 92 34 63, with all of them set, in zone 0D, room 05)
 
@@ -708,11 +708,11 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p48:8859` | ホーリー『SNAKE！わたし・・・<br>ショウタイがばれちゃってつかまっ<br>ちゃったの！！たすけて！ ▼<br>・・・マルフ博士とセッショクがと<br>れたのに ▽ | HOLLY: SNAKE! I... they found out who I am and caught me!! Help!<br>...and I'd made contact with Dr Marv. |
-| `p48:889E`<br>1 frames later | SNAKE『どこだ？！・・・場所は？ ▽ | SNAKE: Where?! ...Where are you? |
-| `p48:88AF`<br>1 frames later | ホーリー『・・・わからない。目かくしされて<br>たから。タワービルのどこかだとお<br>もうけど・・・そうだわ！ ▽ | HOLLY: ...I don't know. I was blindfolded. I think it's somewhere in the Tower Building... that's it! |
-| `p48:88E1`<br>1 frames later | ホーリー『SNAKE！音・・・音がするの。<br>わたしの左から・・・エレベーター<br>の音がする。 ▼<br>それから・・・右からはポンプのよ<br>うな音がきこえるわ。前とうしろか<br>らは水のながれる音がする ▽ | HOLLY: SNAKE! Sounds... I can hear sounds. From my left... the sound of a lift.<br>And from the right... something like a pump. From in front and behind, the sound of running water. |
-| `p48:8944`<br>1 frames later | SNAKE『前ごから水の音・・・右からポンプ<br>音・・・左からエレベーター音？<br>音のマップができたな ▽ | SNAKE: Water in front and behind... a pump on the right... a lift on the left? That makes a map of sounds. |
-| `p48:897A`<br>1 frames later | ホーリー『SNAKE！かれらわたしのムセン<br>キに気がつかなかったみたい。<br>だけどはやくきてっ！まってるわ ▽ | HOLLY: SNAKE! It seems they didn't notice my radio. But come quickly! I'm waiting. |
+| `p48:889E`<br>1 frame later | SNAKE『どこだ？！・・・場所は？ ▽ | SNAKE: Where?! ...Where are you? |
+| `p48:88AF`<br>1 frame later | ホーリー『・・・わからない。目かくしされて<br>たから。タワービルのどこかだとお<br>もうけど・・・そうだわ！ ▽ | HOLLY: ...I don't know. I was blindfolded. I think it's somewhere in the Tower Building... that's it! |
+| `p48:88E1`<br>1 frame later | ホーリー『SNAKE！音・・・音がするの。<br>わたしの左から・・・エレベーター<br>の音がする。 ▼<br>それから・・・右からはポンプのよ<br>うな音がきこえるわ。前とうしろか<br>らは水のながれる音がする ▽ | HOLLY: SNAKE! Sounds... I can hear sounds. From my left... the sound of a lift.<br>And from the right... something like a pump. From in front and behind, the sound of running water. |
+| `p48:8944`<br>1 frame later | SNAKE『前ごから水の音・・・右からポンプ<br>音・・・左からエレベーター音？<br>音のマップができたな ▽ | SNAKE: Water in front and behind... a pump on the right... a lift on the left? That makes a map of sounds. |
+| `p48:897A`<br>1 frame later | ホーリー『SNAKE！かれらわたしのムセン<br>キに気がつかなかったみたい。<br>だけどはやくきてっ！まってるわ ▽ | HOLLY: SNAKE! It seems they didn't notice my radio. But come quickly! I'm waiting. |
 
 **Record 9** (flags 66 67, with all of them set, in zone 09, room 02)
 
@@ -731,8 +731,8 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:B899` | 『SNAKE！そこは危ないぞ！<br>ジライゲンだ ▽ | (no name): SNAKE! It's dangerous there! It's a minefield. |
-| `p49:B8B2`<br>1 frames later | SNAKE『あんたは？ ▽ | SNAKE: Who are you? |
-| `p49:B8BA`<br>1 frames later | 『ファンのー人さ。<br>・・・うまくやれよ ▽ | (no name): One of your fans... good luck. |
+| `p49:B8B2`<br>1 frame later | SNAKE『あんたは？ ▽ | SNAKE: Who are you? |
+| `p49:B8BA`<br>1 frame later | 『ファンのー人さ。<br>・・・うまくやれよ ▽ | (no name): One of your fans... good luck. |
 
 **Record 12** (flags 69 0D 70, with all of them set, in zone 07, room 0C)
 
@@ -765,13 +765,13 @@ Speaking: -. The conversation at `p48:82A9`, with 0 records.
 | | Original | Translation |
 |---|---|---|
 | `p49:BA59` | FOX『SNAKE！ ▽ | FOX: SNAKE! |
-| `p49:BA62`<br>1 frames later | FOX『SNAKE！<br>・・オレだ。GREY　FOXだ ▽ | FOX: SNAKE! ...It's me. GREY FOX. |
-| `p49:BA7A`<br>1 frames later | SNAKE『FOXっ！ ▽ | SNAKE: FOX! |
-| `p49:BA82`<br>1 frames later | FOX『どうやらオレのチュウコクをムダに<br>したらしいな。<br>お前とのユウジョウもこれまでだ ▼<br>その、エレベーターがお前のカンオ<br>ケとなるだろう ▽ | FOX: It seems you wasted my advice. Our friendship ends here.<br>That lift will be your coffin. |
-| `p49:BAC7`<br>1 frames later | SNAKE『なにっ！！ ▽ | SNAKE: What!! |
-| `p49:BACF`<br>1 frames later | FOX『きこえるだろう？その音・・・<br>みっ室専門のアンサツブタイを<br>おくりこんだ・・・・ ▼<br>せいぜいカンゲイしてやってく<br>れ ▽ | FOX: You can hear it, can't you? That sound... I've sent in the closed-room assassination squad...<br>Give them a warm welcome. |
-| `p49:BB0E`<br>1 frames later | SNAKE『テンジョウか？！ ▽ | SNAKE: The ceiling?! |
-| `p49:BB19`<br>1 frames later | FOX『SNAKE、わかれのあいさつ<br>が言えてうれしいぜ<br>・・・OVER ▽ | FOX: SNAKE, I'm glad I could say goodbye... OVER |
+| `p49:BA62`<br>1 frame later | FOX『SNAKE！<br>・・オレだ。GREY　FOXだ ▽ | FOX: SNAKE! ...It's me. GREY FOX. |
+| `p49:BA7A`<br>1 frame later | SNAKE『FOXっ！ ▽ | SNAKE: FOX! |
+| `p49:BA82`<br>1 frame later | FOX『どうやらオレのチュウコクをムダに<br>したらしいな。<br>お前とのユウジョウもこれまでだ ▼<br>その、エレベーターがお前のカンオ<br>ケとなるだろう ▽ | FOX: It seems you wasted my advice. Our friendship ends here.<br>That lift will be your coffin. |
+| `p49:BAC7`<br>1 frame later | SNAKE『なにっ！！ ▽ | SNAKE: What!! |
+| `p49:BACF`<br>1 frame later | FOX『きこえるだろう？その音・・・<br>みっ室専門のアンサツブタイを<br>おくりこんだ・・・・ ▼<br>せいぜいカンゲイしてやってく<br>れ ▽ | FOX: You can hear it, can't you? That sound... I've sent in the closed-room assassination squad...<br>Give them a warm welcome. |
+| `p49:BB0E`<br>1 frame later | SNAKE『テンジョウか？！ ▽ | SNAKE: The ceiling?! |
+| `p49:BB19`<br>1 frame later | FOX『SNAKE、わかれのあいさつ<br>が言えてうれしいぜ<br>・・・OVER ▽ | FOX: SNAKE, I'm glad I could say goodbye... OVER |
 
 ### Conversation at p48:8498
 

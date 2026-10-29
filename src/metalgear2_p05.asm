@@ -1867,7 +1867,7 @@ anda_y_suena:		; cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51,
 	call 08100h		;ac8c   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	jp z,06c63h		;ac8f   ; sonido_51: pide el sonido 0x51
 	jp 06c67h		;ac92   ; sonido_52: pide el sonido 0x52
-especial_29_paso_1:		; anda hasta la columna 7, X = 0x64, y gira a la direccion 1
+especial_29_paso_1:		; (y el 7) anda hasta la columna 7, X = 0x64, y gira a la direccion 1
 	call anda_y_suena		;ac95   ; anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 	ld l,007h		;ac98
 	ld e,064h		;ac9a
@@ -1896,7 +1896,7 @@ llega_a:		; cambia de sala si sale (p05:AE5C); si H = L y D esta a menos de 8 de
 L_ACBF:
 	or a			;acbf
 	ret			;acc0
-especial_29_paso_2:		; anda hasta la fila 2, Y = 0x38: direccion 1, parado 0x10 cuadros
+especial_29_paso_2:		; (y el 8) anda hasta la fila 2, Y = 0x38: direccion 1, parado 0x10 cuadros
 	call anda_y_suena		;acc1   ; anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 	ld h,(ix+00ah)		;acc4   ; lee la fila de la sala del actor
 	ld l,002h		;acc7
@@ -1946,7 +1946,7 @@ especial_29_paso_6:		; anda hasta la fila 3, Y = 0x64, y gira a la direccion 2
 	call llega_a		;ad28   ; llega_a: cambia de sala si sale (p05:AE5C); si H = L y D esta a menos de 8 de E, la direccion B y acarreo
 	ret nc			;ad2b
 	jp paso_siguiente_c		;ad2c   ; paso_siguiente_c: el paso siguiente
-especial_29_paso_7:		; al acabar la espera, el mensaje 0x450; despues p01:7A27, el sonido 0x23 y el mensaje 0x550
+especial_29_paso_9:		; al acabar la espera, el mensaje 0x450; despues p01:7A27, el sonido 0x23 y el mensaje 0x550
 	ld a,(ix+00eh)		;ad2f   ; lee la espera del actor
 	and a			;ad32
 	jr z,L_AD3F		;ad33
@@ -1963,7 +1963,7 @@ L_AD3F:
 mensaje_y_paso_c:		; el mensaje DE y el paso siguiente
 	call 061ceh		;ad4c   ; mensaje_de_50: 0xD8A8 = 1: la ventana estrecha
 	jp paso_siguiente_c		;ad4f   ; paso_siguiente_c: el paso siguiente
-especial_29_paso_9:		; al acabar el mensaje: p01:7A27, la musica, y la tercera barra con 0xCAE0 = 1 (p03:BB38)
+especial_29_paso_a:		; al acabar el mensaje: p01:7A27, la musica, y la tercera barra con 0xCAE0 = 1 (p03:BB38)
 	call 06247h		;ad52   ; mensaje_cada_cuadro_bancos_5:
 	ret nz			;ad55
 	call 079c7h		;ad56   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
@@ -1978,7 +1978,7 @@ especial_29_paso_9:		; al acabar el mensaje: p01:7A27, la musica, y la tercera b
 	ld (0dff2h),a		;ad6c   ; guarda la espera de la tercera barra
 	call 07a8dh		;ad6f   ; a_p03_bb38: p03:BB38 con el banco 3 en 0xA000
 	jr paso_siguiente_c		;ad72
-especial_29_paso_a:		; el byte 0x16 = 1, la direccion 3, su sala especial a 0xE500 y el paso siguiente
+especial_29_paso_b:		; el byte 0x16 = 1, la direccion 3, su sala especial a 0xE500 y el paso siguiente
 	ld (ix+016h),001h		;ad74
 	ld a,003h		;ad78
 	call pon_direccion		;ad7a   ; pon_direccion: la direccion A (0-3) a 0x1B, el dibujo 2 * A, la velocidad de p05:AEEC y el byte 0x0C = 3
@@ -1986,7 +1986,7 @@ especial_29_paso_a:		; el byte 0x16 = 1, la direccion 3, su sala especial a 0xE5
 paso_siguiente_c:		; el paso siguiente
 	inc (ix+001h)		;ad80   ; sube el paso del actor
 	ret			;ad83
-especial_29_paso_b:		; segun la sala de Snake (p05:ADB2): 0, anda (p05:ADAC) con 0xD8A3 = 1; si no, el destino de p05:ADCF y el paso 0x0D
+especial_29_paso_c:		; segun la sala de Snake (p05:ADB2): 0, anda (p05:ADAC) con 0xD8A3 = 1; si no, el destino de p05:ADCF y el paso 0x0D
 	call lado_de_snake		;ad84   ; lado_de_snake: B = donde esta Snake respecto al actor: 3 o 4 en su columna (la 8 o no), 1 o 2 en su fila (la 2 o no); 0 si no
 	ld a,b			;ad87
 	and a			;ad88
@@ -2042,7 +2042,7 @@ DATA_bytes_ADD1:
 ; ======================================================================
 
 
-especial_29_paso_c:		; cambia de sala si sale; si no, anda y, con lo solido delante, gira hacia el destino
+especial_29_paso_d:		; cambia de sala si sale; si no, anda y, con lo solido delante, gira hacia el destino
 	call cambia_de_sala_si_sale		;add9   ; cambia_de_sala_si_sale: fuera de Y 0x20-0xC0 o X 8-0xB8: a la sala de al lado (p05:AE6B) y su sala especial a 0xE500 (sin acarreo)
 	jp nc,paso_siguiente_c		;addc   ; paso_siguiente_c: el paso siguiente
 	call anda_y_suena		;addf   ; anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
@@ -2213,7 +2213,7 @@ DATA_resto_AEEC:
 ; ======================================================================
 
 
-especial_29_paso_d:		; anda; si Snake esta en otra sala, otro destino; al pasar del centro (0x70, p05:AF18), 0xCB3C = 0 y el paso 0x0C
+especial_29_paso_e:		; anda; si Snake esta en otra sala, otro destino; al pasar del centro (0x70, p05:AF18), 0xCB3C = 0 y el paso 0x0C
 	call anda_y_suena		;aef4   ; anda_y_suena: cada 2 cuadros el paso del dibujo; en esta sala el sonido 0x51, si no el 0x52
 	call lado_de_snake		;aef7   ; lado_de_snake: B = donde esta Snake respecto al actor: 3 o 4 en su columna (la 8 o no), 1 o 2 en su fila (la 2 o no); 0 si no
 	ld a,b			;aefa
@@ -2261,7 +2261,7 @@ derecha_de_70:
 	cp 070h		;af2e
 	ccf			;af30
 	ret			;af31
-especial_29_paso_e:		; el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xCAE0 = 2, p03:B1A3, el sonido 0x93 y a Y = 0x80, X = 0x60
+especial_29_paso_f:		; el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xCAE0 = 2, p03:B1A3, el sonido 0x93 y a Y = 0x80, X = 0x60
 	ld (ix+00dh),008h		;af32   ; el dibujo del actor (bit 0: el paso) = 0x08
 	xor a			;af36
 	ld (ix+00ch),a		;af37
@@ -2276,7 +2276,7 @@ especial_29_paso_e:		; el dibujo 8, 0xDFF0 = 0, 0xE258 = 0xD4F2 = 1, 0xCAE0 = 2,
 	ld (ix+003h),080h		;af4e   ; la Y del actor = 0x80
 	ld (ix+005h),060h		;af52   ; la X del actor = 0x60
 	jp paso_siguiente_c		;af56   ; paso_siguiente_c: el paso siguiente
-especial_29_paso_f:		; con Snake cerca (0x20 en X, 0x50 en Y): 0xCB3C = 1, la musica de p01:6BAC y el mensaje 0x610
+especial_29_paso_10:		; con Snake cerca (0x20 en X, 0x50 en Y): 0xCB3C = 1, la musica de p01:6BAC y el mensaje 0x610
 	call 08100h		;af59   ; en_esta_sala: Z si el actor esta en la sala de ahora (fila y columna)
 	ret nz			;af5c
 	ld a,(0cb05h)		;af5d   ; lee la X de Snake
@@ -2297,12 +2297,12 @@ L_AF67:
 	call 07c85h		;af7d   ; pide_musica_hl: la musica de la rutina HL: si no es la pendiente, pendiente dentro de 0x78 cuadros
 	ld de,00610h		;af80
 	jp mensaje_y_paso_c		;af83   ; mensaje_y_paso_c: el mensaje DE y el paso siguiente
-especial_29_paso_10:		; al acabar el mensaje, p01:7A27 y el paso siguiente
+especial_29_paso_11:		; al acabar el mensaje, p01:7A27 y el paso siguiente
 	call 06247h		;af86   ; mensaje_cada_cuadro_bancos_5:
 	ret nz			;af89
 	call 079c7h		;af8a   ; llama_7a27_1: p01:7A27 con A = 1 y los bancos 4 y 5
 	jp paso_siguiente_c		;af8d   ; paso_siguiente_c: el paso siguiente
-especial_29_paso_11:		; el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
+especial_29_paso_12:		; el paso 0x20, 0xD4F2 = 0 y, en la sala 2, 0xD500 = 2
 	ld (ix+001h),020h		;af90   ; el paso del actor = 0x20
 	xor a			;af94
 	ld (0d4f2h),a		;af95
@@ -3712,7 +3712,7 @@ mensaje_d10:		; el mensaje (D, 0x10)
 paso_siguiente_g:		; el paso siguiente
 	inc (ix+001h)		;ba54   ; sube el paso del actor
 L_BA57:
-	ret			;ba57
+	ret			;ba57   ; los pasos 0x0D-0x0F de GREY FOX (p05:B934) vienen aqui: nada
 d8aa_paso_9:		; al acabar el mensaje: 0xCB3C = 0, su musica, p03:B108, el paso siguiente y hacia Snake
 	call acaba_mensaje_1		;ba58   ; acaba_mensaje_1: Z al acabar el mensaje, con p01:7A27 (A = 1)
 	ret nz			;ba5b
@@ -3909,7 +3909,7 @@ L_BB9E:
 	sub b			;bb9e
 	cp 030h		;bb9f
 	ret			;bba1
-d8aa_paso_d:		; sin llamada, 0xCB3C = 1, el dibujo 0x0C, 0x20 cuadros, p03:B1A3 y el sonido 0x93
+d8aa_paso_10:		; sin llamada, 0xCB3C = 1, el dibujo 0x0C, 0x20 cuadros, p03:B1A3 y el sonido 0x93
 	xor a			;bba2
 	ld (ix+00ch),a		;bba3
 	ld (0e1e8h),a		;bba6   ; guarda 1 mientras hay una llamada
@@ -3921,7 +3921,7 @@ d8aa_paso_d:		; sin llamada, 0xCB3C = 1, el dibujo 0x0C, 0x20 cuadros, p03:B1A3 
 	call 07a0ah		;bbb8   ; a_p03_b1a3: p03:B1A3 con el banco 3 en 0xA000
 	call 06c1bh		;bbbb   ; sonido_93: pide el sonido 0x93 (de los que tienen la partitura en un banco de musica, p16:4CE3)
 	jp paso_siguiente_g		;bbbe   ; paso_siguiente_g: el paso siguiente
-d8aa_paso_e:		; al acabar la espera, la otra pagina entera a esta y el barrido desde (0x60, 0x60)
+d8aa_paso_11:		; al acabar la espera, la otra pagina entera a esta y el barrido desde (0x60, 0x60)
 	dec (ix+00eh)		;bbc1   ; baja la espera del actor
 	ret nz			;bbc4
 	ld h,000h		;bbc5
@@ -3933,7 +3933,7 @@ d8aa_paso_e:		; al acabar la espera, la otra pagina entera a esta y el barrido d
 	ld de,06060h		;bbd0
 	call 07a02h		;bbd3   ; a_p03_b68e: p03:B68E con el banco 3 en 0xA000
 	jp paso_siguiente_g		;bbd6   ; paso_siguiente_g: el paso siguiente
-d8aa_paso_f:		; al acabar el barrido: el sonido 0xA0, 0xD8AA = 2, sin sprites, las rachas de p43:BE79, dos sprites, dos mosaicos de quien habla (0 y 8) y el mensaje 0x1070
+d8aa_paso_12:		; al acabar el barrido: el sonido 0xA0, 0xD8AA = 2, sin sprites, las rachas de p43:BE79, dos sprites, dos mosaicos de quien habla (0 y 8) y el mensaje 0x1070
 	call 079e1h		;bbd9   ; a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
 	ld a,(0e270h)		;bbdc   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;bbdf
@@ -3983,7 +3983,7 @@ d8aa_paso_f:		; al acabar el barrido: el sonido 0xA0, 0xD8AA = 2, sin sprites, l
 	ld de,01070h		;bc41
 	call 061d3h		;bc44   ; mensaje_de_50_en: p03:B612 con DE
 	jp paso_siguiente_g		;bc47   ; paso_siguiente_g: el paso siguiente
-d8aa_paso_10:		; p03:B8AC; al acabar el mensaje, la pantalla apagada, 0xCD00-0xCDFF a cero, quita los dos mosaicos y Snake quieto en el estado 0
+d8aa_paso_13:		; p03:B8AC; al acabar el mensaje, la pantalla apagada, 0xCD00-0xCDFF a cero, quita los dos mosaicos y Snake quieto en el estado 0
 	call 07aa8h		;bc4a   ; a_p03_b8ac: p03:B8AC con el banco 3 en 0xA000
 	call acaba_mensaje_0		;bc4d   ; acaba_mensaje_0: Z al acabar el mensaje, con p01:7A27 (A = 0)
 	ret nz			;bc50
@@ -4027,7 +4027,7 @@ hueco_de_mosaico:		; en la pagina A: (0xDC, 0x30) 0x0A x 8 a 0 y una linea verti
 	ld hl,0db30h		;bcac
 	ld bc,00800h		;bcaf
 	jp 04680h		;bcb2   ; linea_vertical: orden LINE del VDP con el lado largo en Y (ARG = 1)
-d8aa_paso_11:		; al acabar el barrido: Snake y el actor en Y = 0x68 (Snake en X = 0x70 mirando a la izquierda, el actor en 0x50), 0xD8AA = 1 y los sprites limpios
+d8aa_paso_14:		; al acabar el barrido: Snake y el actor en Y = 0x68 (Snake en X = 0x70 mirando a la izquierda, el actor en 0x50), 0xD8AA = 1 y los sprites limpios
 	call 079e1h		;bcb5   ; a_p03_b6c8: p03:B6C8 con el banco 3 en 0xA000
 	ld a,(0e270h)		;bcb8   ; lee el barrido: 1 por pasos, 2 de 4 en 4 (0 nada)
 	and a			;bcbb
@@ -4047,7 +4047,7 @@ d8aa_paso_11:		; al acabar el barrido: Snake y el actor en Y = 0x68 (Snake en X 
 	call 04266h		;bcdf   ; esconde_sprites_ram: llena 0xDC00-0xDC7F con 0xE0
 	call 04609h		;bce2   ; enciende_sprites: R#8 con el bit 1 (SPD) a cero, desde la copia 0xFFE7
 	jp paso_siguiente_g		;bce5   ; paso_siguiente_g: el paso siguiente
-d8aa_paso_12:		; al acabar la espera, 0xD8AA = 0 y el paso 0x20
+d8aa_paso_15:		; al acabar la espera, 0xD8AA = 0 y el paso 0x20
 	dec (ix+00eh)		;bce8   ; baja la espera del actor
 	ret nz			;bceb
 	xor a			;bcec

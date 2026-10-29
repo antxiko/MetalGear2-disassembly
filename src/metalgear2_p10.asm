@@ -987,7 +987,7 @@ DATA_resto_A61B:
 ; ======================================================================
 
 
-bandera_por_cosa:		; segun la cosa A: la 0x17 el bit 6 de 0xD7D6; la 0x2A el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D el 5 de 0xD7D9; la 0x0C el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 fuera el 6 de 0xD7E1
+bandera_por_cosa:		; segun la cosa A (la casilla de F2, o la de F3 + 0x0E; su ficha, 0xD600 + (A - 1) * 4): la 0x17 (el ala delta) el bit 6 de 0xD7D6; la 0x2A (una tarjeta) el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D (el cartucho de Marv) el 5 de 0xD7D9; la 0x0C (el mechero) el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B (el spray) el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 (el detector de minas) fuera el 6 de 0xD7E1
 	cp 017h		;a65e
 	jr z,cosa_17		;a660   ; la 0x17
 	cp 02ah		;a662
@@ -1013,7 +1013,7 @@ cosa_2a:
 	ld hl,0d7d2h		;a686
 	res 6,(hl)		;a689   ; ...fuera el 6 de 0xD7D2
 	ret			;a68b
-cosa_2d:
+cosa_2d:		; el cartucho de Marv (0xD6B0): el bit 5 de 0xD7D9, que espera Pettrovich (p05:BFA0)
 	ld hl,0d7d9h		;a68c
 	set 5,(hl)		;a68f   ; el bit 5 de 0xD7D9
 	ret			;a691

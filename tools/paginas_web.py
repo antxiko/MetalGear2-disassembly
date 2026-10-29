@@ -36,14 +36,14 @@ PAL = {
                ficha="Ficha", todas="con todas puestas", ultima="con la última puesta y las demás no",
                sin="siempre", banderas="banderas", zona="en la zona %02X, sala %02X",
                especial="en la especial %02X", azar="al azar, hasta %d de 100",
-               tras="%d cuadros después",
+               tras="%d cuadros después", tras1="1 cuadro después",
                cabeza="Hablan: %s. La conversación de `p48:%04X`, con %d fichas.", conv="Conversación de p48:%04X",
                sinmsg="(sin mensaje)", original="Original", traduccion="Traducción"),
     "en": dict(casilla="Slot", texto="Sign", nada="(none)", donde="Where",
                ficha="Record", todas="with all of them set", ultima="with the last one set and the others not",
                sin="always", banderas="flags", zona="in zone %02X, room %02X",
                especial="in special room %02X", azar="at random, up to %d out of 100",
-               tras="%d frames later",
+               tras="%d frames later", tras1="1 frame later",
                cabeza="Speaking: %s. The conversation at `p48:%04X`, with %d records.", conv="Conversation at p48:%04X",
                sinmsg="(no message)", original="Original", traduccion="Translation"),
 }
@@ -83,12 +83,10 @@ def letreros_de(tabla, idioma):
     docs = os.path.join(T.RAIZ, "docs", "imagenes", "equipo")
     t = palabra50(tabla)
     out, vistos = [], {}
-    n = 0
-    while True:
-        d = palabra50(t + 2 * n)
-        if not 0x8000 <= d < 0xC000:
-            break
-        n += 1
+    # la casilla 0 (nada) y las 13 armas de 0xD600 o las 0x22 cosas de 0xD638
+    # (cosas_de_d600 p10:B00E, cosas_de_d638 p10:B042); detras de la tabla de
+    # F3 siguen punteros que parecen de ella y son trozos de mensajes de p51
+    n = 1 + (13 if tabla == 0x8046 else 0x22)
     out.append("| %s | | | %s |" % (p["casilla"], p["texto"]))
     out.append("|---:|---|---|---|")
     for i in range(n):
@@ -96,8 +94,8 @@ def letreros_de(tabla, idioma):
         txt = letrero(50, d).split("\n")
         fich = "%s_c%02X.png" % (pref, i)
         dib = ("![](%s%s)" % (raiz_img, fich)) if os.path.exists(os.path.join(docs, fich)) else ""
-        if d == palabra50(t):
-            out.append("| %d | %s | | %s |" % (i, dib, p["nada"]))
+        if d == palabra50(t):                       # casilla vacia: sin su recuadro azul
+            out.append("| %d | | | %s |" % (i, p["nada"]))
             continue
         cabeza = re.sub(r"\s+", " ", txt[0].replace("　", " ")).strip()
         resto = "".join(txt[1:])
@@ -156,7 +154,7 @@ def fichas(fs, idioma):
             for mm, u in lista:
                 notas = []
                 if e:
-                    notas.append(p["tras"] % e)
+                    notas.append(p["tras1"] if e == 1 else p["tras"] % e)
                 if u is not None:
                     notas.append(p["azar"] % u)
                 if not mm:
@@ -274,22 +272,59 @@ def letreros(idioma):
     return out + [""]
 
 
-# lo que es cada tipo de actor, a la vista (actores_dibujos.py y los mapas)
-QUE = {
-    0x01: ("soldado", "soldier"), 0x02: ("soldado", "soldier"), 0x04: ("soldado", "soldier"),
-    0x05: ("soldado", "soldier"), 0x06: ("soldado", "soldier"), 0x07: ("soldado", "soldier"),
-    0x09: ("soldado", "soldier"), 0x0A: ("soldado", "soldier"), 0x0C: ("soldado", "soldier"),
-    0x10: ("figura pequeña de gorra roja", "small figure in a red cap"),
-    0x11: ("figura pequeña con coletas", "small figure with pigtails"),
-    0x12: ("animal pequeño", "small animal"), 0x13: ("cúpula azul", "blue dome"),
-    0x14: ("máquina de 48 x 48 puntos", "48 x 48 dot machine"), 0x15: ("cámara", "camera"),
-    0x16: ("pájaro", "bird"), 0x17: ("un punto de 4 x 4, con los pájaros", "a 4 x 4 dot, with the birds"),
+# Lo que es cada enemigo a la vista (enemigos.py salas: la clase y los colores).
+# Los nombres de los animales, de Norden: la paloma mensajera p49:A024 y el
+# hamster de Zanzibar p49:A38E. Los de los soldados, por lo que llevan.
+NOMBRE_CLASE = {
+    "t10": ("niño", "child"), "t11": ("niña con coletas", "girl with pigtails"),
+    "t12": ("hámster de Zanzíbar", "Zanzibar hamster"), "t13": ("cúpula azul", "blue dome"),
+    "t14": ("máquina que recorre su ruta", "machine that runs along its route"),
+    "t15": ("cámara", "camera"), "pajaro": ("paloma", "pigeon"),
 }
+
+# lo comprobado de algunos, por su clase (o "soldado:<sala>")
+NOTA = {
+    "soldado:01_13": ("BLACK COLOR le dice a Snake que siga a un hombre con boina verde que está en el "
+                      "1F: «男のトクチョウはグリーンベレーをかぶっている。1Fにいるはずだ» (`p50:887B`). "
+                      "Solo sale en esta sala.",
+                      "BLACK COLOR tells Snake to tail a man in a green beret who is on 1F: "
+                      "«男のトクチョウはグリーンベレーをかぶっている。1Fにいるはずだ» (`p50:887B`). "
+                      "He is only in this room."),
+    "soldado:E2E_00": ("Los soldados de siempre, en una sala con la paleta en rojos.",
+                       "The usual soldiers, in a room whose palette is all reds."),
+    "t10": ("Los mensajes de los niños los firma «こども» (`p50:82E3`). Pegarles quita a Snake 4 de "
+            "vida: el golpe (`p03:A360`) pasa por `delante_con_actores` (`p07:AED1`).",
+            "The children's messages are signed «こども» (`p50:82E3`). Punching them takes 4 life from "
+            "Snake: the punch (`p03:A360`) goes through `delante_con_actores` (`p07:AED1`)."),
+    "t11": ("Una niña: aquí dice «ながれにさからってはいけないって、かた目のおじちゃんが。» (`p50:82E3`). "
+            "Como a los otros niños, pegarle quita vida a Snake.",
+            "A girl: here she says «ながれにさからってはいけないって、かた目のおじちゃんが。» (`p50:82E3`). "
+            "As with the other children, punching her takes life from Snake."),
+    "t12": ("Norden: «ザンジバーハムスター», que tendría veneno (`p49:A38E`).",
+            "Norden: «ザンジバーハムスター», said to be poisonous (`p49:A38E`)."),
+    "pajaro": ("Norden: una paloma torcaz enseñada como mensajera, «デンショばとにクンレンされたモリバト», "
+               "que traería Marv (`p49:A024`).",
+               "Norden: a wood pigeon trained as a carrier, «デンショばとにクンレンされたモリバト», "
+               "probably brought by Marv (`p49:A024`)."),
+}
+
+
+def nombre_enemigo(e):
+    if e["clase"] != "soldado":
+        return NOMBRE_CLASE.get(e["clase"], (e["clase"], e["clase"]))
+    c = set(e["colores"].split(","))
+    if c <= {"6D0000", "DA0000", "FF0000"}:
+        return ("soldados en la sala roja", "soldiers in the red room")
+    if "919191" in c:
+        return ("soldado de casco gris", "soldier in a grey helmet")
+    if "004824" in c and "FF0000" not in c:
+        return ("soldado de boina verde", "soldier in a green beret")
+    return ("soldado de boina roja", "soldier in a red beret")
 
 
 def enemigos(idioma):
     import json
-    ruta = os.path.join(T.RAIZ, "work", "enemigos", "enemigos.json")
+    ruta = os.path.join(T.RAIZ, "work", "enemigos", "enemigos_salas.json")
     lista = json.load(open(ruta)) if os.path.exists(ruta) else []
     i = 0 if idioma == "es" else 1
     raiz_img = "../imagenes/enemigos/" if idioma == "es" else "imagenes/enemigos/"
@@ -299,16 +334,28 @@ def enemigos(idioma):
         donde = (("especial %s, sala %s" if i == 0 else "special room %s, room %s") % (sala[1:3], sala[4:])
                  if sala.startswith("E") else
                  ("zona %s, sala %s" if i == 0 else "zone %s, room %s") % (sala[:2], sala[3:]))
-        mas = len(e["tambien"])
-        out.append("### %d. %s (%s 0x%02X)" % (e["n"] + 1, QUE.get(e["tipo"], ("?", "?"))[i].capitalize(),
-                                               "tipo" if i == 0 else "kind", e["tipo"]))
+        mas = len(e["salas"]) - 1
+        tipos = ", ".join("0x%02X" % x for x in sorted(e["tipos"]))
+        nombre = nombre_enemigo(e)[i]
+        out.append("### %d. %s" % (e["n"] + 1, nombre[0].upper() + nombre[1:]))
         out.append("")
         out.append("![](%s%s)" % (raiz_img, e["gif"]))
         out.append("")
-        out.append(("Jugado en la %s%s." if i == 0 else "Played in %s%s.") % (
-            donde, ("; igual en %d salas más" % mas if i == 0 else "; the same in %d more rooms" % mas)
-            if mas else ""))
+        if i == 0:
+            out.append("La %s, jugada; %s %s; %s." % (
+                donde, "tipo" if len(e["tipos"]) == 1 else "tipos", tipos,
+                ("sale en %d salas más" % mas if mas > 1 else "sale en una sala más") if mas
+                else "no sale en otra sala"))
+        else:
+            out.append("%s, played; %s %s; %s." % (
+                donde[0].upper() + donde[1:], "kind" if len(e["tipos"]) == 1 else "kinds", tipos,
+                ("it is in %d more rooms" % mas if mas > 1 else "it is in one more room") if mas
+                else "it is in no other room"))
         out.append("")
+        nota = NOTA.get("%s:%s" % (e["clase"], sala)) or NOTA.get(e["clase"])
+        if nota:
+            out.append(nota[i])
+            out.append("")
     return out
 
 

@@ -250,8 +250,9 @@ def juega():
 # F2) y llama a estado_que_toca (p02:98BF), como al salir del menu.
 ACCIONES = [
     ("andar", {}, [(ARR, 16), (IZQ, 16), (ABA, 16), (DER, 16), (0, 4)]),
-    ("golpe", {}, [(d, 2) for d in ()] + sum(([(d, 2), (0, 2), (B1, 1), (0, 10)]
-                                               for d in (ARR, IZQ, ABA, DER)), [])),
+    # el golpe es el disparo 2 (estado_0 p03:A290 -> disparo_2 p03:A360: el
+    # estado 3, 0xCB17 = la direccion + 8); el 1 usa el arma (p03:A56C)
+    ("golpe", {}, sum(([(d, 2), (0, 2), (B2, 1), (0, 10)] for d in (ARR, IZQ, ABA, DER)), [])),
     ("arrastrarse", {}, [(B2 | B1, 1), (B2, 3), (0, 6), (ARR, 16), (IZQ, 16), (ABA, 16),
                          (DER, 16), (0, 4)]),
     ("pistola", {0xCB20: 1, 0xD600: 1, 0xD601: 0x99}, sum(([(d, 2), (0, 2), (B1, 1), (0, 8),
@@ -264,8 +265,10 @@ ACCIONES = [
 
 def gifs(sal):
     """Una animacion por accion: el cuadro del juego (p01:741A) con las teclas,
-    los sprites 0-7 de Snake en un recuadro que lo sigue, al ritmo del MSX."""
-    from PIL import Image
+    la sala entera (la zona de juego, 0xC0 x 0xC0) con Snake y los enemigos, al
+    ritmo del MSX. Antes era un recuadro que seguia a Snake: no se veia que se
+    moviera (la caja salia de una sola imagen)."""
+    import mapas
     from gif_juego import Gif
     os.makedirs(sal, exist_ok=True)
     for nombre, prepara, teclas in ACCIONES:
@@ -284,6 +287,7 @@ def gifs(sal):
             for _ in range(n):
                 m.pon(0xCA08, t)
                 m.pon(0xCA07, t & ~antes)
+                m.pon(0xCA5F, 0)                 # sin alerta: los soldados patrullan
                 antes = t
                 m.bancos_123()
                 m.llama(0x741A)
@@ -292,16 +296,9 @@ def gifs(sal):
                 f = foto(m)
                 m.llama(0x5DD3)                  # Snake pintado, como al empezar el cuadro siguiente
                 v = m.vdp
-                attr = ((v.r[11] & 3) << 15) | ((v.r[5] & 0xFC) << 7)
-                viejo = bytes(v.vram[attr - 0x200:attr + 0x80])
-                v.vram[attr - 0x200:attr + 0x80] = m.mem[0xDA00:0xDC80]
-                for k in range(8, 32):
-                    v.vram[attr + 4 * k] = 0xE0
-                im = Image.new("RGB", (256, 212), (0, 0, 0))
-                v.sprites(im)
-                v.vram[attr - 0x200:attr + 0x80] = viejo
-                y, x = m.mem[0xCB03], m.mem[0xCB05]
-                g.pon(im.crop((x - 32, y - 48, x + 32, y + 16)))
+                im = v.pagina((v.r[2] >> 5) & 3, 212)
+                mapas.sprites_de_ram(v, m.mem, im, con_snake=True)
+                g.pon(im.convert("RGB").crop((0, 0, 0xC0, 0xC0)))
                 vuelve(m, f)
         g.guarda(os.path.join(sal, "snake_%s.gif" % nombre))
 

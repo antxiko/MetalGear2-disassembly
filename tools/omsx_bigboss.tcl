@@ -12,7 +12,9 @@
 #   - a la sala 1 (por la izquierda) y a la 6 (por arriba), como omsx_salas;
 #   - un volcado (vram/ram/vdp) cada segundo durante BB_SEGS segundos, con el
 #     espacio cada medio segundo para pasar los mensajes.
-# Variables: BB_SALIDA (work/omsx_bigboss), BB_SEGS (90).
+# Variables: BB_SALIDA (work/omsx_bigboss), BB_SEGS (90), BB_JEFE (bigboss o fox:
+# con 0xD888 = 0 el CONTINUE va a zona_12_con_d888, p14:B0BA: GREY FOX, la ficha
+# 0xD820 de tipo 9, y se graba desde ahi sin moverse de sala).
 proc opcion {nombre porDefecto} {
     global env
     if {[info exists env($nombre)]} { return $env($nombre) }
@@ -20,6 +22,8 @@ proc opcion {nombre porDefecto} {
 }
 set ::SALIDA [opcion BB_SALIDA {work/omsx_bigboss}]
 set ::SEGS [opcion BB_SEGS 90]
+set ::JEFE [opcion BB_JEFE bigboss]
+set ::D888 [expr {$::JEFE eq "fox" ? 0 : 0xFF}]
 file mkdir $::SALIDA
 set ::log [open [file join $::SALIDA "bigboss.txt"] w]
 set throttle off
@@ -99,7 +103,7 @@ proc a_la_zona_12 {} {
     poke [expr {0xD900 + 3 * 16 + 7}] [expr {0x80 | 0x12}]
     poke 0xD430 0
     poke 0xD881 0xFF
-    poke 0xD888 0xFF
+    poke 0xD888 $::D888
     poke 0xD889 0
     poke 0xCA76 0
     poke 0xCA50 3
@@ -111,7 +115,7 @@ proc a_la_zona_12 {} {
 proc en_la_zona_12 {} {
     apunta "en la zona 0x12"
     poke 0xD881 0xFF
-    poke 0xD888 0xFF
+    poke 0xD888 $::D888
     poke 0xD889 0
     # muerto: el estado de Snake 0x14 hace que el paso 0 pase al 0x0B
     # (p01:745E) y de ahi al game over (estado 6)
@@ -150,6 +154,7 @@ proc continua {} {
 proc seguido {} {
     apunta "tras CONTINUE"
     vuelca "seguido"
+    if {$::JEFE eq "fox"} { graba; return }
     # a la sala 1, por la izquierda desde la 2:8
     poke 0xCA50 2
     poke 0xCA51 8

@@ -4,8 +4,9 @@
 
 Played by the cartridge with the emulated joystick (`tools/snake.py gif`):
 every frame, the keys to `0xCA08` and `0xCA07` and the game loop
-(`p01:741A`); his sprites are painted in a box that follows him, at the MSX's
-pace (one game frame every 5 of the VDP, measured in openMSX).
+(`p01:741A`), and the whole room is painted, as on screen, at the MSX's pace
+(one game frame every 5 of the VDP, measured in openMSX). It is room 0 of
+zone 0, where the game starts.
 
 **Walking**, up, left, down and right:
 
@@ -15,7 +16,8 @@ pace (one game frame every 5 of the VDP, measured in openMSX).
 
 ![Crawling](imagenes/snake_arrastrarse.gif)
 
-**The punch** (the trigger with no weapon), in the four directions:
+**The punch** (trigger 2, `disparo_2`, `p03:A360`: state 3 for 4 frames), in
+the four directions; trigger 1 uses the weapon:
 
 ![The punch](imagenes/snake_golpe.gif)
 
@@ -70,11 +72,11 @@ The F2 signs, as the ROM has them:
 <!-- generado:armas -->
 | Slot | | | Sign |
 |---:|---|---|---|
-| 0 |  | | (none) |
+| 0 | | | (none) |
 | 1 | ![](imagenes/equipo/f2_c01.png) | `p51:B546` | **ハンドガン ［ベレッタM92F］** アメリカ軍用セイシキピストルとしてサイヨウされているセミオートマチックピストル。サイレンサーソウチャクカ。タマホキュウカ。 |
 | 2 | ![](imagenes/equipo/f2_c02.png) | `p51:B59A` | **サブマシンガン ［イングラムM11］** アメリカのコガタケイリョウSMG。ショットキーをおしつづけるとフルオートになる。サイレンサーソウチャクカ。タマホキュウカ。 |
 | 3 | ![](imagenes/equipo/f2_c03.png) | `p51:B5ED` | **グレネード ［M68］** アメリカセイ、チャクハツシンカンシキハヘンシュリュウダン。ジメンにトウタツするとバクハツする。ラッカチテンはターゲット上。 |
-| 4 | ![](imagenes/equipo/f2_c04.png) | | (none) |
+| 4 | | | (none) |
 | 5 | ![](imagenes/equipo/f2_c05.png) | `p51:B63B` | **タイクウミサイル ［スティンガー］** ケイタイシキ、タイクウミサイル。レーダー内のショウジュンをカーソルイドウさせ、ショットキーでハッシャする。レーダー内カノウ。 |
 | 6 | ![](imagenes/equipo/f2_c06.png) | `p51:B690` | **リモコンミサイル ［M47ドラゴン］** シュ動モクシセン指令ホウシキによりハッシャゴのミサイルとモクヒョウをモクシによるカーソルソウサでホウコウをシュウセイできる。 |
 | 7 | ![](imagenes/equipo/f2_c07.png) | `p51:B6E7` | **プラスチック・バクダン** ヘンケイカノウなケイリョウコウセイノウバクヤク。 |
@@ -83,7 +85,7 @@ The F2 signs, as the ROM has them:
 | 10 | ![](imagenes/equipo/f2_c0A.png) | `p51:B761` | **ムリョク化ガス ［ABC M25A2］** ボウドウチンアツ用シュリュウダン。バクハツするとCN1ガスをかざ下にフンシュツする。かざ上でのシヨウはキケン。 |
 | 11 | ![](imagenes/equipo/f2_c0B.png) | `p51:B7B3` | **マウス ［ジェリー2］** シカケやセンサーを発見するのにつかうダミーロボット。物音モードのカイジョにもつかえる。ショットキーでプレイヤーの前方へはしる。 |
 | 12 | ![](imagenes/equipo/f2_c0C.png) | `p51:B866` | **ライター ［JR TOKAI］。** どこにでもうっている100エンライター。シヨウホウホウはフメイ。 |
-| 13 | ![](imagenes/equipo/f2_c0D.png) | | (none) |
+| 13 | | | (none) |
 <!-- /generado -->
 
 ## The equipment (F3)
@@ -93,13 +95,13 @@ The F2 signs, as the ROM has them:
 <!-- generado:equipo -->
 | Slot | | | Sign |
 |---:|---|---|---|
-| 0 |  | | (none) |
+| 0 | | | (none) |
 | 1 | ![](imagenes/equipo/f3_c01.png) | `p51:B89A` | **タバコ ［ラッキー・ストライカー］** ゼンカイにひきつづき、SNAKEアイヨウのタバコ。コドクな戦場にはイキヌキもヒツヨウ。しかし・・・真のシヨウホウホウはフメイ。 |
 | 2 | ![](imagenes/equipo/f3_c02.png) | `p51:BA39` | **ソウガンキョウ ［ニコス F500］** これをつかうとプレイヤーを中心に上下左右のガメンを見ることができる。 |
 | 3 | ![](imagenes/equipo/f3_c03.png) | `p51:BB19` | **ナイトビュア** クラヤミでも真ヒルのように見えるアンシゴーグル。これをソウビすればいかなるクラヤミでも見えるようになる。 |
 | 4 | ![](imagenes/equipo/f3_c04.png) | `p51:B943` | **ガスマスク［ライアット・フェイス・マスク］** これをソウビするとドクガス・エリアでO2ゲージが2バイになり、へり方もおそくなりタイキュウ時間がのびる。ムリョク化ガスにもカ。 |
 | 5 | ![](imagenes/equipo/f3_c05.png) | `p51:B8F2` | **ボディ・アーマー ［S・P・S］** テキからのダメージがハンゲンするボウダンチョッキ。サイレント・パートナー・スペシャルといわれ、ジュウダンにのみユウコウ。 |
-| 6 | ![](imagenes/equipo/f3_c06.png) | | (none) |
+| 6 | | | (none) |
 | 7 | ![](imagenes/equipo/f3_c07.png) | `p51:B9E7` | **サンソボンベ** これをソウビすると水中でのO2ゲージが2バイになり、へり方もおそくなり潜水時間がながくなる。水上に上がればマンタンにもどる。 |
 | 8 | ![](imagenes/equipo/f3_c08.png) | `p51:B99F` | **ジライタンチキ** これをソウビするとジライがレーダー上にしろいコウテンとなってうつる。プレイヤーのしかけたジライもドウヨウにハンノウする。 |
 | 9 | ![](imagenes/equipo/f3_c09.png) | `p51:BAF4` | **ハングライダー** 戦場でのリヨウカチはなし。シヨウホウホウはフメイ。 |
@@ -123,14 +125,11 @@ The F2 signs, as the ROM has them:
 | 27 | ![](imagenes/equipo/f3_c1B.png) | `p51:BCE7` | **カード** (= 20) |
 | 28 | ![](imagenes/equipo/f3_c1C.png) | `p51:BCE7` | **カード** (= 20) |
 | 29 | ![](imagenes/equipo/f3_c1D.png) | `p51:BC94` | **スプレー ［ミセス・スプレー］** ジメチエーテル、LPガスをつかったキョウネンセイのラッカー用スプレー。カキゲンキンとかかれている。イロはメタリックグレイだ。 |
-| 30 | ![](imagenes/equipo/f3_c1E.png) | | (none) |
+| 30 | | | (none) |
 | 31 | ![](imagenes/equipo/f3_c1F.png) | `p51:BBBC` | **カートリッジ** マルフののこしたゲームカートリッジ。この中にOILIXのマイクロフィルムがかくされている。 |
 | 32 | ![](imagenes/equipo/f3_c20.png) | `p51:BD68` | **Cレーション ［B1ユニット］** ショットキーでタイリョクのカイフクができるギュウニク、ブタニク、ハムエッグ、ツナフィッシュ、チョコレート、クラッカーをふくむ。 |
 | 33 | ![](imagenes/equipo/f3_c21.png) | `p51:BDBB` | **Cレーション ［B2ユニット］** ショットキーでタイリョクのカイフクができるマメとミートボールのトマトニ、マメとフランクフルト、ギュウニクのポテトニをふくむ。 |
 | 34 | ![](imagenes/equipo/f3_c22.png) | `p51:BE0D` | **Cレーション ［B3ユニット］** ショットキーでタイリョクのカイフクができるスライスハム、ニワトリとシチメンチョウ、スパゲッティ、チーズ、コーヒーをふくむ。 |
-| 35 |  | | (none) |
-| 36 |  | `p51:AD99` | **ービルのエレベーターこうをのぼっていっ** たわ{FB}1{76}オクジョウか？！{FB}{78}ここの連中もヒッシになってさがしているわ。カレらよりはやくつかまえないと、マルフ博士のユイイツのてがかりよ{FB}{76}ハトさがしか？・・・キミはどうする？{FB}{78}わたし、足でまといになるわ。もうすこしジョウホウをあつめたいしね。ヒョウカ下がってるのよ。ここんとこ・・・それに、こんな目にあったんですもの。{FD}このままではおさまらないわ！{FB}{76}こころづよいな・・・ムリはするなよ{FB}{78}トウチョウされるといけないからシュウハスウかえるわね。140・76ね。SNAKE{FB}{78}それから、カードをコピーしておいたわ。カード4、つかって・・・{FB}{78}じゃあね、SNAKE・・・またあとで{FB}1{76}ホーリー！{FB}2{78}えっ？・・・{FB}{76}今のは、恋人同士のわかれのコトバだ{FB}{78}・・・じゃあ、私たちは？・・・なんて言うの？{FB}2{76}いきていればいつでもあえる・・・{FB}2{78}・・・・わかったわ{FB}2{76}こちらSNAKE・・・潜入ポイントにトウチャク{FB}2{77}SNAKE・・・あいかわらず、時間通りだな{FB}2{77}よし・・・OPERATIONINTRUDE　F014カイシ{FD}もういちど、カクニンする。きみのニンムはザンジバーランドに潜入、ラチされているチェコの生物学者キオ・マルフをダッシュすること{FD}SNAKE、コンカイのシンヘイキ動体はんのうセンサーのスイッチを入れてみろ{FB}2{76}ラジャー・・・スイッチをいれる |
-| 37 |  | `p51:AEBC` | **。** カード4、つかって・・・{FB}{78}じゃあね、SNAKE・・・またあとで{FB}1{76}ホーリー！{FB}2{78}えっ？・・・{FB}{76}今のは、恋人同士のわかれのコトバだ{FB}{78}・・・じゃあ、私たちは？・・・なんて言うの？{FB}2{76}いきていればいつでもあえる・・・{FB}2{78}・・・・わかったわ{FB}2{76}こちらSNAKE・・・潜入ポイントにトウチャク{FB}2{77}SNAKE・・・あいかわらず、時間通りだな{FB}2{77}よし・・・OPERATIONINTRUDE　F014カイシ{FD}もういちど、カクニンする。きみのニンムはザンジバーランドに潜入、ラチされているチェコの生物学者キオ・マルフをダッシュすること{FD}SNAKE、コンカイのシンヘイキ動体はんのうセンサーのスイッチを入れてみろ{FB}2{76}ラジャー・・・スイッチをいれる |
 <!-- /generado -->
 
 ## The radar

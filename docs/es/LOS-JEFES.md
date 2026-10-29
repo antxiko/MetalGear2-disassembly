@@ -25,8 +25,11 @@ la lista es el de su zona en la partida, no está medido.
 
 Cada pelea la **juega el cartucho ejecutado** (`tools/jefes.py`): se entra en
 su zona y su sala, se corre el cuadro entero del juego (`p01:728E`, el de la
-interrupción) con los mensajes pasados con el disparo y la vida de Snake
-llena, y al final se le quita al jefe la vida para ver cómo acaba. Los GIF
+interrupción) con la vida de Snake llena; cada mensaje se pasa con el
+disparo a los 30 cuadros (2,5 s en el MSX), cuando ya se ha escrito, y a
+los 600 cuadros jugados (sin contar los de mensajes y llamadas) se le quita
+al jefe la vida para ver cómo acaba. Lo que la pelea espera del jugador
+(acercarse, coger algo) se dice en cada una. Los GIF
 van **al ritmo del MSX**: jugando, el juego procesa un cuadro cada 5 del VDP
 (medido en openMSX, ver [Por dentro](POR-DENTRO.html)). Una imagen quieta de
 más de 4 segundos (un mensaje que espera) se deja en 4.
@@ -54,8 +57,11 @@ El científico que se transforma. Sus mensajes lo firman «BLACK COLOR»
 
 ![Sus sprites, sin repetir](../imagenes/jefes/sprites_04.png)
 
-«オレはRUNNING MAN» (`p50:8BDA`). En el cartucho ejecutado la pelea se queda
-en el mensaje de su paso 0x10, «見てろっ！！».
+«オレはRUNNING MAN» (`p50:8BDA`). Corre por las salas de su especial; cuando
+se rinde (paso 0x0F, `p05:AF32`) se queda en el centro y espera a que Snake
+se le acerque (paso 0x10, `p05:AF59`: 0x20 puntos en X): aquí Snake va a su
+sala saliendo por arriba, como iría el jugador. Entonces dice
+«・・・SNAKE？チータがヘビにまけた・・なぜ？» (`p50:8CBF`) y arde (pasos 0x20-0x23).
 
 ## 3. HIND D (zona 0x07)
 
@@ -101,6 +107,9 @@ escena (`p05:AB08`). «BOX『おれたちはみっ室専門のアンサツブタ
 Empieza con una llamada del transceptor. Lo nombra ケスラー (`p49:B233`).
 En la pelea no se le ve: va con «el último traje de camuflaje, invisible» y
 una pistola que no suena (`p49:B9BA`). Al morir saca la ficha de tipo 8.
+Cotejado con openMSX entrando en su sala (`tools/omsx_salas.tcl`, zona 0x13
+fila 1 columna 8): la misma llamada, «オレだ・・・ファンのー人だ。SNAKE、気をつけろ。»
+(`p49:B957`) en el 140.00, y luego en la sala solo sus disparos, como aquí.
 
 ## 8. Pettrovich (zona 0x13)
 
@@ -109,9 +118,12 @@ una pistola que no suena (`p49:B9BA`). Al morir saca la ficha de tipo 8.
 ![Sus sprites, sin repetir](../imagenes/jefes/sprites_08.png)
 
 ペトロビッチ・マッドナー, el doctor: sus mensajes son los 0x14-0x17 de
-`p50:8E35-9182` y el nombre entero lo da ケスラー (`p49:B61E`). La ficha se
-queda en su paso 0x11, que espera un suceso de la partida (el bit 5 de
-`0xD7D9`, `p05:BFA0`).
+`p50:8E35-9182` y el nombre entero lo da ケスラー (`p49:B61E`). Habla del
+cartucho de MSX de Marv, llama ホーリー, confiesa («ペトロビッチ、お前がマルフ博士を？»,
+`p50:8FC4`), pelea cuerpo a cuerpo y al morir le dice a Snake cómo destruir
+METAL GEAR (`p50:9182`). Su paso 0x11 (`p05:BFA0`) espera el bit 5 de
+`0xD7D9`, que pone coger la cosa 0x2D (`bandera_por_cosa`, `p10:A68C`): el
+cartucho de Marv, ficha `0xD6B0`. Aquí se le da como si se cogiera.
 
 ## 9. METAL GEAR (zona 0x12)
 
@@ -132,8 +144,19 @@ distintos de 54.272, un objeto lanzado y la barra de vida. Snake lo llama
 
 ![Sus sprites, sin repetir](../imagenes/jefes/sprites_09.png)
 
-Con su conversación (`p50:990C`). Así, «GREY FOX», en los textos. Sus pasos
-5 a 0x10 esperan sucesos de las salas 2 y 3 (`0xD88C`).
+Así, «GREY FOX», en los textos. Se lleva el cartucho y deja a Snake
+ardiendo; キャンベル le dice que tire todo el equipo y las armas
+(`p48:9DB3`). El paso 5 (`p05:B9F3`) espera a que no lleve nada (`0xD88C`,
+que pone `cb4b_sin_cosas`, `p10:BBDD`, al abrir F2 o F3) y a Snake en la sala
+3; el 6, en la sala 2. Aquí se le vacía lo que lleva y se le lleva a esas
+salas como iría el jugador. Luego, los mensajes de los dos (`p50:9866`:
+«FOX！キサマのくさりきったショウネをたたききなおしてやるっ！»), la pelea a
+puñetazos (paso 0x0A) y la conversación del final (`p50:990C`). En openMSX se llega
+a él perdiendo en la zona 0x12 y siguiendo (`zona_12_con_d888`, `p14:B0BA`;
+`tools/omsx_bigboss.tcl` con `BB_JEFE=fox`): su ficha en `0xD820`, su
+mensaje «SNAKE！カートリッジはもらっていくぞ、» (`p50:9C93`) y Snake ardiendo,
+como al principio de este GIF; por ese camino se queda en su paso 5, así que
+el resto de la pelea no está cotejado.
 
 ## 11. BIG BOSS (zona 0x12)
 
@@ -149,8 +172,7 @@ espera en la sala 6 (`p05:B608`), donde llega, hablan con los dos retratos
 (`p50:92BB`...) y empieza a buscarle (paso 8). Cotejado con openMSX llegando
 por el mismo camino (`tools/omsx_bigboss.tcl`: perder en la zona 0x12 y
 CONTINUE): la ficha y los sprites de BIG BOSS en su paso 6, iguales. Al
-quitarle la vida parpadea en azul, naranja y rojo. La pelea de GREY FOX y la
-de NIGHT SIGHT no están cotejadas con openMSX.
+quitarle la vida parpadea en azul, naranja y rojo.
 
 ## La música
 

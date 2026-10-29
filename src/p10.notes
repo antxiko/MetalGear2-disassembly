@@ -1034,10 +1034,10 @@ L 0xA5E6 e070_zona_13 0xD821 = 0x20
 L 0xA5EC cerca_de_e070 acarreo con lo lanzado de tipo 8 (D = 1) o con Snake (D = 0) a menos de C del sitio de HL + B, en Y y en X
 L 0xA5FC cerca_en_y_x la Y - B - la de la ficha...
 L 0xA609 lanzado_8_cerca con lo lanzado de tipo 8, su Y y su X
-L 0xA65E bandera_por_cosa segun la cosa A: la 0x17 el bit 6 de 0xD7D6; la 0x2A el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D el 5 de 0xD7D9; la 0x0C el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 fuera el 6 de 0xD7E1
+L 0xA65E bandera_por_cosa segun la cosa A (la casilla de F2, o la de F3 + 0x0E; su ficha, 0xD600 + (A - 1) * 4): la 0x17 (el ala delta) el bit 6 de 0xD7D6; la 0x2A (una tarjeta) el 4 de 0xD7D8 y fuera el 6 de 0xD7D2; la 0x2D (el cartucho de Marv) el 5 de 0xD7D9; la 0x0C (el mechero) el 6 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x2B (el spray) el 5 de 0xD7DA y fuera el 4 de 0xD7DF; la 0x16 (el detector de minas) fuera el 6 de 0xD7E1
 L 0xA67B cosa_17 
 L 0xA681 cosa_2a 
-L 0xA68C cosa_2d 
+L 0xA68C cosa_2d el cartucho de Marv (0xD6B0): el bit 5 de 0xD7D9, que espera Pettrovich (p05:BFA0)
 L 0xA692 cosa_0c 
 L 0xA697 quita_d7df_4 
 L 0xA69D cosa_2b 

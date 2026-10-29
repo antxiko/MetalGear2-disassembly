@@ -151,6 +151,10 @@ corrected:
   caught it.
 - The vertical order of the rooms: the row **goes up** on leaving through
   the top (`p02:8117`).
+- The steps of RUNNING MAN's table (`p05:AC48`) were named one or two off from
+  0xAD2F on: steps 7 and 8 reuse 1 and 2. Seen when his fight was finished.
+  The same with GREY FOX's (`p05:B934`), three off from `0xBBA2` on: steps
+  0x0D-0x0F all go to a `ret` (`p05:BA57`).
 
 ## Open questions
 
@@ -162,9 +166,6 @@ corrected:
   entering.
 - A few dots (4 to 25) of the lift button lights and of the floor number in
   zone 0x10 come out different from openMSX without explanation.
-- **RUNNING MAN** stays in his message and **Pettrovich** in his step 0x11 in
-  the cartridge running: what comes next in those two fights has not been
-  seen.
 - キャリー's 140.99 message (above).
 - The unnumbered conversation at `p48:84B1` chains, one frame after another,
   pieces of ケスラー's messages started in mid-sentence: whether the game uses

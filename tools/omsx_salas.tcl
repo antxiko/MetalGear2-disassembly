@@ -27,7 +27,8 @@
 #
 # Variables: SALAS_SALIDA (work/omsx_salas), SALAS_LISTA ("zona:fila:col ..."
 # en hexadecimal, las casillas de destino), SALAS_DOBLE (no vacia: un segundo
-# volcado de cada sala a los 3 s, vram-zZZ_sSS_b.bin).
+# volcado de cada sala a los 3 s, vram-zZZ_sSS_b.bin), SALAS_VECES y SALAS_CADA
+# (N volcados mas, uno cada tantos segundos: vram-zZZ_sSS_NN.bin).
 proc opcion {nombre porDefecto} {
     global env
     if {[info exists env($nombre)]} { return $env($nombre) }
@@ -197,11 +198,33 @@ proc mira {z fila col} {
     puts $::log [format "destino %s:%X:%X -> zona %02X sala %02X fila %02X columna %02X especial %02X" $z $fila $col $zz $s         [debug read memory 0xCA50] [debug read memory 0xCA51] $e]
     flush $::log
     vuelca $et
+    # SALAS_VECES N: N volcados mas, uno cada SALAS_CADA s (0,5), sin alerta
+    # (0xCA5F = 0, como tools/enemigos.py) para ver a los enemigos patrullar
+    set veces [opcion SALAS_VECES 0]
+    if {$veces > 0} {
+        serie $et 1 $veces [opcion SALAS_CADA 0.5]
+        return
+    }
     # SALAS_DOBLE: otro volcado a los 3 s (lo que cambia es animacion)
     if {[opcion SALAS_DOBLE {}] ne ""} {
         after time 3 "vuelca ${et}_b; espera siguiente"
         return
     }
     espera siguiente
+}
+proc serie {et k veces cada} {
+    poke 0xCA5F 0
+    poke 0xCA53 [debug read memory 0xCA52]
+    # una llamada (0xCA97, 0xE1E8): RETURN; un mensaje (0xD8A8, 0xE221): el espacio
+    if {[debug read memory 0xCA97] || [debug read memory 0xE1E8]} {
+        keymatrixdown 7 0x80
+        after time 0.15 {keymatrixup 7 0x80}
+    } elseif {[debug read memory 0xD8A8] || [debug read memory 0xE221]} {
+        keymatrixdown 8 0x01
+        after time 0.15 {keymatrixup 8 0x01}
+    }
+    if {$k > $veces} { espera siguiente; return }
+    vuelca [format "%s_%02d" $et $k]
+    after time $cada [list serie $et [expr {$k + 1}] $veces $cada]
 }
 after time 30000 {puts $::log "tiempo agotado"; close $::log; exit}

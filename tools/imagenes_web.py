@@ -5,7 +5,7 @@ que dejan en work/ las herramientas que corren el juego:
 
   mapas.py rotular        work/mapas/web_zona_ZZ.png   -> zona_ZZ.png
   snake.py gif            work/snake_gif/snake_*.gif   -> snake_*.gif (una por accion)
-  enemigos.py             work/enemigos/*.gif          -> enemigos/ (uno por enemigo distinto)
+  enemigos.py salas       work/enemigos/sala_*.gif     -> enemigos/ (la sala de cada enemigo distinto)
   jefes.py                work/jefes/pelea_TT.gif      -> jefes/ (cada pelea entera)
   equipo.py f2 / f3       work/equipo/f2_*, f3_*       -> armas.png, equipo.png, equipo/ (cada cosa)
   radar.py                work/radar/radar.gif         -> radar.gif
@@ -177,12 +177,21 @@ def main(docs):
                     fila.append(solido(im))
         filas.append(fila)
     guarda(hoja_de(filas), docs, "snake_hoja.png")
-    # los enemigos: las imagenes distintas de cada GIF de enemigos.py, una fila cada uno
-    ene = json.load(open(w("enemigos", "enemigos.json")))
+    # los enemigos: los dibujos distintos del de cada GIF de sala (enemigos.py salas
+    # deja sala_NN_<sala>_dNN.png), una fila cada uno
+    ene = json.load(open(w("enemigos", "enemigos_salas.json")))
     filas = []
     for e in ene:
-        ims = [solido(f.convert("RGB")) for f in ImageSequence.Iterator(Image.open(w("enemigos", e["gif"])))]
-        filas.append(distintos([i for i in ims if i.getbbox()]))
+        pref = e["gif"][:-4] + "_d"
+        ims = [solido(Image.open(w("enemigos", f)).convert("RGB"))
+               for f in sorted(os.listdir(w("enemigos"))) if f.startswith(pref) and f.endswith(".png")]
+        ims = [i for i in ims if i.getbbox()]
+        if ims and (e["clase"] == "soldado" or e["clase"] == "t14"):
+            # los que salen de la sala o cruzan una puerta se ven partidos: en la
+            # hoja, solo los enteros (en el GIF se quedan, asi se ven jugando)
+            alto = max(i.getbbox()[3] - i.getbbox()[1] for i in ims)
+            ims = [i for i in ims if i.getbbox()[3] - i.getbbox()[1] >= 0.8 * alto]
+        filas.append(distintos(ims))
     guarda(hoja_de(filas, celda=(52, 52)), docs, "enemigos_hoja.png")
     # los jefes de sprites (no el HIND D ni METAL GEAR, que son caracteres): las
     # piezas distintas de sus sprites (jefes.py: los 8-31 de cada cuadro)
@@ -204,9 +213,21 @@ def main(docs):
 
     # cada arma y cada cosa: el dibujo de lo elegido, del recuadro de la derecha
     # (F2 arriba, F3 abajo; medido: lo que cambia de una pantalla a otra)
+    # las casillas sin letrero (el mismo puntero que la 0, como paginas_web.letreros_de)
+    # son recuadros vacios: fuera
+    from paginas_web import palabra50
+    vacias = set()
+    for pref, tabla, n in (("f2", 0x8046, 14), ("f3", 0x8048, 0x23)):
+        t0 = palabra50(tabla)
+        vacias |= {"%s_c%02X.png" % (pref, i) for i in range(n) if palabra50(t0 + 2 * i) == palabra50(t0)}
     os.makedirs(os.path.join(img, "equipo"), exist_ok=True)
+    for f in vacias:
+        if os.path.exists(os.path.join(img, "equipo", f)):
+            os.remove(os.path.join(img, "equipo", f))
     for f in sorted(os.listdir(w("equipo"))):
         if not f.endswith(".png") or "_c" not in f:
+            continue
+        if f[:2] + "_c" + f.split("_c")[1] in vacias:
             continue
         caja = (208, 114, 248, 132) if f.startswith("f2") else (214, 162, 248, 180)
         cosa = f[:2] + "_c" + f.split("_c")[1]         # f2_c01.png ...
@@ -254,10 +275,14 @@ def main(docs):
         if f.startswith("pelea_") and f.endswith(".gif"):
             shutil.copyfile(w("jefes", f), os.path.join(img, "jefes", f))
     if os.path.isdir(w("enemigos")):
-        os.makedirs(os.path.join(img, "enemigos"), exist_ok=True)
+        # solo los de sala (enemigos.py salas); los recortes de antes, fuera
+        d = os.path.join(img, "enemigos")
+        os.makedirs(d, exist_ok=True)
+        for f in os.listdir(d):
+            os.remove(os.path.join(d, f))
         for f in sorted(os.listdir(w("enemigos"))):
-            if f.endswith(".gif"):
-                shutil.copyfile(w("enemigos", f), os.path.join(img, "enemigos", f))
+            if f.startswith("sala_") and f.endswith(".gif"):
+                shutil.copyfile(w("enemigos", f), os.path.join(d, f))
 
     aud = os.path.join(docs, "audio")
     os.makedirs(aud, exist_ok=True)

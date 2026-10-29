@@ -26,9 +26,11 @@ zone in the game, not measured.
 
 Each fight is **played by the cartridge running** (`tools/jefes.py`): its
 zone and room are entered, the game's whole frame (`p01:728E`, the
-interrupt's) is run with the messages passed with the trigger and Snake's
-life kept full, and at the end the boss's life is taken away to see how it
-ends. The GIFs go **at the MSX's pace**: while playing, the game processes
+interrupt's) is run with Snake's life kept full; each message is passed with
+the trigger after 30 frames (2.5 s on the MSX), once it has been written, and
+after 600 frames of play (not counting those with messages and calls) the
+boss's life is taken away to see how it ends. Whatever the fight waits for
+from the player (coming close, picking something up) is told in each one. The GIFs go **at the MSX's pace**: while playing, the game processes
 one frame every 5 of the VDP (measured in openMSX, see
 [Under the hood](UNDER-THE-HOOD.html)). A still picture longer than 4 seconds
 (a message waiting) is left at 4.
@@ -55,8 +57,12 @@ The scientist who transforms. His messages are signed «BLACK COLOR»
 
 ![Its sprites, no repeats](imagenes/jefes/sprites_04.png)
 
-«オレはRUNNING MAN» (`p50:8BDA`). In the cartridge running, the fight stays
-in the message of its step 0x10, «見てろっ！！».
+«オレはRUNNING MAN» (`p50:8BDA`). He runs through the rooms of his special
+room; when he gives up (step 0x0F, `p05:AF32`) he stays in the middle and
+waits for Snake to come close (step 0x10, `p05:AF59`: 0x20 dots in X): here
+Snake goes to his room leaving through the top, as the player would. Then he
+says «・・・SNAKE？チータがヘビにまけた・・なぜ？» (`p50:8CBF`) and burns (steps
+0x20-0x23).
 
 ## 3. HIND D (zone 0x07)
 
@@ -102,7 +108,9 @@ sets `0xD8A0` and the four records come out (`p05:AA90`) with their scene
 It starts with a transceiver call. ケスラー names it (`p49:B233`). He is
 not seen in the fight: he wears «the latest camouflage suit, stealth» and a
 gun that makes no sound (`p49:B9BA`). When it dies it brings out the record of
-kind 8.
+kind 8. Checked against openMSX entering his room (`tools/omsx_salas.tcl`,
+zone 0x13 row 1 column 8): the same call, «オレだ・・・ファンのー人だ。SNAKE、気をつけろ。»
+(`p49:B957`) on 140.00, and then nothing but his shots in the room, as here.
 
 ## 8. Pettrovich (zone 0x13)
 
@@ -111,9 +119,12 @@ kind 8.
 ![Its sprites, no repeats](imagenes/jefes/sprites_08.png)
 
 ペトロビッチ・マッドナー, the doctor: his messages are 0x14-0x17 of
-`p50:8E35-9182` and ケスラー gives his full name (`p49:B61E`). The record
-stays in its step 0x11, which waits for an event of the game (bit 5 of
-`0xD7D9`, `p05:BFA0`).
+`p50:8E35-9182` and ケスラー gives his full name (`p49:B61E`). He talks about
+Marv's MSX cartridge, ホーリー calls, he confesses («ペトロビッチ、お前がマルフ博士を？»,
+`p50:8FC4`), fights hand to hand and, dying, tells Snake how to destroy METAL
+GEAR (`p50:9182`). His step 0x11 (`p05:BFA0`) waits for bit 5 of `0xD7D9`,
+set by picking up thing 0x2D (`bandera_por_cosa`, `p10:A68C`): Marv's
+cartridge, record `0xD6B0`. Here it is given as if picked up.
 
 ## 9. METAL GEAR (zone 0x12)
 
@@ -134,8 +145,19 @@ different out of 54,272, a thrown object and the life bar. Snake calls it
 
 ![Its sprites, no repeats](imagenes/jefes/sprites_09.png)
 
-With his conversation (`p50:990C`). «GREY FOX», spelt like that, in the
-texts. His steps 5 to 0x10 wait for events of rooms 2 and 3 (`0xD88C`).
+«GREY FOX», spelt like that, in the texts. He takes the cartridge and leaves
+Snake burning; キャンベル tells him to throw away all his equipment and
+weapons (`p48:9DB3`). Step 5 (`p05:B9F3`) waits until he carries nothing
+(`0xD88C`, set by `cb4b_sin_cosas`, `p10:BBDD`, when F2 or F3 opens) and for
+Snake in room 3; step 6, in room 2. Here his things are emptied and he is
+taken to those rooms as the player would go. Then both men's messages
+(`p50:9866`: «FOX！キサマのくさりきったショウネをたたききなおしてやるっ！»), the
+fist fight (step 0x0A) and the final conversation (`p50:990C`). In
+openMSX he is reached by losing in zone 0x12 and continuing
+(`zona_12_con_d888`, `p14:B0BA`; `tools/omsx_bigboss.tcl` with
+`BB_JEFE=fox`): his record at `0xD820`, his message «SNAKE！カートリッジはもらっていくぞ、»
+(`p50:9C93`) and Snake burning, as at the start of this GIF; that way he
+stays in his step 5, so the rest of the fight is not checked.
 
 ## 11. BIG BOSS (zone 0x12)
 
@@ -151,8 +173,7 @@ BOSS's record at `0xD840`. His step 2 tells Snake something in room 1 and step
 portraits (`p50:92BB`...) and he starts looking for him (step 8). Checked
 against openMSX arriving the same way (`tools/omsx_bigboss.tcl`: losing in
 zone 0x12 and CONTINUE): BIG BOSS's record and sprites at his step 6,
-identical. When his life is taken away he flashes blue, orange and red. GREY
-FOX's and NIGHT SIGHT's fights are not checked against openMSX.
+identical. When his life is taken away he flashes blue, orange and red.
 
 ## The music
 
